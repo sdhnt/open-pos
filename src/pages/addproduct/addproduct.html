@@ -1,0 +1,87 @@
+<!-- <ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Add Product</ion-title>
+  </ion-navbar>
+</ion-header> -->
+
+<ion-content padding>
+    <ion-item>
+        <b>အချက်အလက်ထည့်ပါ:</b>
+    
+    </ion-item>
+  
+  <ion-list inset>
+      <!-- <button ion-button full color="dark" (click)="getProdPic()">Upload Picture</button> -->
+      <ion-item>
+          <button ion-button (click)="launchCamera()">Take Picture</button>
+          <img *ngIf="image!=null" [src]="image" style="width: 100px;">  
+      </ion-item>
+
+    <ion-item>
+      <ion-label>ထုတ်ကုန်ကုဒ်:</ion-label>
+      <ion-input type="text" [(ngModel)]='prodCode'></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>နာမည်:</ion-label>
+      <ion-input type="text" [(ngModel)]='prodName'></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>ရောင်းစျေး:</ion-label>
+      <ion-input type="number" [(ngModel)]='prodPrice'></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>ကုန်ကျစရိတ်: </ion-label>
+        <ion-input type="number" [(ngModel)]='prodCost'></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>လက်ရှိစတော့ရှယ်ယာ: </ion-label>
+      <ion-input type="number" [(ngModel)]='currstock'></ion-input>
+  </ion-item>
+    <!-- OPTIONAL EXPIRY/Shelf Life in time -->
+
+    <ion-item>
+
+        <ion-label>အမျိုးအစားကိုရွေးပါ</ion-label>
+        <ion-select multiple="false" [(ngModel)]='prodCat'>
+
+            <!-- <ion-option>New</ion-option> -->
+            <ion-option>New</ion-option>
+            <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>
+          
+      </ion-select>
+
+      <!-- <ion-label>Select Category</ion-label>
+      <ion-select multiple="false" [(ngModel)]='prodCat'>
+            <ion-option>New</ion-option>
+            <ion-option>Snacks</ion-option>
+            <ion-option>Drinks</ion-option>
+            <ion-option>Noodles</ion-option>
+      </ion-select> -->
+    </ion-item>
+
+    
+
+
+        <ion-item *ngIf="prodCat=='New'">
+          <ion-label >အမျိုးအစားအသစ်ထည့်ပါ: </ion-label>
+          <ion-input type="text" placeholder="Enter Category Here"  [(ngModel)]='newprodCat'></ion-input>
+        </ion-item>
+        
+  
+    <!-- <ion-item>
+      
+        <ion-label>Category</ion-label>
+        <ion-input type="text" [(ngModel)]='prodCat'></ion-input>
+        
+      </ion-item> -->
+    
+  
+  </ion-list>
+  <button ion-button block color="primary" (click)="addproduct()"  color="dark">ထုတ်ကုန်ထည့်ပါ</button>
+  <button ion-button block color="primary" (click)="scanQR()"  color="dark">ကုဒ် scan ကို</button>
+
+ 
+</ion-content>

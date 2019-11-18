@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-navbar color="dark">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>ထုတ်ကုန်</ion-title>
+    <ion-buttons end><button ion-button (click)="uploadbtn()"><ion-icon name="cloud-upload" style="align-self: center; color: white;" padding></ion-icon></button></ion-buttons>
+    <ion-buttons end><button ion-button (click)="cashbtn()"><ion-icon name="logo-usd" style="align-self: center; color: white;" padding></ion-icon></button></ion-buttons>
+  
+  </ion-navbar>
+ 
+</ion-header>
+<ion-content>
+
+    <ion-tabs tabsPlacement="top" #myTabs>
+        <ion-tab [root]="ViewList" tabTitle="ထုတ်ကုန်များစာရင်း" tabIcon="list-box"></ion-tab>
+        <ion-tab [root]="AddProd" tabTitle="ထုတ်ကုန်ထည့်ပါ" tabIcon="pricetag"></ion-tab>
+        <ion-tab [root]="AddCat" tabTitle="အမျိုးအစား" tabIcon="albums"></ion-tab>
+  
+    
+       </ion-tabs>
+
+<!-- <ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <div>
+          <ion-list>
+            <ion-item>
+              <ion-label>Total</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>{{total}} USD</ion-label>
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div>
+          <ion-list>
+            <ion-item>
+              <ion-label>Items</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>{{count}} Pcs</ion-label>
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div>
+          <ion-list>
+            <ion-item>
+              <ion-label>VAT</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>{{vat}} USD</ion-label>
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <button ion-button block color="primary" (click)="manual()">Manual Entry</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button block color="primary" (click)="qrscan()">Sales QR Scan</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <button ion-button block color="secondary" (click)="addproduct()">Add Products</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button block color="secondary" (click)="showproduct()">Show Products</button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <button ion-button round block color="secondary" (click)="reset()">Reset</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+ -->
+
+
+  
+
+
+<!-- 
+  <ion-tabs tabsPlacement="top">
+    <ion-tab [root]="ListRoot" tabTitle="List" tabIcon="chat"></ion-tab>
+    <ion-tab [root]="AddRoot" tabTitle="Add" tabIcon="add"></ion-tab>
+   </ion-tabs> -->
+<!-- 
+  <ion-footer>
+    <ion-toolbar>
+      <ion-title>Track💰2Make💰</ion-title>
+    </ion-toolbar>
+  </ion-footer> -->
+

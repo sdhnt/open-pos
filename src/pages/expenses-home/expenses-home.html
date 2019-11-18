@@ -1,0 +1,95 @@
+<!--
+  Generated template for the ExpensesHomePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar color="dark">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title> စရိတ် </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+      <b>Enter Inventory Expenditure Detail:</b> 
+  </ion-item>
+
+<ion-list inset>
+  
+    <ion-grid>
+      <ion-row>
+        <ion-col col-8> 
+            <ion-searchbar showCancelButton="always" [(ngModel)]="searchterm" (ionChange)="filteredProduct()"></ion-searchbar>
+        </ion-col>
+        <ion-col col-4>
+            <button ion-button block color="primary" (click)="scanQR()"  color="dark">ကုဒ် scan ကို</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-item>
+      <ion-label>အမျိုးအစားကိုရွေးပါ</ion-label>
+      <ion-select multiple="true" [(ngModel)]='selectedCat' (ionChange)="filteredProduct()">
+          <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>    
+      </ion-select>
+    </ion-item>
+  </ion-list>
+<ion-list inset  *ngFor="let product of filteredList">
+  <ion-card>
+      <ion-grid> 
+        <ion-row>
+        <ion-col col-2>
+          <ion-row> 
+            <ion-avatar>
+                <img [src]="product.url">
+              </ion-avatar>
+            </ion-row>
+        </ion-col>
+        <ion-col col-10>
+            <ion-row>
+                <ion-col col-6>
+                    {{product.name}}
+                </ion-col>
+                <ion-col col-6>
+                  Stock: {{product.stock_qty}}
+                </ion-col>
+                </ion-row>
+              <ion-row>
+                <ion-col col-6 style="color: grey; font-size: 10px;"> စျေးနှုန်း {{product.price}} MMK </ion-col>
+                <ion-col col-6 style="color: grey; font-size: 10px; text-align: end;"> အမျိုးအစား: {{product.cat}} </ion-col>
+              </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-12> <button ion-button full end color="dark" (click)="chooseProd(product)">Choose</button> </ion-col>
+      </ion-row>
+      </ion-grid>
+    </ion-card> 
+ 
+</ion-list>
+</ion-content>
+
+<ion-footer style="border-top-color:black; border-top: 10px;">
+  <ion-list>
+      <ion-item>
+        Prod Name: {{prodName}}
+        </ion-item>
+    <ion-item>
+      <ion-label>Prod qty</ion-label>
+      <ion-input type="number" [(ngModel)]='prodqty'></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>Total Expenditure</ion-label>
+        <ion-input type="number" [(ngModel)]='prodcost'></ion-input>
+      </ion-item>
+      <ion-item>
+      <ion-label>Batch Expiry Date:</ion-label>
+      <ion-datetime displayFormat="DD/MMM/YYYY" [(ngModel)]='expirydate'></ion-datetime>
+      </ion-item>
+    </ion-list>
+  <button ion-button block color="primary" (click)="addinventoryexpense()"  color="dark">ထုတ်ကုန်ထည့်ပါ</button>
+  
+</ion-footer>

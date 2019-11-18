@@ -1,0 +1,7 @@
+{
+  "name": "barcode-mpos",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}

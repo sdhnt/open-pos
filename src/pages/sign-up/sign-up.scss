@@ -1,0 +1,56 @@
+page-sign-up {
+
+
+
+    ion-content{
+        
+    
+        .scroll-content{
+        //     background-image: url("…/../../../assets/imgs/bckground.jpg") ;
+        // -webkit-background-size: cover;
+        //   -moz-background-size: cover;
+        //   -o-background-size: cover;
+        //   background-size: cover;
+        background-image:linear-gradient(#301924,#000000) ;
+        }	
+    }
+
+    ion-icon{
+        padding: 10px;
+    }
+    
+    .nametop{
+      
+        margin-top: 30px;
+        margin-bottom:30px;
+        font-size: 3em;
+        font-family: 'Megrim';
+        color: orange;
+    }
+    .row-style{
+        background-color: #FFF;
+        padding-left:15px;
+        border-radius: 30px;
+        margin-bottom: 10px;
+    }
+    .row-style1{
+        color: white;
+        align-content: center;
+        padding-left:15px;
+        border-radius: 30px;
+        margin-bottom: 30px;
+    }
+    
+    .icon{
+        display: flex!important;
+        align-content: center!important;
+        align-items: center!important;
+    
+    }
+    .item-cover {
+        width: 0;
+        height: 0;
+        }
+    }
+    
+    

@@ -1,0 +1,20 @@
+<!-- <ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Product List</ion-title>
+  </ion-navbar>
+</ion-header> -->
+
+<ion-content>
+  <ion-list inset>
+    <ion-item *ngFor="let product of listProducts">
+      <h2>{{product.name}}</h2>
+      <p>Price: {{product.price}} USD</p>
+      <button ion-button clear item-end (click)="singleProduct(product)">View</button>
+
+    </ion-item>
+  </ion-list>
+  <button ion-button clear item-end (click)="backBtn()">Back</button>
+</ion-content>
