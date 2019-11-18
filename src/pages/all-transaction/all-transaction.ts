@@ -16,10 +16,10 @@ import firebase from 'firebase';
   templateUrl: 'all-transaction.html',
 })
 export class AllTransactionPage {
+  
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events) {
-
-
+    this.getUserData();
     this.events.subscribe('addRecCalc:created',(data) => {
       console.log("ENTERED!");
       console.log("Received 0 " + data);
@@ -41,7 +41,7 @@ export class AllTransactionPage {
     });
     
 
-    this.getUserData();
+   
   }
   itemsname: string[] = [];
 
@@ -66,14 +66,15 @@ export class AllTransactionPage {
   lastdigit=0;
 
 	ngOnInit() {
+   
   }
+
   async delay(ms: number) {
     await new Promise(resolve => setTimeout(()=>resolve(), ms)).then(()=>console.log("fired"));
   }
-
   
-  userdata: any = {business_address: "",
-
+  userdata: any = 
+  {business_address: "",
   business_name: "",
   cash_balance: "",
   currency: "",
@@ -85,8 +86,8 @@ export class AllTransactionPage {
   businesstype: "",
   taxrate: 0.0,
   discount: 0.0,
- 
-}
+};
+
 async getUserData(){
     console.log(firebase.auth().currentUser.uid);
     var ud;
@@ -103,6 +104,10 @@ async getUserData(){
       console.log("Error getting documents: ", error);
   });
   this.userdata=ud;
+  if(this.userdata==null){
+    console.log("WENISENIWS");// Go to user data page - enter user data
+  }
+  
   console.log(this.userdata);
     
  }
@@ -161,7 +166,7 @@ async getUserData(){
 	btnClicked(btn) {
 
     try {
-
+     
       console.log('CalculatorPage::btnClicked = ' + btn);
 		if (btn == "C") {
       this.result = "";
@@ -207,6 +212,7 @@ async getUserData(){
       console.log(this.itemsqty)
       this.result = eval(this.result)+"";
       this.lastsum=0;
+      
       //this.lastsum=parseInt(this.result);
       for(let i = 0; i < this.itemsprice.length; i++){
         this.lastsum  = this.lastsum + (parseInt(this.itemsprice[i])*this.itemsqty[i]);

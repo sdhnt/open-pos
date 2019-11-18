@@ -136,7 +136,8 @@ module.exports.metadata =
     "cordova-plugin-firebasex": "6.1.0",
     "cordova-plugin-camera": "4.1.0",
     "cordova-plugin-datepicker": "0.9.3",
-    "cordova-plugin-facebook4": "1.7.4"
+    "cordova-plugin-facebook4": "1.7.4",
+    "cordova-android-support-gradle-release": "3.0.1"
 }
 // BOTTOM OF METADATA
 });

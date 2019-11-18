@@ -108,15 +108,14 @@
 
                 <ion-grid>
           
-                  <ion-row> <ion-col style="text-align: center; padding-top: 5px;">{{userdata.business_name}} </ion-col> </ion-row>
+                  <ion-row> <ion-col style="text-align: center; padding-top: 5px;">{{userdata? userdata.business_name: null}} </ion-col> </ion-row>
           
                   <ion-row>
-                      <ion-col col-12 style="color: grey; font-size: 10px; text-align: center"> {{userdata.business_address}}</ion-col>
+                      <ion-col col-12 style="color: grey; font-size: 10px; text-align: center"> {{userdata?userdata.business_address:null}}</ion-col>
                   </ion-row>
                   <ion-row>
-                      <ion-col col-12 style="color: grey; font-size: 10px; text-align: center"> Ph: {{userdata.ph_no}}</ion-col>
-                  </ion-row>
-          
+                      <ion-col col-12 style="color: grey; font-size: 10px; text-align: center"> Ph: {{userdata?userdata.ph_no:null}}</ion-col>
+                  </ion-row>          
                   <ion-row style="padding-top: 5px;">
                       <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><b>Sl</b></ion-col>
                       <ion-col col-4 style="color: black; font-size: 10px; text-align: center"><b>ပစ္စည်း</b></ion-col>

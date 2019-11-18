@@ -52,14 +52,14 @@ export class LoginPage {
           navCtrl.setRoot(TransactionHomePage);
         } else {
           // No user is signed in.
-          console.log("no-wenis")
+          console.log("no-user is signed in")
         }
       });
     }
   
 
       ngAfterViewInit(){
-        console.log("yolo");
+       
       }
 
 facebookLogin(): Promise<any> {

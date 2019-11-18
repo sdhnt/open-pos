@@ -141,5 +141,13 @@
       "APP_ID": "1521978867943856",
       "APP_NAME": "Open-Fintech"
     }
+  },
+  "cordova-android-support-gradle-release": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-android-support-gradle-release@^3.0.1"
+    },
+    "is_top_level": true,
+    "variables": {}
   }
 }

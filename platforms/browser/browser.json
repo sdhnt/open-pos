@@ -62,51 +62,54 @@
       "PACKAGE_NAME": "io.cordova.hellocordova"
     },
     "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.ferdousulhaque.barcodempos"
+      "PACKAGE_NAME": "com.openfintech.pos"
     },
     "cordova-plugin-statusbar": {
-      "PACKAGE_NAME": "com.ferdousulhaque.barcodempos"
+      "PACKAGE_NAME": "com.openfintech.pos"
     },
     "cordova-plugin-device": {
-      "PACKAGE_NAME": "com.ferdousulhaque.barcodempos"
+      "PACKAGE_NAME": "com.openfintech.pos"
     },
     "cordova-plugin-splashscreen": {
-      "PACKAGE_NAME": "com.ferdousulhaque.barcodempos"
+      "PACKAGE_NAME": "com.openfintech.pos"
     },
     "cordova-plugin-ionic-webview": {
-      "PACKAGE_NAME": "com.ferdousulhaque.barcodempos"
+      "PACKAGE_NAME": "com.openfintech.pos"
     },
     "cordova-plugin-ionic-keyboard": {
-      "PACKAGE_NAME": "com.ferdousulhaque.barcodempos"
+      "PACKAGE_NAME": "com.openfintech.pos"
     },
     "cordova-sqlite-storage": {
-      "PACKAGE_NAME": "com.ferdousulhaque.barcodempos"
+      "PACKAGE_NAME": "com.openfintech.pos"
     },
     "cordova-plugin-x-toast": {
-      "PACKAGE_NAME": "com.ferdousulhaque.barcodempos"
+      "PACKAGE_NAME": "com.openfintech.pos"
     },
     "cordova-plugin-androidx": {
-      "PACKAGE_NAME": "com.ferdousulhaque.barcodempos"
+      "PACKAGE_NAME": "com.openfintech.pos"
     },
     "cordova-plugin-androidx-adapter": {
-      "PACKAGE_NAME": "com.ferdousulhaque.barcodempos"
+      "PACKAGE_NAME": "com.openfintech.pos"
     },
     "cordova-plugin-firebasex": {
       "FIREBASE_ANALYTICS_COLLECTION_ENABLED": "true",
       "FIREBASE_PERFORMANCE_COLLECTION_ENABLED": "true",
       "FIREBASE_CRASHLYTICS_COLLECTION_ENABLED": "true",
-      "PACKAGE_NAME": "com.ferdousulhaque.barcodempos"
+      "PACKAGE_NAME": "com.openfintech.pos"
     },
     "cordova-plugin-camera": {
-      "PACKAGE_NAME": "com.ferdousulhaque.barcodempos"
+      "PACKAGE_NAME": "com.openfintech.pos"
     },
     "cordova-plugin-datepicker": {
-      "PACKAGE_NAME": "com.ferdousulhaque.barcodempos"
+      "PACKAGE_NAME": "com.openfintech.pos"
     },
     "cordova-plugin-facebook4": {
       "APP_ID": "1521978867943856",
       "APP_NAME": "Open-Fintech",
-      "PACKAGE_NAME": "com.ferdousulhaque.barcodempos"
+      "PACKAGE_NAME": "com.openfintech.pos"
+    },
+    "cordova-android-support-gradle-release": {
+      "PACKAGE_NAME": "com.openfintech.pos"
     }
   },
   "dependent_plugins": {},
@@ -245,6 +248,7 @@
     "cordova-plugin-firebasex": "6.1.0",
     "cordova-plugin-camera": "4.1.0",
     "cordova-plugin-datepicker": "0.9.3",
-    "cordova-plugin-facebook4": "1.7.4"
+    "cordova-plugin-facebook4": "1.7.4",
+    "cordova-android-support-gradle-release": "3.0.1"
   }
 }

@@ -98,8 +98,9 @@ ext {
 }
 
 // PLUGIN GRADLE EXTENSIONS START
-apply from: "../cordova-plugin-firebasex/barcodempos-build.gradle"
-apply from: "../phonegap-plugin-barcodescanner/barcodempos-barcodescanner.gradle"
+apply from: "../phonegap-plugin-barcodescanner/pos-barcodescanner.gradle"
+apply from: "../cordova-plugin-firebasex/pos-build.gradle"
+apply from: "../cordova-android-support-gradle-release/pos-cordova-android-support-gradle-release.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 def hasBuildExtras1 = file('build-extras.gradle').exists()
@@ -296,7 +297,7 @@ dependencies {
     // SUB-PROJECT DEPENDENCIES START
     implementation(project(path: ":CordovaLib"))
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
-    implementation "com.facebook.android:facebook-android-sdk:4.14.+"
+    implementation "androidx.annotation:annotation:1.0.0"
     implementation "com.google.android.gms:play-services-tagmanager:17.0.0"
     implementation "com.google.firebase:firebase-core:17.0.0"
     implementation "com.google.firebase:firebase-messaging:19.0.0"
@@ -306,7 +307,7 @@ dependencies {
     implementation "com.crashlytics.sdk.android:crashlytics:2.10.1"
     implementation "com.crashlytics.sdk.android:crashlytics-ndk:2.1.0"
     implementation "me.leolin:ShortcutBadger:1.1.22"
-    implementation "androidx.annotation:annotation:1.0.0"
+    implementation "com.facebook.android:facebook-android-sdk:4.14.+"
     // SUB-PROJECT DEPENDENCIES END
 }
 
