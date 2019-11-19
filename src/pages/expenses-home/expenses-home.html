@@ -82,12 +82,16 @@
       <ion-input type="number" [(ngModel)]='prodqty'></ion-input>
     </ion-item>
     <ion-item>
+      <ion-label>Cost per item</ion-label>
+      <ion-input type="number" [(ngModel)]='prodcostitem' (ionChange)="updatebalance('prodcostitem')"></ion-input>
+    </ion-item>
+    <ion-item>
         <ion-label>Total Expenditure</ion-label>
-        <ion-input type="number" [(ngModel)]='prodcost'></ion-input>
+        <ion-input type="number" [(ngModel)]='prodcost' (ionChange)="updatebalance('prodcost')"></ion-input>
       </ion-item>
       <ion-item>
       <ion-label>Batch Expiry Date:</ion-label>
-      <ion-datetime displayFormat="DD/MMM/YYYY" [(ngModel)]='expirydate'></ion-datetime>
+      <ion-datetime displayFormat="DD/MMM/YYYY" [(ngModel)]='expirydate' [min]="minDate" [max]="maxDate"></ion-datetime>
       </ion-item>
     </ion-list>
   <button ion-button block color="primary" (click)="addinventoryexpense()"  color="dark">ထုတ်ကုန်ထည့်ပါ</button>

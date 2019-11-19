@@ -4,6 +4,7 @@ import firebase from 'firebase';
 import { DashboardPage } from '../dashboard/dashboard';
 import { AllTransactionPage } from '../all-transaction/all-transaction';
 import { TransactionHomePage } from '../transaction-home/transaction-home';
+import { StorageProvider } from '../../providers/storage/storage';
 
 
 
@@ -35,7 +36,9 @@ export class SignUpPage {
   discount: number;
   taxrate: number;
   nextbtn=0;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+     public toastCtrl: ToastController, public sp: StorageProvider,
+      public alertCtrl: AlertController) {
     this.nextbtn=0;
   }
 
@@ -92,6 +95,8 @@ export class SignUpPage {
 
       text: "OK",
       handler: () => {
+        this.sp.clearMem();
+        this.sp.setMem();        
         this.navCtrl.setRoot(TransactionHomePage)//navigate to feeds page
       }//end handler
       }]//end button

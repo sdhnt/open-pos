@@ -81,12 +81,6 @@ firebase.initializeApp(config);
 @NgModule({
   declarations: [
     MyApp,
-    
-    //CalculatorPage,
-  
-    //CoachBusinesstipsPage,
-    
- 
 
     DashboardPage,
     ListPage,

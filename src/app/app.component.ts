@@ -10,7 +10,6 @@ import * as firebase from 'firebase';
 import { TransactionHomePage } from '../pages/transaction-home/transaction-home';
 import { SummaryHomePage } from '../pages/summary-home/summary-home';
 import { CoachHomePage } from '../pages/coach-home/coach-home';
-import { ContactUsPageModule } from '../pages/contact-us/contact-us.module';
 import { ContactUsPage } from '../pages/contact-us/contact-us';
 import { StorageProvider } from '../providers/storage/storage';
 import { ExpensesHomePage } from '../pages/expenses-home/expenses-home';

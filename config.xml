@@ -4,6 +4,7 @@
     <description>Simple Barcode Based POS App.</description>
     <author email="sdhnt@connect.hku.hk" href="sdhntgupta.com">Sidhant Gupta</author>
     <content src="index.html" />
+    <allow-navigation href="*" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />

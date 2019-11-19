@@ -31,6 +31,7 @@ export class LoginPage {
       //this.loginWithFB();
       //Get email&passfromstorageandcalllogin
       //onlogin-saveemailandpassto"userdat"&tologinarray in memory
+    
       
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
@@ -58,9 +59,9 @@ export class LoginPage {
     }
   
 
-      ngAfterViewInit(){
+    ngAfterViewInit(){
        
-      }
+    }
 
 facebookLogin(): Promise<any> {
   return this.facebook.login(['email'])
@@ -142,9 +143,9 @@ loginWithFB(){
   
   login(){
 
-      //firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+      
       firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(()=>{
-        console.log("yeahh")
+      
         firebase.auth().signInWithEmailAndPassword(this.email, this.password)
         .then( (user) => {
         

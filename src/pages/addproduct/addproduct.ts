@@ -94,7 +94,7 @@ export class AddProductPage {
       correctOrientation: true,
       targetHeight: 300,
       targetWidth: 300,
-      allowEdit: true,
+      allowEdit: false,
     }
     this.camera.getPicture(options).then((base64Image) => {
       this.image = "data:image/png;base64," + base64Image;

@@ -19,6 +19,7 @@
           <button ion-button (click)="launchCamera()">Take Picture</button>
           <img *ngIf="image!=null" [src]="image" style="width: 100px;">  
       </ion-item>
+      <button ion-button block color="primary" (click)="scanQR()">Scan Code ကို</button>
     
     <ion-item>
       <ion-label>ထုတ်ကုန်ကုဒ်</ion-label>
@@ -52,6 +53,5 @@
   
   </ion-list>
   <button ion-button block color="primary" (click)="updateProduct()">နောက်ဆုံးသတင်း</button>
-  <button ion-button block color="primary" (click)="scanQR()">Scan Code ကို</button>
   <button ion-button block color="danger" (click)="deleteproduct(product)">ဖျက်ပါ</button>
 </ion-content>

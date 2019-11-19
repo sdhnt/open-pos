@@ -24,7 +24,10 @@ export class ExpensesHomePage {
 
   prodqty;
   prodcost;
+  prodcostitem;
   prodName="";
+  minDate=new Date().toISOString();
+  maxDate =  new Date(new Date().setFullYear(new Date().getFullYear() + 5)).toISOString();
   expirydate=new Date();
   currtime = new Date();
   listProducts: any=[];
@@ -41,6 +44,15 @@ export class ExpensesHomePage {
     console.log(this.currtime);
     this.getProducts();
     this.getCategories();
+  }
+
+  updatebalance(edited: string){
+    if(this.prodcostitem!=null && this.prodqty!=null && edited=="prodcostitem"){
+      this.prodcost=this.prodqty*this.prodcostitem;
+    }
+    else if(this.prodcost!=null && this.prodqty!=null && edited=="prodcost"){
+      this.prodcostitem=this.prodcost/this.prodqty;
+    }
   }
 
   getCategories(){

@@ -26111,6 +26111,14 @@ page-expenses-home ion-title {
   text-align: center;
 }
 
+page-income-transaction ion-col ion-input {
+  border: solid 1px black;
+}
+
+page-income-transaction ion-row ion-textarea {
+  border: solid 1px black;
+}
+
 page-login ion-content .scroll-content {
   background-image: -webkit-gradient(linear, left top, left bottom, from(#301924), to(#000000));
   background-image: linear-gradient(#301924, #000000);

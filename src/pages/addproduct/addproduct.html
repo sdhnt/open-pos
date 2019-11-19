@@ -16,10 +16,10 @@
   <ion-list inset>
       <!-- <button ion-button full color="dark" (click)="getProdPic()">Upload Picture</button> -->
       <ion-item>
-          <button ion-button (click)="launchCamera()">Take Picture</button>
+          <button ion-button block color="primary" (click)="launchCamera()">Take Picture</button>
           <img *ngIf="image!=null" [src]="image" style="width: 100px;">  
       </ion-item>
-
+      <button ion-button block color="primary" (click)="scanQR()"  color="dark">ကုဒ် scan ကို</button>
     <ion-item>
       <ion-label>ထုတ်ကုန်ကုဒ်:</ion-label>
       <ion-input type="text" [(ngModel)]='prodCode'></ion-input>
@@ -81,7 +81,7 @@
   
   </ion-list>
   <button ion-button block color="primary" (click)="addproduct()"  color="dark">ထုတ်ကုန်ထည့်ပါ</button>
-  <button ion-button block color="primary" (click)="scanQR()"  color="dark">ကုဒ် scan ကို</button>
+
 
  
 </ion-content>
