@@ -24,8 +24,8 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, 
-    public sp: StorageProvider, public toastCtrl: ToastController) {
+  constructor(public platform: Platform, public statusBar: StatusBar, 
+    public splashScreen: SplashScreen, public toastCtrl: ToastController) {
 
     this.initializeApp();
     this.pages = [
@@ -41,9 +41,7 @@ export class MyApp {
  
   
   logout(){
-
     //this.sp.backupStorageLogout().then();
-
     firebase.auth().signOut().then(()=>{
       this.toastCtrl.create({
         message: "ဆိုင်းအောက်",
@@ -53,7 +51,6 @@ export class MyApp {
   });
 }
 ngAfterViewInit(){
-  console.log("yolo1");
   //this.nav.setRoot(LoginPage);
 }
   
@@ -61,19 +58,6 @@ ngAfterViewInit(){
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-
-      firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-          console.log(user)// User is signed in.
-          
-          
-          this.nav.setRoot(TransactionHomePage);
-        } else {
-          // No user is signed in.
-          //this.nav.setRoot(LoginPage);
-        }
-      });
-    
     });
   }
 

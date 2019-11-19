@@ -27,12 +27,6 @@ export class LoginPage {
     public navParams: NavParams, public toastCtrl: ToastController, public facebook: Facebook, 
     public sp: StorageProvider, public alertCtrl: AlertController,) {
 
-      //IF email+password or FB exists then login auto
-      //this.loginWithFB();
-      //Get email&passfromstorageandcalllogin
-      //onlogin-saveemailandpassto"userdat"&tologinarray in memory
-    
-      
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
           console.log(user)// User is signed in.
@@ -56,12 +50,9 @@ export class LoginPage {
           console.log("no-user is signed in")
         }
       });
+    
     }
   
-
-    ngAfterViewInit(){
-       
-    }
 
 facebookLogin(): Promise<any> {
   return this.facebook.login(['email'])
@@ -113,33 +104,11 @@ loginWithFB(){
     })
   .catch(e => console.log('Error logging into Facebook', e));
 
-      // this.facebook.login(['email'])
-      // .then((res: FacebookLoginResponse) => {
-      //   console.log('Logged into Facebook!', res);
-      //   firebase.auth().signInWithCredential(
-      //     firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken))
-      //     .then( success => {
-      //       console.log("Firebase success" , success);
-      //       resolve(true);
-      //     })
-      //     .catch(err => {
-      //       console.log("Firebase error", err);
-      //       reject(false);
-      //     });
-      // })
-      // .catch(err => {
-      //   console.log('Error logging into Facebook',err);
-      //   reject(false);
-      // });
-  
-
-
 }
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
+    
   }
-
-
   
   login(){
 

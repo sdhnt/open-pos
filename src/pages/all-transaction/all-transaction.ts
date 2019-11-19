@@ -105,7 +105,7 @@ async getUserData(){
   });
   this.userdata=ud;
   if(this.userdata==null){
-    console.log("WENISENIWS");// Go to user data page - enter user data
+    console.log("No User data - push to sign up w facebook");// Go to user data page - enter user data
   }
   
   console.log(this.userdata);
@@ -136,8 +136,7 @@ async getUserData(){
           'qty': this.itemsqty[index],
           }) 
       }
-
-          
+         
     });
 
 
@@ -178,6 +177,9 @@ async getUserData(){
        //IF LAST = character then remove that character 
 
       var answ=this.result.split('+');
+      if(this.result.includes('-')){
+        answ=this.result.split('+').join('-').split('-');
+      }
       var temp;
 
       answ.forEach((element, index) => {
@@ -189,6 +191,13 @@ async getUserData(){
           console.log(element.substring(element.indexOf("*")+1))
           this.itemsqty.push(temp);
 
+        }
+        else if(element.includes("/")){
+          answ[index]=element.substring(0, element.indexOf("/"))
+          this.itemsprice.push(answ[index])
+          temp=Math.round( 1/(parseInt((element.substring(element.indexOf("/")+1)))) * 100 ) / 100;
+          console.log(temp)
+          this.itemsqty.push(temp);
         }
         else
         {
@@ -233,11 +242,6 @@ async getUserData(){
         this.result=this.result.substring(0,0);
       }
 
-      
-
-
-
-      
       console.log("Lastchar: "+this.lastchar+" Result: "+this.result)
 
       
