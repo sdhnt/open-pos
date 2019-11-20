@@ -58,29 +58,18 @@ export class AddProductPage {
   uid;
   currstock: number;
 
-  async getUserData() {
-    console.log(firebase.auth().currentUser.uid);
-    var ud;
-    var uu;
-    var user;
-    const snapshot = await firebase.firestore().collection('users').where("owner", "==", firebase.auth().currentUser.uid).get()
-      .then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
-          uu = doc.id;
-          ud = doc.data();
-          user=doc;
-          
-          //this.userdata=doc.data();       
-        });
+
+  async getUserData(){
+    this.sp.storageReady().then(() => {
+      this.sp.getUserDat().then((val) => {
+       this.userdata=JSON.parse(val);
+       this.uid=this.userdata.uid;
+       console.log(this.userdata)
+      }).catch(err => {
+        alert("Error: "+ err);
       })
-      .catch(function (error) {
-        console.log("Error getting documents: ", error);
-      });
-    this.userdata = ud;
-    this.uid = uu;
-    //this.sp.addUserDat(user);
-    console.log(this.userdata);
-  }
+    })
+   }
 
   newprodCat: any = "";
   listCat: any;

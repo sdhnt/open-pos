@@ -38,24 +38,28 @@ export class StorageProvider {
   uid;
   
 
-  saveinMem(){
-    //console.log("Hey"+this.tempcat)
-    this.storage.get('categories').then((valNullcat) => {
-      this.storage.get('products').then((valNullprod) => {
-        this.storage.get('transactions').then((valNulltransac) => {
-          this.storage.get('user').then((valNulluser)=>{   
-            // console.log("b4set");
-            // console.log(JSON.stringify(this.tempcat));
-            // console.log(JSON.stringify(this.tempprod));
-            // console.log(JSON.stringify(this.temptransac))  ;
-            this.storage.set('categories', "[]").then(() => {this.storage.set('categories', JSON.stringify(this.tempcat));})
-            this.storage.set('products', "[]").then(() => {this.storage.set('products', JSON.stringify(this.tempprod));})
-            this.storage.set('transactions', "[]").then(() => {this.storage.set('transactions', JSON.stringify(this.temptransac));})
-            this.storage.set('user','[]').then(() => {this.storage.set('user', JSON.stringify(this.tempuser));})
-          })
-          })
-         })
-       })
+  async saveinMem(){
+    return new Promise((resolve, reject)=>{
+ //console.log("Hey"+this.tempcat)
+ this.storage.get('categories').then((valNullcat) => {
+  this.storage.get('products').then((valNullprod) => {
+    this.storage.get('transactions').then((valNulltransac) => {
+      this.storage.get('user').then((valNulluser)=>{   
+        // console.log("b4set");
+        // console.log(JSON.stringify(this.tempcat));
+        // console.log(JSON.stringify(this.tempprod));
+        // console.log(JSON.stringify(this.temptransac))  ;
+        this.storage.set('categories', "[]").then(() => {this.storage.set('categories', JSON.stringify(this.tempcat));})
+        this.storage.set('products', "[]").then(() => {this.storage.set('products', JSON.stringify(this.tempprod));})
+        this.storage.set('transactions', "[]").then(() => {this.storage.set('transactions', JSON.stringify(this.temptransac));})
+        this.storage.set('user','[]').then(() => {this.storage.set('user', JSON.stringify(this.tempuser));})
+        resolve();
+      })
+      })
+     })
+   })
+    })
+   
   }
 
   async setMem(){
@@ -106,10 +110,11 @@ export class StorageProvider {
             // console.log(JSON.stringify(tempcat));
             // console.log(JSON.stringify(tempprod));
             // console.log(JSON.stringify(temptransac))  ;
-            this.saveinMem();
+            await this.saveinMem();
+            return await (this.uid!=null)
       })
 
-    return await (this.uid!=null)
+    
   }
 
   backupStorage() {

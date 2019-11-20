@@ -17,6 +17,8 @@ import { StorageProvider } from '../../providers/storage/storage';
   templateUrl: 'all-transaction.html',
 })
 export class AllTransactionPage {
+
+  
   
 
   constructor(public navCtrl: NavController, 

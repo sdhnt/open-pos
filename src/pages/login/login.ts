@@ -42,12 +42,16 @@ export class LoginPage {
           }).present();
     
           sp.clearMem();
-          sp.setMem(); 
-
-          zone.run(() => {
+          sp.setMem().then(()=>{
+                   zone.run(() => {
             navCtrl.setRoot(TransactionHomePage);
         });
           
+          }
+            
+          ); 
+
+   
           
         } else {
           // No user is signed in.
@@ -113,7 +117,7 @@ loginWithFB(){
           }
           ],
       }).present();
-this.loginProcedure();
+      this.loginProcedure();
     
     
       }).catch( (err) => {console.log(err)
@@ -149,14 +153,13 @@ this.loginProcedure();
     }
 
     loginProcedure(){
-
-      
       this.sp.clearMem();
-      this.sp.setMem(); 
-      this.zone.run(() => {
-      this.navCtrl.setRoot(TransactionHomePage);});
-      
+        this.zone.run(() => {
 
+          this.sp.setMem().then(()=>{ this.navCtrl.setRoot(TransactionHomePage); })
+        
+        });
+  
     }
   
 

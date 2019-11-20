@@ -76,27 +76,16 @@ export class SingleProductPage {
   uid;
 
   async getUserData(){
-    console.log(firebase.auth().currentUser.uid);
-    var ud;
-    var uu;
-    const snapshot = await firebase.firestore().collection('users').where("owner","==",firebase.auth().currentUser.uid).get()
-    .then(function(querySnapshot) {
-      querySnapshot.forEach(function(doc) {
-          // doc.data() is never undefined for query doc snapshots
-          //console.log(doc.id, " => ", doc.data());
-          uu=doc.id;
-          ud=doc.data();
-          //this.userdata=doc.data();       
-      });
-  })
-  .catch(function(error) {
-      console.log("Error getting documents: ", error);
-  });
-  this.userdata=ud;
-  this.uid=uu;
-  console.log(this.userdata);
-    
- }
+    this.sp.storageReady().then(() => {
+      this.sp.getUserDat().then((val) => {
+       this.userdata=JSON.parse(val);
+       console.log(this.userdata)
+       this.uid=this.userdata.uid;
+      }).catch(err => {
+        alert("Error: "+ err);
+      })
+    })
+   }
   image: any="";
   launchCamera(){
     let options: CameraOptions = {

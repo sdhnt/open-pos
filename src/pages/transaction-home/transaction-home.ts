@@ -9,7 +9,6 @@ import { ExpenseTransactionPage } from '../expense-transaction/expense-transacti
 import { CalculatorPage } from '../calculator/calculator';
 import { TransactionProductPage } from '../transaction-product/transaction-product';
 import { StorageProvider } from '../../providers/storage/storage';
-
 /**
  * Generated class for the TransactionHomePage page.
  *
@@ -33,23 +32,23 @@ export class TransactionHomePage {
   
   //Calculator = CalculatorPage;
 
-  //@ViewChild('transactionTabs') tabRef: Tabs;
-
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     public toastCtrl: ToastController,public sp: StorageProvider,
     public events: Events) {
-    this.getUserData();
+    //this.getUserData();
 
-    this.events.subscribe('cbUpdate:created',(data) => {
-      this.getUserData();
+    this.events.subscribe('cbUpdate:created',async (data) => {
+      await this.getUserData();
     });
     
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad TransactionHomePage');
-    this.getUserData();
-  }
+  private firstLoaded: boolean = false;
+async ionViewDidEnter() {
+  console.log('ionViewDidLoad TransactionHomePage');
+  
+  await this.getUserData();
+}
 
   userdata: any = {business_address: "",
 
@@ -68,16 +67,15 @@ export class TransactionHomePage {
 }
 
 async getUserData(){
-  this.sp.storageReady().then(() => {
-    this.sp.getUserDat().then((val) => {
-
-      if(val ==null){
-        this.navCtrl.setRoot(this.navCtrl.getActive().component);
-      }
-     this.userdata=JSON.parse(val);
-     console.log(this.userdata)
-    }).catch(err => {
-      alert("Error: "+ err);
+  return new Promise((resolve, reject)=>{
+    this.sp.storageReady().then(() => {
+      this.sp.getUserDat().then((val) => {
+       this.userdata=JSON.parse(val);
+       console.log(this.userdata);
+       resolve();
+      }).catch(err => {
+        alert("Error: "+ err);
+      })
     })
   })
  }
