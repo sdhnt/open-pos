@@ -134,6 +134,7 @@ export class ExpensesHomePage {
           "code": this.product.code,
           "name": this.product.name,
           "price": this.product.price,
+          "wholesale_price": this.product.wholesale_price,
           "cost": (((parseInt(this.product.cost)*parseInt(this.product.stock_qty))+(parseInt(this.prodcost)))/(parseInt(this.prodqty)+parseInt(this.product.stock_qty)))      ,
           "cat": this.product.cat,
           "url": this.product.url,

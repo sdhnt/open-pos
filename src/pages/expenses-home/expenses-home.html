@@ -58,8 +58,9 @@
                 </ion-col>
                 </ion-row>
               <ion-row>
-                <ion-col col-6 style="color: grey; font-size: 10px;"> စျေးနှုန်း {{product.price}} MMK </ion-col>
-                <ion-col col-6 style="color: grey; font-size: 10px; text-align: end;"> အမျိုးအစား: {{product.cat}} </ion-col>
+                <ion-col col-4 style="color: grey; font-size: 10px;"> လက်လီဈေးနှုန်း {{product.price}} MMK </ion-col>
+                <ion-col col-4 style="color: grey; font-size: 10px; text-align: center;"> လက္ကားစျေးနှုန်း {{product.wholesale_price}} MMK </ion-col>
+                <ion-col col-4 style="color: grey; font-size: 10px; text-align: end;"> အမျိုးအစား: {{product.cat}} </ion-col>
               </ion-row>
         </ion-col>
       </ion-row>
@@ -82,7 +83,7 @@
       <ion-input type="number" [(ngModel)]='prodqty' (ionChange)="updatebalance('prodqty')"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label>Cost per item</ion-label>
+      <ion-label>Purchase Price per Item</ion-label>
       <ion-input type="number" [(ngModel)]='prodcostitem' (ionChange)="updatebalance('prodcostitem')"></ion-input>
     </ion-item>
     <ion-item>

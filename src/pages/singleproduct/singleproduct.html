@@ -8,50 +8,56 @@
 </ion-header> -->
 
 <ion-content padding>
-  <ion-list inset>
+  <form [formGroup]="formProduct">
+    <ion-list inset>
 
-    <!-- <ion-item>
-      <ion-label>Photo</ion-label>  
-          <ion-input type="number" [(ngModel)]='product.price'></ion-input>
-      </ion-item> -->
- 
+      <!-- <ion-item>
+        <ion-label>Photo</ion-label>
+            <ion-input type="number" [(ngModel)]='product.price'></ion-input>
+        </ion-item> -->
+
       <ion-item>
-          <button ion-button (click)="launchCamera()">Take Picture</button>
-          <img *ngIf="image!=null" [src]="image" style="width: 100px;">  
+        <button ion-button (click)="launchCamera()">Take Picture</button>
+        <img *ngIf="image!=null" [src]="image" style="width: 100px;">
       </ion-item>
       <button ion-button block color="primary" (click)="scanQR()">Scan Code ကို</button>
-    
-    <ion-item>
-      <ion-label>ထုတ်ကုန်ကုဒ်</ion-label>
-      <ion-input type="text" [(ngModel)]='product.code'></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>နာမည်</ion-label>
-      <ion-input type="text" [(ngModel)]='product.name'></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>စျေးနှုန်း</ion-label>
-      <ion-input type="number" [(ngModel)]='product.price'></ion-input>
-    </ion-item>
-    <ion-item>
-        <ion-label>ကုန်ကျစရိတ်</ion-label>
-        <ion-input type="number" [(ngModel)]='product.cost'></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>QTY</ion-label>
-      <ion-input type="number" [(ngModel)]='product.stock_qty'></ion-input>
-  </ion-item>
-      <ion-item>
-          <ion-label>အမျိုးအစားရွေးပါ</ion-label>
-          <ion-select multiple="false" [(ngModel)]='product.cat'>
-              <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>    
-          </ion-select>
-      </ion-item>
-    
-    
 
-  
-  </ion-list>
+      <ion-item>
+        <ion-label>ထုတ်ကုန်ကုဒ်</ion-label>
+        <ion-input type="text" formControlName="prodCode" [(ngModel)]='product.code'></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>နာမည်</ion-label>
+        <ion-input type="text" formControlName="prodName" [(ngModel)]='product.name'></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>လက်လီဈေးနှုန်း</ion-label>
+        <ion-input type="number" formControlName="prodPrice" [(ngModel)]='product.price'></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>လက္ကားစျေးနှုန်း</ion-label>
+        <ion-input type="number" formControlName="prodWholesalePrice" [(ngModel)]='product.wholesale_price'></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>ဝယ်ယူစျေးနှုန်း</ion-label>
+        <ion-input type="number" formControlName="prodCost" [(ngModel)]='product.cost'></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>QTY</ion-label>
+        <ion-input type="number" formControlName="currstock" [(ngModel)]='product.stock_qty'></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>အမျိုးအစားရွေးပါ</ion-label>
+        <ion-select multiple="false" formControlName="prodCat" [(ngModel)]='product.cat'>
+          <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+
+
+
+    </ion-list>
+  </form>
   <button ion-button block color="primary" (click)="updateProduct()">နောက်ဆုံးသတင်း</button>
   <button ion-button block color="danger" (click)="deleteproduct(product)">ဖျက်ပါ</button>
 </ion-content>
