@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule, NavController } from 'ionic-angular';
+import { ReactiveFormsModule } from "@angular/forms";
 
 import { MyApp } from './app.component';
 import { DashboardPage } from '../pages/dashboard/dashboard';
@@ -108,7 +109,7 @@ firebase.initializeApp(config);
     TransactionProductPageModule,
     ProductListPageModule,
     ExpensesHomePageModule,
-    
+    ReactiveFormsModule
 
   ],
   bootstrap: [IonicApp],

@@ -7,6 +7,7 @@ import { ToastController } from 'ionic-angular';
 import { ProductListPage } from '../product-list/product-list';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import firebase from 'firebase';
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 
 @Component({
   selector: 'page-single-product',
@@ -26,17 +27,29 @@ export class SingleProductPage {
   prodCat: any = "";
   listProduct: any;
 
+  formProduct: FormGroup;
+
   constructor(public navCtrl: NavController,
               public barcodeScanner: BarcodeScanner,
               public navParams: NavParams,
               public sp: StorageProvider,
               private toastCtrl: ToastController,
               public camera: Camera,
+              private formBuilder: FormBuilder,
               ) {
     this.product = this.navParams.get("data");
     this.prodCodeOld = this.product.code;
     this.image=this.product.url;
     this.getUserData();
+    this.formProduct = this.formBuilder.group({
+      prodCode: new FormControl('', Validators.required),
+      prodName: new FormControl('', Validators.required),
+      prodPrice: new FormControl(0, Validators.required),
+      prodWholesalePrice: new FormControl(0, Validators.required),
+      prodCost: new FormControl(0, Validators.required),
+      currstock: new FormControl(0, Validators.required),
+      prodCat: new FormControl('', Validators.required),
+    });
   }
 
   ionViewDidLoad() {
@@ -176,11 +189,14 @@ export class SingleProductPage {
   }
 
   updateProduct(){
-    if(this.newprodCat!=""){
-      this.addCategory();
-      this.product.cat=this.newprodCat;
-    }
-    
+    if (!this.formProduct.valid) {
+      console.log('invalid product with missing fields');
+    } else {
+      if(this.newprodCat!=""){
+        this.addCategory();
+        this.product.cat=this.newprodCat;
+      }
+
       const data = {
         "code": this.product.code,
         "name": this.product.name,
@@ -191,7 +207,7 @@ export class SingleProductPage {
         "url": this.product.url,
         "stock_qty":this.product.stock_qty,
       };
-  
+
       this.sp.updateProduct(data, this.prodCodeOld).then(()=>{
         this.sp.backupStorage();
         setTimeout(() => {
@@ -204,8 +220,7 @@ export class SingleProductPage {
         }, 1000)
         this.prodCode="";
       })
-  
-    
+    }
   }
   
   produrl:any="";

@@ -7,6 +7,7 @@ import { ToastController } from 'ionic-angular';
 import { ProductListPage } from '../product-list/product-list';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import firebase from 'firebase';
+import { FormGroup, FormBuilder,FormControl, Validators } from '@angular/forms';
 
 
 @Component({
@@ -23,6 +24,8 @@ export class AddProductPage {
   prodCat: any = "";
   listProduct: any;
 
+  formProduct: FormGroup;
+
   constructor(public navCtrl: NavController,
     public barcodeScanner: BarcodeScanner,
     public navParams: NavParams,
@@ -30,9 +33,19 @@ export class AddProductPage {
     public toastCtrl: ToastController,
     public events: Events,
     public camera: Camera,
+              private formBuilder: FormBuilder
   ) {
     this.prodCode = this.navParams.get("code");
     this.getUserData();
+    this.formProduct = this.formBuilder.group({
+      prodCode: new FormControl('', Validators.required),
+      prodName: new FormControl('', Validators.required),
+      prodPrice: new FormControl(0, Validators.required),
+      prodWholesalePrice: new FormControl(0, Validators.required),
+      prodCost: new FormControl(0, Validators.required),
+      currstock: new FormControl(0, Validators.required),
+      prodCat: new FormControl('', Validators.required),
+    });
 
   }
 
@@ -178,69 +191,21 @@ export class AddProductPage {
   produrl: any = "";
 
   addproduct() {
+    if (!this.formProduct.valid) {
+      console.log('invalid product with missing fields');
+    } else {
+      if (this.newprodCat != "") {
+        this.addCategory();
+        this.prodCat = this.newprodCat;
+      }
+      if (this.image == "") {
 
-    if (this.newprodCat != "") {
-      this.addCategory();
-      this.prodCat = this.newprodCat;
-    }
-    if (this.image == "") {
 
 
-
-      this.toastCtrl.create({
-        message: "ပစ္စည်းဖန်တီးလျက်ရှိသည်။ ကျေးဇူးပြုပြီးခဏစောင့်ပါ။",
-        duration: 2000,
-      });
-
-      const data = {
-        "code": this.prodCode,
-        "name": this.prodName,
-        "price": this.prodPrice,
-        "wholesale_price": this.prodWholesalePrice,
-        "cost": this.prodCost,
-        "cat": this.prodCat,
-        "url": this.produrl,
-        "stock_qty": this.currstock,
-        //"sub-group": (productcode, itemslist)
-      };
-
-      console.log(data);
-      this.temp = JSON.stringify(data);
-      this.sp.storageReady().then(() => {
-        this.sp.addProduct(data);
-        setTimeout(() => {
-          let toast = this.toastCtrl.create({
-            message: 'ပြီးပြီ',
-            duration: 3000
-          });
-          this.prodCode = "";
-          this.prodName = "";
-          this.prodPrice = 0;
-          this.prodWholesalePrice = 0;
-          this.prodCat = "";
-          this.prodCost = 0;
-          this.produrl = "";
-          this.currstock=0;
-          this.image = "";
-
-          this.sp.backupStorage();
-
-          //this.navCtrl.push(ProductListPage);
-          this.events.publish('prodAdd:created', 0);
-          (this.navCtrl.parent as Tabs).select(0);
-          toast.present();
-        }, 1000)
-      })
-
-    }
-    else {
-      this.temp = this.prodName;
-      this.toastCtrl.create({
-        message: "ပစ္စည်းဖန်တီးလျက်ရှိသည်။ ကျေးဇူးပြုပြီးခဏစောင့်ပါ။",
-        duration: 2000,
-      });
-      this.upload_new(this.prodName).then(() => {
-
+        this.toastCtrl.create({
+          message: "ပစ္စည်းဖန်တီးလျက်ရှိသည်။ ကျေးဇူးပြုပြီးခဏစောင့်ပါ။",
+          duration: 2000,
+        });
 
         const data = {
           "code": this.prodCode,
@@ -256,7 +221,6 @@ export class AddProductPage {
 
         console.log(data);
         this.temp = JSON.stringify(data);
-
         this.sp.storageReady().then(() => {
           this.sp.addProduct(data);
           setTimeout(() => {
@@ -271,6 +235,7 @@ export class AddProductPage {
             this.prodCat = "";
             this.prodCost = 0;
             this.produrl = "";
+            this.currstock=0;
             this.image = "";
 
             this.sp.backupStorage();
@@ -282,8 +247,58 @@ export class AddProductPage {
           }, 1000)
         })
 
-      });
-    }
+      }
+      else {
+        this.temp = this.prodName;
+        this.toastCtrl.create({
+          message: "ပစ္စည်းဖန်တီးလျက်ရှိသည်။ ကျေးဇူးပြုပြီးခဏစောင့်ပါ။",
+          duration: 2000,
+        });
+        this.upload_new(this.prodName).then(() => {
 
+
+          const data = {
+            "code": this.prodCode,
+            "name": this.prodName,
+            "price": this.prodPrice,
+            "wholesale_price": this.prodWholesalePrice,
+            "cost": this.prodCost,
+            "cat": this.prodCat,
+            "url": this.produrl,
+            "stock_qty": this.currstock,
+            //"sub-group": (productcode, itemslist)
+          };
+
+          console.log(data);
+          this.temp = JSON.stringify(data);
+
+          this.sp.storageReady().then(() => {
+            this.sp.addProduct(data);
+            setTimeout(() => {
+              let toast = this.toastCtrl.create({
+                message: 'ပြီးပြီ',
+                duration: 3000
+              });
+              this.prodCode = "";
+              this.prodName = "";
+              this.prodPrice = 0;
+              this.prodWholesalePrice = 0;
+              this.prodCat = "";
+              this.prodCost = 0;
+              this.produrl = "";
+              this.image = "";
+
+              this.sp.backupStorage();
+
+              //this.navCtrl.push(ProductListPage);
+              this.events.publish('prodAdd:created', 0);
+              (this.navCtrl.parent as Tabs).select(0);
+              toast.present();
+            }, 1000)
+          })
+
+        });
+      }
+    }
   }
 }
