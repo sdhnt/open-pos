@@ -3083,6 +3083,8 @@ var TransactionHomePage = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ContactUsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3092,6 +3094,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 /**
@@ -3104,17 +3107,29 @@ var ContactUsPage = /** @class */ (function () {
     function ContactUsPage(navCtrl, navParams) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.email = "";
+        this.phone = "";
+        this.getInfo();
     }
+    ContactUsPage.prototype.getInfo = function () {
+        var _this = this;
+        __WEBPACK_IMPORTED_MODULE_2_firebase___default.a.firestore().collection("contact-us").get()
+            .then(function (doc) {
+            _this.email = doc.docs[0].data().email;
+            _this.phone = doc.docs[0].data().phone;
+        });
+    };
     ContactUsPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad ContactUsPage');
     };
     ContactUsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-contact-us',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\contact-us\contact-us.html"*/'<!--\n\n  Generated template for the ContactUsPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n    <ion-navbar color="dark">\n\n      <button ion-button menuToggle>\n\n        <ion-icon name="menu"></ion-icon>\n\n      </button>\n\n      <ion-title>Contact Us</ion-title>\n\n    </ion-navbar>\n\n  </ion-header>\n\n\n\n<ion-content padding>\n\n<h1>OPEN လေ့ကျင့်ပေးသူနှင့်ဆက်သွယ်မည်</h1>\n\nဒီဆော့ဖ်ဝဲလ်အသုံးပြုနည်းနှင့်ပတ်သက်ပြီး မေးမြန်းလိုပါသလား။\n\nစီးပွားရေးဆိုင်ရာအချက်အလက်များအကြောင်း ဆွေးနွေးလိုပါသလား။\n\nOPEN လေ့ကျင့်ပေးသူနှင့်ဆက်သွယ်ပါ။\n\n‌‌မေးမြန်းစရာရှိပါက Whatsapp/ Messanger တို့မှစာတိုပေးပို့ပြီး မေးမြန်းနိုင်ပြီး ကျွန်တော်တို့မှမြန်နိုင်သမျှမြန်မြန် ဖြေကြားပေးပါမည်။\n\n<br><br>\n\n\n\n<ion-grid>\n\n\n\n  \n\n\n\n\n\n    <ion-row  style="background-color: #f0f0f0">\n\n        <ion-col col-12>\n\n\n\n            <button ion-button full style="text-align: center ; background-color: indigo; color: palevioletred;">\n\n              +65 8871648904\n\n            </button>\n\n        </ion-col>\n\n    </ion-row>\n\n    <ion-row>\n\n        <ion-col col-12>\n\n            <button ion-button full style="text-align: center ; background-color: indigo; color: palevioletred; text-transform:lowercase">\n\n              sdhnt@connect.hku.hk\n\n            </button>\n\n        </ion-col>\n\n\n\n      </ion-row>\n\n</ion-grid>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\contact-us\contact-us.html"*/,
+            selector: 'page-contact-us',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\contact-us\contact-us.html"*/'<ion-header>\n\n    <ion-navbar color="dark">\n\n      <button ion-button menuToggle>\n\n        <ion-icon name="menu"></ion-icon>\n\n      </button>\n\n      <ion-title>Contact Us</ion-title>\n\n    </ion-navbar>\n\n  </ion-header>\n\n\n\n<ion-content padding>\n\n<h1>OPEN လေ့ကျင့်ပေးသူနှင့်ဆက်သွယ်မည်</h1>\n\nဒီဆော့ဖ်ဝဲလ်အသုံးပြုနည်းနှင့်ပတ်သက်ပြီး မေးမြန်းလိုပါသလား။\n\nစီးပွားရေးဆိုင်ရာအချက်အလက်များအကြောင်း ဆွေးနွေးလိုပါသလား။\n\nOPEN လေ့ကျင့်ပေးသူနှင့်ဆက်သွယ်ပါ။\n\n‌‌မေးမြန်းစရာရှိပါက Whatsapp/ Messanger တို့မှစာတိုပေးပို့ပြီး မေးမြန်းနိုင်ပြီး ကျွန်တော်တို့မှမြန်နိုင်သမျှမြန်မြန် ဖြေကြားပေးပါမည်။\n\n<br><br>\n\n\n\n<ion-grid>\n\n\n\n  \n\n\n\n\n\n    <ion-row  style="background-color: #f0f0f0">\n\n        <ion-col col-12>\n\n\n\n            <button ion-button full style="text-align: center ; background-color: indigo; color: palevioletred;">\n\n              {{ phone }}\n\n            </button>\n\n        </ion-col>\n\n    </ion-row>\n\n    <ion-row>\n\n        <ion-col col-12>\n\n            <button ion-button full style="text-align: center ; background-color: indigo; color: palevioletred; text-transform:lowercase">\n\n              {{ email }}\n\n            </button>\n\n        </ion-col>\n\n\n\n      </ion-row>\n\n</ion-grid>\n\n</ion-content>'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\contact-us\contact-us.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]) === "function" && _b || Object])
     ], ContactUsPage);
     return ContactUsPage;
+    var _a, _b;
 }());
 
 //# sourceMappingURL=contact-us.js.map

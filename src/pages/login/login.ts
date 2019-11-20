@@ -101,9 +101,7 @@ loginWithFB(){
     
   }
   
-  login(){
-
-      
+  login(){      
       firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(()=>{
       
         firebase.auth().signInWithEmailAndPassword(this.email, this.password)
