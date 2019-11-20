@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, Tabs } from 'ionic-angular';
 import { IncomeTransactionPage } from '../income-transaction/income-transaction';
 import firebase from 'firebase';
+import { StorageProvider } from '../../providers/storage/storage';
 
 /**
  * Generated class for the AllTransactionPage page.
@@ -18,7 +19,10 @@ import firebase from 'firebase';
 export class AllTransactionPage {
   
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events) {
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams, public events: Events,
+    public sp: StorageProvider,
+    ) {
     this.getUserData();
     this.events.subscribe('addRecCalc:created',(data) => {
       console.log("ENTERED!");
@@ -89,27 +93,14 @@ export class AllTransactionPage {
 };
 
 async getUserData(){
-    console.log(firebase.auth().currentUser.uid);
-    var ud;
-    const snapshot = await firebase.firestore().collection('users').where("owner","==",firebase.auth().currentUser.uid).get()
-    .then(function(querySnapshot) {
-      querySnapshot.forEach(function(doc) {
-          // doc.data() is never undefined for query doc snapshots
-          //console.log(doc.id, " => ", doc.data());
-          ud=doc.data();
-          //this.userdata=doc.data();       
-      });
+  this.sp.storageReady().then(() => {
+    this.sp.getUserDat().then((val) => {
+     this.userdata=JSON.parse(val);
+     console.log(this.userdata)
+    }).catch(err => {
+      alert("Error: "+ err);
+    })
   })
-  .catch(function(error) {
-      console.log("Error getting documents: ", error);
-  });
-  this.userdata=ud;
-  if(this.userdata==null){
-    console.log("No User data - push to sign up w facebook");// Go to user data page - enter user data
-  }
-  
-  console.log(this.userdata);
-    
  }
 
   createRec(){

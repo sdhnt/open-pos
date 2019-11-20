@@ -172,8 +172,6 @@ export class ExpensesHomePage {
       });
 
     //REFLECT CHANGE ON CASH BALANCE HERE & Reflect change in inventory here as well 
-    
-
   }
 
   

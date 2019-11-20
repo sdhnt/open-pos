@@ -29,7 +29,7 @@ export class LoginPage {
 
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-          console.log(user)// User is signed in.
+          //console.log(user)// User is signed in.
           alertCtrl.create({
   
             subTitle:"ကြိုဆိုပါတယ် " + user.displayName,
@@ -53,20 +53,6 @@ export class LoginPage {
     
     }
   
-
-facebookLogin(): Promise<any> {
-  return this.facebook.login(['email'])
-    .then( response => {
-      const facebookCredential = firebase.auth.FacebookAuthProvider
-        .credential(response.authResponse.accessToken);
-
-      firebase.auth().signInWithCredential(facebookCredential)
-        .then( success => { 
-          console.log("Firebase success: " + JSON.stringify(success)); 
-        });
-
-    }).catch((error) => { console.log(error) });
-}
 
 loginWithFB(){
 
@@ -130,8 +116,7 @@ loginWithFB(){
       }).present();
 
       this.sp.clearMem();
-      this.sp.setMem();
-    
+      this.sp.setMem(); 
       this.navCtrl.setRoot(TransactionHomePage);
       
     

@@ -1,7 +1,7 @@
 import { Injectable, ViewChild } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import firebase from 'firebase';
-import { ThrowStmt } from '@angular/compiler';
+import { ThrowStmt, unescapeIdentifier } from '@angular/compiler';
 import { convertDataToISO } from 'ionic-angular/umd/util/datetime-util';
 import { LoginPage } from '../../pages/login/login';
 import { ToastController, NavController, Nav } from 'ionic-angular';
@@ -34,22 +34,26 @@ export class StorageProvider {
   tempprod: any;
   tempcat: any;
   temptransac: any;
+  tempuser: any;
   uid;
   
 
   saveinMem(){
-    console.log("Hey"+this.tempcat)
+    //console.log("Hey"+this.tempcat)
     this.storage.get('categories').then((valNullcat) => {
       this.storage.get('products').then((valNullprod) => {
         this.storage.get('transactions').then((valNulltransac) => {
-          console.log("b4set");
-          console.log(JSON.stringify(this.tempcat));
-          console.log(JSON.stringify(this.tempprod));
-          console.log(JSON.stringify(this.temptransac))  ;
-          this.storage.set('categories', "[]").then(() => {this.storage.set('categories', JSON.stringify(this.tempcat));})
-          this.storage.set('products', "[]").then(() => {this.storage.set('products', JSON.stringify(this.tempprod));})
-          this.storage.set('transactions', "[]").then(() => {this.storage.set('transactions', JSON.stringify(this.temptransac));})
-           })
+          this.storage.get('user').then((valNulluser)=>{   
+            // console.log("b4set");
+            // console.log(JSON.stringify(this.tempcat));
+            // console.log(JSON.stringify(this.tempprod));
+            // console.log(JSON.stringify(this.temptransac))  ;
+            this.storage.set('categories', "[]").then(() => {this.storage.set('categories', JSON.stringify(this.tempcat));})
+            this.storage.set('products', "[]").then(() => {this.storage.set('products', JSON.stringify(this.tempprod));})
+            this.storage.set('transactions', "[]").then(() => {this.storage.set('transactions', JSON.stringify(this.temptransac));})
+            this.storage.set('user','[]').then(() => {this.storage.set('user', JSON.stringify(this.tempuser));})
+          })
+          })
          })
        })
   }
@@ -59,22 +63,36 @@ export class StorageProvider {
     var tempcat;
     var temptransac;
     var uid;
+    var tempuser;
     this.storage.ready().then(async ()=>{
       await firebase.firestore().collection('users').where("owner", "==", firebase.auth().currentUser.uid).get()
             .then(function (querySnapshot) {
               querySnapshot.forEach(function (doc) {
                 uid = doc.id;
                 var usdat=doc.data();
-                console.log(doc.data())
                 tempprod=usdat.products;
                 temptransac=usdat.transactions;
                 tempcat=usdat.categories;
-                console.log("superin");
-                console.log(JSON.stringify(tempcat));
-                console.log(JSON.stringify(tempprod));
-                console.log(JSON.stringify(temptransac))
-              });
-              
+                tempuser={
+                  business_address: usdat.business_address,
+                  business_name: usdat.business_name,
+                  businesstype: usdat.businesstype,
+                  cash_balance: usdat.cash_balance,
+                  created: usdat.created,
+                  currency: usdat.currency,
+                  discount: usdat.discount,
+                  language: usdat.language,
+                  owner: usdat.owner,
+                  owner_name: usdat.owner_name,
+                  ph_no: usdat.ph_no,
+                  taxrate: usdat.taxrate,
+                  id: doc.id,
+                }
+                // console.log("superin");
+                // console.log(JSON.stringify(tempcat));
+                // console.log(JSON.stringify(tempprod));
+                // console.log(JSON.stringify(temptransac))
+              });             
             })
             .catch(function (error) {
               console.log("Error getting documents: ", error);
@@ -83,10 +101,11 @@ export class StorageProvider {
             this.tempprod=tempprod;
             this.temptransac=temptransac;
             this.uid=uid;
-            console.log("setglobal");
-            console.log(JSON.stringify(tempcat));
-            console.log(JSON.stringify(tempprod));
-            console.log(JSON.stringify(temptransac))  ;
+            this.tempuser=tempuser;
+            // console.log("setglobal");
+            // console.log(JSON.stringify(tempcat));
+            // console.log(JSON.stringify(tempprod));
+            // console.log(JSON.stringify(temptransac))  ;
             this.saveinMem();
       })
 
@@ -141,31 +160,55 @@ export class StorageProvider {
   }
 
 
-  addUserDat(data){
-    this.storage.ready().then(()=>{
-      this.storage.get('user').then((val)=>{
-        if(val === null || val=="null"){
+  // async setUserDat(){
+  //   var ud;
+  //   const snapshot = await firebase.firestore().collection('users').where("owner","==",firebase.auth().currentUser.uid).get()
+  //   .then(function(querySnapshot) {
+  //     querySnapshot.forEach(function(doc) {
+  //         ud=doc.data();
+  //         ud.push({"uid": doc.id})
+  //     });
+  //     this.user=ud;
+  //     this.storage.ready().then(()=>{
+  //       this.storage.get('user').then((val)=>{
+  //       this.storage.set('user', this.user);
+  //       console.log(this.user);
+  //       })//end then storage get-set
+  //       .catch(err => {
+  //         alert(err);
+  //       })
+  //     })//end then storage ready
+  // })
+  // .catch(function(error) {
+  //     console.log("Error getting documents: ", error);
+  // });
 
-          this.storage.set('user', "[]").then(() => {
-            this.storage.get('user').then((valNull) => {
-              this.user = JSON.parse(valNull);
-              this.user.push(data);
-              this.storage.set('user', JSON.stringify(this.user));
-            })
-          })
+  //   //note add user dat can only come from firebase right??
+  // }
 
-        }//end if
-        else{
-          this.user = JSON.parse(val);
-          this.user.push(data);
-          this.storage.set('user', JSON.stringify(this.categories));
-        } 
-      })//end then storage get
-      .catch(err => {
-        alert(err);
-      })
-    })//end then storage ready
+  getUserDat() {
+    return this.storage.get('user');
+    //return this.tempuser;
   }
+
+  
+//   updateUserDat(data) {
+//     return new Promise((resolve, reject) => {
+//       this.storage.get('user').then(async (val) => {
+//         if (val != null) {
+//           this.user = data;//update temp variable
+//           this.storage.set('user', JSON.stringify(this.user));
+// /////////////////////////
+// //update firebase userdat here
+// ////////////////////////////
+//           resolve();
+//         }
+
+
+//       })
+
+//     })
+//   }
 
 
 

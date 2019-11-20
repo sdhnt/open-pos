@@ -474,17 +474,20 @@ var StorageProvider = /** @class */ (function () {
     };
     StorageProvider.prototype.saveinMem = function () {
         var _this = this;
-        console.log("Hey" + this.tempcat);
+        //console.log("Hey"+this.tempcat)
         this.storage.get('categories').then(function (valNullcat) {
             _this.storage.get('products').then(function (valNullprod) {
                 _this.storage.get('transactions').then(function (valNulltransac) {
-                    console.log("b4set");
-                    console.log(JSON.stringify(_this.tempcat));
-                    console.log(JSON.stringify(_this.tempprod));
-                    console.log(JSON.stringify(_this.temptransac));
-                    _this.storage.set('categories', "[]").then(function () { _this.storage.set('categories', JSON.stringify(_this.tempcat)); });
-                    _this.storage.set('products', "[]").then(function () { _this.storage.set('products', JSON.stringify(_this.tempprod)); });
-                    _this.storage.set('transactions', "[]").then(function () { _this.storage.set('transactions', JSON.stringify(_this.temptransac)); });
+                    _this.storage.get('user').then(function (valNulluser) {
+                        // console.log("b4set");
+                        // console.log(JSON.stringify(this.tempcat));
+                        // console.log(JSON.stringify(this.tempprod));
+                        // console.log(JSON.stringify(this.temptransac))  ;
+                        _this.storage.set('categories', "[]").then(function () { _this.storage.set('categories', JSON.stringify(_this.tempcat)); });
+                        _this.storage.set('products', "[]").then(function () { _this.storage.set('products', JSON.stringify(_this.tempprod)); });
+                        _this.storage.set('transactions', "[]").then(function () { _this.storage.set('transactions', JSON.stringify(_this.temptransac)); });
+                        _this.storage.set('user', '[]').then(function () { _this.storage.set('user', JSON.stringify(_this.tempuser)); });
+                    });
                 });
             });
         });
@@ -492,7 +495,7 @@ var StorageProvider = /** @class */ (function () {
     StorageProvider.prototype.setMem = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
-            var tempprod, tempcat, temptransac, uid;
+            var tempprod, tempcat, temptransac, uid, tempuser;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -504,14 +507,28 @@ var StorageProvider = /** @class */ (function () {
                                             querySnapshot.forEach(function (doc) {
                                                 uid = doc.id;
                                                 var usdat = doc.data();
-                                                console.log(doc.data());
                                                 tempprod = usdat.products;
                                                 temptransac = usdat.transactions;
                                                 tempcat = usdat.categories;
-                                                console.log("superin");
-                                                console.log(JSON.stringify(tempcat));
-                                                console.log(JSON.stringify(tempprod));
-                                                console.log(JSON.stringify(temptransac));
+                                                tempuser = {
+                                                    business_address: usdat.business_address,
+                                                    business_name: usdat.business_name,
+                                                    businesstype: usdat.businesstype,
+                                                    cash_balance: usdat.cash_balance,
+                                                    created: usdat.created,
+                                                    currency: usdat.currency,
+                                                    discount: usdat.discount,
+                                                    language: usdat.language,
+                                                    owner: usdat.owner,
+                                                    owner_name: usdat.owner_name,
+                                                    ph_no: usdat.ph_no,
+                                                    taxrate: usdat.taxrate,
+                                                    id: doc.id,
+                                                };
+                                                // console.log("superin");
+                                                // console.log(JSON.stringify(tempcat));
+                                                // console.log(JSON.stringify(tempprod));
+                                                // console.log(JSON.stringify(temptransac))
                                             });
                                         })
                                             .catch(function (error) {
@@ -523,10 +540,11 @@ var StorageProvider = /** @class */ (function () {
                                         this.tempprod = tempprod;
                                         this.temptransac = temptransac;
                                         this.uid = uid;
-                                        console.log("setglobal");
-                                        console.log(JSON.stringify(tempcat));
-                                        console.log(JSON.stringify(tempprod));
-                                        console.log(JSON.stringify(temptransac));
+                                        this.tempuser = tempuser;
+                                        // console.log("setglobal");
+                                        // console.log(JSON.stringify(tempcat));
+                                        // console.log(JSON.stringify(tempprod));
+                                        // console.log(JSON.stringify(temptransac))  ;
                                         this.saveinMem();
                                         return [2 /*return*/];
                                 }
@@ -586,30 +604,48 @@ var StorageProvider = /** @class */ (function () {
             });
         });
     };
-    StorageProvider.prototype.addUserDat = function (data) {
-        var _this = this;
-        this.storage.ready().then(function () {
-            _this.storage.get('user').then(function (val) {
-                if (val === null || val == "null") {
-                    _this.storage.set('user', "[]").then(function () {
-                        _this.storage.get('user').then(function (valNull) {
-                            _this.user = JSON.parse(valNull);
-                            _this.user.push(data);
-                            _this.storage.set('user', JSON.stringify(_this.user));
-                        });
-                    });
-                } //end if
-                else {
-                    _this.user = JSON.parse(val);
-                    _this.user.push(data);
-                    _this.storage.set('user', JSON.stringify(_this.categories));
-                }
-            }) //end then storage get
-                .catch(function (err) {
-                alert(err);
-            });
-        }); //end then storage ready
+    // async setUserDat(){
+    //   var ud;
+    //   const snapshot = await firebase.firestore().collection('users').where("owner","==",firebase.auth().currentUser.uid).get()
+    //   .then(function(querySnapshot) {
+    //     querySnapshot.forEach(function(doc) {
+    //         ud=doc.data();
+    //         ud.push({"uid": doc.id})
+    //     });
+    //     this.user=ud;
+    //     this.storage.ready().then(()=>{
+    //       this.storage.get('user').then((val)=>{
+    //       this.storage.set('user', this.user);
+    //       console.log(this.user);
+    //       })//end then storage get-set
+    //       .catch(err => {
+    //         alert(err);
+    //       })
+    //     })//end then storage ready
+    // })
+    // .catch(function(error) {
+    //     console.log("Error getting documents: ", error);
+    // });
+    //   //note add user dat can only come from firebase right??
+    // }
+    StorageProvider.prototype.getUserDat = function () {
+        return this.storage.get('user');
+        //return this.tempuser;
     };
+    //   updateUserDat(data) {
+    //     return new Promise((resolve, reject) => {
+    //       this.storage.get('user').then(async (val) => {
+    //         if (val != null) {
+    //           this.user = data;//update temp variable
+    //           this.storage.set('user', JSON.stringify(this.user));
+    // /////////////////////////
+    // //update firebase userdat here
+    // ////////////////////////////
+    //           resolve();
+    //         }
+    //       })
+    //     })
+    //   }
     StorageProvider.prototype.addCategory = function (data) {
         var _this = this;
         this.storage.ready().then(function () {
@@ -811,13 +847,14 @@ var StorageProvider = /** @class */ (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_3_ionic_angular__["g" /* Nav */]),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["g" /* Nav */])
+        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["g" /* Nav */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["g" /* Nav */]) === "function" && _a || Object)
     ], StorageProvider.prototype, "nav", void 0);
     StorageProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__ionic_storage__["b" /* Storage */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["l" /* ToastController */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["h" /* NavController */]])
+        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__ionic_storage__["b" /* Storage */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["l" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["l" /* ToastController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["h" /* NavController */]) === "function" && _d || Object])
     ], StorageProvider);
     return StorageProvider;
+    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=storage.js.map
@@ -2706,12 +2743,10 @@ var MyApp = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TransactionHomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__all_transaction_all_transaction__ = __webpack_require__(89);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__income_transaction_income_transaction__ = __webpack_require__(95);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__transaction_product_transaction_product__ = __webpack_require__(99);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_storage_storage__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__all_transaction_all_transaction__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__income_transaction_income_transaction__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__transaction_product_transaction_product__ = __webpack_require__(99);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_storage_storage__ = __webpack_require__(14);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2762,7 +2797,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 
 
 
-
 /**
  * Generated class for the TransactionHomePage page.
  *
@@ -2779,10 +2813,10 @@ var TransactionHomePage = /** @class */ (function () {
         this.toastCtrl = toastCtrl;
         this.sp = sp;
         this.events = events;
-        this.AllTransactions = __WEBPACK_IMPORTED_MODULE_3__all_transaction_all_transaction__["a" /* AllTransactionPage */];
-        this.IncomeTransactions = __WEBPACK_IMPORTED_MODULE_4__income_transaction_income_transaction__["a" /* IncomeTransactionPage */];
+        this.AllTransactions = __WEBPACK_IMPORTED_MODULE_2__all_transaction_all_transaction__["a" /* AllTransactionPage */];
+        this.IncomeTransactions = __WEBPACK_IMPORTED_MODULE_3__income_transaction_income_transaction__["a" /* IncomeTransactionPage */];
         //ExpenseTransactions = ExpenseTransactionPage;
-        this.ExpenseTransactions = __WEBPACK_IMPORTED_MODULE_5__transaction_product_transaction_product__["a" /* TransactionProductPage */];
+        this.ExpenseTransactions = __WEBPACK_IMPORTED_MODULE_4__transaction_product_transaction_product__["a" /* TransactionProductPage */];
         this.userdata = { business_address: "",
             business_name: "",
             cash_balance: "",
@@ -2806,29 +2840,17 @@ var TransactionHomePage = /** @class */ (function () {
     };
     TransactionHomePage.prototype.getUserData = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var ud, snapshot;
+            var _this = this;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        console.log(__WEBPACK_IMPORTED_MODULE_2_firebase___default.a.auth().currentUser.uid);
-                        return [4 /*yield*/, __WEBPACK_IMPORTED_MODULE_2_firebase___default.a.firestore().collection('users').where("owner", "==", __WEBPACK_IMPORTED_MODULE_2_firebase___default.a.auth().currentUser.uid).get()
-                                .then(function (querySnapshot) {
-                                querySnapshot.forEach(function (doc) {
-                                    // doc.data() is never undefined for query doc snapshots
-                                    //console.log(doc.id, " => ", doc.data());
-                                    ud = doc.data();
-                                    //this.userdata=doc.data();
-                                });
-                            })
-                                .catch(function (error) {
-                                console.log("Error getting documents: ", error);
-                            })];
-                    case 1:
-                        snapshot = _a.sent();
-                        this.userdata = ud;
-                        console.log(this.userdata);
-                        return [2 /*return*/];
-                }
+                this.sp.storageReady().then(function () {
+                    _this.sp.getUserDat().then(function (val) {
+                        _this.userdata = JSON.parse(val);
+                        console.log(_this.userdata);
+                    }).catch(function (err) {
+                        alert("Error: " + err);
+                    });
+                });
+                return [2 /*return*/];
             });
         });
     };
@@ -2851,17 +2873,16 @@ var TransactionHomePage = /** @class */ (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('myTabs'),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* Tabs */])
+        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* Tabs */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* Tabs */]) === "function" && _a || Object)
     ], TransactionHomePage.prototype, "tabRef", void 0);
     TransactionHomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-transaction-home',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\transaction-home\transaction-home.html"*/'<!--\n\n  Generated template for the TransactionHomePage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n\n\n\n\n<ion-header>\n\n  <ion-navbar color="dark">\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>ဝင်ငွေ</ion-title>\n\n    <ion-buttons end><button ion-button (click)="uploadbtn()"><ion-icon name="cloud-upload" style="align-self: center; color: white;" padding></ion-icon></button></ion-buttons>\n\n    <ion-buttons end><button ion-button (click)="cashbtn()"><ion-icon name="logo-usd" style="align-self: center; color: white;" padding></ion-icon></button></ion-buttons>\n\n  </ion-navbar>\n\n  \n\n</ion-header>\n\n \n\n  \n\n<ion-content padding>\n\n  \n\n  <ion-tabs tabsPlacement="top" #myTabs>\n\n    <ion-tab [root]="AllTransactions" tabTitle="ဂဏန်းတွက်စက်" tabIcon="calculator"></ion-tab>\n\n    <ion-tab [root]="ExpenseTransactions" tabTitle="ထုတ်ကုန်များ" tabIcon="apps"></ion-tab>\n\n    <ion-tab [root]="IncomeTransactions" tabTitle="ငွေလက်ခံဖြတ်ပိုင်း" tabIcon="list-box"></ion-tab>\n\n\n\n   </ion-tabs>\n\n\n\n\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\transaction-home\transaction-home.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ToastController */], __WEBPACK_IMPORTED_MODULE_6__providers_storage_storage__["a" /* StorageProvider */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Events */]])
+        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ToastController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Events */]) === "function" && _f || Object])
     ], TransactionHomePage);
     return TransactionHomePage;
+    var _a, _b, _c, _d, _e, _f;
 }());
 
 //# sourceMappingURL=transaction-home.js.map
@@ -3144,9 +3165,10 @@ var AddProductCategoryPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-add-product-category',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\add-product-category\add-product-category.html"*/'<!--\n\n  Generated template for the AddProductCategoryPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<!-- <ion-header>\n\n  <ion-navbar>\n\n    <ion-title>add-product-category</ion-title>\n\n  </ion-navbar>\n\n</ion-header> -->\n\n\n\n<ion-content padding>\n\n\n\n  <ion-grid>\n\n    <ion-row>\n\n      <ion-col col-8>\n\n          <ion-item>\n\n              <ion-input type="text" placeholder="Enter Category Here"  [(ngModel)]=\'newprodCat\'></ion-input>\n\n          </ion-item>\n\n      </ion-col>\n\n      <ion-col col-4>\n\n          <button ion-button full color="dark" (click)="addCategory()"> အမျိုးအစားထည့်ပါ</button>\n\n\n\n      </ion-col>\n\n    </ion-row>\n\n  </ion-grid>\n\n\n\n   \n\n    \n\n\n\n  <ion-item>\n\n     <h2> <b>အမျိုးအစားကိုကြည့် / ဖယ်ရှားပါ: </b> </h2>\n\n  </ion-item>\n\n \n\n  <ion-list  *ngFor="let element of listCat">\n\n\n\n      <ion-item>\n\n          {{element.name}}\n\n          <ion-icon item-end name="close-circle" (click)="delCat(element)" color="danger"></ion-icon> \n\n      </ion-item>\n\n  </ion-list>\n\n \n\n\n\n\n\n  \n\n\n\n \n\n    \n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\add-product-category\add-product-category.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ToastController */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ToastController */]) === "function" && _d || Object])
     ], AddProductCategoryPage);
     return AddProductCategoryPage;
+    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=add-product-category.js.map
@@ -3160,8 +3182,7 @@ var AddProductCategoryPage = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AllTransactionPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(14);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3216,11 +3237,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
  * Ionic pages and navigation.
  */
 var AllTransactionPage = /** @class */ (function () {
-    function AllTransactionPage(navCtrl, navParams, events) {
+    function AllTransactionPage(navCtrl, navParams, events, sp) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.events = events;
+        this.sp = sp;
         this.itemsname = [];
         this.result = "";
         this.flag_mode = 0;
@@ -3287,32 +3309,17 @@ var AllTransactionPage = /** @class */ (function () {
     };
     AllTransactionPage.prototype.getUserData = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var ud, snapshot;
+            var _this = this;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        console.log(__WEBPACK_IMPORTED_MODULE_2_firebase___default.a.auth().currentUser.uid);
-                        return [4 /*yield*/, __WEBPACK_IMPORTED_MODULE_2_firebase___default.a.firestore().collection('users').where("owner", "==", __WEBPACK_IMPORTED_MODULE_2_firebase___default.a.auth().currentUser.uid).get()
-                                .then(function (querySnapshot) {
-                                querySnapshot.forEach(function (doc) {
-                                    // doc.data() is never undefined for query doc snapshots
-                                    //console.log(doc.id, " => ", doc.data());
-                                    ud = doc.data();
-                                    //this.userdata=doc.data();       
-                                });
-                            })
-                                .catch(function (error) {
-                                console.log("Error getting documents: ", error);
-                            })];
-                    case 1:
-                        snapshot = _a.sent();
-                        this.userdata = ud;
-                        if (this.userdata == null) {
-                            console.log("No User data - push to sign up w facebook"); // Go to user data page - enter user data
-                        }
-                        console.log(this.userdata);
-                        return [2 /*return*/];
-                }
+                this.sp.storageReady().then(function () {
+                    _this.sp.getUserDat().then(function (val) {
+                        _this.userdata = JSON.parse(val);
+                        console.log(_this.userdata);
+                    }).catch(function (err) {
+                        alert("Error: " + err);
+                    });
+                });
+                return [2 /*return*/];
             });
         });
     };
@@ -3446,9 +3453,10 @@ var AllTransactionPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-all-transaction',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\all-transaction\all-transaction.html"*/'<!--\n\n  Generated template for the AllTransactionPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n\n\n\n\n<ion-content padding>\n\n    <!-- <ion-fab bottom right>\n\n        <button ion-fab color="primary" item-right><ion-icon name="calculator"></ion-icon></button>\n\n      </ion-fab> -->\n\n      <ion-card *ngIf="showSampleRec==false">\n\n        ကျေးဇူးပြုပြီးပစ္စည်းအတွက်ပမာဏကိုမြှောက်ပါ၊ ရှိပြီးသားငွေတောင်းခံလွှာကိုထည့်ရန်တူညီသောစာလုံးကိုနှိပ်ပါ။\n\n\n\n        အလွတ်ပစ္စည်းပေါင်းများစွာကိုထည့်သွင်းလိုပါက * qty တစ်ခုချင်းစီကိုရိုက်ထည့်ပြီးနောက်တစ်ခုကိုရိုက်ထည့်ရန် + သင်္ကေတကိုနှိပ်ပါ\n\n      </ion-card>\n\n      \n\n  <ion-grid>\n\n    <ion-row>\n\n\n\n      <ion-col col-12 col-md-6>\n\n\n\n          <div class="calculator">\n\n            <div class="header">\n\n              <div class="window"></div>\n\n              <div class="input">\n\n                <ion-row>\n\n                  <ion-input type="text" placeholder="0" name="display" [(ngModel)]="result">\n\n                  </ion-input>\n\n                  <ion-icon name="backspace" (click)="btnClicked(\'b\')"></ion-icon>\n\n                  \n\n                </ion-row> \n\n               \n\n                    \n\n                \n\n              </div>\n\n             \n\n              \n\n            </div>\n\n            <div class="keys">\n\n              <div class="row">\n\n                <div class="number">\n\n                  <span (click)="btnClicked(\'7\')">7</span>\n\n                  <span (click)="btnClicked(\'8\')">8</span>\n\n                  <span (click)="btnClicked(\'9\')">9</span>\n\n                </div>\n\n                <div class="symbol">\n\n                  <span (click)="btnClicked(\'*\')">×</span>\n\n\n\n                </div>\n\n              </div>\n\n\n\n              <div class="row">\n\n                <div class="number">\n\n                  <span (click)="btnClicked(\'4\')">4</span>\n\n                  <span (click)="btnClicked(\'5\')">5</span>\n\n                  <span (click)="btnClicked(\'6\')">6</span>\n\n                </div>\n\n\n\n                <div class="symbol">\n\n                  <span (click)="btnClicked(\'+\')">+</span>\n\n           </div>\n\n              </div>\n\n\n\n              <div class="row">\n\n                <div class="number">\n\n                  <span (click)="btnClicked(\'1\')">1</span>\n\n                  <span (click)="btnClicked(\'2\')">2</span>\n\n                  <span (click)="btnClicked(\'3\')">3</span>\n\n                </div>\n\n\n\n                <div class="symbol">\n\n                  <span (click)="btnClicked(\'/\')">÷</span>\n\n                  <span (click)="btnClicked(\'squareroot\')">√x</span>\n\n                </div>\n\n\n\n\n\n              </div>\n\n\n\n\n\n              <div class="row">\n\n                <div class="number">\n\n                  <span class=dull (click)="btnClicked(\'C\')">C</span>\n\n                  <span (click)="btnClicked(\'0\')">0</span>\n\n                  <span (click)="btnClicked(\'-\')">-</span>\n\n\n\n\n\n\n\n                </div>\n\n\n\n                <div class="symbol action">\n\n                  <span (click)="btnClicked(\'=\')">=</span>\n\n                </div>\n\n\n\n              </div>\n\n            </div>\n\n          </div>\n\n\n\n    \n\n\n\n      </ion-col>\n\n\n\n      <ion-col col-12 col-md-6>\n\n\n\n\n\n        <ion-card *ngIf="showSampleRec==true"> \n\n\n\n                <ion-grid>\n\n          \n\n                  <ion-row> <ion-col style="text-align: center; padding-top: 5px;">{{userdata? userdata.business_name: null}} </ion-col> </ion-row>\n\n          \n\n                  <ion-row>\n\n                      <ion-col col-12 style="color: grey; font-size: 10px; text-align: center"> {{userdata?userdata.business_address:null}}</ion-col>\n\n                  </ion-row>\n\n                  <ion-row>\n\n                      <ion-col col-12 style="color: grey; font-size: 10px; text-align: center"> Ph: {{userdata?userdata.ph_no:null}}</ion-col>\n\n                  </ion-row>          \n\n                  <ion-row style="padding-top: 5px;">\n\n                      <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><b>Sl</b></ion-col>\n\n                      <ion-col col-4 style="color: black; font-size: 10px; text-align: center"><b>ပစ္စည်း</b></ion-col>\n\n                      <ion-col col-2 style="color: black; font-size: 10px; text-align: center"><b>စျေးနှုန်း</b></ion-col>\n\n                      <ion-col col-2 style="color: black; font-size: 10px; text-align: center"><b>ပမာဏ</b></ion-col>\n\n                      <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="arrow-dropup-circle" style=" color: green"></ion-icon></ion-col>\n\n                      <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="arrow-dropdown-circle" style=" color: red"></ion-icon></ion-col>\n\n                      <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="close" style=" color: red"></ion-icon></ion-col>\n\n                  </ion-row>\n\n          \n\n                 \n\n          \n\n                  <ion-list *ngFor="let item of itemsprice; let i = index" no-lines>\n\n          \n\n              \n\n                    <ion-row>\n\n                        <ion-col col-1 style="color: black; font-size: 10px; text-align: center">{{i+1}}.</ion-col>\n\n                        <ion-col col-4 style="color: black; font-size: 10px; text-align: center">\n\n                         Item {{i+1}}</ion-col>   \n\n                        <ion-col col-2 style="color: black; font-size: 10px; text-align: center">{{item}}</ion-col>\n\n                        <ion-col col-2 style="color: black; font-size: 10px; text-align: center">{{itemsqty[i]}}</ion-col>\n\n                        <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="arrow-dropup-circle" style=" color: green"></ion-icon></ion-col>\n\n                        <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="arrow-dropdown-circle" style=" color: red"></ion-icon></ion-col>\n\n                        <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="close" style=" color: red"></ion-icon></ion-col>\n\n                    </ion-row>\n\n                \n\n          \n\n                  </ion-list>\n\n          \n\n                  <ion-row padding>\n\n                      <ion-col col-1></ion-col>  \n\n                    <ion-col col-4 style="text-align: center;font-size: 10px;"><b>စုစုပေါင်း</b> </ion-col>\n\n                      <ion-col col-2 style="text-align: center;font-size: 10px;"><b>{{lastsum}}</b> </ion-col>\n\n                      <ion-col col-5></ion-col>\n\n                    </ion-row>\n\n          \n\n          \n\n                   \n\n          \n\n          \n\n                </ion-grid>\n\n          \n\n          \n\n          \n\n\n\n        </ion-card>\n\n\n\n      </ion-col>\n\n\n\n\n\n\n\n    </ion-row>\n\n\n\n\n\n  </ion-grid>\n\n\n\n\n\n\n\n  <!-- Dynamically Generate All transactions from backend - see feed from prev -->\n\n\n\n</ion-content>\n\n\n\n<ion-footer>\n\n\n\n    <ion-grid>\n\n      <ion-row>\n\n        <ion-col>\n\n            <button ion-button (click)="createRec()" full style="background-color: #222">ငွေလက်ခံဖြတ်ပိုင်းကိုဖန်တီးပါ</button>\n\n        </ion-col>\n\n      </ion-row>\n\n    </ion-grid>\n\n   \n\n</ion-footer>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\all-transaction\all-transaction.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Events */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Events */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _d || Object])
     ], AllTransactionPage);
     return AllTransactionPage;
+    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=all-transaction.js.map
@@ -4416,7 +4424,7 @@ var LoginPage = /** @class */ (function () {
         this.password = "";
         __WEBPACK_IMPORTED_MODULE_2_firebase___default.a.auth().onAuthStateChanged(function (user) {
             if (user) {
-                console.log(user); // User is signed in.
+                //console.log(user)// User is signed in.
                 alertCtrl.create({
                     subTitle: "ကြိုဆိုပါတယ် " + user.displayName,
                     buttons: [
@@ -4436,17 +4444,6 @@ var LoginPage = /** @class */ (function () {
             }
         });
     }
-    LoginPage.prototype.facebookLogin = function () {
-        return this.facebook.login(['email'])
-            .then(function (response) {
-            var facebookCredential = __WEBPACK_IMPORTED_MODULE_2_firebase___default.a.auth.FacebookAuthProvider
-                .credential(response.authResponse.accessToken);
-            __WEBPACK_IMPORTED_MODULE_2_firebase___default.a.auth().signInWithCredential(facebookCredential)
-                .then(function (success) {
-                console.log("Firebase success: " + JSON.stringify(success));
-            });
-        }).catch(function (error) { console.log(error); });
-    };
     LoginPage.prototype.loginWithFB = function () {
         var _this = this;
         this.facebook.login(['email'])
@@ -4518,11 +4515,10 @@ var LoginPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-login',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\login\login.html"*/'\n\n<ion-content padding>\n\n\n\n\n\n\n\n  <button ion-button block clear color="light" class="nametop"><b>Open</b></button> \n\n\n\n\n\n\n\n  <ion-grid style="width: 75%;">\n\n    \n\n    <ion-row class="row-style">\n\n      \n\n      <ion-icon name="mail" color="semi-light" class="icon"></ion-icon>\n\n      <ion-input type="email" placeholder="အီးမေးလ်" [(ngModel)]="email"></ion-input>\n\n    </ion-row>\n\n    <ion-row class="row-style">\n\n      <ion-icon name="key" color="semi-light" class="icon"></ion-icon>\n\n      <ion-input type="password" placeholder="စကားဝှက်" [(ngModel)]="password" ></ion-input>\n\n    </ion-row>\n\n    <ion-row>\n\n      <button ion-button block round outline color="light" style="margin-top: 20px;" (click)="login()">ဆိုင်းအင်လုပ်ခြင်း</button>\n\n    </ion-row>\n\n    <div class="btn_container">\n\n      <button ion-button full (click)="loginWithFB();">Facebook ဖြင့်ဝင်ပါ</button>\n\n  </div>\n\n  \n\n  </ion-grid>\n\n\n\n\n\n  <button ion-button block clear color="light" style="margin-top: 10px;" (click)="gotoSignUp()">အကောင့်မရှိဘူးလား</button> \n\n  \n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\login\login.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ToastController */], __WEBPACK_IMPORTED_MODULE_6__ionic_native_facebook__["a" /* Facebook */],
-            __WEBPACK_IMPORTED_MODULE_5__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ToastController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_6__ionic_native_facebook__["a" /* Facebook */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__ionic_native_facebook__["a" /* Facebook */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _f || Object])
     ], LoginPage);
     return LoginPage;
+    var _a, _b, _c, _d, _e, _f;
 }());
 
 //# sourceMappingURL=login.js.map
@@ -4687,11 +4683,10 @@ var SignUpPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-sign-up',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\sign-up\sign-up.html"*/'<ion-header>\n\n  <ion-navbar transparent>\n\n   <!--  <ion-title>\n\n     AdMonkey\n\n    </ion-title> -->\n\n \n\n\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n	\n\n		<button ion-button block clear color="light" class="nametop"><b>Open</b></button> \n\n\n\n<ion-grid style="width: 75%;">\n\n\n\n	<div *ngIf="nextbtn!=1">\n\n	<ion-row class="row-style1" justify-content-center align-items-center style="height: 100%">စီးပွားရေးလုပ်ငန်းတစ်ခုမှတ်ပုံတင်ပါ</ion-row>\n\n	<ion-row class="row-style"> \n\n		<ion-icon name="person" color="semi-light" class="icon"></ion-icon>\n\n		<ion-input type="text" placeholder="နာမည်" [(ngModel)]="name"></ion-input>\n\n	</ion-row>\n\n	<ion-row class="row-style">\n\n		<ion-icon name="mail" color="semi-light" class="icon"></ion-icon>\n\n		<ion-input type="email" placeholder="အီးမေးလ်" [(ngModel)]="email"> </ion-input>\n\n	</ion-row>\n\n	<ion-row class="row-style">\n\n		<ion-icon name="key" color="semi-light" class="icon"></ion-icon>\n\n		<ion-input type="password" placeholder="စကားဝှက်"  [(ngModel)]="password"></ion-input>\n\n	</ion-row>\n\n	<ion-row class="row-style">\n\n		<ion-icon name="home" color="semi-light" class="icon"></ion-icon>\n\n		<ion-input type="text" placeholder="စီးပွားရေးအမည် "  [(ngModel)]="businessname"></ion-input>\n\n	</ion-row>\n\n	<ion-row class="row-style">\n\n		<ion-icon name="pin" color="semi-light" class="icon"></ion-icon>\n\n		<ion-input type="text" placeholder="စီးပွားရေးလိပ်စာ"  [(ngModel)]="businessaddress"></ion-input>\n\n	</ion-row>\n\n	<ion-row class="row-style">\n\n		<ion-icon name="call" color="semi-light" class="icon"></ion-icon>\n\n		<ion-input type="text" placeholder="ဖုန်းနံပါတ်"  [(ngModel)]="phno"></ion-input>\n\n	</ion-row>\n\n<button ion-button block round outline color="light" style="margin-top: 10px;" (click)="nextPg()">နောက်တစ်ခု</button>\n\n</div>\n\n<div *ngIf="nextbtn==1">\n\n		<button ion-button block round outline color="light" style="margin-bottom: 10px;" (click)="prevPg()">ယခင်</button>\n\n	<ion-row class="row-style">\n\n			<ion-icon name="globe" color="semi-light" class="icon"></ion-icon>\n\n			<ion-label>လုပ်ငန်းအမျိုးအစား</ion-label>\n\n			<ion-select [(ngModel)]="businesstype">\n\n					<ion-option>Pharmaceuticals</ion-option>\n\n					<ion-option>Tailor</ion-option>\n\n					<ion-option>KTV</ion-option>\n\n					<ion-option>Fashion</ion-option>\n\n					<ion-option>Retail</ion-option>\n\n					<ion-option>Wholesale</ion-option>\n\n					<ion-option>Food</ion-option>\n\n			</ion-select>\n\n			<!-- <ion-input type="text" placeholder="Language"  [(ngModel)]="businessname"></ion-input> -->\n\n   </ion-row>\n\n\n\n\n\n	<ion-row class="row-style">\n\n		<ion-icon name="chatboxes" color="semi-light" class="icon"></ion-icon>\n\n		<ion-label>ဘာသာစကား</ion-label>\n\n		<ion-select [(ngModel)]="language">\n\n				<ion-option>English</ion-option>\n\n				<ion-option>Filipino</ion-option>\n\n				<ion-option>ဗမာ</ion-option>\n\n		</ion-select>\n\n		<!-- <ion-input type="text" placeholder="Language"  [(ngModel)]="businessname"></ion-input> -->\n\n	</ion-row>\n\n\n\n	<ion-row class="row-style">\n\n			<ion-icon name="logo-usd" color="semi-light" class="icon"></ion-icon>\n\n			<ion-label>ငွေကြေး</ion-label>\n\n			<ion-select [(ngModel)]="currency">\n\n					<ion-option>USD</ion-option>\n\n					<ion-option>PHP</ion-option>\n\n					<ion-option>MMK</ion-option>\n\n			</ion-select>\n\n			<!-- <ion-input type="text" placeholder="Language"  [(ngModel)]="businessname"></ion-input> -->\n\n		</ion-row>\n\n\n\n\n\n	<ion-row class="row-style">\n\n		<ion-icon name="cash" color="semi-light" class="icon"></ion-icon>\n\n		<ion-input type="number" placeholder="ငွေလက်ကျန်"  [(ngModel)]="cb"></ion-input>\n\n	</ion-row>\n\n\n\n	<ion-row class="row-style">\n\n			<ion-icon name="cash" color="semi-light" class="icon"></ion-icon>\n\n			<ion-input type="number" placeholder="လျှော့စျေးနှုန်း %"  [(ngModel)]="discount"></ion-input>\n\n		</ion-row>\n\n\n\n		<ion-row class="row-style">\n\n				<ion-icon name="cash" color="semi-light" class="icon"></ion-icon>\n\n				<ion-input type="number" placeholder="အခွန်နှုန်း %"  [(ngModel)]="taxrate"></ion-input>\n\n			</ion-row>\n\n	<ion-row>\n\n		<button ion-button block round outline color="light" style="margin-top: 20px;" (click)="signup()">ဆိုင်းအပ်</button>\n\n	</ion-row>\n\n</div>\n\n</ion-grid>\n\n<button ion-button block clear color="light" style="margin-top: 10px;" (click)="goBack()">အကောင့်ရှိပြီးသားလား? လော့ဂ်အင်</button>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\sign-up\sign-up.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ToastController */], __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__["a" /* StorageProvider */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ToastController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _e || Object])
     ], SignUpPage);
     return SignUpPage;
+    var _a, _b, _c, _d, _e;
 }());
 
 //# sourceMappingURL=sign-up.js.map

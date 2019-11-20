@@ -65,27 +65,16 @@ export class TransactionHomePage {
   discount: 0.0,
  
 }
-  async getUserData(){
-    console.log(firebase.auth().currentUser.uid);
-    var ud;
-    const snapshot = await firebase.firestore().collection('users').where("owner","==",firebase.auth().currentUser.uid).get()
-    .then(function(querySnapshot) {
-      querySnapshot.forEach(function(doc) {
-          // doc.data() is never undefined for query doc snapshots
-          //console.log(doc.id, " => ", doc.data());
-          ud=doc.data();
-          //this.userdata=doc.data();
-          
-      });
+async getUserData(){
+  this.sp.storageReady().then(() => {
+    this.sp.getUserDat().then((val) => {
+     this.userdata=JSON.parse(val);
+     console.log(this.userdata)
+    }).catch(err => {
+      alert("Error: "+ err);
+    })
   })
-  .catch(function(error) {
-      console.log("Error getting documents: ", error);
-  });
-  this.userdata=ud;
-  console.log(this.userdata);
-    
  }
-
 
   openCalc(){
     //this.navCtrl.push(CalculatorPage);
