@@ -1,0 +1,18 @@
+# rename this file as .bash_profile, and move it to your system user root
+# then run source .bash_profile
+
+# After installing JDK 8
+export JAVA_HOME=/Applications/Android\ Studio.app/Contents/jre/jdk/Contents/Home
+
+export PATH=${JAVA_HOME}/bin:$PATH
+
+# Set Android_HOME
+export ANDROID_SDK_ROOT=~/Library/Android/sdk/
+
+# Add the Android SDK to the ANDROID_SDK_ROOT variable
+export PATH=$ANDROID_SDK_ROOT/platform-tools:$PATH
+export PATH=$ANDROID_SDK_ROOT/tools:$PATH
+
+#Set GRADLE_HOME
+export GRADLE_HOME=/usr/local/Cellar/gradle/6.0.1/
+export PATH=$PATH:$GRADLE_HOME/bin
