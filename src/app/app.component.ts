@@ -50,9 +50,6 @@ export class MyApp {
       this.nav.setRoot(LoginPage);
   });
 }
-ngAfterViewInit(){
-  //this.nav.setRoot(LoginPage);
-}
   
   initializeApp() {
     this.platform.ready().then(() => {

@@ -170,8 +170,6 @@ export class AddProductPage {
 
   scanQR() {
     this.barcodeScanner.scan().then(barcodeData => {
-      //this.prodCode = barcodeData.text;
-      //this.navCtrl.setRoot(AddProductPage,{code: barcodeData.text})
       this.prodCode = barcodeData.text;
     }).catch(err => {
       console.log('Error', err);

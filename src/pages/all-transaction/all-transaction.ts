@@ -59,7 +59,14 @@ export class AllTransactionPage {
       this.showSampleRec=false;
       this.flag_mode=1;
     }
+
+    this.delay(1000).then(()=>{
+      this.getUserData();    })
+
+
   }
+
+  
 
   result = "";
   flag_mode=0;
@@ -70,10 +77,6 @@ export class AllTransactionPage {
   lastsum=0;
   lastchar="NIL"
   lastdigit=0;
-
-	ngOnInit() {
-   
-  }
 
   async delay(ms: number) {
     await new Promise(resolve => setTimeout(()=>resolve(), ms)).then(()=>console.log("fired"));

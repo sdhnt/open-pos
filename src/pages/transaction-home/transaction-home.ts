@@ -46,10 +46,15 @@ export class TransactionHomePage {
   private firstLoaded: boolean = false;
 async ionViewDidEnter() {
   console.log('ionViewDidLoad TransactionHomePage');
-  
-  await this.getUserData();
+
+  this.delay(1000).then(()=>{
+    this.getUserData();    })
+
 }
 
+async delay(ms: number) {
+  await new Promise(resolve => setTimeout(()=>resolve(), ms)).then(()=>console.log("fired"));
+}
   userdata: any = {business_address: "",
 
   business_name: "",
@@ -97,7 +102,6 @@ async getUserData(){
 
   cashbtn(){
     this.toastCtrl.create({
-  
       message: "ငွေလက်ကျန်: " + this.userdata.cash_balance,
       duration: 3000
     }).present();

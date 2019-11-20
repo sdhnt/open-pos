@@ -153,8 +153,10 @@ loginWithFB(){
     }
 
     loginProcedure(){
-      this.sp.clearMem();
+    
         this.zone.run(() => {
+
+          this.sp.clearMem();
 
           this.sp.setMem().then(()=>{ this.navCtrl.setRoot(TransactionHomePage); })
         

@@ -92,10 +92,6 @@ export class StorageProvider {
                   taxrate: usdat.taxrate,
                   id: doc.id,
                 }
-                // console.log("superin");
-                // console.log(JSON.stringify(tempcat));
-                // console.log(JSON.stringify(tempprod));
-                // console.log(JSON.stringify(temptransac))
               });             
             })
             .catch(function (error) {
