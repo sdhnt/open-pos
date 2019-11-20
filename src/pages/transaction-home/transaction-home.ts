@@ -48,6 +48,7 @@ export class TransactionHomePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TransactionHomePage');
+    this.getUserData();
   }
 
   userdata: any = {business_address: "",
@@ -65,9 +66,14 @@ export class TransactionHomePage {
   discount: 0.0,
  
 }
+
 async getUserData(){
   this.sp.storageReady().then(() => {
     this.sp.getUserDat().then((val) => {
+
+      if(val ==null){
+        this.navCtrl.setRoot(this.navCtrl.getActive().component);
+      }
      this.userdata=JSON.parse(val);
      console.log(this.userdata)
     }).catch(err => {

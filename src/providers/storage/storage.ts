@@ -186,8 +186,8 @@ export class StorageProvider {
   //   //note add user dat can only come from firebase right??
   // }
 
-  getUserDat() {
-    return this.storage.get('user');
+  async getUserDat() {
+    return await this.storage.get('user');
     //return this.tempuser;
   }
 

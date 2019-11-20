@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import firebase from 'firebase';
 import {SignUpPage} from '../sign-up/sign-up';
@@ -23,7 +23,7 @@ export class LoginPage {
   email: string="";
   password: string="";
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController, public zone: NgZone,
     public navParams: NavParams, public toastCtrl: ToastController, public facebook: Facebook, 
     public sp: StorageProvider, public alertCtrl: AlertController,) {
 
@@ -42,9 +42,13 @@ export class LoginPage {
           }).present();
     
           sp.clearMem();
-          sp.setMem();
-        
-          navCtrl.setRoot(TransactionHomePage);
+          sp.setMem(); 
+
+          zone.run(() => {
+            navCtrl.setRoot(TransactionHomePage);
+        });
+          
+          
         } else {
           // No user is signed in.
           console.log("no-user is signed in")
@@ -76,12 +80,7 @@ loginWithFB(){
                 ],
             }).present();
         
-            this.sp.clearMem();
-            this.sp.setMem();
-          
-            this.navCtrl.setRoot(TransactionHomePage);
-            
-          
+            this.loginProcedure();
           })
           .catch(err => {
             console.log("Firebase error", err);
@@ -114,11 +113,7 @@ loginWithFB(){
           }
           ],
       }).present();
-
-      this.sp.clearMem();
-      this.sp.setMem(); 
-      this.navCtrl.setRoot(TransactionHomePage);
-      
+this.loginProcedure();
     
     
       }).catch( (err) => {console.log(err)
@@ -151,6 +146,17 @@ loginWithFB(){
   
     this.navCtrl.push(SignUpPage)
   
+    }
+
+    loginProcedure(){
+
+      
+      this.sp.clearMem();
+      this.sp.setMem(); 
+      this.zone.run(() => {
+      this.navCtrl.setRoot(TransactionHomePage);});
+      
+
     }
   
 
