@@ -26232,6 +26232,10 @@ page-sign-up .item-cover {
   height: 0;
 }
 
+page-sign-up h6 {
+  margin-bottom: 10px;
+}
+
 page-summary-home ion-title {
   position: absolute;
   top: 0;

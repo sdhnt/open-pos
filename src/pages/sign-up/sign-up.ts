@@ -22,6 +22,10 @@ import { StorageProvider } from '../../providers/storage/storage';
 })
 export class SignUpPage {
 
+  listOfBType: String[] = [];
+  listOfCurrency: String[] = [];
+  listOfLang: String[] = [];
+
   
 	name: string="";
 	email: string="";
@@ -40,6 +44,7 @@ export class SignUpPage {
      public toastCtrl: ToastController, public sp: StorageProvider,
       public alertCtrl: AlertController) {
     this.nextbtn=0;
+    this.loadDropDowns();
   }
 
   ionViewDidLoad() {
@@ -52,6 +57,21 @@ export class SignUpPage {
   }
   prevPg(){
     this.nextbtn=0;
+  }
+
+  loadDropDowns(){
+    firebase.firestore().collection("sign-up").get()
+    .then((doc) => {
+      doc.docs[0].data().businessType.forEach((b)=>{
+        this.listOfBType.push(b);
+      })
+      doc.docs[0].data().currency.forEach((c)=>{
+        this.listOfCurrency.push(c);
+      })
+      doc.docs[0].data().language.forEach((l)=>{
+        this.listOfLang.push(l);
+      })
+    })
   }
 
 
@@ -119,11 +139,7 @@ export class SignUpPage {
 
   });
 }
-
   goBack(){
   this.navCtrl.pop();
   }
-
-
-
 }

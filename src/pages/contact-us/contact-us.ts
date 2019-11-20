@@ -32,9 +32,7 @@ export class ContactUsPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ContactUsPage');
-
-    
+    console.log('ionViewDidLoad ContactUsPage');   
   }
 
 }
