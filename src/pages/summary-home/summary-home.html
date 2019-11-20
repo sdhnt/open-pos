@@ -14,17 +14,27 @@
   </ion-header>
 
   <ion-content>
-<!-- 
-  <ion-content padding>
-    <ion-searchbar showCancelButton="always" [(ngModel)]="searchterm" (ionChange)="filteredProduct()"></ion-searchbar>
-      <ion-item>
-        <ion-label>Select Category</ion-label>
-        <ion-select multiple="true" [(ngModel)]='selectedCat' (ionChange)="filteredProduct()">
-            <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>    
-        </ion-select>
+
+    <ion-item>
+        <span style="vertical-align: middle; display: inline-block; color: black; font-size: 1.5rem;" item-start>
+          Summarize:
+          </span>
+           <ion-toggle  color="dark" style="vertical-align: middle; display: inline-block" item-end [(ngModel)]="expanded"></ion-toggle>
+        
       </ion-item>
-     -->
-      <ion-list inset  *ngFor="let transac of listtransac?.reverse()">
+      <ion-item>
+          Total sales Today: {{tstoday}}
+          
+        </ion-item>
+        <ion-item>
+            Total sales for this month: {{tsmonth}}
+        </ion-item>
+        <ion-item>
+            Total sales for last 30 days : {{ts30}}
+        </ion-item>
+        
+
+      <ion-list inset  *ngFor="let transac of listtransacrev">
         
           <ion-card>
               <ion-grid line>
@@ -32,26 +42,42 @@
                     <ion-col col-10 style="color: grey; font-size: 10px;"> {{getDateTime(transac.datetime)}} </ion-col>
                     <ion-col col-2 style="text-align: center "><ion-icon name="cash" style="color: green"></ion-icon> </ion-col>
                   </ion-row>
+
+                  <ion-list *ngFor="let item of transac.itemslist" [hidden]="expanded">
+                      
+                      <ion-row  style="padding: 0px;text-align: center ;  background-color: indigo; color: palevioletred;">
+                          <ion-col col-8>
+                            {{item.name}}
+                          </ion-col>
+                          <ion-col col-2 >
+                              {{item.price}}
+                          </ion-col>
+                          <ion-col col-2>
+                              {{item.qty}}
+                          </ion-col>
+                        </ion-row>
+                        <ion-row *ngIf="transac.totaldisc!=transac.totalsum" style="padding: 0px;text-align: center ;  background-color: silver; color: palevioletred;">
+                            <ion-col col-8>
+                               Total after discount ({{transac.discount}}%)
+                              </ion-col>
+                              <ion-col col-4 >
+                                  {{transac.totaldisc}}
+                              </ion-col>
+                        </ion-row>
+                        <ion-row *ngIf="transac.totalsum!=transac.totalatax" style="padding: 0px; text-align: center ;  background-color: silver; color: palevioletred;">
+                            <ion-col col-8>
+                                Total after tax ({{transac.taxrate}}%)
+                              </ion-col>
+                              <ion-col col-4 >
+                                  {{transac.totalatax}}
+                              </ion-col>
+                        </ion-row>
+              </ion-list> 
                   <ion-row style="padding-left: 10px; padding-bottom: 10px;">
-                    <ion-col col-10><h2><b>စုစုပေါင်း: {{transac.totalsum}}</b></h2></ion-col>
-                    <ion-col col-2></ion-col>
+                    <ion-col col-10><h2><b>စုစုပေါင်း: {{transac.totaldisc}}</b></h2></ion-col>
                   </ion-row>
 
-                  <ion-list *ngFor="let item of transac.itemslist">
-                      <ion-item>
-                          <ion-row  style="background-color: #f0f0f0">
-                              <ion-col col-8 style="text-align: center ; background-color: indigo; color: palevioletred;">
-                                {{item.name}}
-                              </ion-col>
-                              <ion-col col-2 style="text-align: center ; background-color: indigo; color: palevioletred;">
-                                  {{item.price}}
-                              </ion-col>
-                              <ion-col col-2 style="text-align: center ; background-color: indigo; color: palevioletred;">
-                                  {{item.qty}}
-                              </ion-col>
-                            </ion-row>
-                      </ion-item>
-                  </ion-list>  
+               
                
               </ion-grid>
             </ion-card>   

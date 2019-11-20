@@ -307,9 +307,18 @@ var SummaryHomePage = /** @class */ (function () {
         this.sp = sp;
         this.events = events;
         this.toastCtrl = toastCtrl;
+        this.expanded = true;
+        this.tstoday = 0;
+        this.tsmonth = 0;
+        this.ts30 = 0;
+        this.currentdatetime = new Date();
+        this.totalsaletoday = 0;
     }
     SummaryHomePage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad SummaryHomePage');
+        this.tstoday = 0;
+        this.tsmonth = 0;
+        this.ts30 = 0;
         this.getTransac();
     };
     SummaryHomePage.prototype.getTransac = function () {
@@ -317,7 +326,19 @@ var SummaryHomePage = /** @class */ (function () {
         this.sp.storageReady().then(function () {
             _this.sp.getTransactions().then(function (val) {
                 _this.listtransac = JSON.parse(val);
+                _this.listtransacrev = _this.listtransac.reverse();
                 console.log(_this.listtransac);
+                _this.listtransacrev.forEach(function (element) {
+                    if (_this.getDate(element.datetime) == _this.getDate(_this.currentdatetime)) {
+                        _this.tstoday += parseInt(element.totaldisc);
+                    }
+                    if (_this.getDate(element.datetime) > _this.getDate(_this.currentdatetime) - 30) {
+                        _this.ts30 += parseInt(element.totaldisc);
+                    }
+                    if (_this.getMonth(element.datetime) == _this.getMonth(_this.currentdatetime)) {
+                        _this.tsmonth += parseInt(element.totaldisc);
+                    }
+                });
             }).catch(function (err) {
                 alert("Error: " + err);
             });
@@ -327,12 +348,23 @@ var SummaryHomePage = /** @class */ (function () {
         //return (datetime.getDate() + "/" + (datetime.getMonth() + 1) + "/" + datetime. getFullYear())
         var temp = new Date(datetime);
         var temp1 = temp;
-        var t = temp.getDate() + "/" + temp.getMonth() + "/" + temp.getFullYear() + " " + temp.getHours() + ":" + temp.getMinutes();
+        var t = temp.getDate() + "/" + (temp.getMonth() + 1) + "/" + temp.getFullYear() + " " + temp.getHours() + ":" + temp.getMinutes();
+        return (t);
+    };
+    SummaryHomePage.prototype.getDate = function (datetime) {
+        var temp = new Date(datetime);
+        var temp1 = temp;
+        var t = temp.getDate();
+        return (t);
+    };
+    SummaryHomePage.prototype.getMonth = function (datetime) {
+        var temp = new Date(datetime);
+        var t = temp.getMonth();
         return (t);
     };
     SummaryHomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-summary-home',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\summary-home\summary-home.html"*/'<!--\n\n  Generated template for the SummaryHomePage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n    <ion-navbar color="dark">\n\n      <button ion-button menuToggle>\n\n        <ion-icon name="menu"></ion-icon>\n\n      </button>\n\n      <ion-title> ငွေပေးငွေယူအကျဉ်းချုပ် </ion-title>\n\n    </ion-navbar>\n\n  </ion-header>\n\n\n\n  <ion-content>\n\n<!-- \n\n  <ion-content padding>\n\n    <ion-searchbar showCancelButton="always" [(ngModel)]="searchterm" (ionChange)="filteredProduct()"></ion-searchbar>\n\n      <ion-item>\n\n        <ion-label>Select Category</ion-label>\n\n        <ion-select multiple="true" [(ngModel)]=\'selectedCat\' (ionChange)="filteredProduct()">\n\n            <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>    \n\n        </ion-select>\n\n      </ion-item>\n\n     -->\n\n      <ion-list inset  *ngFor="let transac of listtransac?.reverse()">\n\n        \n\n          <ion-card>\n\n              <ion-grid line>\n\n                  <ion-row style="padding-left: 10px; padding-bottom: 5px; ">\n\n                    <ion-col col-10 style="color: grey; font-size: 10px;"> {{getDateTime(transac.datetime)}} </ion-col>\n\n                    <ion-col col-2 style="text-align: center "><ion-icon name="cash" style="color: green"></ion-icon> </ion-col>\n\n                  </ion-row>\n\n                  <ion-row style="padding-left: 10px; padding-bottom: 10px;">\n\n                    <ion-col col-10><h2><b>စုစုပေါင်း: {{transac.totalsum}}</b></h2></ion-col>\n\n                    <ion-col col-2></ion-col>\n\n                  </ion-row>\n\n\n\n                  <ion-list *ngFor="let item of transac.itemslist">\n\n                      <ion-item>\n\n                          <ion-row  style="background-color: #f0f0f0">\n\n                              <ion-col col-8 style="text-align: center ; background-color: indigo; color: palevioletred;">\n\n                                {{item.name}}\n\n                              </ion-col>\n\n                              <ion-col col-2 style="text-align: center ; background-color: indigo; color: palevioletred;">\n\n                                  {{item.price}}\n\n                              </ion-col>\n\n                              <ion-col col-2 style="text-align: center ; background-color: indigo; color: palevioletred;">\n\n                                  {{item.qty}}\n\n                              </ion-col>\n\n                            </ion-row>\n\n                      </ion-item>\n\n                  </ion-list>  \n\n               \n\n              </ion-grid>\n\n            </ion-card>   \n\n        </ion-list>\n\n      \n\n    \n\n      \n\n    \n\n    \n\n    \n\n    \n\n    </ion-content>\n\n\n\n\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\summary-home\summary-home.html"*/,
+            selector: 'page-summary-home',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\summary-home\summary-home.html"*/'<!--\n\n  Generated template for the SummaryHomePage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n    <ion-navbar color="dark">\n\n      <button ion-button menuToggle>\n\n        <ion-icon name="menu"></ion-icon>\n\n      </button>\n\n      <ion-title> ငွေပေးငွေယူအကျဉ်းချုပ် </ion-title>\n\n    </ion-navbar>\n\n  </ion-header>\n\n\n\n  <ion-content>\n\n\n\n    <ion-item>\n\n        <span style="vertical-align: middle; display: inline-block; color: black; font-size: 1.5rem;" item-start>\n\n          Summarize:\n\n          </span>\n\n           <ion-toggle  color="dark" style="vertical-align: middle; display: inline-block" item-end [(ngModel)]="expanded"></ion-toggle>\n\n        \n\n      </ion-item>\n\n      <ion-item>\n\n          Total sales Today: {{tstoday}}\n\n          \n\n        </ion-item>\n\n        <ion-item>\n\n            Total sales for this month: {{tsmonth}}\n\n        </ion-item>\n\n        <ion-item>\n\n            Total sales for last 30 days : {{ts30}}\n\n        </ion-item>\n\n        \n\n\n\n      <ion-list inset  *ngFor="let transac of listtransacrev">\n\n        \n\n          <ion-card>\n\n              <ion-grid line>\n\n                  <ion-row style="padding-left: 10px; padding-bottom: 5px; ">\n\n                    <ion-col col-10 style="color: grey; font-size: 10px;"> {{getDateTime(transac.datetime)}} </ion-col>\n\n                    <ion-col col-2 style="text-align: center "><ion-icon name="cash" style="color: green"></ion-icon> </ion-col>\n\n                  </ion-row>\n\n\n\n                  <ion-list *ngFor="let item of transac.itemslist" [hidden]="expanded">\n\n                      \n\n                      <ion-row  style="padding: 0px;text-align: center ;  background-color: indigo; color: palevioletred;">\n\n                          <ion-col col-8>\n\n                            {{item.name}}\n\n                          </ion-col>\n\n                          <ion-col col-2 >\n\n                              {{item.price}}\n\n                          </ion-col>\n\n                          <ion-col col-2>\n\n                              {{item.qty}}\n\n                          </ion-col>\n\n                        </ion-row>\n\n                        <ion-row *ngIf="transac.totaldisc!=transac.totalsum" style="padding: 0px;text-align: center ;  background-color: silver; color: palevioletred;">\n\n                            <ion-col col-8>\n\n                               Total after discount ({{transac.discount}}%)\n\n                              </ion-col>\n\n                              <ion-col col-4 >\n\n                                  {{transac.totaldisc}}\n\n                              </ion-col>\n\n                        </ion-row>\n\n                        <ion-row *ngIf="transac.totalsum!=transac.totalatax" style="padding: 0px; text-align: center ;  background-color: silver; color: palevioletred;">\n\n                            <ion-col col-8>\n\n                                Total after tax ({{transac.taxrate}}%)\n\n                              </ion-col>\n\n                              <ion-col col-4 >\n\n                                  {{transac.totalatax}}\n\n                              </ion-col>\n\n                        </ion-row>\n\n              </ion-list> \n\n                  <ion-row style="padding-left: 10px; padding-bottom: 10px;">\n\n                    <ion-col col-10><h2><b>စုစုပေါင်း: {{transac.totaldisc}}</b></h2></ion-col>\n\n                  </ion-row>\n\n\n\n               \n\n               \n\n              </ion-grid>\n\n            </ion-card>   \n\n        </ion-list>\n\n      \n\n    \n\n      \n\n    \n\n    \n\n    \n\n    \n\n    </ion-content>\n\n\n\n\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\summary-home\summary-home.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Events */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ToastController */]])
