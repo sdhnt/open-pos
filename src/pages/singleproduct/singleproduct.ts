@@ -21,6 +21,7 @@ export class SingleProductPage {
   prodCode: any = "";
   prodName: any = "";
   prodPrice: number = 0;
+  prodWholesalePrice: number = 0;
   prodCost: number = 0;
   prodCat: any = "";
   listProduct: any;
@@ -184,6 +185,7 @@ export class SingleProductPage {
         "code": this.product.code,
         "name": this.product.name,
         "price": this.product.price,
+        "wholesale_price": this.product.wholesale_price,
         "cost": this.product.cost,
         "cat": this.product.cat,
         "url": this.product.url,

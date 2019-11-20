@@ -18,6 +18,7 @@ export class AddProductPage {
   prodCode: any = "";
   prodName: any = "";
   prodPrice: number = null;
+  prodWholesalePrice: number = null;
   prodCost: number = null;
   prodCat: any = "";
   listProduct: any;
@@ -195,6 +196,7 @@ export class AddProductPage {
         "code": this.prodCode,
         "name": this.prodName,
         "price": this.prodPrice,
+        "wholesale_price": this.prodWholesalePrice,
         "cost": this.prodCost,
         "cat": this.prodCat,
         "url": this.produrl,
@@ -214,6 +216,7 @@ export class AddProductPage {
           this.prodCode = "";
           this.prodName = "";
           this.prodPrice = 0;
+          this.prodWholesalePrice = 0;
           this.prodCat = "";
           this.prodCost = 0;
           this.produrl = "";
@@ -243,6 +246,7 @@ export class AddProductPage {
           "code": this.prodCode,
           "name": this.prodName,
           "price": this.prodPrice,
+          "wholesale_price": this.prodWholesalePrice,
           "cost": this.prodCost,
           "cat": this.prodCat,
           "url": this.produrl,
@@ -263,6 +267,7 @@ export class AddProductPage {
             this.prodCode = "";
             this.prodName = "";
             this.prodPrice = 0;
+            this.prodWholesalePrice = 0;
             this.prodCat = "";
             this.prodCost = 0;
             this.produrl = "";
