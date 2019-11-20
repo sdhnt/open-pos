@@ -30,16 +30,16 @@ export class LoginPage {
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
           //console.log(user)// User is signed in.
-          alertCtrl.create({
+          // alertCtrl.create({
   
-            subTitle:"ကြိုဆိုပါတယ် " + user.displayName,
-            buttons: [
-              {
-                text: 'Okay!',
-                role: 'cancel',
-              }
-              ],
-          }).present();
+          //   subTitle:"ကြိုဆိုပါတယ် " + user.displayName,
+          //   buttons: [
+          //     {
+          //       text: 'Okay!',
+          //       role: 'cancel',
+          //     }
+          //     ],
+          // }).present();
     
           sp.clearMem();
           sp.setMem().then(()=>{
@@ -60,6 +60,8 @@ export class LoginPage {
       });
     
     }
+
+
   
 
 loginWithFB(){
@@ -73,16 +75,16 @@ loginWithFB(){
           .then( success => {
             console.log("Firebase success" , success);
             var temp=success;
-            this.alertCtrl.create({
+            // this.alertCtrl.create({
   
-              subTitle:"ကြိုဆိုပါတယ် " + temp.additionalUserInfo.profile['first_name'],
-              buttons: [
-                {
-                  text: 'Okay!',
-                  role: 'cancel',
-                }
-                ],
-            }).present();
+            //   subTitle:"ကြိုဆိုပါတယ် " + temp.additionalUserInfo.profile['first_name'],
+            //   buttons: [
+            //     {
+            //       text: 'Okay!',
+            //       role: 'cancel',
+            //     }
+            //     ],
+            // }).present();
         
             this.loginProcedure();
           })
@@ -107,16 +109,16 @@ loginWithFB(){
         firebase.auth().signInWithEmailAndPassword(this.email, this.password)
         .then( (user) => {
         
-      this.alertCtrl.create({
+      // this.alertCtrl.create({
   
-        subTitle:"ကြိုဆိုပါတယ် " + user.user.displayName,
-        buttons: [
-          {
-            text: 'Okay!',
-            role: 'cancel',
-          }
-          ],
-      }).present();
+      //   subTitle:"ကြိုဆိုပါတယ် " + user.user.displayName,
+      //   buttons: [
+      //     {
+      //       text: 'Okay!',
+      //       role: 'cancel',
+      //     }
+      //     ],
+      // }).present();
       this.loginProcedure();
     
     

@@ -60,10 +60,8 @@ export class AllTransactionPage {
       this.flag_mode=1;
     }
 
-    this.delay(1000).then(()=>{
-      this.getUserData();    })
-
-
+    this.delay(3000).then(()=>{
+      this.getUserData();})
   }
 
   
@@ -159,6 +157,7 @@ async getUserData(){
   
 
 	btnClicked(btn) {
+    this.getUserData();
 
     try {
      

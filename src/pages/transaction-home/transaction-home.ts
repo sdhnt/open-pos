@@ -43,13 +43,11 @@ export class TransactionHomePage {
     
   }
 
-  private firstLoaded: boolean = false;
 async ionViewDidEnter() {
   console.log('ionViewDidLoad TransactionHomePage');
 
-  this.delay(1000).then(()=>{
-    this.getUserData();    })
-
+  this.delay(3000).then(()=>{
+    this.getUserData();})
 }
 
 async delay(ms: number) {
@@ -101,6 +99,7 @@ async getUserData(){
   }
 
   cashbtn(){
+    this.getUserData();
     this.toastCtrl.create({
       message: "ငွေလက်ကျန်: " + this.userdata.cash_balance,
       duration: 3000
