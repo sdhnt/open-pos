@@ -28,7 +28,7 @@ export class ExpensesHomePage {
   prodName="";
   minDate=new Date().toISOString();
   maxDate =  new Date(new Date().setFullYear(new Date().getFullYear() + 5)).toISOString();
-  expirydate=new Date();
+  expirydate=new Date().toISOString();
   currtime = new Date();
   listProducts: any=[];
   filteredList: any=[];
@@ -159,7 +159,7 @@ export class ExpensesHomePage {
         this.prodqty=null;
         this.prodcost=null;
         this.prodName="";
-        this.expirydate=new Date();
+        this.expirydate=new Date().toISOString();
         this.currtime = new Date();
         this.searchterm="";
         this.selectedCat=[];
