@@ -5,6 +5,7 @@ import { ThrowStmt } from '@angular/compiler';
 import { convertDataToISO } from 'ionic-angular/umd/util/datetime-util';
 import { LoginPage } from '../../pages/login/login';
 import { ToastController, NavController, Nav } from 'ionic-angular';
+import { notImplemented } from '@angular/core/src/render3/util';
 
 @Injectable()
 export class StorageProvider {
@@ -14,7 +15,7 @@ export class StorageProvider {
   products: any = [];
   categories: any = [];
   transactions: any = [];
-  login: any =[];
+  user: any =[];
 
   static get parameters() {
     return [[Storage]];
@@ -140,55 +141,35 @@ export class StorageProvider {
   }
 
 
-  
-  async backupStorageLogout() {
-    var uid;
-    var parseprod;
-    var parsetransac;
-    var parsecat;
+  addUserDat(data){
+    this.storage.ready().then(()=>{
+      this.storage.get('user').then((val)=>{
+        if(val === null || val=="null"){
 
-      this.storage.ready().then(() => {
-      this.storage.get('products').then((val) => {
-        parseprod = JSON.parse(val);
-        this.storage.get('transactions').then((val) => {
-          parsetransac = JSON.parse(val);
-          this.storage.get('categories').then((val) => {
-            parsecat = JSON.parse(val);
-
-            
-            const snapshot = firebase.firestore().collection('users').where("owner", "==", firebase.auth().currentUser.uid).get()
-            .then(function (querySnapshot) {
-              querySnapshot.forEach(function (doc) {
-                uid = doc.id;
-                console.log(uid);
-                firebase.firestore().collection("users").doc(uid).update({
-                  "products": parseprod,
-                  "transactions": parsetransac,
-                  "categories": parsecat,
-                }).then(()=>{}).catch((err) => {
-                  console.log(err)
-                });
-              });
+          this.storage.set('user', "[]").then(() => {
+            this.storage.get('user').then((valNull) => {
+              this.user = JSON.parse(valNull);
+              this.user.push(data);
+              this.storage.set('user', JSON.stringify(this.user));
             })
-            .catch(function (error) {
-              console.log("Error getting documents: ", error);
-            });
-
-
-
-
-          
-          }).catch(err => {
-            alert("lol  "+err);
           })
-        }).catch(err => {
-          alert("lmao!");
-        })
-      }).catch(err => {
-        alert("dickk");
+
+        }//end if
+        else{
+          this.user = JSON.parse(val);
+          this.user.push(data);
+          this.storage.set('user', JSON.stringify(this.categories));
+        } 
+      })//end then storage get
+      .catch(err => {
+        alert(err);
       })
-    })
+    })//end then storage ready
   }
+
+
+
+
 
   addCategory(data) {
     this.storage.ready().then(() => {
@@ -212,6 +193,28 @@ export class StorageProvider {
       })
     })
   }
+
+  getCategories() {
+    return this.storage.get('categories');
+  }
+
+  deleteCategory(data) {
+    this.storage.ready().then(() => {
+      this.storage.get('categories').then((val) => {
+        this.categories = JSON.parse(val);
+        let arr = [];
+        let arr2 = [];
+        arr = this.categories;
+        arr2 = arr.filter((val) => {
+          return (val.name != data.name);
+        })
+        this.storage.set('categories', JSON.stringify(arr2));
+      }).catch(err => {
+        alert(err + 1);
+      })
+    })
+  }
+
 
   addProduct(data) {
     this.storage.ready().then(() => {
@@ -269,10 +272,6 @@ export class StorageProvider {
 
   getTransactions() {
     return this.storage.get('transactions');
-  }
-
-  getCategories() {
-    return this.storage.get('categories');
   }
 
   searchProduct(barcode) {
@@ -374,23 +373,6 @@ export class StorageProvider {
           return (val.code != data.code && val.name != data.name);
         })
         this.storage.set('products', JSON.stringify(arr2));
-      }).catch(err => {
-        alert(err + 1);
-      })
-    })
-  }
-
-  deleteCategory(data) {
-    this.storage.ready().then(() => {
-      this.storage.get('categories').then((val) => {
-        this.categories = JSON.parse(val);
-        let arr = [];
-        let arr2 = [];
-        arr = this.categories;
-        arr2 = arr.filter((val) => {
-          return (val.name != data.name);
-        })
-        this.storage.set('categories', JSON.stringify(arr2));
       }).catch(err => {
         alert(err + 1);
       })

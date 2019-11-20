@@ -37,8 +37,6 @@ export class ExpensesHomePage {
   listCat : any;
   totalamt=0.0;
 
-
-
   ionViewDidLoad() {
     console.log('ionViewDidLoad ExpensesHomePage');
     console.log(this.currtime);
@@ -47,10 +45,10 @@ export class ExpensesHomePage {
   }
 
   updatebalance(edited: string){
-    if(this.prodcostitem!=null && this.prodqty!=null && edited=="prodcostitem"){
+    if(this.prodcostitem!=null && this.prodqty!=null && (edited=="prodcostitem" ||edited=="prodqty")){
       this.prodcost=this.prodqty*this.prodcostitem;
     }
-    else if(this.prodcost!=null && this.prodqty!=null && edited=="prodcost"){
+    else if(this.prodcost!=null && this.prodqty!=null && (edited=="prodcost" ||edited=="prodqty")){
       this.prodcostitem=this.prodcost/this.prodqty;
     }
   }

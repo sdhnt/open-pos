@@ -48,13 +48,14 @@ export class AddProductPage {
     console.log(firebase.auth().currentUser.uid);
     var ud;
     var uu;
+    var user;
     const snapshot = await firebase.firestore().collection('users').where("owner", "==", firebase.auth().currentUser.uid).get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-          // doc.data() is never undefined for query doc snapshots
-          //console.log(doc.id, " => ", doc.data());
           uu = doc.id;
           ud = doc.data();
+          user=doc;
+          
           //this.userdata=doc.data();       
         });
       })
@@ -63,8 +64,8 @@ export class AddProductPage {
       });
     this.userdata = ud;
     this.uid = uu;
+    this.sp.addUserDat(user);
     console.log(this.userdata);
-
   }
 
   newprodCat: any = "";

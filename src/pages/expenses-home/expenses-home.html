@@ -79,7 +79,7 @@
         </ion-item>
     <ion-item>
       <ion-label>Prod qty</ion-label>
-      <ion-input type="number" [(ngModel)]='prodqty'></ion-input>
+      <ion-input type="number" [(ngModel)]='prodqty' (ionChange)="updatebalance('prodqty')"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Cost per item</ion-label>
