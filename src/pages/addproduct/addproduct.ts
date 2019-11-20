@@ -78,7 +78,7 @@ export class AddProductPage {
       });
     this.userdata = ud;
     this.uid = uu;
-    this.sp.addUserDat(user);
+    //this.sp.addUserDat(user);
     console.log(this.userdata);
   }
 

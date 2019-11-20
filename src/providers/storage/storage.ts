@@ -194,7 +194,7 @@ export class StorageProvider {
   
 //   updateUserDat(data) {
 //     return new Promise((resolve, reject) => {
-//       this.storage.get('user').then(async (val) => {
+//       this.storage.get('').then(async (val) => {
 //         if (val != null) {
 //           this.user = data;//update temp variable
 //           this.storage.set('user', JSON.stringify(this.user));
