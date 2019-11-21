@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, Tabs, Events } from 'ionic-angular';
 import { AddProductPage } from '../addproduct/addproduct';
-import { ListPage } from '../list/list';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { AlertController } from 'ionic-angular';
 import { StorageProvider} from '../../providers/storage/storage';
@@ -11,7 +10,8 @@ import firebase from 'firebase';
 import { LoginPage } from '../login/login';
 import { ProductListPage } from '../product-list/product-list';
 import { AddProductCategoryPage } from '../add-product-category/add-product-category';
-
+import { TranslateModule } from "@ngx-translate/core";
+import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 
 @Component({
   selector: 'page-dashboard',
@@ -37,7 +37,7 @@ export class DashboardPage {
   
 
 
-  constructor(public navCtrl: NavController,
+  constructor(public navCtrl: NavController, private translateConfigService: TranslateConfigService,
       private barcodeScanner: BarcodeScanner,
       public alertCtrl: AlertController,
       public sp: StorageProvider,
@@ -137,10 +137,6 @@ async getUserData(){
 
   addproduct(){
     this.navCtrl.push(AddProductPage);
-  }
-
-  showproduct(){
-    this.navCtrl.push(ListPage);
   }
 
   manual() {

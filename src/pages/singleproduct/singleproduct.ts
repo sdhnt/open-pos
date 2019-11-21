@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { StorageProvider} from '../../providers/storage/storage';
-import { ListPage } from '../list/list';
 import { ToastController } from 'ionic-angular';
 import { ProductListPage } from '../product-list/product-list';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import firebase from 'firebase';
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { TranslateModule } from "@ngx-translate/core";
+import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 
 @Component({
   selector: 'page-single-product',
@@ -29,7 +30,7 @@ export class SingleProductPage {
 
   formProduct: FormGroup;
 
-  constructor(public navCtrl: NavController,
+  constructor(public navCtrl: NavController, private translateConfigService: TranslateConfigService,
               public barcodeScanner: BarcodeScanner,
               public navParams: NavParams,
               public sp: StorageProvider,

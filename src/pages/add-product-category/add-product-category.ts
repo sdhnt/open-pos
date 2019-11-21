@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { StorageProvider } from '../../providers/storage/storage';
+import { TranslateConfigService } from "../../providers/translation/translate-config.service";
+
+
 
 /**
  * Generated class for the AddProductCategoryPage page.
@@ -16,7 +19,7 @@ import { StorageProvider } from '../../providers/storage/storage';
 })
 export class AddProductCategoryPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public sp: StorageProvider, public toastCtrl : ToastController) {
+  constructor(public navCtrl: NavController, private translateConfigService: TranslateConfigService,public navParams: NavParams, public sp: StorageProvider, public toastCtrl : ToastController) {
   }
 
   ionViewDidLoad() {

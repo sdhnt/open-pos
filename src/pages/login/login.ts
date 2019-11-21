@@ -25,9 +25,13 @@ export class LoginPage {
   password: string="";
   selectedLanguage: string;
 
-  constructor(public navCtrl: NavController, public zone: NgZone,
+  listOfLang: String[] = [];
+
+  constructor(public navCtrl: NavController, public zone: NgZone, 
     public navParams: NavParams, public toastCtrl: ToastController, public facebook: Facebook, 
     public sp: StorageProvider, public alertCtrl: AlertController, private translateConfigService: TranslateConfigService) {
+
+      this.loadDropDowns();
 
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
@@ -65,6 +69,19 @@ export class LoginPage {
     
     }
 
+    language;
+
+
+    loadDropDowns(){
+      firebase.firestore().collection("sign-up").get()
+      .then((doc) => {
+        doc.docs[0].data().language.forEach((l)=>{
+          this.listOfLang.push(l);
+          console.log(this.listOfLang)
+        })
+      })
+    }
+  
 
   
 

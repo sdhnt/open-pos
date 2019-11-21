@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, ToastController } from 'ionic-angular';
 import { StorageProvider } from '../../providers/storage/storage';
 import firebase from 'firebase';
+import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 
 /**
  * Generated class for the ExpensesHomePage page.
@@ -17,7 +18,7 @@ import firebase from 'firebase';
 })
 export class ExpensesHomePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController, private translateConfigService: TranslateConfigService,public navParams: NavParams,
     public sp: StorageProvider, public events: Events, public toastCtrl: ToastController,
     ) {
   }

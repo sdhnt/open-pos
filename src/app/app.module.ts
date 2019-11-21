@@ -5,7 +5,6 @@ import { ReactiveFormsModule } from "@angular/forms";
 
 import { MyApp } from './app.component';
 import { DashboardPage } from '../pages/dashboard/dashboard';
-import { ListPage } from '../pages/list/list';
 import { AddProductPage } from '../pages/addproduct/addproduct';
 import { SingleProductPage } from '../pages/singleproduct/singleproduct';
 import { LoginPage } from '../pages/login/login';
@@ -30,7 +29,6 @@ import { TransactionHomePage } from '../pages/transaction-home/transaction-home'
 import { AllTransactionPage } from '../pages/all-transaction/all-transaction';
 import { ExpenseTransactionPage } from '../pages/expense-transaction/expense-transaction';
 import { IncomeTransactionPage } from '../pages/income-transaction/income-transaction';
-import { CalculatorPage } from '../pages/calculator/calculator';
 import { SummaryHomePage } from '../pages/summary-home/summary-home';
 import { CoachHomePage } from '../pages/coach-home/coach-home';
 import { CoachGoalsPage } from '../pages/coach-goals/coach-goals';
@@ -43,7 +41,6 @@ import { AddProductCategoryPage } from '../pages/add-product-category/add-produc
 import { ExpensesHomePage } from '../pages/expenses-home/expenses-home';
 import { AddProductCategoryPageModule } from '../pages/add-product-category/add-product-category.module';
 import { AllTransactionPageModule } from '../pages/all-transaction/all-transaction.module';
-import { CalculatorPageModule } from '../pages/calculator/calculator.module';
 import { CoachBusinesstipsPageModule } from '../pages/coach-businesstips/coach-businesstips.module';
 import { CoachHomePageModule } from '../pages/coach-home/coach-home.module';
 import { CoachGoalsPageModule } from '../pages/coach-goals/coach-goals.module';
@@ -92,7 +89,7 @@ export function LanguageLoader(http: HttpClient) {
     MyApp,
 
     DashboardPage,
-    ListPage,
+   
     AddProductPage,
     SingleProductPage,
     
@@ -103,7 +100,6 @@ export function LanguageLoader(http: HttpClient) {
     IonicStorageModule.forRoot(),
     AddProductCategoryPageModule,
     AllTransactionPageModule,
-    CalculatorPageModule,
     CoachBusinesstipsPageModule,
     CoachHomePageModule,
     CoachGoalsPageModule,
@@ -132,7 +128,6 @@ export function LanguageLoader(http: HttpClient) {
   entryComponents: [
     MyApp,
     DashboardPage,
-    ListPage,
     AddProductPage,
     SingleProductPage,
     LoginPage,
@@ -141,7 +136,6 @@ export function LanguageLoader(http: HttpClient) {
     ExpenseTransactionPage,
     IncomeTransactionPage,
     AllTransactionPage,
-    CalculatorPage,
     CoachHomePage,
     SummaryHomePage,
     CoachGoalsPage,

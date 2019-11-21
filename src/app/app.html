@@ -1,17 +1,17 @@
 <ion-menu [content]="content" type="overlay">
   <ion-header>
     <ion-toolbar>
-      <ion-title>မီနူး</ion-title>
+      <ion-title>{{Menu | translate}}</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <ion-content>
     <ion-list>
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        {{p.title}}
+        {{p.title | translate}}
       </button>
       <button menuClose ion-item (click)="logout()" >
-        ဒီအကောင့်မှထွက်ပါ
+        {{'Logout'| translate}}
       </button>
       
        

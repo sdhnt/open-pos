@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import firebase from 'firebase';
+import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 
 /**
  * Generated class for the ContactUsPage page.
@@ -19,7 +20,7 @@ export class ContactUsPage {
   email: String = "";
   phone: String = "";
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController,private translateConfigService: TranslateConfigService, public navParams: NavParams) {
     this.getInfo();
   }
 

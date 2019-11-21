@@ -13,6 +13,7 @@ import { CoachHomePage } from '../pages/coach-home/coach-home';
 import { ContactUsPage } from '../pages/contact-us/contact-us';
 import { StorageProvider } from '../providers/storage/storage';
 import { ExpensesHomePage } from '../pages/expenses-home/expenses-home';
+import { TranslateConfigService } from '../providers/translation/translate-config.service';
 
 @Component({
   templateUrl: 'app.html'
@@ -24,17 +25,17 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, 
+  constructor(public platform: Platform, public statusBar: StatusBar, private translateConfigService: TranslateConfigService,
     public splashScreen: SplashScreen, public toastCtrl: ToastController) {
 
     this.initializeApp();
     this.pages = [
-      { title: 'ဝင်ငွေ', component: TransactionHomePage },
-      { title: 'ထုတ်ကုန်များ', component: DashboardPage },
-      { title: 'စစရိတ်', component: ExpensesHomePage },
-      { title: 'စီးပွားရေး', component: SummaryHomePage },
-      { title: 'ဆရာ', component: CoachHomePage },
-      { title: 'ကူညီပါ', component: ContactUsPage },
+      { title: 'Sales', component: TransactionHomePage },
+      { title: 'Products', component: DashboardPage },
+      { title: 'Expense', component: ExpensesHomePage },
+      { title: 'Business', component: SummaryHomePage },
+      { title: 'Coach', component: CoachHomePage },
+      { title: 'Contact Us', component: ContactUsPage },
     ];
   }
 
@@ -44,7 +45,7 @@ export class MyApp {
     //this.sp.backupStorageLogout().then();
     firebase.auth().signOut().then(()=>{
       this.toastCtrl.create({
-        message: "ဆိုင်းအောက်",
+        message:"{{ 'Logged out!' | translate }}",
         duration: 3000
       }).present()
       this.nav.setRoot(LoginPage);

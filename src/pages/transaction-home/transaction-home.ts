@@ -1,14 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Tabs, ToastController, Events } from 'ionic-angular';
-import { ListPage } from '../list/list';
 import firebase from 'firebase';
 import { AddProductPage } from '../addproduct/addproduct';
 import { AllTransactionPage } from '../all-transaction/all-transaction'
 import { IncomeTransactionPage } from '../income-transaction/income-transaction';
 import { ExpenseTransactionPage } from '../expense-transaction/expense-transaction';
-import { CalculatorPage } from '../calculator/calculator';
 import { TransactionProductPage } from '../transaction-product/transaction-product';
 import { StorageProvider } from '../../providers/storage/storage';
+import { TranslateConfigService } from "../../providers/translation/translate-config.service";
+
 /**
  * Generated class for the TransactionHomePage page.
  *
@@ -32,7 +32,7 @@ export class TransactionHomePage {
   
   //Calculator = CalculatorPage;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, 
+  constructor(public navCtrl: NavController, public navParams: NavParams, private translateConfigService: TranslateConfigService,
     public toastCtrl: ToastController,public sp: StorageProvider,
     public events: Events) {
     //this.getUserData();

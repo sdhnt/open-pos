@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, Events } from 'ionic-angular';
 import { StorageProvider } from '../../providers/storage/storage';
 import Moment from 'moment';
+import { TranslateConfigService } from "../../providers/translation/translate-config.service";
+
 /**
  * Generated class for the SummaryHomePage page.
  *
@@ -16,7 +18,7 @@ import Moment from 'moment';
 })
 export class SummaryHomePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,public sp: StorageProvider, public events: Events, 
+  constructor(public navCtrl: NavController, private translateConfigService: TranslateConfigService,public navParams: NavParams,public sp: StorageProvider, public events: Events, 
     public toastCtrl: ToastController) {
 
       

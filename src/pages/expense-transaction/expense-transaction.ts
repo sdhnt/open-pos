@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 
 /**
  * Generated class for the ExpenseTransactionPage page.
@@ -15,7 +16,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ExpenseTransactionPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, private translateConfigService: TranslateConfigService,public navParams: NavParams) {
   }
 
   ionViewDidLoad() {

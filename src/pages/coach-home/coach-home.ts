@@ -5,6 +5,7 @@ import { CoachCoachPage } from '../coach-coach/coach-coach';
 import { CoachBusinesstipsPage } from '../coach-businesstips/coach-businesstips';
 import { ContactUsPageModule } from '../contact-us/contact-us.module';
 import { ContactUsPage } from '../contact-us/contact-us';
+import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 
 /**
  * Generated class for the CoachHomePage page.
@@ -26,7 +27,7 @@ export class CoachHomePage {
   Coach=CoachCoachPage;
   Tips=CoachBusinesstipsPage;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController,private translateConfigService: TranslateConfigService, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {

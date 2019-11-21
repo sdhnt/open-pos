@@ -5,6 +5,7 @@ import firebase from 'firebase';
 import { StorageProvider } from '../../providers/storage/storage';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { ThrowStmt } from '@angular/compiler';
+import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 
 /**
  * Generated class for the IncomeTransactionPage page.
@@ -22,7 +23,7 @@ export class IncomeTransactionPage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, 
-    public sp: StorageProvider, public toastCtrl: ToastController,
+    public sp: StorageProvider, public toastCtrl: ToastController, private translateConfigService: TranslateConfigService,
     private barcodeScanner: BarcodeScanner) {
     
     //console.log("Recieved -1" + this.navParams.get('itemslist'));

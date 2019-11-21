@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, Events, Tabs } from 'ionic-angular
 import { IncomeTransactionPage } from '../income-transaction/income-transaction';
 import firebase from 'firebase';
 import { StorageProvider } from '../../providers/storage/storage';
+import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 
 /**
  * Generated class for the AllTransactionPage page.
@@ -21,7 +22,7 @@ export class AllTransactionPage {
   
   
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController, private translateConfigService: TranslateConfigService,
     public navParams: NavParams, public events: Events,
     public sp: StorageProvider,
     ) {

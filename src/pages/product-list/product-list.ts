@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, ToastController } from 'ionic-angular';
 import { StorageProvider } from '../../providers/storage/storage';
 import { SingleProductPage } from '../singleproduct/singleproduct';
+import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 
 /**
  * Generated class for the ProductListPage page.
@@ -28,7 +29,7 @@ export class ProductListPage {
   filteredList: any;
   listArray: any =[];
   listCat : any;
-  constructor(public navCtrl: NavController, public navParams: NavParams,public sp: StorageProvider, public events: Events, 
+  constructor(public navCtrl: NavController, private translateConfigService: TranslateConfigService,public navParams: NavParams,public sp: StorageProvider, public events: Events, 
     public toastCtrl: ToastController) {
 
     this.events.subscribe('prodAdd:created',(data) => {

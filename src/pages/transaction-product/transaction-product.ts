@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, Events, Tabs } from 'ionic-angular';
 import { StorageProvider } from '../../providers/storage/storage';
+import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 
 /**
  * Generated class for the TransactionProductPage page.
@@ -16,7 +17,7 @@ import { StorageProvider } from '../../providers/storage/storage';
 })
 export class TransactionProductPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public sp: StorageProvider, public events: Events,
+  constructor(public navCtrl: NavController, private translateConfigService: TranslateConfigService, public navParams: NavParams, public sp: StorageProvider, public events: Events,
     public toastCtrl: ToastController) {
 
       this.event=false;

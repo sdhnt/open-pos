@@ -5,6 +5,8 @@ import { DashboardPage } from '../dashboard/dashboard';
 import { AllTransactionPage } from '../all-transaction/all-transaction';
 import { TransactionHomePage } from '../transaction-home/transaction-home';
 import { StorageProvider } from '../../providers/storage/storage';
+import { TranslateConfigService } from "../../providers/translation/translate-config.service";
+
 
 
 
@@ -41,10 +43,11 @@ export class SignUpPage {
   taxrate: number;
   nextbtn=0;
   constructor(public navCtrl: NavController, public navParams: NavParams,
-     public toastCtrl: ToastController, public sp: StorageProvider,
+     public toastCtrl: ToastController, public sp: StorageProvider, private translateConfigService: TranslateConfigService,
       public alertCtrl: AlertController) {
     this.nextbtn=0;
     this.loadDropDowns();
+   
   }
 
   ionViewDidLoad() {
