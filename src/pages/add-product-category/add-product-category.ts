@@ -54,7 +54,7 @@ export class AddProductCategoryPage {
       this.sp.addCategory(data);
       setTimeout(()=> {
         let toast = this.toastCtrl.create({
-          message: 'ပြီးပြီ',
+          message: 'Finish',
           duration: 3000
         });
         this.newprodCat="";
@@ -76,7 +76,7 @@ export class AddProductCategoryPage {
       this.sp.backupStorage();
       setTimeout(()=> {
         let toast = this.toastCtrl.create({
-          message: 'ပြီးပြီ',
+          message: 'Finish',
           duration: 3000
         });
         this.getCategories();
