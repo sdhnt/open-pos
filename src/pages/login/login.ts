@@ -5,6 +5,7 @@ import {SignUpPage} from '../sign-up/sign-up';
 import { TransactionHomePage } from '../transaction-home/transaction-home';
 import { StorageProvider } from '../../providers/storage/storage';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
+import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 
 /**
  * Generated class for the LoginPage page.
@@ -22,10 +23,11 @@ export class LoginPage {
 
   email: string="";
   password: string="";
+  selectedLanguage: string;
 
   constructor(public navCtrl: NavController, public zone: NgZone,
     public navParams: NavParams, public toastCtrl: ToastController, public facebook: Facebook, 
-    public sp: StorageProvider, public alertCtrl: AlertController,) {
+    public sp: StorageProvider, public alertCtrl: AlertController, private translateConfigService: TranslateConfigService) {
 
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
@@ -58,6 +60,8 @@ export class LoginPage {
           console.log("no-user is signed in")
         }
       });
+
+      this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
     
     }
 
@@ -162,6 +166,11 @@ loginWithFB(){
         
         });
   
+    }
+
+    languageChanged(){
+        console.log(`selected language: ${this.selectedLanguage}`);
+        this.translateConfigService.setLanguage(this.selectedLanguage);
     }
   
 

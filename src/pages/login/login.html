@@ -28,7 +28,18 @@
   </ion-grid>
 
 
-  <button ion-button block clear color="light" style="margin-top: 10px;" (click)="gotoSignUp()">အကောင့်မရှိဘူးလား</button> 
+  <button ion-button block clear color="light" style="margin-top: 10px;" (click)="gotoSignUp()">အကောင့်မရှိဘူးလား</button>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Select language</ion-label>
+      <ion-select multiple="false" placeholder="Select One" [(ngModel)]="selectedLanguage" (ionChange)="languageChanged()">
+        <ion-option value="en">English</ion-option>
+        <ion-option value="my">Burmese</ion-option>
+        <ion-option value="fil">Filipino</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
   
 
 </ion-content>
