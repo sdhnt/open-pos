@@ -181,9 +181,17 @@ export class AddProductPage {
   produrl: any = "";
 
   addproduct() {
-    if (!this.formProduct.valid || this.prodCat === "New") {
-      console.log('invalid product with missing fields');
+    if (!this.formProduct.valid || (this.prodCat == "New"&& this.newprodCat=="")) {
+
+      this.toastCtrl.create({
+        message: "Incomplete",
+        duration: 1000,
+      }).present();
     } else {
+
+
+
+      //old
       if (this.newprodCat != "") {
         this.addCategory();
         this.prodCat = this.newprodCat;
@@ -220,12 +228,12 @@ export class AddProductPage {
             });
             this.prodCode = "";
             this.prodName = "";
-            this.prodPrice = 0;
-            this.prodWholesalePrice = 0;
+            this.prodPrice = null;
+            this.prodWholesalePrice = null;
             this.prodCat = "";
-            this.prodCost = 0;
+            this.prodCost = null;
             this.produrl = "";
-            this.currstock=0;
+            this.currstock=null;
             this.image = "";
 
             this.sp.backupStorage();

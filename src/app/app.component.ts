@@ -34,7 +34,7 @@ export class MyApp {
       { title: 'Products', component: DashboardPage },
       { title: 'Expense', component: ExpensesHomePage },
       { title: 'Business', component: SummaryHomePage },
-      { title: 'Coach', component: CoachHomePage },
+     // { title: 'Coach', component: CoachHomePage },
       { title: 'Contact Us', component: ContactUsPage },
     ];
   }
@@ -45,7 +45,7 @@ export class MyApp {
     //this.sp.backupStorageLogout().then();
     firebase.auth().signOut().then(()=>{
       this.toastCtrl.create({
-        message:"{{ 'Logged out!' | translate }}",
+        message:"Logged out!",
         duration: 3000
       }).present()
       this.nav.setRoot(LoginPage);

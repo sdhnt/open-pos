@@ -109,6 +109,9 @@ export class SignUpPage {
         cash_balance: this.cb,
         discount: this.discount,
         taxrate: this.taxrate,
+        categories: [{name:"Example"}],
+        products: [{cat:"Example",code:"0000",cost:"0", name:"Example Product",price:"0",stock_qty:"0",url:"https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y",wholesale_price:"0",}],
+        transactions:[{datetime: new Date(),discount:0,discountlist:[],itemslist:[{cat:"Example",code:"0000",cost:"0", name:"Example Product",price:"0",stock_qty:"0",}],pnllist:[],prodidlist:[],taxrate:0,totalatax:0,totaldisc:0,totalsum:0,}]
       }).then(async (doc) => {
         console.log(doc);
       this.alertCtrl.create({
