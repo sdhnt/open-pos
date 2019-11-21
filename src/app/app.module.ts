@@ -20,6 +20,10 @@ import { ToastController } from 'ionic-angular';
 import { GettersetterProvider } from '../providers/gettersetter/gettersetter';
 import { Camera } from '@ionic-native/camera'; 
 import { Facebook } from '@ionic-native/facebook';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateConfigService } from '../providers/translation/translate-config.service';
 
 import * as firebase from 'firebase';
 import { TransactionHomePage } from '../pages/transaction-home/transaction-home';
@@ -77,6 +81,11 @@ var config = {
 
 firebase.initializeApp(config);
 
+// language translation service
+export function LanguageLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
+}
+
 
 @NgModule({
   declarations: [
@@ -109,8 +118,15 @@ firebase.initializeApp(config);
     TransactionProductPageModule,
     ProductListPageModule,
     ExpensesHomePageModule,
-    ReactiveFormsModule
-
+    ReactiveFormsModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (LanguageLoader),
+        deps: [HttpClient]
+      }
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -148,6 +164,7 @@ firebase.initializeApp(config);
     GettersetterProvider,
     Camera,
     Facebook,
+    TranslateConfigService,
   ]
 })
 export class AppModule {}
