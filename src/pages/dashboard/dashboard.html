@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>ထုတ်ကုန်</ion-title>
+    <ion-title>{{"Products"|translate}}</ion-title>
     <ion-buttons end><button ion-button (click)="uploadbtn()"><ion-icon name="cloud-upload" style="align-self: center; color: white;" padding></ion-icon></button></ion-buttons>
     <ion-buttons end><button ion-button (click)="cashbtn()"><ion-icon name="logo-usd" style="align-self: center; color: white;" padding></ion-icon></button></ion-buttons>
   
@@ -13,9 +13,9 @@
 <ion-content>
 
     <ion-tabs tabsPlacement="top" #myTabs>
-        <ion-tab [root]="ViewList" tabTitle="ထုတ်ကုန်များစာရင်း" tabIcon="list-box"></ion-tab>
-        <ion-tab [root]="AddProd" tabTitle="ထုတ်ကုန်ထည့်ပါ" tabIcon="pricetag"></ion-tab>
-        <ion-tab [root]="AddCat" tabTitle="အမျိုးအစား" tabIcon="albums"></ion-tab>
+        <ion-tab [root]="ViewList" tabTitle="{{'Stock'|translate}}" tabIcon="list-box"></ion-tab>
+        <ion-tab [root]="AddProd" tabTitle="{{'Add Product'|translate}}" tabIcon="pricetag"></ion-tab>
+        <ion-tab [root]="AddCat" tabTitle="{{'Add Category'|translate}}" tabIcon="albums"></ion-tab>
   
     
        </ion-tabs>

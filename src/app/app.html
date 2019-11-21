@@ -1,7 +1,17 @@
 <ion-menu [content]="content" type="overlay">
   <ion-header>
     <ion-toolbar>
-      <ion-title>{{Menu | translate}}</ion-title>
+      <ion-row>
+        <button ion-button block medium color="dark">{{'Menu' | translate}}</button> 
+      </ion-row>
+
+      <ion-row>
+          <button ion-button block small outline color="dark">{{'View User Profile' | translate}}</button>
+      </ion-row>
+      
+
+
+      
     </ion-toolbar>
   </ion-header>
 

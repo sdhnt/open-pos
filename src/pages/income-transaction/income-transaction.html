@@ -6,8 +6,7 @@
 -->
 
 <ion-content padding>
-  {{temp}}
-
+ 
 
     <ion-card >
 
@@ -19,16 +18,16 @@
             <ion-col col-12 style="color: grey;  text-align: center"> {{userdata?userdata.business_address:null}}</ion-col>
         </ion-row>
         <ion-row>
-            <ion-col col-12 style="color: grey; text-align: center">  Ph: {{userdata?userdata.ph_no:null}}</ion-col>
+            <ion-col col-12 style="color: grey; text-align: center">  {{userdata?userdata.ph_no:null}}</ion-col>
         </ion-row>
 
-        <ion-row style="padding-top: 5px;">
-          <ion-col col-1 style="color: black;   text-align: center"><b>Sl</b></ion-col>
-          <ion-col col-4 style="color: black;   text-align: left"><b>ပစ္စည်း</b></ion-col>
-          <ion-col col-2 style="color: black;   text-align: center"><b>လက်လီဈေးနှုန်း</b></ion-col>
-          <ion-col col-2 style="color: black;   text-align: center"><b>ပမာဏ</b></ion-col>
+            <ion-row style="padding-top: 5px;">
+            <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><b>{{"Sl" | translate}}</b></ion-col>
+            <ion-col col-4 style="color: black; font-size: 10px; text-align: center"><b>{{"Name" | translate}}</b></ion-col>
+            <ion-col col-2 style="color: black; font-size: 10px; text-align: center"><b>{{"Price"| translate}}</b></ion-col>
+            <ion-col col-2 style="color: black; font-size: 10px; text-align: center"><b>{{"Qty"| translate}}</b></ion-col>
             <ion-col col-3></ion-col>
-        </ion-row>
+             </ion-row>
        
 
         <ion-list *ngFor="let item of datastore.itemslist; let i = index" no-lines>
@@ -38,7 +37,7 @@
               <ion-col col-1 style="color: black; text-align: center;">{{i+1}}.</ion-col>
               <ion-col col-4 style="color: black; text-align: center;">
                 <div *ngIf="item.name=='ထုတ်ကုန်'; else itemexist">
-                  <button ion-button full (click)="addSingleProd(item,i)">ရွေးချယ်ပါ</button>
+                  <button ion-button small (click)="addSingleProd(item,i)">{{"Choose"|translate}}</button>
                 </div>
                 <ng-template #itemexist>{{item.name}}</ng-template>
               </ion-col>
@@ -54,50 +53,50 @@
         </ion-list>
         <ion-row padding>
             <ion-col col-1></ion-col>  
-          <ion-col col-4 style="text-align: center; font-size: 1.0rem; "><b>စုစုပေါင်း:</b> </ion-col>
+          <ion-col col-4 style="text-align: center; font-size: 1.0rem; "><b>{{"Grand total:"|translate}}</b> </ion-col>
             <ion-col col-2 style="text-align: center; ">{{lastsum}} </ion-col>
             <ion-col col-5></ion-col>
           </ion-row>
 
 
           <ion-row *ngIf="discbtn==0">
-              <button ion-button (click)="setDisc()">Add Discount</button>
+              <button ion-button small (click)="setDisc()">{{"Add Discount"|translate}}</button>
             </ion-row>
           <ion-row *ngIf="discbtn==1">
-            <ion-col col-5>   <ion-label style="font-size: 1.0rem;">Discount Rate %:</ion-label></ion-col>
+            <ion-col col-5>   <ion-label style="font-size: 1.0rem;">{{"Discount Rate %:"|translate}}</ion-label></ion-col>
             <ion-col col-7>
                 <ion-input type="number" placeholder="အရေအတွက်" [(ngModel)]="discount" style="font-size: 1.3rem; " (input)="updateRec()" ngDefaultControl>
                   </ion-input>
             </ion-col>       
           </ion-row>
           <ion-row *ngIf="discount!=0">
-            <ion-col col-5 style="text-align: left; font-size: 1.0rem; ">လျှော့စျေးပြီးနောက်စုစုပေါင်း: </ion-col>
+            <ion-col col-5 style="text-align: left; font-size: 1.0rem; ">{{"Discounted Total:"|translate}}</ion-col>
               <ion-col col-7 style="text-align: left; ">{{lastsumdisc}}</ion-col>
             </ion-row>
             <ion-row *ngIf="discbtn==1">
-                <button ion-button (click)="remDisc()">Remove Discount</button>
+                <button ion-button small (click)="remDisc()">{{"Remove Discount"|translate}}</button>
               </ion-row>
 
 
 
 
             <ion-row *ngIf="taxbtn==0">
-              <button ion-button (click)="setTax()">Add Tax</button>
+              <button ion-button small (click)="setTax()">{{"Add Tax"|translate}}</button>
             </ion-row>
 
             <ion-row *ngIf="taxbtn==1">
-                <ion-col col-5>   <ion-label style="font-size: 1.0rem;">Tax Rate %:</ion-label></ion-col>
+                <ion-col col-5>   <ion-label style="font-size: 1.0rem;">{{"Tax Rate %:"|translate}}</ion-label></ion-col>
                 <ion-col col-7>
                     <ion-input type="number" placeholder="အရေအတွက်" [(ngModel)]="taxrate" style="font-size: 1.3rem;" (input)="updateRec()" ngDefaultControl>
                       </ion-input>
                 </ion-col>       
               </ion-row>
           <ion-row *ngIf="taxrate!=0">
-            <ion-col col-5 style="text-align: left;font-size: 1.0rem; ">အခွန်ပြီးနောက်စုစုပေါင်း:</ion-col>
+            <ion-col col-5 style="text-align: left;font-size: 1.0rem; ">{{"Total after tax:"|translate}}</ion-col>
               <ion-col col-7 style="text-align: left; ">{{lastsumtax}}</ion-col>
             </ion-row>
             <ion-row *ngIf="taxbtn==1">
-                <button ion-button (click)="remTax()">Remove Tax</button>
+                <button ion-button small (click)="remTax()">{{"Remove Tax"|translate}}</button>
               </ion-row>
       </ion-grid>
       </ion-card>
@@ -107,7 +106,7 @@
    
           <ion-item>
           <span style="vertical-align: middle; display: inline-block; color: black; font-size: 1.0rem;" item-start>
-            ယာယီပစ္စည်းထည့်ပါ
+              {{"Add a temporary item"|translate}}
             </span>
              <ion-toggle color="dark" style="vertical-align: middle; display: inline-block" item-end (ionChange)="dispM()"></ion-toggle>
           
@@ -119,16 +118,16 @@
        <div *ngIf="displayManual==1;">
      
         <ion-item>
-            <ion-label style="font-size: 1.0rem;">နာမည်</ion-label>
-            <ion-input type="text" placeholder="ထုတ်ကုန်အမည်ရိုက်ထည့်ပါ" [(ngModel)]="newItemName" ngDefaultControl></ion-input>
+            <ion-label style="font-size: 1.0rem;">{{"Name"|translate}}</ion-label>
+            <ion-input type="text" placeholder="{{'Enter Product Name'|translate}}" [(ngModel)]="newItemName" ngDefaultControl></ion-input>
           </ion-item>
           <ion-item>
-              <ion-label style="font-size: 1.0rem;">စျေးနှုန်း</ion-label>
-              <ion-input  type="number" placeholder="အမျိုးအစားအလိုက်စျေးနှုန်း" [(ngModel)]="newUnitPrice" ngDefaultControl></ion-input>
+              <ion-label style="font-size: 1.0rem;">{{"Price"|translate}}</ion-label>
+              <ion-input  type="number" placeholder="{{'Enter Price'|translate}}" [(ngModel)]="newUnitPrice" ngDefaultControl></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label style="font-size: 1.0rem;">ပမာဏ</ion-label>
-                <ion-input type="number" placeholder="အရေအတွက်" [(ngModel)]="newUnitQty" ngDefaultControl></ion-input>
+                <ion-label style="font-size: 1.0rem;">{{"Qty"|translate}}</ion-label>
+                <ion-input type="number" placeholder="{{'Enter Qty'|translate}}" [(ngModel)]="newUnitQty" ngDefaultControl></ion-input>
               </ion-item>
               <!-- <ion-item>
                   <ion-label style="font-size: 1.0rem;" >Select Category</ion-label>
@@ -136,16 +135,16 @@
                       <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>    
                   </ion-select>
                 </ion-item> -->
-                <button ion-button style="font-size: 1.0rem;" full (click)="addNewItem()"> ထုတ်ကုန်အသစ်ထည့်ပါ </button>
+                <button ion-button style="font-size: 1.0rem;" full (click)="addNewItem()"> {{"Add Product"|translate}} </button>
               </div>
   </ion-card>
   <ion-grid>
       <ion-row>
-          <ion-col col-6 style="text-align: center;"> <button ion-button style="font-size: 1.0rem;" (click)="addCalc()"> ဂဏန်းတွက်စက်ကနေထည့်ပါ</button></ion-col>
-          <ion-col col-6 style="text-align: center;"> <button ion-button style="font-size: 1.0rem;" (click)="addProdList()"> ထုတ်ကုန်စာရင်းမှထည့်ပါ</button></ion-col>
+          <ion-col col-6 style="text-align: center;"> <button ion-button style="font-size: 1.0rem;" (click)="addCalc()"> {{"Add from Calculator"|translate}}</button></ion-col>
+          <ion-col col-6 style="text-align: center;"> <button ion-button style="font-size: 1.0rem;" (click)="addProdList()"> {{"Add from Product List"|translate}}</button></ion-col>
           </ion-row>
           <ion-row>
-          <ion-col col-12 style="text-align: center;"> <button ion-button style="font-size: 1.0rem;" (click)="qrscan()"> Scan QR Code</button></ion-col>
+          <ion-col col-12 style="text-align: center;"> <button ion-button style="font-size: 1.0rem;" (click)="qrscan()"> {{"Scan Barcode"|translate}}</button></ion-col>
         </ion-row>
   </ion-grid>
 

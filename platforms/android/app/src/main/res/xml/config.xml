@@ -55,7 +55,7 @@
     <name>Open</name>
     <description>Simple Barcode Based POS App.</description>
     <author email="sdhnt@connect.hku.hk" href="sdhntgupta.com">Sidhant Gupta</author>
-    <content original-src="index.html" src="http://localhost:8101" />
+    <content src="index.html" />
     <allow-navigation href="*" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -64,7 +64,6 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    <allow-navigation href="http://localhost:8101" sessionid="172299ed" />
     <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application" xmlns:android="http://schemas.android.com/apk/res/android">
         <application android:networkSecurityConfig="@xml/network_security_config" />
     </edit-config>

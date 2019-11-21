@@ -9,7 +9,7 @@
       <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
-      <ion-title> ငွေပေးငွေယူအကျဉ်းချုပ် </ion-title>
+      <ion-title> {{"Business"|translate}} </ion-title>
     </ion-navbar>
   </ion-header>
 
@@ -17,20 +17,20 @@
 
     <ion-item>
         <span style="vertical-align: middle; display: inline-block; color: black; font-size: 1.5rem;" item-start>
-          Summarize:
+          {{"Summarize"|translate}}:
           </span>
            <ion-toggle  color="dark" style="vertical-align: middle; display: inline-block" item-end [(ngModel)]="expanded"></ion-toggle>
         
       </ion-item>
       <ion-item>
-          Total sales Today: {{tstoday}}
+          {{"Total sales today"|translate}}: {{tstoday}}
           
         </ion-item>
         <ion-item>
-            Total sales for this month: {{tsmonth}}
+            {{"Total sales for this month"|translate}}: {{tsmonth}}
         </ion-item>
         <ion-item>
-            Total sales for last 30 days : {{ts30}}
+            {{"Total sales for last 30 days"|translate}} : {{ts30}}
         </ion-item>
         
 
@@ -58,7 +58,7 @@
                         </ion-row>
                         <ion-row *ngIf="transac.totaldisc!=transac.totalsum" style="padding: 0px;text-align: center ;  background-color: silver; color: palevioletred;">
                             <ion-col col-8>
-                               Total after discount ({{transac.discount}}%)
+                               {{"Discounted total:"|translate}} ({{transac.discount}}%)
                               </ion-col>
                               <ion-col col-4 >
                                   {{transac.totaldisc}}
@@ -66,7 +66,7 @@
                         </ion-row>
                         <ion-row *ngIf="transac.totalsum!=transac.totalatax" style="padding: 0px; text-align: center ;  background-color: silver; color: palevioletred;">
                             <ion-col col-8>
-                                Total after tax ({{transac.taxrate}}%)
+                                {{"Total after tax:"|translate}} ({{transac.taxrate}}%)
                               </ion-col>
                               <ion-col col-4 >
                                   {{transac.totalatax}}
@@ -74,7 +74,7 @@
                         </ion-row>
               </ion-list> 
                   <ion-row style="padding-left: 10px; padding-bottom: 10px;">
-                    <ion-col col-10><h2><b>စုစုပေါင်း: {{transac.totaldisc}}</b></h2></ion-col>
+                    <ion-col col-10><h2><b>{{"Grand Total:"|translate}} {{transac.totaldisc}}</b></h2></ion-col>
                   </ion-row>
 
                

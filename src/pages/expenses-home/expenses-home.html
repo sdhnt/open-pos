@@ -9,13 +9,13 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title> စရိတ် </ion-title>
+    <ion-title> {{"Expense"|translate}} </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <ion-item>
-      <b>Enter Inventory Expenditure Detail:</b> 
+      <b>{{'Enter Inventory Expenditure Detail:'|translate}}</b> 
   </ion-item>
 
 <ion-list inset>
@@ -26,12 +26,12 @@
             <ion-searchbar showCancelButton="always" [(ngModel)]="searchterm" (ionChange)="filteredProduct()"></ion-searchbar>
         </ion-col>
         <ion-col col-4>
-            <button ion-button block color="primary" (click)="scanQR()"  color="dark">ကုဒ် scan ကို</button>
+            <button ion-button small block color="primary" (click)="scanQR()"  color="dark">{{"Scan Barcode"|translate}}</button>
         </ion-col>
       </ion-row>
     </ion-grid>
     <ion-item>
-      <ion-label>အမျိုးအစားကိုရွေးပါ</ion-label>
+      <ion-label>{{"Select category"| translate}}</ion-label>
       <ion-select multiple="true" [(ngModel)]='selectedCat' (ionChange)="filteredProduct()">
           <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>    
       </ion-select>
@@ -54,18 +54,18 @@
                     {{product.name}}
                 </ion-col>
                 <ion-col col-6>
-                  Stock: {{product.stock_qty}}
+                  {{"Stock"|translate}}: {{product.stock_qty}}
                 </ion-col>
                 </ion-row>
               <ion-row>
-                <ion-col col-4 style="color: grey; font-size: 10px;"> လက်လီဈေးနှုန်း {{product.price}} MMK </ion-col>
-                <ion-col col-4 style="color: grey; font-size: 10px; text-align: center;"> လက္ကားစျေးနှုန်း {{product.wholesale_price}} MMK </ion-col>
-                <ion-col col-4 style="color: grey; font-size: 10px; text-align: end;"> အမျိုးအစား: {{product.cat}} </ion-col>
+                <ion-col col-4 style="color: grey; font-size: 10px;"> {{"Retail Price"|translate}} {{product.price}} MMK </ion-col>
+                <ion-col col-4 style="color: grey; font-size: 10px; text-align: center;"> {{"Wholesale Price"|translate}} {{product.wholesale_price}} MMK </ion-col>
+                <ion-col col-4 style="color: grey; font-size: 10px; text-align: end;"> {{"Category"|translate}} {{product.cat}} </ion-col>
               </ion-row>
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col col-12> <button ion-button full end color="dark" (click)="chooseProd(product)">Choose</button> </ion-col>
+        <ion-col col-12> <button ion-button full end color="dark" (click)="chooseProd(product)">{{"Choose"|translate}}</button> </ion-col>
       </ion-row>
       </ion-grid>
     </ion-card> 
@@ -76,25 +76,25 @@
 <ion-footer style="border-top-color:black; border-top: 10px;">
   <ion-list>
       <ion-item>
-        Prod Name: {{prodName}}
+        {{"Product Name"|translate}}: {{prodName}}
         </ion-item>
     <ion-item>
-      <ion-label>Prod qty</ion-label>
+      <ion-label>{{"Product Qty"|translate}}</ion-label>
       <ion-input type="number" [(ngModel)]='prodqty' (ionChange)="updatebalance('prodqty')"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label>Purchase Price per Item</ion-label>
+      <ion-label>{{"Purchase Price per Item"|translate}}</ion-label>
       <ion-input type="number" [(ngModel)]='prodcostitem' (ionChange)="updatebalance('prodcostitem')"></ion-input>
     </ion-item>
     <ion-item>
-        <ion-label>Total Expenditure</ion-label>
+        <ion-label>{{"Total Expenditure"|translate}}</ion-label>
         <ion-input type="number" [(ngModel)]='prodcost' (ionChange)="updatebalance('prodcost')"></ion-input>
       </ion-item>
       <ion-item>
-      <ion-label>Batch Expiry Date:</ion-label>
+      <ion-label>{{"Batch Expiry Date:"|translate}}</ion-label>
       <ion-datetime displayFormat="DD/MMM/YYYY" [(ngModel)]='expirydate' [min]="minDate" [max]="maxDate"></ion-datetime>
       </ion-item>
     </ion-list>
-  <button ion-button block color="primary" (click)="addinventoryexpense()"  color="dark">ထုတ်ကုန်ထည့်ပါ</button>
+  <button ion-button block color="primary" (click)="addinventoryexpense()"  color="dark">{{"Add Product"|translate}}</button>
   
 </ion-footer>

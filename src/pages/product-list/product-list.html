@@ -14,7 +14,7 @@
 <ion-content padding>
 <ion-searchbar showCancelButton="always" [(ngModel)]="searchterm" (ionChange)="filteredProduct()"></ion-searchbar>
   <ion-item>
-    <ion-label>အမျိုးအစားကိုရွေးပါ</ion-label>
+    <ion-label>{{"Select category"|translate}}</ion-label>
     <ion-select multiple="true" [(ngModel)]='selectedCat' (ionChange)="filteredProduct()">
         <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>    
     </ion-select>
@@ -80,7 +80,7 @@
                         {{product.name}}
                     </ion-col>
                     <ion-col col-4>
-                      Stock: {{product.stock_qty}}
+                      {{"Stock"|translate}}: {{product.stock_qty}}
                     </ion-col>
                       <ion-col col-1>
                           <ion-icon name="arrow-dropup-circle" style=" color: green" (click)="swapUp(product.code)"></ion-icon>
@@ -90,14 +90,14 @@
                       </ion-col>
                   </ion-row>
                   <ion-row>
-                    <ion-col col-4 style="color: grey; font-size: 10px;"> လက်လီဈေးနှုန်း {{product.price}} MMK </ion-col>
-                    <ion-col col-4 style="color: grey; font-size: 10px; text-align: center;"> လက္ကားစျေးနှုန်း {{product.wholesale_price}} MMK </ion-col>
-                    <ion-col col-4 style="color: grey; font-size: 10px; text-align: end;"> အမျိုးအစား: {{product.cat}} </ion-col>
+                    <ion-col col-4 style="color: grey; font-size: 10px;"> {{"Retail Price"|translate}} {{product.price}} MMK </ion-col>
+                    <ion-col col-4 style="color: grey; font-size: 10px; text-align: center;"> {{"Wholesale Price"|translate}} {{product.wholesale_price}} MMK </ion-col>
+                    <ion-col col-4 style="color: grey; font-size: 10px; text-align: end;">  {{"Category"|translate}} {{product.cat}} </ion-col>
                   </ion-row>
             </ion-col>
           </ion-row>
           <ion-row>
-            <ion-col col-12> <button ion-button full end color="dark" (click)="singleProduct(product)">ကြည့်ရှု / တည်းဖြတ်</button> </ion-col>
+            <ion-col col-12> <button ion-button full end color="dark" (click)="singleProduct(product)">{{"View / Edit"|translate}}</button> </ion-col>
           </ion-row>
           </ion-grid>
         </ion-card> 

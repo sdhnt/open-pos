@@ -1,31 +1,8 @@
-<!--
-  Generated template for the TransactionProductPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<!-- <ion-header>
-  <ion-navbar>
-    <ion-title>transaction-product</ion-title>
-  </ion-navbar>
-</ion-header> -->
-
 <ion-content padding>
   <ion-searchbar showCancelButton="always" [(ngModel)]="searchterm" (ionChange)="filteredProduct()"></ion-searchbar>
   
-  <!-- <ion-item>
-      <ion-label>Categories</ion-label>
-      <ion-select [(ngModel)]="cat" multiple="true">
-        <ion-option>Noodle</ion-option>
-        <ion-option>Snack</ion-option>
-        <ion-option>Main Course</ion-option>
-        <ion-option>Dessert</ion-option>
-        <ion-option>Drinks</ion-option>
-      </ion-select>
-    </ion-item> -->
-  
     <ion-item>
-      <ion-label>အမျိုးအစားရွေးပါ</ion-label>
+      <ion-label>{{"Select category"|translate}}</ion-label>
       <ion-select multiple="true" [(ngModel)]='selectedCat' (ionChange)="filteredProduct()">
           <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>    
       </ion-select>
@@ -101,14 +78,14 @@
                         </ion-col>
                     </ion-row>
                     <ion-row>
-                      <ion-col col-4 style="color: grey; font-size: 10px;"> လက်လီဈေးနှုန်း {{product.price}} MMK </ion-col>
-                      <ion-col col-4 style="color: grey; font-size: 10px; text-align: center;"> လက္ကားစျေးနှုန်း {{product.wholesale_price}} MMK </ion-col>
-                      <ion-col col-4 style="color: grey; font-size: 10px; text-align: end;"> အမျိုးအစား: {{product.cat}} </ion-col>
+                      <ion-col col-4 style="color: grey; font-size: 10px;"> {{"Retail Price"|translate}} {{product.price}} MMK </ion-col>
+                      <ion-col col-4 style="color: grey; font-size: 10px; text-align: center;"> {{"Wholesale Price"|translate}} {{product.wholesale_price}} MMK </ion-col>
+                      <ion-col col-4 style="color: grey; font-size: 10px; text-align: end;"> {{"Category"|translate}} {{product.cat}} </ion-col>
                     </ion-row>
               </ion-col>
             </ion-row>
             <ion-row *ngIf="event1==true">
-              <ion-col col-12> <button ion-button full end color="dark" (click)="singleProduct(product)">ထည့်ပါ</button> </ion-col>
+              <ion-col col-12> <button ion-button full end color="dark" (click)="singleProduct(product)">{{"Add"|translate}}</button> </ion-col>
             </ion-row>
             </ion-grid>
           </ion-card> 
@@ -129,12 +106,12 @@
     <ion-grid>
       <ion-row *ngIf="event1==false">
         <ion-col>
-            <button ion-button (click)="createRec()" full style="background-color: #222">လက်ခံဖြတ်ပိုင်းဖန်တီးပါ</button>
+            <button ion-button (click)="createRec()" full style="background-color: #222">{{"Create Receipt"|translate}}</button>
         </ion-col>
       </ion-row>
       <ion-row *ngIf="event1==true">
         <ion-col>
-            <button ion-button (click)="reset()" full style="background-color: #222">ပြန်လည်စတင်</button>
+            <button ion-button (click)="reset()" full style="background-color: #222">{{"Reset"|translate}}</button>
         </ion-col>
       </ion-row>
     </ion-grid>
