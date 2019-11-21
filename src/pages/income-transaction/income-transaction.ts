@@ -329,25 +329,11 @@ qrscan(){
   }
 
 
-  async updateCb(positivetransacsum){
-    console.log(firebase.auth().currentUser.uid);
-    var ud;
-    const snapshot = await firebase.firestore().collection('users').where("owner","==",firebase.auth().currentUser.uid).get()
-    .then(function(querySnapshot) {
-      querySnapshot.forEach(function(doc) {
-          // doc.data() is never undefined for query doc snapshots
-          //console.log(doc.id, " => ", doc.data());
-          ud=doc.data();
-          //this.userdata=doc.data();     
-          firebase.firestore().collection("users").doc(doc.id).update({cash_balance: (parseInt(ud.cash_balance)+positivetransacsum).toString()});  
-      });
-  })
-  .catch(function(error) {
-      console.log("Error getting documents: ", error);
-  });
-  this.userdata=ud;
-  console.log(this.userdata);
-    
+  async updateCb(postransacsum){
+
+    this.getUserData();
+    this.userdata.cash_balance= (parseInt(this.userdata.cash_balance)+parseInt(postransacsum)).toString();
+    this.sp.setUserDat(this.userdata);
  }
   
 

@@ -47,6 +47,7 @@ export class AddProductPage {
       prodCost: new FormControl(0, Validators.required),
       currstock: new FormControl(0, Validators.required),
       prodCat: new FormControl('', Validators.required),
+      newprodCat: new FormControl('', Validators.compose([]))
     });
 
   }
@@ -180,7 +181,7 @@ export class AddProductPage {
   produrl: any = "";
 
   addproduct() {
-    if (!this.formProduct.valid) {
+    if (!this.formProduct.valid || this.prodCat === "New") {
       console.log('invalid product with missing fields');
     } else {
       if (this.newprodCat != "") {
@@ -278,7 +279,6 @@ export class AddProductPage {
               this.image = "";
 
               this.sp.backupStorage();
-
               //this.navCtrl.push(ProductListPage);
               this.events.publish('prodAdd:created', 0);
               (this.navCtrl.parent as Tabs).select(0);

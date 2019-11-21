@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, Events, ToastController } from 'io
 import { StorageProvider } from '../../providers/storage/storage';
 import firebase from 'firebase';
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
+import { ProductListPage } from '../product-list/product-list';
 
 /**
  * Generated class for the ExpensesHomePage page.
@@ -21,6 +22,7 @@ export class ExpensesHomePage {
   constructor(public navCtrl: NavController, private translateConfigService: TranslateConfigService,public navParams: NavParams,
     public sp: StorageProvider, public events: Events, public toastCtrl: ToastController,
     ) {
+      this.getUserData();
   }
 
   prodqty;
@@ -37,13 +39,26 @@ export class ExpensesHomePage {
   selectedCat: any=[];
   listCat : any;
   totalamt=0.0;
+  userdata: any;
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ExpensesHomePage');
     console.log(this.currtime);
     this.getProducts();
     this.getCategories();
+    this.getUserData();
   }
+
+  async getUserData(){
+    this.sp.storageReady().then(() => {
+      this.sp.getUserDat().then((val) => {
+       this.userdata=JSON.parse(val);
+       console.log(this.userdata)
+      }).catch(err => {
+        alert("Error: "+ err);
+      })
+    })
+   }
 
   updatebalance(edited: string){
     if(this.prodcostitem!=null && this.prodqty!=null && (edited=="prodcostitem" ||edited=="prodqty")){
@@ -119,18 +134,16 @@ export class ExpensesHomePage {
     prodidlist.push(this.expirydate);
     const dataexp = {
       "itemslist": itemslist,
-      "totalsum": this.prodcost,
+      "totalsum": (this.prodcost*-1),
       "prodidlist": prodidlist,
       "pnllist": pnllist,
       "datetime": this.currtime,
       "taxrate": 0,
       "discountlist": discountlist,
       "discount": 0,
-      "totaldisc": this.prodcost,
-      "totalatax":this.prodcost,
+      "totaldisc": (this.prodcost*-1),
+      "totalatax":(this.prodcost*-1), 
     };
-
-
         const data1 = {
           "code": this.product.code,
           "name": this.product.name,
@@ -171,6 +184,7 @@ export class ExpensesHomePage {
     this.product=null;
     this.sp.backupStorage();
     toast.present();
+    this.navCtrl.push(ProductListPage);
       });
 
     //REFLECT CHANGE ON CASH BALANCE HERE & Reflect change in inventory here as well 
@@ -178,22 +192,10 @@ export class ExpensesHomePage {
 
   
   async updateCb(negtransacsum){
-    console.log(firebase.auth().currentUser.uid);
-    var ud;
-    const snapshot = await firebase.firestore().collection('users').where("owner","==",firebase.auth().currentUser.uid).get()
-    .then(function(querySnapshot) {
-      querySnapshot.forEach(function(doc) {
-          // doc.data() is never undefined for query doc snapshots
-          //console.log(doc.id, " => ", doc.data());
-          ud=doc.data();
-          //this.userdata=doc.data();    
-          console.log(ud.cash_balance+" "+negtransacsum); 
-          firebase.firestore().collection("users").doc(doc.id).update({cash_balance: (parseInt(ud.cash_balance)-parseInt(negtransacsum)).toString()});  
-      });
-  })
-  .catch(function(error) {
-      console.log("Error getting documents: ", error);
-  });
+
+    this.getUserData();
+    this.userdata.cash_balance= (parseInt(this.userdata.cash_balance)-parseInt(negtransacsum)).toString();
+    this.sp.setUserDat(this.userdata);
  }
 
   scanQR(){

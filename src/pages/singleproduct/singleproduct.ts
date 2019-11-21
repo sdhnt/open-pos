@@ -206,7 +206,7 @@ export class SingleProductPage {
             duration: 2000
           });
           toast.present();
-          this.navCtrl.setRoot(ProductListPage);
+          this.navCtrl.push(ProductListPage);
         }, 1000)
         this.prodCode="";
       })
@@ -229,7 +229,7 @@ export class SingleProductPage {
         });
         toast.present();
         this.sp.backupStorage();
-        this.navCtrl.setRoot(ProductListPage);
+        this.navCtrl.push(ProductListPage);
       }, 1000)
     }).catch(err => {
       console.log(err)

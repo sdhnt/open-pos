@@ -82,7 +82,7 @@ export class ProductListPage {
   }
 
   singleProduct(data){
-    this.navCtrl.setRoot(SingleProductPage, {'data': data});
+    this.navCtrl.push(SingleProductPage, {'data': data});
   }
  
   filteredProduct(){

@@ -161,31 +161,45 @@ export class StorageProvider {
   }
 
 
-  // async setUserDat(){
-  //   var ud;
-  //   const snapshot = await firebase.firestore().collection('users').where("owner","==",firebase.auth().currentUser.uid).get()
-  //   .then(function(querySnapshot) {
-  //     querySnapshot.forEach(function(doc) {
-  //         ud=doc.data();
-  //         ud.push({"uid": doc.id})
-  //     });
-  //     this.user=ud;
-  //     this.storage.ready().then(()=>{
-  //       this.storage.get('user').then((val)=>{
-  //       this.storage.set('user', this.user);
-  //       console.log(this.user);
-  //       })//end then storage get-set
-  //       .catch(err => {
-  //         alert(err);
-  //       })
-  //     })//end then storage ready
-  // })
-  // .catch(function(error) {
-  //     console.log("Error getting documents: ", error);
-  // });
+ async setUserDat(data){
 
-  //   //note add user dat can only come from firebase right??
-  // }
+  this.tempuser=data;
+
+  this.storage.get('user').then(async (valNulluser)=>{   
+    this.storage.set('user','[]').then(() => {this.storage.set('user', JSON.stringify(this.tempuser));});
+
+    
+    console.log(firebase.auth().currentUser.uid);
+    var ud;
+    const snapshot = await firebase.firestore().collection('users').where("owner","==",firebase.auth().currentUser.uid).get()
+    .then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+          firebase.firestore().collection("users").doc(doc.id).update({
+            cash_balance:  data.cash_balance,
+            business_address: data.business_address,
+            business_name: data.business_name,
+            businesstype: data.businesstype,
+            created: data.created,
+            currency: data.currency,
+            discount: data.discount,
+            language: data.language,
+            owner: data.owner,
+            owner_name: data.owner_name,
+            ph_no: data.ph_no,
+            taxrate: data.taxrate,
+            id: doc.id,
+          });     
+      });
+  })
+  .catch(function(error) {
+      console.log("Error getting documents: ", error);
+  });
+
+  });
+
+
+ }
+
 
   async getUserDat() {
     return await this.storage.get('user');
