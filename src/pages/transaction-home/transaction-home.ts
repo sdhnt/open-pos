@@ -47,6 +47,9 @@ export class TransactionHomePage {
 
 async ionViewDidEnter() {
   console.log('ionViewDidLoad TransactionHomePage');
+  // document.addEventListener("backbutton",function(e) {
+  //   console.log("disable back button")
+  // }, false);
 
   this.delay(3000).then(()=>{
     this.getUserData();})
@@ -70,6 +73,7 @@ async delay(ms: number) {
   discount: 0.0,
  
 }
+
 
 async getUserData(){
   return new Promise((resolve, reject)=>{

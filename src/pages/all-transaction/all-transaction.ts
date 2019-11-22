@@ -87,7 +87,7 @@ export class AllTransactionPage {
   cash_balance: "",
   currency: "",
   created: "",
-  language: "",
+  language: "en",
   owner: "", 
   owner_name: "",
   ph_no: "",

@@ -102,8 +102,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     
   ],
   imports: [
-    BrowserModule,
-    IonicModule.forRoot(MyApp),
+    BrowserModule, 
+    IonicModule.forRoot(MyApp, {navExitApp: false}),
     IonicStorageModule.forRoot(),
     AddProductCategoryPageModule,
     AllTransactionPageModule,

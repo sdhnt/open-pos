@@ -50,7 +50,11 @@ export class MyApp {
       this.nav.setRoot(LoginPage);
   });
 }
-  
+ionViewDidEnter() {
+  document.addEventListener("backbutton",function(e) {
+    console.log("disable back button")
+  }, false);
+}
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
@@ -59,6 +63,8 @@ export class MyApp {
       this.translateService.addLangs(["en", "pt"]);
       this.translateService.setDefaultLang('en');
       this.translateService.use('en');
+
+
     });
   }
 
