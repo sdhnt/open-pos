@@ -29,6 +29,7 @@ export class TransactionProductPage {
        
         var tempdat= JSON.parse(data);
         this.getProducts(); 
+        console.log(tempdat);
      
         tempdat.forEach(element => {
           this.event=true;
@@ -45,15 +46,18 @@ export class TransactionProductPage {
               }
             });
           }
+        if(element.code=="000000"){
+          this.calcitems.push(element);
+        }
         
           
         });
-        //console.log(this.listProducts)
+        console.log(this.calcitems)
       });
 
       this.events.subscribe('addSingleProd:created',(data, index, fulldat) => {
         console.log("ENTERED!");
-        console.log("Received 0 " + data + index);
+        console.log("Received 1 " + data + index);
         this.recitemslist=JSON.parse(fulldat);
 
         this.index=parseInt(index);
@@ -67,6 +71,8 @@ export class TransactionProductPage {
         //console.log(this.listProducts)
       });
   }
+
+  calcitems: any=[];
 
   reset(){
    
@@ -240,9 +246,24 @@ export class TransactionProductPage {
 
     this.listProducts.forEach(element => {
       if (element.qty > 0) {
-        tempJSON.itemslist.push(element)
+        tempJSON.itemslist.push(element);
+        console.log("pushed" + element);
       }
     });
+
+    if(this.calcitems.length>0){
+      console.log(this.calcitems)
+      console.log(this.calcitems.length)
+      this.calcitems.forEach(element => {
+        tempJSON.itemslist.push(element);
+      });
+    }
+
+    this.listProducts=[];
+    this.calcitems=[];
+    this.listArray= [];
+    this.recitemslist= [];
+    
     console.log(this.datlist)
     const myObjStr = JSON.stringify(tempJSON);
 
@@ -255,7 +276,6 @@ export class TransactionProductPage {
       this.event=false;
       this.event1=false;
       //this.listProducts=
-
       //your task after delay.
     });
 

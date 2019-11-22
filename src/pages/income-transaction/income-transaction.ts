@@ -28,11 +28,20 @@ export class IncomeTransactionPage {
     
     //console.log("Recieved -1" + this.navParams.get('itemslist'));
     this.getUserData();
+    this.setUsrLang();
+
+    
     
   }
 
   async delay(ms: number) {
     await new Promise(resolve => setTimeout(()=>resolve(), ms)).then(()=>console.log("fired"));
+}
+
+
+setUsrLang(){
+  this.translateConfigService.setLanguage(this.userdata.language);
+  console.log(this.userdata.language)
 }
 
 taxbtn=0;
@@ -61,6 +70,7 @@ async getUserData(){
     this.sp.getUserDat().then((val) => {
      this.userdata=JSON.parse(val);
      console.log(this.userdata)
+     this.setUsrLang();
     }).catch(err => {
       alert("Error: "+ err);
     })

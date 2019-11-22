@@ -138,7 +138,9 @@ loginWithFB(){
       //     }
       //     ],
       // }).present();
+  
       this.loginProcedure();
+
     
     
       }).catch( (err) => {console.log(err)
@@ -172,6 +174,7 @@ loginWithFB(){
     this.navCtrl.push(SignUpPage)
   
     }
+
 
     loginProcedure(){
     

@@ -75,6 +75,7 @@ async getUserData(){
       this.sp.getUserDat().then((val) => {
        this.userdata=JSON.parse(val);
        console.log(this.userdata);
+       this.setUsrLang();
        resolve();
       }).catch(err => {
         alert("Error: "+ err);
@@ -104,6 +105,11 @@ async getUserData(){
       message: "ငွေလက်ကျန်: " + this.userdata.cash_balance,
       duration: 3000
     }).present();
+  }
+
+  setUsrLang(){
+    this.translateConfigService.setLanguage(this.userdata.language);
+    console.log(this.userdata.language)
   }
 
 }   
