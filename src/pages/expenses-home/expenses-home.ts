@@ -4,6 +4,7 @@ import { StorageProvider } from '../../providers/storage/storage';
 import firebase from 'firebase';
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import { ProductListPage } from '../product-list/product-list';
+import { DashboardPage } from '../dashboard/dashboard';
 
 /**
  * Generated class for the ExpensesHomePage page.
@@ -179,12 +180,11 @@ export class ExpensesHomePage {
         this.searchterm="";
         this.selectedCat=[];
         
-        this.totalamt=0.0;
-        
+        this.totalamt=0.0;       
     this.product=null;
     this.sp.backupStorage();
     toast.present();
-    this.navCtrl.push(ProductListPage);
+    this.navCtrl.setRoot(DashboardPage);
       });
 
     //REFLECT CHANGE ON CASH BALANCE HERE & Reflect change in inventory here as well 

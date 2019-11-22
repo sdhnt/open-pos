@@ -28,10 +28,7 @@ export class IncomeTransactionPage {
     
     //console.log("Recieved -1" + this.navParams.get('itemslist'));
     this.getUserData();
-    this.setUsrLang();
-
-    
-    
+  
   }
 
   async delay(ms: number) {
@@ -39,10 +36,6 @@ export class IncomeTransactionPage {
 }
 
 
-setUsrLang(){
-  this.translateConfigService.setLanguage(this.userdata.language);
-  console.log(this.userdata.language)
-}
 
 taxbtn=0;
 
@@ -70,7 +63,6 @@ async getUserData(){
     this.sp.getUserDat().then((val) => {
      this.userdata=JSON.parse(val);
      console.log(this.userdata)
-     this.setUsrLang();
     }).catch(err => {
       alert("Error: "+ err);
     })
@@ -82,7 +74,7 @@ async getUserData(){
   ionViewDidLoad() {
     console.log('ionViewDidLoad IncomeTransactionPage');
     this.getCategories();
-    
+    this.getUserData();
       this.events.subscribe('genRec:created',(data) => {
       console.log("ENTERED!");
       console.log("Received 0 " + data);

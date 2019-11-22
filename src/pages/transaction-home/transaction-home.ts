@@ -8,6 +8,7 @@ import { ExpenseTransactionPage } from '../expense-transaction/expense-transacti
 import { TransactionProductPage } from '../transaction-product/transaction-product';
 import { StorageProvider } from '../../providers/storage/storage';
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
+import { LoginPage } from '../login/login';
 
 /**
  * Generated class for the TransactionHomePage page.
@@ -24,6 +25,7 @@ import { TranslateConfigService } from "../../providers/translation/translate-co
 export class TransactionHomePage {
 
   @ViewChild('myTabs') tabRef: Tabs;
+  
 
   AllTransactions = AllTransactionPage;
   IncomeTransactions = IncomeTransactionPage;
@@ -59,7 +61,7 @@ async delay(ms: number) {
   cash_balance: "",
   currency: "",
   created: "",
-  language: "",
+  language: "en",
   owner: "", 
   owner_name: "",
   ph_no: "",
@@ -106,6 +108,7 @@ async getUserData(){
       duration: 3000
     }).present();
   }
+
 
   setUsrLang(){
     this.translateConfigService.setLanguage(this.userdata.language);

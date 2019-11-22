@@ -97,8 +97,8 @@ async getUserData(){
   }
 
   cashbtn(){
+    this.getUserData();
     this.toastCtrl.create({
-  
       message: "ငွေလက်ကျန်: " + this.userdata.cash_balance,
       duration: 3000
     }).present();

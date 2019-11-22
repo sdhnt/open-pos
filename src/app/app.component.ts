@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, ToastController } from 'ionic-angular';
+import { Nav, Platform, ToastController, App } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -14,6 +14,7 @@ import { ContactUsPage } from '../pages/contact-us/contact-us';
 import { StorageProvider } from '../providers/storage/storage';
 import { ExpensesHomePage } from '../pages/expenses-home/expenses-home';
 import { TranslateConfigService } from '../providers/translation/translate-config.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   templateUrl: 'app.html'
@@ -25,8 +26,9 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, private translateConfigService: TranslateConfigService,
-    public splashScreen: SplashScreen, public toastCtrl: ToastController) {
+  constructor(public app: App, public platform: Platform, public statusBar: StatusBar, private translateService: TranslateService,
+    private translateConfigService: TranslateConfigService,
+    public splashScreen: SplashScreen, public toastCtrl: ToastController, public sp: StorageProvider) {
 
     this.initializeApp();
     this.pages = [
@@ -38,9 +40,6 @@ export class MyApp {
       { title: 'Contact Us', component: ContactUsPage },
     ];
   }
-
- 
-  
   logout(){
     //this.sp.backupStorageLogout().then();
     firebase.auth().signOut().then(()=>{
@@ -55,7 +54,11 @@ export class MyApp {
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      this.splashScreen.hide();   
+      
+      this.translateService.addLangs(["en", "pt"]);
+      this.translateService.setDefaultLang('en');
+      this.translateService.use('en');
     });
   }
 

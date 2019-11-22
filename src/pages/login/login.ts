@@ -35,19 +35,7 @@ export class LoginPage {
 
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-          //console.log(user)// User is signed in.
-          // alertCtrl.create({
-  
-          //   subTitle:"ကြိုဆိုပါတယ် " + user.displayName,
-          //   buttons: [
-          //     {
-          //       text: 'Okay!',
-          //       role: 'cancel',
-          //     }
-          //     ],
-          // }).present();
-    
-          sp.clearMem();
+          //sp.clearMem();
           sp.setMem().then(()=>{
                    zone.run(() => {
             navCtrl.setRoot(TransactionHomePage);
@@ -96,17 +84,6 @@ loginWithFB(){
           .then( success => {
             console.log("Firebase success" , success);
             var temp=success;
-            // this.alertCtrl.create({
-  
-            //   subTitle:"ကြိုဆိုပါတယ် " + temp.additionalUserInfo.profile['first_name'],
-            //   buttons: [
-            //     {
-            //       text: 'Okay!',
-            //       role: 'cancel',
-            //     }
-            //     ],
-            // }).present();
-        
             this.loginProcedure();
           })
           .catch(err => {
@@ -128,17 +105,7 @@ loginWithFB(){
         firebase.auth().signInWithEmailAndPassword(this.email, this.password)
         .then( (user) => {
         
-      // this.alertCtrl.create({
-  
-      //   subTitle:"ကြိုဆိုပါတယ် " + user.user.displayName,
-      //   buttons: [
-      //     {
-      //       text: 'Okay!',
-      //       role: 'cancel',
-      //     }
-      //     ],
-      // }).present();
-  
+ 
       this.loginProcedure();
 
     
@@ -180,7 +147,7 @@ loginWithFB(){
     
         this.zone.run(() => {
 
-          this.sp.clearMem();
+         // this.sp.clearMem();
 
           this.sp.setMem().then(()=>{ this.navCtrl.setRoot(TransactionHomePage); })
         

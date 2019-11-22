@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule, APP_INITIALIZER } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule, NavController } from 'ionic-angular';
 import { ReactiveFormsModule } from "@angular/forms";
 
@@ -20,7 +20,7 @@ import { GettersetterProvider } from '../providers/gettersetter/gettersetter';
 import { Camera } from '@ionic-native/camera'; 
 import { Facebook } from '@ionic-native/facebook';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateConfigService } from '../providers/translation/translate-config.service';
 
@@ -79,9 +79,16 @@ var config = {
 firebase.initializeApp(config);
 
 // language translation service
-export function LanguageLoader(http: HttpClient) {
+export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
 }
+// export function initTranslation(translate: TranslateService) {
+//   return () => {
+//     translate.setDefaultLang('my');
+//     translate.use('my');
+//     return Promise.resolve();
+//   };
+// }
 
 
 @NgModule({
@@ -119,7 +126,7 @@ export function LanguageLoader(http: HttpClient) {
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (LanguageLoader),
+        useFactory: (HttpLoaderFactory),
         deps: [HttpClient]
       }
     })
@@ -149,6 +156,7 @@ export function LanguageLoader(http: HttpClient) {
   ],
   providers: [
     StatusBar,
+    
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     StorageProvider,
