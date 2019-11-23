@@ -28,6 +28,17 @@ export class SingleProductPage {
   prodCat: any = "";
   listProduct: any;
 
+  orgData = {
+    prodCode: 0,
+    prodName: "",
+    prodPrice: 0,
+    prodWholesalePrice: 0,
+    prodCost: 0,
+    stock: 0,
+    prodCat: "",
+    image: ""
+  };
+
   formProduct: FormGroup;
 
   constructor(public navCtrl: NavController, private translateConfigService: TranslateConfigService,
@@ -41,6 +52,16 @@ export class SingleProductPage {
     this.product = this.navParams.get("data");
     this.prodCodeOld = this.product.code;
     this.image=this.product.url;
+
+    this.orgData["image"] = this.image;
+    this.orgData["prodCode"] = this.product.code;
+    this.orgData["prodName"] = this.product.name;
+    this.orgData["prodPrice"] = this.product.price;
+    this.orgData["prodWholesalePrice"] = this.product.wholesale_price;
+    this.orgData["prodCost"] = this.product.cost;
+    this.orgData["stock"] = this.product.stock_qty;
+    this.orgData["prodCat"] = this.product.cat;
+
     this.getUserData();
     this.formProduct = this.formBuilder.group({
       prodCode: new FormControl('', Validators.required),
@@ -234,5 +255,16 @@ export class SingleProductPage {
     }).catch(err => {
       console.log(err)
     });
+  }
+
+  discardChange(){
+    this.image = this.orgData["image"] ;
+    this.product.code = this.orgData["prodCode"];
+    this.product.name = this.orgData["prodName"];
+    this.product.price = this.orgData["prodPrice"];
+    this.product.wholesale_price = this.orgData["prodWholesalePrice"];
+    this.product.cost = this.orgData["prodCost"];
+    this.product.stock_qty = this.orgData["stock"];
+    this.product.cat = this.orgData["prodCat"];
   }
 }

@@ -165,7 +165,14 @@ export class AddProductPage {
     }
   }
 
-
+  clearFields(){
+  this.prodCode = "";
+  this.prodName = "";
+  this.prodPrice = null;
+  this.prodWholesalePrice = null;
+  this.prodCost = null;
+  this.prodCat = "";
+  }
 
   addProdPic() {
 
