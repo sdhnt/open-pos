@@ -25944,6 +25944,10 @@ page-login ion-header {
   color: white;
 }
 
+page-login .input-cover {
+  position: static;
+}
+
 page-login ion-content .scroll-content {
   background-image: -webkit-gradient(linear, left top, left bottom, from(#301924), to(#000000));
   background-image: linear-gradient(#301924, #000000);
