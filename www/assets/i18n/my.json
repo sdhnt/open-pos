@@ -93,17 +93,19 @@
  "Already have an account? Log-in":"အကောင့်ရှိပြီးသားလား? အကောင့်၀င်မည်",
  "Add Stock":"စတော့ရှယ်ယာထည့်ပါ",
  "Add New Stock":"စတော့ရှယ်ယာအသစ်ထည့်ပါ",
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
- "Clear":"ရှင်းလင်းသော"
-=======
+ "Clear":"ရှင်းလင်းသော",
  "Finish": "ပြီးပြီ",
  "Incomplete": "မပြည့်စုံ",
- "Creating item, please wait a moment": "ပစ္စည်းဖန်တီးလျက်ရှိသည်။ ကျေးဇူးပြုပြီးခဏစောင့်ပါ။"
->>>>>>> Stashed changes
-=======
- "Finish": "ပြီးပြီ",
- "Incomplete": "မပြည့်စုံ",
- "Creating item, please wait a moment": "ပစ္စည်းဖန်တီးလျက်ရှိသည်။ ကျေးဇူးပြုပြီးခဏစောင့်ပါ။"
->>>>>>> Stashed changes
+ "Creating item, please wait a moment": "ပစ္စည်းဖန်တီးလျက်ရှိသည်။ ကျေးဇူးပြုပြီးခဏစောင့်ပါ။",
+ "Online backup ready": "အွန်လိုင်းအရန်သင့်သိမ်းဆည်းပြီးပါပြီ",
+ "Balance": "ငွေလက်ကျန်",
+ "Found Product": "ကုန်ပစ္စည်းတွေ့ပြီ",
+ "Get Product!!!": "ကုန်ပစ္စည်းရယူ!!!",
+ "POS reset to Zero": "POS သည်သုညသို့ပြန်လည်သတ်မှတ်သည်",
+ "Not found!": "မတွေ့ပါ!",
+ "This feature will open shortly": "ဒီအင်္ဂါရပ်မကြာမီဖွင့်ပါလိမ့်မည်",
+ "Please wait while creating your profile ...": "သင်၏ပရိုဖိုင်းကိုဖန်တီးနေစဉ်ခဏစောင့်ပါ...",
+ "Your account has been created successfully": "သင်၏အကောင့်ကိုအောင်မြင်စွာဖန်တီးလိုက်ပြီ",
+ "Please wait - Uploading new image": "ကျေးဇူးပြု၍ စောင့်ပါ - ပုံအသစ်တင်ပါ",
+ "Done uploading": "တင်ပြီးပါပြီ"
 }
