@@ -129,8 +129,10 @@ export class SingleProductPage {
   temp="na";
   upload_new(name: string){ 
     return new Promise((resolve, reject) => {
+      const message = this.translateConfigService.getTranslatedMessage('Please wait - Uploading new image');
       this.toastCtrl.create({
-        message:"Please wait - Uploading New Image",
+        // @ts-ignore
+        message: message.value,
         duration: 1000,
       }).present();
       this.temp="prodImages/"+this.uid+ this.prodCode+ name;
@@ -147,9 +149,11 @@ export class SingleProductPage {
           // do something with url here
         
             this.product.url = url;
-            this.temp = url; 
+            this.temp = url;
+            const message = this.translateConfigService.getTranslatedMessage('Done uploading');
             this.toastCtrl.create({
-              message:"Done Uploading",
+              // @ts-ignore
+              message: message.value,
               duration: 1000,
             }).present();
 
@@ -173,8 +177,10 @@ export class SingleProductPage {
     this.sp.storageReady().then(() => {
       this.sp.addCategory(data);
       setTimeout(()=> {
+        const message = this.translateConfigService.getTranslatedMessage('Finish');
         let toast = this.toastCtrl.create({
-          message: 'ပြီးပြီ',
+          // @ts-ignore
+          message: message.value,
           duration: 3000
         });
         this.newprodCat="";
@@ -222,8 +228,10 @@ export class SingleProductPage {
       this.sp.updateProduct(data, this.prodCodeOld).then(()=>{
         this.sp.backupStorage();
         setTimeout(() => {
+          const message = this.translateConfigService.getTranslatedMessage('Finish');
           let toast = this.toastCtrl.create({
-            message: "ပြီးပြီ",
+            // @ts-ignore
+            message: message.value,
             duration: 2000
           });
           toast.present();
@@ -244,8 +252,10 @@ export class SingleProductPage {
       this.sp.deleteProduct(data);
       
       setTimeout(() => {
+        const message = this.translateConfigService.getTranslatedMessage('Finish');
         let toast = this.toastCtrl.create({
-          message: "ပြီးပြီ",
+          // @ts-ignore
+          message: message.value,
           duration: 2000
         });
         toast.present();

@@ -80,9 +80,10 @@ export class SignUpPage {
 
   
   signup(){
-
+    const message = this.translateConfigService.getTranslatedMessage('Please wait while creating your profile ...');
     this.toastCtrl.create({
-      message: "သင်၏ပရိုဖိုင်းကိုဖန်တီးနေစဉ်ခဏစောင့်ပါ...",
+      // @ts-ignore
+      message: message.value,
       duration: 3000
       
     }).present();
@@ -114,9 +115,13 @@ export class SignUpPage {
         transactions:[{datetime: new Date(),discount:0,discountlist:[],itemslist:[{cat:"Example",code:"0000",cost:"0", name:"Example Product",price:"0",stock_qty:"0",}],pnllist:[],prodidlist:[],taxrate:0,totalatax:0,totaldisc:0,totalsum:0,}]
       }).then(async (doc) => {
         console.log(doc);
+        const title = this.translateConfigService.getTranslatedMessage('Account Created');
+        const message = this.translateConfigService.getTranslatedMessage('Your account has been created successfully');
       this.alertCtrl.create({
-      title: "Account Created",
-      message: "သင်၏အကောင့်ကိုအောင်မြင်စွာဖန်တီးလိုက်ပြီ.",
+        // @ts-ignore
+      title: title.value,
+        // @ts-ignore
+      message: message.value,
       buttons:[{
 
       text: "OK",

@@ -89,17 +89,20 @@ async getUserData(){
   uploadbtn(){
 
     this.sp.backupStorage();
+    const message = this.translateConfigService.getTranslatedMessage('Online backup ready');
     this.toastCtrl.create({
-  
-      message: "အွန်လိုင်းအရန်သင့်သိမ်းဆည်းပြီးပါပြီ",
+      // @ts-ignore
+      message: message.value,
       duration: 2000
     }).present();
   }
 
   cashbtn(){
     this.getUserData();
+    const messsage = this.translateConfigService.getTranslatedMessage('Balance');
     this.toastCtrl.create({
-      message: "ငွေလက်ကျန်: " + this.userdata.cash_balance,
+      // @ts-ignore
+      message: message.value + this.userdata.cash_balance,
       duration: 3000
     }).present();
   }
@@ -111,8 +114,10 @@ async getUserData(){
     this.barcodeScanner.scan().then(barcodeData => {
       this.sp.searchProduct(barcodeData.text).then(val => {
         if(val[0] != null){
+          const message = this.translateConfigService.getTranslatedMessage('Found Product');
           let toast = this.toastCtrl.create({
-            message: "Found Product "+ val[0].name,
+            // @ts-ignore
+            message: message.value + " " + val[0].name,
             duration: 2000
           });
           toast.present();
@@ -123,8 +128,10 @@ async getUserData(){
           this.getset.setCount(this.count);
           this.getset.setVat(this.vat);
         }else{
+          const message = this.translateConfigService.getTranslatedMessage('Get Product!!!');
           let toast = this.toastCtrl.create({
-            message: "ကုန်ပစ္စည်းမရှိပါ!!!",
+            // @ts-ignore
+            message: message.value,
             duration: 2000
           });
           toast.present();
@@ -158,8 +165,10 @@ async getUserData(){
           handler: data => {
             this.sp.searchProduct(data.code).then(val => {
               if(val[0] != null){
+                const message = this.translateConfigService.getTranslatedMessage('Found Product');
                 let toast = this.toastCtrl.create({
-                  message: "Found Product "+ val[0].name,
+                  // @ts-ignore
+                  message: message.value + " " + val[0].name,
                   duration: 2000
                 });
                 toast.present();
@@ -170,8 +179,10 @@ async getUserData(){
                 this.getset.setCount(this.count);
                 this.getset.setVat(this.vat);
               }else{
+                const message = this.translateConfigService.getTranslatedMessage('Get Product!!!');
                 let toast = this.toastCtrl.create({
-                  message: "ကုန်ပစ္စည်းမရှိပါ!!!",
+                  // @ts-ignore
+                  message: message.value,
                   duration: 2000
                 });
                 toast.present();
@@ -191,8 +202,10 @@ async getUserData(){
     this.total = 0;
     this.count = 0;
     this.vat = 0;
+    const message = this.translateConfigService.getTranslatedMessage('POS reset to Zero');
     let toast = this.toastCtrl.create({
-      message: "POS reset to Zero",
+      // @ts-ignore
+      message: message.value,
       duration: 2000
     });
     toast.present();

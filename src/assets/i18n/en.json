@@ -93,5 +93,19 @@
   "Already have an account? Log-in":"Already have an account? Log-in",
   "Add Stock":"Add Stock",
   "Add New Stock":"Add New Stock",
-  "Clear":"Clear"
+  "Clear":"Clear",
+  "Finish": "Finish",
+  "Incomplete": "Incomplete",
+  "Creating item, please wait a moment": "Creating item, please wait a moment",
+  "Online backup ready": "Online backup ready",
+  "Balance": "Balance",
+  "Found Product": "Found Product",
+  "Get Product!!!": "Get Product!!!",
+  "POS reset to Zero": "POS reset to Zero",
+  "Not found!": "Not found!",
+  "This feature will open shortly": "This feature will open shortly",
+  "Please wait while creating your profile ...": "Please wait while creating your profile ...",
+  "Your account has been created successfully": "Your account has been created successfully",
+  "Please wait - Uploading new image": "Please wait - Uploading new image",
+  "Done uploading": "Done uploading"
 }

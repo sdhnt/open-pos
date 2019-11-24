@@ -168,8 +168,10 @@ export class ExpensesHomePage {
       console.log(dataexp)
       this.sp.addTransactions(dataexp);
       this.updateCb(this.prodcost).then(()=>{this.events.publish('cbUpdate:created', 0); console.log("update")});
+        const message = this.translateConfigService.getTranslatedMessage('Finish');
         let toast = this.toastCtrl.create({
-          message: 'ပြီးပြီ',
+          // @ts-ignore
+          message: message.value,
           duration: 3000
         });
 
@@ -203,15 +205,19 @@ export class ExpensesHomePage {
     this.barcodeScanner.scan().then(barcodeData => {
     this.sp.searchProduct(barcodeData.text).then(val => {
       if(val[0] != null){
+        const message = this.translateConfigService.getTranslatedMessage('Found Product');
         let toast = this.toastCtrl.create({
-          message: "Found Product "+ val[0].name,
+          // @ts-ignore
+          message: message.value + " "+ val[0].name,
           duration: 2000
         });
         toast.present();
         this.chooseProd(val[0]);
       }else{
+        const message = this.translateConfigService.getTranslatedMessage('Not found!');
         let toast = this.toastCtrl.create({
-          message: "Not found!",
+          // @ts-ignore
+          message: message.value,
           duration: 2000
         });
         toast.present();

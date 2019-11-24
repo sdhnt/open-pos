@@ -130,8 +130,10 @@ loginWithFB(){
     }
 
     loginAction(){
+        const message = this.translateConfigService.getTranslatedMessage('This feature will open shortly');
       this.toastCtrl.create({
-        message: "အင်္ဂါရပ်မကြာမီဖွင့်ပါလိမ့်မည်",
+          // @ts-ignore
+        message: message.value,
         duration: 2000,
       }).present();
     }

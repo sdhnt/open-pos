@@ -149,8 +149,10 @@ export class AddProductPage {
       this.sp.storageReady().then(() => {
         this.sp.addCategory(data);
         setTimeout(() => {
+          const message = this.translateConfigService.getTranslatedMessage('Finish');
           let toast = this.toastCtrl.create({
-            message: 'ပြီးပြီ',
+            // @ts-ignore
+            message: message.value,
             duration: 3000
           });
           this.newprodCat = "";
@@ -189,9 +191,10 @@ export class AddProductPage {
 
   addproduct() {
     if (!this.formProduct.valid || (this.prodCat == "New"&& this.newprodCat=="")) {
-
+      const message = this.translateConfigService.getTranslatedMessage('Incomplete');
       this.toastCtrl.create({
-        message: "Incomplete",
+        // @ts-ignore
+        message: message.value,
         duration: 1000,
       }).present();
     } else {
@@ -206,9 +209,10 @@ export class AddProductPage {
       if (this.image == "") {
 
 
-
+        const message = this.translateConfigService.getTranslatedMessage('Creating item, please wait a moment');
         this.toastCtrl.create({
-          message: "ပစ္စည်းဖန်တီးလျက်ရှိသည်။ ကျေးဇူးပြုပြီးခဏစောင့်ပါ။",
+          // @ts-ignore
+          message: message.value,
           duration: 2000,
         });
 
@@ -229,8 +233,10 @@ export class AddProductPage {
         this.sp.storageReady().then(() => {
           this.sp.addProduct(data);
           setTimeout(() => {
+            const message = this.translateConfigService.getTranslatedMessage('Finish');
             let toast = this.toastCtrl.create({
-              message: 'ပြီးပြီ',
+              // @ts-ignore
+              message: message.value,
               duration: 3000
             });
             this.prodCode = "";
@@ -255,8 +261,10 @@ export class AddProductPage {
       }
       else {
         this.temp = this.prodName;
+        const message = this.translateConfigService.getTranslatedMessage('Creating item, please wait a moment');
         this.toastCtrl.create({
-          message: "ပစ္စည်းဖန်တီးလျက်ရှိသည်။ ကျေးဇူးပြုပြီးခဏစောင့်ပါ။",
+          // @ts-ignore
+          message: message.value,
           duration: 2000,
         });
         this.upload_new(this.prodName).then(() => {
@@ -280,8 +288,10 @@ export class AddProductPage {
           this.sp.storageReady().then(() => {
             this.sp.addProduct(data);
             setTimeout(() => {
+              const message = this.translateConfigService.getTranslatedMessage('Finish');
               let toast = this.toastCtrl.create({
-                message: 'ပြီးပြီ',
+                // @ts-ignore
+                message: message.value,
                 duration: 3000
               });
               this.prodCode = "";
