@@ -39,6 +39,7 @@ import { TransactionProductPage } from '../pages/transaction-product/transaction
 import { ProductListPage } from '../pages/product-list/product-list';
 import { AddProductCategoryPage } from '../pages/add-product-category/add-product-category';
 import { ExpensesHomePage } from '../pages/expenses-home/expenses-home';
+import { UserProfilePage } from "../pages/user-profile/user-profile";
 import { AddProductCategoryPageModule } from '../pages/add-product-category/add-product-category.module';
 import { AllTransactionPageModule } from '../pages/all-transaction/all-transaction.module';
 import { CoachBusinesstipsPageModule } from '../pages/coach-businesstips/coach-businesstips.module';
@@ -55,7 +56,7 @@ import { SummaryHomePageModule } from '../pages/summary-home/summary-home.module
 import { TransactionProductPageModule } from '../pages/transaction-product/transaction-product.module';
 import { ProductListPageModule } from '../pages/product-list/product-list.module';
 import { ExpensesHomePageModule } from '../pages/expenses-home/expenses-home.module';
-
+import { UserProfilePageModule} from "../pages/user-profile/user-profile.module";
 
 
 // var config = {
@@ -121,6 +122,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TransactionProductPageModule,
     ProductListPageModule,
     ExpensesHomePageModule,
+    UserProfilePageModule,
     ReactiveFormsModule,
     HttpClientModule,
     TranslateModule.forRoot({
@@ -153,6 +155,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProductListPage,
     AddProductCategoryPage,
     ExpensesHomePage,
+    UserProfilePage,
   ],
   providers: [
     StatusBar,
