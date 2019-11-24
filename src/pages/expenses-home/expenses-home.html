@@ -66,7 +66,7 @@
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col col-12> <button ion-button full end color="dark" (click)="chooseProd(product)">{{"Choose"|translate}}</button> </ion-col>
+        <ion-col col-12> <button ion-button full end color="dark" (click)="chooseProd(product)">{{"Add New Stock"|translate}}</button> </ion-col>
       </ion-row>
       </ion-grid>
     </ion-card> 
@@ -99,6 +99,6 @@
       <ion-datetime displayFormat="DD/MMM/YYYY" [(ngModel)]='expirydate' [min]="minDate" [max]="maxDate"></ion-datetime>
       </ion-item>
     </ion-list>
-  <button ion-button block color="primary" (click)="addinventoryexpense()"  color="dark">{{"Add Product"|translate}}</button>
+  <button ion-button block color="primary" (click)="addinventoryexpense()"  color="dark">{{"Add Stock"|translate}}</button>
   
 </ion-footer>

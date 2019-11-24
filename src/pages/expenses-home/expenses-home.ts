@@ -5,6 +5,7 @@ import firebase from 'firebase';
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import { ProductListPage } from '../product-list/product-list';
 import { DashboardPage } from '../dashboard/dashboard';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 /**
  * Generated class for the ExpensesHomePage page.
@@ -21,7 +22,7 @@ import { DashboardPage } from '../dashboard/dashboard';
 export class ExpensesHomePage {
 
   constructor(public navCtrl: NavController, private translateConfigService: TranslateConfigService,public navParams: NavParams,
-    public sp: StorageProvider, public events: Events, public toastCtrl: ToastController,
+    public sp: StorageProvider, public events: Events, public toastCtrl: ToastController, public barcodeScanner: BarcodeScanner
     ) {
       this.getUserData();
   }
@@ -117,9 +118,6 @@ export class ExpensesHomePage {
           else{
             return true;
           }
-
-       
-         
         }
     });   
 
@@ -201,7 +199,27 @@ export class ExpensesHomePage {
     this.sp.setUserDat(this.userdata);
  }
 
-  scanQR(){
+  scanQR(){    
+    this.barcodeScanner.scan().then(barcodeData => {
+    this.sp.searchProduct(barcodeData.text).then(val => {
+      if(val[0] != null){
+        let toast = this.toastCtrl.create({
+          message: "Found Product "+ val[0].name,
+          duration: 2000
+        });
+        toast.present();
+        this.chooseProd(val[0]);
+      }else{
+        let toast = this.toastCtrl.create({
+          message: "Not found!",
+          duration: 2000
+        });
+        toast.present();
+      }
+    })
+  }).catch(err => {
+      console.log('Error', err);
+  });
 
   }
 
