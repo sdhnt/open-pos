@@ -13,6 +13,7 @@ import { CoachHomePage } from '../pages/coach-home/coach-home';
 import { ContactUsPage } from '../pages/contact-us/contact-us';
 import { StorageProvider } from '../providers/storage/storage';
 import { ExpensesHomePage } from '../pages/expenses-home/expenses-home';
+import { UserProfilePage } from "../pages/user-profile/user-profile";
 import { TranslateConfigService } from '../providers/translation/translate-config.service';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -70,5 +71,9 @@ ionViewDidEnter() {
 
   openPage(page) {
     this.nav.setRoot(page.component);
+  }
+
+  openUserProfilePage() {
+    this.openPage({component: UserProfilePage});
   }
 }
