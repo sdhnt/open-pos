@@ -53,8 +53,10 @@ export class AddProductCategoryPage {
     this.sp.storageReady().then(() => {
       this.sp.addCategory(data);
       setTimeout(()=> {
+        const message = this.translateConfigService.getTranslatedMessage('Finish');
         let toast = this.toastCtrl.create({
-          message: 'Finish',
+          // @ts-ignore
+          message: message.value,
           duration: 3000
         });
         this.newprodCat="";
@@ -75,8 +77,10 @@ export class AddProductCategoryPage {
       this.sp.deleteCategory(element);
       this.sp.backupStorage();
       setTimeout(()=> {
+        const message = this.translateConfigService.getTranslatedMessage('Finish');
         let toast = this.toastCtrl.create({
-          message: 'Finish',
+          // @ts-ignore
+          message: message.value,
           duration: 3000
         });
         this.getCategories();

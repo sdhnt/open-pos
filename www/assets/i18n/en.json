@@ -93,5 +93,17 @@
   "Already have an account? Log-in":"Already have an account? Log-in",
   "Add Stock":"Add Stock",
   "Add New Stock":"Add New Stock",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
   "Clear":"Clear"
+=======
+  "Finish": "Finish",
+  "Incomplete": "Incomplete",
+  "Creating item, please wait a moment": "Creating item, please wait a moment"
+>>>>>>> Stashed changes
+=======
+  "Finish": "Finish",
+  "Incomplete": "Incomplete",
+  "Creating item, please wait a moment": "Creating item, please wait a moment"
+>>>>>>> Stashed changes
 }

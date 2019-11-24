@@ -98,17 +98,20 @@ async getUserData(){
   uploadbtn(){
 
     this.sp.backupStorage();
+    const message = this.translateConfigService.getTranslatedMessage('Online backup ready');
     this.toastCtrl.create({
-  
-      message: "အွန်လိုင်းအရန်သင့်သိမ်းဆည်းပြီးပါပြီ",
+        // @ts-ignore
+      message: message.value,
       duration: 2000
     }).present();
   }
 
   cashbtn(){
     this.getUserData();
+    const message = this.translateConfigService.getTranslatedMessage('Balance');
     this.toastCtrl.create({
-      message: "ငွေလက်ကျန်: " + this.userdata.cash_balance,
+        // @ts-ignore
+      message: message.value + ": " + this.userdata.cash_balance,
       duration: 3000
     }).present();
   }

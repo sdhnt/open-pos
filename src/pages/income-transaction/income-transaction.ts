@@ -131,8 +131,10 @@ qrscan(){
     this.sp.searchProduct(barcodeData.text).then(val => {
       if(val[0] != null){
         curprod=val[0];
+        const message = this.translateConfigService.getTranslatedMessage('Found Product');
         let toast = this.toastCtrl.create({
-          message: "Found Product "+ val[0].name,
+          // @ts-ignore
+          message: message.value + " "+ val[0].name,
           duration: 2000
         });
         toast.present();
@@ -159,8 +161,10 @@ qrscan(){
 
       
       }else{
+        const message = this.translateConfigService.getTranslatedMessage('Get Product!!!');
         let toast = this.toastCtrl.create({
-          message: "ကုန်ပစ္စည်းမရှိပါ!!!",
+          // @ts-ignore
+          message: message.value,
           duration: 2000
         });
         toast.present();
@@ -380,8 +384,10 @@ qrscan(){
         console.log(data)
         this.sp.addTransactions(data);
         this.updateCb(this.lastsum).then(()=>{this.events.publish('cbUpdate:created', 0);});
+          const message = this.translateConfigService.getTranslatedMessage('Finish');
           let toast = this.toastCtrl.create({
-            message: 'ပြီးပြီ',
+            // @ts-ignore
+            message: message.value,
             duration: 3000
           });
 
@@ -446,10 +452,10 @@ qrscan(){
   }
 
   printRec(){
-
+    const message = this.translateConfigService.getTranslatedMessage('This feature will open shortly');
     this.toastCtrl.create({
-  
-      message: "ဒီအင်္ဂါရပ်မကြာမီဖွင့်ပါလိမ့်မည်",
+      // @ts-ignore
+      message: message.value,
       duration: 2000,
     }).present();
 
