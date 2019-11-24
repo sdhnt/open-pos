@@ -268,6 +268,7 @@ export class SingleProductPage {
   }
 
   discardChange(){
+    //const message = this.translateConfigService.getTranslatedMessage('Changes discarded');
     this.image = this.orgData["image"] ;
     this.product.code = this.orgData["prodCode"];
     this.product.name = this.orgData["prodName"];
@@ -276,5 +277,11 @@ export class SingleProductPage {
     this.product.cost = this.orgData["prodCost"];
     this.product.stock_qty = this.orgData["stock"];
     this.product.cat = this.orgData["prodCat"];
+
+    let toast = this.toastCtrl.create({
+      message: "Changes discarded",
+      duration: 2500
+    }).present();
+    this.navCtrl.push(ProductListPage);
   }
 }
