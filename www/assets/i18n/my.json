@@ -66,6 +66,7 @@
  "Don't have an account?":"အကောင့်မရှိဘူးလား?",
  "View / Edit":"ကြည့်မည် / ပြင်ဆင်မည်",
  "Update Product":"ကုန်ပစ္စည်း အပ်ဒိတ်လုပ်မည်",
+ "Update profile successful": "ပရိုဖိုင်းကိုအောင်အောင်မြင်မြင်ပြုပြင်ပြီးပါပြီ",
  "Delete Product":"ကုန်ပစ္စည်းဖျက်မည်",
  "Summarize:":"အကျဉ်းချုပ်:",
  "Total sales today":"ယနေ့ရောင်းအား",
@@ -107,5 +108,6 @@
  "Please wait while creating your profile ...": "သင်၏ပရိုဖိုင်းကိုဖန်တီးနေစဉ်ခဏစောင့်ပါ...",
  "Your account has been created successfully": "သင်၏အကောင့်ကိုအောင်မြင်စွာဖန်တီးလိုက်ပြီ",
  "Please wait - Uploading new image": "ကျေးဇူးပြု၍ စောင့်ပါ - ပုံအသစ်တင်ပါ",
- "Done uploading": "တင်ပြီးပါပြီ"
+ "Done uploading": "တင်ပြီးပါပြီ",
+ "Changes Discarded":"ပြောင်းလဲပစ်စွန့်ပစ်"
 }

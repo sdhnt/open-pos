@@ -9,6 +9,7 @@ import firebase from 'firebase';
 import { FormGroup, FormBuilder,FormControl, Validators } from '@angular/forms';
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
+import { DashboardPage } from '../dashboard/dashboard';
 
 
 
@@ -174,7 +175,7 @@ export class AddProductPage {
   this.prodWholesalePrice = null;
   this.prodCost = null;
   this.prodCat = "";
-  this.navCtrl.push(ProductListPage);
+  (this.navCtrl.parent as Tabs).select(0);
   }
 
   addProdPic() {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, Tabs } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { StorageProvider} from '../../providers/storage/storage';
 import { ToastController } from 'ionic-angular';
@@ -9,6 +9,7 @@ import firebase from 'firebase';
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
+import { DashboardPage } from '../dashboard/dashboard';
 
 @Component({
   selector: 'page-single-product',
@@ -283,6 +284,6 @@ export class SingleProductPage {
       message: message.value,
       duration: 2500
     }).present();
-    this.navCtrl.push(ProductListPage);
+    (this.navCtrl.parent as Tabs).select(0);
   }
 }
