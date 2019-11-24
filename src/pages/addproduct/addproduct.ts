@@ -174,6 +174,7 @@ export class AddProductPage {
   this.prodWholesalePrice = null;
   this.prodCost = null;
   this.prodCat = "";
+  this.navCtrl.push(ProductListPage);
   }
 
   addProdPic() {
