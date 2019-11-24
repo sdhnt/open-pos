@@ -27,6 +27,7 @@
   "Add Product":"Add Product",
   "View User Profile":"View User Profile",
   "User Profile":"User Profile",
+  "Update Profile": "Update Profile",
   "Sl":"Sl",
   "Name":"Name",
   "Price":"Price",
@@ -89,5 +90,7 @@
   "Usual Discount %":"Usual Discount %",
   "Usual Tax %":"Usual Tax %",
   "Sign Up":"Sign Up",
-  "Already have an account? Log-in":"Already have an account? Log-in"
+  "Already have an account? Log-in":"Already have an account? Log-in",
+  "Add Stock":"Add Stock",
+  "Add New Stock":"Add New Stock"
 }
