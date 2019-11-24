@@ -35,7 +35,7 @@ export class MyApp {
     this.pages = [
       { title: 'Sales', component: TransactionHomePage },
       { title: 'Products', component: DashboardPage },
-      { title: 'Expense', component: ExpensesHomePage },
+      { title: 'Stock', component: ExpensesHomePage },
       { title: 'Business', component: SummaryHomePage },
      // { title: 'Coach', component: CoachHomePage },
       { title: 'Contact Us', component: ContactUsPage },

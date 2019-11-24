@@ -9,7 +9,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title> {{"Expense"|translate}} </ion-title>
+    <ion-title> {{"Add New Stock"|translate}} </ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -74,12 +74,12 @@
 </ion-list>
 </ion-content>
 
-<ion-footer style="border-top-color:black; border-top: 10px;">
+<ion-footer style="border-top-color:black; border-top: 10px;" *ngIf='prodName!=""'> 
   <ion-list>
     <ion-item>
       {{"Product Name"|translate}}: {{prodName}}
       <button ion-button style="float: right; color:white; background-color: red;" [hidden]="hideButton" (click)="clearProduct()">
-        CLEAR
+        {{"Clear"|translate}}
       </button>
     </ion-item>
     <ion-item>
