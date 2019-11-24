@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { StorageProvider } from "../../providers/storage/storage";
 import {FormControl, FormGroup, FormBuilder, Validators} from "@angular/forms";
+import { TransactionHomePage } from '../transaction-home/transaction-home';
 
 /**
  * Generated class for the UserProfilePage page.
@@ -55,6 +56,7 @@ export class UserProfilePage {
       this.sp.storageReady().then(() => {
         this.sp.setUserDat(this.user).then(() => {
           console.log('new user data saved in storage');
+          this.navCtrl.setRoot(TransactionHomePage)
         }).catch(error => {
           console.error(error);
         });
