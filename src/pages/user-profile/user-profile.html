@@ -18,30 +18,54 @@
     <ion-list inset>
       <ion-item>
         <ion-label>{{ 'Business Name' | translate }}</ion-label>
-        <ion-input type="text" formControlName="business_name" [(ngModel)]="user.business_name"></ion-input>
+        <ion-input type="text" formControlName="business_name" [(ngModel)]="user.business_name" (ionChange)="onChange()"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label>{{ 'Full Business Address' | translate }}</ion-label>
-        <ion-input type="text" formControlName="business_address" [(ngModel)]="user.business_address"></ion-input>
+        <ion-input type="text" formControlName="business_address" [(ngModel)]="user.business_address" (ionChange)="onChange()"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label>{{ 'Owner' | translate }}</ion-label>
-        <ion-input type="text" formControlName="owner_name" [(ngModel)]="user.owner_name"></ion-input>
+        <ion-input type="text" formControlName="owner_name" [(ngModel)]="user.owner_name" (ionChange)="onChange()"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label>{{ 'Business Type' | translate }}</ion-label>
-        <ion-input type="text" formControlName="businesstype" [(ngModel)]="user.businesstype"></ion-input>
+        <ion-icon name="globe" color="semi-light" class="icon"></ion-icon>
+        <ion-label>{{"Business Type"|translate}}</ion-label>
+        <ion-select formControlName="businesstype" [(ngModel)]="user.businesstype" (ionChange)="onChange()">
+          <ion-option *ngFor="let b of listOfBType" value="{{ b }}">{{ b }}</ion-option>
+        </ion-select>
       </ion-item>
       <ion-item>
         <ion-label>{{ 'Phone Number' | translate }}</ion-label>
-        <ion-input type="text" formControlName="ph_no" [(ngModel)]="user.ph_no"></ion-input>
+        <ion-input type="text" formControlName="ph_no" [(ngModel)]="user.ph_no" (ionChange)="onChange()"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="logo-usd" color="semi-light" class="icon"></ion-icon>
+        <ion-label>{{"Currency"|translate}}</ion-label>
+        <ion-select formControlName="currency" [(ngModel)]="user.currency" (ionChange)="onChange()">
+          <ion-option *ngFor="let c of listOfCurrency" value = "{{ c }}">{{ c }}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{ 'Balance' | translate }}</ion-label>
+        <ion-input type="number" formControlName="cash_balance" [(ngModel)]="user.cash_balance" (ionChange)="onChange()"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{ 'Usual Discount %' | translate }}</ion-label>
+        <ion-input type="number" formControlName="discount" [(ngModel)]="user.discount" (ionChange)="onChange()"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label>{{ 'Tax Rate %:' | translate }}</ion-label>
-        <ion-input type="number" formControlName="taxrate" [(ngModel)]="user.taxrate"></ion-input>
+        <ion-input type="number" formControlName="taxrate" [(ngModel)]="user.taxrate" (ionChange)="onChange()"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{"Language"|translate}}</ion-label>
+        <ion-select formControlName="language" [(ngModel)]="user.language" (ionChange)="onChange()">
+          <ion-option *ngFor="let l of listOfLang" value="{{ l }}">{{ l }}</ion-option>
+        </ion-select>
       </ion-item>
     </ion-list>
 
-    <button ion-button block color="primary" (click)="setUser()"  color="dark">{{'Update Profile'| translate}}</button>
+    <button *ngIf="submitButton" ion-button block color="primary" (click)="setUser()"  color="dark">{{'Update Profile'| translate}}</button>
   </form>
 </ion-content>
