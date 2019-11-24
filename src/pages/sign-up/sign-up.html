@@ -42,7 +42,7 @@
 				  <ion-icon name="globe" color="semi-light" class="icon"></ion-icon>
 				  <ion-label>{{"Business Type"|translate}}</ion-label>
 				  <ion-select [(ngModel)]="businesstype">
-					  <ion-option *ngFor="let b of listOfBType">{{ b }}</ion-option>
+					  <ion-option *ngFor="let b of listOfBType" value="{{ b }}">{{ b }}</ion-option>
 				  </ion-select>
 				  <!-- <ion-input type="text" placeholder="Language"  [(ngModel)]="businessname"></ion-input> -->
 		 </ion-row>
@@ -52,7 +52,7 @@
 			  <ion-icon name="chatboxes" color="semi-light" class="icon"></ion-icon>
 			  <ion-label>{{"Language"|translate}}</ion-label>
 			  <ion-select [(ngModel)]="language">
-				  <ion-option *ngFor="let l of listOfLang">{{ l }}</ion-option>
+				  <ion-option *ngFor="let l of listOfLang" value="{{ l }}">{{ l }}</ion-option>
 			  </ion-select>
 			  <!-- <ion-input type="text" placeholder="Language"  [(ngModel)]="businessname"></ion-input> -->
 		  </ion-row>
@@ -61,7 +61,7 @@
 				  <ion-icon name="logo-usd" color="semi-light" class="icon"></ion-icon>
 				  <ion-label>{{"Currency"|translate}}</ion-label>
 				  <ion-select [(ngModel)]="currency">
-					  <ion-option *ngFor="let c of listOfCurrency">{{ c }}</ion-option>
+					  <ion-option *ngFor="let c of listOfCurrency" value = "{{ c }}">{{ c }}</ion-option>
 				  </ion-select>
 				  <!-- <ion-input type="text" placeholder="Language"  [(ngModel)]="businessname"></ion-input> -->
 			  </ion-row>

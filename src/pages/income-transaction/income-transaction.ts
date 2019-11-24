@@ -6,6 +6,7 @@ import { StorageProvider } from '../../providers/storage/storage';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { ThrowStmt } from '@angular/compiler';
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
+import { TransactionHomePage } from '../transaction-home/transaction-home';
 
 /**
  * Generated class for the IncomeTransactionPage page.
@@ -399,6 +400,7 @@ qrscan(){
       
       });
     }
+    (this.navCtrl.parent as Tabs).select(0);
   }
 
   addCalc(){

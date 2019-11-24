@@ -41,6 +41,7 @@ export class ExpensesHomePage {
   listCat : any;
   totalamt=0.0;
   userdata: any;
+  hideButton: boolean = true;
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ExpensesHomePage');
@@ -68,6 +69,8 @@ export class ExpensesHomePage {
     else if(this.prodcost!=null && this.prodqty!=null && (edited=="prodcost" ||edited=="prodqty")){
       this.prodcostitem=this.prodcost/this.prodqty;
     }
+
+    
   }
 
   getCategories(){
@@ -150,7 +153,7 @@ export class ExpensesHomePage {
           "name": this.product.name,
           "price": this.product.price,
           "wholesale_price": this.product.wholesale_price,
-          "cost": (((parseInt(this.product.cost)*parseInt(this.product.stock_qty))+(parseInt(this.prodcost)))/(parseInt(this.prodqty)+parseInt(this.product.stock_qty)))      ,
+          "cost": Math.round(((parseInt(this.product.cost)*parseInt(this.product.stock_qty))+(parseInt(this.prodcost)))/(parseInt(this.prodqty)+parseInt(this.product.stock_qty))*100)/100,
           "cat": this.product.cat,
           "url": this.product.url,
           "stock_qty":(parseInt(this.product.stock_qty)+parseInt(this.prodqty)),
@@ -206,6 +209,16 @@ export class ExpensesHomePage {
     this.prodName=product.name;
     console.log(this.prodName);
     this.product=product;
+    this.hideButton = false;
+  }
+
+  clearProduct(){
+    this.hideButton = true;
+    this.prodName = "";
+    this.product = null;
+    this.prodqty = "";
+    this.prodcost = "";
+    this.prodcostitem = "";
   }
 
   // qrscan(){
