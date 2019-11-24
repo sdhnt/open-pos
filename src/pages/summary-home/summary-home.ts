@@ -36,7 +36,6 @@ export class SummaryHomePage {
     this.tsmonth=0;
     this.ts30=0;
     this.getTransac();
-   
   }
 
   listtransac: any;

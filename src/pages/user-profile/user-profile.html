@@ -14,9 +14,30 @@
 </ion-header>
 
 <ion-content>
-
-  <div>
-    content
-  </div>
-
+  <ion-list inset>
+    <ion-item>
+      <ion-label>{{ 'Business Name' | translate }}</ion-label>
+      <ion-label>{{user.business_name}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{ 'Full Business Address' | translate }}</ion-label>
+      <ion-label>{{user.business_address}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{ 'Owner' | translate }}</ion-label>
+      <ion-label>{{user.owner_name}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{ 'Business Type' | translate }}</ion-label>
+      <ion-label>{{user.businesstype}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{ 'Phone Number' | translate }}</ion-label>
+      <ion-label>{{user.ph_no}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{ 'Tax Rate %:' | translate }}</ion-label>
+      <ion-label>{{user.taxrate}}</ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

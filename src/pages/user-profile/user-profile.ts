@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { StorageProvider } from "../../providers/storage/storage";
 
 /**
  * Generated class for the UserProfilePage page.
@@ -13,13 +14,26 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   selector: 'page-user-profile',
   templateUrl: 'user-profile.html',
 })
-export class UserProfilePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+export class UserProfilePage {
+  user: any;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private sp: StorageProvider) {
+    this.user = {};
   }
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad UserProfilePage');
+    this.getUser();
+  }
+
+  getUser() {
+    this.sp.storageReady().then(() => {
+      this.sp.getUserDat().then(user => {
+        this.user = JSON.parse(user);
+      })
+    });
   }
 
 }
