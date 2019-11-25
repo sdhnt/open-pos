@@ -16,6 +16,7 @@ import { ExpensesHomePage } from '../pages/expenses-home/expenses-home';
 import { UserProfilePage } from "../pages/user-profile/user-profile";
 import { TranslateConfigService } from '../providers/translation/translate-config.service';
 import { TranslateService } from '@ngx-translate/core';
+import { PrinterTestPage } from '../pages/printer-test/printer-test';
 
 @Component({
   templateUrl: 'app.html'
@@ -39,6 +40,7 @@ export class MyApp {
       { title: 'Business', component: SummaryHomePage },
      // { title: 'Coach', component: CoachHomePage },
       { title: 'Contact Us', component: ContactUsPage },
+      { title: 'Printer Test', component: PrinterTestPage },
     ];
   }
   logout(){

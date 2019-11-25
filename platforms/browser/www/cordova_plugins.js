@@ -117,6 +117,22 @@ module.exports = [
         "clobbers": [
             "facebookConnectPlugin"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-bluetooth-serial/www/bluetoothSerial.js",
+        "id": "cordova-plugin-bluetooth-serial.bluetoothSerial",
+        "pluginId": "cordova-plugin-bluetooth-serial",
+        "clobbers": [
+            "window.bluetoothSerial"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-bluetooth-serial/src/browser/bluetoothSerial.js",
+        "id": "cordova-plugin-bluetooth-serial.BluetoothSerial_browser",
+        "pluginId": "cordova-plugin-bluetooth-serial",
+        "clobbers": [
+            "window.bluetoothSerial"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -137,7 +153,8 @@ module.exports.metadata =
     "cordova-plugin-camera": "4.1.0",
     "cordova-plugin-datepicker": "0.9.3",
     "cordova-plugin-facebook4": "1.7.4",
-    "cordova-android-support-gradle-release": "3.0.1"
+    "cordova-android-support-gradle-release": "3.0.1",
+    "cordova-plugin-bluetooth-serial": "0.4.7"
 }
 // BOTTOM OF METADATA
 });

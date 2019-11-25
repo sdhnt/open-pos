@@ -1,6 +1,14 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
   module.exports = [
     {
+      "id": "cordova-plugin-bluetooth-serial.bluetoothSerial",
+      "file": "plugins/cordova-plugin-bluetooth-serial/www/bluetoothSerial.js",
+      "pluginId": "cordova-plugin-bluetooth-serial",
+      "clobbers": [
+        "window.bluetoothSerial"
+      ]
+    },
+    {
       "id": "cordova-plugin-camera.Camera",
       "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
       "pluginId": "cordova-plugin-camera",
@@ -125,6 +133,7 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-android-support-gradle-release": "3.0.1",
     "cordova-plugin-androidx": "1.0.2",
     "cordova-plugin-androidx-adapter": "1.1.0",
+    "cordova-plugin-bluetooth-serial": "0.4.7",
     "cordova-plugin-camera": "4.1.0",
     "cordova-plugin-datepicker": "0.9.3",
     "cordova-plugin-device": "2.0.2",

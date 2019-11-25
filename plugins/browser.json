@@ -53,6 +53,9 @@
     },
     "cordova-android-support-gradle-release": {
       "PACKAGE_NAME": "com.openfintech.pos"
+    },
+    "cordova-plugin-bluetooth-serial": {
+      "PACKAGE_NAME": "com.openfintech.pos"
     }
   },
   "dependent_plugins": {

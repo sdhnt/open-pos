@@ -11,6 +11,9 @@
       "ANDROID_SUPPORT_VERSION": "27.+",
       "PACKAGE_NAME": "com.openfintech.pos"
     },
+    "cordova-plugin-bluetooth-serial": {
+      "PACKAGE_NAME": "com.openfintech.pos"
+    },
     "cordova-plugin-camera": {
       "ANDROID_SUPPORT_V4_VERSION": "27.+",
       "PACKAGE_NAME": "com.openfintech.pos"

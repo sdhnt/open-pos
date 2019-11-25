@@ -4,6 +4,7 @@
     <description>Simple Barcode Based POS App.</description>
     <author email="sdhnt@connect.hku.hk" href="sdhntgupta.com">Sidhant Gupta</author>
     <content src="index.html" />
+    <allow-navigation href="*" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -11,6 +12,7 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <allow-navigation href="http://localhost:8101" sessionid="1b7a093e" />
     <preference name="ScrollEnabled" value="false" />
     <preference name="android-minSdkVersion" value="19" />
     <preference name="BackupWebStorage" value="none" />
@@ -20,7 +22,7 @@
     <preference name="FadeSplashScreenDuration" value="1000" />
     <preference name="SplashScreen" value="screen" />
     <preference name="ShowSplashScreen" value="true" />
-    <preference name="ShowSplashScreenSpinner" value="false" />
+    <preference name="ShowSplashScreenSpinner" value="true" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="FadeSplashScreen" value="true" />
 </widget>

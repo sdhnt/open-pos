@@ -8,35 +8,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1001643033524:android:621c36ea1c2427931368e1",
-        "android_client_info": {
-          "package_name": "com.ferdousulhaque.barcodempos"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1001643033524-vcg5cng0r5suio5v7tqpvidp7cavm62o.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBl9Ze4lzwfzYtdQvFdf_RHgyfA1WtwCmM"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1001643033524-vcg5cng0r5suio5v7tqpvidp7cavm62o.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:1001643033524:android:3e8eec1cb71370141368e1",
         "android_client_info": {
           "package_name": "com.openfintech.pos"

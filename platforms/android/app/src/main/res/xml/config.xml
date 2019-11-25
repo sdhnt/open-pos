@@ -1,5 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.openfintech.pos" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <feature name="BluetoothSerial">
+        <param name="android-package" value="com.megster.cordova.BluetoothSerial" />
+    </feature>
     <feature name="Camera">
         <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
     </feature>
@@ -55,7 +58,7 @@
     <name>Open</name>
     <description>Simple Barcode Based POS App.</description>
     <author email="sdhnt@connect.hku.hk" href="sdhntgupta.com">Sidhant Gupta</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://localhost:8100" />
     <allow-navigation href="*" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -65,6 +68,7 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <allow-navigation href="http://localhost:8101" sessionid="1b7a093e" />
+    <allow-navigation href="http://localhost:8100" sessionid="2e2496f7" />
     <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application" xmlns:android="http://schemas.android.com/apk/res/android">
         <application android:networkSecurityConfig="@xml/network_security_config" />
     </edit-config>

@@ -1,15 +1,1170 @@
 webpackJsonp([0],{
 
-/***/ 101:
+/***/ 13:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TranslateConfigService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ngx_translate_core__ = __webpack_require__(16);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+//translate-config.service.ts
+
+
+// @ts-ignore
+var TranslateConfigService = /** @class */ (function () {
+    function TranslateConfigService(translate) {
+        this.translate = translate;
+    }
+    TranslateConfigService.prototype.getDefaultLanguage = function () {
+        var language = this.translate.getBrowserLang();
+        this.translate.setDefaultLang(language);
+        console.log("device default language: " + language);
+        return language;
+    };
+    TranslateConfigService.prototype.setLanguage = function (setLang) {
+        this.translate.use(setLang);
+    };
+    TranslateConfigService.prototype.getTranslatedMessage = function (message) {
+        return this.translate.get(message);
+    };
+    TranslateConfigService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__ngx_translate_core__["c" /* TranslateService */]])
+    ], TranslateConfigService);
+    return TranslateConfigService;
+}());
+
+//# sourceMappingURL=translate-config.service.js.map
+
+/***/ }),
+
+/***/ 130:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddProductCategoryPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__ = __webpack_require__(13);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+/**
+ * Generated class for the AddProductCategoryPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var AddProductCategoryPage = /** @class */ (function () {
+    function AddProductCategoryPage(navCtrl, translateConfigService, navParams, sp, toastCtrl) {
+        this.navCtrl = navCtrl;
+        this.translateConfigService = translateConfigService;
+        this.navParams = navParams;
+        this.sp = sp;
+        this.toastCtrl = toastCtrl;
+        this.newprodCat = "";
+    }
+    AddProductCategoryPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad AddProductCategoryPage');
+        this.getCategories();
+    };
+    AddProductCategoryPage.prototype.getCategories = function () {
+        var _this = this;
+        console.log(this.listCat + " and " + this.newprodCat);
+        this.sp.storageReady().then(function () {
+            _this.sp.getCategories().then(function (val) {
+                console.log("val = " + val);
+                _this.listCat = JSON.parse(val);
+                console.log(_this.listCat);
+                _this.getCategories();
+            }).catch(function (err) {
+                alert("Error: " + err);
+            });
+        });
+    };
+    AddProductCategoryPage.prototype.addCategory = function () {
+        var _this = this;
+        console.log(this.listCat + " and " + this.newprodCat);
+        if (this.newprodCat != "") {
+            var data_1 = {
+                "name": this.newprodCat,
+            };
+            this.sp.storageReady().then(function () {
+                _this.sp.addCategory(data_1);
+                setTimeout(function () {
+                    var message = _this.translateConfigService.getTranslatedMessage('Finish');
+                    var toast = _this.toastCtrl.create({
+                        // @ts-ignore
+                        message: message.value,
+                        duration: 3000
+                    });
+                    _this.newprodCat = "";
+                    _this.sp.backupStorage();
+                    //this.navCtrl.push(ProductListPage);
+                    //this.events.publish('prodAdd:created',0);
+                    // (this.navCtrl.parent as Tabs).select(0);
+                    toast.present();
+                }, 1000);
+            });
+        }
+    };
+    AddProductCategoryPage.prototype.delCat = function (element) {
+        var _this = this;
+        this.sp.storageReady().then(function () {
+            _this.sp.deleteCategory(element);
+            _this.sp.backupStorage();
+            setTimeout(function () {
+                var message = _this.translateConfigService.getTranslatedMessage('Finish');
+                var toast = _this.toastCtrl.create({
+                    // @ts-ignore
+                    message: message.value,
+                    duration: 3000
+                });
+                _this.getCategories();
+                //this.navCtrl.push(ProductListPage);
+                //this.events.publish('prodAdd:created',0);
+                // (this.navCtrl.parent as Tabs).select(0);
+                toast.present();
+            }, 1000);
+        });
+    };
+    AddProductCategoryPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-add-product-category',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\add-product-category\add-product-category.html"*/'<ion-content padding>\n\n\n\n  <ion-grid>\n\n    <ion-row>\n\n      <ion-col col-8>\n\n          <ion-item>\n\n              <ion-input type="text" placeholder="Enter Category Here"  [(ngModel)]=\'newprodCat\'></ion-input>\n\n          </ion-item>\n\n      </ion-col>\n\n      <ion-col col-4>\n\n          <button ion-button full color="dark" (click)="addCategory()"> {{\'Add Category\' | translate}}</button>\n\n\n\n      </ion-col>\n\n    </ion-row>\n\n  </ion-grid>\n\n\n\n   \n\n    \n\n\n\n  <ion-item>\n\n     <h2> <b>{{\'View/Delete Category\' | translate}} </b> </h2>\n\n  </ion-item>\n\n \n\n  <ion-list  *ngFor="let element of listCat">\n\n\n\n      <ion-item>\n\n          {{element.name}}\n\n          <ion-icon item-end name="close-circle" (click)="delCat(element)" color="danger"></ion-icon> \n\n      </ion-item>\n\n  </ion-list>\n\n \n\n\n\n\n\n  \n\n\n\n \n\n    \n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\add-product-category\add-product-category.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__["a" /* TranslateConfigService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */]])
+    ], AddProductCategoryPage);
+    return AddProductCategoryPage;
+}());
+
+//# sourceMappingURL=add-product-category.js.map
+
+/***/ }),
+
+/***/ 137:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AllTransactionPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__ = __webpack_require__(13);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
+
+
+
+/**
+ * Generated class for the AllTransactionPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var AllTransactionPage = /** @class */ (function () {
+    function AllTransactionPage(navCtrl, translateConfigService, navParams, events, sp) {
+        var _this = this;
+        this.navCtrl = navCtrl;
+        this.translateConfigService = translateConfigService;
+        this.navParams = navParams;
+        this.events = events;
+        this.sp = sp;
+        this.itemsname = [];
+        this.result = "";
+        this.flag_mode = 0;
+        this.showSampleRec = true;
+        this.itemsprice = [];
+        this.itemsqty = [];
+        this.ctr = 0;
+        this.lastsum = 0;
+        this.lastchar = "NIL";
+        this.lastdigit = 0;
+        this.userdata = { business_address: "",
+            business_name: "",
+            cash_balance: "",
+            currency: "",
+            created: "",
+            language: "en",
+            owner: "",
+            owner_name: "",
+            ph_no: "",
+            businesstype: "",
+            taxrate: 0.0,
+            discount: 0.0,
+        };
+        this.getUserData();
+        this.events.subscribe('addRecCalc:created', function (data) {
+            console.log("ENTERED!");
+            console.log("Received 0 " + data);
+            //SET itemsprice here? - make new addgen - diff button calls diff event that pushes rather than replaces
+            //Same for Product Transaction Page
+            //console.log(this.showSampleRec);
+            var tempdat = JSON.parse(data);
+            // this.itemsname=null;
+            // this.itemsprice=null;
+            // this.itemsqty=null;
+            tempdat.forEach(function (element) {
+                _this.itemsname.push(element.name);
+                _this.itemsprice.push(element.price);
+                _this.itemsqty.push(element.qty);
+            });
+            console.log(_this.itemsprice);
+        });
+    }
+    AllTransactionPage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        console.log('ionViewDidLoad AllTransactionPage');
+        console.log("Size of array: " + this.itemsprice.length);
+        if (this.itemsprice.length > 0) {
+            this.showSampleRec = false;
+            this.flag_mode = 1;
+        }
+        this.delay(3000).then(function () {
+            _this.getUserData();
+        });
+    };
+    AllTransactionPage.prototype.delay = function (ms) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, new Promise(function (resolve) { return setTimeout(function () { return resolve(); }, ms); }).then(function () { return console.log("fired"); })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AllTransactionPage.prototype.getUserData = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                this.sp.storageReady().then(function () {
+                    _this.sp.getUserDat().then(function (val) {
+                        _this.userdata = JSON.parse(val);
+                        console.log(_this.userdata);
+                    }).catch(function (err) {
+                        alert("Error: " + err);
+                    });
+                });
+                return [2 /*return*/];
+            });
+        });
+    };
+    AllTransactionPage.prototype.createRec = function () {
+        var _this = this;
+        var tempJSON = { "itemslist": [], };
+        this.itemsprice.forEach(function (element, index) {
+            if (_this.itemsname.length > 0 && index < _this.itemsname.length) {
+                tempJSON.itemslist.push({ 'name': _this.itemsname[index],
+                    'price': parseInt(element),
+                    'qty': _this.itemsqty[index],
+                });
+            }
+            else {
+                tempJSON.itemslist.push({
+                    'code': '000000',
+                    'cat': 'NIL',
+                    'stock_qty': 0,
+                    'name': "ထုတ်ကုန်",
+                    'price': parseInt(element),
+                    'qty': _this.itemsqty[index],
+                });
+            }
+        });
+        //var sampledat={ 'itemslist': myJsonString,};
+        var myObjStr = JSON.stringify(tempJSON);
+        this.navCtrl.parent.select(2);
+        this.delay(300).then(function (any) {
+            _this.events.publish('genRec:created', myObjStr);
+            console.log("Sent: " + myObjStr);
+            //your task after delay.
+        });
+        this.result = "";
+        this.itemsname = [];
+        this.itemsprice = [];
+        this.lastsum = 0;
+        this.itemsqty = [];
+    };
+    AllTransactionPage.prototype.btnClicked = function (btn) {
+        var _this = this;
+        this.getUserData();
+        try {
+            console.log('CalculatorPage::btnClicked = ' + btn);
+            if (btn == "C") {
+                this.result = "";
+                this.itemsprice = [];
+                this.lastsum = 0;
+                this.itemsqty = [];
+            }
+            else if (btn == "=") {
+                this.showSampleRec = true;
+                //IF LAST = character then remove that character 
+                var answ = this.result.split('+');
+                if (this.result.includes('-')) {
+                    answ = this.result.split('+').join('-').split('-');
+                }
+                var temp;
+                answ.forEach(function (element, index) {
+                    if (element.includes("*")) {
+                        answ[index] = element.substring(0, element.indexOf("*"));
+                        _this.itemsprice.push(answ[index]);
+                        temp = parseInt(element.substring(element.indexOf("*") + 1));
+                        console.log(element.substring(element.indexOf("*") + 1));
+                        _this.itemsqty.push(temp);
+                    }
+                    else if (element.includes("/")) {
+                        answ[index] = element.substring(0, element.indexOf("/"));
+                        _this.itemsprice.push(answ[index]);
+                        temp = Math.round(1 / (parseInt((element.substring(element.indexOf("/") + 1)))) * 100) / 100;
+                        console.log(temp);
+                        _this.itemsqty.push(temp);
+                    }
+                    else {
+                        if (element != "") {
+                            _this.itemsprice.push(element);
+                            _this.itemsqty.push(parseInt("1"));
+                        }
+                    }
+                    // this.itemsprice.push(
+                    //   {'name': "Blank_Item",
+                    //   'price': parseInt(element),
+                    //   'qty': 0,
+                    //   })      
+                });
+                //flag_mode=0 means normal (sample reciept is generated)
+                //if(flag_mode==1) then go to reciept page directly - call createRec()
+                //if(flag_mode=2) then just use as calc - no reciept is generated
+                console.log(this.itemsprice);
+                console.log(this.itemsqty);
+                this.result = eval(this.result) + "";
+                this.lastsum = 0;
+                //this.lastsum=parseInt(this.result);
+                for (var i = 0; i < this.itemsprice.length; i++) {
+                    this.lastsum = this.lastsum + (parseInt(this.itemsprice[i]) * this.itemsqty[i]);
+                    console.log(this.lastsum);
+                }
+            }
+            else if (btn == "b") {
+                this.result = this.result.substring(0, this.result.length - 1);
+            }
+            else if (btn == "squareroot") {
+                this.result = Math.sqrt(eval(this.result)) + "";
+            }
+            else if (btn == "square") {
+                this.result = eval("(" + this.result + ") * ( " + this.result + ")");
+            }
+            else if (btn == "reciproc") {
+                this.result = eval(1 + "/ (" + this.result + ")");
+            }
+            else {
+                if (parseInt(this.result) == this.lastsum) {
+                    this.result = this.result.substring(0, 0);
+                }
+                console.log("Lastchar: " + this.lastchar + " Result: " + this.result);
+                if ((btn == '+' || btn == '-' || btn == '*' || btn == '/') && (this.lastchar == '+' || this.lastchar == '-' || this.lastchar == '*' || this.lastchar == '/')) {
+                    this.result = this.result = this.result.substring(0, this.result.length - 1);
+                }
+                this.lastchar = btn;
+                this.result += btn;
+            }
+        }
+        catch (err) {
+            this.result = "Input Error!";
+            this.itemsprice = [];
+            this.lastsum = 0;
+            this.itemsqty = [];
+        }
+        finally {
+        }
+    };
+    AllTransactionPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-all-transaction',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\all-transaction\all-transaction.html"*/'<!--\n\n  Generated template for the AllTransactionPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n\n\n\n\n<ion-content padding>\n\n    <!-- <ion-fab bottom right>\n\n        <button ion-fab color="primary" item-right><ion-icon name="calculator"></ion-icon></button>\n\n      </ion-fab> -->\n\n      <!-- <ion-card *ngIf="showSampleRec==false">\n\n        ကျေးဇူးပြုပြီးပစ္စည်းအတွက်ပမာဏကိုမြှောက်ပါ၊ ရှိပြီးသားငွေတောင်းခံလွှာကိုထည့်ရန်တူညီသောစာလုံးကိုနှိပ်ပါ။\n\n\n\n        အလွတ်ပစ္စည်းပေါင်းများစွာကိုထည့်သွင်းလိုပါက * qty တစ်ခုချင်းစီကိုရိုက်ထည့်ပြီးနောက်တစ်ခုကိုရိုက်ထည့်ရန် + သင်္ကေတကိုနှိပ်ပါ\n\n      </ion-card>\n\n       -->\n\n  <ion-grid>\n\n    <ion-row>\n\n\n\n      <ion-col col-12 col-md-6>\n\n\n\n          <div class="calculator">\n\n            <div class="header">\n\n              <div class="window"></div>\n\n              <div class="input">\n\n                <ion-row>\n\n                  <ion-input type="text" placeholder="0" name="display" [(ngModel)]="result">\n\n                  </ion-input>\n\n                  <ion-icon name="backspace" (click)="btnClicked(\'b\')"></ion-icon>\n\n                  \n\n                </ion-row> \n\n               \n\n                    \n\n                \n\n              </div>\n\n             \n\n              \n\n            </div>\n\n            <div class="keys">\n\n              <div class="row">\n\n                <div class="number">\n\n                  <span (click)="btnClicked(\'7\')">7</span>\n\n                  <span (click)="btnClicked(\'8\')">8</span>\n\n                  <span (click)="btnClicked(\'9\')">9</span>\n\n                </div>\n\n                <div class="symbol">\n\n                  <span (click)="btnClicked(\'*\')">×</span>\n\n\n\n                </div>\n\n              </div>\n\n\n\n              <div class="row">\n\n                <div class="number">\n\n                  <span (click)="btnClicked(\'4\')">4</span>\n\n                  <span (click)="btnClicked(\'5\')">5</span>\n\n                  <span (click)="btnClicked(\'6\')">6</span>\n\n                </div>\n\n\n\n                <div class="symbol">\n\n                  <span (click)="btnClicked(\'+\')">+</span>\n\n           </div>\n\n              </div>\n\n\n\n              <div class="row">\n\n                <div class="number">\n\n                  <span (click)="btnClicked(\'1\')">1</span>\n\n                  <span (click)="btnClicked(\'2\')">2</span>\n\n                  <span (click)="btnClicked(\'3\')">3</span>\n\n                </div>\n\n\n\n                <div class="symbol">\n\n                  <span (click)="btnClicked(\'/\')">÷</span>\n\n                  <span (click)="btnClicked(\'squareroot\')">√x</span>\n\n                </div>\n\n\n\n\n\n              </div>\n\n\n\n\n\n              <div class="row">\n\n                <div class="number">\n\n                  <span (click)="btnClicked(\'C\')">C</span>\n\n                  <span (click)="btnClicked(\'0\')">0</span>\n\n                  <span (click)="btnClicked(\'-\')">-</span>\n\n\n\n\n\n\n\n                </div>\n\n\n\n                <div class="symbol action">\n\n                  <span (click)="btnClicked(\'=\')">=</span>\n\n                </div>\n\n\n\n              </div>\n\n            </div>\n\n          </div>\n\n\n\n    \n\n\n\n      </ion-col>\n\n\n\n      <ion-col col-12 col-md-6>\n\n\n\n\n\n        <ion-card *ngIf="showSampleRec==true"> \n\n\n\n                <ion-grid>\n\n          \n\n                  <ion-row> <ion-col style="text-align: center; padding-top: 5px;">{{userdata? userdata.business_name: null}} </ion-col> </ion-row>\n\n          \n\n                  <ion-row>\n\n                      <ion-col col-12 style="color: grey; font-size: 10px; text-align: center"> {{userdata?userdata.business_address:null}}</ion-col>\n\n                  </ion-row>\n\n                  <ion-row>\n\n                      <ion-col col-12 style="color: grey; font-size: 10px; text-align: center"> {{userdata?userdata.ph_no:null}}</ion-col>\n\n                  </ion-row>          \n\n                  <ion-row style="padding-top: 5px;">\n\n                      <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><b>{{"Sl" | translate}}</b></ion-col>\n\n                      <ion-col col-4 style="color: black; font-size: 10px; text-align: center"><b>{{"Name" | translate}}</b></ion-col>\n\n                      <ion-col col-2 style="color: black; font-size: 10px; text-align: center"><b>{{"Price"| translate}}</b></ion-col>\n\n                      <ion-col col-2 style="color: black; font-size: 10px; text-align: center"><b>{{"Qty"| translate}}</b></ion-col>\n\n                      <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="arrow-dropup-circle" style=" color: green"></ion-icon></ion-col>\n\n                      <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="arrow-dropdown-circle" style=" color: red"></ion-icon></ion-col>\n\n                      <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="close" style=" color: red"></ion-icon></ion-col>\n\n                  </ion-row>\n\n          \n\n                 \n\n          \n\n                  <ion-list *ngFor="let item of itemsprice; let i = index" no-lines>\n\n          \n\n              \n\n                    <ion-row>\n\n                        <ion-col col-1 style="color: black; font-size: 10px; text-align: center">{{i+1}}.</ion-col>\n\n                        <ion-col col-4 style="color: black; font-size: 10px; text-align: center">\n\n                         Item {{i+1}}</ion-col>   \n\n                        <ion-col col-2 style="color: black; font-size: 10px; text-align: center">{{item}}</ion-col>\n\n                        <ion-col col-2 style="color: black; font-size: 10px; text-align: center">{{itemsqty[i]}}</ion-col>\n\n                        <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="arrow-dropup-circle" style=" color: green"></ion-icon></ion-col>\n\n                        <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="arrow-dropdown-circle" style=" color: red"></ion-icon></ion-col>\n\n                        <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="close" style=" color: red"></ion-icon></ion-col>\n\n                    </ion-row>\n\n                \n\n          \n\n                  </ion-list>\n\n          \n\n                  <ion-row padding>\n\n                      <ion-col col-1></ion-col>  \n\n                    <ion-col col-4 style="text-align: center;font-size: 10px;"><b>{{"Total"| translate}}</b> </ion-col>\n\n                      <ion-col col-2 style="text-align: center;font-size: 10px;"><b>{{lastsum}}</b> </ion-col>\n\n                      <ion-col col-5></ion-col>\n\n                    </ion-row>\n\n          \n\n          \n\n                   \n\n          \n\n          \n\n                </ion-grid>\n\n          \n\n          \n\n          \n\n\n\n        </ion-card>\n\n\n\n      </ion-col>\n\n\n\n\n\n\n\n    </ion-row>\n\n\n\n\n\n  </ion-grid>\n\n\n\n\n\n\n\n  <!-- Dynamically Generate All transactions from backend - see feed from prev -->\n\n\n\n</ion-content>\n\n\n\n<ion-footer>\n\n\n\n    <ion-grid>\n\n      <ion-row>\n\n        <ion-col>\n\n            <button ion-button (click)="createRec()" full style="background-color: #222">{{"Create Receipt"|translate}}</button>\n\n        </ion-col>\n\n      </ion-row>\n\n    </ion-grid>\n\n   \n\n</ion-footer>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\all-transaction\all-transaction.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__["a" /* TranslateConfigService */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */]])
+    ], AllTransactionPage);
+    return AllTransactionPage;
+}());
+
+//# sourceMappingURL=all-transaction.js.map
+
+/***/ }),
+
+/***/ 138:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CoachBusinesstipsPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_translation_translate_config_service__ = __webpack_require__(13);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+/**
+ * Generated class for the CoachBusinesstipsPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var CoachBusinesstipsPage = /** @class */ (function () {
+    function CoachBusinesstipsPage(navCtrl, navParams, translateConfigService) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.translateConfigService = translateConfigService;
+    }
+    CoachBusinesstipsPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad CoachBusinesstipsPage');
+    };
+    CoachBusinesstipsPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-coach-businesstips',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\coach-businesstips\coach-businesstips.html"*/'<!--\n\n  Generated template for the CoachBusinesstipsPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<!-- <ion-header>\n\n  <ion-navbar>\n\n    <ion-title>coach-businesstips</ion-title>\n\n  </ion-navbar>\n\n</ion-header> -->\n\n\n\n<ion-content padding>\n\n\n\n  \n\n  <ion-card>\n\n    <ion-grid line>\n\n        <ion-row style="padding-left: 10px; padding-bottom: 5px; ">\n\n          <ion-col col-10 style="color: grey; font-size: 10px;"> Wed, 10th October 2018 </ion-col>\n\n          <ion-col col-2 style="text-align: center "><ion-icon name="bulb" style="color: green"></ion-icon> </ion-col>\n\n        </ion-row>\n\n        <ion-row style="padding-left: 10px; padding-bottom: 10px;">\n\n          <ion-col><h2><b>You\'ve got a winner!</b></h2></ion-col>\n\n        </ion-row>\n\n\n\n      <ion-row style="padding-left: 15px; padding-bottom: 10px;">\n\n        Your item XYZ sells 50% higher than any other product in its category. Item ABC sells only 2% the volume of XYZ. You should stock more XYZ and less ABC.\n\n      </ion-row>\n\n      <ion-row  style="background-color: #f0f0f0">\n\n        <ion-col col-6 style="text-align: center ">\n\n            <ion-icon name="thumbs-up" ></ion-icon>\n\n        </ion-col>\n\n        <ion-col col-6 style="text-align: center ">\n\n            <ion-icon name="thumbs-down"></ion-icon>\n\n        </ion-col>\n\n      </ion-row>\n\n    </ion-grid>\n\n  </ion-card> \n\n\n\n  \n\n\n\n\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\coach-businesstips\coach-businesstips.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_translation_translate_config_service__["a" /* TranslateConfigService */]])
+    ], CoachBusinesstipsPage);
+    return CoachBusinesstipsPage;
+}());
+
+//# sourceMappingURL=coach-businesstips.js.map
+
+/***/ }),
+
+/***/ 139:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CoachCoachPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_translation_translate_config_service__ = __webpack_require__(13);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+/**
+ * Generated class for the CoachCoachPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var CoachCoachPage = /** @class */ (function () {
+    function CoachCoachPage(navCtrl, translateConfigService, navParams) {
+        this.navCtrl = navCtrl;
+        this.translateConfigService = translateConfigService;
+        this.navParams = navParams;
+    }
+    CoachCoachPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad CoachCoachPage');
+    };
+    CoachCoachPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-coach-coach',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\coach-coach\coach-coach.html"*/'<!--\n\n  Generated template for the CoachCoachPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<!-- <ion-header>\n\n  <ion-navbar>\n\n    <ion-title>coach-coach</ion-title>\n\n  </ion-navbar>\n\n</ion-header> -->\n\n\n\n<ion-content padding>\n\n\n\n    <ion-card>\n\n        <ion-grid line>\n\n            <ion-row style="padding-left: 10px; padding-bottom: 5px; ">\n\n              <ion-col col-10 style="color: grey; font-size: 10px;"> Thus, 12th October 2018 </ion-col>\n\n              <ion-col col-2 style="text-align: center "><ion-icon name="bulb" style="color: green"></ion-icon> </ion-col>\n\n            </ion-row>\n\n            <ion-row style="padding-left: 10px; padding-bottom: 10px;">\n\n              <ion-col><h2><b>EC Coach Tip</b></h2></ion-col>\n\n            </ion-row>\n\n    \n\n          <ion-row style="padding-left: 15px; padding-bottom: 10px;">\n\n              Want to look professional? Provide your customers a receipt with their purchases.\n\n          </ion-row>\n\n          <ion-row  style="background-color: #f0f0f0">\n\n            <ion-col col-6 style="text-align: center ">\n\n                <ion-icon name="thumbs-up" ></ion-icon>\n\n            </ion-col>\n\n            <ion-col col-6 style="text-align: center ">\n\n                <ion-icon name="thumbs-down"></ion-icon>\n\n            </ion-col>\n\n          </ion-row>\n\n        </ion-grid>\n\n      </ion-card> \n\n\n\n      \n\n    <ion-card>\n\n        <ion-grid line>\n\n            <ion-row style="padding-left: 10px; padding-bottom: 5px; ">\n\n              <ion-col col-10 style="color: grey; font-size: 10px;"> Thus, 12th October 2018 </ion-col>\n\n              <ion-col col-2 style="text-align: center "><ion-icon name="bulb" style="color: green"></ion-icon> </ion-col>\n\n            </ion-row>\n\n            <ion-row style="padding-left: 10px; padding-bottom: 10px;">\n\n              <ion-col><h2><b>EC Coach Tip</b></h2></ion-col>\n\n            </ion-row>\n\n    \n\n          <ion-row style="padding-left: 15px; padding-bottom: 10px;">\n\n              Let your customers know that you are listening. Tell them, "I hear what you are saying" and ask "Tell me more about that". This way you indicate that you are paying attention without agreeing or disagreeing with them.\n\n          </ion-row>\n\n          <ion-row  style="background-color: #f0f0f0">\n\n            <ion-col col-6 style="text-align: center ">\n\n                <ion-icon name="thumbs-up" ></ion-icon>\n\n            </ion-col>\n\n            <ion-col col-6 style="text-align: center ">\n\n                <ion-icon name="thumbs-down"></ion-icon>\n\n            </ion-col>\n\n          </ion-row>\n\n        </ion-grid>\n\n      </ion-card> \n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\coach-coach\coach-coach.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__providers_translation_translate_config_service__["a" /* TranslateConfigService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]])
+    ], CoachCoachPage);
+    return CoachCoachPage;
+}());
+
+//# sourceMappingURL=coach-coach.js.map
+
+/***/ }),
+
+/***/ 140:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CoachGoalsPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_translation_translate_config_service__ = __webpack_require__(13);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+/**
+ * Generated class for the CoachGoalsPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var CoachGoalsPage = /** @class */ (function () {
+    function CoachGoalsPage(navCtrl, translateConfigService, navParams) {
+        this.navCtrl = navCtrl;
+        this.translateConfigService = translateConfigService;
+        this.navParams = navParams;
+    }
+    CoachGoalsPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad CoachGoalsPage');
+    };
+    CoachGoalsPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-coach-goals',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\coach-goals\coach-goals.html"*/'<!--\n\n  Generated template for the CoachGoalsPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<!-- <ion-header>\n\n  <ion-navbar>\n\n    <ion-title>coach-goals</ion-title>\n\n  </ion-navbar>\n\n</ion-header> -->\n\n\n\n<ion-content padding>\n\n\n\n\n\n      \n\n    <ion-card>\n\n        <ion-grid line>\n\n            <ion-row style="padding-left: 10px; padding-bottom: 5px; ">\n\n              <ion-col col-10 style="color: grey; font-size: 10px;"> Thus, 12th October 2018 </ion-col>\n\n              <ion-col col-2 style="text-align: center "><ion-icon name="bulb" style="color: green"></ion-icon> </ion-col>\n\n            </ion-row>\n\n            <ion-row style="padding-left: 10px; padding-bottom: 10px;">\n\n              <ion-col><h2><b>Goal: Bulk Transaction</b></h2></ion-col>\n\n            </ion-row>\n\n    \n\n          <ion-row style="padding-left: 15px; padding-bottom: 10px;">\n\n              Record 15 transactions and get the ability to add miltiple products in one transaction entry!              \n\n          </ion-row>\n\n          <ion-row  style="background-color: #f0f0f0">\n\n            <ion-col col-12 style="text-align: center ; background-color: indigo; color: palevioletred;">\n\n                <b>Go</b>\n\n            </ion-col>\n\n \n\n          </ion-row>\n\n        </ion-grid>\n\n      </ion-card> \n\n\n\n      <ion-card>\n\n          <ion-grid line>\n\n              <ion-row style="padding-left: 10px; padding-bottom: 5px; ">\n\n                <ion-col col-10 style="color: grey; font-size: 10px;"> Thus, 12th October 2018 </ion-col>\n\n                <ion-col col-2 style="text-align: center "><ion-icon name="bulb" style="color: green"></ion-icon> </ion-col>\n\n              </ion-row>\n\n              <ion-row style="padding-left: 10px; padding-bottom: 10px;">\n\n                <ion-col><h2><b>Goal: Record Discounts</b></h2></ion-col>\n\n              </ion-row>\n\n      \n\n            <ion-row style="padding-left: 15px; padding-bottom: 10px;">\n\n                Record 25 transactions to add discounts to sales & expenses              \n\n            </ion-row>\n\n            <ion-row  style="background-color: #f0f0f0">\n\n              <ion-col col-12 style="text-align: center ; background-color: indigo; color: palevioletred;">\n\n                  <b>Go</b>\n\n              </ion-col>\n\n   \n\n            </ion-row>\n\n          </ion-grid>\n\n        </ion-card> \n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\coach-goals\coach-goals.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__providers_translation_translate_config_service__["a" /* TranslateConfigService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]])
+    ], CoachGoalsPage);
+    return CoachGoalsPage;
+}());
+
+//# sourceMappingURL=coach-goals.js.map
+
+/***/ }),
+
+/***/ 141:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ExpensesHomePage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__dashboard_dashboard__ = __webpack_require__(142);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_barcode_scanner__ = __webpack_require__(52);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
+
+
+
+
+
+/**
+ * Generated class for the ExpensesHomePage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var ExpensesHomePage = /** @class */ (function () {
+    function ExpensesHomePage(navCtrl, translateConfigService, navParams, sp, events, toastCtrl, barcodeScanner) {
+        this.navCtrl = navCtrl;
+        this.translateConfigService = translateConfigService;
+        this.navParams = navParams;
+        this.sp = sp;
+        this.events = events;
+        this.toastCtrl = toastCtrl;
+        this.barcodeScanner = barcodeScanner;
+        this.prodName = "";
+        this.minDate = new Date().toISOString();
+        this.maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 5)).toISOString();
+        this.expirydate = new Date().toISOString();
+        this.currtime = new Date();
+        this.listProducts = [];
+        this.filteredList = [];
+        this.searchterm = "";
+        this.selectedCat = [];
+        this.totalamt = 0.0;
+        this.hideButton = true;
+        this.getUserData();
+    }
+    ExpensesHomePage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad ExpensesHomePage');
+        console.log(this.currtime);
+        this.getProducts();
+        this.getCategories();
+        this.getUserData();
+    };
+    ExpensesHomePage.prototype.getUserData = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                this.sp.storageReady().then(function () {
+                    _this.sp.getUserDat().then(function (val) {
+                        _this.userdata = JSON.parse(val);
+                        console.log(_this.userdata);
+                    }).catch(function (err) {
+                        alert("Error: " + err);
+                    });
+                });
+                return [2 /*return*/];
+            });
+        });
+    };
+    ExpensesHomePage.prototype.updatebalance = function (edited) {
+        if (this.prodcostitem != null && this.prodqty != null && (edited == "prodcostitem" || edited == "prodqty")) {
+            this.prodcost = this.prodqty * this.prodcostitem;
+        }
+        else if (this.prodcost != null && this.prodqty != null && (edited == "prodcost" || edited == "prodqty")) {
+            this.prodcostitem = this.prodcost / this.prodqty;
+        }
+    };
+    ExpensesHomePage.prototype.getCategories = function () {
+        var _this = this;
+        //console.log(this.listCat + " and "+this.newprodCat);
+        this.sp.storageReady().then(function () {
+            _this.sp.getCategories().then(function (val) {
+                _this.listCat = JSON.parse(val);
+                //console.log("Addprodpg: "+this.listCat)
+                _this.getCategories();
+            }).catch(function (err) {
+                alert("Error: " + err);
+            });
+        });
+    };
+    ExpensesHomePage.prototype.getProducts = function () {
+        var _this = this;
+        this.sp.storageReady().then(function () {
+            _this.sp.getProducts().then(function (val) {
+                _this.listProducts = JSON.parse(val);
+                if (_this.listProducts != null) {
+                    _this.filteredProduct();
+                }
+            }).catch(function (err) {
+                alert("Error: " + err);
+            });
+        });
+    };
+    ExpensesHomePage.prototype.filteredProduct = function () {
+        var _this = this;
+        this.filteredList = this.listProducts.filter(function (item) {
+            //console.log(this.searchterm);
+            console.log(item);
+            if (item.name.toLowerCase().includes(_this.searchterm.toLowerCase())) {
+                if (_this.selectedCat.length > 0) {
+                    for (var i = 0; i < _this.selectedCat.length; i++) {
+                        if (_this.selectedCat == null || item.cat.includes(_this.selectedCat[i])) {
+                            return true;
+                        }
+                    }
+                }
+                else {
+                    return true;
+                }
+            }
+        });
+        //console.log("FilteredProd: "+this.filteredList)
+    };
+    ExpensesHomePage.prototype.addinventoryexpense = function () {
+        var _this = this;
+        var itemslist = [];
+        var prodidlist = [];
+        var pnllist = [];
+        var discountlist = [];
+        itemslist.push(this.product);
+        prodidlist.push(this.expirydate);
+        var dataexp = {
+            "itemslist": itemslist,
+            "totalsum": (this.prodcost * -1),
+            "prodidlist": prodidlist,
+            "pnllist": pnllist,
+            "datetime": this.currtime,
+            "taxrate": 0,
+            "discountlist": discountlist,
+            "discount": 0,
+            "totaldisc": (this.prodcost * -1),
+            "totalatax": (this.prodcost * -1),
+        };
+        var data1 = {
+            "code": this.product.code,
+            "name": this.product.name,
+            "price": this.product.price,
+            "wholesale_price": this.product.wholesale_price,
+            "cost": Math.round(((parseInt(this.product.cost) * parseInt(this.product.stock_qty)) + (parseInt(this.prodcost))) / (parseInt(this.prodqty) + parseInt(this.product.stock_qty)) * 100) / 100,
+            "cat": this.product.cat,
+            "url": this.product.url,
+            "stock_qty": (parseInt(this.product.stock_qty) + parseInt(this.prodqty)),
+        };
+        this.sp.updateProduct(data1, this.product.code).then(function () {
+        });
+        this.sp.storageReady().then(function () {
+            console.log(dataexp);
+            _this.sp.addTransactions(dataexp);
+            _this.updateCb(_this.prodcost).then(function () { _this.events.publish('cbUpdate:created', 0); console.log("update"); });
+            var message = _this.translateConfigService.getTranslatedMessage('Finish');
+            var toast = _this.toastCtrl.create({
+                // @ts-ignore
+                message: message.value,
+                duration: 3000
+            });
+            _this.prodqty = null;
+            _this.prodcost = null;
+            _this.prodName = "";
+            _this.expirydate = new Date().toISOString();
+            _this.currtime = new Date();
+            _this.searchterm = "";
+            _this.selectedCat = [];
+            _this.totalamt = 0.0;
+            _this.product = null;
+            _this.sp.backupStorage();
+            toast.present();
+            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__dashboard_dashboard__["a" /* DashboardPage */]);
+        });
+        //REFLECT CHANGE ON CASH BALANCE HERE & Reflect change in inventory here as well 
+    };
+    ExpensesHomePage.prototype.updateCb = function (negtransacsum) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                this.getUserData();
+                this.userdata.cash_balance = (parseInt(this.userdata.cash_balance) - parseInt(negtransacsum)).toString();
+                this.sp.setUserDat(this.userdata);
+                return [2 /*return*/];
+            });
+        });
+    };
+    ExpensesHomePage.prototype.scanQR = function () {
+        var _this = this;
+        this.barcodeScanner.scan().then(function (barcodeData) {
+            _this.sp.searchProduct(barcodeData.text).then(function (val) {
+                if (val[0] != null) {
+                    var message = _this.translateConfigService.getTranslatedMessage('Found Product');
+                    var toast = _this.toastCtrl.create({
+                        // @ts-ignore
+                        message: message.value + " " + val[0].name,
+                        duration: 2000
+                    });
+                    toast.present();
+                    _this.chooseProd(val[0]);
+                }
+                else {
+                    var message = _this.translateConfigService.getTranslatedMessage('Not found!');
+                    var toast = _this.toastCtrl.create({
+                        // @ts-ignore
+                        message: message.value,
+                        duration: 2000
+                    });
+                    toast.present();
+                }
+            });
+        }).catch(function (err) {
+            console.log('Error', err);
+        });
+    };
+    ExpensesHomePage.prototype.chooseProd = function (product) {
+        this.prodName = product.name;
+        console.log(this.prodName);
+        this.product = product;
+        this.hideButton = false;
+    };
+    ExpensesHomePage.prototype.clearProduct = function () {
+        this.hideButton = true;
+        this.prodName = "";
+        this.product = null;
+        this.prodqty = "";
+        this.prodcost = "";
+        this.prodcostitem = "";
+    };
+    ExpensesHomePage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-expenses-home',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\expenses-home\expenses-home.html"*/'<!--\n\n  Generated template for the ExpensesHomePage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n  <ion-navbar color="dark">\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title> {{"Add New Stock"|translate}} </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n  <ion-item>\n\n      <b>{{\'Enter Inventory Expenditure Detail:\'|translate}}</b> \n\n  </ion-item>\n\n\n\n<ion-list inset>\n\n  \n\n    <ion-grid>\n\n      <ion-row>\n\n        <ion-col col-8> \n\n            <ion-searchbar showCancelButton="always" [(ngModel)]="searchterm" (ionChange)="filteredProduct()"></ion-searchbar>\n\n        </ion-col>\n\n        <ion-col col-4>\n\n            <button ion-button small block color="primary" (click)="scanQR()"  color="dark">{{"Scan Barcode"|translate}}</button>\n\n        </ion-col>\n\n      </ion-row>\n\n    </ion-grid>\n\n    <ion-item>\n\n      <ion-label>{{"Select category"| translate}}</ion-label>\n\n      <ion-select multiple="true" [(ngModel)]=\'selectedCat\' (ionChange)="filteredProduct()">\n\n          <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>    \n\n      </ion-select>\n\n    </ion-item>\n\n  </ion-list>\n\n<ion-list inset  *ngFor="let product of filteredList">\n\n  <ion-card>\n\n      <ion-grid> \n\n        <ion-row>\n\n        <ion-col col-2>\n\n          <ion-row> \n\n            <ion-avatar>\n\n                <img [src]="product.url">\n\n              </ion-avatar>\n\n            </ion-row>\n\n        </ion-col>\n\n        <ion-col col-10>\n\n            <ion-row>\n\n                <ion-col col-6>\n\n                    {{product.name}}\n\n                </ion-col>\n\n                <ion-col col-6>\n\n                  {{"Stock"|translate}}: {{product.stock_qty}}\n\n                </ion-col>\n\n                </ion-row>\n\n              <ion-row>\n\n                <ion-col col-4 style="color: grey; font-size: 10px;"> {{"Retail Price"|translate}} {{product.price}} MMK </ion-col> \n\n                <!-- change currency units to those that are selected by user -Pranay -->\n\n                <ion-col col-4 style="color: grey; font-size: 10px; text-align: center;"> {{"Wholesale Price"|translate}} {{product.wholesale_price}} MMK </ion-col>\n\n                <ion-col col-4 style="color: grey; font-size: 10px; text-align: end;"> {{"Category"|translate}} {{product.cat}} </ion-col>\n\n              </ion-row>\n\n        </ion-col>\n\n      </ion-row>\n\n      <ion-row>\n\n        <ion-col col-12> <button ion-button full end color="dark" (click)="chooseProd(product)">{{"Add New Stock"|translate}}</button> </ion-col>\n\n      </ion-row>\n\n      </ion-grid>\n\n    </ion-card> \n\n \n\n</ion-list>\n\n</ion-content>\n\n\n\n<ion-footer style="border-top-color:black; border-top: 10px;" *ngIf=\'prodName!=""\'> \n\n  <ion-list>\n\n    <ion-item>\n\n      {{"Product Name"|translate}}: {{prodName}}\n\n      <button ion-button style="float: right; color:white; background-color: red;" [hidden]="hideButton" (click)="clearProduct()">\n\n        {{"Clear"|translate}}\n\n      </button>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label>{{"Product Qty"|translate}}</ion-label>\n\n      <ion-input type="number" [(ngModel)]=\'prodqty\' (ionChange)="updatebalance(\'prodqty\')"></ion-input>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label>{{"Purchase Price per Item"|translate}}</ion-label>\n\n      <ion-input type="number" [(ngModel)]=\'prodcostitem\' (ionChange)="updatebalance(\'prodcostitem\')"></ion-input>\n\n    </ion-item>\n\n    <ion-item>\n\n        <ion-label>{{"Total Expenditure"|translate}}</ion-label>\n\n        <ion-input type="number" [(ngModel)]=\'prodcost\' (ionChange)="updatebalance(\'prodcost\')"></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n      <ion-label>{{"Batch Expiry Date:"|translate}}</ion-label>\n\n      <ion-datetime displayFormat="DD/MMM/YYYY" [(ngModel)]=\'expirydate\' [min]="minDate" [max]="maxDate"></ion-datetime>\n\n      </ion-item>\n\n    </ion-list>\n\n  <button ion-button block color="primary" (click)="addinventoryexpense()"  color="dark">{{"Add Stock"|translate}}</button>\n\n  \n\n</ion-footer>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\expenses-home\expenses-home.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__["a" /* TranslateConfigService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */], __WEBPACK_IMPORTED_MODULE_5__ionic_native_barcode_scanner__["a" /* BarcodeScanner */]])
+    ], ExpensesHomePage);
+    return ExpensesHomePage;
+}());
+
+//# sourceMappingURL=expenses-home.js.map
+
+/***/ }),
+
+/***/ 142:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DashboardPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__addproduct_addproduct__ = __webpack_require__(249);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_barcode_scanner__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_gettersetter_gettersetter__ = __webpack_require__(253);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__product_list_product_list__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__add_product_category_add_product_category__ = __webpack_require__(130);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_translation_translate_config_service__ = __webpack_require__(13);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+var DashboardPage = /** @class */ (function () {
+    function DashboardPage(navCtrl, translateConfigService, barcodeScanner, alertCtrl, sp, getset, toastCtrl, events) {
+        var _this = this;
+        this.navCtrl = navCtrl;
+        this.translateConfigService = translateConfigService;
+        this.barcodeScanner = barcodeScanner;
+        this.alertCtrl = alertCtrl;
+        this.sp = sp;
+        this.getset = getset;
+        this.toastCtrl = toastCtrl;
+        this.events = events;
+        this.ViewList = __WEBPACK_IMPORTED_MODULE_6__product_list_product_list__["a" /* ProductListPage */];
+        this.AddProd = __WEBPACK_IMPORTED_MODULE_2__addproduct_addproduct__["a" /* AddProductPage */];
+        this.AddCat = __WEBPACK_IMPORTED_MODULE_7__add_product_category_add_product_category__["a" /* AddProductCategoryPage */];
+        this.userdata = { business_address: "",
+            business_name: "",
+            cash_balance: "",
+            currency: "",
+            created: "",
+            language: "",
+            owner: "",
+            owner_name: "",
+            ph_no: "",
+            businesstype: "",
+            taxrate: 0.0,
+            discount: 0.0,
+        };
+        this.getUserData();
+        this.events.subscribe('cbUpdate:created', function (data) {
+            _this.getUserData();
+        });
+    }
+    DashboardPage.prototype.getUserData = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                this.sp.storageReady().then(function () {
+                    _this.sp.getUserDat().then(function (val) {
+                        _this.userdata = JSON.parse(val);
+                        console.log(_this.userdata);
+                    }).catch(function (err) {
+                        alert("Error: " + err);
+                    });
+                });
+                return [2 /*return*/];
+            });
+        });
+    };
+    DashboardPage.prototype.ionViewDidLoad = function () {
+        this.total = this.getset.getTotal();
+        this.count = this.getset.getCount();
+        this.vat = this.getset.getVat();
+    };
+    DashboardPage.prototype.uploadbtn = function () {
+        this.sp.backupStorage();
+        var message = this.translateConfigService.getTranslatedMessage('Online backup ready');
+        this.toastCtrl.create({
+            // @ts-ignore
+            message: message.value,
+            duration: 2000
+        }).present();
+    };
+    DashboardPage.prototype.cashbtn = function () {
+        this.getUserData();
+        var messsage = this.translateConfigService.getTranslatedMessage('Balance');
+        this.toastCtrl.create({
+            // @ts-ignore
+            message: message.value + this.userdata.cash_balance,
+            duration: 3000
+        }).present();
+    };
+    DashboardPage.prototype.qrscan = function () {
+        var _this = this;
+        this.barcodeScanner.scan().then(function (barcodeData) {
+            _this.sp.searchProduct(barcodeData.text).then(function (val) {
+                if (val[0] != null) {
+                    var message = _this.translateConfigService.getTranslatedMessage('Found Product');
+                    var toast = _this.toastCtrl.create({
+                        // @ts-ignore
+                        message: message.value + " " + val[0].name,
+                        duration: 2000
+                    });
+                    toast.present();
+                    _this.count++;
+                    _this.total += parseFloat(val[0].price);
+                    _this.vat += (parseFloat(val[0].price) * 0.05);
+                    _this.getset.setTotal(_this.total);
+                    _this.getset.setCount(_this.count);
+                    _this.getset.setVat(_this.vat);
+                }
+                else {
+                    var message = _this.translateConfigService.getTranslatedMessage('Get Product!!!');
+                    var toast = _this.toastCtrl.create({
+                        // @ts-ignore
+                        message: message.value,
+                        duration: 2000
+                    });
+                    toast.present();
+                }
+            });
+        }).catch(function (err) {
+            console.log('Error', err);
+        });
+    };
+    DashboardPage.prototype.addproduct = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__addproduct_addproduct__["a" /* AddProductPage */]);
+    };
+    DashboardPage.prototype.manual = function () {
+        var _this = this;
+        var alertPop = this.alertCtrl.create({
+            title: 'Product',
+            inputs: [
+                {
+                    name: 'code',
+                    placeholder: 'Product Code'
+                }
+            ],
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel'
+                },
+                {
+                    text: 'Search',
+                    handler: function (data) {
+                        _this.sp.searchProduct(data.code).then(function (val) {
+                            if (val[0] != null) {
+                                var message = _this.translateConfigService.getTranslatedMessage('Found Product');
+                                var toast = _this.toastCtrl.create({
+                                    // @ts-ignore
+                                    message: message.value + " " + val[0].name,
+                                    duration: 2000
+                                });
+                                toast.present();
+                                _this.count++;
+                                _this.total += parseFloat(val[0].price);
+                                _this.vat += (parseFloat(val[0].price) * 0.05);
+                                _this.getset.setTotal(_this.total);
+                                _this.getset.setCount(_this.count);
+                                _this.getset.setVat(_this.vat);
+                            }
+                            else {
+                                var message = _this.translateConfigService.getTranslatedMessage('Get Product!!!');
+                                var toast = _this.toastCtrl.create({
+                                    // @ts-ignore
+                                    message: message.value,
+                                    duration: 2000
+                                });
+                                toast.present();
+                            }
+                        });
+                    }
+                }
+            ]
+        });
+        alertPop.present();
+    };
+    DashboardPage.prototype.reset = function () {
+        this.getset.setTotal(0);
+        this.getset.setCount(0);
+        this.getset.setVat(0);
+        this.total = 0;
+        this.count = 0;
+        this.vat = 0;
+        var message = this.translateConfigService.getTranslatedMessage('POS reset to Zero');
+        var toast = this.toastCtrl.create({
+            // @ts-ignore
+            message: message.value,
+            duration: 2000
+        });
+        toast.present();
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('myTabs'),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* Tabs */])
+    ], DashboardPage.prototype, "tabRef", void 0);
+    DashboardPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-dashboard',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\dashboard\dashboard.html"*/'<ion-header>\n\n  <ion-navbar color="dark">\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>{{"Products"|translate}}</ion-title>\n\n    <ion-buttons end><button ion-button (click)="uploadbtn()"><ion-icon name="cloud-upload" style="align-self: center; color: white;" padding></ion-icon></button></ion-buttons>\n\n    <ion-buttons end><button ion-button (click)="cashbtn()"><ion-icon name="logo-usd" style="align-self: center; color: white;" padding></ion-icon></button></ion-buttons>\n\n  \n\n  </ion-navbar>\n\n \n\n</ion-header>\n\n<ion-content>\n\n\n\n    <ion-tabs tabsPlacement="top" #myTabs>\n\n        <ion-tab [root]="ViewList" tabTitle="{{\'Stock\'|translate}}" tabIcon="list-box"></ion-tab>\n\n        <ion-tab [root]="AddProd" tabTitle="{{\'Add Product\'|translate}}" tabIcon="pricetag"></ion-tab>\n\n        <ion-tab [root]="AddCat" tabTitle="{{\'Add Category\'|translate}}" tabIcon="albums"></ion-tab>\n\n  \n\n    \n\n       </ion-tabs>\n\n\n\n<!-- <ion-content>\n\n  <ion-grid>\n\n    <ion-row>\n\n      <ion-col>\n\n        <div>\n\n          <ion-list>\n\n            <ion-item>\n\n              <ion-label>Total</ion-label>\n\n            </ion-item>\n\n            <ion-item>\n\n              <ion-label>{{total}} USD</ion-label>\n\n            </ion-item>\n\n          </ion-list>\n\n        </div>\n\n      </ion-col>\n\n      <ion-col>\n\n        <div>\n\n          <ion-list>\n\n            <ion-item>\n\n              <ion-label>Items</ion-label>\n\n            </ion-item>\n\n            <ion-item>\n\n              <ion-label>{{count}} Pcs</ion-label>\n\n            </ion-item>\n\n          </ion-list>\n\n        </div>\n\n      </ion-col>\n\n      <ion-col>\n\n        <div>\n\n          <ion-list>\n\n            <ion-item>\n\n              <ion-label>VAT</ion-label>\n\n            </ion-item>\n\n            <ion-item>\n\n              <ion-label>{{vat}} USD</ion-label>\n\n            </ion-item>\n\n          </ion-list>\n\n        </div>\n\n      </ion-col>\n\n    </ion-row>\n\n  </ion-grid>\n\n\n\n  <ion-grid>\n\n    <ion-row>\n\n      <ion-col>\n\n        <button ion-button block color="primary" (click)="manual()">Manual Entry</button>\n\n      </ion-col>\n\n      <ion-col>\n\n        <button ion-button block color="primary" (click)="qrscan()">Sales QR Scan</button>\n\n      </ion-col>\n\n    </ion-row>\n\n  </ion-grid>\n\n\n\n  <ion-grid>\n\n    <ion-row>\n\n      <ion-col>\n\n        <button ion-button block color="secondary" (click)="addproduct()">Add Products</button>\n\n      </ion-col>\n\n      <ion-col>\n\n        <button ion-button block color="secondary" (click)="showproduct()">Show Products</button>\n\n      </ion-col>\n\n    </ion-row>\n\n    <ion-row>\n\n      <ion-col>\n\n        <button ion-button round block color="secondary" (click)="reset()">Reset</button>\n\n      </ion-col>\n\n    </ion-row>\n\n  </ion-grid>\n\n -->\n\n\n\n\n\n  \n\n\n\n\n\n<!-- \n\n  <ion-tabs tabsPlacement="top">\n\n    <ion-tab [root]="ListRoot" tabTitle="List" tabIcon="chat"></ion-tab>\n\n    <ion-tab [root]="AddRoot" tabTitle="Add" tabIcon="add"></ion-tab>\n\n   </ion-tabs> -->\n\n<!-- \n\n  <ion-footer>\n\n    <ion-toolbar>\n\n      <ion-title>Track💰2Make💰</ion-title>\n\n    </ion-toolbar>\n\n  </ion-footer> -->\n\n\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\dashboard\dashboard.html"*/
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_8__providers_translation_translate_config_service__["a" /* TranslateConfigService */],
+            __WEBPACK_IMPORTED_MODULE_3__ionic_native_barcode_scanner__["a" /* BarcodeScanner */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__["a" /* StorageProvider */],
+            __WEBPACK_IMPORTED_MODULE_5__providers_gettersetter_gettersetter__["a" /* GettersetterProvider */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */]])
+    ], DashboardPage);
+    return DashboardPage;
+}());
+
+//# sourceMappingURL=dashboard.js.map
+
+/***/ }),
+
+/***/ 145:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return IncomeTransactionPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_barcode_scanner__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_translation_translate_config_service__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_barcode_scanner__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_translation_translate_config_service__ = __webpack_require__(13);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -445,8 +1600,8 @@ var IncomeTransactionPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-income-transaction',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\income-transaction\income-transaction.html"*/'<!--\n\n  Generated template for the IncomeTransactionPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n\n\n<ion-content padding>\n\n \n\n\n\n    <ion-card >\n\n\n\n      <ion-grid>\n\n\n\n        <ion-row> <ion-col style="text-align: center; padding-top: 5px;"> {{userdata?userdata.business_name:null}}  </ion-col> </ion-row>\n\n\n\n        <ion-row>\n\n            <ion-col col-12 style="color: grey;  text-align: center"> {{userdata?userdata.business_address:null}}</ion-col>\n\n        </ion-row>\n\n        <ion-row>\n\n            <ion-col col-12 style="color: grey; text-align: center">  {{userdata?userdata.ph_no:null}}</ion-col>\n\n        </ion-row>\n\n\n\n            <ion-row style="padding-top: 5px;">\n\n            <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><b>{{"Sl" | translate}}</b></ion-col>\n\n            <ion-col col-4 style="color: black; font-size: 10px; text-align: center"><b>{{"Name" | translate}}</b></ion-col>\n\n            <ion-col col-2 style="color: black; font-size: 10px; text-align: center"><b>{{"Price"| translate}}</b></ion-col>\n\n            <ion-col col-2 style="color: black; font-size: 10px; text-align: center"><b>{{"Qty"| translate}}</b></ion-col>\n\n            <ion-col col-3></ion-col>\n\n             </ion-row>\n\n       \n\n\n\n        <ion-list *ngFor="let item of datastore.itemslist; let i = index" no-lines>\n\n\n\n    \n\n          <ion-row>\n\n              <ion-col col-1 style="color: black; text-align: center;">{{i+1}}.</ion-col>\n\n              <ion-col col-4 style="color: black; text-align: center;">\n\n                <div *ngIf="item.name==\'ထုတ်ကုန်\'; else itemexist">\n\n                  <button ion-button small (click)="addSingleProd(item,i)">{{"Choose"|translate}}</button>\n\n                </div>\n\n                <ng-template #itemexist>{{item.name}}</ng-template>\n\n              </ion-col>\n\n              <ion-col col-2 style="color: black;   text-align: center;">{{item.price}}</ion-col>\n\n              <ion-col col-2 style="color: black;   text-align: center;">{{item.qty}}</ion-col>\n\n              <ion-col col-1 style="color: black;   text-align: center;"><ion-icon name="add" style=" color: green" (click)="addQty(i)"></ion-icon></ion-col>\n\n              <ion-col col-1 style="color: black;   text-align: center;"><ion-icon name="remove" style=" color: red" (click)="removeQty(i)"></ion-icon></ion-col>\n\n              <ion-col col-1 style="color: black;   text-align: center;"><ion-icon name="close" style=" color: red" (click)="removeItem(i)"></ion-icon></ion-col>\n\n          </ion-row>\n\n          <!-- <ion-row>\n\n          <ion-col col-12 style="text-align: center"><ion-icon name="cut" style=" color: maroon"></ion-icon></ion-col>\n\n          </ion-row> -->\n\n        </ion-list>\n\n        <ion-row padding>\n\n            <ion-col col-1></ion-col>  \n\n          <ion-col col-4 style="text-align: center; font-size: 1.0rem; "><b>{{"Grand total:"|translate}}</b> </ion-col>\n\n            <ion-col col-2 style="text-align: center; ">{{lastsum}} </ion-col>\n\n            <ion-col col-5></ion-col>\n\n          </ion-row>\n\n\n\n\n\n          <ion-row *ngIf="discbtn==0">\n\n              <button ion-button small (click)="setDisc()">{{"Add Discount"|translate}}</button>\n\n            </ion-row>\n\n          <ion-row *ngIf="discbtn==1">\n\n            <ion-col col-5>   <ion-label style="font-size: 1.0rem;">{{"Discount Rate %:"|translate}}</ion-label></ion-col>\n\n            <ion-col col-7>\n\n                <ion-input type="number" placeholder="အရေအတွက်" [(ngModel)]="discount" style="font-size: 1.3rem; " (input)="updateRec()" ngDefaultControl>\n\n                  </ion-input>\n\n            </ion-col>       \n\n          </ion-row>\n\n          <ion-row *ngIf="discount!=0">\n\n            <ion-col col-5 style="text-align: left; font-size: 1.0rem; ">{{"Discounted Total:"|translate}}</ion-col>\n\n              <ion-col col-7 style="text-align: left; ">{{lastsumdisc}}</ion-col>\n\n            </ion-row>\n\n            <ion-row *ngIf="discbtn==1">\n\n                <button ion-button small (click)="remDisc()">{{"Remove Discount"|translate}}</button>\n\n              </ion-row>\n\n\n\n\n\n\n\n\n\n            <ion-row *ngIf="taxbtn==0">\n\n              <button ion-button small (click)="setTax()">{{"Add Tax"|translate}}</button>\n\n            </ion-row>\n\n\n\n            <ion-row *ngIf="taxbtn==1">\n\n                <ion-col col-5>   <ion-label style="font-size: 1.0rem;">{{"Tax Rate %:"|translate}}</ion-label></ion-col>\n\n                <ion-col col-7>\n\n                    <ion-input type="number" placeholder="အရေအတွက်" [(ngModel)]="taxrate" style="font-size: 1.3rem;" (input)="updateRec()" ngDefaultControl>\n\n                      </ion-input>\n\n                </ion-col>       \n\n              </ion-row>\n\n          <ion-row *ngIf="taxrate!=0">\n\n            <ion-col col-5 style="text-align: left;font-size: 1.0rem; ">{{"Total after tax:"|translate}}</ion-col>\n\n              <ion-col col-7 style="text-align: left; ">{{lastsumtax}}</ion-col>\n\n            </ion-row>\n\n            <ion-row *ngIf="taxbtn==1">\n\n                <button ion-button small (click)="remTax()">{{"Remove Tax"|translate}}</button>\n\n              </ion-row>\n\n      </ion-grid>\n\n      </ion-card>\n\n  <!-- Dynamically Generate All expense from backend - see feed from prev -->\n\n\n\n  <ion-card padding>\n\n   \n\n          <ion-item>\n\n          <span style="vertical-align: middle; display: inline-block; color: black; font-size: 1.0rem;" item-start>\n\n              {{"Add a temporary item"|translate}}\n\n            </span>\n\n             <ion-toggle color="dark" style="vertical-align: middle; display: inline-block" item-end (ionChange)="dispM()"></ion-toggle>\n\n          \n\n        </ion-item>\n\n          \n\n\n\n     \n\n     \n\n       <div *ngIf="displayManual==1;">\n\n     \n\n        <ion-item>\n\n            <ion-label style="font-size: 1.0rem;">{{"Name"|translate}}</ion-label>\n\n            <ion-input type="text" placeholder="{{\'Enter Product Name\'|translate}}" [(ngModel)]="newItemName" ngDefaultControl></ion-input>\n\n          </ion-item>\n\n          <ion-item>\n\n              <ion-label style="font-size: 1.0rem;">{{"Price"|translate}}</ion-label>\n\n              <ion-input  type="number" placeholder="{{\'Enter Price\'|translate}}" [(ngModel)]="newUnitPrice" ngDefaultControl></ion-input>\n\n            </ion-item>\n\n            <ion-item>\n\n                <ion-label style="font-size: 1.0rem;">{{"Qty"|translate}}</ion-label>\n\n                <ion-input type="number" placeholder="{{\'Enter Qty\'|translate}}" [(ngModel)]="newUnitQty" ngDefaultControl></ion-input>\n\n              </ion-item>\n\n              <!-- <ion-item>\n\n                  <ion-label style="font-size: 1.0rem;" >Select Category</ion-label>\n\n                  <ion-select multiple="false" [(ngModel)]=\'newItemCat\'>\n\n                      <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>    \n\n                  </ion-select>\n\n                </ion-item> -->\n\n                <button ion-button style="font-size: 1.0rem;" full (click)="addNewItem()"> {{"Add Product"|translate}} </button>\n\n              </div>\n\n  </ion-card>\n\n  <ion-grid>\n\n      <ion-row>\n\n          <ion-col col-6 style="text-align: center;"> <button ion-button style="font-size: 1.0rem;" (click)="addCalc()"> {{"Add from Calculator"|translate}}</button></ion-col>\n\n          <ion-col col-6 style="text-align: center;"> <button ion-button style="font-size: 1.0rem;" (click)="addProdList()"> {{"Add from Product List"|translate}}</button></ion-col>\n\n          </ion-row>\n\n          <ion-row>\n\n          <ion-col col-12 style="text-align: center;"> <button ion-button style="font-size: 1.0rem;" (click)="qrscan()"> {{"Scan Barcode"|translate}}</button></ion-col>\n\n        </ion-row>\n\n  </ion-grid>\n\n\n\n</ion-content>\n\n\n\n\n\n<ion-footer>\n\n    <ion-grid>\n\n        <ion-row>\n\n          <ion-col col-4>\n\n            <button ion-button full color="dark" (click)="saveRec()"> <ion-icon name="checkmark"></ion-icon>\n\n            </button>\n\n          </ion-col>\n\n          <ion-col col-4>\n\n            <button ion-button full color="dark"> <ion-icon name="print"></ion-icon>\n\n            </button>\n\n          </ion-col>\n\n          <ion-col col-4>\n\n              <button ion-button full color="dark" (click)="cancelRec()">  <ion-icon name="close"></ion-icon>\n\n              </button>\n\n            </ion-col>\n\n        </ion-row>\n\n      </ion-grid>\n\n</ion-footer>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\income-transaction\income-transaction.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */],
-            __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */], __WEBPACK_IMPORTED_MODULE_4__providers_translation_translate_config_service__["a" /* TranslateConfigService */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */], __WEBPACK_IMPORTED_MODULE_4__providers_translation_translate_config_service__["a" /* TranslateConfigService */],
             __WEBPACK_IMPORTED_MODULE_3__ionic_native_barcode_scanner__["a" /* BarcodeScanner */]])
     ], IncomeTransactionPage);
     return IncomeTransactionPage;
@@ -456,20 +1611,20 @@ var IncomeTransactionPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 102:
+/***/ 146:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__sign_up_sign_up__ = __webpack_require__(103);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__transaction_home_transaction_home__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_storage_storage__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_facebook__ = __webpack_require__(205);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_translation_translate_config_service__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__sign_up_sign_up__ = __webpack_require__(147);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__transaction_home_transaction_home__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_storage_storage__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_facebook__ = __webpack_require__(257);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_translation_translate_config_service__ = __webpack_require__(13);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -595,8 +1750,8 @@ var LoginPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-login',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\login\login.html"*/'<ion-header>\n\n  <ion-row>\n\n      <ion-col col-4>\n\n          <ion-select multiple="false" [(ngModel)]="selectedLanguage" (ionChange)="languageChanged()">\n\n              <ion-option *ngFor="let l of listOfLang">{{ l }}</ion-option>\n\n            </ion-select>\n\n      </ion-col>\n\n      <ion-col col-8></ion-col>\n\n  </ion-row>\n\n\n\n         \n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n\n\n  <button ion-button block clear color="light" class="nametop"><b>Open</b></button>\n\n\n\n  <ion-grid style="width: 75%;">\n\n    \n\n    <ion-row class="row-style">\n\n      \n\n      <ion-icon name="mail" color="semi-light" class="icon"></ion-icon>\n\n      <ion-input type="email" placeholder="{{ \'email\' | translate }}" [(ngModel)]="email"></ion-input>\n\n    </ion-row>\n\n    <ion-row class="row-style">\n\n      <ion-icon name="key" color="semi-light" class="icon"></ion-icon>\n\n      <ion-input type="password" placeholder="{{ \'password\' | translate }}" [(ngModel)]="password" ></ion-input>\n\n    </ion-row>\n\n    <ion-row>\n\n      <button ion-button block round outline color="light" style="margin-top: 20px;" (click)="login()">{{"Sign in"|translate}}</button>\n\n    </ion-row>\n\n    <!-- <div class="btn_container">\n\n      <button ion-button full (click)="loginWithFB();">Facebook ဖြင့်ဝင်ပါ</button>\n\n  </div> -->\n\n  \n\n  </ion-grid>\n\n\n\n\n\n  <button ion-button block clear color="light" style="margin-top: 10px;" (click)="gotoSignUp()">{{"Don\'t have an account?"|translate}}</button>\n\n\n\n\n\n\n\n \n\n  \n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\login\login.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgZone */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */], __WEBPACK_IMPORTED_MODULE_6__ionic_native_facebook__["a" /* Facebook */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgZone */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */], __WEBPACK_IMPORTED_MODULE_6__ionic_native_facebook__["a" /* Facebook */],
             __WEBPACK_IMPORTED_MODULE_5__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_7__providers_translation_translate_config_service__["a" /* TranslateConfigService */]])
     ], LoginPage);
     return LoginPage;
@@ -606,18 +1761,18 @@ var LoginPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 103:
+/***/ 147:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignUpPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__transaction_home_transaction_home__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_translation_translate_config_service__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__transaction_home_transaction_home__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_translation_translate_config_service__ = __webpack_require__(13);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -796,8 +1951,8 @@ var SignUpPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-sign-up',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\sign-up\sign-up.html"*/'<ion-header>\n\n		<ion-navbar transparent>\n\n		</ion-navbar>\n\n	  </ion-header>\n\n	  <ion-content padding>\n\n		  \n\n			  <button ion-button block clear color="light" class="nametop"><b>Open</b></button> \n\n	  \n\n	  <ion-grid style="width: 75%;">\n\n	  \n\n		  <div *ngIf="nextbtn!=1">\n\n		  <ion-row class="row-style1" justify-content-center align-items-center style="height: 100%">{{"Register a business"|translate}}</ion-row>\n\n		  <ion-row class="row-style"> \n\n			  <ion-icon name="person" color="semi-light" class="icon"></ion-icon>\n\n			  <ion-input type="text" placeholder="{{\'Name\'|translate}}" [(ngModel)]="name"></ion-input>\n\n		  </ion-row>\n\n		  <ion-row class="row-style">\n\n			  <ion-icon name="mail" color="semi-light" class="icon"></ion-icon>\n\n			  <ion-input type="email" placeholder="{{ \'email\' | translate }}" [(ngModel)]="email"> </ion-input>\n\n		  </ion-row>\n\n		  <ion-row class="row-style">\n\n			  <ion-icon name="key" color="semi-light" class="icon"></ion-icon>\n\n			  <ion-input type="password" placeholder="\'password\'|translate"  [(ngModel)]="password"></ion-input>\n\n		  </ion-row>\n\n		  <ion-row class="row-style">\n\n			  <ion-icon name="home" color="semi-light" class="icon"></ion-icon>\n\n			  <ion-input type="text" placeholder="{{\'Business Name\'|translate}} "  [(ngModel)]="businessname"></ion-input>\n\n		  </ion-row>\n\n		  <ion-row class="row-style">\n\n			  <ion-icon name="pin" color="semi-light" class="icon"></ion-icon>\n\n			  <ion-input type="text" placeholder="{{\'Full Busines Address\'|translate}}"  [(ngModel)]="businessaddress"></ion-input>\n\n		  </ion-row>\n\n		  <ion-row class="row-style">\n\n			  <ion-icon name="call" color="semi-light" class="icon"></ion-icon>\n\n			  <ion-input type="text" placeholder="{{\'Phone Number\'|translate}}"  [(ngModel)]="phno"></ion-input>\n\n		  </ion-row>\n\n	  <button ion-button block round outline color="light" style="margin-top: 10px;" (click)="nextPg()">{{\'Next Page\'|translate}}</button>\n\n	  </div>\n\n	  <div *ngIf="nextbtn==1">\n\n			  <button ion-button block round outline color="light" style="margin-bottom: 10px;" (click)="prevPg()">{{\'Back\'|translate}}</button>\n\n		  <ion-row class="row-style">\n\n				  <ion-icon name="globe" color="semi-light" class="icon"></ion-icon>\n\n				  <ion-label>{{"Business Type"|translate}}</ion-label>\n\n				  <ion-select [(ngModel)]="businesstype">\n\n					  <ion-option *ngFor="let b of listOfBType" value="{{ b }}">{{ b }}</ion-option>\n\n				  </ion-select>\n\n				  <!-- <ion-input type="text" placeholder="Language"  [(ngModel)]="businessname"></ion-input> -->\n\n		 </ion-row>\n\n	  \n\n	  \n\n		  <ion-row class="row-style">\n\n			  <ion-icon name="chatboxes" color="semi-light" class="icon"></ion-icon>\n\n			  <ion-label>{{"Language"|translate}}</ion-label>\n\n			  <ion-select [(ngModel)]="language">\n\n				  <ion-option *ngFor="let l of listOfLang" value="{{ l }}">{{ l }}</ion-option>\n\n			  </ion-select>\n\n			  <!-- <ion-input type="text" placeholder="Language"  [(ngModel)]="businessname"></ion-input> -->\n\n		  </ion-row>\n\n	  \n\n		  <ion-row class="row-style">\n\n				  <ion-icon name="logo-usd" color="semi-light" class="icon"></ion-icon>\n\n				  <ion-label>{{"Currency"|translate}}</ion-label>\n\n				  <ion-select [(ngModel)]="currency">\n\n					  <ion-option *ngFor="let c of listOfCurrency" value = "{{ c }}">{{ c }}</ion-option>\n\n				  </ion-select>\n\n				  <!-- <ion-input type="text" placeholder="Language"  [(ngModel)]="businessname"></ion-input> -->\n\n			  </ion-row>\n\n	  \n\n	  \n\n		  <ion-row class="row-style">\n\n			  <ion-icon name="cash" color="semi-light" class="icon"></ion-icon>\n\n			  <ion-input type="number" placeholder="{{\'Starting Cash Balance\'|translate}}"  [(ngModel)]="cb"></ion-input>\n\n		  </ion-row>\n\n	  \n\n		  <ion-row class="row-style">\n\n				  <ion-icon name="cash" color="semi-light" class="icon"></ion-icon>\n\n				  <ion-input type="number" placeholder="{{\'Usual Discount %\'|translate}}"  [(ngModel)]="discount"></ion-input>\n\n			  </ion-row>\n\n	  \n\n			  <ion-row class="row-style">\n\n					  <ion-icon name="cash" color="semi-light" class="icon"></ion-icon>\n\n					  <ion-input type="number" placeholder="{{ \'Usual Tax %\' | translate }}"  [(ngModel)]="taxrate"></ion-input>\n\n				  </ion-row>\n\n		  <ion-row>\n\n			  <button ion-button block round outline color="light" style="margin-top: 20px;" (click)="signup()">{{"Sign Up"|translate}}</button>\n\n		  </ion-row>\n\n	  </div>\n\n	  </ion-grid>\n\n	  <button ion-button block clear color="light" style="margin-top: 10px;" (click)="goBack()">{{"Already have an account? Log-in"|translate}}</button>\n\n	  </ion-content>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\sign-up\sign-up.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */], __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_5__providers_translation_translate_config_service__["a" /* TranslateConfigService */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */], __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_5__providers_translation_translate_config_service__["a" /* TranslateConfigService */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
     ], SignUpPage);
     return SignUpPage;
@@ -807,15 +1962,15 @@ var SignUpPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 104:
+/***/ 148:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TransactionProductPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__ = __webpack_require__(13);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1088,8 +2243,8 @@ var TransactionProductPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-transaction-product',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\transaction-product\transaction-product.html"*/'<ion-content padding>\n\n  <ion-searchbar showCancelButton="always" [(ngModel)]="searchterm" (ionChange)="filteredProduct()"></ion-searchbar>\n\n  \n\n    <ion-item>\n\n      <ion-label>{{"Select category"|translate}}</ion-label>\n\n      <ion-select multiple="true" [(ngModel)]=\'selectedCat\' (ionChange)="filteredProduct()">\n\n          <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>    \n\n      </ion-select>\n\n    </ion-item>\n\n  \n\n  \n\n  <!-- <ion-card>\n\n      <ion-grid line>\n\n        <ion-row>\n\n        <ion-col col-2>\n\n          <ion-row>\n\n            <ion-avatar>\n\n                <img src="https://i0.wp.com/mainlymiles.com/wp-content/uploads/2019/04/Yew-Mee.jpg?w=256&h=256&crop=1&ssl=1">\n\n              </ion-avatar>\n\n            </ion-row>\n\n        </ion-col>\n\n        <ion-col col-10>\n\n            <ion-row>\n\n                <ion-col col-7>\n\n                  Shan Noodle\n\n                </ion-col>\n\n                <ion-col col-3>\n\n                  568 - N/A?\n\n                  </ion-col>\n\n                  <ion-col col-1>\n\n                      <ion-icon name="arrow-dropup-circle" style=" color: green"></ion-icon>\n\n                  </ion-col>\n\n                  <ion-col col-1>\n\n                      <ion-icon name="arrow-dropdown-circle" style=" color: red"></ion-icon>\n\n                  </ion-col>\n\n              </ion-row>\n\n              <ion-row>\n\n                <ion-col col-6 style="color: grey; font-size: 10px;"> Price 3500 MMK </ion-col>\n\n                <ion-col col-6 style="color: grey; font-size: 10px; text-align: end;"> Category: Noodle </ion-col>\n\n              </ion-row>\n\n              <ion-row>\n\n                <ion-col col-6></ion-col>\n\n                <ion-col col-6> <button ion-button full end color="dark">View/Edit</button> </ion-col>\n\n              </ion-row>\n\n  \n\n        </ion-col>\n\n      </ion-row>\n\n      </ion-grid>\n\n    </ion-card>  -->\n\n  \n\n  \n\n  \n\n    <ion-list inset  *ngFor="let product of filteredList; let i=index">\n\n      \n\n        <ion-card>\n\n            <ion-grid> \n\n              <ion-row>\n\n              <ion-col col-2>\n\n                <ion-row> \n\n                  <ion-avatar>\n\n                      <img [src]="product.url">\n\n                    </ion-avatar>\n\n                  </ion-row>\n\n              </ion-col>\n\n              <ion-col col-10>\n\n                  <ion-row>\n\n                      <ion-col col-6>\n\n                          {{product.name}} \n\n                      </ion-col>\n\n                      <ion-col col-2>\n\n                        {{product.qty}}\n\n                      </ion-col>\n\n                        <ion-col col-2>\n\n                            <ion-icon name="add" style=" color: green" (click)="addUp(i)"></ion-icon>\n\n                        </ion-col>\n\n                        <ion-col col-2>\n\n                            <ion-icon name="remove" style=" color: red" (click)="addDown(i)"></ion-icon>\n\n                        </ion-col>\n\n                    </ion-row>\n\n                    <ion-row>\n\n                      <ion-col col-4 style="color: grey; font-size: 10px;"> {{"Retail Price"|translate}} {{product.price}} MMK </ion-col>\n\n                      <ion-col col-4 style="color: grey; font-size: 10px; text-align: center;"> {{"Wholesale Price"|translate}} {{product.wholesale_price}} MMK </ion-col>\n\n                      <ion-col col-4 style="color: grey; font-size: 10px; text-align: end;"> {{"Category"|translate}} {{product.cat}} </ion-col>\n\n                    </ion-row>\n\n              </ion-col>\n\n            </ion-row>\n\n            <ion-row *ngIf="event1==true">\n\n              <ion-col col-12> <button ion-button full end color="dark" (click)="singleProduct(product)">{{"Add"|translate}}</button> </ion-col>\n\n            </ion-row>\n\n            </ion-grid>\n\n          </ion-card> \n\n       \n\n      </ion-list>\n\n    \n\n  \n\n    \n\n  \n\n  \n\n  \n\n  \n\n  </ion-content>\n\n  \n\n  \n\n<ion-footer>\n\n\n\n    <ion-grid>\n\n      <ion-row *ngIf="event1==false">\n\n        <ion-col>\n\n            <button ion-button (click)="createRec()" full style="background-color: #222">{{"Create Receipt"|translate}}</button>\n\n        </ion-col>\n\n      </ion-row>\n\n      <ion-row *ngIf="event1==true">\n\n        <ion-col>\n\n            <button ion-button (click)="reset()" full style="background-color: #222">{{"Reset"|translate}}</button>\n\n        </ion-col>\n\n      </ion-row>\n\n    </ion-grid>\n\n   \n\n</ion-footer>\n\n\n\n\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\transaction-product\transaction-product.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__["a" /* TranslateConfigService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__["a" /* TranslateConfigService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */]])
     ], TransactionProductPage);
     return TransactionProductPage;
 }());
@@ -1098,15 +2253,15 @@ var TransactionProductPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 105:
+/***/ 149:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SummaryHomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__ = __webpack_require__(13);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1193,8 +2348,8 @@ var SummaryHomePage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-summary-home',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\summary-home\summary-home.html"*/'<!--\n\n  Generated template for the SummaryHomePage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n    <ion-navbar color="dark">\n\n      <button ion-button menuToggle>\n\n        <ion-icon name="menu"></ion-icon>\n\n      </button>\n\n      <ion-title> {{"Business"|translate}} </ion-title>\n\n    </ion-navbar>\n\n  </ion-header>\n\n\n\n  <ion-content>\n\n\n\n    <ion-item>\n\n        <span style="vertical-align: middle; display: inline-block; color: black; font-size: 1.5rem;" item-start>\n\n          {{"Summarize"|translate}}:\n\n          </span>\n\n           <ion-toggle  color="dark" style="vertical-align: middle; display: inline-block" item-end [(ngModel)]="expanded"></ion-toggle>\n\n        \n\n      </ion-item>\n\n      <ion-item>\n\n          {{"Total sales today"|translate}}: {{tstoday}}\n\n          \n\n        </ion-item>\n\n        <ion-item>\n\n            {{"Total sales for this month"|translate}}: {{tsmonth}}\n\n        </ion-item>\n\n        <ion-item>\n\n            {{"Total sales for last 30 days"|translate}} : {{ts30}}\n\n        </ion-item>\n\n        \n\n\n\n      <ion-list inset  *ngFor="let transac of listtransacrev">\n\n        \n\n          <ion-card>\n\n              <ion-grid line>\n\n                  <ion-row style="padding-left: 10px; padding-bottom: 5px; ">\n\n                    <ion-col col-10 style="color: grey; font-size: 10px;"> {{getDateTime(transac.datetime)}} </ion-col>\n\n                    <ion-col col-2 style="text-align: center "><ion-icon name="cash" style="color: green"></ion-icon> </ion-col>\n\n                  </ion-row>\n\n\n\n                  <ion-list *ngFor="let item of transac.itemslist" [hidden]="expanded">\n\n                      \n\n                      <ion-row  style="padding: 0px;text-align: center ;  background-color: indigo; color: palevioletred;">\n\n                          <ion-col col-8>\n\n                            {{item.name}}\n\n                          </ion-col>\n\n                          <ion-col col-2 >\n\n                              {{item.price}}\n\n                          </ion-col>\n\n                          <ion-col col-2>\n\n                              {{item.qty}}\n\n                          </ion-col>\n\n                        </ion-row>\n\n                        <ion-row *ngIf="transac.totaldisc!=transac.totalsum" style="padding: 0px;text-align: center ;  background-color: silver; color: palevioletred;">\n\n                            <ion-col col-8>\n\n                               {{"Discounted total:"|translate}} ({{transac.discount}}%)\n\n                              </ion-col>\n\n                              <ion-col col-4 >\n\n                                  {{transac.totaldisc}}\n\n                              </ion-col>\n\n                        </ion-row>\n\n                        <ion-row *ngIf="transac.totalsum!=transac.totalatax" style="padding: 0px; text-align: center ;  background-color: silver; color: palevioletred;">\n\n                            <ion-col col-8>\n\n                                {{"Total after tax:"|translate}} ({{transac.taxrate}}%)\n\n                              </ion-col>\n\n                              <ion-col col-4 >\n\n                                  {{transac.totalatax}}\n\n                              </ion-col>\n\n                        </ion-row>\n\n              </ion-list> \n\n                  <ion-row style="padding-left: 10px; padding-bottom: 10px;">\n\n                    <ion-col col-10><h2><b>{{"Grand Total:"|translate}} {{transac.totaldisc}}</b></h2></ion-col>\n\n                  </ion-row>\n\n\n\n               \n\n               \n\n              </ion-grid>\n\n            </ion-card>   \n\n        </ion-list>\n\n      \n\n    \n\n      \n\n    \n\n    \n\n    \n\n    \n\n    </ion-content>\n\n\n\n\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\summary-home\summary-home.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__["a" /* TranslateConfigService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__["a" /* TranslateConfigService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */]])
     ], SummaryHomePage);
     return SummaryHomePage;
 }());
@@ -1203,21 +2358,21 @@ var SummaryHomePage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 106:
+/***/ 160:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserProfilePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__transaction_home_transaction_home__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash__ = __webpack_require__(321);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__transaction_home_transaction_home__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash__ = __webpack_require__(751);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_firebase__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_firebase__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_translation_translate_config_service__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_translation_translate_config_service__ = __webpack_require__(13);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1332,11 +2487,11 @@ var UserProfilePage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-user-profile',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\user-profile\user-profile.html"*/'<!--\n\n  Generated template for the UserProfilePage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n  <ion-navbar color="dark">\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>{{ \'User Profile\' | translate }}</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n  <form [formGroup]="formUser">\n\n    <ion-list inset>\n\n      <ion-item>\n\n        <ion-label>{{ \'Business Name\' | translate }}</ion-label>\n\n        <ion-input type="text" formControlName="business_name" [(ngModel)]="user.business_name" (ionChange)="onChange()"></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label>{{ \'Full Business Address\' | translate }}</ion-label>\n\n        <ion-input type="text" formControlName="business_address" [(ngModel)]="user.business_address" (ionChange)="onChange()"></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label>{{ \'Owner\' | translate }}</ion-label>\n\n        <ion-input type="text" formControlName="owner_name" [(ngModel)]="user.owner_name" (ionChange)="onChange()"></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-icon name="globe" color="semi-light" class="icon"></ion-icon>\n\n        <ion-label>{{"Business Type"|translate}}</ion-label>\n\n        <ion-select formControlName="businesstype" [(ngModel)]="user.businesstype" (ionChange)="onChange()">\n\n          <ion-option *ngFor="let b of listOfBType" value="{{ b }}">{{ b }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label>{{ \'Phone Number\' | translate }}</ion-label>\n\n        <ion-input type="text" formControlName="ph_no" [(ngModel)]="user.ph_no" (ionChange)="onChange()"></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-icon name="logo-usd" color="semi-light" class="icon"></ion-icon>\n\n        <ion-label>{{"Currency"|translate}}</ion-label>\n\n        <ion-select formControlName="currency" [(ngModel)]="user.currency" (ionChange)="onChange()">\n\n          <ion-option *ngFor="let c of listOfCurrency" value = "{{ c }}">{{ c }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label>{{ \'Balance\' | translate }}</ion-label>\n\n        <ion-input type="number" formControlName="cash_balance" [(ngModel)]="user.cash_balance" (ionChange)="onChange()"></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label>{{ \'Usual Discount %\' | translate }}</ion-label>\n\n        <ion-input type="number" formControlName="discount" [(ngModel)]="user.discount" (ionChange)="onChange()"></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label>{{ \'Tax Rate %:\' | translate }}</ion-label>\n\n        <ion-input type="number" formControlName="taxrate" [(ngModel)]="user.taxrate" (ionChange)="onChange()"></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label>{{"Language"|translate}}</ion-label>\n\n        <ion-select formControlName="language" [(ngModel)]="user.language" (ionChange)="onChange()">\n\n          <ion-option *ngFor="let l of listOfLang" value="{{ l }}">{{ l }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n    </ion-list>\n\n\n\n    <button *ngIf="submitButton" ion-button block color="primary" (click)="setUser()"  color="dark">{{\'Update Profile\'| translate}}</button>\n\n  </form>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\user-profile\user-profile.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */],
             __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */],
             __WEBPACK_IMPORTED_MODULE_7__providers_translation_translate_config_service__["a" /* TranslateConfigService */]])
     ], UserProfilePage);
     return UserProfilePage;
@@ -1346,7 +2501,7 @@ var UserProfilePage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 139:
+/***/ 191:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -1359,20 +2514,20 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 139;
+webpackEmptyAsyncContext.id = 191;
 
 /***/ }),
 
-/***/ 15:
+/***/ 23:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StorageProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_storage__ = __webpack_require__(184);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_storage__ = __webpack_require__(237);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(5);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1850,12 +3005,12 @@ var StorageProvider = /** @class */ (function () {
         return this.storage.ready();
     };
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_3_ionic_angular__["h" /* Nav */]),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["h" /* Nav */])
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_3_ionic_angular__["i" /* Nav */]),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["i" /* Nav */])
     ], StorageProvider.prototype, "nav", void 0);
     StorageProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__ionic_storage__["b" /* Storage */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["m" /* ToastController */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["i" /* NavController */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__ionic_storage__["b" /* Storage */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["n" /* ToastController */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["j" /* NavController */]])
     ], StorageProvider);
     return StorageProvider;
 }());
@@ -1864,60 +3019,63 @@ var StorageProvider = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 182:
+/***/ 235:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
 	"../pages/add-product-category/add-product-category.module": [
-		183
+		236
 	],
 	"../pages/all-transaction/all-transaction.module": [
-		189
+		239
 	],
 	"../pages/coach-businesstips/coach-businesstips.module": [
-		190
+		240
 	],
 	"../pages/coach-coach/coach-coach.module": [
-		191
+		241
 	],
 	"../pages/coach-goals/coach-goals.module": [
-		192
+		242
 	],
 	"../pages/coach-home/coach-home.module": [
-		193
+		243
 	],
 	"../pages/contact-us/contact-us.module": [
-		195
+		245
 	],
 	"../pages/expense-transaction/expense-transaction.module": [
-		196
+		246
 	],
 	"../pages/expenses-home/expenses-home.module": [
-		198
+		248
 	],
 	"../pages/income-transaction/income-transaction.module": [
-		203
+		255
 	],
 	"../pages/login/login.module": [
-		204
+		256
+	],
+	"../pages/printer-test/printer-test.module": [
+		261
 	],
 	"../pages/product-list/product-list.module": [
-		206
+		258
 	],
 	"../pages/sign-up/sign-up.module": [
-		207
+		259
 	],
 	"../pages/summary-home/summary-home.module": [
-		208
+		260
 	],
 	"../pages/transaction-home/transaction-home.module": [
-		209
+		357
 	],
 	"../pages/transaction-product/transaction-product.module": [
-		210
+		358
 	],
 	"../pages/user-profile/user-profile.module": [
-		211
+		359
 	]
 };
 function webpackAsyncContext(req) {
@@ -1931,21 +3089,21 @@ function webpackAsyncContext(req) {
 webpackAsyncContext.keys = function webpackAsyncContextKeys() {
 	return Object.keys(map);
 };
-webpackAsyncContext.id = 182;
+webpackAsyncContext.id = 235;
 module.exports = webpackAsyncContext;
 
 /***/ }),
 
-/***/ 183:
+/***/ 236:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AddProductCategoryPageModule", function() { return AddProductCategoryPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__add_product_category__ = __webpack_require__(92);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__add_product_category__ = __webpack_require__(130);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(16);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1977,16 +3135,16 @@ var AddProductCategoryPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 189:
+/***/ 239:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AllTransactionPageModule", function() { return AllTransactionPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__all_transaction__ = __webpack_require__(93);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__all_transaction__ = __webpack_require__(137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(16);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2018,16 +3176,16 @@ var AllTransactionPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 190:
+/***/ 240:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CoachBusinesstipsPageModule", function() { return CoachBusinesstipsPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__coach_businesstips__ = __webpack_require__(94);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__coach_businesstips__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(16);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2059,16 +3217,16 @@ var CoachBusinesstipsPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 191:
+/***/ 241:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CoachCoachPageModule", function() { return CoachCoachPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__coach_coach__ = __webpack_require__(95);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__coach_coach__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(16);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2100,16 +3258,16 @@ var CoachCoachPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 192:
+/***/ 242:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CoachGoalsPageModule", function() { return CoachGoalsPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__coach_goals__ = __webpack_require__(96);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__coach_goals__ = __webpack_require__(140);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(16);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2141,16 +3299,16 @@ var CoachGoalsPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 193:
+/***/ 243:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CoachHomePageModule", function() { return CoachHomePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__coach_home__ = __webpack_require__(194);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__coach_home__ = __webpack_require__(244);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(16);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2182,18 +3340,18 @@ var CoachHomePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 194:
+/***/ 244:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CoachHomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__coach_goals_coach_goals__ = __webpack_require__(96);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__coach_coach_coach_coach__ = __webpack_require__(95);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__coach_businesstips_coach_businesstips__ = __webpack_require__(94);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__contact_us_contact_us__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_translation_translate_config_service__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__coach_goals_coach_goals__ = __webpack_require__(140);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__coach_coach_coach_coach__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__coach_businesstips_coach_businesstips__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__contact_us_contact_us__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_translation_translate_config_service__ = __webpack_require__(13);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2235,7 +3393,7 @@ var CoachHomePage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-coach-home',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\coach-home\coach-home.html"*/'<!--\n\n  Generated template for the CoachHomePage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n    <ion-navbar color="dark">\n\n      <button ion-button menuToggle>\n\n        <ion-icon name="menu"></ion-icon>\n\n      </button>\n\n      <ion-title>ဆရာ</ion-title>\n\n      <ion-buttons end><button ion-button (click)="contactpg()" style="align-self: right; background-color:#222"><ion-icon name="contact" style="align-self: center; color: white;" padding></ion-icon></button></ion-buttons>\n\n          </ion-navbar>\n\n  </ion-header>\n\n   \n\n\n\n<ion-content padding>\n\n\n\n    <ion-tabs tabsPlacement="top" #myTabs>\n\n        <ion-tab [root]="Goals" tabTitle="ပန်းတိုင်များ" tabIcon="paper-plane"></ion-tab>\n\n        <ion-tab [root]="Coach" tabTitle="ဆရာ" tabIcon="school"></ion-tab>\n\n        <ion-tab [root]="Tips" tabTitle="စီးပွားရေးသိကောင်းစရာများ" tabIcon="cash"></ion-tab>\n\n        \n\n       </ion-tabs>\n\n    \n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\coach-home\coach-home.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */], __WEBPACK_IMPORTED_MODULE_6__providers_translation_translate_config_service__["a" /* TranslateConfigService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavParams */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_6__providers_translation_translate_config_service__["a" /* TranslateConfigService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]])
     ], CoachHomePage);
     return CoachHomePage;
 }());
@@ -2244,16 +3402,16 @@ var CoachHomePage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 195:
+/***/ 245:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ContactUsPageModule", function() { return ContactUsPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__contact_us__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__contact_us__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(16);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2285,16 +3443,16 @@ var ContactUsPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 196:
+/***/ 246:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ExpenseTransactionPageModule", function() { return ExpenseTransactionPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__expense_transaction__ = __webpack_require__(197);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__expense_transaction__ = __webpack_require__(247);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(16);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2326,14 +3484,14 @@ var ExpenseTransactionPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 197:
+/***/ 247:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ExpenseTransactionPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_translation_translate_config_service__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_translation_translate_config_service__ = __webpack_require__(13);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2365,7 +3523,7 @@ var ExpenseTransactionPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-expense-transaction',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\expense-transaction\expense-transaction.html"*/'<!--\n\n  Generated template for the ExpenseTransactionPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-content padding>\n\n\n\n Product List\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\expense-transaction\expense-transaction.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__providers_translation_translate_config_service__["a" /* TranslateConfigService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavParams */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__providers_translation_translate_config_service__["a" /* TranslateConfigService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]])
     ], ExpenseTransactionPage);
     return ExpenseTransactionPage;
 }());
@@ -2374,16 +3532,16 @@ var ExpenseTransactionPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 198:
+/***/ 248:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ExpensesHomePageModule", function() { return ExpensesHomePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__expenses_home__ = __webpack_require__(97);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__expenses_home__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(16);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2415,20 +3573,20 @@ var ExpensesHomePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 199:
+/***/ 249:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddProductPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_barcode_scanner__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_camera__ = __webpack_require__(100);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_firebase__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_barcode_scanner__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_camera__ = __webpack_require__(144);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_firebase__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_forms__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_translation_translate_config_service__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_forms__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_translation_translate_config_service__ = __webpack_require__(13);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2744,11 +3902,11 @@ var AddProductPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-add-product',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\addproduct\addproduct.html"*/'<!-- <ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>Add Product</ion-title>\n\n  </ion-navbar>\n\n</ion-header> -->\n\n\n\n<ion-content padding>\n\n    <ion-item>\n\n        <b>{{"Enter Information:" | translate}}</b>\n\n    \n\n    </ion-item>\n\n\n\n    <ion-item>\n\n        <button ion-button block color="primary" (click)="launchCamera()">{{\'Take Picture\' | translate}}</button>\n\n        <img *ngIf="image!=null" [src]="image" style="width: 100px;">\n\n      </ion-item>\n\n  \n\n  <form [formGroup]="formProduct">\n\n    <ion-list inset>\n\n      <!-- <button ion-button full color="dark" (click)="getProdPic()">Upload Picture</button> -->\n\n      <button ion-button block color="primary" (click)="scanQR()"  color="dark">{{\'Scan Barcode\'| translate}}</button>\n\n      <ion-item>\n\n        <ion-label>{{\'Product Code:\'| translate}}</ion-label>\n\n        <ion-input type="text" formControlName="prodCode" [(ngModel)]=\'prodCode\'></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label>{{\'Product Name:\'| translate}}</ion-label>\n\n        <ion-input type="text" formControlName="prodName" [(ngModel)]=\'prodName\'></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label>{{\'Product Retail Price:\'| translate}}</ion-label>\n\n        <ion-input type="number" formControlName="prodPrice" [(ngModel)]=\'prodPrice\'></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label>{{\'Product Wholesale Price:\'| translate}}</ion-label>\n\n        <ion-input type="number" formControlName="prodWholesalePrice" [(ngModel)]=\'prodWholesalePrice\'></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label>{{\'Product Buying Cost:\'| translate}}</ion-label>\n\n        <ion-input type="number" formControlName="prodCost" [(ngModel)]=\'prodCost\'></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label>{{\'Current Stock Qty:\'| translate}}</ion-label>\n\n        <ion-input type="number" formControlName="currstock" [(ngModel)]=\'currstock\'></ion-input>\n\n      </ion-item>\n\n      <!-- OPTIONAL EXPIRY/Shelf Life in time -->\n\n\n\n      <ion-item>\n\n\n\n        <ion-label>{{\'Product Category\' | translate}}</ion-label>\n\n        <ion-select multiple="false" formControlName="prodCat" [(ngModel)]=\'prodCat\'>\n\n\n\n          <!-- <ion-option>New</ion-option> -->\n\n          <ion-option value="New"> {{\'Add New Category\'| translate}}</ion-option>\n\n          <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>\n\n\n\n        </ion-select>\n\n\n\n        <!-- <ion-label>Select Category</ion-label>\n\n        <ion-select multiple="false" [(ngModel)]=\'prodCat\'>\n\n              <ion-option>New</ion-option>\n\n              <ion-option>Snacks</ion-option>\n\n              <ion-option>Drinks</ion-option>\n\n              <ion-option>Noodles</ion-option>\n\n        </ion-select> -->\n\n      </ion-item>\n\n\n\n\n\n\n\n\n\n      <ion-item *ngIf="prodCat==\'New\'">\n\n        <ion-label >{{\'Enter New Category Name\' | translate}}</ion-label>\n\n        <ion-input type="text" placeholder="Enter Category Here" formControlName="newprodCat" [(ngModel)]=\'newprodCat\'></ion-input>\n\n      </ion-item>\n\n\n\n    </ion-list>\n\n  </form>\n\n  <button ion-button block color="primary" (click)="addproduct()"  color="dark">{{\'Add Product\'| translate}}</button>\n\n  <button ion-button block style="background-color: red; color: white;" (click)="clearFields()">Clear Fields</button>\n\n\n\n  \n\n</ion-content>'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\addproduct\addproduct.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_2__ionic_native_barcode_scanner__["a" /* BarcodeScanner */], __WEBPACK_IMPORTED_MODULE_7__providers_translation_translate_config_service__["a" /* TranslateConfigService */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__["a" /* StorageProvider */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */],
             __WEBPACK_IMPORTED_MODULE_4__ionic_native_camera__["a" /* Camera */],
             __WEBPACK_IMPORTED_MODULE_6__angular_forms__["a" /* FormBuilder */]])
@@ -2760,7 +3918,7 @@ var AddProductPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 201:
+/***/ 253:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2817,21 +3975,21 @@ var GettersetterProvider = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 202:
+/***/ 254:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SingleProductPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_barcode_scanner__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__product_list_product_list__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_camera__ = __webpack_require__(100);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_firebase__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_barcode_scanner__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__product_list_product_list__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_camera__ = __webpack_require__(144);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_firebase__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_forms__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_translation_translate_config_service__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_forms__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_translation_translate_config_service__ = __webpack_require__(13);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3131,11 +4289,11 @@ var SingleProductPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-single-product',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\singleproduct\singleproduct.html"*/'<!-- <ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>Update Product</ion-title>\n\n  </ion-navbar> \n\n</ion-header> -->\n\n\n\n<ion-content padding>\n\n  <form [formGroup]="formProduct">\n\n    <ion-list inset>\n\n\n\n      <!-- <ion-item>\n\n        <ion-label>Photo</ion-label>\n\n            <ion-input type="number" [(ngModel)]=\'product.price\'></ion-input>\n\n        </ion-item> -->\n\n\n\n      <ion-item>\n\n        <button ion-button (click)="launchCamera()">{{\'Take Picture\' | translate}}</button>\n\n        <img *ngIf="image!=null" [src]="image" style="width: 100px;">\n\n      </ion-item>\n\n      <button ion-button block color="primary" (click)="scanQR()">{{\'Scan Barcode\'| translate}}</button>\n\n\n\n      <ion-item>\n\n        <ion-label>{{\'Product Code:\'| translate}}</ion-label>\n\n        <ion-input type="text" formControlName="prodCode" [(ngModel)]=\'product.code\'></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label>{{\'Product Name:\'| translate}}</ion-label>\n\n        <ion-input type="text" formControlName="prodName" [(ngModel)]=\'product.name\'></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label>{{\'Product Retail Price:\'| translate}}</ion-label>\n\n        <ion-input type="number" formControlName="prodPrice" [(ngModel)]=\'product.price\'></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label>{{\'Product Wholesale Price:\'| translate}}</ion-label>\n\n        <ion-input type="number" formControlName="prodWholesalePrice" [(ngModel)]=\'product.wholesale_price\'></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label>{{\'Product Buying Cost:\'| translate}}</ion-label>\n\n        <ion-input type="number" formControlName="prodCost" [(ngModel)]=\'product.cost\'></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label>{{\'Current Stock Qty:\'| translate}}</ion-label>\n\n        <ion-input type="number" formControlName="currstock" [(ngModel)]=\'product.stock_qty\'></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label>{{\'Product Category\' | translate}}</ion-label>\n\n        <ion-select multiple="false" formControlName="prodCat" [(ngModel)]=\'product.cat\'>\n\n          <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n\n\n\n\n\n\n    </ion-list>\n\n  </form>\n\n  <button ion-button block color="primary" (click)="updateProduct()">{{\'Update Product\'| translate}}</button>\n\n  <button ion-button block style="color: whitesmoke; background-color: gray;" (click)="discardChange()">Discard Changes</button>\n\n  <button ion-button block color="danger" (click)="deleteproduct(product)">{{\'Delete Product\'| translate}}</button>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\singleproduct\singleproduct.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */], __WEBPACK_IMPORTED_MODULE_8__providers_translation_translate_config_service__["a" /* TranslateConfigService */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_8__providers_translation_translate_config_service__["a" /* TranslateConfigService */],
             __WEBPACK_IMPORTED_MODULE_2__ionic_native_barcode_scanner__["a" /* BarcodeScanner */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__["a" /* StorageProvider */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */],
             __WEBPACK_IMPORTED_MODULE_5__ionic_native_camera__["a" /* Camera */],
             __WEBPACK_IMPORTED_MODULE_7__angular_forms__["a" /* FormBuilder */]])
     ], SingleProductPage);
@@ -3146,16 +4304,16 @@ var SingleProductPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 203:
+/***/ 255:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IncomeTransactionPageModule", function() { return IncomeTransactionPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__income_transaction__ = __webpack_require__(101);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__income_transaction__ = __webpack_require__(145);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(16);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3187,16 +4345,16 @@ var IncomeTransactionPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 204:
+/***/ 256:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginPageModule", function() { return LoginPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__login__ = __webpack_require__(102);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__login__ = __webpack_require__(146);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(16);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3228,16 +4386,16 @@ var LoginPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 206:
+/***/ 258:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProductListPageModule", function() { return ProductListPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__product_list__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__product_list__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(16);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3269,16 +4427,16 @@ var ProductListPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 207:
+/***/ 259:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SignUpPageModule", function() { return SignUpPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__sign_up__ = __webpack_require__(103);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__sign_up__ = __webpack_require__(147);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(16);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3310,16 +4468,16 @@ var SignUpPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 208:
+/***/ 260:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SummaryHomePageModule", function() { return SummaryHomePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__summary_home__ = __webpack_require__(105);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__summary_home__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(16);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3351,16 +4509,397 @@ var SummaryHomePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 209:
+/***/ 261:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PrinterTestPageModule", function() { return PrinterTestPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__printer_test__ = __webpack_require__(262);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var PrinterTestPageModule = /** @class */ (function () {
+    function PrinterTestPageModule() {
+    }
+    PrinterTestPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__printer_test__["a" /* PrinterTestPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__printer_test__["a" /* PrinterTestPage */]),
+            ],
+        })
+    ], PrinterTestPageModule);
+    return PrinterTestPageModule;
+}());
+
+//# sourceMappingURL=printer-test.module.js.map
+
+/***/ }),
+
+/***/ 262:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PrinterTestPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_printer_printer__ = __webpack_require__(263);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_printer_printer_commands__ = __webpack_require__(722);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_esc_pos_encoder_ionic__ = __webpack_require__(723);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_esc_pos_encoder_ionic___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_esc_pos_encoder_ionic__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+/**
+ * Generated class for the PrinterTestPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var PrinterTestPage = /** @class */ (function () {
+    function PrinterTestPage(navCtrl, navParams, printer, alertCtrl, loadCtrl, toastCtrl) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.printer = printer;
+        this.alertCtrl = alertCtrl;
+        this.loadCtrl = loadCtrl;
+        this.toastCtrl = toastCtrl;
+        this.inputData = {};
+    }
+    PrinterTestPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad PrinterTestPage');
+    };
+    PrinterTestPage.prototype.showToast = function (data) {
+        var toast = this.toastCtrl.create({
+            duration: 3000,
+            message: data,
+            position: 'bottom',
+        });
+        toast.present();
+    };
+    /*
+      noSpecialChars(string) {
+        var translate = {
+            à: 'a',
+            á: 'a',
+            â: 'a',
+            ã: 'a',
+            ä: 'a',
+            å: 'a',
+            æ: 'a',
+            ç: 'c',
+            è: 'e',
+            é: 'e',
+            ê: 'e',
+            ë: 'e',
+            ì: 'i',
+            í: 'i',
+            î: 'i',
+            ï: 'i',
+            ð: 'd',
+            ñ: 'n',
+            ò: 'o',
+            ó: 'o',
+            ô: 'o',
+            õ: 'o',
+            ö: 'o',
+            ø: 'o',
+            ù: 'u',
+            ú: 'u',
+            û: 'u',
+            ü: 'u',
+            ý: 'y',
+            þ: 'b',
+            ÿ: 'y',
+            ŕ: 'r',
+            À: 'A',
+            Á: 'A',
+            Â: 'A',
+            Ã: 'A',
+            Ä: 'A',
+            Å: 'A',
+            Æ: 'A',
+            Ç: 'C',
+            È: 'E',
+            É: 'E',
+            Ê: 'E',
+            Ë: 'E',
+            Ì: 'I',
+            Í: 'I',
+            Î: 'I',
+            Ï: 'I',
+            Ð: 'D',
+            Ñ: 'N',
+            Ò: 'O',
+            Ó: 'O',
+            Ô: 'O',
+            Õ: 'O',
+            Ö: 'O',
+            Ø: 'O',
+            Ù: 'U',
+            Ú: 'U',
+            Û: 'U',
+            Ü: 'U',
+            Ý: 'Y',
+            Þ: 'B',
+            Ÿ: 'Y',
+            Ŕ: 'R',
+          },
+          translate_re = /[àáâãäåæçèéêëìíîïðñòóôõöøùúûüýþßàáâãäåæçèéêëìíîïðñòóôõöøùúûýýþÿŕŕÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÝÝÞŸŔŔ]/gim;
+        return string.replace(translate_re, function(match) {
+          return translate[match];
+        });
+      }
+    */
+    PrinterTestPage.prototype.print = function (device, data) {
+        var _this = this;
+        console.log('Device mac: ', device);
+        console.log('Data: ', JSON.stringify(data));
+        var load = this.loadCtrl.create({
+            content: 'Printing...',
+        });
+        load.present();
+        this.printer.connectBluetooth(device).subscribe(function (status) {
+            console.log(status);
+            _this.printer
+                .printData(data)
+                .then(function (printStatus) {
+                console.log(printStatus);
+                var alert = _this.alertCtrl.create({
+                    title: 'Successful print!',
+                    buttons: [{
+                            text: 'Ok',
+                            handler: function () {
+                                load.dismiss();
+                                _this.printer.disconnectBluetooth();
+                            },
+                        },],
+                });
+                alert.present();
+            })
+                .catch(function (error) {
+                console.log(error);
+                var alert = _this.alertCtrl.create({
+                    title: 'There was an error printing, please try again!',
+                    buttons: [{
+                            text: 'Ok',
+                            handler: function () {
+                                load.dismiss();
+                                //this.printer.disconnectBluetooth();
+                            },
+                        },],
+                });
+                alert.present();
+            });
+        }, function (error) {
+            console.log(error);
+            var alert = _this.alertCtrl.create({
+                title: 'There was an error connecting to the printer, please try again!',
+                buttons: [{
+                        text: 'Ok',
+                        handler: function () {
+                            load.dismiss();
+                            //this.printer.disconnectBluetooth();
+                        },
+                    },],
+            });
+            alert.present();
+        });
+    };
+    PrinterTestPage.prototype.prepareToPrint = function (data) {
+        // u can remove this when generate the receipt using another method
+        if (!data.title) {
+            data.title = 'Title';
+        }
+        if (!data.text) {
+            data.text =
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis tellus sapien, aliquam id mattis et, pretium eu libero. In dictum mauris vel lorem porttitor, et tempor neque semper. Aliquam erat volutpat. Aliquam vel malesuada urna, a pulvinar augue. Nunc ac fermentum massa. Proin efficitur purus fermentum tellus fringilla, fringilla aliquam nunc dignissim. Duis et luctus tellus, sed ullamcorper lectus.';
+        }
+        /*
+            let receipt = '';
+            receipt += commands.HARDWARE.HW_INIT;
+            receipt += commands.TEXT_FORMAT.TXT_4SQUARE;
+            receipt += commands.TEXT_FORMAT.TXT_ALIGN_CT;
+            receipt += data.title.toUpperCase();
+            receipt += commands.EOL;
+            receipt += commands.TEXT_FORMAT.TXT_NORMAL;
+            receipt += commands.HORIZONTAL_LINE.HR_58MM;
+            receipt += commands.EOL;
+            receipt += commands.HORIZONTAL_LINE.HR2_58MM;
+            receipt += commands.EOL;
+            receipt += commands.TEXT_FORMAT.TXT_ALIGN_LT;
+            receipt += data.text;
+            //secure space on footer
+            receipt += commands.EOL;
+            receipt += commands.EOL;
+            receipt += commands.EOL;*/
+        //this.receipt = receipt;
+        var encoder = new __WEBPACK_IMPORTED_MODULE_4_esc_pos_encoder_ionic___default.a();
+        var result = encoder.initialize();
+        result
+            .codepage('cp936')
+            .align('center')
+            .raw(__WEBPACK_IMPORTED_MODULE_3__providers_printer_printer_commands__["a" /* commands */].TEXT_FORMAT.TXT_4SQUARE)
+            .line(data.title)
+            .raw(__WEBPACK_IMPORTED_MODULE_3__providers_printer_printer_commands__["a" /* commands */].TEXT_FORMAT.TXT_NORMAL)
+            .text(__WEBPACK_IMPORTED_MODULE_3__providers_printer_printer_commands__["a" /* commands */].HORIZONTAL_LINE.HR_58MM)
+            .text(__WEBPACK_IMPORTED_MODULE_3__providers_printer_printer_commands__["a" /* commands */].HORIZONTAL_LINE.HR2_58MM)
+            .text(data.text)
+            .newline()
+            .raw(__WEBPACK_IMPORTED_MODULE_3__providers_printer_printer_commands__["a" /* commands */].TEXT_FORMAT.TXT_4SQUARE)
+            .text('简体中文')
+            .newline()
+            .newline()
+            .newline();
+        this.mountAlertBt(result.encode());
+    };
+    PrinterTestPage.prototype.mountAlertBt = function (data) {
+        var _this = this;
+        this.receipt = data;
+        console.log(this.receipt);
+        var alert = this.alertCtrl.create({
+            title: 'Select your printer',
+            buttons: [{
+                    text: 'Cancel',
+                    role: 'cancel',
+                },
+                {
+                    text: 'Select printer',
+                    handler: function (device) {
+                        if (!device) {
+                            _this.showToast('Select a printer!');
+                            return false;
+                        }
+                        console.log(device);
+                        _this.print(device, _this.receipt);
+                    },
+                },
+            ],
+        });
+        this.printer.enableBluetooth().then(function () {
+            _this.printer
+                .searchBluetooth()
+                .then(function (devices) {
+                devices.forEach(function (device) {
+                    console.log('Devices: ', JSON.stringify(device));
+                    alert.addInput({
+                        name: 'printer',
+                        value: device.address,
+                        label: device.name,
+                        type: 'radio',
+                    });
+                });
+                alert.present();
+            })
+                .catch(function (error) {
+                console.log(error);
+                _this.showToast('There was an error connecting the printer, please try again!');
+                _this.mountAlertBt(_this.receipt);
+            });
+        })
+            .catch(function (error) {
+            console.log(error);
+            _this.showToast('Error activating bluetooth, please try again!');
+            _this.mountAlertBt(_this.receipt);
+        });
+    };
+    PrinterTestPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["m" /* Component */])({
+            selector: 'page-printer-test',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\printer-test\printer-test.html"*/'<!--\n  Generated template for the PrinterTestPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-title>printer-test</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-list>\n    <ion-item>\n      <ion-label color="primary" floating>Title</ion-label>\n      <ion-input [(ngModel)]=\'inputData.title\'></ion-input>\n    </ion-item>\n    <ion-item>\n      <ion-label color="primary" floating>Text</ion-label>\n      <ion-input [(ngModel)]=\'inputData.text\'></ion-input>\n    </ion-item>\n    <div hidden></div>\n  </ion-list>\n  <button ion-button full (click)="prepareToPrint(inputData)">Test print</button>\n</ion-content>\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\printer-test\printer-test.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_printer_printer__["a" /* PrinterProvider */],
+            __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["a" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["h" /* LoadingController */],
+            __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["n" /* ToastController */]])
+    ], PrinterTestPage);
+    return PrinterTestPage;
+}());
+
+//# sourceMappingURL=printer-test.js.map
+
+/***/ }),
+
+/***/ 263:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PrinterProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ionic_native_bluetooth_serial_ngx__ = __webpack_require__(264);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var PrinterProvider = /** @class */ (function () {
+    function PrinterProvider(bluetoothSerial) {
+        this.bluetoothSerial = bluetoothSerial;
+    }
+    PrinterProvider.prototype.enableBluetooth = function () {
+        return this.bluetoothSerial.enable();
+    };
+    PrinterProvider.prototype.searchBluetooth = function () {
+        return this.bluetoothSerial.list();
+    };
+    PrinterProvider.prototype.connectBluetooth = function (address) {
+        return this.bluetoothSerial.connect(address);
+    };
+    PrinterProvider.prototype.printData = function (data) {
+        return this.bluetoothSerial.write(data);
+    };
+    PrinterProvider.prototype.disconnectBluetooth = function () {
+        return this.bluetoothSerial.disconnect();
+    };
+    PrinterProvider = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__ionic_native_bluetooth_serial_ngx__["a" /* BluetoothSerial */]])
+    ], PrinterProvider);
+    return PrinterProvider;
+}());
+
+//# sourceMappingURL=printer.js.map
+
+/***/ }),
+
+/***/ 357:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TransactionHomePageModule", function() { return TransactionHomePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__transaction_home__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__transaction_home__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(16);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3392,16 +4931,16 @@ var TransactionHomePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 210:
+/***/ 358:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TransactionProductPageModule", function() { return TransactionProductPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__transaction_product__ = __webpack_require__(104);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__transaction_product__ = __webpack_require__(148);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(16);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3433,16 +4972,16 @@ var TransactionProductPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 211:
+/***/ 359:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserProfilePageModule", function() { return UserProfilePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__user_profile__ = __webpack_require__(106);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__user_profile__ = __webpack_require__(160);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(16);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3474,13 +5013,13 @@ var UserProfilePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 253:
+/***/ 401:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(254);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(271);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(402);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(406);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(0);
 
 
@@ -3491,74 +5030,80 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 271:
+/***/ 406:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* unused harmony export HttpLoaderFactory */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__(340);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_dashboard_dashboard__ = __webpack_require__(98);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_addproduct_addproduct__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_singleproduct_singleproduct__ = __webpack_require__(202);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_login_login__ = __webpack_require__(102);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_sign_up_sign_up__ = __webpack_require__(103);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_status_bar__ = __webpack_require__(251);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_splash_screen__ = __webpack_require__(252);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_barcode_scanner__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__providers_storage_storage__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_storage__ = __webpack_require__(184);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__providers_gettersetter_gettersetter__ = __webpack_require__(201);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__ionic_native_camera__ = __webpack_require__(100);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__ionic_native_facebook__ = __webpack_require__(205);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__angular_common_http__ = __webpack_require__(341);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__ngx_translate_core__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__ngx_translate_http_loader__ = __webpack_require__(346);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__providers_translation_translate_config_service__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22_firebase__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_22_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_transaction_home_transaction_home__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_all_transaction_all_transaction__ = __webpack_require__(93);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_expense_transaction_expense_transaction__ = __webpack_require__(197);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_income_transaction_income_transaction__ = __webpack_require__(101);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_summary_home_summary_home__ = __webpack_require__(105);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pages_coach_home_coach_home__ = __webpack_require__(194);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_coach_goals_coach_goals__ = __webpack_require__(96);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_coach_coach_coach_coach__ = __webpack_require__(95);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__pages_coach_businesstips_coach_businesstips__ = __webpack_require__(94);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__pages_contact_us_contact_us__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__pages_transaction_product_transaction_product__ = __webpack_require__(104);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__pages_product_list_product_list__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__pages_add_product_category_add_product_category__ = __webpack_require__(92);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__pages_expenses_home_expenses_home__ = __webpack_require__(97);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__pages_user_profile_user_profile__ = __webpack_require__(106);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_38__pages_add_product_category_add_product_category_module__ = __webpack_require__(183);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_39__pages_all_transaction_all_transaction_module__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_40__pages_coach_businesstips_coach_businesstips_module__ = __webpack_require__(190);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_41__pages_coach_home_coach_home_module__ = __webpack_require__(193);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_42__pages_coach_goals_coach_goals_module__ = __webpack_require__(192);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_43__pages_coach_coach_coach_coach_module__ = __webpack_require__(191);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_44__pages_contact_us_contact_us_module__ = __webpack_require__(195);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_45__pages_login_login_module__ = __webpack_require__(204);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_46__pages_sign_up_sign_up_module__ = __webpack_require__(207);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_47__pages_transaction_home_transaction_home_module__ = __webpack_require__(209);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_48__pages_expense_transaction_expense_transaction_module__ = __webpack_require__(196);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_49__pages_income_transaction_income_transaction_module__ = __webpack_require__(203);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_50__pages_summary_home_summary_home_module__ = __webpack_require__(208);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_51__pages_transaction_product_transaction_product_module__ = __webpack_require__(210);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_52__pages_product_list_product_list_module__ = __webpack_require__(206);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_53__pages_expenses_home_expenses_home_module__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_54__pages_user_profile_user_profile_module__ = __webpack_require__(211);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__(770);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_dashboard_dashboard__ = __webpack_require__(142);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_addproduct_addproduct__ = __webpack_require__(249);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_singleproduct_singleproduct__ = __webpack_require__(254);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_login_login__ = __webpack_require__(146);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_sign_up_sign_up__ = __webpack_require__(147);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_status_bar__ = __webpack_require__(399);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_splash_screen__ = __webpack_require__(400);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_barcode_scanner__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__providers_storage_storage__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_storage__ = __webpack_require__(237);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__providers_gettersetter_gettersetter__ = __webpack_require__(253);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__ionic_native_camera__ = __webpack_require__(144);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__ionic_native_facebook__ = __webpack_require__(257);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__angular_common_http__ = __webpack_require__(771);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__ngx_translate_core__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__ngx_translate_http_loader__ = __webpack_require__(772);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__providers_translation_translate_config_service__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__ionic_native_bluetooth_serial_ngx__ = __webpack_require__(264);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__providers_printer_printer__ = __webpack_require__(263);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24_firebase__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_24_firebase__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_transaction_home_transaction_home__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_all_transaction_all_transaction__ = __webpack_require__(137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_expense_transaction_expense_transaction__ = __webpack_require__(247);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pages_income_transaction_income_transaction__ = __webpack_require__(145);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_summary_home_summary_home__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_coach_home_coach_home__ = __webpack_require__(244);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__pages_coach_goals_coach_goals__ = __webpack_require__(140);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__pages_coach_coach_coach_coach__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__pages_coach_businesstips_coach_businesstips__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__pages_contact_us_contact_us__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__pages_transaction_product_transaction_product__ = __webpack_require__(148);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__pages_product_list_product_list__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__pages_add_product_category_add_product_category__ = __webpack_require__(130);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_38__pages_expenses_home_expenses_home__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_39__pages_user_profile_user_profile__ = __webpack_require__(160);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_40__pages_add_product_category_add_product_category_module__ = __webpack_require__(236);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_41__pages_all_transaction_all_transaction_module__ = __webpack_require__(239);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_42__pages_coach_businesstips_coach_businesstips_module__ = __webpack_require__(240);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_43__pages_coach_home_coach_home_module__ = __webpack_require__(243);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_44__pages_coach_goals_coach_goals_module__ = __webpack_require__(242);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_45__pages_coach_coach_coach_coach_module__ = __webpack_require__(241);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_46__pages_contact_us_contact_us_module__ = __webpack_require__(245);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_47__pages_login_login_module__ = __webpack_require__(256);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_48__pages_sign_up_sign_up_module__ = __webpack_require__(259);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_49__pages_transaction_home_transaction_home_module__ = __webpack_require__(357);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_50__pages_expense_transaction_expense_transaction_module__ = __webpack_require__(246);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_51__pages_income_transaction_income_transaction_module__ = __webpack_require__(255);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_52__pages_summary_home_summary_home_module__ = __webpack_require__(260);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_53__pages_transaction_product_transaction_product_module__ = __webpack_require__(358);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_54__pages_product_list_product_list_module__ = __webpack_require__(258);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_55__pages_expenses_home_expenses_home_module__ = __webpack_require__(248);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_56__pages_user_profile_user_profile_module__ = __webpack_require__(359);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_57__pages_printer_test_printer_test_module__ = __webpack_require__(261);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
+
 
 
 
@@ -3632,7 +5177,7 @@ var config = {
     messagingSenderId: "1001643033524",
     measurementId: "G-CECMRG504L"
 };
-__WEBPACK_IMPORTED_MODULE_22_firebase__["initializeApp"](config);
+__WEBPACK_IMPORTED_MODULE_24_firebase__["initializeApp"](config);
 // language translation service
 function HttpLoaderFactory(http) {
     return new __WEBPACK_IMPORTED_MODULE_20__ngx_translate_http_loader__["a" /* TranslateHttpLoader */](http, '../assets/i18n/', '.json');
@@ -3673,31 +5218,33 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/product-list/product-list.module#ProductListPageModule', name: 'ProductListPage', segment: 'product-list', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/sign-up/sign-up.module#SignUpPageModule', name: 'SignUpPage', segment: 'sign-up', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/summary-home/summary-home.module#SummaryHomePageModule', name: 'SummaryHomePage', segment: 'summary-home', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/printer-test/printer-test.module#PrinterTestPageModule', name: 'PrinterTestPage', segment: 'printer-test', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/transaction-home/transaction-home.module#TransactionHomePageModule', name: 'TransactionHomePage', segment: 'transaction-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/transaction-product/transaction-product.module#TransactionProductPageModule', name: 'TransactionProductPage', segment: 'transaction-product', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/user-profile/user-profile.module#UserProfilePageModule', name: 'UserProfilePage', segment: 'user-profile', priority: 'low', defaultHistory: [] }
                     ]
                 }),
                 __WEBPACK_IMPORTED_MODULE_14__ionic_storage__["a" /* IonicStorageModule */].forRoot(),
-                __WEBPACK_IMPORTED_MODULE_38__pages_add_product_category_add_product_category_module__["AddProductCategoryPageModule"],
-                __WEBPACK_IMPORTED_MODULE_39__pages_all_transaction_all_transaction_module__["AllTransactionPageModule"],
-                __WEBPACK_IMPORTED_MODULE_40__pages_coach_businesstips_coach_businesstips_module__["CoachBusinesstipsPageModule"],
-                __WEBPACK_IMPORTED_MODULE_41__pages_coach_home_coach_home_module__["CoachHomePageModule"],
-                __WEBPACK_IMPORTED_MODULE_42__pages_coach_goals_coach_goals_module__["CoachGoalsPageModule"],
-                __WEBPACK_IMPORTED_MODULE_43__pages_coach_coach_coach_coach_module__["CoachCoachPageModule"],
-                __WEBPACK_IMPORTED_MODULE_44__pages_contact_us_contact_us_module__["ContactUsPageModule"],
-                __WEBPACK_IMPORTED_MODULE_45__pages_login_login_module__["LoginPageModule"],
-                __WEBPACK_IMPORTED_MODULE_46__pages_sign_up_sign_up_module__["SignUpPageModule"],
-                __WEBPACK_IMPORTED_MODULE_47__pages_transaction_home_transaction_home_module__["TransactionHomePageModule"],
-                __WEBPACK_IMPORTED_MODULE_48__pages_expense_transaction_expense_transaction_module__["ExpenseTransactionPageModule"],
-                __WEBPACK_IMPORTED_MODULE_49__pages_income_transaction_income_transaction_module__["IncomeTransactionPageModule"],
-                __WEBPACK_IMPORTED_MODULE_50__pages_summary_home_summary_home_module__["SummaryHomePageModule"],
-                __WEBPACK_IMPORTED_MODULE_51__pages_transaction_product_transaction_product_module__["TransactionProductPageModule"],
-                __WEBPACK_IMPORTED_MODULE_52__pages_product_list_product_list_module__["ProductListPageModule"],
-                __WEBPACK_IMPORTED_MODULE_53__pages_expenses_home_expenses_home_module__["ExpensesHomePageModule"],
-                __WEBPACK_IMPORTED_MODULE_54__pages_user_profile_user_profile_module__["UserProfilePageModule"],
+                __WEBPACK_IMPORTED_MODULE_40__pages_add_product_category_add_product_category_module__["AddProductCategoryPageModule"],
+                __WEBPACK_IMPORTED_MODULE_41__pages_all_transaction_all_transaction_module__["AllTransactionPageModule"],
+                __WEBPACK_IMPORTED_MODULE_42__pages_coach_businesstips_coach_businesstips_module__["CoachBusinesstipsPageModule"],
+                __WEBPACK_IMPORTED_MODULE_43__pages_coach_home_coach_home_module__["CoachHomePageModule"],
+                __WEBPACK_IMPORTED_MODULE_44__pages_coach_goals_coach_goals_module__["CoachGoalsPageModule"],
+                __WEBPACK_IMPORTED_MODULE_45__pages_coach_coach_coach_coach_module__["CoachCoachPageModule"],
+                __WEBPACK_IMPORTED_MODULE_46__pages_contact_us_contact_us_module__["ContactUsPageModule"],
+                __WEBPACK_IMPORTED_MODULE_47__pages_login_login_module__["LoginPageModule"],
+                __WEBPACK_IMPORTED_MODULE_48__pages_sign_up_sign_up_module__["SignUpPageModule"],
+                __WEBPACK_IMPORTED_MODULE_49__pages_transaction_home_transaction_home_module__["TransactionHomePageModule"],
+                __WEBPACK_IMPORTED_MODULE_50__pages_expense_transaction_expense_transaction_module__["ExpenseTransactionPageModule"],
+                __WEBPACK_IMPORTED_MODULE_51__pages_income_transaction_income_transaction_module__["IncomeTransactionPageModule"],
+                __WEBPACK_IMPORTED_MODULE_52__pages_summary_home_summary_home_module__["SummaryHomePageModule"],
+                __WEBPACK_IMPORTED_MODULE_53__pages_transaction_product_transaction_product_module__["TransactionProductPageModule"],
+                __WEBPACK_IMPORTED_MODULE_54__pages_product_list_product_list_module__["ProductListPageModule"],
+                __WEBPACK_IMPORTED_MODULE_55__pages_expenses_home_expenses_home_module__["ExpensesHomePageModule"],
+                __WEBPACK_IMPORTED_MODULE_56__pages_user_profile_user_profile_module__["UserProfilePageModule"],
                 __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* ReactiveFormsModule */],
                 __WEBPACK_IMPORTED_MODULE_18__angular_common_http__["b" /* HttpClientModule */],
+                __WEBPACK_IMPORTED_MODULE_57__pages_printer_test_printer_test_module__["PrinterTestPageModule"],
                 __WEBPACK_IMPORTED_MODULE_19__ngx_translate_core__["b" /* TranslateModule */].forRoot({
                     loader: {
                         provide: __WEBPACK_IMPORTED_MODULE_19__ngx_translate_core__["a" /* TranslateLoader */],
@@ -3714,21 +5261,21 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_7__pages_singleproduct_singleproduct__["a" /* SingleProductPage */],
                 __WEBPACK_IMPORTED_MODULE_8__pages_login_login__["a" /* LoginPage */],
                 __WEBPACK_IMPORTED_MODULE_9__pages_sign_up_sign_up__["a" /* SignUpPage */],
-                __WEBPACK_IMPORTED_MODULE_23__pages_transaction_home_transaction_home__["a" /* TransactionHomePage */],
-                __WEBPACK_IMPORTED_MODULE_25__pages_expense_transaction_expense_transaction__["a" /* ExpenseTransactionPage */],
-                __WEBPACK_IMPORTED_MODULE_26__pages_income_transaction_income_transaction__["a" /* IncomeTransactionPage */],
-                __WEBPACK_IMPORTED_MODULE_24__pages_all_transaction_all_transaction__["a" /* AllTransactionPage */],
-                __WEBPACK_IMPORTED_MODULE_28__pages_coach_home_coach_home__["a" /* CoachHomePage */],
-                __WEBPACK_IMPORTED_MODULE_27__pages_summary_home_summary_home__["a" /* SummaryHomePage */],
-                __WEBPACK_IMPORTED_MODULE_29__pages_coach_goals_coach_goals__["a" /* CoachGoalsPage */],
-                __WEBPACK_IMPORTED_MODULE_30__pages_coach_coach_coach_coach__["a" /* CoachCoachPage */],
-                __WEBPACK_IMPORTED_MODULE_31__pages_coach_businesstips_coach_businesstips__["a" /* CoachBusinesstipsPage */],
-                __WEBPACK_IMPORTED_MODULE_32__pages_contact_us_contact_us__["a" /* ContactUsPage */],
-                __WEBPACK_IMPORTED_MODULE_33__pages_transaction_product_transaction_product__["a" /* TransactionProductPage */],
-                __WEBPACK_IMPORTED_MODULE_34__pages_product_list_product_list__["a" /* ProductListPage */],
-                __WEBPACK_IMPORTED_MODULE_35__pages_add_product_category_add_product_category__["a" /* AddProductCategoryPage */],
-                __WEBPACK_IMPORTED_MODULE_36__pages_expenses_home_expenses_home__["a" /* ExpensesHomePage */],
-                __WEBPACK_IMPORTED_MODULE_37__pages_user_profile_user_profile__["a" /* UserProfilePage */],
+                __WEBPACK_IMPORTED_MODULE_25__pages_transaction_home_transaction_home__["a" /* TransactionHomePage */],
+                __WEBPACK_IMPORTED_MODULE_27__pages_expense_transaction_expense_transaction__["a" /* ExpenseTransactionPage */],
+                __WEBPACK_IMPORTED_MODULE_28__pages_income_transaction_income_transaction__["a" /* IncomeTransactionPage */],
+                __WEBPACK_IMPORTED_MODULE_26__pages_all_transaction_all_transaction__["a" /* AllTransactionPage */],
+                __WEBPACK_IMPORTED_MODULE_30__pages_coach_home_coach_home__["a" /* CoachHomePage */],
+                __WEBPACK_IMPORTED_MODULE_29__pages_summary_home_summary_home__["a" /* SummaryHomePage */],
+                __WEBPACK_IMPORTED_MODULE_31__pages_coach_goals_coach_goals__["a" /* CoachGoalsPage */],
+                __WEBPACK_IMPORTED_MODULE_32__pages_coach_coach_coach_coach__["a" /* CoachCoachPage */],
+                __WEBPACK_IMPORTED_MODULE_33__pages_coach_businesstips_coach_businesstips__["a" /* CoachBusinesstipsPage */],
+                __WEBPACK_IMPORTED_MODULE_34__pages_contact_us_contact_us__["a" /* ContactUsPage */],
+                __WEBPACK_IMPORTED_MODULE_35__pages_transaction_product_transaction_product__["a" /* TransactionProductPage */],
+                __WEBPACK_IMPORTED_MODULE_36__pages_product_list_product_list__["a" /* ProductListPage */],
+                __WEBPACK_IMPORTED_MODULE_37__pages_add_product_category_add_product_category__["a" /* AddProductCategoryPage */],
+                __WEBPACK_IMPORTED_MODULE_38__pages_expenses_home_expenses_home__["a" /* ExpensesHomePage */],
+                __WEBPACK_IMPORTED_MODULE_39__pages_user_profile_user_profile__["a" /* UserProfilePage */],
             ],
             providers: [
                 __WEBPACK_IMPORTED_MODULE_10__ionic_native_status_bar__["a" /* StatusBar */],
@@ -3737,11 +5284,13 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_13__providers_storage_storage__["a" /* StorageProvider */],
                 __WEBPACK_IMPORTED_MODULE_12__ionic_native_barcode_scanner__["a" /* BarcodeScanner */],
                 __WEBPACK_IMPORTED_MODULE_14__ionic_storage__["a" /* IonicStorageModule */],
-                __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* ToastController */],
+                __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["n" /* ToastController */],
                 __WEBPACK_IMPORTED_MODULE_15__providers_gettersetter_gettersetter__["a" /* GettersetterProvider */],
                 __WEBPACK_IMPORTED_MODULE_16__ionic_native_camera__["a" /* Camera */],
                 __WEBPACK_IMPORTED_MODULE_17__ionic_native_facebook__["a" /* Facebook */],
                 __WEBPACK_IMPORTED_MODULE_21__providers_translation_translate_config_service__["a" /* TranslateConfigService */],
+                __WEBPACK_IMPORTED_MODULE_22__ionic_native_bluetooth_serial_ngx__["a" /* BluetoothSerial */],
+                __WEBPACK_IMPORTED_MODULE_23__providers_printer_printer__["a" /* PrinterProvider */],
             ]
         })
     ], AppModule);
@@ -3752,134 +5301,18 @@ var AppModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 340:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(251);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(252);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_dashboard_dashboard__ = __webpack_require__(98);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_login_login__ = __webpack_require__(102);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_firebase__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_transaction_home_transaction_home__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_summary_home_summary_home__ = __webpack_require__(105);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_contact_us_contact_us__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__providers_storage_storage__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_expenses_home_expenses_home__ = __webpack_require__(97);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_user_profile_user_profile__ = __webpack_require__(106);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__providers_translation_translate_config_service__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ngx_translate_core__ = __webpack_require__(10);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var MyApp = /** @class */ (function () {
-    function MyApp(app, platform, statusBar, translateService, translateConfigService, splashScreen, toastCtrl, sp) {
-        this.app = app;
-        this.platform = platform;
-        this.statusBar = statusBar;
-        this.translateService = translateService;
-        this.translateConfigService = translateConfigService;
-        this.splashScreen = splashScreen;
-        this.toastCtrl = toastCtrl;
-        this.sp = sp;
-        this.rootPage = __WEBPACK_IMPORTED_MODULE_5__pages_login_login__["a" /* LoginPage */];
-        this.initializeApp();
-        this.pages = [
-            { title: 'Sales', component: __WEBPACK_IMPORTED_MODULE_7__pages_transaction_home_transaction_home__["a" /* TransactionHomePage */] },
-            { title: 'Products', component: __WEBPACK_IMPORTED_MODULE_4__pages_dashboard_dashboard__["a" /* DashboardPage */] },
-            { title: 'Stock', component: __WEBPACK_IMPORTED_MODULE_11__pages_expenses_home_expenses_home__["a" /* ExpensesHomePage */] },
-            { title: 'Business', component: __WEBPACK_IMPORTED_MODULE_8__pages_summary_home_summary_home__["a" /* SummaryHomePage */] },
-            // { title: 'Coach', component: CoachHomePage },
-            { title: 'Contact Us', component: __WEBPACK_IMPORTED_MODULE_9__pages_contact_us_contact_us__["a" /* ContactUsPage */] },
-        ];
-    }
-    MyApp.prototype.logout = function () {
-        var _this = this;
-        //this.sp.backupStorageLogout().then();
-        __WEBPACK_IMPORTED_MODULE_6_firebase__["auth"]().signOut().then(function () {
-            _this.toastCtrl.create({
-                message: "Logged out!",
-                duration: 3000
-            }).present();
-            _this.nav.setRoot(__WEBPACK_IMPORTED_MODULE_5__pages_login_login__["a" /* LoginPage */]);
-        });
-    };
-    MyApp.prototype.ionViewDidEnter = function () {
-        document.addEventListener("backbutton", function (e) {
-            console.log("disable back button");
-        }, false);
-    };
-    MyApp.prototype.initializeApp = function () {
-        var _this = this;
-        this.platform.ready().then(function () {
-            _this.statusBar.styleDefault();
-            _this.splashScreen.hide();
-            _this.translateService.addLangs(["en", "pt"]);
-            _this.translateService.setDefaultLang('en');
-            _this.translateService.use('en');
-        });
-    };
-    MyApp.prototype.openPage = function (page) {
-        this.nav.setRoot(page.component);
-    };
-    MyApp.prototype.openUserProfilePage = function () {
-        this.openPage({ component: __WEBPACK_IMPORTED_MODULE_12__pages_user_profile_user_profile__["a" /* UserProfilePage */] });
-    };
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* Nav */]),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* Nav */])
-    ], MyApp.prototype, "nav", void 0);
-    MyApp = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\app\app.html"*/'<ion-menu [content]="content" type="overlay">\n\n  <ion-header>\n\n    <ion-toolbar>\n\n      <ion-row>\n\n        <button ion-button block medium color="dark">{{\'Menu\' | translate}}</button> \n\n      </ion-row>\n\n\n\n      <ion-row>\n\n          <button ion-button block small outline color="dark" (click)="openUserProfilePage()" menuClose>{{\'View User Profile\' | translate}}</button>\n\n      </ion-row>\n\n      \n\n\n\n\n\n      \n\n    </ion-toolbar>\n\n  </ion-header>\n\n\n\n  <ion-content>\n\n    <ion-list>\n\n      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">\n\n        {{p.title | translate}}\n\n      </button>\n\n      <button menuClose ion-item (click)="logout()" >\n\n        {{\'Logout\'| translate}}\n\n      </button>\n\n      \n\n       \n\n      \n\n    </ion-list>\n\n  </ion-content>\n\n\n\n</ion-menu>\n\n\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\app\app.html"*/
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_14__ngx_translate_core__["c" /* TranslateService */],
-            __WEBPACK_IMPORTED_MODULE_13__providers_translation_translate_config_service__["a" /* TranslateConfigService */],
-            __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */], __WEBPACK_IMPORTED_MODULE_10__providers_storage_storage__["a" /* StorageProvider */]])
-    ], MyApp);
-    return MyApp;
-}());
-
-//# sourceMappingURL=app.component.js.map
-
-/***/ }),
-
-/***/ 41:
+/***/ 54:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TransactionHomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__all_transaction_all_transaction__ = __webpack_require__(93);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__income_transaction_income_transaction__ = __webpack_require__(101);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__transaction_product_transaction_product__ = __webpack_require__(104);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_storage_storage__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_translation_translate_config_service__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__all_transaction_all_transaction__ = __webpack_require__(137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__income_transaction_income_transaction__ = __webpack_require__(145);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__transaction_product_transaction_product__ = __webpack_require__(148);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_storage_storage__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_translation_translate_config_service__ = __webpack_require__(13);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4050,14 +5483,14 @@ var TransactionHomePage = /** @class */ (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('myTabs'),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Tabs */])
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* Tabs */])
     ], TransactionHomePage.prototype, "tabRef", void 0);
     TransactionHomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-transaction-home',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\transaction-home\transaction-home.html"*/'<!--\n\n  Generated template for the TransactionHomePage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n\n\n\n\n<ion-header>\n\n  <ion-navbar color="dark">\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>{{"Sales"|translate}}</ion-title>\n\n    <ion-buttons end><button ion-button (click)="uploadbtn()"><ion-icon name="cloud-upload" style="align-self: center; color: white;" padding></ion-icon></button></ion-buttons>\n\n    <ion-buttons end><button ion-button (click)="cashbtn()"><ion-icon name="logo-usd" style="align-self: center; color: white;" padding></ion-icon></button></ion-buttons>\n\n  </ion-navbar>\n\n  \n\n</ion-header>\n\n \n\n  \n\n<ion-content padding>\n\n  \n\n  <ion-tabs tabsPlacement="top" #myTabs>\n\n    <ion-tab [root]="AllTransactions" tabTitle="{{\'Calculator\'|translate}}" tabIcon="calculator"></ion-tab>\n\n    <ion-tab [root]="ExpenseTransactions" tabTitle="{{\'Stock\'|translate}}" tabIcon="apps"></ion-tab>\n\n    <ion-tab [root]="IncomeTransactions" tabTitle="{{\'Receipt\'|translate}}" tabIcon="list-box"></ion-tab>\n\n\n\n   </ion-tabs>\n\n\n\n\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\transaction-home\transaction-home.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavParams */], __WEBPACK_IMPORTED_MODULE_6__providers_translation_translate_config_service__["a" /* TranslateConfigService */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */], __WEBPACK_IMPORTED_MODULE_5__providers_storage_storage__["a" /* StorageProvider */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_6__providers_translation_translate_config_service__["a" /* TranslateConfigService */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */], __WEBPACK_IMPORTED_MODULE_5__providers_storage_storage__["a" /* StorageProvider */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */]])
     ], TransactionHomePage);
     return TransactionHomePage;
@@ -4067,16 +5500,254 @@ var TransactionHomePage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 60:
+/***/ 722:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return commands; });
+//commands based on https://github.com/humbertopiaia/escpos-commands-js/blob/master/src/commands.js
+//all the commands below may vary by printer, check the manual
+var commands = {
+    LF: [0x0a],
+    ESC: [0x1b],
+    FS: [0x1c],
+    GS: [0x1d],
+    US: [0x1f],
+    FF: [0x0c],
+    DLE: [0x10],
+    DC1: [0x11],
+    DC4: [0x14],
+    EOT: [0x04],
+    NUL: [0x00],
+    //EOL: [\n],
+    HORIZONTAL_LINE: {
+        HR_58MM: '================================',
+        HR2_58MM: '********************************'
+    },
+    FEED_CONTROL_SEQUENCES: {
+        CTL_LF: [0x0a],
+        CTL_FF: [0x0c],
+        CTL_CR: [0x0d],
+        CTL_HT: [0x09],
+        CTL_VT: [0x0b],
+    },
+    LINE_SPACING: {
+        LS_DEFAULT: [0x1b, 0x32],
+        LS_SET: [0x1b, 0x33]
+    },
+    HARDWARE: {
+        HW_INIT: [0x1b, 0x40],
+        HW_SELECT: [0x1b, 0x3d, 0x01],
+        HW_RESET: [0x1b, 0x3f, 0x0a, 0x00],
+    },
+    CASH_DRAWER: {
+        CD_KICK_2: [0x1b, 0x70, 0x00],
+        CD_KICK_5: [0x1b, 0x70, 0x01],
+    },
+    MARGINS: {
+        BOTTOM: [0x1b, 0x4f],
+        LEFT: [0x1b, 0x6c],
+        RIGHT: [0x1b, 0x51],
+    },
+    PAPER: {
+        PAPER_FULL_CUT: [0x1d, 0x56, 0x00],
+        PAPER_PART_CUT: [0x1d, 0x56, 0x01],
+        PAPER_CUT_A: [0x1d, 0x56, 0x41],
+        PAPER_CUT_B: [0x1d, 0x56, 0x42],
+    },
+    TEXT_FORMAT: {
+        TXT_NORMAL: [0x1b, 0x21, 0x00],
+        TXT_2HEIGHT: [0x1b, 0x21, 0x10],
+        TXT_2WIDTH: [0x1b, 0x21, 0x20],
+        TXT_4SQUARE: [0x1b, 0x21, 0x30],
+        TXT_CUSTOM_SIZE: function (width, height) {
+            var widthDec = (width - 1) * 16;
+            var heightDec = height - 1;
+            var sizeDec = widthDec + heightDec;
+            return [0x1d, 0x21, String.fromCharCode(sizeDec)];
+        },
+        TXT_HEIGHT: {
+            1: [0x00],
+            2: [0x01],
+            3: [0x02],
+            4: [0x03],
+            5: [0x04],
+            6: [0x05],
+            7: [0x06],
+            8: [0x07]
+        },
+        TXT_WIDTH: {
+            1: [0x00],
+            2: [0x10],
+            3: [0x20],
+            4: [0x30],
+            5: [0x40],
+            6: [0x50],
+            7: [0x60],
+            8: [0x70]
+        },
+        TXT_UNDERL_OFF: [0x1b, 0x2d, 0x00],
+        TXT_UNDERL_ON: [0x1b, 0x2d, 0x01],
+        TXT_UNDERL2_ON: [0x1b, 0x2d, 0x02],
+        TXT_BOLD_OFF: [0x1b, 0x45, 0x00],
+        TXT_BOLD_ON: [0x1b, 0x45, 0x01],
+        TXT_ITALIC_OFF: [0x1b, 0x35],
+        TXT_ITALIC_ON: [0x1b, 0x34],
+        TXT_FONT_A: [0x1b, 0x4d, 0x00],
+        TXT_FONT_B: [0x1b, 0x4d, 0x01],
+        TXT_FONT_C: [0x1b, 0x4d, 0x02],
+        TXT_ALIGN_LT: [0x1b, 0x61, 0x00],
+        TXT_ALIGN_CT: [0x1b, 0x61, 0x01],
+        TXT_ALIGN_RT: [0x1b, 0x61, 0x02],
+    }
+};
+//# sourceMappingURL=printer-commands.js.map
+
+/***/ }),
+
+/***/ 745:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 746:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 770:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(399);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(400);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_dashboard_dashboard__ = __webpack_require__(142);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_login_login__ = __webpack_require__(146);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_firebase__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_firebase__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_transaction_home_transaction_home__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_summary_home_summary_home__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_contact_us_contact_us__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__providers_storage_storage__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_expenses_home_expenses_home__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_user_profile_user_profile__ = __webpack_require__(160);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__providers_translation_translate_config_service__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ngx_translate_core__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_printer_test_printer_test__ = __webpack_require__(262);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var MyApp = /** @class */ (function () {
+    function MyApp(app, platform, statusBar, translateService, translateConfigService, splashScreen, toastCtrl, sp) {
+        this.app = app;
+        this.platform = platform;
+        this.statusBar = statusBar;
+        this.translateService = translateService;
+        this.translateConfigService = translateConfigService;
+        this.splashScreen = splashScreen;
+        this.toastCtrl = toastCtrl;
+        this.sp = sp;
+        this.rootPage = __WEBPACK_IMPORTED_MODULE_5__pages_login_login__["a" /* LoginPage */];
+        this.initializeApp();
+        this.pages = [
+            { title: 'Sales', component: __WEBPACK_IMPORTED_MODULE_7__pages_transaction_home_transaction_home__["a" /* TransactionHomePage */] },
+            { title: 'Products', component: __WEBPACK_IMPORTED_MODULE_4__pages_dashboard_dashboard__["a" /* DashboardPage */] },
+            { title: 'Stock', component: __WEBPACK_IMPORTED_MODULE_11__pages_expenses_home_expenses_home__["a" /* ExpensesHomePage */] },
+            { title: 'Business', component: __WEBPACK_IMPORTED_MODULE_8__pages_summary_home_summary_home__["a" /* SummaryHomePage */] },
+            // { title: 'Coach', component: CoachHomePage },
+            { title: 'Contact Us', component: __WEBPACK_IMPORTED_MODULE_9__pages_contact_us_contact_us__["a" /* ContactUsPage */] },
+            { title: 'Printer Test', component: __WEBPACK_IMPORTED_MODULE_15__pages_printer_test_printer_test__["a" /* PrinterTestPage */] },
+        ];
+    }
+    MyApp.prototype.logout = function () {
+        var _this = this;
+        //this.sp.backupStorageLogout().then();
+        __WEBPACK_IMPORTED_MODULE_6_firebase__["auth"]().signOut().then(function () {
+            _this.toastCtrl.create({
+                message: "Logged out!",
+                duration: 3000
+            }).present();
+            _this.nav.setRoot(__WEBPACK_IMPORTED_MODULE_5__pages_login_login__["a" /* LoginPage */]);
+        });
+    };
+    MyApp.prototype.ionViewDidEnter = function () {
+        document.addEventListener("backbutton", function (e) {
+            console.log("disable back button");
+        }, false);
+    };
+    MyApp.prototype.initializeApp = function () {
+        var _this = this;
+        this.platform.ready().then(function () {
+            _this.statusBar.styleDefault();
+            _this.splashScreen.hide();
+            _this.translateService.addLangs(["en", "pt"]);
+            _this.translateService.setDefaultLang('en');
+            _this.translateService.use('en');
+        });
+    };
+    MyApp.prototype.openPage = function (page) {
+        this.nav.setRoot(page.component);
+    };
+    MyApp.prototype.openUserProfilePage = function () {
+        this.openPage({ component: __WEBPACK_IMPORTED_MODULE_12__pages_user_profile_user_profile__["a" /* UserProfilePage */] });
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Nav */]),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Nav */])
+    ], MyApp.prototype, "nav", void 0);
+    MyApp = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\app\app.html"*/'<ion-menu [content]="content" type="overlay">\n\n  <ion-header>\n\n    <ion-toolbar>\n\n      <ion-row>\n\n        <button ion-button block medium color="dark">{{\'Menu\' | translate}}</button> \n\n      </ion-row>\n\n\n\n      <ion-row>\n\n          <button ion-button block small outline color="dark" (click)="openUserProfilePage()" menuClose>{{\'View User Profile\' | translate}}</button>\n\n      </ion-row>\n\n      \n\n\n\n\n\n      \n\n    </ion-toolbar>\n\n  </ion-header>\n\n\n\n  <ion-content>\n\n    <ion-list>\n\n      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">\n\n        {{p.title | translate}}\n\n      </button>\n\n      <button menuClose ion-item (click)="logout()" >\n\n        {{\'Logout\'| translate}}\n\n      </button>\n\n      \n\n       \n\n      \n\n    </ion-list>\n\n  </ion-content>\n\n\n\n</ion-menu>\n\n\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\app\app.html"*/
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_14__ngx_translate_core__["c" /* TranslateService */],
+            __WEBPACK_IMPORTED_MODULE_13__providers_translation_translate_config_service__["a" /* TranslateConfigService */],
+            __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */], __WEBPACK_IMPORTED_MODULE_10__providers_storage_storage__["a" /* StorageProvider */]])
+    ], MyApp);
+    return MyApp;
+}());
+
+//# sourceMappingURL=app.component.js.map
+
+/***/ }),
+
+/***/ 87:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ContactUsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__ = __webpack_require__(13);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4120,7 +5791,7 @@ var ContactUsPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-contact-us',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\contact-us\contact-us.html"*/'<ion-header>\n\n    <ion-navbar color="dark">\n\n      <button ion-button menuToggle>\n\n        <ion-icon name="menu"></ion-icon>\n\n      </button>\n\n      <ion-title>{{"Contact Us"| translate}}</ion-title>\n\n    </ion-navbar>\n\n  </ion-header>\n\n\n\n<ion-content padding>\n\n<h1>{{"Contact the OPEN Helpline"| translate}}</h1>\n\n{{"Contact us msg"| translate}}\n\n\n\n<br><br>\n\n\n\n<ion-grid>\n\n\n\n  \n\n\n\n\n\n    <ion-row  style="background-color: #f0f0f0">\n\n        <ion-col col-12>\n\n\n\n            <button ion-button full style="text-align: center ; background-color: indigo; color: palevioletred;">\n\n              {{ phone }}\n\n            </button>\n\n        </ion-col>\n\n    </ion-row>\n\n    <ion-row>\n\n        <ion-col col-12>\n\n            <button ion-button full style="text-align: center ; background-color: indigo; color: palevioletred; text-transform:lowercase">\n\n              {{ email }}\n\n            </button>\n\n        </ion-col>\n\n\n\n      </ion-row>\n\n</ion-grid>\n\n</ion-content>'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\contact-us\contact-us.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__["a" /* TranslateConfigService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavParams */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__["a" /* TranslateConfigService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]])
     ], ContactUsPage);
     return ContactUsPage;
 }());
@@ -4129,16 +5800,16 @@ var ContactUsPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 61:
+/***/ 88:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProductListPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__singleproduct_singleproduct__ = __webpack_require__(202);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_translation_translate_config_service__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__singleproduct_singleproduct__ = __webpack_require__(254);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_translation_translate_config_service__ = __webpack_require__(13);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4255,1170 +5926,15 @@ var ProductListPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-product-list',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\product-list\product-list.html"*/'<!--\n\n  Generated template for the ProductListPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<!-- <ion-header>\n\n  <ion-navbar>\n\n    <ion-title>product-list</ion-title>\n\n  </ion-navbar>\n\n</ion-header> -->\n\n\n\n\n\n<ion-content padding>\n\n<ion-searchbar showCancelButton="always" [(ngModel)]="searchterm" (ionChange)="filteredProduct()"></ion-searchbar>\n\n  <ion-item>\n\n    <ion-label>{{"Select category"|translate}}</ion-label>\n\n    <ion-select multiple="true" [(ngModel)]=\'selectedCat\' (ionChange)="filteredProduct()">\n\n        <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>    \n\n    </ion-select>\n\n  </ion-item>\n\n\n\n\n\n<!-- <ion-card>\n\n    <ion-grid line>\n\n      <ion-row>\n\n      <ion-col col-2>\n\n        <ion-row>\n\n          <ion-avatar>\n\n              <img src="https://i0.wp.com/mainlymiles.com/wp-content/uploads/2019/04/Yew-Mee.jpg?w=256&h=256&crop=1&ssl=1">\n\n            </ion-avatar>\n\n          </ion-row>\n\n      </ion-col>\n\n      <ion-col col-10>\n\n          <ion-row>\n\n              <ion-col col-7>\n\n                Shan Noodle\n\n              </ion-col>\n\n              <ion-col col-3>\n\n                568 - N/A?\n\n                </ion-col>\n\n                <ion-col col-1>\n\n                    <ion-icon name="arrow-dropup-circle" style=" color: green"></ion-icon>\n\n                </ion-col>\n\n                <ion-col col-1>\n\n                    <ion-icon name="arrow-dropdown-circle" style=" color: red"></ion-icon>\n\n                </ion-col>\n\n            </ion-row>\n\n            <ion-row>\n\n              <ion-col col-6 style="color: grey; font-size: 10px;"> Price 3500 MMK </ion-col>\n\n              <ion-col col-6 style="color: grey; font-size: 10px; text-align: end;"> Category: Noodle </ion-col>\n\n            </ion-row>\n\n            <ion-row>\n\n              <ion-col col-6></ion-col>\n\n              <ion-col col-6> <button ion-button full end color="dark">View/Edit</button> </ion-col>\n\n            </ion-row>\n\n\n\n      </ion-col>\n\n    </ion-row>\n\n    </ion-grid>\n\n  </ion-card>  -->\n\n\n\n\n\n\n\n  <ion-list inset  *ngFor="let product of filteredList">\n\n    \n\n      <ion-card>\n\n          <ion-grid> \n\n            <ion-row>\n\n            <ion-col col-2>\n\n              <ion-row> \n\n                <ion-avatar>\n\n                    <img [src]="product.url">\n\n                  </ion-avatar>\n\n                </ion-row>\n\n            </ion-col>\n\n            <ion-col col-10>\n\n                <ion-row>\n\n                    <ion-col col-6>\n\n                        {{product.name}}\n\n                    </ion-col>\n\n                    <ion-col col-4>\n\n                      {{"Stock"|translate}}: {{product.stock_qty}}\n\n                    </ion-col>\n\n                      <ion-col col-1>\n\n                          <ion-icon name="arrow-dropup-circle" style=" color: green" (click)="swapUp(product.code)"></ion-icon>\n\n                      </ion-col>\n\n                      <ion-col col-1>\n\n                          <ion-icon name="arrow-dropdown-circle" style=" color: red" (click)="swapDown(product.code)"></ion-icon>\n\n                      </ion-col>\n\n                  </ion-row>\n\n                  <ion-row>\n\n                    <ion-col col-4 style="color: grey; font-size: 10px;"> {{"Retail Price"|translate}} {{product.price}} MMK </ion-col>\n\n                    <ion-col col-4 style="color: grey; font-size: 10px; text-align: center;"> {{"Wholesale Price"|translate}} {{product.wholesale_price}} MMK </ion-col>\n\n                    <ion-col col-4 style="color: grey; font-size: 10px; text-align: end;">  {{"Category"|translate}} {{product.cat}} </ion-col>\n\n                  </ion-row>\n\n            </ion-col>\n\n          </ion-row>\n\n          <ion-row>\n\n            <ion-col col-12> <button ion-button full end color="dark" (click)="singleProduct(product)">{{"View / Edit"|translate}}</button> </ion-col>\n\n          </ion-row>\n\n          </ion-grid>\n\n        </ion-card> \n\n     \n\n    </ion-list>\n\n  \n\n\n\n  \n\n\n\n\n\n\n\n\n\n</ion-content>\n\n\n\n\n\n\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\product-list\product-list.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */], __WEBPACK_IMPORTED_MODULE_4__providers_translation_translate_config_service__["a" /* TranslateConfigService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_4__providers_translation_translate_config_service__["a" /* TranslateConfigService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */]])
     ], ProductListPage);
     return ProductListPage;
 }());
 
 //# sourceMappingURL=product-list.js.map
 
-/***/ }),
-
-/***/ 8:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TranslateConfigService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ngx_translate_core__ = __webpack_require__(10);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-//translate-config.service.ts
-
-
-// @ts-ignore
-var TranslateConfigService = /** @class */ (function () {
-    function TranslateConfigService(translate) {
-        this.translate = translate;
-    }
-    TranslateConfigService.prototype.getDefaultLanguage = function () {
-        var language = this.translate.getBrowserLang();
-        this.translate.setDefaultLang(language);
-        console.log("device default language: " + language);
-        return language;
-    };
-    TranslateConfigService.prototype.setLanguage = function (setLang) {
-        this.translate.use(setLang);
-    };
-    TranslateConfigService.prototype.getTranslatedMessage = function (message) {
-        return this.translate.get(message);
-    };
-    TranslateConfigService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])({
-            providedIn: 'root'
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__ngx_translate_core__["c" /* TranslateService */]])
-    ], TranslateConfigService);
-    return TranslateConfigService;
-}());
-
-//# sourceMappingURL=translate-config.service.js.map
-
-/***/ }),
-
-/***/ 92:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddProductCategoryPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__ = __webpack_require__(8);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-/**
- * Generated class for the AddProductCategoryPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var AddProductCategoryPage = /** @class */ (function () {
-    function AddProductCategoryPage(navCtrl, translateConfigService, navParams, sp, toastCtrl) {
-        this.navCtrl = navCtrl;
-        this.translateConfigService = translateConfigService;
-        this.navParams = navParams;
-        this.sp = sp;
-        this.toastCtrl = toastCtrl;
-        this.newprodCat = "";
-    }
-    AddProductCategoryPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad AddProductCategoryPage');
-        this.getCategories();
-    };
-    AddProductCategoryPage.prototype.getCategories = function () {
-        var _this = this;
-        console.log(this.listCat + " and " + this.newprodCat);
-        this.sp.storageReady().then(function () {
-            _this.sp.getCategories().then(function (val) {
-                console.log("val = " + val);
-                _this.listCat = JSON.parse(val);
-                console.log(_this.listCat);
-                _this.getCategories();
-            }).catch(function (err) {
-                alert("Error: " + err);
-            });
-        });
-    };
-    AddProductCategoryPage.prototype.addCategory = function () {
-        var _this = this;
-        console.log(this.listCat + " and " + this.newprodCat);
-        if (this.newprodCat != "") {
-            var data_1 = {
-                "name": this.newprodCat,
-            };
-            this.sp.storageReady().then(function () {
-                _this.sp.addCategory(data_1);
-                setTimeout(function () {
-                    var message = _this.translateConfigService.getTranslatedMessage('Finish');
-                    var toast = _this.toastCtrl.create({
-                        // @ts-ignore
-                        message: message.value,
-                        duration: 3000
-                    });
-                    _this.newprodCat = "";
-                    _this.sp.backupStorage();
-                    //this.navCtrl.push(ProductListPage);
-                    //this.events.publish('prodAdd:created',0);
-                    // (this.navCtrl.parent as Tabs).select(0);
-                    toast.present();
-                }, 1000);
-            });
-        }
-    };
-    AddProductCategoryPage.prototype.delCat = function (element) {
-        var _this = this;
-        this.sp.storageReady().then(function () {
-            _this.sp.deleteCategory(element);
-            _this.sp.backupStorage();
-            setTimeout(function () {
-                var message = _this.translateConfigService.getTranslatedMessage('Finish');
-                var toast = _this.toastCtrl.create({
-                    // @ts-ignore
-                    message: message.value,
-                    duration: 3000
-                });
-                _this.getCategories();
-                //this.navCtrl.push(ProductListPage);
-                //this.events.publish('prodAdd:created',0);
-                // (this.navCtrl.parent as Tabs).select(0);
-                toast.present();
-            }, 1000);
-        });
-    };
-    AddProductCategoryPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-add-product-category',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\add-product-category\add-product-category.html"*/'<ion-content padding>\n\n\n\n  <ion-grid>\n\n    <ion-row>\n\n      <ion-col col-8>\n\n          <ion-item>\n\n              <ion-input type="text" placeholder="Enter Category Here"  [(ngModel)]=\'newprodCat\'></ion-input>\n\n          </ion-item>\n\n      </ion-col>\n\n      <ion-col col-4>\n\n          <button ion-button full color="dark" (click)="addCategory()"> {{\'Add Category\' | translate}}</button>\n\n\n\n      </ion-col>\n\n    </ion-row>\n\n  </ion-grid>\n\n\n\n   \n\n    \n\n\n\n  <ion-item>\n\n     <h2> <b>{{\'View/Delete Category\' | translate}} </b> </h2>\n\n  </ion-item>\n\n \n\n  <ion-list  *ngFor="let element of listCat">\n\n\n\n      <ion-item>\n\n          {{element.name}}\n\n          <ion-icon item-end name="close-circle" (click)="delCat(element)" color="danger"></ion-icon> \n\n      </ion-item>\n\n  </ion-list>\n\n \n\n\n\n\n\n  \n\n\n\n \n\n    \n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\add-product-category\add-product-category.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__["a" /* TranslateConfigService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */]])
-    ], AddProductCategoryPage);
-    return AddProductCategoryPage;
-}());
-
-//# sourceMappingURL=add-product-category.js.map
-
-/***/ }),
-
-/***/ 93:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AllTransactionPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__ = __webpack_require__(8);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [0, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-
-
-
-
-/**
- * Generated class for the AllTransactionPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var AllTransactionPage = /** @class */ (function () {
-    function AllTransactionPage(navCtrl, translateConfigService, navParams, events, sp) {
-        var _this = this;
-        this.navCtrl = navCtrl;
-        this.translateConfigService = translateConfigService;
-        this.navParams = navParams;
-        this.events = events;
-        this.sp = sp;
-        this.itemsname = [];
-        this.result = "";
-        this.flag_mode = 0;
-        this.showSampleRec = true;
-        this.itemsprice = [];
-        this.itemsqty = [];
-        this.ctr = 0;
-        this.lastsum = 0;
-        this.lastchar = "NIL";
-        this.lastdigit = 0;
-        this.userdata = { business_address: "",
-            business_name: "",
-            cash_balance: "",
-            currency: "",
-            created: "",
-            language: "en",
-            owner: "",
-            owner_name: "",
-            ph_no: "",
-            businesstype: "",
-            taxrate: 0.0,
-            discount: 0.0,
-        };
-        this.getUserData();
-        this.events.subscribe('addRecCalc:created', function (data) {
-            console.log("ENTERED!");
-            console.log("Received 0 " + data);
-            //SET itemsprice here? - make new addgen - diff button calls diff event that pushes rather than replaces
-            //Same for Product Transaction Page
-            //console.log(this.showSampleRec);
-            var tempdat = JSON.parse(data);
-            // this.itemsname=null;
-            // this.itemsprice=null;
-            // this.itemsqty=null;
-            tempdat.forEach(function (element) {
-                _this.itemsname.push(element.name);
-                _this.itemsprice.push(element.price);
-                _this.itemsqty.push(element.qty);
-            });
-            console.log(_this.itemsprice);
-        });
-    }
-    AllTransactionPage.prototype.ionViewDidLoad = function () {
-        var _this = this;
-        console.log('ionViewDidLoad AllTransactionPage');
-        console.log("Size of array: " + this.itemsprice.length);
-        if (this.itemsprice.length > 0) {
-            this.showSampleRec = false;
-            this.flag_mode = 1;
-        }
-        this.delay(3000).then(function () {
-            _this.getUserData();
-        });
-    };
-    AllTransactionPage.prototype.delay = function (ms) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, new Promise(function (resolve) { return setTimeout(function () { return resolve(); }, ms); }).then(function () { return console.log("fired"); })];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    AllTransactionPage.prototype.getUserData = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
-            return __generator(this, function (_a) {
-                this.sp.storageReady().then(function () {
-                    _this.sp.getUserDat().then(function (val) {
-                        _this.userdata = JSON.parse(val);
-                        console.log(_this.userdata);
-                    }).catch(function (err) {
-                        alert("Error: " + err);
-                    });
-                });
-                return [2 /*return*/];
-            });
-        });
-    };
-    AllTransactionPage.prototype.createRec = function () {
-        var _this = this;
-        var tempJSON = { "itemslist": [], };
-        this.itemsprice.forEach(function (element, index) {
-            if (_this.itemsname.length > 0 && index < _this.itemsname.length) {
-                tempJSON.itemslist.push({ 'name': _this.itemsname[index],
-                    'price': parseInt(element),
-                    'qty': _this.itemsqty[index],
-                });
-            }
-            else {
-                tempJSON.itemslist.push({
-                    'code': '000000',
-                    'cat': 'NIL',
-                    'stock_qty': 0,
-                    'name': "ထုတ်ကုန်",
-                    'price': parseInt(element),
-                    'qty': _this.itemsqty[index],
-                });
-            }
-        });
-        //var sampledat={ 'itemslist': myJsonString,};
-        var myObjStr = JSON.stringify(tempJSON);
-        this.navCtrl.parent.select(2);
-        this.delay(300).then(function (any) {
-            _this.events.publish('genRec:created', myObjStr);
-            console.log("Sent: " + myObjStr);
-            //your task after delay.
-        });
-        this.result = "";
-        this.itemsname = [];
-        this.itemsprice = [];
-        this.lastsum = 0;
-        this.itemsqty = [];
-    };
-    AllTransactionPage.prototype.btnClicked = function (btn) {
-        var _this = this;
-        this.getUserData();
-        try {
-            console.log('CalculatorPage::btnClicked = ' + btn);
-            if (btn == "C") {
-                this.result = "";
-                this.itemsprice = [];
-                this.lastsum = 0;
-                this.itemsqty = [];
-            }
-            else if (btn == "=") {
-                this.showSampleRec = true;
-                //IF LAST = character then remove that character 
-                var answ = this.result.split('+');
-                if (this.result.includes('-')) {
-                    answ = this.result.split('+').join('-').split('-');
-                }
-                var temp;
-                answ.forEach(function (element, index) {
-                    if (element.includes("*")) {
-                        answ[index] = element.substring(0, element.indexOf("*"));
-                        _this.itemsprice.push(answ[index]);
-                        temp = parseInt(element.substring(element.indexOf("*") + 1));
-                        console.log(element.substring(element.indexOf("*") + 1));
-                        _this.itemsqty.push(temp);
-                    }
-                    else if (element.includes("/")) {
-                        answ[index] = element.substring(0, element.indexOf("/"));
-                        _this.itemsprice.push(answ[index]);
-                        temp = Math.round(1 / (parseInt((element.substring(element.indexOf("/") + 1)))) * 100) / 100;
-                        console.log(temp);
-                        _this.itemsqty.push(temp);
-                    }
-                    else {
-                        if (element != "") {
-                            _this.itemsprice.push(element);
-                            _this.itemsqty.push(parseInt("1"));
-                        }
-                    }
-                    // this.itemsprice.push(
-                    //   {'name': "Blank_Item",
-                    //   'price': parseInt(element),
-                    //   'qty': 0,
-                    //   })      
-                });
-                //flag_mode=0 means normal (sample reciept is generated)
-                //if(flag_mode==1) then go to reciept page directly - call createRec()
-                //if(flag_mode=2) then just use as calc - no reciept is generated
-                console.log(this.itemsprice);
-                console.log(this.itemsqty);
-                this.result = eval(this.result) + "";
-                this.lastsum = 0;
-                //this.lastsum=parseInt(this.result);
-                for (var i = 0; i < this.itemsprice.length; i++) {
-                    this.lastsum = this.lastsum + (parseInt(this.itemsprice[i]) * this.itemsqty[i]);
-                    console.log(this.lastsum);
-                }
-            }
-            else if (btn == "b") {
-                this.result = this.result.substring(0, this.result.length - 1);
-            }
-            else if (btn == "squareroot") {
-                this.result = Math.sqrt(eval(this.result)) + "";
-            }
-            else if (btn == "square") {
-                this.result = eval("(" + this.result + ") * ( " + this.result + ")");
-            }
-            else if (btn == "reciproc") {
-                this.result = eval(1 + "/ (" + this.result + ")");
-            }
-            else {
-                if (parseInt(this.result) == this.lastsum) {
-                    this.result = this.result.substring(0, 0);
-                }
-                console.log("Lastchar: " + this.lastchar + " Result: " + this.result);
-                if ((btn == '+' || btn == '-' || btn == '*' || btn == '/') && (this.lastchar == '+' || this.lastchar == '-' || this.lastchar == '*' || this.lastchar == '/')) {
-                    this.result = this.result = this.result.substring(0, this.result.length - 1);
-                }
-                this.lastchar = btn;
-                this.result += btn;
-            }
-        }
-        catch (err) {
-            this.result = "Input Error!";
-            this.itemsprice = [];
-            this.lastsum = 0;
-            this.itemsqty = [];
-        }
-        finally {
-        }
-    };
-    AllTransactionPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-all-transaction',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\all-transaction\all-transaction.html"*/'<!--\n\n  Generated template for the AllTransactionPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n\n\n\n\n<ion-content padding>\n\n    <!-- <ion-fab bottom right>\n\n        <button ion-fab color="primary" item-right><ion-icon name="calculator"></ion-icon></button>\n\n      </ion-fab> -->\n\n      <!-- <ion-card *ngIf="showSampleRec==false">\n\n        ကျေးဇူးပြုပြီးပစ္စည်းအတွက်ပမာဏကိုမြှောက်ပါ၊ ရှိပြီးသားငွေတောင်းခံလွှာကိုထည့်ရန်တူညီသောစာလုံးကိုနှိပ်ပါ။\n\n\n\n        အလွတ်ပစ္စည်းပေါင်းများစွာကိုထည့်သွင်းလိုပါက * qty တစ်ခုချင်းစီကိုရိုက်ထည့်ပြီးနောက်တစ်ခုကိုရိုက်ထည့်ရန် + သင်္ကေတကိုနှိပ်ပါ\n\n      </ion-card>\n\n       -->\n\n  <ion-grid>\n\n    <ion-row>\n\n\n\n      <ion-col col-12 col-md-6>\n\n\n\n          <div class="calculator">\n\n            <div class="header">\n\n              <div class="window"></div>\n\n              <div class="input">\n\n                <ion-row>\n\n                  <ion-input type="text" placeholder="0" name="display" [(ngModel)]="result">\n\n                  </ion-input>\n\n                  <ion-icon name="backspace" (click)="btnClicked(\'b\')"></ion-icon>\n\n                  \n\n                </ion-row> \n\n               \n\n                    \n\n                \n\n              </div>\n\n             \n\n              \n\n            </div>\n\n            <div class="keys">\n\n              <div class="row">\n\n                <div class="number">\n\n                  <span (click)="btnClicked(\'7\')">7</span>\n\n                  <span (click)="btnClicked(\'8\')">8</span>\n\n                  <span (click)="btnClicked(\'9\')">9</span>\n\n                </div>\n\n                <div class="symbol">\n\n                  <span (click)="btnClicked(\'*\')">×</span>\n\n\n\n                </div>\n\n              </div>\n\n\n\n              <div class="row">\n\n                <div class="number">\n\n                  <span (click)="btnClicked(\'4\')">4</span>\n\n                  <span (click)="btnClicked(\'5\')">5</span>\n\n                  <span (click)="btnClicked(\'6\')">6</span>\n\n                </div>\n\n\n\n                <div class="symbol">\n\n                  <span (click)="btnClicked(\'+\')">+</span>\n\n           </div>\n\n              </div>\n\n\n\n              <div class="row">\n\n                <div class="number">\n\n                  <span (click)="btnClicked(\'1\')">1</span>\n\n                  <span (click)="btnClicked(\'2\')">2</span>\n\n                  <span (click)="btnClicked(\'3\')">3</span>\n\n                </div>\n\n\n\n                <div class="symbol">\n\n                  <span (click)="btnClicked(\'/\')">÷</span>\n\n                  <span (click)="btnClicked(\'squareroot\')">√x</span>\n\n                </div>\n\n\n\n\n\n              </div>\n\n\n\n\n\n              <div class="row">\n\n                <div class="number">\n\n                  <span (click)="btnClicked(\'C\')">C</span>\n\n                  <span (click)="btnClicked(\'0\')">0</span>\n\n                  <span (click)="btnClicked(\'-\')">-</span>\n\n\n\n\n\n\n\n                </div>\n\n\n\n                <div class="symbol action">\n\n                  <span (click)="btnClicked(\'=\')">=</span>\n\n                </div>\n\n\n\n              </div>\n\n            </div>\n\n          </div>\n\n\n\n    \n\n\n\n      </ion-col>\n\n\n\n      <ion-col col-12 col-md-6>\n\n\n\n\n\n        <ion-card *ngIf="showSampleRec==true"> \n\n\n\n                <ion-grid>\n\n          \n\n                  <ion-row> <ion-col style="text-align: center; padding-top: 5px;">{{userdata? userdata.business_name: null}} </ion-col> </ion-row>\n\n          \n\n                  <ion-row>\n\n                      <ion-col col-12 style="color: grey; font-size: 10px; text-align: center"> {{userdata?userdata.business_address:null}}</ion-col>\n\n                  </ion-row>\n\n                  <ion-row>\n\n                      <ion-col col-12 style="color: grey; font-size: 10px; text-align: center"> {{userdata?userdata.ph_no:null}}</ion-col>\n\n                  </ion-row>          \n\n                  <ion-row style="padding-top: 5px;">\n\n                      <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><b>{{"Sl" | translate}}</b></ion-col>\n\n                      <ion-col col-4 style="color: black; font-size: 10px; text-align: center"><b>{{"Name" | translate}}</b></ion-col>\n\n                      <ion-col col-2 style="color: black; font-size: 10px; text-align: center"><b>{{"Price"| translate}}</b></ion-col>\n\n                      <ion-col col-2 style="color: black; font-size: 10px; text-align: center"><b>{{"Qty"| translate}}</b></ion-col>\n\n                      <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="arrow-dropup-circle" style=" color: green"></ion-icon></ion-col>\n\n                      <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="arrow-dropdown-circle" style=" color: red"></ion-icon></ion-col>\n\n                      <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="close" style=" color: red"></ion-icon></ion-col>\n\n                  </ion-row>\n\n          \n\n                 \n\n          \n\n                  <ion-list *ngFor="let item of itemsprice; let i = index" no-lines>\n\n          \n\n              \n\n                    <ion-row>\n\n                        <ion-col col-1 style="color: black; font-size: 10px; text-align: center">{{i+1}}.</ion-col>\n\n                        <ion-col col-4 style="color: black; font-size: 10px; text-align: center">\n\n                         Item {{i+1}}</ion-col>   \n\n                        <ion-col col-2 style="color: black; font-size: 10px; text-align: center">{{item}}</ion-col>\n\n                        <ion-col col-2 style="color: black; font-size: 10px; text-align: center">{{itemsqty[i]}}</ion-col>\n\n                        <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="arrow-dropup-circle" style=" color: green"></ion-icon></ion-col>\n\n                        <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="arrow-dropdown-circle" style=" color: red"></ion-icon></ion-col>\n\n                        <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="close" style=" color: red"></ion-icon></ion-col>\n\n                    </ion-row>\n\n                \n\n          \n\n                  </ion-list>\n\n          \n\n                  <ion-row padding>\n\n                      <ion-col col-1></ion-col>  \n\n                    <ion-col col-4 style="text-align: center;font-size: 10px;"><b>{{"Total"| translate}}</b> </ion-col>\n\n                      <ion-col col-2 style="text-align: center;font-size: 10px;"><b>{{lastsum}}</b> </ion-col>\n\n                      <ion-col col-5></ion-col>\n\n                    </ion-row>\n\n          \n\n          \n\n                   \n\n          \n\n          \n\n                </ion-grid>\n\n          \n\n          \n\n          \n\n\n\n        </ion-card>\n\n\n\n      </ion-col>\n\n\n\n\n\n\n\n    </ion-row>\n\n\n\n\n\n  </ion-grid>\n\n\n\n\n\n\n\n  <!-- Dynamically Generate All transactions from backend - see feed from prev -->\n\n\n\n</ion-content>\n\n\n\n<ion-footer>\n\n\n\n    <ion-grid>\n\n      <ion-row>\n\n        <ion-col>\n\n            <button ion-button (click)="createRec()" full style="background-color: #222">{{"Create Receipt"|translate}}</button>\n\n        </ion-col>\n\n      </ion-row>\n\n    </ion-grid>\n\n   \n\n</ion-footer>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\all-transaction\all-transaction.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__["a" /* TranslateConfigService */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */],
-            __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */]])
-    ], AllTransactionPage);
-    return AllTransactionPage;
-}());
-
-//# sourceMappingURL=all-transaction.js.map
-
-/***/ }),
-
-/***/ 94:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CoachBusinesstipsPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_translation_translate_config_service__ = __webpack_require__(8);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-/**
- * Generated class for the CoachBusinesstipsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var CoachBusinesstipsPage = /** @class */ (function () {
-    function CoachBusinesstipsPage(navCtrl, navParams, translateConfigService) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.translateConfigService = translateConfigService;
-    }
-    CoachBusinesstipsPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad CoachBusinesstipsPage');
-    };
-    CoachBusinesstipsPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-coach-businesstips',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\coach-businesstips\coach-businesstips.html"*/'<!--\n\n  Generated template for the CoachBusinesstipsPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<!-- <ion-header>\n\n  <ion-navbar>\n\n    <ion-title>coach-businesstips</ion-title>\n\n  </ion-navbar>\n\n</ion-header> -->\n\n\n\n<ion-content padding>\n\n\n\n  \n\n  <ion-card>\n\n    <ion-grid line>\n\n        <ion-row style="padding-left: 10px; padding-bottom: 5px; ">\n\n          <ion-col col-10 style="color: grey; font-size: 10px;"> Wed, 10th October 2018 </ion-col>\n\n          <ion-col col-2 style="text-align: center "><ion-icon name="bulb" style="color: green"></ion-icon> </ion-col>\n\n        </ion-row>\n\n        <ion-row style="padding-left: 10px; padding-bottom: 10px;">\n\n          <ion-col><h2><b>You\'ve got a winner!</b></h2></ion-col>\n\n        </ion-row>\n\n\n\n      <ion-row style="padding-left: 15px; padding-bottom: 10px;">\n\n        Your item XYZ sells 50% higher than any other product in its category. Item ABC sells only 2% the volume of XYZ. You should stock more XYZ and less ABC.\n\n      </ion-row>\n\n      <ion-row  style="background-color: #f0f0f0">\n\n        <ion-col col-6 style="text-align: center ">\n\n            <ion-icon name="thumbs-up" ></ion-icon>\n\n        </ion-col>\n\n        <ion-col col-6 style="text-align: center ">\n\n            <ion-icon name="thumbs-down"></ion-icon>\n\n        </ion-col>\n\n      </ion-row>\n\n    </ion-grid>\n\n  </ion-card> \n\n\n\n  \n\n\n\n\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\coach-businesstips\coach-businesstips.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_translation_translate_config_service__["a" /* TranslateConfigService */]])
-    ], CoachBusinesstipsPage);
-    return CoachBusinesstipsPage;
-}());
-
-//# sourceMappingURL=coach-businesstips.js.map
-
-/***/ }),
-
-/***/ 95:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CoachCoachPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_translation_translate_config_service__ = __webpack_require__(8);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-/**
- * Generated class for the CoachCoachPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var CoachCoachPage = /** @class */ (function () {
-    function CoachCoachPage(navCtrl, translateConfigService, navParams) {
-        this.navCtrl = navCtrl;
-        this.translateConfigService = translateConfigService;
-        this.navParams = navParams;
-    }
-    CoachCoachPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad CoachCoachPage');
-    };
-    CoachCoachPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-coach-coach',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\coach-coach\coach-coach.html"*/'<!--\n\n  Generated template for the CoachCoachPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<!-- <ion-header>\n\n  <ion-navbar>\n\n    <ion-title>coach-coach</ion-title>\n\n  </ion-navbar>\n\n</ion-header> -->\n\n\n\n<ion-content padding>\n\n\n\n    <ion-card>\n\n        <ion-grid line>\n\n            <ion-row style="padding-left: 10px; padding-bottom: 5px; ">\n\n              <ion-col col-10 style="color: grey; font-size: 10px;"> Thus, 12th October 2018 </ion-col>\n\n              <ion-col col-2 style="text-align: center "><ion-icon name="bulb" style="color: green"></ion-icon> </ion-col>\n\n            </ion-row>\n\n            <ion-row style="padding-left: 10px; padding-bottom: 10px;">\n\n              <ion-col><h2><b>EC Coach Tip</b></h2></ion-col>\n\n            </ion-row>\n\n    \n\n          <ion-row style="padding-left: 15px; padding-bottom: 10px;">\n\n              Want to look professional? Provide your customers a receipt with their purchases.\n\n          </ion-row>\n\n          <ion-row  style="background-color: #f0f0f0">\n\n            <ion-col col-6 style="text-align: center ">\n\n                <ion-icon name="thumbs-up" ></ion-icon>\n\n            </ion-col>\n\n            <ion-col col-6 style="text-align: center ">\n\n                <ion-icon name="thumbs-down"></ion-icon>\n\n            </ion-col>\n\n          </ion-row>\n\n        </ion-grid>\n\n      </ion-card> \n\n\n\n      \n\n    <ion-card>\n\n        <ion-grid line>\n\n            <ion-row style="padding-left: 10px; padding-bottom: 5px; ">\n\n              <ion-col col-10 style="color: grey; font-size: 10px;"> Thus, 12th October 2018 </ion-col>\n\n              <ion-col col-2 style="text-align: center "><ion-icon name="bulb" style="color: green"></ion-icon> </ion-col>\n\n            </ion-row>\n\n            <ion-row style="padding-left: 10px; padding-bottom: 10px;">\n\n              <ion-col><h2><b>EC Coach Tip</b></h2></ion-col>\n\n            </ion-row>\n\n    \n\n          <ion-row style="padding-left: 15px; padding-bottom: 10px;">\n\n              Let your customers know that you are listening. Tell them, "I hear what you are saying" and ask "Tell me more about that". This way you indicate that you are paying attention without agreeing or disagreeing with them.\n\n          </ion-row>\n\n          <ion-row  style="background-color: #f0f0f0">\n\n            <ion-col col-6 style="text-align: center ">\n\n                <ion-icon name="thumbs-up" ></ion-icon>\n\n            </ion-col>\n\n            <ion-col col-6 style="text-align: center ">\n\n                <ion-icon name="thumbs-down"></ion-icon>\n\n            </ion-col>\n\n          </ion-row>\n\n        </ion-grid>\n\n      </ion-card> \n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\coach-coach\coach-coach.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__providers_translation_translate_config_service__["a" /* TranslateConfigService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavParams */]])
-    ], CoachCoachPage);
-    return CoachCoachPage;
-}());
-
-//# sourceMappingURL=coach-coach.js.map
-
-/***/ }),
-
-/***/ 96:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CoachGoalsPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_translation_translate_config_service__ = __webpack_require__(8);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-/**
- * Generated class for the CoachGoalsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var CoachGoalsPage = /** @class */ (function () {
-    function CoachGoalsPage(navCtrl, translateConfigService, navParams) {
-        this.navCtrl = navCtrl;
-        this.translateConfigService = translateConfigService;
-        this.navParams = navParams;
-    }
-    CoachGoalsPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad CoachGoalsPage');
-    };
-    CoachGoalsPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-coach-goals',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\coach-goals\coach-goals.html"*/'<!--\n\n  Generated template for the CoachGoalsPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<!-- <ion-header>\n\n  <ion-navbar>\n\n    <ion-title>coach-goals</ion-title>\n\n  </ion-navbar>\n\n</ion-header> -->\n\n\n\n<ion-content padding>\n\n\n\n\n\n      \n\n    <ion-card>\n\n        <ion-grid line>\n\n            <ion-row style="padding-left: 10px; padding-bottom: 5px; ">\n\n              <ion-col col-10 style="color: grey; font-size: 10px;"> Thus, 12th October 2018 </ion-col>\n\n              <ion-col col-2 style="text-align: center "><ion-icon name="bulb" style="color: green"></ion-icon> </ion-col>\n\n            </ion-row>\n\n            <ion-row style="padding-left: 10px; padding-bottom: 10px;">\n\n              <ion-col><h2><b>Goal: Bulk Transaction</b></h2></ion-col>\n\n            </ion-row>\n\n    \n\n          <ion-row style="padding-left: 15px; padding-bottom: 10px;">\n\n              Record 15 transactions and get the ability to add miltiple products in one transaction entry!              \n\n          </ion-row>\n\n          <ion-row  style="background-color: #f0f0f0">\n\n            <ion-col col-12 style="text-align: center ; background-color: indigo; color: palevioletred;">\n\n                <b>Go</b>\n\n            </ion-col>\n\n \n\n          </ion-row>\n\n        </ion-grid>\n\n      </ion-card> \n\n\n\n      <ion-card>\n\n          <ion-grid line>\n\n              <ion-row style="padding-left: 10px; padding-bottom: 5px; ">\n\n                <ion-col col-10 style="color: grey; font-size: 10px;"> Thus, 12th October 2018 </ion-col>\n\n                <ion-col col-2 style="text-align: center "><ion-icon name="bulb" style="color: green"></ion-icon> </ion-col>\n\n              </ion-row>\n\n              <ion-row style="padding-left: 10px; padding-bottom: 10px;">\n\n                <ion-col><h2><b>Goal: Record Discounts</b></h2></ion-col>\n\n              </ion-row>\n\n      \n\n            <ion-row style="padding-left: 15px; padding-bottom: 10px;">\n\n                Record 25 transactions to add discounts to sales & expenses              \n\n            </ion-row>\n\n            <ion-row  style="background-color: #f0f0f0">\n\n              <ion-col col-12 style="text-align: center ; background-color: indigo; color: palevioletred;">\n\n                  <b>Go</b>\n\n              </ion-col>\n\n   \n\n            </ion-row>\n\n          </ion-grid>\n\n        </ion-card> \n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\coach-goals\coach-goals.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__providers_translation_translate_config_service__["a" /* TranslateConfigService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavParams */]])
-    ], CoachGoalsPage);
-    return CoachGoalsPage;
-}());
-
-//# sourceMappingURL=coach-goals.js.map
-
-/***/ }),
-
-/***/ 97:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ExpensesHomePage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__dashboard_dashboard__ = __webpack_require__(98);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_barcode_scanner__ = __webpack_require__(40);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [0, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-
-
-
-
-
-
-/**
- * Generated class for the ExpensesHomePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var ExpensesHomePage = /** @class */ (function () {
-    function ExpensesHomePage(navCtrl, translateConfigService, navParams, sp, events, toastCtrl, barcodeScanner) {
-        this.navCtrl = navCtrl;
-        this.translateConfigService = translateConfigService;
-        this.navParams = navParams;
-        this.sp = sp;
-        this.events = events;
-        this.toastCtrl = toastCtrl;
-        this.barcodeScanner = barcodeScanner;
-        this.prodName = "";
-        this.minDate = new Date().toISOString();
-        this.maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 5)).toISOString();
-        this.expirydate = new Date().toISOString();
-        this.currtime = new Date();
-        this.listProducts = [];
-        this.filteredList = [];
-        this.searchterm = "";
-        this.selectedCat = [];
-        this.totalamt = 0.0;
-        this.hideButton = true;
-        this.getUserData();
-    }
-    ExpensesHomePage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad ExpensesHomePage');
-        console.log(this.currtime);
-        this.getProducts();
-        this.getCategories();
-        this.getUserData();
-    };
-    ExpensesHomePage.prototype.getUserData = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
-            return __generator(this, function (_a) {
-                this.sp.storageReady().then(function () {
-                    _this.sp.getUserDat().then(function (val) {
-                        _this.userdata = JSON.parse(val);
-                        console.log(_this.userdata);
-                    }).catch(function (err) {
-                        alert("Error: " + err);
-                    });
-                });
-                return [2 /*return*/];
-            });
-        });
-    };
-    ExpensesHomePage.prototype.updatebalance = function (edited) {
-        if (this.prodcostitem != null && this.prodqty != null && (edited == "prodcostitem" || edited == "prodqty")) {
-            this.prodcost = this.prodqty * this.prodcostitem;
-        }
-        else if (this.prodcost != null && this.prodqty != null && (edited == "prodcost" || edited == "prodqty")) {
-            this.prodcostitem = this.prodcost / this.prodqty;
-        }
-    };
-    ExpensesHomePage.prototype.getCategories = function () {
-        var _this = this;
-        //console.log(this.listCat + " and "+this.newprodCat);
-        this.sp.storageReady().then(function () {
-            _this.sp.getCategories().then(function (val) {
-                _this.listCat = JSON.parse(val);
-                //console.log("Addprodpg: "+this.listCat)
-                _this.getCategories();
-            }).catch(function (err) {
-                alert("Error: " + err);
-            });
-        });
-    };
-    ExpensesHomePage.prototype.getProducts = function () {
-        var _this = this;
-        this.sp.storageReady().then(function () {
-            _this.sp.getProducts().then(function (val) {
-                _this.listProducts = JSON.parse(val);
-                if (_this.listProducts != null) {
-                    _this.filteredProduct();
-                }
-            }).catch(function (err) {
-                alert("Error: " + err);
-            });
-        });
-    };
-    ExpensesHomePage.prototype.filteredProduct = function () {
-        var _this = this;
-        this.filteredList = this.listProducts.filter(function (item) {
-            //console.log(this.searchterm);
-            console.log(item);
-            if (item.name.toLowerCase().includes(_this.searchterm.toLowerCase())) {
-                if (_this.selectedCat.length > 0) {
-                    for (var i = 0; i < _this.selectedCat.length; i++) {
-                        if (_this.selectedCat == null || item.cat.includes(_this.selectedCat[i])) {
-                            return true;
-                        }
-                    }
-                }
-                else {
-                    return true;
-                }
-            }
-        });
-        //console.log("FilteredProd: "+this.filteredList)
-    };
-    ExpensesHomePage.prototype.addinventoryexpense = function () {
-        var _this = this;
-        var itemslist = [];
-        var prodidlist = [];
-        var pnllist = [];
-        var discountlist = [];
-        itemslist.push(this.product);
-        prodidlist.push(this.expirydate);
-        var dataexp = {
-            "itemslist": itemslist,
-            "totalsum": (this.prodcost * -1),
-            "prodidlist": prodidlist,
-            "pnllist": pnllist,
-            "datetime": this.currtime,
-            "taxrate": 0,
-            "discountlist": discountlist,
-            "discount": 0,
-            "totaldisc": (this.prodcost * -1),
-            "totalatax": (this.prodcost * -1),
-        };
-        var data1 = {
-            "code": this.product.code,
-            "name": this.product.name,
-            "price": this.product.price,
-            "wholesale_price": this.product.wholesale_price,
-            "cost": Math.round(((parseInt(this.product.cost) * parseInt(this.product.stock_qty)) + (parseInt(this.prodcost))) / (parseInt(this.prodqty) + parseInt(this.product.stock_qty)) * 100) / 100,
-            "cat": this.product.cat,
-            "url": this.product.url,
-            "stock_qty": (parseInt(this.product.stock_qty) + parseInt(this.prodqty)),
-        };
-        this.sp.updateProduct(data1, this.product.code).then(function () {
-        });
-        this.sp.storageReady().then(function () {
-            console.log(dataexp);
-            _this.sp.addTransactions(dataexp);
-            _this.updateCb(_this.prodcost).then(function () { _this.events.publish('cbUpdate:created', 0); console.log("update"); });
-            var message = _this.translateConfigService.getTranslatedMessage('Finish');
-            var toast = _this.toastCtrl.create({
-                // @ts-ignore
-                message: message.value,
-                duration: 3000
-            });
-            _this.prodqty = null;
-            _this.prodcost = null;
-            _this.prodName = "";
-            _this.expirydate = new Date().toISOString();
-            _this.currtime = new Date();
-            _this.searchterm = "";
-            _this.selectedCat = [];
-            _this.totalamt = 0.0;
-            _this.product = null;
-            _this.sp.backupStorage();
-            toast.present();
-            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__dashboard_dashboard__["a" /* DashboardPage */]);
-        });
-        //REFLECT CHANGE ON CASH BALANCE HERE & Reflect change in inventory here as well 
-    };
-    ExpensesHomePage.prototype.updateCb = function (negtransacsum) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                this.getUserData();
-                this.userdata.cash_balance = (parseInt(this.userdata.cash_balance) - parseInt(negtransacsum)).toString();
-                this.sp.setUserDat(this.userdata);
-                return [2 /*return*/];
-            });
-        });
-    };
-    ExpensesHomePage.prototype.scanQR = function () {
-        var _this = this;
-        this.barcodeScanner.scan().then(function (barcodeData) {
-            _this.sp.searchProduct(barcodeData.text).then(function (val) {
-                if (val[0] != null) {
-                    var message = _this.translateConfigService.getTranslatedMessage('Found Product');
-                    var toast = _this.toastCtrl.create({
-                        // @ts-ignore
-                        message: message.value + " " + val[0].name,
-                        duration: 2000
-                    });
-                    toast.present();
-                    _this.chooseProd(val[0]);
-                }
-                else {
-                    var message = _this.translateConfigService.getTranslatedMessage('Not found!');
-                    var toast = _this.toastCtrl.create({
-                        // @ts-ignore
-                        message: message.value,
-                        duration: 2000
-                    });
-                    toast.present();
-                }
-            });
-        }).catch(function (err) {
-            console.log('Error', err);
-        });
-    };
-    ExpensesHomePage.prototype.chooseProd = function (product) {
-        this.prodName = product.name;
-        console.log(this.prodName);
-        this.product = product;
-        this.hideButton = false;
-    };
-    ExpensesHomePage.prototype.clearProduct = function () {
-        this.hideButton = true;
-        this.prodName = "";
-        this.product = null;
-        this.prodqty = "";
-        this.prodcost = "";
-        this.prodcostitem = "";
-    };
-    ExpensesHomePage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-expenses-home',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\expenses-home\expenses-home.html"*/'<!--\n\n  Generated template for the ExpensesHomePage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n  <ion-navbar color="dark">\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title> {{"Add New Stock"|translate}} </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n  <ion-item>\n\n      <b>{{\'Enter Inventory Expenditure Detail:\'|translate}}</b> \n\n  </ion-item>\n\n\n\n<ion-list inset>\n\n  \n\n    <ion-grid>\n\n      <ion-row>\n\n        <ion-col col-8> \n\n            <ion-searchbar showCancelButton="always" [(ngModel)]="searchterm" (ionChange)="filteredProduct()"></ion-searchbar>\n\n        </ion-col>\n\n        <ion-col col-4>\n\n            <button ion-button small block color="primary" (click)="scanQR()"  color="dark">{{"Scan Barcode"|translate}}</button>\n\n        </ion-col>\n\n      </ion-row>\n\n    </ion-grid>\n\n    <ion-item>\n\n      <ion-label>{{"Select category"| translate}}</ion-label>\n\n      <ion-select multiple="true" [(ngModel)]=\'selectedCat\' (ionChange)="filteredProduct()">\n\n          <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>    \n\n      </ion-select>\n\n    </ion-item>\n\n  </ion-list>\n\n<ion-list inset  *ngFor="let product of filteredList">\n\n  <ion-card>\n\n      <ion-grid> \n\n        <ion-row>\n\n        <ion-col col-2>\n\n          <ion-row> \n\n            <ion-avatar>\n\n                <img [src]="product.url">\n\n              </ion-avatar>\n\n            </ion-row>\n\n        </ion-col>\n\n        <ion-col col-10>\n\n            <ion-row>\n\n                <ion-col col-6>\n\n                    {{product.name}}\n\n                </ion-col>\n\n                <ion-col col-6>\n\n                  {{"Stock"|translate}}: {{product.stock_qty}}\n\n                </ion-col>\n\n                </ion-row>\n\n              <ion-row>\n\n                <ion-col col-4 style="color: grey; font-size: 10px;"> {{"Retail Price"|translate}} {{product.price}} MMK </ion-col> \n\n                <!-- change currency units to those that are selected by user -Pranay -->\n\n                <ion-col col-4 style="color: grey; font-size: 10px; text-align: center;"> {{"Wholesale Price"|translate}} {{product.wholesale_price}} MMK </ion-col>\n\n                <ion-col col-4 style="color: grey; font-size: 10px; text-align: end;"> {{"Category"|translate}} {{product.cat}} </ion-col>\n\n              </ion-row>\n\n        </ion-col>\n\n      </ion-row>\n\n      <ion-row>\n\n        <ion-col col-12> <button ion-button full end color="dark" (click)="chooseProd(product)">{{"Add New Stock"|translate}}</button> </ion-col>\n\n      </ion-row>\n\n      </ion-grid>\n\n    </ion-card> \n\n \n\n</ion-list>\n\n</ion-content>\n\n\n\n<ion-footer style="border-top-color:black; border-top: 10px;" *ngIf=\'prodName!=""\'> \n\n  <ion-list>\n\n    <ion-item>\n\n      {{"Product Name"|translate}}: {{prodName}}\n\n      <button ion-button style="float: right; color:white; background-color: red;" [hidden]="hideButton" (click)="clearProduct()">\n\n        {{"Clear"|translate}}\n\n      </button>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label>{{"Product Qty"|translate}}</ion-label>\n\n      <ion-input type="number" [(ngModel)]=\'prodqty\' (ionChange)="updatebalance(\'prodqty\')"></ion-input>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label>{{"Purchase Price per Item"|translate}}</ion-label>\n\n      <ion-input type="number" [(ngModel)]=\'prodcostitem\' (ionChange)="updatebalance(\'prodcostitem\')"></ion-input>\n\n    </ion-item>\n\n    <ion-item>\n\n        <ion-label>{{"Total Expenditure"|translate}}</ion-label>\n\n        <ion-input type="number" [(ngModel)]=\'prodcost\' (ionChange)="updatebalance(\'prodcost\')"></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n      <ion-label>{{"Batch Expiry Date:"|translate}}</ion-label>\n\n      <ion-datetime displayFormat="DD/MMM/YYYY" [(ngModel)]=\'expirydate\' [min]="minDate" [max]="maxDate"></ion-datetime>\n\n      </ion-item>\n\n    </ion-list>\n\n  <button ion-button block color="primary" (click)="addinventoryexpense()"  color="dark">{{"Add Stock"|translate}}</button>\n\n  \n\n</ion-footer>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\expenses-home\expenses-home.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__["a" /* TranslateConfigService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */], __WEBPACK_IMPORTED_MODULE_5__ionic_native_barcode_scanner__["a" /* BarcodeScanner */]])
-    ], ExpensesHomePage);
-    return ExpensesHomePage;
-}());
-
-//# sourceMappingURL=expenses-home.js.map
-
-/***/ }),
-
-/***/ 98:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DashboardPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__addproduct_addproduct__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_barcode_scanner__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_gettersetter_gettersetter__ = __webpack_require__(201);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__product_list_product_list__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__add_product_category_add_product_category__ = __webpack_require__(92);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_translation_translate_config_service__ = __webpack_require__(8);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [0, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-
-
-
-
-
-
-
-
-
-
-
-var DashboardPage = /** @class */ (function () {
-    function DashboardPage(navCtrl, translateConfigService, barcodeScanner, alertCtrl, sp, getset, toastCtrl, events) {
-        var _this = this;
-        this.navCtrl = navCtrl;
-        this.translateConfigService = translateConfigService;
-        this.barcodeScanner = barcodeScanner;
-        this.alertCtrl = alertCtrl;
-        this.sp = sp;
-        this.getset = getset;
-        this.toastCtrl = toastCtrl;
-        this.events = events;
-        this.ViewList = __WEBPACK_IMPORTED_MODULE_6__product_list_product_list__["a" /* ProductListPage */];
-        this.AddProd = __WEBPACK_IMPORTED_MODULE_2__addproduct_addproduct__["a" /* AddProductPage */];
-        this.AddCat = __WEBPACK_IMPORTED_MODULE_7__add_product_category_add_product_category__["a" /* AddProductCategoryPage */];
-        this.userdata = { business_address: "",
-            business_name: "",
-            cash_balance: "",
-            currency: "",
-            created: "",
-            language: "",
-            owner: "",
-            owner_name: "",
-            ph_no: "",
-            businesstype: "",
-            taxrate: 0.0,
-            discount: 0.0,
-        };
-        this.getUserData();
-        this.events.subscribe('cbUpdate:created', function (data) {
-            _this.getUserData();
-        });
-    }
-    DashboardPage.prototype.getUserData = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
-            return __generator(this, function (_a) {
-                this.sp.storageReady().then(function () {
-                    _this.sp.getUserDat().then(function (val) {
-                        _this.userdata = JSON.parse(val);
-                        console.log(_this.userdata);
-                    }).catch(function (err) {
-                        alert("Error: " + err);
-                    });
-                });
-                return [2 /*return*/];
-            });
-        });
-    };
-    DashboardPage.prototype.ionViewDidLoad = function () {
-        this.total = this.getset.getTotal();
-        this.count = this.getset.getCount();
-        this.vat = this.getset.getVat();
-    };
-    DashboardPage.prototype.uploadbtn = function () {
-        this.sp.backupStorage();
-        var message = this.translateConfigService.getTranslatedMessage('Online backup ready');
-        this.toastCtrl.create({
-            // @ts-ignore
-            message: message.value,
-            duration: 2000
-        }).present();
-    };
-    DashboardPage.prototype.cashbtn = function () {
-        this.getUserData();
-        var messsage = this.translateConfigService.getTranslatedMessage('Balance');
-        this.toastCtrl.create({
-            // @ts-ignore
-            message: message.value + this.userdata.cash_balance,
-            duration: 3000
-        }).present();
-    };
-    DashboardPage.prototype.qrscan = function () {
-        var _this = this;
-        this.barcodeScanner.scan().then(function (barcodeData) {
-            _this.sp.searchProduct(barcodeData.text).then(function (val) {
-                if (val[0] != null) {
-                    var message = _this.translateConfigService.getTranslatedMessage('Found Product');
-                    var toast = _this.toastCtrl.create({
-                        // @ts-ignore
-                        message: message.value + " " + val[0].name,
-                        duration: 2000
-                    });
-                    toast.present();
-                    _this.count++;
-                    _this.total += parseFloat(val[0].price);
-                    _this.vat += (parseFloat(val[0].price) * 0.05);
-                    _this.getset.setTotal(_this.total);
-                    _this.getset.setCount(_this.count);
-                    _this.getset.setVat(_this.vat);
-                }
-                else {
-                    var message = _this.translateConfigService.getTranslatedMessage('Get Product!!!');
-                    var toast = _this.toastCtrl.create({
-                        // @ts-ignore
-                        message: message.value,
-                        duration: 2000
-                    });
-                    toast.present();
-                }
-            });
-        }).catch(function (err) {
-            console.log('Error', err);
-        });
-    };
-    DashboardPage.prototype.addproduct = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__addproduct_addproduct__["a" /* AddProductPage */]);
-    };
-    DashboardPage.prototype.manual = function () {
-        var _this = this;
-        var alertPop = this.alertCtrl.create({
-            title: 'Product',
-            inputs: [
-                {
-                    name: 'code',
-                    placeholder: 'Product Code'
-                }
-            ],
-            buttons: [
-                {
-                    text: 'Cancel',
-                    role: 'cancel'
-                },
-                {
-                    text: 'Search',
-                    handler: function (data) {
-                        _this.sp.searchProduct(data.code).then(function (val) {
-                            if (val[0] != null) {
-                                var message = _this.translateConfigService.getTranslatedMessage('Found Product');
-                                var toast = _this.toastCtrl.create({
-                                    // @ts-ignore
-                                    message: message.value + " " + val[0].name,
-                                    duration: 2000
-                                });
-                                toast.present();
-                                _this.count++;
-                                _this.total += parseFloat(val[0].price);
-                                _this.vat += (parseFloat(val[0].price) * 0.05);
-                                _this.getset.setTotal(_this.total);
-                                _this.getset.setCount(_this.count);
-                                _this.getset.setVat(_this.vat);
-                            }
-                            else {
-                                var message = _this.translateConfigService.getTranslatedMessage('Get Product!!!');
-                                var toast = _this.toastCtrl.create({
-                                    // @ts-ignore
-                                    message: message.value,
-                                    duration: 2000
-                                });
-                                toast.present();
-                            }
-                        });
-                    }
-                }
-            ]
-        });
-        alertPop.present();
-    };
-    DashboardPage.prototype.reset = function () {
-        this.getset.setTotal(0);
-        this.getset.setCount(0);
-        this.getset.setVat(0);
-        this.total = 0;
-        this.count = 0;
-        this.vat = 0;
-        var message = this.translateConfigService.getTranslatedMessage('POS reset to Zero');
-        var toast = this.toastCtrl.create({
-            // @ts-ignore
-            message: message.value,
-            duration: 2000
-        });
-        toast.present();
-    };
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('myTabs'),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Tabs */])
-    ], DashboardPage.prototype, "tabRef", void 0);
-    DashboardPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-dashboard',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\dashboard\dashboard.html"*/'<ion-header>\n\n  <ion-navbar color="dark">\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>{{"Products"|translate}}</ion-title>\n\n    <ion-buttons end><button ion-button (click)="uploadbtn()"><ion-icon name="cloud-upload" style="align-self: center; color: white;" padding></ion-icon></button></ion-buttons>\n\n    <ion-buttons end><button ion-button (click)="cashbtn()"><ion-icon name="logo-usd" style="align-self: center; color: white;" padding></ion-icon></button></ion-buttons>\n\n  \n\n  </ion-navbar>\n\n \n\n</ion-header>\n\n<ion-content>\n\n\n\n    <ion-tabs tabsPlacement="top" #myTabs>\n\n        <ion-tab [root]="ViewList" tabTitle="{{\'Stock\'|translate}}" tabIcon="list-box"></ion-tab>\n\n        <ion-tab [root]="AddProd" tabTitle="{{\'Add Product\'|translate}}" tabIcon="pricetag"></ion-tab>\n\n        <ion-tab [root]="AddCat" tabTitle="{{\'Add Category\'|translate}}" tabIcon="albums"></ion-tab>\n\n  \n\n    \n\n       </ion-tabs>\n\n\n\n<!-- <ion-content>\n\n  <ion-grid>\n\n    <ion-row>\n\n      <ion-col>\n\n        <div>\n\n          <ion-list>\n\n            <ion-item>\n\n              <ion-label>Total</ion-label>\n\n            </ion-item>\n\n            <ion-item>\n\n              <ion-label>{{total}} USD</ion-label>\n\n            </ion-item>\n\n          </ion-list>\n\n        </div>\n\n      </ion-col>\n\n      <ion-col>\n\n        <div>\n\n          <ion-list>\n\n            <ion-item>\n\n              <ion-label>Items</ion-label>\n\n            </ion-item>\n\n            <ion-item>\n\n              <ion-label>{{count}} Pcs</ion-label>\n\n            </ion-item>\n\n          </ion-list>\n\n        </div>\n\n      </ion-col>\n\n      <ion-col>\n\n        <div>\n\n          <ion-list>\n\n            <ion-item>\n\n              <ion-label>VAT</ion-label>\n\n            </ion-item>\n\n            <ion-item>\n\n              <ion-label>{{vat}} USD</ion-label>\n\n            </ion-item>\n\n          </ion-list>\n\n        </div>\n\n      </ion-col>\n\n    </ion-row>\n\n  </ion-grid>\n\n\n\n  <ion-grid>\n\n    <ion-row>\n\n      <ion-col>\n\n        <button ion-button block color="primary" (click)="manual()">Manual Entry</button>\n\n      </ion-col>\n\n      <ion-col>\n\n        <button ion-button block color="primary" (click)="qrscan()">Sales QR Scan</button>\n\n      </ion-col>\n\n    </ion-row>\n\n  </ion-grid>\n\n\n\n  <ion-grid>\n\n    <ion-row>\n\n      <ion-col>\n\n        <button ion-button block color="secondary" (click)="addproduct()">Add Products</button>\n\n      </ion-col>\n\n      <ion-col>\n\n        <button ion-button block color="secondary" (click)="showproduct()">Show Products</button>\n\n      </ion-col>\n\n    </ion-row>\n\n    <ion-row>\n\n      <ion-col>\n\n        <button ion-button round block color="secondary" (click)="reset()">Reset</button>\n\n      </ion-col>\n\n    </ion-row>\n\n  </ion-grid>\n\n -->\n\n\n\n\n\n  \n\n\n\n\n\n<!-- \n\n  <ion-tabs tabsPlacement="top">\n\n    <ion-tab [root]="ListRoot" tabTitle="List" tabIcon="chat"></ion-tab>\n\n    <ion-tab [root]="AddRoot" tabTitle="Add" tabIcon="add"></ion-tab>\n\n   </ion-tabs> -->\n\n<!-- \n\n  <ion-footer>\n\n    <ion-toolbar>\n\n      <ion-title>Track💰2Make💰</ion-title>\n\n    </ion-toolbar>\n\n  </ion-footer> -->\n\n\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\dashboard\dashboard.html"*/
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */], __WEBPACK_IMPORTED_MODULE_8__providers_translation_translate_config_service__["a" /* TranslateConfigService */],
-            __WEBPACK_IMPORTED_MODULE_3__ionic_native_barcode_scanner__["a" /* BarcodeScanner */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
-            __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__["a" /* StorageProvider */],
-            __WEBPACK_IMPORTED_MODULE_5__providers_gettersetter_gettersetter__["a" /* GettersetterProvider */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */]])
-    ], DashboardPage);
-    return DashboardPage;
-}());
-
-//# sourceMappingURL=dashboard.js.map
-
 /***/ })
 
-},[253]);
+},[401]);
 //# sourceMappingURL=main.js.map

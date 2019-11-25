@@ -28,6 +28,7 @@
   "View User Profile":"View User Profile",
   "User Profile":"User Profile",
   "Update Profile": "Update Profile",
+  "Update profile successful": "Update profile successful",
   "Sl":"Sl",
   "Name":"Name",
   "Price":"Price",
@@ -108,5 +109,6 @@
   "Your account has been created successfully": "Your account has been created successfully",
   "Please wait - Uploading new image": "Please wait - Uploading new image",
   "Done uploading": "Done uploading",
-  "Changes Discarded":"Changes Discarded"
+  "Changes Discarded":"Changes Discarded",
+  "Printer Test":"Printer Test"
 }
