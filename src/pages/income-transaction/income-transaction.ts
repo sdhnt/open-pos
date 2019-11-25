@@ -313,8 +313,10 @@ qrscan(){
     this.taxrate=0;
     this.taxbtn=0;
     this.discbtn=0;
+    const message = this.translateConfigService.getTranslatedMessage('Receipt was cancelled')
     this.toastCtrl.create({
-      message: "ငွေလက်ခံဖြတ်ပိုင်းဖျက်သိမ်းခဲ့သည်",
+      // @ts-ignore
+      message: message.value,
       duration: 2000,
     }).present();
     
