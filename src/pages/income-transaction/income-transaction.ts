@@ -109,7 +109,7 @@ updateRec(){
   });
   totalDiscount += totalIndividualDiscount;
   this.lastsumAfterIndividualDiscount = this.lastsum - totalIndividualDiscount;
-  this.lastsumdisc = this.lastsum - totalDiscount;
+  this.lastsumdisc = (this.lastsum - totalDiscount)*((100-this.discount)/100);
   this.lastsumtax=this.lastsumdisc * (1.0 + (this.taxrate / 100));
 }
 
@@ -366,6 +366,12 @@ qrscan(){
           this.sp.updateProduct(data1, product.code).then(()=>{
           });
           data.discountlist.push(product.discount);
+          this.discountlist.push(product.discount)
+          console.log(this.discountlist)
+        }
+        else{
+          data.discountlist.push(product.discount);
+          this.discountlist.push(product.discount);
         }
       });
 
@@ -400,7 +406,7 @@ qrscan(){
     }
     (this.navCtrl.parent as Tabs).select(0);
   }
-
+discountlist=[];
   addCalc(){
 
     (this.navCtrl.parent as Tabs).select(0);

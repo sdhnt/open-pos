@@ -259,6 +259,10 @@ export class TransactionProductPage {
       });
     }
 
+    tempJSON.itemslist.forEach(element => {
+      element.discount=0;
+    });
+
     this.listProducts=[];
     this.calcitems=[];
     this.listArray= [];
