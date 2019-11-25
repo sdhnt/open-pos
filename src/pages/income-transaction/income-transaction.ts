@@ -29,7 +29,7 @@ export class IncomeTransactionPage {
     
     //console.log("Recieved -1" + this.navParams.get('itemslist'));
     this.getUserData();
-  
+
   }
 
   async delay(ms: number) {
@@ -82,13 +82,7 @@ async getUserData(){
       var JSONitems=JSON.parse(data);
       this.datastore=JSONitems;
       console.log(this.datastore.itemslist)
-      this.lastsum=0;
-      for(let i = 0; i < this.datastore.itemslist.length; i++){
-        this.lastsum  = this.lastsum + (this.datastore.itemslist[i].price*this.datastore.itemslist[i].qty);
-        console.log(this.lastsum)
-      }
-      this.lastsumdisc=this.lastsum*(1.0-(this.discount/100));
-      this.lastsumtax=this.lastsumdisc*(1.0+(this.taxrate/100)); 
+      this.updateRec();
     });
   
 }
@@ -152,12 +146,7 @@ qrscan(){
         // }
         this.datastore.itemslist.push(curprod)
         //this.lastsum=this.lastsum+curprod.price;
-        this.lastsum=0;
-        for(let i = 0; i < this.datastore.itemslist.length; i++){
-               this.lastsum  = this.lastsum + (this.datastore.itemslist[i].price*this.datastore.itemslist[i].qty);
-           }
-           this.lastsumdisc=this.lastsum*(1.0-(this.discount/100));
-            this.lastsumtax=this.lastsumdisc*(1.0+(this.taxrate/100));  
+        this.updateRec();
 
       
       }else{
@@ -214,12 +203,7 @@ qrscan(){
 
     var rem=this.datastore.itemslist.splice(index,1);
 
-    this.lastsum=0;
-    for(let i = 0; i < this.datastore.itemslist.length; i++){
-      this.lastsum  = this.lastsum + (this.datastore.itemslist[i].price*this.datastore.itemslist[i].qty);
-    }
-    this.lastsumdisc=this.lastsum*(1.0-(this.discount/100)); 
-    this.lastsumtax=this.lastsumdisc*(1.0-(this.taxrate/100)); 
+    this.updateRec();
     console.log("I: "+ index)
     console.log(this.datastore.itemslist[index])
     }
@@ -228,12 +212,7 @@ qrscan(){
     //this.lastsum=this.lastsum+this.datastore.itemslist[index].price;
     this.datastore.itemslist[index].qty=parseInt(this.datastore.itemslist[index].qty)+1;  
 
-    this.lastsum=0;
-    for(let i = 0; i < this.datastore.itemslist.length; i++){
-      this.lastsum  = this.lastsum + (this.datastore.itemslist[i].price*this.datastore.itemslist[i].qty);
-    }
-    this.lastsumdisc=this.lastsum*(1.0-(this.discount/100)); 
-    this.lastsumtax=this.lastsumdisc*(1.0-(this.taxrate/100)); 
+    this.updateRec();
   }
 
   removeQty(index){
@@ -243,12 +222,7 @@ qrscan(){
       this.removeItem(index);
     }
 
-    this.lastsum=0;
-    for(let i = 0; i < this.datastore.itemslist.length; i++){
-      this.lastsum  = this.lastsum + (this.datastore.itemslist[i].price*this.datastore.itemslist[i].qty);
-    }
-    this.lastsumdisc=this.lastsum*(1.0-(this.discount/100)); 
-    this.lastsumtax=this.lastsumdisc*(1.0-(this.taxrate/100)); 
+    this.updateRec();
   }
 
   newItemName: string="";
@@ -273,12 +247,7 @@ qrscan(){
     this.newUnitPrice=null;
     this.newUnitQty=null;
 
-    this.lastsum=0;
-    for(let i = 0; i < this.datastore.itemslist.length; i++){
-      this.lastsum  = this.lastsum + (this.datastore.itemslist[i].price*this.datastore.itemslist[i].qty);
-    }
-    this.lastsumdisc=this.lastsum*(1.0-(this.discount/100)); 
-    this.lastsumtax=this.lastsumdisc*(1.0-(this.taxrate/100)); 
+    this.updateRec();
   }
 
 
