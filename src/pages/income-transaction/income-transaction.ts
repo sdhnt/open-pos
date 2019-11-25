@@ -109,8 +109,8 @@ updateRec(){
   });
   totalDiscount += totalIndividualDiscount;
   this.lastsumAfterIndividualDiscount = this.lastsum - totalIndividualDiscount;
-  this.lastsumdisc = (this.lastsum - totalDiscount)*((100-this.discount)/100);
-  this.lastsumtax=this.lastsumdisc * (1.0 + (this.taxrate / 100));
+  this.lastsumdisc = Math.round((this.lastsum - totalDiscount)*((100-this.discount)/100)*100)/100  ;
+  this.lastsumtax=Math.round(this.lastsumdisc * (1.0 + (this.taxrate / 100))*100)/100;
 }
 
 setTax(){
