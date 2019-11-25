@@ -24,7 +24,7 @@
     "@angular/platform-browser": "5.2.11",
     "@angular/platform-browser-dynamic": "5.2.11",
     "@ionic-native/barcode-scanner": "^4.20.0",
-    "@ionic-native/bluetooth-serial": "^5.17.0",
+    "@ionic-native/bluetooth-serial": "^4.20.0",
     "@ionic-native/camera": "^4.20.0",
     "@ionic-native/core": "~4.20.0",
     "@ionic-native/date-picker": "^4.20.0",

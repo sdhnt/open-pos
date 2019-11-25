@@ -23,7 +23,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateConfigService } from '../providers/translation/translate-config.service';
-import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
+import { BluetoothSerial} from '@ionic-native/bluetooth-serial';
 import { PrinterProvider } from './../providers/printer/printer';
 
 import * as firebase from 'firebase';
@@ -59,7 +59,7 @@ import { TransactionProductPageModule } from '../pages/transaction-product/trans
 import { ProductListPageModule } from '../pages/product-list/product-list.module';
 import { ExpensesHomePageModule } from '../pages/expenses-home/expenses-home.module';
 import { UserProfilePageModule} from "../pages/user-profile/user-profile.module";
-import  {PrinterTestPageModule} from "../pages/printer-test/printer-test.module"
+import  {PrinterTestPageModule} from "../pages/printer-test/printer-test.module";
 
 
 // var config = {
