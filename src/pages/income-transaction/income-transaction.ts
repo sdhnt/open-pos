@@ -7,6 +7,10 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { ThrowStmt } from '@angular/compiler';
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import { TransactionHomePage } from '../transaction-home/transaction-home';
+;import {  AlertController,  LoadingController} from 'ionic-angular';
+import {  PrinterProvider } from './../../providers/printer/printer';
+import {  commands } from './../../providers/printer/printer-commands';
+import EscPosEncoder from 'esc-pos-encoder-ionic';
 
 /**
  * Generated class for the IncomeTransactionPage page.
@@ -25,7 +29,12 @@ export class IncomeTransactionPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, 
     public sp: StorageProvider, public toastCtrl: ToastController, private translateConfigService: TranslateConfigService,
-    private barcodeScanner: BarcodeScanner) {
+    private barcodeScanner: BarcodeScanner,
+    private printer: PrinterProvider,
+    private alertCtrl: AlertController,
+    private loadCtrl: LoadingController,
+    
+    ) {
     
     //console.log("Recieved -1" + this.navParams.get('itemslist'));
     this.getUserData();
@@ -41,7 +50,6 @@ export class IncomeTransactionPage {
 taxbtn=0;
 
 userdata: any = {business_address: "",
-
   business_name: "",
   cash_balance: "",
   currency: "",
@@ -452,13 +460,253 @@ qrscan(){
   }
 
   printRec(){
-    const message = this.translateConfigService.getTranslatedMessage('This feature will open shortly');
-    this.toastCtrl.create({
-      // @ts-ignore
-      message: message.value,
-      duration: 2000,
-    }).present();
 
+    if(this.datastore.itemslist.length==0){     
+    }
+    else{
+        const data = {
+          "itemslist": this.datastore.itemslist,
+          "totalsum": this.lastsum,
+          "prodidlist": this.prodidlist,
+          "pnllist": this.pnllist,
+          "datetime": this.datetime,
+          "taxrate": this.taxrate,
+          "discountlist": this.discountlist,
+          "discount": this.discount,
+          "totaldisc": this.lastsumdisc,
+          "totalatax":this.lastsumtax,
+        };
+  
+        this.datastore.itemslist.forEach(product => {
+          if(product.code!="000000"){
+            const data1 = {
+              "code": product.code,
+              "name": product.name,
+              "price": product.price,
+              "cost": product.cost,
+              "cat": product.cat,
+              "url": product.url,
+              "stock_qty":(product.stock_qty-product.qty),
+            }
+            this.sp.updateProduct(data1, product.code).then(()=>{
+            })
+          }
+        });
+
+        this.sp.storageReady().then(() => {
+          console.log(data)
+          this.sp.addTransactions(data);
+          this.updateCb(this.lastsum).then(()=>{this.events.publish('cbUpdate:created', 0);});
+          this.sp.backupStorage();
+          this.prepareToPrint()
+        
+      
+        
+        });
+      }
+    }
+
+
+
+    ///////////////////////
+
+
+
+    
+  receipt: any;
+  inputData: any = {};
+
+  showToast(data) {
+    let toast = this.toastCtrl.create({
+      duration: 3000,
+      message: data,
+      position: 'bottom',
+    });
+    toast.present();
+  }
+  print(device, data) {
+    console.log('Device mac: ', device);
+    console.log('Data: ', JSON.stringify(data));
+    let load = this.loadCtrl.create({
+      content: 'Printing...',
+    });
+    load.present();
+    this.printer.connectBluetooth(device).subscribe(
+      (status) => {
+        console.log(status);
+        this.printer
+          .printData(data)
+          .then((printStatus) => {
+            console.log(printStatus);
+            let alert = this.alertCtrl.create({
+              title: 'Successful print!',
+              buttons: [{
+                text: 'Ok',
+                handler: () => {
+                  load.dismiss();
+                  this.printer.disconnectBluetooth();
+                },
+              }, ],
+            });
+            this.datastore.itemslist=[];
+            this.lastsum=0;
+            this.lastsumtax=0;
+            this.lastsumdisc=0;
+            this.discount=0;
+            this.taxrate=0;
+            this.taxbtn=0;
+            this.discbtn=0;
+            alert.present();
+            (this.navCtrl.parent as Tabs).select(0);
+            
+          })
+          .catch((error) => {
+            console.log(error);
+            let alert = this.alertCtrl.create({
+              title: 'There was an error printing, please try again!',
+              buttons: [{
+                text: 'Ok',
+                handler: () => {
+                  load.dismiss();
+                  //this.printer.disconnectBluetooth();
+                },
+              }, ],
+            });
+            alert.present();
+          });
+      },
+      (error) => {
+        console.log(error);
+        let alert = this.alertCtrl.create({
+          title: 'There was an error connecting to the printer, please try again!',
+          buttons: [{
+            text: 'Ok',
+            handler: () => {
+              load.dismiss();
+              //this.printer.disconnectBluetooth();
+            },
+          }, ],
+        });
+        alert.present();
+      },
+    );
+  }
+
+  prepareToPrint() {
+    /*
+        let receipt = '';
+        receipt += commands.HARDWARE.HW_INIT;
+        receipt += commands.TEXT_FORMAT.TXT_4SQUARE;
+        receipt += commands.TEXT_FORMAT.TXT_ALIGN_CT;
+        receipt += data.title.toUpperCase();
+        receipt += commands.EOL;
+        receipt += commands.TEXT_FORMAT.TXT_NORMAL;
+        receipt += commands.HORIZONTAL_LINE.HR_58MM;
+        receipt += commands.EOL;
+        receipt += commands.HORIZONTAL_LINE.HR2_58MM;
+        receipt += commands.EOL;
+        receipt += commands.TEXT_FORMAT.TXT_ALIGN_LT;
+        receipt += data.text;
+        //secure space on footer
+        receipt += commands.EOL;
+        receipt += commands.EOL;
+        receipt += commands.EOL;*/
+    //this.receipt = receipt;
+    const encoder = new EscPosEncoder();
+    const result = encoder.initialize();
+
+    result
+      .codepage('cp936')
+      .align('center')
+      .raw(commands.TEXT_FORMAT.TXT_4SQUARE)
+      .line(this.userdata.business_name)
+      .newline()
+      .raw(commands.TEXT_FORMAT.TXT_NORMAL)
+      .line(this.userdata.business_address)
+      .newline()
+      .line(this.userdata.ph_no)
+      .newline()
+      .text(commands.HORIZONTAL_LINE.HR_58MM)
+      .newline();
+      if(this.datastore!=null){
+        result.align('left')
+        this.datastore.itemslist.forEach(element => {
+          result.text(element.name)
+          .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+          .text(element.qty)
+          .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+          .text(element.price)
+          .line("Hello World!")
+        });
+         result.newline()
+         .line("Total: "+ this.lastsum)
+      }
+    
+      
+
+      result.raw(commands.TEXT_FORMAT.TXT_4SQUARE)
+      .newline()
+      .line("")
+      .newline()
+      .line("")
+      .newline().cut('full');
+
+
+    this.mountAlertBt(result.encode());
+  }
+
+  mountAlertBt(data) {
+
+    this.receipt = data;
+    console.log(this.receipt)
+    let alert = this.alertCtrl.create({
+      title: 'Select your printer',
+      buttons: [{
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
+          text: 'Select printer',
+          handler: (device) => {
+            if (!device) {
+              this.showToast('Select a printer!');
+              return false;
+            }
+            console.log(device);
+            this.print(device, this.receipt);
+          },
+        },
+      ],
+    });
+
+    this.printer.enableBluetooth().then(() => {
+        this.printer
+          .searchBluetooth()
+          .then((devices) => {
+            devices.forEach((device) => {
+              console.log('Devices: ', JSON.stringify(device));
+              alert.addInput({
+                name: 'printer',
+                value: device.address,
+                label: device.name,
+                type: 'radio',
+              });
+            });
+            alert.present();
+          })
+          .catch((error) => {
+            console.log(error);
+            this.showToast(
+              'There was an error connecting the printer, please try again!',
+            );
+            this.mountAlertBt(this.receipt);
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+        this.showToast('Error activating bluetooth, please try again!');
+        this.mountAlertBt(this.receipt);
+      });
   }
 
 }

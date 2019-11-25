@@ -59,7 +59,6 @@ import { TransactionProductPageModule } from '../pages/transaction-product/trans
 import { ProductListPageModule } from '../pages/product-list/product-list.module';
 import { ExpensesHomePageModule } from '../pages/expenses-home/expenses-home.module';
 import { UserProfilePageModule} from "../pages/user-profile/user-profile.module";
-import  {PrinterTestPageModule} from "../pages/printer-test/printer-test.module";
 
 
 // var config = {
@@ -128,7 +127,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     UserProfilePageModule,
     ReactiveFormsModule,
     HttpClientModule,
-    PrinterTestPageModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

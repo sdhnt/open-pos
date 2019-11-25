@@ -305,7 +305,7 @@ export class StorageProvider {
   addTransactions(data) {
     this.storage.ready().then(() => {
       this.storage.get('transactions').then((val) => {
-        console.log(val);
+        //console.log(val);
         if (val === null) {
           this.storage.set('transactions', "[]").then(() => {
             this.storage.get('transactions').then((valNull) => {
