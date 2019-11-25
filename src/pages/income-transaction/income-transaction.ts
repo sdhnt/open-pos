@@ -79,9 +79,10 @@ async getUserData(){
       this.events.subscribe('genRec:created',(data) => {
       console.log("ENTERED!");
       console.log("Received 0 " + data);
-      var JSONitems=JSON.parse(data);
-      this.datastore=JSONitems;
-      console.log(this.datastore.itemslist)
+      this.datastore = JSON.parse(data);
+      this.datastore.itemslist.forEach((item) => {
+        item.discount = 0;
+      });
       this.updateRec();
     });
   
@@ -144,7 +145,8 @@ qrscan(){
         //     this.lastsum  = this.lastsum + (this.datastore.itemslist[i].price*this.datastore.itemslist[i].qty);
         //   }
         // }
-        this.datastore.itemslist.push(curprod)
+        curprod.discount = 0;
+        this.datastore.itemslist.push(curprod);
         //this.lastsum=this.lastsum+curprod.price;
         this.updateRec();
 
@@ -229,26 +231,29 @@ qrscan(){
   newUnitPrice: number=null;
   newUnitQty: number=null;
   newItemCat: string="";
+  newItemDiscount: number=null;
 
   addNewItem(){
 
     if(this.newItemName!="" && this.newUnitPrice!=null && this.newUnitQty!=null){
 
-    var newitem={
-      code: "000000",
-      name: this.newItemName,
-      price: this.newUnitPrice,
-      qty: this.newUnitQty,
+      const newitem = {
+        code: "000000",
+        name: this.newItemName,
+        price: this.newUnitPrice,
+        qty: this.newUnitQty,
+        discount: this.newItemDiscount ? this.newItemDiscount : 0
+      };
+
+      this.datastore.itemslist.push(newitem);
+      this.newItemCat="";
+      this.newItemName="";
+      this.newUnitPrice=null;
+      this.newUnitQty=null;
+      this.newItemDiscount = null;
+
+      this.updateRec();
     }
-
-    this.datastore.itemslist.push(newitem);
-    this.newItemCat="";
-    this.newItemName="";
-    this.newUnitPrice=null;
-    this.newUnitQty=null;
-
-    this.updateRec();
-  }
 
 
   }
@@ -282,7 +287,7 @@ qrscan(){
     this.taxrate=0;
     this.taxbtn=0;
     this.discbtn=0;
-    const message = this.translateConfigService.getTranslatedMessage('Receipt was cancelled')
+    const message = this.translateConfigService.getTranslatedMessage('Receipt was cancelled');
     this.toastCtrl.create({
       // @ts-ignore
       message: message.value,
@@ -295,7 +300,6 @@ qrscan(){
   pnllist: any=[];
   datetime = Date.now();
   tax_vat: any = [];
-  discountlist: any=[];
 
 
   updateProduct(){
@@ -319,14 +323,14 @@ qrscan(){
     if(this.datastore.itemslist.length==0){     
     }
     else{
-      const data = {
+      let data = {
         "itemslist": this.datastore.itemslist,
         "totalsum": this.lastsum,
         "prodidlist": this.prodidlist,
         "pnllist": this.pnllist,
         "datetime": this.datetime,
         "taxrate": this.taxrate,
-        "discountlist": this.discountlist,
+        "discountlist": [],
         "discount": this.discount,
         "totaldisc": this.lastsumdisc,
         "totalatax":this.lastsumtax,
@@ -342,9 +346,10 @@ qrscan(){
             "cat": product.cat,
             "url": product.url,
             "stock_qty":(product.stock_qty-product.qty),
-          }
+          };
           this.sp.updateProduct(data1, product.code).then(()=>{
-          })
+          });
+          data.discountlist.push(product.discount);
         }
       });
 
