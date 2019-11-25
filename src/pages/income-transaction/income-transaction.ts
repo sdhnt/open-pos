@@ -630,15 +630,27 @@ qrscan(){
       .newline();
       if(this.datastore!=null){
         result.align('left')
-        this.datastore.itemslist.forEach(element => {
-          result.text(element.name)
+         .raw(commands.FEED_CONTROL_SEQUENCES.RST_HT)
+         .raw(commands.FEED_CONTROL_SEQUENCES.SET_HT)
+         .text("Sl ").raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+         .text("Item Name ")
+         .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+         .text("Qty ")
+         .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+         .text("Price")
+         .newline()
+         
+        this.datastore.itemslist.forEach((element, index) => {
+          result.text((index+1)+" ").raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+          .text(element.name +" ", 30)
           .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
-          .text(element.qty)
+          .text(element.qty+" ")
           .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
-          .text(element.price)
-          .line("Hello World!")
+          .text(element.price+" ")
+          .newline()
         });
          result.newline()
+         result.align('right')
          .line("Total: "+ this.lastsum)
       }
     

@@ -22,7 +22,9 @@ export const commands = {
     CTL_FF: [0x0c], // Form feed
     CTL_CR: [0x0d], // Carriage return
     CTL_HT: [0x09], // Horizontal tab
-    CTL_VT: [0x0b], // Vertical tab
+    CTL_VT: [0x0b], // Vertical tab 
+    RST_HT: [0x1b,0x44,0x00], //Reset HT
+    SET_HT: [0x1b,0x44,0x05,0x23,0x28,0x00], //Set HT
   },
   LINE_SPACING: {
     LS_DEFAULT: [0x1b,0x32],
