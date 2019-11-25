@@ -47,6 +47,13 @@
               <ion-col col-1 style="color: black;   text-align: center;"><ion-icon name="remove" style=" color: red" (click)="removeQty(i)"></ion-icon></ion-col>
               <ion-col col-1 style="color: black;   text-align: center;"><ion-icon name="close" style=" color: red" (click)="removeItem(i)"></ion-icon></ion-col>
           </ion-row>
+          <ion-row>
+            <ion-col col-1></ion-col>
+            <ion-col col-4 style="color: grey">{{ 'Discount' | translate }}</ion-col>
+            <ion-col col-4>
+              <ion-input type="number" [(ngModel)]="item.discount" (ionChange)="updateRec()" min="0" max="100"></ion-input>
+            </ion-col>
+          </ion-row>
           <!-- <ion-row>
           <ion-col col-12 style="text-align: center"><ion-icon name="cut" style=" color: maroon"></ion-icon></ion-col>
           </ion-row> -->
@@ -54,7 +61,7 @@
         <ion-row padding>
             <ion-col col-1></ion-col>  
           <ion-col col-4 style="text-align: center; font-size: 1.0rem; "><b>{{"Grand total:"|translate}}</b> </ion-col>
-            <ion-col col-2 style="text-align: center; ">{{lastsum}} </ion-col>
+            <ion-col col-2 style="text-align: center; ">{{lastsumAfterIndividualDiscount}} </ion-col>
             <ion-col col-5></ion-col>
           </ion-row>
 
@@ -65,7 +72,7 @@
           <ion-row *ngIf="discbtn==1">
             <ion-col col-5>   <ion-label style="font-size: 1.0rem;">{{"Discount Rate %:"|translate}}</ion-label></ion-col>
             <ion-col col-7>
-                <ion-input type="number" placeholder="အရေအတွက်" [(ngModel)]="discount" style="font-size: 1.3rem; " (input)="updateRec()" ngDefaultControl>
+                <ion-input type="number" placeholder="အရေအတွက်" [(ngModel)]="discount" style="font-size: 1.3rem; " (input)="updateRec()" ngDefaultControl min="0" max="100">
                   </ion-input>
             </ion-col>       
           </ion-row>
@@ -87,7 +94,7 @@
             <ion-row *ngIf="taxbtn==1">
                 <ion-col col-5>   <ion-label style="font-size: 1.0rem;">{{"Tax Rate %:"|translate}}</ion-label></ion-col>
                 <ion-col col-7>
-                    <ion-input type="number" placeholder="အရေအတွက်" [(ngModel)]="taxrate" style="font-size: 1.3rem;" (input)="updateRec()" ngDefaultControl>
+                    <ion-input type="number" placeholder="အရေအတွက်" [(ngModel)]="taxrate" style="font-size: 1.3rem;" (input)="updateRec()" ngDefaultControl min="0" max="100">
                       </ion-input>
                 </ion-col>       
               </ion-row>
@@ -135,6 +142,10 @@
                       <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>    
                   </ion-select>
                 </ion-item> -->
+         <ion-item>
+           <ion-label style="font-size: 1.0rem;">{{"Discount"|translate}}</ion-label>
+           <ion-input type="number" placeholder="{{'Enter Discount'|translate}}" [(ngModel)]="newItemDiscount" ngDefaultControl></ion-input>
+         </ion-item>
                 <button ion-button style="font-size: 1.0rem;" full (click)="addNewItem()"> {{"Add Product"|translate}} </button>
               </div>
   </ion-card>
