@@ -10,5 +10,6 @@ import { TranslateModule } from "@ngx-translate/core";
     IonicPageModule.forChild(ProductListPage),
     TranslateModule.forChild(),
   ],
+  exports: [ProductListPage]
 })
 export class ProductListPageModule {}
