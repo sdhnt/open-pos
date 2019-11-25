@@ -58,8 +58,7 @@ import { SummaryHomePageModule } from '../pages/summary-home/summary-home.module
 import { TransactionProductPageModule } from '../pages/transaction-product/transaction-product.module';
 import { ProductListPageModule } from '../pages/product-list/product-list.module';
 import { ExpensesHomePageModule } from '../pages/expenses-home/expenses-home.module';
-import { UserProfilePageModule} from "../pages/user-profile/user-profile.module";
-
+import { UserProfilePageModule } from "../pages/user-profile/user-profile.module";
 
 // var config = {
 //   apiKey: "AIzaSyADjIbI3_GRS4eRHGVGFsT2hrkKvH9K06M",
