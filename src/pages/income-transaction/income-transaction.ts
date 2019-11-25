@@ -91,11 +91,17 @@ temp;
 
 updateRec(){
   this.lastsum=0;
-  for(let i = 0; i < this.datastore.itemslist.length; i++){
-         this.lastsum  = this.lastsum + (this.datastore.itemslist[i].price*this.datastore.itemslist[i].qty);
-     }
-     this.lastsumdisc=this.lastsum*(1.0-(this.discount/100));
-     this.lastsumtax=this.lastsumdisc*(1.0+(this.taxrate/100));  
+  let totalDiscount = 0;
+  this.datastore.itemslist.forEach(item => {
+    if (item.discount != 0) {
+      totalDiscount += item.price * item.discount / 100 * item.qty;
+    } else {
+      totalDiscount += item.price * this.discount / 100 * item.qty;
+    }
+    this.lastsum += item.price * item.qty;
+  });
+  this.lastsumdisc = this.lastsum - totalDiscount;
+  this.lastsumtax=this.lastsumdisc * (1.0 + (this.taxrate / 100));
 }
 
 setTax(){
