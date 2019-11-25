@@ -91,15 +91,17 @@ temp;
 
 updateRec(){
   this.lastsum=0;
-  let totalDiscount = 0;
+  let totalDiscount = 0, totalIndividualDiscount = 0;
   this.datastore.itemslist.forEach(item => {
     if (item.discount != 0) {
-      totalDiscount += item.price * item.discount / 100 * item.qty;
+      totalIndividualDiscount += item.price * item.discount / 100 * item.qty;
     } else {
       totalDiscount += item.price * this.discount / 100 * item.qty;
     }
     this.lastsum += item.price * item.qty;
   });
+  totalDiscount += totalIndividualDiscount;
+  this.lastsumAfterIndividualDiscount = this.lastsum - totalIndividualDiscount;
   this.lastsumdisc = this.lastsum - totalDiscount;
   this.lastsumtax=this.lastsumdisc * (1.0 + (this.taxrate / 100));
 }
@@ -193,6 +195,7 @@ qrscan(){
   itemsprice: string[] = [] ;
   ctr=0;
   lastsum=0;
+  lastsumAfterIndividualDiscount = 0;
   lastchar="NIL"
   lastdigit=0;
 
