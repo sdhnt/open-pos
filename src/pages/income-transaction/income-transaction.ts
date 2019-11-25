@@ -4,7 +4,6 @@ import { AllTransactionPage } from '../all-transaction/all-transaction';
 import firebase from 'firebase';
 import { StorageProvider } from '../../providers/storage/storage';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-import { ThrowStmt } from '@angular/compiler';
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import { TransactionHomePage } from '../transaction-home/transaction-home';
 ;import {  AlertController,  LoadingController} from 'ionic-angular';

@@ -1,7 +1,6 @@
 import { Injectable, ViewChild } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import firebase from 'firebase';
-import { ThrowStmt, unescapeIdentifier } from '@angular/compiler';
 import { convertDataToISO } from 'ionic-angular/umd/util/datetime-util';
 import { LoginPage } from '../../pages/login/login';
 import { ToastController, NavController, Nav } from 'ionic-angular';
