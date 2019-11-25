@@ -101,14 +101,12 @@ updateRec(){
   let totalDiscount = 0, totalIndividualDiscount = 0;
   this.datastore.itemslist.forEach(item => {
     if (item.discount != 0) {
-      totalIndividualDiscount += item.price * item.discount / 100 * item.qty;
-    } else {
-      totalDiscount += item.price * this.discount / 100 * item.qty;
+      totalIndividualDiscount += Math.round(item.price * item.discount / 100 * item.qty*100)/100;
     }
     this.lastsum += item.price * item.qty;
   });
   totalDiscount += totalIndividualDiscount;
-  this.lastsumAfterIndividualDiscount = this.lastsum - totalIndividualDiscount;
+  this.lastsumAfterIndividualDiscount = Math.round(this.lastsum - totalIndividualDiscount*100)/100;
   this.lastsumdisc = Math.round((this.lastsum - totalDiscount)*((100-this.discount)/100)*100)/100  ;
   this.lastsumtax=Math.round(this.lastsumdisc * (1.0 + (this.taxrate / 100))*100)/100;
 }
