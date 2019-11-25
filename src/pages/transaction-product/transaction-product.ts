@@ -43,6 +43,7 @@ export class TransactionProductPage {
               if(element1.name==element.name)
               {
                 element1.qty=element.qty;
+                element1.discount=element.discount;
               }
             });
           }
@@ -119,12 +120,6 @@ export class TransactionProductPage {
     })
   }
 
-  // backBtn(){
-  //     //Hide back btn if src is tab
-  //     this.navCtrl.pop();
-
-  // }
-
   tempprodlist: any = [{}];
 
   addUp(index) {
@@ -171,7 +166,7 @@ export class TransactionProductPage {
     this.filteredList = this.listProducts.filter(
       (item) => {
         //console.log(this.searchterm);
-        console.log(item);
+        //console.log(item);
         if (item.name.toLowerCase().includes(this.searchterm.toLowerCase())) {
 
           if (this.selectedCat.length > 0) {
@@ -192,6 +187,7 @@ export class TransactionProductPage {
     var tempqty=this.recitemslist[this.index].qty;
     this.recitemslist[this.index]=product;
     this.recitemslist[this.index].qty=tempqty;
+    //this.recitemslist[this.index].discount=
 
     var tempJSON = { "itemslist": this.recitemslist, };
 
@@ -260,7 +256,10 @@ export class TransactionProductPage {
     }
 
     tempJSON.itemslist.forEach(element => {
-      element.discount=0;
+      if(element.discount)
+      {}
+      else
+      {element.discount=0;}
     });
 
     this.listProducts=[];

@@ -42,6 +42,7 @@ export class AllTransactionPage {
         this.itemsname.push(element.name)
         this.itemsprice.push(element.price);
         this.itemsqty.push(element.qty)
+        this.loitems.push(element);
         
       });
       console.log(this.itemsprice)
@@ -51,6 +52,7 @@ export class AllTransactionPage {
    
   }
   itemsname: string[] = [];
+  loitems: any =[];
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AllTransactionPage');
@@ -114,10 +116,8 @@ async getUserData(){
 
       if(this.itemsname.length>0 && index<this.itemsname.length){
         tempJSON.itemslist.push(
-          {'name': this.itemsname[index],
-          'price': parseInt(element),
-          'qty': this.itemsqty[index],
-          }) 
+          this.loitems[index]
+          ) 
 
       }
       else{
@@ -154,6 +154,7 @@ async getUserData(){
     this.itemsname=[];
     this.itemsprice=[];this.lastsum=0;
     this.itemsqty=[];
+    this.loitems=[];
   
   }
   
@@ -258,6 +259,7 @@ async getUserData(){
       this.result="Input Error!"
       this.itemsprice=[];this.lastsum=0;
       this.itemsqty=[];
+      this.loitems=[];
       
     }
     finally {

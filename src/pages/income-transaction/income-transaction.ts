@@ -87,9 +87,9 @@ async getUserData(){
       console.log("ENTERED!");
       console.log("Received 0 " + data);
       this.datastore = JSON.parse(data);
-      this.datastore.itemslist.forEach((item) => {
-        item.discount = 0;
-      });
+      // this.datastore.itemslist.forEach((item) => {
+      //   //item.discount = 0;
+      // });
       this.updateRec();
     });
   
@@ -303,6 +303,7 @@ qrscan(){
     this.taxrate=0;
     this.taxbtn=0;
     this.discbtn=0;
+    this.updateRec();
     const message = this.translateConfigService.getTranslatedMessage('Receipt was cancelled');
     this.toastCtrl.create({
       // @ts-ignore
