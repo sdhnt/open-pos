@@ -32,6 +32,8 @@ import { SignUpPageModule } from '../pages/sign-up/sign-up.module';
 import { TransactionHomePageModule } from "../pages/transaction-home/transaction-home.module";
 import { DashboardPageModule } from "../pages/dashboard/dashboard.module";
 import { AddProductPageModule } from "../pages/addproduct/addproduct.module";
+import { SingleProductPage } from '../pages/singleproduct/singleproduct';
+import { SingleProductPageModule } from '../pages/singleproduct/singleproduct.module';
 
 // var config = {
 //   apiKey: "AIzaSyADjIbI3_GRS4eRHGVGFsT2hrkKvH9K06M",
@@ -79,6 +81,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TransactionHomePageModule,
     DashboardPageModule,
     AddProductPageModule,
+    SingleProductPageModule,
     ReactiveFormsModule,
     HttpClientModule,
     TranslateModule.forRoot({
@@ -97,6 +100,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     TransactionHomePage,
     DashboardPage,
     AddProductPage,
+    SingleProductPage,
+
   ],
   providers: [
     StatusBar,   

@@ -25,6 +25,7 @@ export class MyApp {
 
   rootPage: any = LoginPage;
 
+  language: "en"
   pages: Array<{title: string, component: any}>;
 
   constructor(public app: App, public platform: Platform, public statusBar: StatusBar, private translateService: TranslateService,
