@@ -11,5 +11,6 @@ import { TranslateModule } from "@ngx-translate/core";
     IonicPageModule.forChild(CoachBusinesstipsPage),
     TranslateModule.forChild(),
   ],
+  exports: [CoachBusinesstipsPage]
 })
 export class CoachBusinesstipsPageModule {}

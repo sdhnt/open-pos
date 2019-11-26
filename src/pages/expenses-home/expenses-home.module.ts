@@ -11,5 +11,6 @@ import { TranslateModule } from "@ngx-translate/core";
     IonicPageModule.forChild(ExpensesHomePage),
     TranslateModule.forChild(),
   ],
+  exports: [ExpensesHomePage]
 })
 export class ExpensesHomePageModule {}

@@ -10,5 +10,6 @@ import { TranslateModule } from "@ngx-translate/core";
     IonicPageModule.forChild(SummaryHomePage),
     TranslateModule.forChild(),
   ],
+  exports: [SummaryHomePage]
 })
 export class SummaryHomePageModule {}
