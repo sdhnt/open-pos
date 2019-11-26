@@ -126,7 +126,7 @@ async getUserData(){
           'code': '000000',
           'cat': 'NIL',
           'stock_qty': 0,
-          'name': "ထုတ်ကုန်",
+          'name': "Item",
           'price': parseInt(element),
           'qty': this.itemsqty[index],
           'discount':0,

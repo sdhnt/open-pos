@@ -36,7 +36,7 @@
           <ion-row>
               <ion-col col-1 style="color: black; text-align: center;">{{i+1}}.</ion-col>
               <ion-col col-4 style="color: black; text-align: center;">
-                <div *ngIf="item.name=='ထုတ်ကုန်'; else itemexist">
+                <div *ngIf="item.name=='Item'; else itemexist">
                   <button ion-button small (click)="addSingleProd(item,i)">{{"Choose"|translate}}</button>
                 </div>
                 <ng-template #itemexist>{{item.name}}</ng-template>

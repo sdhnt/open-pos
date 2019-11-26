@@ -101,14 +101,17 @@ updateRec(){
   let totalDiscount = 0, totalIndividualDiscount = 0;
   this.datastore.itemslist.forEach(item => {
     if (item.discount != 0) {
-      totalIndividualDiscount += Math.round(item.price * item.discount / 100 * item.qty*100)/100;
+      totalIndividualDiscount += item.price * item.discount / 100 * item.qty;
+      console.log(totalIndividualDiscount);
     }
     this.lastsum += item.price * item.qty;
   });
   totalDiscount += totalIndividualDiscount;
-  this.lastsumAfterIndividualDiscount = Math.round(this.lastsum - totalIndividualDiscount*100)/100;
-  this.lastsumdisc = Math.round((this.lastsum - totalDiscount)*((100-this.discount)/100)*100)/100  ;
-  this.lastsumtax=Math.round(this.lastsumdisc * (1.0 + (this.taxrate / 100))*100)/100;
+  console.log(this.lastsum+" "+totalDiscount)
+  this.lastsumAfterIndividualDiscount = this.lastsum - totalIndividualDiscount;
+  console.log(this.lastsum+ " "+this.lastsumAfterIndividualDiscount)
+  this.lastsumdisc = Math.round((this.lastsum - totalDiscount)*((100-this.discount)/100)   *100)/100 ;
+  this.lastsumtax=Math.round(this.lastsumdisc * (1.0 + (this.taxrate / 100))  *100)/100;
 }
 
 setTax(){
@@ -637,10 +640,25 @@ discountlist=[];
           .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
           .text(element.price+" ")
           .newline()
+          if(parseInt(element.discount)!=0){
+          result.text(" ").raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+          .text("Discount ("+element.discount+"%) :", 30)
+          .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+          .text(" ")
+          .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+          .text("-"+Math.round((element.price)*(parseInt(element.discount)*element.qty))/100)
+          .newline()
+          }
         });
          result.newline()
          result.align('right')
-         .line("Total: "+ this.lastsum)
+         .line("Total: "+ this.lastsumAfterIndividualDiscount)
+         if(this.lastsumAfterIndividualDiscount!=this.lastsumdisc){
+          result.line(" After Discount (" + this.discount+ "%): "+ this.lastsumdisc)
+         }
+         if(this.lastsumAfterIndividualDiscount!=this.lastsumtax){
+          result.line("After Tax (" + this.taxrate+ "%): "+ this.lastsumtax)
+         }
       }
     
       
