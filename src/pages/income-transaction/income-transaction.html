@@ -113,7 +113,7 @@
    
           <ion-item>
           <span style="vertical-align: middle; display: inline-block; color: black; font-size: 1.0rem;" item-start>
-              {{"Add a temporary item"|translate}}
+              {{"Additional Charges"|translate}}
             </span>
              <ion-toggle color="dark" style="vertical-align: middle; display: inline-block" item-end (ionChange)="dispM()"></ion-toggle>
           
@@ -132,21 +132,17 @@
               <ion-label style="font-size: 1.0rem;">{{"Price"|translate}}</ion-label>
               <ion-input  type="number" placeholder="{{'Enter Price'|translate}}" [(ngModel)]="newUnitPrice" ngDefaultControl></ion-input>
             </ion-item>
-            <ion-item>
-                <ion-label style="font-size: 1.0rem;">{{"Qty"|translate}}</ion-label>
-                <ion-input type="number" placeholder="{{'Enter Qty'|translate}}" [(ngModel)]="newUnitQty" ngDefaultControl></ion-input>
-              </ion-item>
               <!-- <ion-item>
                   <ion-label style="font-size: 1.0rem;" >Select Category</ion-label>
                   <ion-select multiple="false" [(ngModel)]='newItemCat'>
                       <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>    
                   </ion-select>
                 </ion-item> -->
-         <ion-item>
+         <!-- <ion-item>
            <ion-label style="font-size: 1.0rem;">{{"Discount"|translate}}</ion-label>
            <ion-input type="number" placeholder="{{'Enter Discount'|translate}}" [(ngModel)]="newItemDiscount" ngDefaultControl></ion-input>
-         </ion-item>
-                <button ion-button style="font-size: 1.0rem;" full (click)="addNewItem()"> {{"Add Product"|translate}} </button>
+         </ion-item> -->
+                <button ion-button style="font-size: 1.0rem;" full (click)="addNewItem()"> {{"Add Charges"|translate}} </button>
               </div>
   </ion-card>
   <ion-grid>

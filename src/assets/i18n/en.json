@@ -82,7 +82,7 @@
   "Reset":"Reset",
   "Register a business":"Register a business",
   "Business Name":"Business Name",
-  "Full Business Address":"Full Busines Address",
+  "Full Business Address":"Full Business Address",
   "Owner": "Owner",
   "Phone Number":"Phone Number",
   "Next Page":"Next Page",
@@ -113,5 +113,8 @@
   "Please wait - Uploading new image": "Please wait - Uploading new image",
   "Done uploading": "Done uploading",
   "Changes Discarded":"Changes Discarded",
-  "Printer Test":"Printer Test"
+  "Printer Test":"Printer Test",
+  "Additional Charges":"Additional Charges",
+  "Add Charges":"Add Charges",
+  "Enter Category Here":"Enter Category Here"
 }

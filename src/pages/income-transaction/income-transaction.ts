@@ -101,8 +101,8 @@ updateRec(){
   let totalDiscount = 0, totalIndividualDiscount = 0;
   this.datastore.itemslist.forEach(item => {
     if (item.discount != 0) {
-      totalIndividualDiscount += item.price * item.discount / 100 * item.qty;
-      console.log(totalIndividualDiscount);
+      totalIndividualDiscount += item.price * parseInt(item.discount) / 100 * item.qty;
+      console.log(parseInt(item.price) * parseInt(item.discount) / 100 * item.qty);
     }
     this.lastsum += item.price * item.qty;
   });
@@ -246,7 +246,7 @@ qrscan(){
 
   newItemName: string="";
   newUnitPrice: number=null;
-  newUnitQty: number=null;
+  newUnitQty: number=1;
   newItemCat: string="";
   newItemDiscount: number=null;
 
@@ -266,8 +266,8 @@ qrscan(){
       this.newItemCat="";
       this.newItemName="";
       this.newUnitPrice=null;
-      this.newUnitQty=null;
-      this.newItemDiscount = null;
+      this.newUnitQty=1;
+      this.newItemDiscount = 0;
 
       this.updateRec();
     }
