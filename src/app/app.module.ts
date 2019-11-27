@@ -74,7 +74,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   imports: [
     BrowserModule, 
-    IonicModule.forRoot(MyApp, {navExitApp: false, preloadModules: true}),
+    IonicModule.forRoot(MyApp, {preloadModules: true}),
     IonicStorageModule.forRoot(),
     LoginPageModule,
     SignUpPageModule,

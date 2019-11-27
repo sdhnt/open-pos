@@ -63,22 +63,24 @@ ionViewDidEnter() {
     let lastTimeBackPress = 0;
     const debounceTime = 2000;
     this.platform.registerBackButtonAction(() => {
-      if (new Date().getTime() - lastTimeBackPress < debounceTime) {
-        // prompt user to exit from app
-        const message = this.translateConfigService.getTranslatedMessage('Press home button to exit');
-        let toast = this.toastCtrl.create({
-          // @ts-ignore
-          message: message.value,
-          duration: 3000,
-        });
-        toast.present();
+      let view = this.nav.getActive();
+      if (view.component.name == "TransactionHomePage") {
+        if (new Date().getTime() - lastTimeBackPress < debounceTime) {
+          // prompt user to exit from app
+          const message = this.translateConfigService.getTranslatedMessage('Press home button to exit');
+          let toast = this.toastCtrl.create({
+            // @ts-ignore
+            message: message.value,
+            duration: 3000,
+          });
+          toast.present();
+        } else {
+          lastTimeBackPress = new Date().getTime();
+        }
       } else {
-        lastTimeBackPress = new Date().getTime();
+        this.nav.pop({});
       }
     });
-  document.addEventListener("backbutton",function(e) {
-    console.log("disable back button");
-  }, false);
 }
   initializeApp() {
     this.platform.ready().then(() => {
