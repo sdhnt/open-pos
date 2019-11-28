@@ -355,16 +355,16 @@ export class StorageProvider {
   }
 
   updateProduct(data, old_code) {
-    let except = null;
     return new Promise((resolve, reject) => {
-      this.storage.get('products').then((val) => {
+      this.storage.get('products').then(async (val) => {
         if (val != null) {
           this.products = JSON.parse(val);
-          except = this.products.filter((product) => {
-            return (product.code != old_code);
+          let newProdudcts = [];
+          this.products.forEach(product => {
+            const newProduct = product.code == old_code ? data : product;
+            newProdudcts.push(newProduct);
           });
-          except.push(data);
-          this.storage.set('products', JSON.stringify(except));
+          await this.storage.set('products', JSON.stringify(newProdudcts));
           resolve();
         }
       })

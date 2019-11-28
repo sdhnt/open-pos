@@ -130,7 +130,7 @@ export class ExpensesHomePage {
 
   product;
 
-  addinventoryexpense(){
+  async addinventoryexpense(){
     var itemslist=[];
     var prodidlist=[];
     var pnllist=[];
@@ -160,10 +160,9 @@ export class ExpensesHomePage {
           "url": this.product.url,
           "stock_qty":(parseInt(this.product.stock_qty)+parseInt(this.prodqty)),
         }
-        this.sp.updateProduct(data1, this.product.code).then(()=>{
-        })
-      
-    
+        await this.sp.updateProduct(data1, this.product.code).then(()=>{});
+
+
 
 
 
@@ -186,8 +185,8 @@ export class ExpensesHomePage {
         this.currtime = new Date();
         this.searchterm="";
         this.selectedCat=[];
-        
-        this.totalamt=0.0;       
+
+        this.totalamt=0.0;
     this.product=null;
     this.sp.backupStorage();
     toast.present();
