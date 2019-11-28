@@ -19,6 +19,7 @@ export class ContactUsPage {
 
   email: String = "";
   phone: String = "";
+  chatbot: string = "";
 
   constructor(public navCtrl: NavController,private translateConfigService: TranslateConfigService, public navParams: NavParams) {
     this.getInfo();
@@ -29,7 +30,12 @@ export class ContactUsPage {
     .then((doc) => {
       this.email = doc.docs[0].data().email;
       this.phone = doc.docs[0].data().phone;
+      this.chatbot = doc.docs[0].data().chatbot;
     })
+  }
+
+  navFB() {
+    window.open(this.chatbot, '_system', 'location=no');
   }
 
   ionViewDidLoad() {
