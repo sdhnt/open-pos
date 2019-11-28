@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, Tabs } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events, Tabs, ToastController } from 'ionic-angular';
 import { IncomeTransactionPage } from '../income-transaction/income-transaction';
 import firebase from 'firebase';
 import { StorageProvider } from '../../providers/storage/storage';
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
+import { GlobalProvider } from "../../providers/global/global";
+//import { threadId } from 'worker_threads';
 
 /**
  * Generated class for the AllTransactionPage page.
@@ -20,12 +22,13 @@ import { TranslateConfigService } from "../../providers/translation/translate-co
 export class AllTransactionPage {
 
   
-  
 
   constructor(public navCtrl: NavController, private translateConfigService: TranslateConfigService,
     public navParams: NavParams, public events: Events,
-    public sp: StorageProvider,
+    public sp: StorageProvider, public tstCtrl: ToastController,
+    public global: GlobalProvider
     ) {
+
     this.getUserData();
     this.events.subscribe('addRecCalc:created',(data) => {
       console.log("ENTERED!");
@@ -67,7 +70,9 @@ export class AllTransactionPage {
       this.getUserData();})
   }
 
-  
+  ionViewWillLeave(){
+    this.global.CalcToReceipt = "Create Receipt";
+  }
 
   result = "";
   flag_mode=0;
