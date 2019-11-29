@@ -25,6 +25,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateConfigService } from '../providers/translation/translate-config.service';
 import { BluetoothSerial} from '@ionic-native/bluetooth-serial';
 import { PrinterProvider } from './../providers/printer/printer';
+import { Geolocation } from "@ionic-native/geolocation";
+import { GeolocationService } from "../providers/geolocation/geolocation.service";
 
 import * as firebase from 'firebase';
 import { LoginPageModule } from '../pages/login/login.module';
@@ -91,7 +93,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: (HttpLoaderFactory),
         deps: [HttpClient]
       }
-    })
+    }),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -119,6 +121,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     BluetoothSerial,
     PrinterProvider,
     GlobalProvider,
+    Geolocation,
+    GeolocationService,
   ]
 })
 export class AppModule {}

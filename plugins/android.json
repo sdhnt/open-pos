@@ -73,6 +73,9 @@
     },
     "cordova-plugin-backbutton": {
       "PACKAGE_NAME": "com.openfintech.pos"
+    },
+    "cordova-plugin-geolocation": {
+      "PACKAGE_NAME": "com.openfintech.pos"
     }
   },
   "dependent_plugins": {
