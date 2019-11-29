@@ -74,7 +74,7 @@ export class StorageProvider {
                 uid = doc.id;
                 var usdat=doc.data();
                 tempprod=usdat.products;
-                temptransac=usdat.transactions;
+                temptransac=usdat.transactions.slice(Math.max(usdat.transactions.length - 10, 0));
                 tempcat=usdat.categories;
                 tempuser={
                   business_address: usdat.business_address,
@@ -133,9 +133,12 @@ export class StorageProvider {
               querySnapshot.forEach(function (doc) {
                 uid = doc.id;
                 console.log(uid);
+                let existingTransactions = doc.data().transactions;
+                existingTransactions = existingTransactions.slice(Math.max(existingTransactions - 10, 0));
+                const updatedTransactions = existingTransactions.concat(parsetransac);
                 firebase.firestore().collection("users").doc(uid).update({
                   "products": parseprod,
-                  "transactions": parsetransac,
+                  "transactions": updatedTransactions,
                   "categories": parsecat,
                 }).then(async (doc) => {
                 }).catch((err) => {
