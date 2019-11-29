@@ -126,7 +126,7 @@ export class SignUpPage {
 
       text: "OK",
       handler: () => {
-        this.sp.clearMem();
+        //this.sp.clearMem();
         this.sp.setMem();        
         this.navCtrl.setRoot(TransactionHomePage)//navigate to feeds page
       }//end handler
