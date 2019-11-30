@@ -21,8 +21,39 @@ import { TranslateConfigService } from "../../providers/translation/translate-co
 })
 
 export class UserProfilePage {
-  user: any;
-  oldUser: any;
+
+  temptimes: any;
+  tempuser: any;
+  user: any = {
+  business_address: "",
+  business_name: "",
+  cash_balance: "",
+  currency: "",
+  created: "",
+  language: "en",
+  owner: "", 
+  owner_name: "",
+  ph_no: "",
+  businesstype: "",
+  taxrate: 0.0,
+  discount: 0.0,
+ 
+};
+  oldUser: any = {
+  business_address: "",
+  business_name: "",
+  cash_balance: "",
+  currency: "",
+  created: "",
+  language: "en",
+  owner: "", 
+  owner_name: "",
+  ph_no: "",
+  businesstype: "",
+  taxrate: 0.0,
+  discount: 0.0,
+ 
+};
   formUser: FormGroup;
   submitButton: boolean;
   listOfBType: String[] = [];
@@ -37,8 +68,39 @@ export class UserProfilePage {
       private toastCtrl: ToastController,
       private translateConfigService: TranslateConfigService,
   ) {
-    this.user = {};
-    this.oldUser = {};
+
+    this.temptimes=this.navParams.get("timestamp"),
+    this.tempuser=this.navParams.get("user"),
+    console.log( this.temptimes + " "+ this.tempuser),
+    this.user = {
+  business_address: "",
+  business_name: "",
+  cash_balance: "",
+  currency: "",
+  created: "",
+  language: "en",
+  owner: "", 
+  owner_name: "",
+  ph_no: "",
+  businesstype: "",
+  taxrate: 0.0,
+  discount: 0.0,
+    };
+    this.oldUser = {
+  business_address: "",
+  business_name: "",
+  cash_balance: "",
+  currency: "",
+  created: "",
+  language: "en",
+  owner: "", 
+  owner_name: "",
+  ph_no: "",
+  businesstype: "",
+  taxrate: 0.0,
+  discount: 0.0,
+    };
+
     this.submitButton = false;
     this.loadDropDowns();
     this.formUser = this.formBuilder.group({
@@ -79,7 +141,40 @@ export class UserProfilePage {
   getUser() {
     this.sp.storageReady().then(() => {
       this.sp.getUserDat().then(user => {
+
+        if(user==null)
+        {
+          //create user doc in docs 
+
+          firebase.firestore().collection("users").add({
+            // file_name: this.text,
+            created: this.navParams.get("timestamp"),
+            owner: this.navParams.get("uid"),
+            owner_name: firebase.auth().currentUser.displayName,
+            business_name: "",
+            businesstype: "",
+            business_address: "",
+            ph_no: "",
+            language: "en",
+            currency: "USD",
+            discount: 0.0,
+            taxrate: 0.0,
+            cash_balance: "",
+            categories: [{name:"Example"}],
+            products: [{cat:"Example",code:"0000",cost:"0", name:"Example Product",price:"0",stock_qty:"0",url:"https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y",wholesale_price:"0",}],
+            transactions:[{datetime: new Date(),discount:0,discountlist:[],itemslist:[{cat:"Example",code:"0000",cost:"0", name:"Example Product",price:"0",stock_qty:"0",}],pnllist:[],prodidlist:[],taxrate:0,totalatax:0,totaldisc:0,totalsum:0,}]
+          }).then(()=>{
+            this.sp.setMem(); 
+            this.user.owner=this.navParams.get("uid");
+            this.user.created=this.navParams.get("timestamp");
+            this.oldUser.owner=this.navParams.get("uid");
+            this.user.created=this.navParams.get("timestamp");
+          })
+
+        }
+        else{
         this.user = JSON.parse(user);
+      }
       })
     });
   }

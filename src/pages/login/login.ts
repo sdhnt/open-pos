@@ -1,11 +1,12 @@
 import { Component, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
-import firebase from 'firebase';
-import {SignUpPage} from '../sign-up/sign-up';
+import firebase, { auth } from 'firebase';
+import { SignUpPage } from '../sign-up/sign-up';
 import { TransactionHomePage } from '../transaction-home/transaction-home';
 import { StorageProvider } from '../../providers/storage/storage';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
+import { UserProfilePage } from '../user-profile/user-profile';
 
 /**
  * Generated class for the LoginPage page.
@@ -21,146 +22,177 @@ import { TranslateConfigService } from "../../providers/translation/translate-co
 })
 export class LoginPage {
 
-  email: string="";
-  password: string="";
+  email: string = "";
+  password: string = "";
   selectedLanguage: string;
 
   listOfLang: String[] = [];
 
-  constructor(public navCtrl: NavController, public zone: NgZone, 
-    public navParams: NavParams, public toastCtrl: ToastController, public facebook: Facebook, 
+  constructor(public navCtrl: NavController, public zone: NgZone,
+    public navParams: NavParams, public toastCtrl: ToastController, public facebook: Facebook,
     public sp: StorageProvider, public alertCtrl: AlertController, private translateConfigService: TranslateConfigService) {
 
-      this.loadDropDowns();
+    this.loadDropDowns();
 
-      firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-          //sp.clearMem();
-          sp.setMem().then(()=>{
-                   zone.run(() => {
-            navCtrl.setRoot(TransactionHomePage);
-        });
-          
-          }
-            
-          ); 
+    firebase.auth().onAuthStateChanged(async function (user) {
+      if (user) {
+        //sp.clearMem();
 
-   
-          
-        } else {
-          // No user is signed in.
-          console.log("no-user is signed in")
-        }
-      });
+        await firebase.firestore().collection('users').where("owner", "==", firebase.auth().currentUser.uid).get()
+          .then(function (querySnapshot) {
 
-      this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
-    
-    }
+            if (querySnapshot.size == 0) {
+              console.log("Not permitted - no sign up 1")
+              navCtrl.setRoot(UserProfilePage, {
+                "uid": firebase.auth().currentUser.uid, 
+                "timestamp": firebase.firestore.FieldValue.serverTimestamp(),
+              } );
+            }
 
-    language;
+            else {
+              sp.setMem().then(() => {
+                zone.run(() => {
+                  console.log("firing from constructor")
+                  navCtrl.setRoot(TransactionHomePage);
+                });
+
+              });
+            }
+          });
 
 
-    loadDropDowns(){
-      firebase.firestore().collection("sign-up").get()
+      } else {
+        // No user is signed in.
+        console.log("no-user is signed in")
+      }
+    });
+
+    this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
+
+  }
+
+  language;
+
+
+  loadDropDowns() {
+    firebase.firestore().collection("sign-up").get()
       .then((doc) => {
-        doc.docs[0].data().language.forEach((l)=>{
+        doc.docs[0].data().language.forEach((l) => {
           this.listOfLang.push(l);
           console.log(this.listOfLang)
         })
       })
-    }
-  
+  }
 
-  
 
-loginWithFB(){
 
-  this.facebook.login(['email'])
-  .then((res: FacebookLoginResponse) =>{
-     console.log('Logged into Facebook!', res)
 
-     firebase.auth().signInWithCredential(
+  loginWithFB() {
+
+    this.facebook.login(['email'])
+      .then((res: FacebookLoginResponse) => {
+        console.log('Logged into Facebook!', res)
+
+        firebase.auth().signInWithCredential(
           firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken))
-          .then( success => {
-            console.log("Firebase success" , success);
-            var temp=success;
-            this.loginProcedure();
+          .then(async success => {
+            console.log("Firebase success", success);
+            var temp = success;
+            await firebase.firestore().collection('users').where("owner", "==", firebase.auth().currentUser.uid).get()
+              .then(function (querySnapshot) {
+
+                if (querySnapshot.size == 0) {
+                  console.log("Not permitted - no sign up")
+                  this.navCtrl.setRoot(UserProfilePage, {
+                    "uid": firebase.auth().currentUser.uid, 
+                    "timestamp": firebase.firestore.FieldValue.serverTimestamp(),
+                  } );
+                }
+
+                else {
+                  this.loginProcedure();
+                }
+              });
+
+
+
           })
           .catch(err => {
             console.log("Firebase error", err);
           });
 
-    })
-  .catch(e => console.log('Error logging into Facebook', e));
+      })
+      .catch(e => console.log('Error logging into Facebook', e));
 
-}
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
-    
+
   }
-  
-  login(){      
-      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(()=>{
-      
-        firebase.auth().signInWithEmailAndPassword(this.email, this.password)
-        .then( (user) => {
-        
- 
-      this.loginProcedure();
 
-    
-    
-      }).catch( (err) => {console.log(err)
-        this.toastCtrl.create({
-        message: err.message,
-        duration: 3000
-      }).present();
-    
-    
-    
-    
-      })
-        
-      
-      
-      
-      });
-      //console.log(user)
- 
-    }
+  login() {
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
 
-    loginAction(){
-        const message = this.translateConfigService.getTranslatedMessage('This feature will open shortly');
-      this.toastCtrl.create({
-          // @ts-ignore
-        message: message.value,
-        duration: 2000,
-      }).present();
-    }
-    
-    gotoSignUp(){
-  
+      firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+        .then((user) => {
+
+
+          this.loginProcedure();
+
+
+
+        }).catch((err) => {
+          console.log(err)
+          this.toastCtrl.create({
+            message: err.message,
+            duration: 3000
+          }).present();
+
+
+
+
+        })
+
+
+
+
+    });
+    //console.log(user)
+
+  }
+
+  loginAction() {
+    const message = this.translateConfigService.getTranslatedMessage('This feature will open shortly');
+    this.toastCtrl.create({
+      // @ts-ignore
+      message: message.value,
+      duration: 2000,
+    }).present();
+  }
+
+  gotoSignUp() {
+
     this.navCtrl.push(SignUpPage)
-  
-    }
+
+  }
 
 
-    loginProcedure(){
-    
-        this.zone.run(() => {
+  loginProcedure() {
 
-         // this.sp.clearMem();
+    this.zone.run(() => {
+      console.log("firing from login proc")
+      // this.sp.clearMem();
 
-          this.sp.setMem().then(()=>{ this.navCtrl.setRoot(TransactionHomePage); })
-        
-        });
-  
-    }
+      this.sp.setMem().then(() => { this.navCtrl.setRoot(TransactionHomePage); })
 
-    languageChanged(){
-        console.log(`selected language: ${this.selectedLanguage}`);
-        this.translateConfigService.setLanguage(this.selectedLanguage);
-    }
-  
+    });
+
+  }
+
+  languageChanged() {
+    console.log(`selected language: ${this.selectedLanguage}`);
+    this.translateConfigService.setLanguage(this.selectedLanguage);
+  }
+
 
 }
