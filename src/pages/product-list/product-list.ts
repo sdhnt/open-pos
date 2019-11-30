@@ -26,7 +26,8 @@ export class ProductListPage {
   icons: string[];
   items: Array<{title: string, note: string, icon: string}>;
   listProducts: any;
-  filteredList: any;
+  filteredList: any; 
+  filteredListRev: any;
   listArray: any =[];
   listCat : any;
   constructor(public navCtrl: NavController, private translateConfigService: TranslateConfigService,public navParams: NavParams,public sp: StorageProvider, public events: Events, 
@@ -106,7 +107,8 @@ export class ProductListPage {
        
          
         }
-    });   
+    });  
+    this.filteredListRev=this.filteredList.reverse(); 
 
     
     //console.log("FilteredProd: "+this.filteredList)

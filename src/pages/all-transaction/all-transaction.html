@@ -25,12 +25,37 @@
             <div class="header">
               <div class="window"></div>
               <div class="input">
-                <ion-row>
+                <!-- <ion-row>
+                  
                   <ion-input type="text" placeholder="0" name="display" [(ngModel)]="result">
                   </ion-input>
+                  
+                 
                   <ion-icon name="backspace" (click)="btnClicked('b')"></ion-icon>
                   
-                </ion-row> 
+                </ion-row>  -->
+                <ion-row>
+                    <ion-col col-10>
+                      <div style="text-align: left; overflow-y: scroll; height: 80px;">
+                      {{result}}
+                  </div>
+                  </ion-col>
+
+                   <!-- <ion-col col-10>
+                      <ion-scroll scrollX="true" style="  white-space: nowrap; height: 80px;">
+                        <div style="text-align: right;">
+                          {{result}}
+                        </div>
+                      </ion-scroll>
+                  </ion-col> -->
+
+    
+                
+                  
+                  <ion-col col-2> <ion-icon name="backspace" (click)="btnClicked('b')"></ion-icon>
+                  </ion-col>
+                  
+                </ion-row>
                
                     
                 
