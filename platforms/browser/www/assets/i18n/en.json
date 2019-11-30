@@ -116,6 +116,10 @@
   "Printer Test":"Printer Test",
   "Additional Charges":"Additional Charges",
   "Add Charges":"Add Charges",
+<<<<<<< HEAD
   "Enter Category Here":"Enter Category Here",
   "Press home button to exit": "Press home button to exit"
+=======
+  "Enter Category Here":"Enter Category Here"
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 }

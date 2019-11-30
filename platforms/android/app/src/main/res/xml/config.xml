@@ -46,8 +46,13 @@
     <feature name="BarcodeScanner">
         <param name="android-package" value="com.phonegap.plugins.barcodescanner.BarcodeScanner" />
     </feature>
+<<<<<<< HEAD
     <feature name="BackbuttonPlugin">
         <param name="android-package" value="com.badrit.Backbutton.BackbuttonPlugin" />
+=======
+    <feature name="Geolocation">
+        <param name="android-package" value="org.apache.cordova.geolocation.Geolocation" />
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
     </feature>
     <feature name="CDVIonicKeyboard">
         <param name="android-package" onload="true" value="io.ionic.keyboard.CDVIonicKeyboard" />

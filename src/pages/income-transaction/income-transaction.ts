@@ -6,11 +6,12 @@ import { StorageProvider } from '../../providers/storage/storage';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import { TransactionHomePage } from '../transaction-home/transaction-home';
-;import {  AlertController,  LoadingController} from 'ionic-angular';
+import {  AlertController,  LoadingController} from 'ionic-angular';
 import {  PrinterProvider } from './../../providers/printer/printer';
 import {  commands } from './../../providers/printer/printer-commands';
 import { GlobalProvider } from "../../providers/global/global";
 import EscPosEncoder from 'esc-pos-encoder-ionic';
+import { GeolocationService } from "../../providers/geolocation/geolocation.service";
 
 /**
  * Generated class for the IncomeTransactionPage page.
@@ -32,12 +33,14 @@ export class IncomeTransactionPage {
     private barcodeScanner: BarcodeScanner,
     private printer: PrinterProvider,
     private alertCtrl: AlertController,
-    private loadCtrl: LoadingController, public global: GlobalProvider
-    
+    private loadCtrl: LoadingController,
+    public global: GlobalProvider,
+    private gps: GeolocationService,
     ) {
     
     //console.log("Recieved -1" + this.navParams.get('itemslist'));
     this.getUserData();
+    this.gps.getCoordinates().then(coordinates => {this.geolocation = coordinates}).catch(error => {console.log(error)});
 
   }
 
@@ -319,6 +322,7 @@ qrscan(){
   pnllist: any=[];
   datetime = Date.now();
   tax_vat: any = [];
+  geolocation: {};
 
 
   updateProduct(){
@@ -353,6 +357,7 @@ qrscan(){
         "discount": this.discount,
         "totaldisc": this.lastsumdisc,
         "totalatax":this.lastsumtax,
+        "geolocation": this.geolocation,
       };
 
       this.datastore.itemslist.forEach(product => {
