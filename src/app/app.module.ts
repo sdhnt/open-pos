@@ -34,6 +34,7 @@ import { DashboardPageModule } from "../pages/dashboard/dashboard.module";
 import { AddProductPageModule } from "../pages/addproduct/addproduct.module";
 import { SingleProductPage } from '../pages/singleproduct/singleproduct';
 import { SingleProductPageModule } from '../pages/singleproduct/singleproduct.module';
+import { GlobalProvider } from '../providers/global/global';
 
 // var config = {
 //   apiKey: "AIzaSyADjIbI3_GRS4eRHGVGFsT2hrkKvH9K06M",
@@ -117,6 +118,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TranslateConfigService,
     BluetoothSerial,
     PrinterProvider,
+    GlobalProvider,
   ]
 })
 export class AppModule {}
