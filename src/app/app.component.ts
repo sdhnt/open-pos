@@ -22,6 +22,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
+  
 
   rootPage: any = LoginPage;
 
@@ -48,7 +49,42 @@ export class MyApp {
      // { title: 'Coach', component: CoachHomePage },
       { title: 'Contact Us', component: ContactUsPage },
     ];
+    this.backButtonEvent();
   }
+
+
+
+
+
+  backButtonEvent() {
+    this.platform.backButton.subscribe(async () => {
+        console.log("yoyo");
+        (navigator as any).Backbutton.goHome();
+        
+    });
+
+    this.platform.registerBackButtonAction(() => { 
+      console.log("yo1")
+    }); 
+
+
+    document.addEventListener("backbutton", onBackKeyDown, false);
+  function onBackKeyDown() {
+    console.log("y03")
+    // navigator.Backbutton.goHome(function() {
+    //     console.log('success')
+    // }, function() {
+    //     console.log('fail')
+    // });
+}
+}
+
+
+
+
+
+
+
   logout(){
     //this.sp.backupStorageLogout().then();
     firebase.auth().signOut().then(()=>{
@@ -59,28 +95,42 @@ export class MyApp {
       this.nav.setRoot(LoginPage);
   });
 }
+
+resetBackButton: any;
+
 ionViewDidEnter() {
-    let lastTimeBackPress = 0;
-    const debounceTime = 2000;
-    this.platform.registerBackButtonAction(() => {
-      let view = this.nav.getActive();
-      if (view.component.name == "TransactionHomePage") {
-        if (new Date().getTime() - lastTimeBackPress < debounceTime) {
-          // prompt user to exit from app
-          const message = this.translateConfigService.getTranslatedMessage('Press home button to exit');
-          let toast = this.toastCtrl.create({
-            // @ts-ignore
-            message: message.value,
-            duration: 3000,
-          });
-          toast.present();
-        } else {
-          lastTimeBackPress = new Date().getTime();
-        }
-      } else {
-        this.nav.pop({});
-      }
-    });
+
+    // while(true){
+      // this.resetBackButton = this.platform.registerBackButtonAction(() => {
+      //   //(navigator as any).Backbutton.goHome();
+      //   console.log("yo")  
+      // });
+
+    //   this.platform.registerBackButtonAction(() => {
+    //     console.log("yo")
+    //   });
+    // }
+    // let lastTimeBackPress = 0;
+    // const debounceTime = 2000;
+    // this.platform.registerBackButtonAction(() => {
+    //   let view = this.nav.getActive();
+    //   if (view.component.name == "TransactionHomePage") {
+    //     if (new Date().getTime() - lastTimeBackPress < debounceTime) {
+    //       // prompt user to exit from app
+    //       const message = this.translateConfigService.getTranslatedMessage('Press home button to exit');
+    //       let toast = this.toastCtrl.create({
+    //         // @ts-ignore
+    //         message: message.value,
+    //         duration: 3000,
+    //       });
+    //       toast.present();
+    //     } else {
+    //       lastTimeBackPress = new Date().getTime();
+    //     }
+    //   } else {
+    //     this.nav.pop({});
+    //   }
+    // });
 }
   initializeApp() {
     this.platform.ready().then(() => {
