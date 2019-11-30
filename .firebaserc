@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "open-fintech"
+    "default": "open-fintech",
+    "dev": "open-fintech-dev"
   }
 }
