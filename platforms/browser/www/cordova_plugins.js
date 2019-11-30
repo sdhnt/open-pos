@@ -133,6 +133,14 @@ module.exports = [
         "clobbers": [
             "window.bluetoothSerial"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-backbutton/www/Backbutton.js",
+        "id": "cordova-plugin-backbutton.Backbutton",
+        "pluginId": "cordova-plugin-backbutton",
+        "clobbers": [
+            "navigator.Backbutton"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -154,7 +162,8 @@ module.exports.metadata =
     "cordova-plugin-datepicker": "0.9.3",
     "cordova-plugin-facebook4": "1.7.4",
     "cordova-android-support-gradle-release": "3.0.1",
-    "cordova-plugin-bluetooth-serial": "0.4.7"
+    "cordova-plugin-bluetooth-serial": "0.4.7",
+    "cordova-plugin-backbutton": "0.3.0"
 }
 // BOTTOM OF METADATA
 });

@@ -58,9 +58,9 @@
  "Total after tax:":"အခွန်ပါပြီးစုစုပေါင်း",
  "Remove Tax":"အခွန်ဖယ်ရှားမည်",
  "Add a temporary item":"Add a temporary item",
- "Enter Product Name":"Enter Product Name",
- "Enter Price":"Enter Price",
- "Enter Qty":"Enter Qty",
+ "Enter Product Name":"ထုတ်ကုန်အမည်ရိုက်ထည့်ပါ",
+ "Enter Price":"စျေးနှုန်းရိုက်ထည့်ပါ",
+ "Enter Qty":"အရေအတွက်ရိုက်ထည့်ပါ",
  "Enter Discount": "လျှော့စျေးကိုထည့်ပါ",
  "Add from Calculator":"ဂဏန်းတွက်စက်မှပေါင်းပါ",
  "Add from Product List":"ကုန်ပစ္စည်းစာရင်းမှထည့်ပါ",
@@ -113,5 +113,9 @@
  "Please wait - Uploading new image": "ကျေးဇူးပြု၍ စောင့်ပါ - ပုံအသစ်တင်ပါ",
  "Done uploading": "တင်ပြီးပါပြီ",
  "Changes Discarded":"ပြောင်းလဲပစ်စွန့်ပစ်",
- "Printer Test":"ပရင်တာစမ်းသပ်မှု"
+ "Printer Test":"ပရင်တာစမ်းသပ်မှု",
+ "Additional Charges":"အပိုစွဲချက်",
+ "Add Charges":"စွဲချက်ထည့်ပါ",
+ "Enter Category Here":"ဤနေရာတွင်အမျိုးအစားထည့်ပါ",
+ "Press home button to exit": "ထွက်ရန်အိမ်ခလုတ်ကိုနှိပ်ပါ"
 }

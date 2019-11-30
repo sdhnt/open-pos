@@ -9,6 +9,7 @@ import { TransactionHomePage } from '../transaction-home/transaction-home';
 ;import {  AlertController,  LoadingController} from 'ionic-angular';
 import {  PrinterProvider } from './../../providers/printer/printer';
 import {  commands } from './../../providers/printer/printer-commands';
+import { GlobalProvider } from "../../providers/global/global";
 import EscPosEncoder from 'esc-pos-encoder-ionic';
 
 /**
@@ -31,7 +32,7 @@ export class IncomeTransactionPage {
     private barcodeScanner: BarcodeScanner,
     private printer: PrinterProvider,
     private alertCtrl: AlertController,
-    private loadCtrl: LoadingController,
+    private loadCtrl: LoadingController, public global: GlobalProvider
     
     ) {
     
@@ -410,7 +411,7 @@ qrscan(){
   }
 discountlist=[];
   addCalc(){
-
+    this.global.CalcToReceipt = "Update Receipt";
     (this.navCtrl.parent as Tabs).select(0);
     this.delay(300).then(any=>{
       this.events.publish('addRecCalc:created', JSON.stringify(this.datastore.itemslist));//SEND ITEMS PRICE
