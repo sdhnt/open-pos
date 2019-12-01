@@ -13,5 +13,5 @@
         "exports": false,
         "require": false
     }
-  , "esversion": 6
+  , "esversion": 8
 }
