@@ -1,29 +1,27 @@
-import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
-import { Injectable } from '@angular/core';
+import { BluetoothSerial } from "@ionic-native/bluetooth-serial";
+import { Injectable } from "@angular/core";
 
 @Injectable()
 export class PrinterProvider {
-
   constructor(private bluetoothSerial: BluetoothSerial) {}
 
-  enableBluetooth(){
+  enableBluetooth() {
     return this.bluetoothSerial.enable();
   }
 
-  searchBluetooth(){
+  searchBluetooth() {
     return this.bluetoothSerial.list();
   }
 
-  connectBluetooth(address){
+  connectBluetooth(address) {
     return this.bluetoothSerial.connect(address);
   }
 
-  printData(data){
+  printData(data) {
     return this.bluetoothSerial.write(data);
   }
 
-  disconnectBluetooth(){
+  disconnectBluetooth() {
     return this.bluetoothSerial.disconnect();
   }
-
 }

@@ -1,5 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
 
 /*
   Generated class for the GlobalProvider provider.
@@ -9,11 +9,9 @@ import { Injectable } from '@angular/core';
 */
 @Injectable()
 export class GlobalProvider {
-
   CalcToReceipt = "Create Receipt";
 
   constructor(public http: HttpClient) {
     //console.log('Hello GlobalProvider Provider');
   }
-
 }

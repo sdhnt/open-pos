@@ -1,14 +1,11 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
-import firebase from 'firebase';
-import { DashboardPage } from '../dashboard/dashboard';
-import { AllTransactionPage } from '../all-transaction/all-transaction';
-import { TransactionHomePage } from '../transaction-home/transaction-home';
-import { StorageProvider } from '../../providers/storage/storage';
+import { Component } from "@angular/core";
+import { IonicPage, NavController, NavParams, ToastController, AlertController } from "ionic-angular";
+import firebase from "firebase";
+import { DashboardPage } from "../dashboard/dashboard";
+import { AllTransactionPage } from "../all-transaction/all-transaction";
+import { TransactionHomePage } from "../transaction-home/transaction-home";
+import { StorageProvider } from "../../providers/storage/storage";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
-
-
-
 
 /**
  * Generated class for the SignUpPage page.
@@ -19,138 +16,178 @@ import { TranslateConfigService } from "../../providers/translation/translate-co
 
 @IonicPage()
 @Component({
-  selector: 'page-sign-up',
-  templateUrl: 'sign-up.html',
+  selector: "page-sign-up",
+  templateUrl: "sign-up.html",
 })
 export class SignUpPage {
-
   listOfBType: String[] = [];
   listOfCurrency: String[] = [];
   listOfLang: String[] = [];
 
-  
-	name: string="";
-	email: string="";
-  password: string="";
-  businessname: string="";
-  businessaddress: string="";
-  businesstype: string="";
-  phno: string="";
-  language: string="";
-  currency: string="";
+  name: string = "";
+  email: string = "";
+  password: string = "";
+  businessname: string = "";
+  businessaddress: string = "";
+  businesstype: string = "";
+  phno: string = "";
+  language: string = "";
+  currency: string = "";
   cb: number;
   discount: number;
   taxrate: number;
-  nextbtn=0;
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-     public toastCtrl: ToastController, public sp: StorageProvider, private translateConfigService: TranslateConfigService,
-      public alertCtrl: AlertController) {
-    this.nextbtn=0;
+  nextbtn = 0;
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public toastCtrl: ToastController,
+    public sp: StorageProvider,
+    private translateConfigService: TranslateConfigService,
+    public alertCtrl: AlertController,
+  ) {
+    this.nextbtn = 0;
     this.loadDropDowns();
-   
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SignUpPage');
-    this.nextbtn=0;
+    console.log("ionViewDidLoad SignUpPage");
+    this.nextbtn = 0;
   }
 
-  nextPg(){
-    this.nextbtn=1;
+  nextPg() {
+    this.nextbtn = 1;
   }
-  prevPg(){
-    this.nextbtn=0;
-  }
-
-  loadDropDowns(){
-    firebase.firestore().collection("sign-up").get()
-    .then((doc) => {
-      doc.docs[0].data().businessType.forEach((b)=>{
-        this.listOfBType.push(b);
-      })
-      doc.docs[0].data().currency.forEach((c)=>{
-        this.listOfCurrency.push(c);
-      })
-      doc.docs[0].data().language.forEach((l)=>{
-        this.listOfLang.push(l);
-      })
-    })
+  prevPg() {
+    this.nextbtn = 0;
   }
 
+  loadDropDowns() {
+    firebase
+      .firestore()
+      .collection("sign-up")
+      .get()
+      .then(doc => {
+        doc.docs[0].data().businessType.forEach(b => {
+          this.listOfBType.push(b);
+        });
+        doc.docs[0].data().currency.forEach(c => {
+          this.listOfCurrency.push(c);
+        });
+        doc.docs[0].data().language.forEach(l => {
+          this.listOfLang.push(l);
+        });
+      });
+  }
 
-  
-  signup(){
-    const message = this.translateConfigService.getTranslatedMessage('Please wait while creating your profile ...');
-    this.toastCtrl.create({
-      // @ts-ignore
-      message: message.value,
-      duration: 3000
-      
-    }).present();
-  	firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
-  	(data) 	=> {
-
-  		let newUser: firebase.User = data.user;
-  		newUser.updateProfile({
-  		displayName: this.name,
-  		}).then( (res) =>{
-      console.log("Profile Updated")
-
-      firebase.firestore().collection("users").add({
-        // file_name: this.text,
-        created: firebase.firestore.FieldValue.serverTimestamp(),
-        owner: firebase.auth().currentUser.uid,
-        owner_name: firebase.auth().currentUser.displayName,
-        business_name: this.businessname,
-        businesstype: this.businesstype,
-        business_address: this.businessaddress,
-        ph_no: this.phno,
-        language: this.language,
-        currency: this.currency,
-        cash_balance: this.cb,
-        discount: this.discount,
-        taxrate: this.taxrate,
-        categories: [{name:"Example"}],
-        products: [{cat:"Example",code:"0000",cost:"0", name:"Example Product",price:"0",stock_qty:"0",url:"https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y",wholesale_price:"0",}],
-        transactions:[{datetime: new Date(),discount:0,discountlist:[],itemslist:[{cat:"Example",code:"0000",cost:"0", name:"Example Product",price:"0",stock_qty:"0",}],pnllist:[],prodidlist:[],taxrate:0,totalatax:0,totaldisc:0,totalsum:0,}]
-      }).then(async (doc) => {
-        console.log(doc);
-        const title = this.translateConfigService.getTranslatedMessage('Account Created');
-        const message = this.translateConfigService.getTranslatedMessage('Your account has been created successfully');
-      this.alertCtrl.create({
+  signup() {
+    const message = this.translateConfigService.getTranslatedMessage("Please wait while creating your profile ...");
+    this.toastCtrl
+      .create({
         // @ts-ignore
-      title: title.value,
-        // @ts-ignore
-      message: message.value,
-      buttons:[{
+        message: message.value,
+        duration: 3000,
+      })
+      .present();
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(this.email, this.password)
+      .then(data => {
+        let newUser: firebase.User = data.user;
+        newUser
+          .updateProfile({
+            displayName: this.name,
+          })
+          .then(res => {
+            console.log("Profile Updated");
 
-      text: "OK",
-      handler: () => {
-        //this.sp.clearMem();
-        this.sp.setMem();        
-        this.navCtrl.setRoot(TransactionHomePage)//navigate to feeds page
-      }//end handler
-      }]//end button
-
-      }).present();
-      
-  		}).catch((err)=>{
-  		console.log(err)});
-  		
-  	}).catch( (err) => {
-  		console.log(err)
-    this.toastCtrl.create({
-
-    message: err.message,
-    duration: 3000
-  }).present();
-
-
-  	});
-
-  });
-}
-  goBack(){
-  this.navCtrl.pop();
+            firebase
+              .firestore()
+              .collection("users")
+              .add({
+                // file_name: this.text,
+                created: firebase.firestore.FieldValue.serverTimestamp(),
+                owner: firebase.auth().currentUser.uid,
+                owner_name: firebase.auth().currentUser.displayName,
+                business_name: this.businessname,
+                businesstype: this.businesstype,
+                business_address: this.businessaddress,
+                ph_no: this.phno,
+                language: this.language,
+                currency: this.currency,
+                cash_balance: this.cb,
+                discount: this.discount,
+                taxrate: this.taxrate,
+                categories: [{ name: "Example" }],
+                products: [
+                  {
+                    cat: "Example",
+                    code: "0000",
+                    cost: "0",
+                    name: "Example Product",
+                    price: "0",
+                    stock_qty: "0",
+                    url: "https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y",
+                    wholesale_price: "0",
+                  },
+                ],
+                transactions: [
+                  {
+                    datetime: new Date(),
+                    discount: 0,
+                    discountlist: [],
+                    itemslist: [
+                      { cat: "Example", code: "0000", cost: "0", name: "Example Product", price: "0", stock_qty: "0" },
+                    ],
+                    pnllist: [],
+                    prodidlist: [],
+                    taxrate: 0,
+                    totalatax: 0,
+                    totaldisc: 0,
+                    totalsum: 0,
+                  },
+                ],
+              })
+              .then(async doc => {
+                console.log(doc);
+                const title = this.translateConfigService.getTranslatedMessage("Account Created");
+                const message = this.translateConfigService.getTranslatedMessage(
+                  "Your account has been created successfully",
+                );
+                this.alertCtrl
+                  .create({
+                    // @ts-ignore
+                    title: title.value,
+                    // @ts-ignore
+                    message: message.value,
+                    buttons: [
+                      {
+                        text: "OK",
+                        handler: () => {
+                          //this.sp.clearMem();
+                          this.sp.setMem();
+                          this.navCtrl.setRoot(TransactionHomePage); //navigate to feeds page
+                        }, //end handler
+                      },
+                    ], //end button
+                  })
+                  .present();
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          })
+          .catch(err => {
+            console.log(err);
+            this.toastCtrl
+              .create({
+                message: err.message,
+                duration: 3000,
+              })
+              .present();
+          });
+      });
+  }
+  goBack() {
+    this.navCtrl.pop();
   }
 }

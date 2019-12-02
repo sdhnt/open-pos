@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 /*
   Generated class for the GettersetterProvider provider.
@@ -8,37 +8,33 @@ import { Injectable } from '@angular/core';
 */
 @Injectable()
 export class GettersetterProvider {
-
   total: number = 0;
   count: number = 0;
   vat: number = 0;
 
-  constructor() {
-    
-  }
+  constructor() {}
 
-  getTotal(){
+  getTotal() {
     return this.total;
   }
 
-  setTotal(total){
+  setTotal(total) {
     this.total = total;
   }
 
-  getCount(){
+  getCount() {
     return this.count;
   }
 
-  setCount(count){
+  setCount(count) {
     this.count = count;
   }
 
-  getVat(){
+  getVat() {
     return this.vat;
   }
 
-  setVat(vat){
+  setVat(vat) {
     this.vat = vat;
   }
-
 }

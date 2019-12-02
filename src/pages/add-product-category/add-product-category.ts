@@ -1,9 +1,7 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
-import { StorageProvider } from '../../providers/storage/storage';
+import { Component } from "@angular/core";
+import { IonicPage, NavController, NavParams, ToastController } from "ionic-angular";
+import { StorageProvider } from "../../providers/storage/storage";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
-
-
 
 /**
  * Generated class for the AddProductCategoryPage page.
@@ -14,85 +12,88 @@ import { TranslateConfigService } from "../../providers/translation/translate-co
 
 @IonicPage()
 @Component({
-  selector: 'page-add-product-category',
-  templateUrl: 'add-product-category.html',
+  selector: "page-add-product-category",
+  templateUrl: "add-product-category.html",
 })
 export class AddProductCategoryPage {
-
-  constructor(public navCtrl: NavController, private translateConfigService: TranslateConfigService,public navParams: NavParams, public sp: StorageProvider, public toastCtrl : ToastController) {
-  }
+  constructor(
+    public navCtrl: NavController,
+    private translateConfigService: TranslateConfigService,
+    public navParams: NavParams,
+    public sp: StorageProvider,
+    public toastCtrl: ToastController,
+  ) {}
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AddProductCategoryPage');
+    console.log("ionViewDidLoad AddProductCategoryPage");
     this.getCategories();
   }
 
-  newprodCat: any ="";
-  listCat : any;
-  getCategories(){
-    console.log(this.listCat + " and "+this.newprodCat);
+  newprodCat: any = "";
+  listCat: any;
+  getCategories() {
+    console.log(this.listCat + " and " + this.newprodCat);
     this.sp.storageReady().then(() => {
-      this.sp.getCategories().then((val) => {
-        console.log("val = "+val);
-       this.listCat = JSON.parse(val);
-      
-        console.log(this.listCat)
-        this.getCategories();
-      }).catch(err => {
-        alert("Error: "+ err);
-      })
-    })
-  }
+      this.sp
+        .getCategories()
+        .then(val => {
+          console.log("val = " + val);
+          this.listCat = JSON.parse(val);
 
-  addCategory(){
-    console.log(this.listCat + " and "+this.newprodCat);
-    if(this.newprodCat!=""){
-    const data = {
-      "name": this.newprodCat,
-    };
-    this.sp.storageReady().then(() => {
-      this.sp.addCategory(data);
-      setTimeout(()=> {
-        const message = this.translateConfigService.getTranslatedMessage('Finish');
-        let toast = this.toastCtrl.create({
-          // @ts-ignore
-          message: message.value,
-          duration: 3000
+          console.log(this.listCat);
+          this.getCategories();
+        })
+        .catch(err => {
+          alert("Error: " + err);
         });
-        this.newprodCat="";
-        this.sp.backupStorage();
-
-
-        //this.navCtrl.push(ProductListPage);
-        //this.events.publish('prodAdd:created',0);
-       // (this.navCtrl.parent as Tabs).select(0);
-        toast.present();
-      },1000)        
-    })
-  }
+    });
   }
 
-  delCat(element){
+  addCategory() {
+    console.log(this.listCat + " and " + this.newprodCat);
+    if (this.newprodCat != "") {
+      const data = {
+        name: this.newprodCat,
+      };
+      this.sp.storageReady().then(() => {
+        this.sp.addCategory(data);
+        setTimeout(() => {
+          const message = this.translateConfigService.getTranslatedMessage("Finish");
+          let toast = this.toastCtrl.create({
+            // @ts-ignore
+            message: message.value,
+            duration: 3000,
+          });
+          this.newprodCat = "";
+          this.sp.backupStorage();
+
+          //this.navCtrl.push(ProductListPage);
+          //this.events.publish('prodAdd:created',0);
+          // (this.navCtrl.parent as Tabs).select(0);
+          toast.present();
+        }, 1000);
+      });
+    }
+  }
+
+  delCat(element) {
     this.sp.storageReady().then(() => {
       this.sp.deleteCategory(element);
       this.sp.backupStorage();
-      setTimeout(()=> {
-        const message = this.translateConfigService.getTranslatedMessage('Finish');
+      setTimeout(() => {
+        const message = this.translateConfigService.getTranslatedMessage("Finish");
         let toast = this.toastCtrl.create({
           // @ts-ignore
           message: message.value,
-          duration: 3000
+          duration: 3000,
         });
         this.getCategories();
 
-
         //this.navCtrl.push(ProductListPage);
         //this.events.publish('prodAdd:created',0);
-       // (this.navCtrl.parent as Tabs).select(0);
+        // (this.navCtrl.parent as Tabs).select(0);
         toast.present();
-      },1000)        
-    })
-    
-
+      }, 1000);
+    });
   }
 }

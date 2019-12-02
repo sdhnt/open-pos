@@ -133,9 +133,8 @@
     }
   },
   "lint-staged": {
-    "*.{js,ts,tsx}": [
-      "eslint --fix",
-      "git commit"
+    "src/**/*.{js,ts,tsx}": [
+      "eslint --fix"
     ]
   }
 }
