@@ -11,6 +11,7 @@ export class GeolocationService {
 
     getCoordinates () {
         return new Promise((resolve, reject) => {
+            // @ts-ignore
             this.geolocation.getCurrentPosition().then(position => {
                 console.log(`geolocation -> latitude: ${position.coords.latitude}, longitude: ${position.coords.longitude}`);
                 resolve(position.coords);
