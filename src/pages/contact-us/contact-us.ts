@@ -21,17 +21,17 @@ export class ContactUsPage {
   phone: String = "";
   chatbot: string = "";
 
-  constructor(public navCtrl: NavController,private translateConfigService: TranslateConfigService, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, private translateConfigService: TranslateConfigService, public navParams: NavParams) {
     this.getInfo();
   }
 
-  getInfo(){
+  getInfo() {
     firebase.firestore().collection("contact-us").get()
-    .then((doc) => {
-      this.email = doc.docs[0].data().email;
-      this.phone = doc.docs[0].data().phone;
-      this.chatbot = doc.docs[0].data().chatbot;
-    })
+      .then((doc) => {
+        this.email = doc.docs[0].data().email;
+        this.phone = doc.docs[0].data().phone;
+        this.chatbot = doc.docs[0].data().chatbot;
+      })
   }
 
   navFB() {
@@ -39,7 +39,7 @@ export class ContactUsPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ContactUsPage');   
+    console.log('ionViewDidLoad ContactUsPage');
   }
 
 }

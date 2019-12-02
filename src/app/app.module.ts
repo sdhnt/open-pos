@@ -17,13 +17,13 @@ import { StorageProvider } from '../providers/storage/storage';
 import { IonicStorageModule } from '@ionic/storage';
 import { ToastController } from 'ionic-angular';
 import { GettersetterProvider } from '../providers/gettersetter/gettersetter';
-import { Camera } from '@ionic-native/camera'; 
+import { Camera } from '@ionic-native/camera';
 import { Facebook } from '@ionic-native/facebook';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateConfigService } from '../providers/translation/translate-config.service';
-import { BluetoothSerial} from '@ionic-native/bluetooth-serial';
+import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 import { PrinterProvider } from './../providers/printer/printer';
 import { Geolocation } from "@ionic-native/geolocation";
 import { GeolocationService } from "../providers/geolocation/geolocation.service";
@@ -58,26 +58,17 @@ const config = {
 
 firebase.initializeApp(config);
 
-// language translation service
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
 }
-// export function initTranslation(translate: TranslateService) {
-//   return () => {
-//     translate.setDefaultLang('my');
-//     translate.use('my');
-//     return Promise.resolve();
-//   };
-// }
-
 
 @NgModule({
   declarations: [
     MyApp
   ],
   imports: [
-    BrowserModule, 
-    IonicModule.forRoot(MyApp, {preloadModules: true}),
+    BrowserModule,
+    IonicModule.forRoot(MyApp, { preloadModules: true }),
     IonicStorageModule.forRoot(),
     LoginPageModule,
     SignUpPageModule,
@@ -107,9 +98,9 @@ export function HttpLoaderFactory(http: HttpClient) {
 
   ],
   providers: [
-    StatusBar,   
+    StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     StorageProvider,
     BarcodeScanner,
     IonicStorageModule,
@@ -125,4 +116,4 @@ export function HttpLoaderFactory(http: HttpClient) {
     GeolocationService,
   ]
 })
-export class AppModule {}
+export class AppModule { }

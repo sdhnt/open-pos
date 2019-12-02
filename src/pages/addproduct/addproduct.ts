@@ -6,7 +6,7 @@ import { ToastController } from 'ionic-angular';
 import { ProductListPage } from '../product-list/product-list';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import firebase from 'firebase';
-import { FormGroup, FormBuilder,FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import { DashboardPage } from '../dashboard/dashboard';
@@ -36,7 +36,7 @@ export class AddProductPage {
     public toastCtrl: ToastController,
     public events: Events,
     public camera: Camera,
-              private formBuilder: FormBuilder
+    private formBuilder: FormBuilder
   ) {
     this.prodCode = this.navParams.get("code");
     this.getUserData();
@@ -63,17 +63,17 @@ export class AddProductPage {
   currstock: number;
 
 
-  async getUserData(){
+  async getUserData() {
     this.sp.storageReady().then(() => {
       this.sp.getUserDat().then((val) => {
-       this.userdata=JSON.parse(val);
-       this.uid=this.userdata.uid;
-       console.log(this.userdata)
+        this.userdata = JSON.parse(val);
+        this.uid = this.userdata.uid;
+        console.log(this.userdata)
       }).catch(err => {
-        alert("Error: "+ err);
+        alert("Error: " + err);
       })
     })
-   }
+  }
 
   newprodCat: any = "";
   listCat: any;
@@ -168,14 +168,14 @@ export class AddProductPage {
     }
   }
 
-  clearFields(){
-  this.prodCode = "";
-  this.prodName = "";
-  this.prodPrice = null;
-  this.prodWholesalePrice = null;
-  this.prodCost = null;
-  this.prodCat = "";
-  (this.navCtrl.parent as Tabs).select(0);
+  clearFields() {
+    this.prodCode = "";
+    this.prodName = "";
+    this.prodPrice = null;
+    this.prodWholesalePrice = null;
+    this.prodCost = null;
+    this.prodCat = "";
+    (this.navCtrl.parent as Tabs).select(0);
   }
 
   addProdPic() {
@@ -192,7 +192,7 @@ export class AddProductPage {
   produrl: any = "";
 
   addproduct() {
-    if (!this.formProduct.valid || (this.prodCat == "New"&& this.newprodCat=="")) {
+    if (!this.formProduct.valid || (this.prodCat == "New" && this.newprodCat == "")) {
       const message = this.translateConfigService.getTranslatedMessage('Incomplete');
       this.toastCtrl.create({
         // @ts-ignore
@@ -248,7 +248,7 @@ export class AddProductPage {
             this.prodCat = "";
             this.prodCost = null;
             this.produrl = "";
-            this.currstock=null;
+            this.currstock = null;
             this.image = "";
 
             this.sp.backupStorage();

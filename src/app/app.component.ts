@@ -70,12 +70,7 @@ export class MyApp {
 
     document.addEventListener("backbutton", onBackKeyDown, false);
   function onBackKeyDown() {
-    console.log("y03")
-    // navigator.Backbutton.goHome(function() {
-    //     console.log('success')
-    // }, function() {
-    //     console.log('fail')
-    // });
+
 }
 }
 
@@ -86,7 +81,7 @@ export class MyApp {
 
 
   logout(){
-    //this.sp.backupStorageLogout().then();
+
     firebase.auth().signOut().then(()=>{
       this.toastCtrl.create({
         message:"Logged out!",
@@ -100,37 +95,6 @@ resetBackButton: any;
 
 ionViewDidEnter() {
 
-    // while(true){
-      // this.resetBackButton = this.platform.registerBackButtonAction(() => {
-      //   //(navigator as any).Backbutton.goHome();
-      //   console.log("yo")  
-      // });
-
-    //   this.platform.registerBackButtonAction(() => {
-    //     console.log("yo")
-    //   });
-    // }
-    // let lastTimeBackPress = 0;
-    // const debounceTime = 2000;
-    // this.platform.registerBackButtonAction(() => {
-    //   let view = this.nav.getActive();
-    //   if (view.component.name == "TransactionHomePage") {
-    //     if (new Date().getTime() - lastTimeBackPress < debounceTime) {
-    //       // prompt user to exit from app
-    //       const message = this.translateConfigService.getTranslatedMessage('Press home button to exit');
-    //       let toast = this.toastCtrl.create({
-    //         // @ts-ignore
-    //         message: message.value,
-    //         duration: 3000,
-    //       });
-    //       toast.present();
-    //     } else {
-    //       lastTimeBackPress = new Date().getTime();
-    //     }
-    //   } else {
-    //     this.nav.pop({});
-    //   }
-    // });
 }
   initializeApp() {
     this.platform.ready().then(() => {
