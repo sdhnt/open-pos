@@ -338,7 +338,7 @@ qrscan(){
 
     this.getUserData();
     this.userdata.cash_balance= (parseInt(this.userdata.cash_balance)+parseInt(postransacsum)).toString();
-    this.sp.setUserDat(this.userdata);
+    await this.sp.setUserDat(this.userdata);
  }
   
 
@@ -360,19 +360,19 @@ qrscan(){
         "geolocation": this.geolocation,
       };
 
-      this.datastore.itemslist.forEach(product => {
+      this.datastore.itemslist.forEach(async product => {
         if(product.code!="000000"){
           const data1 = {
             "code": product.code,
             "name": product.name,
             "price": product.price,
+            "wholesale_price": product.wholesale_price,
             "cost": product.cost,
             "cat": product.cat,
             "url": product.url,
             "stock_qty":(product.stock_qty-product.qty),
           };
-          this.sp.updateProduct(data1, product.code).then(()=>{
-          });
+          await this.sp.updateProduct(data1, product.code);
           data.discountlist.push(product.discount);
           this.discountlist.push(product.discount)
           console.log(this.discountlist)
@@ -386,10 +386,10 @@ qrscan(){
 
 
 
-      this.sp.storageReady().then(() => {
+      this.sp.storageReady().then(async () => {
         console.log(data)
         this.sp.addTransactions(data);
-        this.updateCb(this.lastsum).then(()=>{this.events.publish('cbUpdate:created', 0);});
+        await this.updateCb(this.lastsum).then(()=>{this.events.publish('cbUpdate:created', 0);});
           const message = this.translateConfigService.getTranslatedMessage('Finish');
           let toast = this.toastCtrl.create({
             // @ts-ignore
@@ -491,10 +491,10 @@ discountlist=[];
           }
         });
 
-        this.sp.storageReady().then(() => {
+        this.sp.storageReady().then(async () => {
           console.log(data)
           this.sp.addTransactions(data);
-          this.updateCb(this.lastsum).then(()=>{this.events.publish('cbUpdate:created', 0);});
+          await this.updateCb(this.lastsum).then(()=>{this.events.publish('cbUpdate:created', 0);});
           this.sp.backupStorage();
           this.prepareToPrint()
         
