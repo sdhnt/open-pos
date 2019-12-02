@@ -8,29 +8,25 @@ exports.createUserArchive = functions.firestore.document('users/{id}').onCreate(
   db.collection('users-archive').doc(context.params.id).set(newUser);
 });
 
-exports.updateUserArchive = functions.firestore.document('users/{id}').onUpdate(async (change, context) => {
-  const newUser = change.after.data();
-  console.log(newUser);
-  const userRef = await db.collection('users').doc(context.params.id);
-  const userInArchiveRef = await db.collection('users-archive').doc(context.params.id);
+exports.updateUserArchive = functions.pubsub.schedule('every day 03:00').timeZone('Asia/Hong_Kong').onRun(async context => {
+  const userRef = await db.collection('users');
+  userRef.get().then(snapshot => {
+    snapshot.forEach(async doc => {
+      const user = doc.data();
+      const userInArchiveRef = await db.collection('users-archive').doc(doc.id);
+      const userInArchive = await userInArchiveRef.get();
+      const archiveLength = userInArchive.transactions.length;
+      userInArchive.transactions.splice(Math.max(archiveLength - 100, 0), Math.min(100, archiveLength));
+      userInArchive.transactions.concat(user.transactions);
 
-  // limit number of transactions in user collection, store extra transactions in user-archive collection
-  userInArchiveRef.get().then(doc => {
-    const userInArchive = doc.data();
-    console.log(userInArchive);
-    const archiveLength = userInArchive.transactions.length;
-    userInArchive.transactions.splice(Math.max(archiveLength - 100, 0), Math.min(100, archiveLength));
-    userInArchive.transactions.concat(newUser.transactions);
-    console.log(userInArchive);
-
-    const userLength = newUser.transactions.length;
-    if (userLength > 100) {
-      newUser.transactions.splice(0, userLength - 100);
-    } else if (userLength < 100) {
-      newUser.transactions = userInArchive.transactions.slice(Math.max(userLength - 100, 0));
-    }
-
-    userRef.update(newUser);
-    userInArchiveRef.update(userInArchive);
+      const userLength = user.transactions.length;
+      if (userLength > 100) {
+        user.transactions.splice(0, userLength - 100);
+      } else if (userLength < 100) {
+        user.transactions = userInArchive.transactions.slice(Math.max(userLength - 100, 0));
+      }
+      userRef.update(user);
+      userInArchiveRef.update(userInArchive);
+    });
   });
 });
