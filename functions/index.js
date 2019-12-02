@@ -9,24 +9,31 @@ exports.createUserArchive = functions.firestore.document('users/{id}').onCreate(
 });
 
 exports.updateUserArchive = functions.pubsub.schedule('every day 03:00').timeZone('Asia/Hong_Kong').onRun(async context => {
-  const userRef = await db.collection('users');
-  userRef.get().then(snapshot => {
+  const limit = 100;
+  db.collection('users').get().then(snapshot => {
     snapshot.forEach(async doc => {
       const user = doc.data();
       const userInArchiveRef = await db.collection('users-archive').doc(doc.id);
-      const userInArchive = await userInArchiveRef.get();
+      let snapshotInArchive = await userInArchiveRef.get();
+      if (!snapshotInArchive.exists) {
+        console.log('create missing user in archive');
+        await db.collection('users-archive').doc(doc.id).set(user);
+        snapshotInArchive = await db.collection('users-archive').doc(doc.id).get();
+      }
+      const userInArchive = snapshotInArchive.data();
       const archiveLength = userInArchive.transactions.length;
-      userInArchive.transactions.splice(Math.max(archiveLength - 100, 0), Math.min(100, archiveLength));
-      userInArchive.transactions.concat(user.transactions);
+      userInArchive.transactions.splice(Math.max(archiveLength - limit, 0), Math.min(limit, archiveLength));
+      userInArchive.transactions = userInArchive.transactions.concat(user.transactions);
 
       const userLength = user.transactions.length;
-      if (userLength > 100) {
-        user.transactions.splice(0, userLength - 100);
-      } else if (userLength < 100) {
-        user.transactions = userInArchive.transactions.slice(Math.max(userLength - 100, 0));
+      if (userLength > limit) {
+        user.transactions.splice(0, userLength - limit);
+      } else if (userLength < limit) {
+        user.transactions = userInArchive.transactions.slice(Math.max(userLength - limit, 0));
       }
-      userRef.update(user);
-      userInArchiveRef.update(userInArchive);
+
+      db.collection('users').doc(doc.id).update(user);
+      db.collection('users-archive').doc(doc.id).update(userInArchive);
     });
   });
 });
