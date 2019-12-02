@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import firebase from 'firebase';
+import { Component } from "@angular/core";
+import { IonicPage, NavController, NavParams } from "ionic-angular";
+import firebase from "firebase";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 
 /**
@@ -12,34 +12,39 @@ import { TranslateConfigService } from "../../providers/translation/translate-co
 
 @IonicPage()
 @Component({
-  selector: 'page-contact-us',
-  templateUrl: 'contact-us.html',
+  selector: "page-contact-us",
+  templateUrl: "contact-us.html",
 })
 export class ContactUsPage {
+  email = "";
+  phone = "";
+  chatbot = "";
 
-  email: String = "";
-  phone: String = "";
-  chatbot: string = "";
-
-  constructor(public navCtrl: NavController, private translateConfigService: TranslateConfigService, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    private translateConfigService: TranslateConfigService,
+    public navParams: NavParams,
+  ) {
     this.getInfo();
   }
 
   getInfo() {
-    firebase.firestore().collection("contact-us").get()
-      .then((doc) => {
+    firebase
+      .firestore()
+      .collection("contact-us")
+      .get()
+      .then(doc => {
         this.email = doc.docs[0].data().email;
         this.phone = doc.docs[0].data().phone;
         this.chatbot = doc.docs[0].data().chatbot;
-      })
+      });
   }
 
   navFB() {
-    window.open(this.chatbot, '_system', 'location=no');
+    window.open(this.chatbot, "_system", "location=no");
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ContactUsPage');
+    console.log("ionViewDidLoad ContactUsPage");
   }
-
 }
