@@ -115,7 +115,7 @@ export class DashboardPage {
         this.sp.searchProduct(barcodeData.text).then(val => {
           if (val[0] != null) {
             const message = this.translateConfigService.getTranslatedMessage("Found Product");
-            let toast = this.toastCtrl.create({
+            const toast = this.toastCtrl.create({
               // @ts-ignore
               message: message.value + " " + val[0].name,
               duration: 2000,
@@ -129,7 +129,7 @@ export class DashboardPage {
             this.getset.setVat(this.vat);
           } else {
             const message = this.translateConfigService.getTranslatedMessage("Get Product!!!");
-            let toast = this.toastCtrl.create({
+            const toast = this.toastCtrl.create({
               // @ts-ignore
               message: message.value,
               duration: 2000,
@@ -148,7 +148,7 @@ export class DashboardPage {
   }
 
   manual() {
-    let alertPop = this.alertCtrl.create({
+    const alertPop = this.alertCtrl.create({
       title: "Product",
       inputs: [
         {
@@ -167,7 +167,7 @@ export class DashboardPage {
             this.sp.searchProduct(data.code).then(val => {
               if (val[0] != null) {
                 const message = this.translateConfigService.getTranslatedMessage("Found Product");
-                let toast = this.toastCtrl.create({
+                const toast = this.toastCtrl.create({
                   // @ts-ignore
                   message: message.value + " " + val[0].name,
                   duration: 2000,
@@ -181,7 +181,7 @@ export class DashboardPage {
                 this.getset.setVat(this.vat);
               } else {
                 const message = this.translateConfigService.getTranslatedMessage("Get Product!!!");
-                let toast = this.toastCtrl.create({
+                const toast = this.toastCtrl.create({
                   // @ts-ignore
                   message: message.value,
                   duration: 2000,
@@ -204,7 +204,7 @@ export class DashboardPage {
     this.count = 0;
     this.vat = 0;
     const message = this.translateConfigService.getTranslatedMessage("POS reset to Zero");
-    let toast = this.toastCtrl.create({
+    const toast = this.toastCtrl.create({
       // @ts-ignore
       message: message.value,
       duration: 2000,

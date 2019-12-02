@@ -64,11 +64,11 @@ export class StorageProvider {
   }
 
   async setMem() {
-    var tempprod;
-    var tempcat;
-    var temptransac;
-    var uid;
-    var tempuser;
+    let tempprod;
+    let tempcat;
+    let temptransac;
+    let uid;
+    let tempuser;
     this.storage.ready().then(async () => {
       await firebase
         .firestore()
@@ -78,7 +78,7 @@ export class StorageProvider {
         .then(function(querySnapshot) {
           querySnapshot.forEach(function(doc) {
             uid = doc.id;
-            var usdat = doc.data();
+            const usdat = doc.data();
             tempprod = usdat.products;
             temptransac = usdat.transactions.slice(Math.max(usdat.transactions.length - 10, 0));
             tempcat = usdat.categories;
@@ -117,10 +117,10 @@ export class StorageProvider {
   }
 
   backupStorage() {
-    var uid;
-    var parseprod;
-    var parsetransac;
-    var parsecat;
+    let uid;
+    let parseprod;
+    let parsetransac;
+    let parsecat;
 
     this.storage.ready().then(() => {
       this.storage
@@ -192,7 +192,7 @@ export class StorageProvider {
       });
 
       console.log(firebase.auth().currentUser.uid);
-      var ud;
+      let ud;
       const snapshot = await firebase
         .firestore()
         .collection("users")
@@ -390,7 +390,7 @@ export class StorageProvider {
       this.storage.get("products").then(async val => {
         if (val != null) {
           this.products = JSON.parse(val);
-          let newProdudcts = [];
+          const newProdudcts = [];
           this.products.forEach(product => {
             const newProduct = product.code == old_code ? data : product;
             newProdudcts.push(newProduct);
@@ -403,15 +403,15 @@ export class StorageProvider {
   }
 
   swapProductUp(old_code) {
-    let except = null;
+    const except = null;
     return new Promise((resolve, reject) => {
       this.storage.get("products").then(val => {
         if (val != null) {
           this.products = JSON.parse(val);
 
-          for (var i = 0; i < this.products.length; i++) {
+          for (let i = 0; i < this.products.length; i++) {
             if (this.products[i].code == old_code && i != 0) {
-              var temp = this.products[i];
+              const temp = this.products[i];
               this.products[i] = this.products[i - 1];
               this.products[i - 1] = temp;
             }
@@ -425,15 +425,15 @@ export class StorageProvider {
   }
 
   swapProductDown(old_code) {
-    let except = null;
+    const except = null;
     return new Promise((resolve, reject) => {
       this.storage.get("products").then(val => {
         if (val != null) {
           this.products = JSON.parse(val);
 
-          for (var i = 0; i < this.products.length; i++) {
+          for (let i = 0; i < this.products.length; i++) {
             if (this.products[i].code == old_code && i < this.products.length - 1) {
-              var temp = this.products[i];
+              const temp = this.products[i];
               this.products[i] = this.products[i + 1];
               this.products[i + 1] = temp;
             }

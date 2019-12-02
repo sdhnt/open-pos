@@ -62,6 +62,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "../assets/i18n/", ".json");
 }
 
+// @ts-ignore
 @NgModule({
   declarations: [MyApp],
   imports: [

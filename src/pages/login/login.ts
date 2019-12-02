@@ -21,11 +21,11 @@ import { UserProfilePage } from "../user-profile/user-profile";
   templateUrl: "login.html",
 })
 export class LoginPage {
-  email: string = "";
-  password: string = "";
+  email = "";
+  password = "";
   selectedLanguage: string;
 
-  listOfLang: String[] = [];
+  listOfLang: string[] = [];
 
   constructor(
     public navCtrl: NavController,
@@ -99,7 +99,7 @@ export class LoginPage {
           .signInWithCredential(firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken))
           .then(async success => {
             console.log("Firebase success", success);
-            var temp = success;
+            const temp = success;
             await firebase
               .firestore()
               .collection("users")

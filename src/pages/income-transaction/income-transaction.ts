@@ -73,9 +73,9 @@ export class IncomeTransactionPage {
     discount: 0.0,
   };
 
-  discount: number = 0.0;
+  discount = 0.0;
   lastsumdisc = 0.0;
-  taxrate: number = 0.0;
+  taxrate = 0.0;
 
   async getUserData() {
     this.sp.storageReady().then(() => {
@@ -149,7 +149,7 @@ export class IncomeTransactionPage {
   }
 
   qrscan() {
-    var curprod;
+    let curprod;
     this.barcodeScanner
       .scan()
       .then(barcodeData => {
@@ -157,7 +157,7 @@ export class IncomeTransactionPage {
           if (val[0] != null) {
             curprod = val[0];
             const message = this.translateConfigService.getTranslatedMessage("Found Product");
-            let toast = this.toastCtrl.create({
+            const toast = this.toastCtrl.create({
               // @ts-ignore
               message: message.value + " " + val[0].name,
               duration: 2000,
@@ -181,7 +181,7 @@ export class IncomeTransactionPage {
             this.updateRec();
           } else {
             const message = this.translateConfigService.getTranslatedMessage("Get Product!!!");
-            let toast = this.toastCtrl.create({
+            const toast = this.toastCtrl.create({
               // @ts-ignore
               message: message.value,
               duration: 2000,
@@ -228,7 +228,7 @@ export class IncomeTransactionPage {
   removeItem(index) {
     //this.lastsum=this.lastsum-(this.datastore.itemslist[index].price*this.datastore.itemslist[index].qty);
 
-    var rem = this.datastore.itemslist.splice(index, 1);
+    const rem = this.datastore.itemslist.splice(index, 1);
 
     this.updateRec();
     console.log("I: " + index);
@@ -252,10 +252,10 @@ export class IncomeTransactionPage {
     this.updateRec();
   }
 
-  newItemName: string = "";
+  newItemName = "";
   newUnitPrice: number = null;
-  newUnitQty: number = 1;
-  newItemCat: string = "";
+  newUnitQty = 1;
+  newItemCat = "";
   newItemDiscount: number = null;
 
   addNewItem() {
@@ -338,7 +338,7 @@ export class IncomeTransactionPage {
   saveRec() {
     if (this.datastore.itemslist.length == 0) {
     } else {
-      let data = {
+      const data = {
         itemslist: this.datastore.itemslist,
         totalsum: this.lastsum,
         prodidlist: this.prodidlist,
@@ -381,7 +381,7 @@ export class IncomeTransactionPage {
           this.events.publish("cbUpdate:created", 0);
         });
         const message = this.translateConfigService.getTranslatedMessage("Finish");
-        let toast = this.toastCtrl.create({
+        const toast = this.toastCtrl.create({
           // @ts-ignore
           message: message.value,
           duration: 3000,
@@ -492,7 +492,7 @@ export class IncomeTransactionPage {
   inputData: any = {};
 
   showToast(data) {
-    let toast = this.toastCtrl.create({
+    const toast = this.toastCtrl.create({
       duration: 3000,
       message: data,
       position: "bottom",
@@ -502,7 +502,7 @@ export class IncomeTransactionPage {
   print(device, data) {
     console.log("Device mac: ", device);
     console.log("Data: ", JSON.stringify(data));
-    let load = this.loadCtrl.create({
+    const load = this.loadCtrl.create({
       content: "Printing...",
     });
     load.present();
@@ -513,7 +513,7 @@ export class IncomeTransactionPage {
           .printData(data)
           .then(printStatus => {
             console.log(printStatus);
-            let alert = this.alertCtrl.create({
+            const alert = this.alertCtrl.create({
               title: "Successful print!",
               buttons: [
                 {
@@ -538,7 +538,7 @@ export class IncomeTransactionPage {
           })
           .catch(error => {
             console.log(error);
-            let alert = this.alertCtrl.create({
+            const alert = this.alertCtrl.create({
               title: "There was an error printing, please try again!",
               buttons: [
                 {
@@ -555,7 +555,7 @@ export class IncomeTransactionPage {
       },
       error => {
         console.log(error);
-        let alert = this.alertCtrl.create({
+        const alert = this.alertCtrl.create({
           title: "There was an error connecting to the printer, please try again!",
           buttons: [
             {
@@ -669,7 +669,7 @@ export class IncomeTransactionPage {
   mountAlertBt(data) {
     this.receipt = data;
     console.log(this.receipt);
-    let alert = this.alertCtrl.create({
+    const alert = this.alertCtrl.create({
       title: "Select your printer",
       buttons: [
         {

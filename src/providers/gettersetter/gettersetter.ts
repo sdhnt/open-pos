@@ -8,9 +8,9 @@ import { Injectable } from "@angular/core";
 */
 @Injectable()
 export class GettersetterProvider {
-  total: number = 0;
-  count: number = 0;
-  vat: number = 0;
+  total = 0;
+  count = 0;
+  vat = 0;
 
   constructor() {}
 

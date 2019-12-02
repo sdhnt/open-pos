@@ -30,7 +30,7 @@ export class TransactionProductPage {
       console.log("ENTERED!");
       console.log("Received 0 " + data);
 
-      var tempdat = JSON.parse(data);
+      const tempdat = JSON.parse(data);
       this.getProducts();
       console.log(tempdat);
 
@@ -63,7 +63,7 @@ export class TransactionProductPage {
 
       this.index = parseInt(index);
 
-      var tempdat = JSON.parse(data);
+      const tempdat = JSON.parse(data);
       this.event1 = true;
       this.getProducts();
       this.filteredProductPrice(tempdat.price);
@@ -159,7 +159,7 @@ export class TransactionProductPage {
       //console.log(item);
       if (item.name.toLowerCase().includes(this.searchterm.toLowerCase())) {
         if (this.selectedCat.length > 0) {
-          for (var i = 0; i < this.selectedCat.length; i++) {
+          for (let i = 0; i < this.selectedCat.length; i++) {
             if (this.selectedCat == null || item.cat.includes(this.selectedCat[i])) {
               return true;
             }
@@ -172,12 +172,12 @@ export class TransactionProductPage {
   }
 
   singleProduct(product) {
-    var tempqty = this.recitemslist[this.index].qty;
+    const tempqty = this.recitemslist[this.index].qty;
     this.recitemslist[this.index] = product;
     this.recitemslist[this.index].qty = tempqty;
     //this.recitemslist[this.index].discount=
 
-    var tempJSON = { itemslist: this.recitemslist };
+    const tempJSON = { itemslist: this.recitemslist };
 
     const myObjStr = JSON.stringify(tempJSON);
     (this.navCtrl.parent as Tabs).select(2);
@@ -217,7 +217,7 @@ export class TransactionProductPage {
   createRec() {
     //console.log("bangin");
 
-    var tempJSON = { itemslist: [] };
+    const tempJSON = { itemslist: [] };
 
     this.listProducts.forEach(element => {
       if (element.qty > 0) {

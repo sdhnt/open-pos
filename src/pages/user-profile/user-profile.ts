@@ -52,9 +52,9 @@ export class UserProfilePage {
   };
   formUser: FormGroup;
   submitButton: boolean;
-  listOfBType: String[] = [];
-  listOfCurrency: String[] = [];
-  listOfLang: String[] = [];
+  listOfBType: string[] = [];
+  listOfCurrency: string[] = [];
+  listOfLang: string[] = [];
 
   constructor(
     public navCtrl: NavController,

@@ -36,7 +36,7 @@ export class AllTransactionPage {
       //SET itemsprice here? - make new addgen - diff button calls diff event that pushes rather than replaces
       //Same for Product Transaction Page
       //console.log(this.showSampleRec);
-      var tempdat = JSON.parse(data);
+      const tempdat = JSON.parse(data);
       // this.itemsname=null;
       // this.itemsprice=null;
       // this.itemsqty=null;
@@ -113,7 +113,7 @@ export class AllTransactionPage {
   }
 
   createRec() {
-    var tempJSON = { itemslist: [] };
+    const tempJSON = { itemslist: [] };
 
     this.itemsprice.forEach((element, index) => {
       if (this.itemsname.length > 0 && index < this.itemsname.length) {
@@ -167,14 +167,14 @@ export class AllTransactionPage {
 
         //IF LAST = character then remove that character
 
-        var answ = this.result.split("+");
+        let answ = this.result.split("+");
         if (this.result.includes("-")) {
           answ = this.result
             .split("+")
             .join("-")
             .split("-");
         }
-        var temp;
+        let temp;
 
         answ.forEach((element, index) => {
           if (element.includes("*")) {
