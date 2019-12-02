@@ -6,11 +6,12 @@ import { StorageProvider } from '../../providers/storage/storage';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import { TransactionHomePage } from '../transaction-home/transaction-home';
-;import {  AlertController,  LoadingController} from 'ionic-angular';
+import {  AlertController,  LoadingController} from 'ionic-angular';
 import {  PrinterProvider } from './../../providers/printer/printer';
 import {  commands } from './../../providers/printer/printer-commands';
 import { GlobalProvider } from "../../providers/global/global";
 import EscPosEncoder from 'esc-pos-encoder-ionic';
+import { GeolocationService } from "../../providers/geolocation/geolocation.service";
 
 /**
  * Generated class for the IncomeTransactionPage page.
@@ -32,12 +33,14 @@ export class IncomeTransactionPage {
     private barcodeScanner: BarcodeScanner,
     private printer: PrinterProvider,
     private alertCtrl: AlertController,
-    private loadCtrl: LoadingController, public global: GlobalProvider
-    
+    private loadCtrl: LoadingController,
+    public global: GlobalProvider,
+    private gps: GeolocationService,
     ) {
     
     //console.log("Recieved -1" + this.navParams.get('itemslist'));
     this.getUserData();
+    this.gps.getCoordinates().then(coordinates => {this.geolocation = coordinates}).catch(error => {console.log(error)});
 
   }
 
@@ -319,6 +322,7 @@ qrscan(){
   pnllist: any=[];
   datetime = Date.now();
   tax_vat: any = [];
+  geolocation: {};
 
 
   updateProduct(){
@@ -334,7 +338,7 @@ qrscan(){
 
     this.getUserData();
     this.userdata.cash_balance= (parseInt(this.userdata.cash_balance)+parseInt(postransacsum)).toString();
-    this.sp.setUserDat(this.userdata);
+    await this.sp.setUserDat(this.userdata);
  }
   
 
@@ -353,21 +357,22 @@ qrscan(){
         "discount": this.discount,
         "totaldisc": this.lastsumdisc,
         "totalatax":this.lastsumtax,
+        "geolocation": this.geolocation,
       };
 
-      this.datastore.itemslist.forEach(product => {
+      this.datastore.itemslist.forEach(async product => {
         if(product.code!="000000"){
           const data1 = {
             "code": product.code,
             "name": product.name,
             "price": product.price,
+            "wholesale_price": product.wholesale_price,
             "cost": product.cost,
             "cat": product.cat,
             "url": product.url,
             "stock_qty":(product.stock_qty-product.qty),
           };
-          this.sp.updateProduct(data1, product.code).then(()=>{
-          });
+          await this.sp.updateProduct(data1, product.code);
           data.discountlist.push(product.discount);
           this.discountlist.push(product.discount)
           console.log(this.discountlist)
@@ -381,10 +386,10 @@ qrscan(){
 
 
 
-      this.sp.storageReady().then(() => {
+      this.sp.storageReady().then(async () => {
         console.log(data)
         this.sp.addTransactions(data);
-        this.updateCb(this.lastsum).then(()=>{this.events.publish('cbUpdate:created', 0);});
+        await this.updateCb(this.lastsum).then(()=>{this.events.publish('cbUpdate:created', 0);});
           const message = this.translateConfigService.getTranslatedMessage('Finish');
           let toast = this.toastCtrl.create({
             // @ts-ignore
@@ -486,10 +491,10 @@ discountlist=[];
           }
         });
 
-        this.sp.storageReady().then(() => {
+        this.sp.storageReady().then(async () => {
           console.log(data)
           this.sp.addTransactions(data);
-          this.updateCb(this.lastsum).then(()=>{this.events.publish('cbUpdate:created', 0);});
+          await this.updateCb(this.lastsum).then(()=>{this.events.publish('cbUpdate:created', 0);});
           this.sp.backupStorage();
           this.prepareToPrint()
         

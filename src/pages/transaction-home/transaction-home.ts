@@ -106,8 +106,8 @@ async getUserData(){
     }).present();
   }
 
-  cashbtn(){
-    this.getUserData();
+  async cashbtn(){
+    await this.getUserData();
     const message = this.translateConfigService.getTranslatedMessage('Balance');
     this.toastCtrl.create({
         // @ts-ignore
