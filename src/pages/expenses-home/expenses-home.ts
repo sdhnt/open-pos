@@ -6,6 +6,7 @@ import { TranslateConfigService } from "../../providers/translation/translate-co
 import { ProductListPage } from '../product-list/product-list';
 import { DashboardPage } from '../dashboard/dashboard';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { GeolocationService } from "../../providers/geolocation/geolocation.service";
 
 /**
  * Generated class for the ExpensesHomePage page.
@@ -22,9 +23,10 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 export class ExpensesHomePage {
 
   constructor(public navCtrl: NavController, private translateConfigService: TranslateConfigService,public navParams: NavParams,
-    public sp: StorageProvider, public events: Events, public toastCtrl: ToastController, public barcodeScanner: BarcodeScanner
+    public sp: StorageProvider, public events: Events, public toastCtrl: ToastController, public barcodeScanner: BarcodeScanner, private gps: GeolocationService
     ) {
       this.getUserData();
+      this.gps.getCoordinates().then(coordinates => {this.geolocation = coordinates}).catch(error => {console.log(error)});
   }
 
   prodqty;
@@ -43,6 +45,7 @@ export class ExpensesHomePage {
   totalamt=0.0;
   userdata: any;
   hideButton: boolean = true;
+  geolocation: {};
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ExpensesHomePage');
@@ -144,7 +147,8 @@ export class ExpensesHomePage {
       "discountlist": discountlist,
       "discount": 0,
       "totaldisc": (this.prodcost*-1),
-      "totalatax":(this.prodcost*-1), 
+      "totalatax":(this.prodcost*-1),
+      "geolocation": this.geolocation,
     };
         const data1 = {
           "code": this.product.code,

@@ -129,12 +129,27 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       ]
     },
     {
+<<<<<<< HEAD
       "id": "cordova-plugin-backbutton.Backbutton",
       "file": "plugins/cordova-plugin-backbutton/www/Backbutton.js",
       "pluginId": "cordova-plugin-backbutton",
       "clobbers": [
         "navigator.Backbutton"
       ]
+=======
+      "id": "cordova-plugin-geolocation.geolocation",
+      "file": "plugins/cordova-plugin-geolocation/www/android/geolocation.js",
+      "pluginId": "cordova-plugin-geolocation",
+      "clobbers": [
+        "navigator.geolocation"
+      ]
+    },
+    {
+      "id": "cordova-plugin-geolocation.PositionError",
+      "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
+      "pluginId": "cordova-plugin-geolocation",
+      "runs": true
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
     }
   ];
   module.exports.metadata = {
@@ -155,6 +170,10 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-x-toast": "2.7.2",
     "cordova-sqlite-storage": "3.4.0",
     "phonegap-plugin-barcodescanner": "8.1.0",
+<<<<<<< HEAD
     "cordova-plugin-backbutton": "0.3.0"
+=======
+    "cordova-plugin-geolocation": "4.0.2"
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
   };
 });

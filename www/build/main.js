@@ -4,17 +4,27 @@ webpackJsonp([14],{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+<<<<<<< HEAD
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
+=======
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignUpPage; });
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
+<<<<<<< HEAD
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__sign_up_sign_up__ = __webpack_require__(99);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__transaction_home_transaction_home__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_storage_storage__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_facebook__ = __webpack_require__(194);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_translation_translate_config_service__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__user_profile_user_profile__ = __webpack_require__(123);
+=======
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__transaction_home_transaction_home__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_translation_translate_config_service__ = __webpack_require__(11);
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -65,15 +75,21 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 
 
 
+<<<<<<< HEAD
 
 
 
 /**
  * Generated class for the LoginPage page.
+=======
+/**
+ * Generated class for the SignUpPage page.
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
+<<<<<<< HEAD
 var LoginPage = /** @class */ (function () {
     function LoginPage(navCtrl, zone, navParams, toastCtrl, facebook, sp, alertCtrl, translateConfigService) {
         this.navCtrl = navCtrl;
@@ -185,6 +201,114 @@ var LoginPage = /** @class */ (function () {
             __WEBPACK_IMPORTED_MODULE_2_firebase___default.a.auth().signInWithEmailAndPassword(_this.email, _this.password)
                 .then(function (user) {
                 _this.loginProcedure();
+=======
+var SignUpPage = /** @class */ (function () {
+    function SignUpPage(navCtrl, navParams, toastCtrl, sp, translateConfigService, alertCtrl) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.toastCtrl = toastCtrl;
+        this.sp = sp;
+        this.translateConfigService = translateConfigService;
+        this.alertCtrl = alertCtrl;
+        this.listOfBType = [];
+        this.listOfCurrency = [];
+        this.listOfLang = [];
+        this.name = "";
+        this.email = "";
+        this.password = "";
+        this.businessname = "";
+        this.businessaddress = "";
+        this.businesstype = "";
+        this.phno = "";
+        this.language = "";
+        this.currency = "";
+        this.nextbtn = 0;
+        this.nextbtn = 0;
+        this.loadDropDowns();
+    }
+    SignUpPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad SignUpPage');
+        this.nextbtn = 0;
+    };
+    SignUpPage.prototype.nextPg = function () {
+        this.nextbtn = 1;
+    };
+    SignUpPage.prototype.prevPg = function () {
+        this.nextbtn = 0;
+    };
+    SignUpPage.prototype.loadDropDowns = function () {
+        var _this = this;
+        __WEBPACK_IMPORTED_MODULE_2_firebase___default.a.firestore().collection("sign-up").get()
+            .then(function (doc) {
+            doc.docs[0].data().businessType.forEach(function (b) {
+                _this.listOfBType.push(b);
+            });
+            doc.docs[0].data().currency.forEach(function (c) {
+                _this.listOfCurrency.push(c);
+            });
+            doc.docs[0].data().language.forEach(function (l) {
+                _this.listOfLang.push(l);
+            });
+        });
+    };
+    SignUpPage.prototype.signup = function () {
+        var _this = this;
+        var message = this.translateConfigService.getTranslatedMessage('Please wait while creating your profile ...');
+        this.toastCtrl.create({
+            // @ts-ignore
+            message: message.value,
+            duration: 3000
+        }).present();
+        __WEBPACK_IMPORTED_MODULE_2_firebase___default.a.auth().createUserWithEmailAndPassword(this.email, this.password).then(function (data) {
+            var newUser = data.user;
+            newUser.updateProfile({
+                displayName: _this.name,
+            }).then(function (res) {
+                console.log("Profile Updated");
+                __WEBPACK_IMPORTED_MODULE_2_firebase___default.a.firestore().collection("users").add({
+                    // file_name: this.text,
+                    created: __WEBPACK_IMPORTED_MODULE_2_firebase___default.a.firestore.FieldValue.serverTimestamp(),
+                    owner: __WEBPACK_IMPORTED_MODULE_2_firebase___default.a.auth().currentUser.uid,
+                    owner_name: __WEBPACK_IMPORTED_MODULE_2_firebase___default.a.auth().currentUser.displayName,
+                    business_name: _this.businessname,
+                    businesstype: _this.businesstype,
+                    business_address: _this.businessaddress,
+                    ph_no: _this.phno,
+                    language: _this.language,
+                    currency: _this.currency,
+                    cash_balance: _this.cb,
+                    discount: _this.discount,
+                    taxrate: _this.taxrate,
+                    categories: [{ name: "Example" }],
+                    products: [{ cat: "Example", code: "0000", cost: "0", name: "Example Product", price: "0", stock_qty: "0", url: "https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y", wholesale_price: "0", }],
+                    transactions: [{ datetime: new Date(), discount: 0, discountlist: [], itemslist: [{ cat: "Example", code: "0000", cost: "0", name: "Example Product", price: "0", stock_qty: "0", }], pnllist: [], prodidlist: [], taxrate: 0, totalatax: 0, totaldisc: 0, totalsum: 0, }]
+                }).then(function (doc) { return __awaiter(_this, void 0, void 0, function () {
+                    var _this = this;
+                    var title, message;
+                    return __generator(this, function (_a) {
+                        console.log(doc);
+                        title = this.translateConfigService.getTranslatedMessage('Account Created');
+                        message = this.translateConfigService.getTranslatedMessage('Your account has been created successfully');
+                        this.alertCtrl.create({
+                            // @ts-ignore
+                            title: title.value,
+                            // @ts-ignore
+                            message: message.value,
+                            buttons: [{
+                                    text: "OK",
+                                    handler: function () {
+                                        //this.sp.clearMem();
+                                        _this.sp.setMem();
+                                        _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_3__transaction_home_transaction_home__["a" /* TransactionHomePage */]); //navigate to feeds page
+                                    } //end handler
+                                }] //end button
+                        }).present();
+                        return [2 /*return*/];
+                    });
+                }); }).catch(function (err) {
+                    console.log(err);
+                });
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
             }).catch(function (err) {
                 console.log(err);
                 _this.toastCtrl.create({
@@ -193,6 +317,7 @@ var LoginPage = /** @class */ (function () {
                 }).present();
             });
         });
+<<<<<<< HEAD
         //console.log(user)
     };
     LoginPage.prototype.loginAction = function () {
@@ -230,6 +355,24 @@ var LoginPage = /** @class */ (function () {
 }());
 
 //# sourceMappingURL=login.js.map
+=======
+    };
+    SignUpPage.prototype.goBack = function () {
+        this.navCtrl.pop();
+    };
+    SignUpPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-sign-up',template:/*ion-inline-start:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/sign-up/sign-up.html"*/'<ion-header>\n		<ion-navbar transparent>\n		</ion-navbar>\n	  </ion-header>\n	  <ion-content padding>\n		  \n			  <button ion-button block clear color="light" class="nametop"><b>Open</b></button> \n	  \n	  <ion-grid style="width: 75%;">\n	  \n		  <div *ngIf="nextbtn!=1">\n		  <ion-row class="row-style1" justify-content-center align-items-center style="height: 100%">{{"Register a business"|translate}}</ion-row>\n		  <ion-row class="row-style"> \n			  <ion-icon name="person" color="semi-light" class="icon"></ion-icon>\n			  <ion-input type="text" placeholder="{{\'Name\'|translate}}" [(ngModel)]="name"></ion-input>\n		  </ion-row>\n		  <ion-row class="row-style">\n			  <ion-icon name="mail" color="semi-light" class="icon"></ion-icon>\n			  <ion-input type="email" placeholder="{{ \'email\' | translate }}" [(ngModel)]="email"> </ion-input>\n		  </ion-row>\n		  <ion-row class="row-style">\n			  <ion-icon name="key" color="semi-light" class="icon"></ion-icon>\n			  <ion-input type="password" placeholder="{{\'password\'|translate}}"  [(ngModel)]="password"></ion-input>\n		  </ion-row>\n		  <ion-row class="row-style">\n			  <ion-icon name="home" color="semi-light" class="icon"></ion-icon>\n			  <ion-input type="text" placeholder="{{\'Business Name\'|translate}} "  [(ngModel)]="businessname"></ion-input>\n		  </ion-row>\n		  <ion-row class="row-style">\n			  <ion-icon name="pin" color="semi-light" class="icon"></ion-icon>\n			  <ion-input type="text" placeholder="{{\'Full Business Address\'|translate}}"  [(ngModel)]="businessaddress"></ion-input>\n		  </ion-row>\n		  <ion-row class="row-style">\n			  <ion-icon name="call" color="semi-light" class="icon"></ion-icon>\n			  <ion-input type="text" placeholder="{{\'Phone Number\'|translate}}"  [(ngModel)]="phno"></ion-input>\n		  </ion-row>\n	  <button ion-button block round outline color="light" style="margin-top: 10px;" (click)="nextPg()">{{\'Next Page\'|translate}}</button>\n	  </div>\n	  <div *ngIf="nextbtn==1">\n			  <button ion-button block round outline color="light" style="margin-bottom: 10px;" (click)="prevPg()">{{\'Back\'|translate}}</button>\n		  <ion-row class="row-style">\n				  <ion-icon name="globe" color="semi-light" class="icon"></ion-icon>\n				  <ion-label>{{"Business Type"|translate}}</ion-label>\n				  <ion-select [(ngModel)]="businesstype">\n					  <ion-option *ngFor="let b of listOfBType" value="{{ b }}">{{ b }}</ion-option>\n				  </ion-select>\n				  <!-- <ion-input type="text" placeholder="Language"  [(ngModel)]="businessname"></ion-input> -->\n		 </ion-row>\n	  \n	  \n		  <ion-row class="row-style">\n			  <ion-icon name="chatboxes" color="semi-light" class="icon"></ion-icon>\n			  <ion-label>{{"Language"|translate}}</ion-label>\n			  <ion-select [(ngModel)]="language">\n				  <ion-option *ngFor="let l of listOfLang" value="{{ l }}">{{ l }}</ion-option>\n			  </ion-select>\n			  <!-- <ion-input type="text" placeholder="Language"  [(ngModel)]="businessname"></ion-input> -->\n		  </ion-row>\n	  \n		  <ion-row class="row-style">\n				  <ion-icon name="logo-usd" color="semi-light" class="icon"></ion-icon>\n				  <ion-label>{{"Currency"|translate}}</ion-label>\n				  <ion-select [(ngModel)]="currency">\n					  <ion-option *ngFor="let c of listOfCurrency" value = "{{ c }}">{{ c }}</ion-option>\n				  </ion-select>\n				  <!-- <ion-input type="text" placeholder="Language"  [(ngModel)]="businessname"></ion-input> -->\n			  </ion-row>\n	  \n	  \n		  <ion-row class="row-style">\n			  <ion-icon name="cash" color="semi-light" class="icon"></ion-icon>\n			  <ion-input type="number" placeholder="{{\'Starting Cash Balance\'|translate}}"  [(ngModel)]="cb"></ion-input>\n		  </ion-row>\n	  \n		  <ion-row class="row-style">\n				  <ion-icon name="cash" color="semi-light" class="icon"></ion-icon>\n				  <ion-input type="number" placeholder="{{\'Usual Discount %\'|translate}}"  [(ngModel)]="discount"></ion-input>\n			  </ion-row>\n	  \n			  <ion-row class="row-style">\n					  <ion-icon name="cash" color="semi-light" class="icon"></ion-icon>\n					  <ion-input type="number" placeholder="{{ \'Usual Tax %\' | translate }}"  [(ngModel)]="taxrate"></ion-input>\n				  </ion-row>\n		  <ion-row>\n			  <button ion-button block round outline color="light" style="margin-top: 20px;" (click)="signup()">{{"Sign Up"|translate}}</button>\n		  </ion-row>\n	  </div>\n	  </ion-grid>\n	  <button ion-button block clear color="light" style="margin-top: 10px;" (click)="goBack()">{{"Already have an account? Log-in"|translate}}</button>\n	  </ion-content>\n'/*ion-inline-end:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/sign-up/sign-up.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */], __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_5__providers_translation_translate_config_service__["a" /* TranslateConfigService */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
+    ], SignUpPage);
+    return SignUpPage;
+}());
+
+//# sourceMappingURL=sign-up.js.map
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 
 /***/ }),
 
@@ -290,7 +433,7 @@ var TranslateConfigService = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__singleproduct_singleproduct__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__singleproduct_singleproduct__ = __webpack_require__(96);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_translation_translate_config_service__ = __webpack_require__(11);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -407,7 +550,11 @@ var ProductListPage = /** @class */ (function () {
     };
     ProductListPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+<<<<<<< HEAD
             selector: 'page-product-list',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\product-list\product-list.html"*/'<!--\n\n  Generated template for the ProductListPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<!-- <ion-header>\n\n  <ion-navbar>\n\n    <ion-title>product-list</ion-title>\n\n  </ion-navbar>\n\n</ion-header> -->\n\n\n\n\n\n<ion-content padding>\n\n<ion-searchbar showCancelButton="always" [(ngModel)]="searchterm" (ionChange)="filteredProduct()"></ion-searchbar>\n\n  <ion-item>\n\n    <ion-label>{{"Select category"|translate}}</ion-label>\n\n    <ion-select multiple="true" [(ngModel)]=\'selectedCat\' (ionChange)="filteredProduct()">\n\n        <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>    \n\n    </ion-select>\n\n  </ion-item>\n\n\n\n\n\n<!-- <ion-card>\n\n    <ion-grid line>\n\n      <ion-row>\n\n      <ion-col col-2>\n\n        <ion-row>\n\n          <ion-avatar>\n\n              <img src="https://i0.wp.com/mainlymiles.com/wp-content/uploads/2019/04/Yew-Mee.jpg?w=256&h=256&crop=1&ssl=1">\n\n            </ion-avatar>\n\n          </ion-row>\n\n      </ion-col>\n\n      <ion-col col-10>\n\n          <ion-row>\n\n              <ion-col col-7>\n\n                Shan Noodle\n\n              </ion-col>\n\n              <ion-col col-3>\n\n                568 - N/A?\n\n                </ion-col>\n\n                <ion-col col-1>\n\n                    <ion-icon name="arrow-dropup-circle" style=" color: green"></ion-icon>\n\n                </ion-col>\n\n                <ion-col col-1>\n\n                    <ion-icon name="arrow-dropdown-circle" style=" color: red"></ion-icon>\n\n                </ion-col>\n\n            </ion-row>\n\n            <ion-row>\n\n              <ion-col col-6 style="color: grey; font-size: 10px;"> Price 3500 MMK </ion-col>\n\n              <ion-col col-6 style="color: grey; font-size: 10px; text-align: end;"> Category: Noodle </ion-col>\n\n            </ion-row>\n\n            <ion-row>\n\n              <ion-col col-6></ion-col>\n\n              <ion-col col-6> <button ion-button full end color="dark">View/Edit</button> </ion-col>\n\n            </ion-row>\n\n\n\n      </ion-col>\n\n    </ion-row>\n\n    </ion-grid>\n\n  </ion-card>  -->\n\n\n\n\n\n\n\n  <ion-list inset  *ngFor="let product of filteredListRev">\n\n    \n\n      <ion-card>\n\n          <ion-grid> \n\n            <ion-row>\n\n            <ion-col col-2>\n\n              <ion-row> \n\n                <ion-avatar>\n\n                    <img [src]="product.url">\n\n                  </ion-avatar>\n\n                </ion-row>\n\n            </ion-col>\n\n            <ion-col col-10>\n\n                <ion-row>\n\n                    <ion-col col-6>\n\n                        {{product.name}}\n\n                    </ion-col>\n\n                    <ion-col col-4>\n\n                      {{"Stock"|translate}}: {{product.stock_qty}}\n\n                    </ion-col>\n\n                      <ion-col col-1>\n\n                          <ion-icon name="arrow-dropup-circle" style=" color: green" (click)="swapUp(product.code)"></ion-icon>\n\n                      </ion-col>\n\n                      <ion-col col-1>\n\n                          <ion-icon name="arrow-dropdown-circle" style=" color: red" (click)="swapDown(product.code)"></ion-icon>\n\n                      </ion-col>\n\n                  </ion-row>\n\n                  <ion-row>\n\n                    <ion-col col-4 style="color: grey; font-size: 10px;"> {{"Retail Price"|translate}} {{product.price}} MMK </ion-col>\n\n                    <ion-col col-4 style="color: grey; font-size: 10px; text-align: center;"> {{"Wholesale Price"|translate}} {{product.wholesale_price}} MMK </ion-col>\n\n                    <ion-col col-4 style="color: grey; font-size: 10px; text-align: end;">  {{"Category"|translate}} {{product.cat}} </ion-col>\n\n                  </ion-row>\n\n            </ion-col>\n\n          </ion-row>\n\n          <ion-row>\n\n            <ion-col col-12> <button ion-button full end color="dark" (click)="singleProduct(product)">{{"View / Edit"|translate}}</button> </ion-col>\n\n          </ion-row>\n\n          </ion-grid>\n\n        </ion-card> \n\n     \n\n    </ion-list>\n\n  \n\n\n\n  \n\n\n\n\n\n\n\n\n\n</ion-content>\n\n\n\n\n\n\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\product-list\product-list.html"*/,
+=======
+            selector: 'page-product-list',template:/*ion-inline-start:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/product-list/product-list.html"*/'<!--\n  Generated template for the ProductListPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<!-- <ion-header>\n  <ion-navbar>\n    <ion-title>product-list</ion-title>\n  </ion-navbar>\n</ion-header> -->\n\n\n<ion-content padding>\n<ion-searchbar showCancelButton="always" [(ngModel)]="searchterm" (ionChange)="filteredProduct()"></ion-searchbar>\n  <ion-item>\n    <ion-label>{{"Select category"|translate}}</ion-label>\n    <ion-select multiple="true" [(ngModel)]=\'selectedCat\' (ionChange)="filteredProduct()">\n        <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>    \n    </ion-select>\n  </ion-item>\n\n\n<!-- <ion-card>\n    <ion-grid line>\n      <ion-row>\n      <ion-col col-2>\n        <ion-row>\n          <ion-avatar>\n              <img src="https://i0.wp.com/mainlymiles.com/wp-content/uploads/2019/04/Yew-Mee.jpg?w=256&h=256&crop=1&ssl=1">\n            </ion-avatar>\n          </ion-row>\n      </ion-col>\n      <ion-col col-10>\n          <ion-row>\n              <ion-col col-7>\n                Shan Noodle\n              </ion-col>\n              <ion-col col-3>\n                568 - N/A?\n                </ion-col>\n                <ion-col col-1>\n                    <ion-icon name="arrow-dropup-circle" style=" color: green"></ion-icon>\n                </ion-col>\n                <ion-col col-1>\n                    <ion-icon name="arrow-dropdown-circle" style=" color: red"></ion-icon>\n                </ion-col>\n            </ion-row>\n            <ion-row>\n              <ion-col col-6 style="color: grey; font-size: 10px;"> Price 3500 MMK </ion-col>\n              <ion-col col-6 style="color: grey; font-size: 10px; text-align: end;"> Category: Noodle </ion-col>\n            </ion-row>\n            <ion-row>\n              <ion-col col-6></ion-col>\n              <ion-col col-6> <button ion-button full end color="dark">View/Edit</button> </ion-col>\n            </ion-row>\n\n      </ion-col>\n    </ion-row>\n    </ion-grid>\n  </ion-card>  -->\n\n\n\n  <ion-list inset  *ngFor="let product of filteredList">\n    \n      <ion-card>\n          <ion-grid> \n            <ion-row>\n            <ion-col col-2>\n              <ion-row> \n                <ion-avatar>\n                    <img [src]="product.url">\n                  </ion-avatar>\n                </ion-row>\n            </ion-col>\n            <ion-col col-10>\n                <ion-row>\n                    <ion-col col-6>\n                        {{product.name}}\n                    </ion-col>\n                    <ion-col col-4>\n                      {{"Stock"|translate}}: {{product.stock_qty}}\n                    </ion-col>\n                      <ion-col col-1>\n                          <ion-icon name="arrow-dropup-circle" style=" color: green" (click)="swapUp(product.code)"></ion-icon>\n                      </ion-col>\n                      <ion-col col-1>\n                          <ion-icon name="arrow-dropdown-circle" style=" color: red" (click)="swapDown(product.code)"></ion-icon>\n                      </ion-col>\n                  </ion-row>\n                  <ion-row>\n                    <ion-col col-4 style="color: grey; font-size: 10px;"> {{"Retail Price"|translate}} {{product.price}} MMK </ion-col>\n                    <ion-col col-4 style="color: grey; font-size: 10px; text-align: center;"> {{"Wholesale Price"|translate}} {{product.wholesale_price}} MMK </ion-col>\n                    <ion-col col-4 style="color: grey; font-size: 10px; text-align: end;">  {{"Category"|translate}} {{product.cat}} </ion-col>\n                  </ion-row>\n            </ion-col>\n          </ion-row>\n          <ion-row>\n            <ion-col col-12> <button ion-button full end color="dark" (click)="singleProduct(product)">{{"View / Edit"|translate}}</button> </ion-col>\n          </ion-row>\n          </ion-grid>\n        </ion-card> \n     \n    </ion-list>\n  \n\n  \n\n\n\n\n</ion-content>\n\n\n\n'/*ion-inline-end:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/product-list/product-list.html"*/,
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_4__providers_translation_translate_config_service__["a" /* TranslateConfigService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */]])
@@ -419,12 +566,34 @@ var ProductListPage = /** @class */ (function () {
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 123:
+=======
+/***/ 134:
+/***/ (function(module, exports) {
+
+function webpackEmptyAsyncContext(req) {
+	// Here Promise.resolve().then() is used instead of new Promise() to prevent
+	// uncatched exception popping up in devtools
+	return Promise.resolve().then(function() {
+		throw new Error("Cannot find module '" + req + "'.");
+	});
+}
+webpackEmptyAsyncContext.keys = function() { return []; };
+webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
+module.exports = webpackEmptyAsyncContext;
+webpackEmptyAsyncContext.id = 134;
+
+/***/ }),
+
+/***/ 14:
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserProfilePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+<<<<<<< HEAD
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(16);
@@ -434,6 +603,12 @@ var ProductListPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_firebase__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_firebase__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_translation_translate_config_service__ = __webpack_require__(11);
+=======
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_storage__ = __webpack_require__(178);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(5);
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1165,16 +1340,28 @@ var StorageProvider = /** @class */ (function () {
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 178:
+=======
+/***/ 177:
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
 	"../pages/add-product-category/add-product-category.module": [
+<<<<<<< HEAD
 		369,
 		13
 	],
 	"../pages/all-transaction/all-transaction.module": [
 		370,
+=======
+		370,
+		13
+	],
+	"../pages/all-transaction/all-transaction.module": [
+		383,
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 		12
 	],
 	"../pages/coach-businesstips/coach-businesstips.module": [
@@ -1186,7 +1373,11 @@ var map = {
 		3
 	],
 	"../pages/coach-goals/coach-goals.module": [
+<<<<<<< HEAD
 		373,
+=======
+		374,
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 		2
 	],
 	"../pages/coach-home/coach-home.module": [
@@ -1210,21 +1401,33 @@ var map = {
 		9
 	],
 	"../pages/login/login.module": [
+<<<<<<< HEAD
 		193
+=======
+		190
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 	],
 	"../pages/product-list/product-list.module": [
 		379,
 		8
 	],
 	"../pages/sign-up/sign-up.module": [
+<<<<<<< HEAD
 		191
+=======
+		192
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 	],
 	"../pages/summary-home/summary-home.module": [
 		380,
 		7
 	],
 	"../pages/transaction-home/transaction-home.module": [
+<<<<<<< HEAD
 		192
+=======
+		193
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 	],
 	"../pages/transaction-product/transaction-product.module": [
 		381,
@@ -1246,12 +1449,18 @@ function webpackAsyncContext(req) {
 webpackAsyncContext.keys = function webpackAsyncContextKeys() {
 	return Object.keys(map);
 };
+<<<<<<< HEAD
 webpackAsyncContext.id = 178;
+=======
+webpackAsyncContext.id = 177;
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 module.exports = webpackAsyncContext;
 
 /***/ }),
 
-/***/ 185:
+<<<<<<< HEAD
+=======
+/***/ 183:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1308,12 +1517,13 @@ var GettersetterProvider = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 186:
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
+/***/ 185:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PrinterProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ionic_native_bluetooth_serial__ = __webpack_require__(187);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ionic_native_bluetooth_serial__ = __webpack_require__(186);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1356,7 +1566,72 @@ var PrinterProvider = /** @class */ (function () {
 
 /***/ }),
 
+<<<<<<< HEAD
+/***/ 186:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PrinterProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ionic_native_bluetooth_serial__ = __webpack_require__(187);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+=======
+/***/ 190:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginPageModule", function() { return LoginPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__login__ = __webpack_require__(99);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(23);
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var PrinterProvider = /** @class */ (function () {
+    function PrinterProvider(bluetoothSerial) {
+        this.bluetoothSerial = bluetoothSerial;
+    }
+    PrinterProvider.prototype.enableBluetooth = function () {
+        return this.bluetoothSerial.enable();
+    };
+    PrinterProvider.prototype.searchBluetooth = function () {
+        return this.bluetoothSerial.list();
+    };
+    PrinterProvider.prototype.connectBluetooth = function (address) {
+        return this.bluetoothSerial.connect(address);
+    };
+    PrinterProvider.prototype.printData = function (data) {
+        return this.bluetoothSerial.write(data);
+    };
+    PrinterProvider.prototype.disconnectBluetooth = function () {
+        return this.bluetoothSerial.disconnect();
+    };
+    PrinterProvider = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__ionic_native_bluetooth_serial__["a" /* BluetoothSerial */]])
+    ], PrinterProvider);
+    return PrinterProvider;
+}());
+
+//# sourceMappingURL=printer.js.map
+
+/***/ }),
+
+<<<<<<< HEAD
 /***/ 191:
+=======
+/***/ 192:
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1364,7 +1639,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SignUpPageModule", function() { return SignUpPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__sign_up__ = __webpack_require__(99);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__sign_up__ = __webpack_require__(100);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(23);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1398,7 +1673,11 @@ var SignUpPageModule = /** @class */ (function () {
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 192:
+=======
+/***/ 193:
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1440,6 +1719,7 @@ var TransactionHomePageModule = /** @class */ (function () {
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 193:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1483,6 +1763,9 @@ var LoginPageModule = /** @class */ (function () {
 /***/ }),
 
 /***/ 236:
+=======
+/***/ 235:
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1538,7 +1821,11 @@ var ContactUsPage = /** @class */ (function () {
     };
     ContactUsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+<<<<<<< HEAD
             selector: 'page-contact-us',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\contact-us\contact-us.html"*/'<ion-header>\n\n    <ion-navbar color="dark">\n\n      <button ion-button menuToggle>\n\n        <ion-icon name="menu"></ion-icon>\n\n      </button>\n\n      <ion-title>{{"Contact Us"| translate}}</ion-title>\n\n    </ion-navbar>\n\n  </ion-header>\n\n\n\n<ion-content padding>\n\n<h1>{{"Contact the OPEN Helpline"| translate}}</h1>\n\n{{"Contact us msg"| translate}}\n\n\n\n<br><br>\n\n\n\n<ion-grid>\n\n\n\n  \n\n\n\n\n\n    <ion-row  style="background-color: #f0f0f0">\n\n        <ion-col col-12>\n\n\n\n            <button ion-button full style="text-align: center ; background-color: indigo; color: palevioletred;">\n\n              {{ phone }}\n\n            </button>\n\n        </ion-col>\n\n    </ion-row>\n\n    <ion-row>\n\n        <ion-col col-12>\n\n            <button ion-button full style="text-align: center ; background-color: indigo; color: palevioletred; text-transform:lowercase">\n\n              {{ email }}\n\n            </button>\n\n        </ion-col>\n\n    </ion-row>\n\n    <ion-row>\n\n      <ion-col col-12>\n\n          <button ion-button full style="text-align: center ; background-color: indigo; color: palevioletred; text-transform: unset;" (click)="navFB()">\n\n            Reach us on Facebook!\n\n          </button>\n\n      </ion-col>\n\n  </ion-row>\n\n</ion-grid>\n\n</ion-content>'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\contact-us\contact-us.html"*/,
+=======
+            selector: 'page-contact-us',template:/*ion-inline-start:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/contact-us/contact-us.html"*/'<ion-header>\n    <ion-navbar color="dark">\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title>{{"Contact Us"| translate}}</ion-title>\n    </ion-navbar>\n  </ion-header>\n\n<ion-content padding>\n<h1>{{"Contact the OPEN Helpline"| translate}}</h1>\n{{"Contact us msg"| translate}}\n\n<br><br>\n\n<ion-grid>\n\n  \n\n\n    <ion-row  style="background-color: #f0f0f0">\n        <ion-col col-12>\n\n            <button ion-button full style="text-align: center ; background-color: indigo; color: palevioletred;">\n              {{ phone }}\n            </button>\n        </ion-col>\n    </ion-row>\n    <ion-row>\n        <ion-col col-12>\n            <button ion-button full style="text-align: center ; background-color: indigo; color: palevioletred; text-transform:lowercase">\n              {{ email }}\n            </button>\n        </ion-col>\n\n      </ion-row>\n</ion-grid>\n</ion-content>'/*ion-inline-end:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/contact-us/contact-us.html"*/,
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__["a" /* TranslateConfigService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]])
     ], ContactUsPage);
@@ -1549,7 +1836,11 @@ var ContactUsPage = /** @class */ (function () {
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 237:
+=======
+/***/ 236:
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1652,7 +1943,7 @@ var AddProductCategoryPage = /** @class */ (function () {
     };
     AddProductCategoryPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-add-product-category',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\add-product-category\add-product-category.html"*/'<ion-content padding>\n\n\n\n  <ion-grid>\n\n    <ion-row>\n\n      <ion-col col-8>\n\n          <ion-item>\n\n              <ion-input type="text" placeholder="Enter Category Here"  [(ngModel)]=\'newprodCat\'></ion-input>\n\n          </ion-item>\n\n      </ion-col>\n\n      <ion-col col-4>\n\n          <button ion-button full color="dark" (click)="addCategory()"> {{\'Add Category\' | translate}}</button>\n\n\n\n      </ion-col>\n\n    </ion-row>\n\n  </ion-grid>\n\n\n\n   \n\n    \n\n\n\n  <ion-item>\n\n     <h2> <b>{{\'View/Delete Category\' | translate}} </b> </h2>\n\n  </ion-item>\n\n \n\n  <ion-list  *ngFor="let element of listCat">\n\n\n\n      <ion-item>\n\n          {{element.name}}\n\n          <ion-icon item-end name="close-circle" (click)="delCat(element)" color="danger"></ion-icon> \n\n      </ion-item>\n\n  </ion-list>\n\n \n\n\n\n\n\n  \n\n\n\n \n\n    \n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\add-product-category\add-product-category.html"*/,
+            selector: 'page-add-product-category',template:/*ion-inline-start:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/add-product-category/add-product-category.html"*/'<ion-content padding>\n\n  <ion-grid>\n    <ion-row>\n      <ion-col col-8>\n          <ion-item>\n              <ion-input type="text" placeholder="Enter Category Here"  [(ngModel)]=\'newprodCat\'></ion-input>\n          </ion-item>\n      </ion-col>\n      <ion-col col-4>\n          <button ion-button full color="dark" (click)="addCategory()"> {{\'Add Category\' | translate}}</button>\n\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n   \n    \n\n  <ion-item>\n     <h2> <b>{{\'View/Delete Category\' | translate}} </b> </h2>\n  </ion-item>\n \n  <ion-list  *ngFor="let element of listCat">\n\n      <ion-item>\n          {{element.name}}\n          <ion-icon item-end name="close-circle" (click)="delCat(element)" color="danger"></ion-icon> \n      </ion-item>\n  </ion-list>\n \n\n\n  \n\n \n    \n</ion-content>\n'/*ion-inline-end:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/add-product-category/add-product-category.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__["a" /* TranslateConfigService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */]])
     ], AddProductCategoryPage);
@@ -1663,16 +1954,26 @@ var AddProductCategoryPage = /** @class */ (function () {
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 238:
+=======
+/***/ 237:
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AllTransactionPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ExpensesHomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__ = __webpack_require__(11);
+<<<<<<< HEAD
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_global_global__ = __webpack_require__(93);
+=======
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__dashboard_dashboard__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_barcode_scanner__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_geolocation_geolocation_service__ = __webpack_require__(97);
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1722,21 +2023,31 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 
 
 
+<<<<<<< HEAD
 //import { threadId } from 'worker_threads';
+=======
+
+
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 /**
- * Generated class for the AllTransactionPage page.
+ * Generated class for the ExpensesHomePage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
+<<<<<<< HEAD
 var AllTransactionPage = /** @class */ (function () {
     function AllTransactionPage(navCtrl, translateConfigService, navParams, events, sp, tstCtrl, global) {
+=======
+var ExpensesHomePage = /** @class */ (function () {
+    function ExpensesHomePage(navCtrl, translateConfigService, navParams, sp, events, toastCtrl, barcodeScanner, gps) {
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
         var _this = this;
         this.navCtrl = navCtrl;
         this.translateConfigService = translateConfigService;
         this.navParams = navParams;
-        this.events = events;
         this.sp = sp;
+<<<<<<< HEAD
         this.tstCtrl = tstCtrl;
         this.global = global;
         this.itemsname = [];
@@ -1763,26 +2074,27 @@ var AllTransactionPage = /** @class */ (function () {
             taxrate: 0.0,
             discount: 0.0,
         };
+=======
+        this.events = events;
+        this.toastCtrl = toastCtrl;
+        this.barcodeScanner = barcodeScanner;
+        this.gps = gps;
+        this.prodName = "";
+        this.minDate = new Date().toISOString();
+        this.maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 5)).toISOString();
+        this.expirydate = new Date().toISOString();
+        this.currtime = new Date();
+        this.listProducts = [];
+        this.filteredList = [];
+        this.searchterm = "";
+        this.selectedCat = [];
+        this.totalamt = 0.0;
+        this.hideButton = true;
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
         this.getUserData();
-        this.events.subscribe('addRecCalc:created', function (data) {
-            console.log("ENTERED!");
-            console.log("Received 0 " + data);
-            //SET itemsprice here? - make new addgen - diff button calls diff event that pushes rather than replaces
-            //Same for Product Transaction Page
-            //console.log(this.showSampleRec);
-            var tempdat = JSON.parse(data);
-            // this.itemsname=null;
-            // this.itemsprice=null;
-            // this.itemsqty=null;
-            tempdat.forEach(function (element) {
-                _this.itemsname.push(element.name);
-                _this.itemsprice.push(element.price);
-                _this.itemsqty.push(element.qty);
-                _this.loitems.push(element);
-            });
-            console.log(_this.itemsprice);
-        });
+        this.gps.getCoordinates().then(function (coordinates) { _this.geolocation = coordinates; }).catch(function (error) { console.log(error); });
     }
+<<<<<<< HEAD
     AllTransactionPage.prototype.ionViewDidLoad = function () {
         var _this = this;
         console.log('ionViewDidLoad AllTransactionPage');
@@ -1809,8 +2121,16 @@ var AllTransactionPage = /** @class */ (function () {
                 }
             });
         });
+=======
+    ExpensesHomePage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad ExpensesHomePage');
+        console.log(this.currtime);
+        this.getProducts();
+        this.getCategories();
+        this.getUserData();
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
     };
-    AllTransactionPage.prototype.getUserData = function () {
+    ExpensesHomePage.prototype.getUserData = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
             return __generator(this, function (_a) {
@@ -1826,135 +2146,173 @@ var AllTransactionPage = /** @class */ (function () {
             });
         });
     };
-    AllTransactionPage.prototype.createRec = function () {
-        var _this = this;
-        var tempJSON = { "itemslist": [], };
-        this.itemsprice.forEach(function (element, index) {
-            if (_this.itemsname.length > 0 && index < _this.itemsname.length) {
-                tempJSON.itemslist.push(_this.loitems[index]);
-            }
-            else {
-                tempJSON.itemslist.push({
-                    'code': '000000',
-                    'cat': 'NIL',
-                    'stock_qty': 0,
-                    'name': "Item",
-                    'price': parseInt(element),
-                    'qty': _this.itemsqty[index],
-                    'discount': 0,
-                });
-            }
-        });
-        //var sampledat={ 'itemslist': myJsonString,};
-        var myObjStr = JSON.stringify(tempJSON);
-        this.navCtrl.parent.select(2);
-        this.delay(300).then(function (any) {
-            _this.events.publish('genRec:created', myObjStr);
-            console.log("Sent: " + myObjStr);
-            //your task after delay.
-        });
-        this.result = "";
-        this.itemsname = [];
-        this.itemsprice = [];
-        this.lastsum = 0;
-        this.itemsqty = [];
-        this.loitems = [];
+    ExpensesHomePage.prototype.updatebalance = function (edited) {
+        if (this.prodcostitem != null && this.prodqty != null && (edited == "prodcostitem" || edited == "prodqty")) {
+            this.prodcost = this.prodqty * this.prodcostitem;
+        }
+        else if (this.prodcost != null && this.prodqty != null && (edited == "prodcost" || edited == "prodqty")) {
+            this.prodcostitem = this.prodcost / this.prodqty;
+        }
     };
-    AllTransactionPage.prototype.btnClicked = function (btn) {
+    ExpensesHomePage.prototype.getCategories = function () {
         var _this = this;
-        this.getUserData();
-        try {
-            console.log('CalculatorPage::btnClicked = ' + btn);
-            if (btn == "C") {
-                this.result = "";
-                this.itemsprice = [];
-                this.lastsum = 0;
-                this.itemsqty = [];
-            }
-            else if (btn == "=") {
-                this.showSampleRec = true;
-                //IF LAST = character then remove that character 
-                var answ = this.result.split('+');
-                if (this.result.includes('-')) {
-                    answ = this.result.split('+').join('-').split('-');
+        //console.log(this.listCat + " and "+this.newprodCat);
+        this.sp.storageReady().then(function () {
+            _this.sp.getCategories().then(function (val) {
+                _this.listCat = JSON.parse(val);
+                //console.log("Addprodpg: "+this.listCat)
+                _this.getCategories();
+            }).catch(function (err) {
+                alert("Error: " + err);
+            });
+        });
+    };
+    ExpensesHomePage.prototype.getProducts = function () {
+        var _this = this;
+        this.sp.storageReady().then(function () {
+            _this.sp.getProducts().then(function (val) {
+                _this.listProducts = JSON.parse(val);
+                if (_this.listProducts != null) {
+                    _this.filteredProduct();
                 }
-                var temp;
-                answ.forEach(function (element, index) {
-                    if (element.includes("*")) {
-                        answ[index] = element.substring(0, element.indexOf("*"));
-                        _this.itemsprice.push(answ[index]);
-                        temp = parseInt(element.substring(element.indexOf("*") + 1));
-                        console.log(element.substring(element.indexOf("*") + 1));
-                        _this.itemsqty.push(temp);
-                    }
-                    else if (element.includes("/")) {
-                        answ[index] = element.substring(0, element.indexOf("/"));
-                        _this.itemsprice.push(answ[index]);
-                        temp = Math.round(1 / (parseInt((element.substring(element.indexOf("/") + 1)))) * 100) / 100;
-                        console.log(temp);
-                        _this.itemsqty.push(temp);
-                    }
-                    else {
-                        if (element != "") {
-                            _this.itemsprice.push(element);
-                            _this.itemsqty.push(parseInt("1"));
+            }).catch(function (err) {
+                alert("Error: " + err);
+            });
+        });
+    };
+    ExpensesHomePage.prototype.filteredProduct = function () {
+        var _this = this;
+        this.filteredList = this.listProducts.filter(function (item) {
+            //console.log(this.searchterm);
+            console.log(item);
+            if (item.name.toLowerCase().includes(_this.searchterm.toLowerCase())) {
+                if (_this.selectedCat.length > 0) {
+                    for (var i = 0; i < _this.selectedCat.length; i++) {
+                        if (_this.selectedCat == null || item.cat.includes(_this.selectedCat[i])) {
+                            return true;
                         }
                     }
-                    // this.itemsprice.push(
-                    //   {'name': "Blank_Item",
-                    //   'price': parseInt(element),
-                    //   'qty': 0,
-                    //   })      
-                });
-                //flag_mode=0 means normal (sample reciept is generated)
-                //if(flag_mode==1) then go to reciept page directly - call createRec()
-                //if(flag_mode=2) then just use as calc - no reciept is generated
-                console.log(this.itemsprice);
-                console.log(this.itemsqty);
-                this.result = eval(this.result) + "";
-                this.lastsum = 0;
-                //this.lastsum=parseInt(this.result);
-                for (var i = 0; i < this.itemsprice.length; i++) {
-                    this.lastsum = this.lastsum + (parseInt(this.itemsprice[i]) * this.itemsqty[i]);
-                    console.log(this.lastsum);
+                }
+                else {
+                    return true;
                 }
             }
-            else if (btn == "b") {
-                this.result = this.result.substring(0, this.result.length - 1);
-            }
-            else if (btn == "squareroot") {
-                this.result = Math.sqrt(eval(this.result)) + "";
-            }
-            else if (btn == "square") {
-                this.result = eval("(" + this.result + ") * ( " + this.result + ")");
-            }
-            else if (btn == "reciproc") {
-                this.result = eval(1 + "/ (" + this.result + ")");
-            }
-            else {
-                if (parseInt(this.result) == this.lastsum) {
-                    this.result = this.result.substring(0, 0);
-                }
-                console.log("Lastchar: " + this.lastchar + " Result: " + this.result);
-                if ((btn == '+' || btn == '-' || btn == '*' || btn == '/') && (this.lastchar == '+' || this.lastchar == '-' || this.lastchar == '*' || this.lastchar == '/')) {
-                    this.result = this.result = this.result.substring(0, this.result.length - 1);
-                }
-                this.lastchar = btn;
-                this.result += btn;
-            }
-        }
-        catch (err) {
-            this.result = "Input Error!";
-            this.itemsprice = [];
-            this.lastsum = 0;
-            this.itemsqty = [];
-            this.loitems = [];
-        }
-        finally {
-        }
+        });
+        //console.log("FilteredProd: "+this.filteredList)
     };
-    AllTransactionPage = __decorate([
+    ExpensesHomePage.prototype.addinventoryexpense = function () {
+        var _this = this;
+        var itemslist = [];
+        var prodidlist = [];
+        var pnllist = [];
+        var discountlist = [];
+        itemslist.push(this.product);
+        prodidlist.push(this.expirydate);
+        var dataexp = {
+            "itemslist": itemslist,
+            "totalsum": (this.prodcost * -1),
+            "prodidlist": prodidlist,
+            "pnllist": pnllist,
+            "datetime": this.currtime,
+            "taxrate": 0,
+            "discountlist": discountlist,
+            "discount": 0,
+            "totaldisc": (this.prodcost * -1),
+            "totalatax": (this.prodcost * -1),
+            "geolocation": this.geolocation,
+        };
+        var data1 = {
+            "code": this.product.code,
+            "name": this.product.name,
+            "price": this.product.price,
+            "wholesale_price": this.product.wholesale_price,
+            "cost": Math.round(((parseInt(this.product.cost) * parseInt(this.product.stock_qty)) + (parseInt(this.prodcost))) / (parseInt(this.prodqty) + parseInt(this.product.stock_qty)) * 100) / 100,
+            "cat": this.product.cat,
+            "url": this.product.url,
+            "stock_qty": (parseInt(this.product.stock_qty) + parseInt(this.prodqty)),
+        };
+        this.sp.updateProduct(data1, this.product.code).then(function () {
+        });
+        this.sp.storageReady().then(function () {
+            console.log(dataexp);
+            _this.sp.addTransactions(dataexp);
+            _this.updateCb(_this.prodcost).then(function () { _this.events.publish('cbUpdate:created', 0); console.log("update"); });
+            var message = _this.translateConfigService.getTranslatedMessage('Finish');
+            var toast = _this.toastCtrl.create({
+                // @ts-ignore
+                message: message.value,
+                duration: 3000
+            });
+            _this.prodqty = null;
+            _this.prodcost = null;
+            _this.prodName = "";
+            _this.expirydate = new Date().toISOString();
+            _this.currtime = new Date();
+            _this.searchterm = "";
+            _this.selectedCat = [];
+            _this.totalamt = 0.0;
+            _this.product = null;
+            _this.sp.backupStorage();
+            toast.present();
+            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__dashboard_dashboard__["a" /* DashboardPage */]);
+        });
+        //REFLECT CHANGE ON CASH BALANCE HERE & Reflect change in inventory here as well 
+    };
+    ExpensesHomePage.prototype.updateCb = function (negtransacsum) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                this.getUserData();
+                this.userdata.cash_balance = (parseInt(this.userdata.cash_balance) - parseInt(negtransacsum)).toString();
+                this.sp.setUserDat(this.userdata);
+                return [2 /*return*/];
+            });
+        });
+    };
+    ExpensesHomePage.prototype.scanQR = function () {
+        var _this = this;
+        this.barcodeScanner.scan().then(function (barcodeData) {
+            _this.sp.searchProduct(barcodeData.text).then(function (val) {
+                if (val[0] != null) {
+                    var message = _this.translateConfigService.getTranslatedMessage('Found Product');
+                    var toast = _this.toastCtrl.create({
+                        // @ts-ignore
+                        message: message.value + " " + val[0].name,
+                        duration: 2000
+                    });
+                    toast.present();
+                    _this.chooseProd(val[0]);
+                }
+                else {
+                    var message = _this.translateConfigService.getTranslatedMessage('Not found!');
+                    var toast = _this.toastCtrl.create({
+                        // @ts-ignore
+                        message: message.value,
+                        duration: 2000
+                    });
+                    toast.present();
+                }
+            });
+        }).catch(function (err) {
+            console.log('Error', err);
+        });
+    };
+    ExpensesHomePage.prototype.chooseProd = function (product) {
+        this.prodName = product.name;
+        console.log(this.prodName);
+        this.product = product;
+        this.hideButton = false;
+    };
+    ExpensesHomePage.prototype.clearProduct = function () {
+        this.hideButton = true;
+        this.prodName = "";
+        this.product = null;
+        this.prodqty = "";
+        this.prodcost = "";
+        this.prodcostitem = "";
+    };
+    ExpensesHomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+<<<<<<< HEAD
             selector: 'page-all-transaction',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\all-transaction\all-transaction.html"*/'<!--\n\n  Generated template for the AllTransactionPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n\n\n\n\n<ion-content padding>\n\n    <!-- <ion-fab bottom right>\n\n        <button ion-fab color="primary" item-right><ion-icon name="calculator"></ion-icon></button>\n\n      </ion-fab> -->\n\n      <!-- <ion-card *ngIf="showSampleRec==false">\n\n        ကျေးဇူးပြုပြီးပစ္စည်းအတွက်ပမာဏကိုမြှောက်ပါ၊ ရှိပြီးသားငွေတောင်းခံလွှာကိုထည့်ရန်တူညီသောစာလုံးကိုနှိပ်ပါ။\n\n\n\n        အလွတ်ပစ္စည်းပေါင်းများစွာကိုထည့်သွင်းလိုပါက * qty တစ်ခုချင်းစီကိုရိုက်ထည့်ပြီးနောက်တစ်ခုကိုရိုက်ထည့်ရန် + သင်္ကေတကိုနှိပ်ပါ\n\n      </ion-card>\n\n       -->\n\n  <ion-grid>\n\n    <ion-row>\n\n\n\n      <ion-col col-12 col-md-6>\n\n\n\n          <div class="calculator">\n\n            <div class="header">\n\n              <div class="window"></div>\n\n              <div class="input">\n\n                <!-- <ion-row>\n\n                  \n\n                  <ion-input type="text" placeholder="0" name="display" [(ngModel)]="result">\n\n                  </ion-input>\n\n                  \n\n                 \n\n                  <ion-icon name="backspace" (click)="btnClicked(\'b\')"></ion-icon>\n\n                  \n\n                </ion-row>  -->\n\n                <ion-row>\n\n                    <ion-col col-10>\n\n                      <div style="text-align: left; overflow-y: scroll; height: 80px;">\n\n                      {{result}}\n\n                  </div>\n\n                  </ion-col>\n\n\n\n                   <!-- <ion-col col-10>\n\n                      <ion-scroll scrollX="true" style="  white-space: nowrap; height: 80px;">\n\n                        <div style="text-align: right;">\n\n                          {{result}}\n\n                        </div>\n\n                      </ion-scroll>\n\n                  </ion-col> -->\n\n\n\n    \n\n                \n\n                  \n\n                  <ion-col col-2> <ion-icon name="backspace" (click)="btnClicked(\'b\')"></ion-icon>\n\n                  </ion-col>\n\n                  \n\n                </ion-row>\n\n               \n\n                    \n\n                \n\n              </div>\n\n             \n\n              \n\n            </div>\n\n            <div class="keys">\n\n              <div class="row">\n\n                <div class="number">\n\n                  <span (click)="btnClicked(\'7\')">7</span>\n\n                  <span (click)="btnClicked(\'8\')">8</span>\n\n                  <span (click)="btnClicked(\'9\')">9</span>\n\n                </div>\n\n                <div class="symbol">\n\n                  <span (click)="btnClicked(\'*\')">×</span>\n\n\n\n                </div>\n\n              </div>\n\n\n\n              <div class="row">\n\n                <div class="number">\n\n                  <span (click)="btnClicked(\'4\')">4</span>\n\n                  <span (click)="btnClicked(\'5\')">5</span>\n\n                  <span (click)="btnClicked(\'6\')">6</span>\n\n                </div>\n\n\n\n                <div class="symbol">\n\n                  <span (click)="btnClicked(\'+\')">+</span>\n\n           </div>\n\n              </div>\n\n\n\n              <div class="row">\n\n                <div class="number">\n\n                  <span (click)="btnClicked(\'1\')">1</span>\n\n                  <span (click)="btnClicked(\'2\')">2</span>\n\n                  <span (click)="btnClicked(\'3\')">3</span>\n\n                </div>\n\n\n\n                <div class="symbol">\n\n                  <span (click)="btnClicked(\'/\')">÷</span>\n\n                  <span (click)="btnClicked(\'squareroot\')">√x</span>\n\n                </div>\n\n\n\n\n\n              </div>\n\n\n\n\n\n              <div class="row">\n\n                <div class="number">\n\n                  <span (click)="btnClicked(\'C\')">C</span>\n\n                  <span (click)="btnClicked(\'0\')">0</span>\n\n                  <span (click)="btnClicked(\'-\')">-</span>\n\n\n\n\n\n\n\n                </div>\n\n\n\n                <div class="symbol action">\n\n                  <span (click)="btnClicked(\'=\')">=</span>\n\n                </div>\n\n\n\n              </div>\n\n            </div>\n\n          </div>\n\n\n\n    \n\n\n\n      </ion-col>\n\n\n\n      <ion-col col-12 col-md-6>\n\n\n\n\n\n        <ion-card *ngIf="showSampleRec==true"> \n\n\n\n                <ion-grid>\n\n          \n\n                  <ion-row> <ion-col style="text-align: center; padding-top: 5px;">{{userdata? userdata.business_name: null}} </ion-col> </ion-row>\n\n          \n\n                  <ion-row>\n\n                      <ion-col col-12 style="color: grey; font-size: 10px; text-align: center"> {{userdata?userdata.business_address:null}}</ion-col>\n\n                  </ion-row>\n\n                  <ion-row>\n\n                      <ion-col col-12 style="color: grey; font-size: 10px; text-align: center"> {{userdata?userdata.ph_no:null}}</ion-col>\n\n                  </ion-row>          \n\n                  <ion-row style="padding-top: 5px;">\n\n                      <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><b>{{"Sl" | translate}}</b></ion-col>\n\n                      <ion-col col-4 style="color: black; font-size: 10px; text-align: center"><b>{{"Name" | translate}}</b></ion-col>\n\n                      <ion-col col-2 style="color: black; font-size: 10px; text-align: center"><b>{{"Price"| translate}}</b></ion-col>\n\n                      <ion-col col-2 style="color: black; font-size: 10px; text-align: center"><b>{{"Qty"| translate}}</b></ion-col>\n\n                      <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="arrow-dropup-circle" style=" color: green"></ion-icon></ion-col>\n\n                      <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="arrow-dropdown-circle" style=" color: red"></ion-icon></ion-col>\n\n                      <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="close" style=" color: red"></ion-icon></ion-col>\n\n                  </ion-row>\n\n          \n\n                 \n\n          \n\n                  <ion-list *ngFor="let item of itemsprice; let i = index" no-lines>\n\n          \n\n              \n\n                    <ion-row>\n\n                        <ion-col col-1 style="color: black; font-size: 10px; text-align: center">{{i+1}}.</ion-col>\n\n                        <ion-col col-4 style="color: black; font-size: 10px; text-align: center">\n\n                         Item {{i+1}}</ion-col>   \n\n                        <ion-col col-2 style="color: black; font-size: 10px; text-align: center">{{item}}</ion-col>\n\n                        <ion-col col-2 style="color: black; font-size: 10px; text-align: center">{{itemsqty[i]}}</ion-col>\n\n                        <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="arrow-dropup-circle" style=" color: green"></ion-icon></ion-col>\n\n                        <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="arrow-dropdown-circle" style=" color: red"></ion-icon></ion-col>\n\n                        <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="close" style=" color: red"></ion-icon></ion-col>\n\n                    </ion-row>\n\n                \n\n          \n\n                  </ion-list>\n\n          \n\n                  <ion-row padding>\n\n                      <ion-col col-1></ion-col>  \n\n                    <ion-col col-4 style="text-align: center;font-size: 10px;"><b>{{"Total"| translate}}</b> </ion-col>\n\n                      <ion-col col-2 style="text-align: center;font-size: 10px;"><b>{{lastsum}}</b> </ion-col>\n\n                      <ion-col col-5></ion-col>\n\n                    </ion-row>\n\n          \n\n          \n\n                   \n\n          \n\n          \n\n                </ion-grid>\n\n          \n\n          \n\n          \n\n\n\n        </ion-card>\n\n\n\n      </ion-col>\n\n\n\n\n\n\n\n    </ion-row>\n\n\n\n\n\n  </ion-grid>\n\n\n\n\n\n\n\n  <!-- Dynamically Generate All transactions from backend - see feed from prev -->\n\n\n\n</ion-content>\n\n\n\n<ion-footer>\n\n\n\n    <ion-grid>\n\n      <ion-row>\n\n        <ion-col>\n\n            <button ion-button (click)="createRec()" full style="background-color: #222">{{this.global.CalcToReceipt|translate}}</button>\n\n        </ion-col>\n\n      </ion-row>\n\n    </ion-grid>\n\n   \n\n</ion-footer>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\all-transaction\all-transaction.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__["a" /* TranslateConfigService */],
@@ -1963,13 +2321,25 @@ var AllTransactionPage = /** @class */ (function () {
             __WEBPACK_IMPORTED_MODULE_4__providers_global_global__["a" /* GlobalProvider */]])
     ], AllTransactionPage);
     return AllTransactionPage;
+=======
+            selector: 'page-expenses-home',template:/*ion-inline-start:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/expenses-home/expenses-home.html"*/'<!--\n  Generated template for the ExpensesHomePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar color="dark">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title> {{"Add New Stock"|translate}} </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-item>\n      <b>{{\'Enter Inventory Expenditure Detail:\'|translate}}</b> \n  </ion-item>\n\n<ion-list inset>\n  \n    <ion-grid>\n      <ion-row>\n        <ion-col col-8> \n            <ion-searchbar showCancelButton="always" [(ngModel)]="searchterm" (ionChange)="filteredProduct()"></ion-searchbar>\n        </ion-col>\n        <ion-col col-4>\n            <button ion-button small block color="primary" (click)="scanQR()"  color="dark">{{"Scan Barcode"|translate}}</button>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n    <ion-item>\n      <ion-label>{{"Select category"| translate}}</ion-label>\n      <ion-select multiple="true" [(ngModel)]=\'selectedCat\' (ionChange)="filteredProduct()">\n          <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>    \n      </ion-select>\n    </ion-item>\n  </ion-list>\n<ion-list inset  *ngFor="let product of filteredList">\n  <ion-card>\n      <ion-grid> \n        <ion-row>\n        <ion-col col-2>\n          <ion-row> \n            <ion-avatar>\n                <img [src]="product.url">\n              </ion-avatar>\n            </ion-row>\n        </ion-col>\n        <ion-col col-10>\n            <ion-row>\n                <ion-col col-6>\n                    {{product.name}}\n                </ion-col>\n                <ion-col col-6>\n                  {{"Stock"|translate}}: {{product.stock_qty}}\n                </ion-col>\n                </ion-row>\n              <ion-row>\n                <ion-col col-4 style="color: grey; font-size: 10px;"> {{"Retail Price"|translate}} {{product.price}} MMK </ion-col> \n                <!-- change currency units to those that are selected by user -Pranay -->\n                <ion-col col-4 style="color: grey; font-size: 10px; text-align: center;"> {{"Wholesale Price"|translate}} {{product.wholesale_price}} MMK </ion-col>\n                <ion-col col-4 style="color: grey; font-size: 10px; text-align: end;"> {{"Category"|translate}} {{product.cat}} </ion-col>\n              </ion-row>\n        </ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col col-12> <button ion-button full end color="dark" (click)="chooseProd(product)">{{"Add New Stock"|translate}}</button> </ion-col>\n      </ion-row>\n      </ion-grid>\n    </ion-card> \n \n</ion-list>\n</ion-content>\n\n<ion-footer style="border-top-color:black; border-top: 10px;" *ngIf=\'prodName!=""\'> \n  <ion-list>\n    <ion-item>\n      {{"Product Name"|translate}}: {{prodName}}\n      <button ion-button style="float: right; color:white; background-color: red;" [hidden]="hideButton" (click)="clearProduct()">\n        {{"Clear"|translate}}\n      </button>\n    </ion-item>\n    <ion-item>\n      <ion-label>{{"Product Qty"|translate}}</ion-label>\n      <ion-input type="number" [(ngModel)]=\'prodqty\' (ionChange)="updatebalance(\'prodqty\')"></ion-input>\n    </ion-item>\n    <ion-item>\n      <ion-label>{{"Purchase Price per Item"|translate}}</ion-label>\n      <ion-input type="number" [(ngModel)]=\'prodcostitem\' (ionChange)="updatebalance(\'prodcostitem\')"></ion-input>\n    </ion-item>\n    <ion-item>\n        <ion-label>{{"Total Expenditure"|translate}}</ion-label>\n        <ion-input type="number" [(ngModel)]=\'prodcost\' (ionChange)="updatebalance(\'prodcost\')"></ion-input>\n      </ion-item>\n      <ion-item>\n      <ion-label>{{"Batch Expiry Date:"|translate}}</ion-label>\n      <ion-datetime displayFormat="DD/MMM/YYYY" [(ngModel)]=\'expirydate\' [min]="minDate" [max]="maxDate"></ion-datetime>\n      </ion-item>\n    </ion-list>\n  <button ion-button block color="primary" (click)="addinventoryexpense()"  color="dark">{{"Add Stock"|translate}}</button>\n  \n</ion-footer>\n'/*ion-inline-end:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/expenses-home/expenses-home.html"*/,
+        }),
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__["a" /* TranslateConfigService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__["a" /* TranslateConfigService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_5__ionic_native_barcode_scanner__["a" /* BarcodeScanner */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__ionic_native_barcode_scanner__["a" /* BarcodeScanner */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_6__providers_geolocation_geolocation_service__["a" /* GeolocationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__providers_geolocation_geolocation_service__["a" /* GeolocationService */]) === "function" && _h || Object])
+    ], ExpensesHomePage);
+    return ExpensesHomePage;
+    var _a, _b, _c, _d, _e, _f, _g, _h;
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 }());
 
-//# sourceMappingURL=all-transaction.js.map
+//# sourceMappingURL=expenses-home.js.map
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 239:
+=======
+/***/ 238:
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1977,9 +2347,19 @@ var AllTransactionPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(14);
+<<<<<<< HEAD
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__dashboard_dashboard__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_barcode_scanner__ = __webpack_require__(40);
+=======
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_barcode_scanner__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_translation_translate_config_service__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_printer_printer__ = __webpack_require__(185);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_printer_printer_commands__ = __webpack_require__(311);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_esc_pos_encoder_ionic__ = __webpack_require__(312);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_esc_pos_encoder_ionic___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_esc_pos_encoder_ionic__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_geolocation_geolocation_service__ = __webpack_require__(97);
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2030,14 +2410,21 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 
 
 
+
 /**
  * Generated class for the ExpensesHomePage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
+<<<<<<< HEAD
 var ExpensesHomePage = /** @class */ (function () {
     function ExpensesHomePage(navCtrl, translateConfigService, navParams, sp, events, toastCtrl, barcodeScanner) {
+=======
+var IncomeTransactionPage = /** @class */ (function () {
+    function IncomeTransactionPage(navCtrl, navParams, events, sp, toastCtrl, translateConfigService, barcodeScanner, printer, alertCtrl, loadCtrl, gps) {
+        var _this = this;
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
         this.navCtrl = navCtrl;
         this.translateConfigService = translateConfigService;
         this.navParams = navParams;
@@ -2045,6 +2432,7 @@ var ExpensesHomePage = /** @class */ (function () {
         this.events = events;
         this.toastCtrl = toastCtrl;
         this.barcodeScanner = barcodeScanner;
+<<<<<<< HEAD
         this.prodName = "";
         this.minDate = new Date().toISOString();
         this.maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 5)).toISOString();
@@ -2056,7 +2444,56 @@ var ExpensesHomePage = /** @class */ (function () {
         this.selectedCat = [];
         this.totalamt = 0.0;
         this.hideButton = true;
+=======
+        this.printer = printer;
+        this.alertCtrl = alertCtrl;
+        this.loadCtrl = loadCtrl;
+        this.gps = gps;
+        this.taxbtn = 0;
+        this.userdata = { business_address: "",
+            business_name: "",
+            cash_balance: "",
+            currency: "",
+            created: "",
+            language: "en",
+            owner: "",
+            owner_name: "",
+            ph_no: "",
+            businesstype: "",
+            taxrate: 0.0,
+            discount: 0.0,
+        };
+        this.discount = 0.0;
+        this.lastsumdisc = 0.0;
+        this.taxrate = 0.0;
+        this.discbtn = 0;
+        this.result = "";
+        this.displayManual = 0;
+        this.datastore = { 'itemslist': [] };
+        this.flag_mode = 0;
+        this.showSampleRec = true;
+        this.itemsprice = [];
+        this.ctr = 0;
+        this.lastsum = 0;
+        this.lastsumAfterIndividualDiscount = 0;
+        this.lastchar = "NIL";
+        this.lastdigit = 0;
+        this.newItemName = "";
+        this.newUnitPrice = null;
+        this.newUnitQty = 1;
+        this.newItemCat = "";
+        this.newItemDiscount = null;
+        this.listArray = [];
+        this.prodidlist = [];
+        this.pnllist = [];
+        this.datetime = Date.now();
+        this.tax_vat = [];
+        this.discountlist = [];
+        this.inputData = {};
+        //console.log("Recieved -1" + this.navParams.get('itemslist'));
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
         this.getUserData();
+        this.gps.getCoordinates().then(function (coordinates) { _this.geolocation = coordinates; }).catch(function (error) { console.log(error); });
     }
     ExpensesHomePage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad ExpensesHomePage');
@@ -2403,6 +2840,7 @@ var IncomeTransactionPage = /** @class */ (function () {
             });
         });
     };
+<<<<<<< HEAD
     IncomeTransactionPage.prototype.getUserData = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
@@ -2413,6 +2851,38 @@ var IncomeTransactionPage = /** @class */ (function () {
                         console.log(_this.userdata);
                     }).catch(function (err) {
                         alert("Error: " + err);
+=======
+    IncomeTransactionPage.prototype.saveRec = function () {
+        var _this = this;
+        if (this.datastore.itemslist.length == 0) {
+        }
+        else {
+            var data_1 = {
+                "itemslist": this.datastore.itemslist,
+                "totalsum": this.lastsum,
+                "prodidlist": this.prodidlist,
+                "pnllist": this.pnllist,
+                "datetime": this.datetime,
+                "taxrate": this.taxrate,
+                "discountlist": [],
+                "discount": this.discount,
+                "totaldisc": this.lastsumdisc,
+                "totalatax": this.lastsumtax,
+                "geolocation": this.geolocation,
+            };
+            this.datastore.itemslist.forEach(function (product) {
+                if (product.code != "000000") {
+                    var data1 = {
+                        "code": product.code,
+                        "name": product.name,
+                        "price": product.price,
+                        "cost": product.cost,
+                        "cat": product.cat,
+                        "url": product.url,
+                        "stock_qty": (product.stock_qty - product.qty),
+                    };
+                    _this.sp.updateProduct(data1, product.code).then(function () {
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
                     });
                 });
                 return [2 /*return*/];
@@ -2897,6 +3367,57 @@ var IncomeTransactionPage = /** @class */ (function () {
             .line("")
             .newline().cut('full');
         this.mountAlertBt(result.encode());
+<<<<<<< HEAD
+    };
+    IncomeTransactionPage.prototype.mountAlertBt = function (data) {
+        var _this = this;
+        this.receipt = data;
+        console.log(this.receipt);
+        var alert = this.alertCtrl.create({
+            title: 'Select your printer',
+            buttons: [{
+                    text: 'Cancel',
+                    role: 'cancel',
+                },
+                {
+                    text: 'Select printer',
+                    handler: function (device) {
+                        if (!device) {
+                            _this.showToast('Select a printer!');
+                            return false;
+                        }
+                        console.log(device);
+                        _this.print(device, _this.receipt);
+                    },
+                },
+            ],
+        });
+        this.printer.enableBluetooth().then(function () {
+            _this.printer
+                .searchBluetooth()
+                .then(function (devices) {
+                devices.forEach(function (device) {
+                    console.log('Devices: ', JSON.stringify(device));
+                    alert.addInput({
+                        name: 'printer',
+                        value: device.address,
+                        label: device.name,
+                        type: 'radio',
+                    });
+                });
+                alert.present();
+            })
+                .catch(function (error) {
+                console.log(error);
+                _this.showToast('There was an error connecting the printer, please try again!');
+                _this.mountAlertBt(_this.receipt);
+            });
+        })
+            .catch(function (error) {
+            console.log(error);
+            _this.showToast('Error activating bluetooth, please try again!');
+            _this.mountAlertBt(_this.receipt);
+=======
     };
     IncomeTransactionPage.prototype.mountAlertBt = function (data) {
         var _this = this;
@@ -2950,6 +3471,211 @@ var IncomeTransactionPage = /** @class */ (function () {
     };
     IncomeTransactionPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-income-transaction',template:/*ion-inline-start:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/income-transaction/income-transaction.html"*/'<!--\n  Generated template for the IncomeTransactionPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-content padding>\n \n\n    <ion-card >\n\n      <ion-grid>\n\n        <ion-row> <ion-col style="text-align: center; padding-top: 5px;"> {{userdata?userdata.business_name:null}}  </ion-col> </ion-row>\n\n        <ion-row>\n            <ion-col col-12 style="color: grey;  text-align: center"> {{userdata?userdata.business_address:null}}</ion-col>\n        </ion-row>\n        <ion-row>\n            <ion-col col-12 style="color: grey; text-align: center">  {{userdata?userdata.ph_no:null}}</ion-col>\n        </ion-row>\n\n            <ion-row style="padding-top: 5px;">\n            <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><b>{{"Sl" | translate}}</b></ion-col>\n            <ion-col col-4 style="color: black; font-size: 10px; text-align: center"><b>{{"Name" | translate}}</b></ion-col>\n            <ion-col col-2 style="color: black; font-size: 10px; text-align: center"><b>{{"Price"| translate}}</b></ion-col>\n            <ion-col col-2 style="color: black; font-size: 10px; text-align: center"><b>{{"Qty"| translate}}</b></ion-col>\n            <ion-col col-3></ion-col>\n             </ion-row>\n       \n\n        <ion-list *ngFor="let item of datastore.itemslist; let i = index" no-lines>\n\n    \n          <ion-row>\n              <ion-col col-1 style="color: black; text-align: center;">{{i+1}}.</ion-col>\n              <ion-col col-4 style="color: black; text-align: center;">\n                <div *ngIf="item.name==\'Item\'; else itemexist">\n                  <button ion-button small (click)="addSingleProd(item,i)">{{"Choose"|translate}}</button>\n                </div>\n                <ng-template #itemexist>{{item.name}}</ng-template>\n              </ion-col>\n              <ion-col col-2 style="color: black;   text-align: center;">{{item.price}}</ion-col>\n              <ion-col col-2 style="color: black;   text-align: center;">{{item.qty}}</ion-col>\n              <ion-col col-1 style="color: black;   text-align: center;"><ion-icon name="add" style=" color: green" (click)="addQty(i)"></ion-icon></ion-col>\n              <ion-col col-1 style="color: black;   text-align: center;"><ion-icon name="remove" style=" color: red" (click)="removeQty(i)"></ion-icon></ion-col>\n              <ion-col col-1 style="color: black;   text-align: center;"><ion-icon name="close" style=" color: red" (click)="removeItem(i)"></ion-icon></ion-col>\n          </ion-row>\n          <ion-row>\n            <ion-col col-1></ion-col>\n            <ion-col col-4 style="color: grey">{{ \'Discount\' | translate }}</ion-col>\n            <ion-col col-4>\n              <ion-input type="number" [(ngModel)]="item.discount" (ionChange)="updateRec()" min="0" max="100"></ion-input>\n            </ion-col>\n          </ion-row>\n          <!-- <ion-row>\n          <ion-col col-12 style="text-align: center"><ion-icon name="cut" style=" color: maroon"></ion-icon></ion-col>\n          </ion-row> -->\n        </ion-list>\n        <ion-row padding>\n            <ion-col col-1></ion-col>  \n          <ion-col col-4 style="text-align: center; font-size: 1.0rem; "><b>{{"Grand total:"|translate}}</b> </ion-col>\n            <ion-col col-2 style="text-align: center; ">{{lastsumAfterIndividualDiscount}} </ion-col>\n            <ion-col col-5></ion-col>\n          </ion-row>\n\n\n          <ion-row *ngIf="discbtn==0">\n              <button ion-button small (click)="setDisc()">{{"Add Discount"|translate}}</button>\n            </ion-row>\n          <ion-row *ngIf="discbtn==1">\n            <ion-col col-5>   <ion-label style="font-size: 1.0rem;">{{"Discount Rate %:"|translate}}</ion-label></ion-col>\n            <ion-col col-7>\n                <ion-input type="number" placeholder="အရေအတွက်" [(ngModel)]="discount" style="font-size: 1.3rem; " (input)="updateRec()" ngDefaultControl min="0" max="100">\n                  </ion-input>\n            </ion-col>       \n          </ion-row>\n          <ion-row *ngIf="discount!=0">\n            <ion-col col-5 style="text-align: left; font-size: 1.0rem; ">{{"Discounted Total:"|translate}}</ion-col>\n              <ion-col col-7 style="text-align: left; ">{{lastsumdisc}}</ion-col>\n            </ion-row>\n            <ion-row *ngIf="discbtn==1">\n                <button ion-button small (click)="remDisc()">{{"Remove Discount"|translate}}</button>\n              </ion-row>\n\n\n\n\n            <ion-row *ngIf="taxbtn==0">\n              <button ion-button small (click)="setTax()">{{"Add Tax"|translate}}</button>\n            </ion-row>\n\n            <ion-row *ngIf="taxbtn==1">\n                <ion-col col-5>   <ion-label style="font-size: 1.0rem;">{{"Tax Rate %:"|translate}}</ion-label></ion-col>\n                <ion-col col-7>\n                    <ion-input type="number" placeholder="အရေအတွက်" [(ngModel)]="taxrate" style="font-size: 1.3rem;" (input)="updateRec()" ngDefaultControl min="0" max="100">\n                      </ion-input>\n                </ion-col>       \n              </ion-row>\n          <ion-row *ngIf="taxrate!=0">\n            <ion-col col-5 style="text-align: left;font-size: 1.0rem; ">{{"Total after tax:"|translate}}</ion-col>\n              <ion-col col-7 style="text-align: left; ">{{lastsumtax}}</ion-col>\n            </ion-row>\n            <ion-row *ngIf="taxbtn==1">\n                <button ion-button small (click)="remTax()">{{"Remove Tax"|translate}}</button>\n              </ion-row>\n      </ion-grid>\n      </ion-card>\n  <!-- Dynamically Generate All expense from backend - see feed from prev -->\n\n  <ion-card padding>\n   \n          <ion-item>\n          <span style="vertical-align: middle; display: inline-block; color: black; font-size: 1.0rem;" item-start>\n              {{"Additional Charges"|translate}}\n            </span>\n             <ion-toggle color="dark" style="vertical-align: middle; display: inline-block" item-end (ionChange)="dispM()"></ion-toggle>\n          \n        </ion-item>\n          \n\n     \n     \n       <div *ngIf="displayManual==1;">\n     \n        <ion-item>\n            <ion-label style="font-size: 1.0rem;">{{"Name"|translate}}</ion-label>\n            <ion-input type="text" placeholder="{{\'Enter Product Name\'|translate}}" [(ngModel)]="newItemName" ngDefaultControl></ion-input>\n          </ion-item>\n          <ion-item>\n              <ion-label style="font-size: 1.0rem;">{{"Price"|translate}}</ion-label>\n              <ion-input  type="number" placeholder="{{\'Enter Price\'|translate}}" [(ngModel)]="newUnitPrice" ngDefaultControl></ion-input>\n            </ion-item>\n              <!-- <ion-item>\n                  <ion-label style="font-size: 1.0rem;" >Select Category</ion-label>\n                  <ion-select multiple="false" [(ngModel)]=\'newItemCat\'>\n                      <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>    \n                  </ion-select>\n                </ion-item> -->\n         <!-- <ion-item>\n           <ion-label style="font-size: 1.0rem;">{{"Discount"|translate}}</ion-label>\n           <ion-input type="number" placeholder="{{\'Enter Discount\'|translate}}" [(ngModel)]="newItemDiscount" ngDefaultControl></ion-input>\n         </ion-item> -->\n                <button ion-button style="font-size: 1.0rem;" full (click)="addNewItem()"> {{"Add Charges"|translate}} </button>\n              </div>\n  </ion-card>\n  <ion-grid>\n      <ion-row>\n          <ion-col col-6 style="text-align: center;"> <button ion-button style="font-size: 1.0rem;" (click)="addCalc()"> {{"Add from Calculator"|translate}}</button></ion-col>\n          <ion-col col-6 style="text-align: center;"> <button ion-button style="font-size: 1.0rem;" (click)="addProdList()"> {{"Add from Product List"|translate}}</button></ion-col>\n          </ion-row>\n          <ion-row>\n          <ion-col col-12 style="text-align: center;"> <button ion-button style="font-size: 1.0rem;" (click)="qrscan()"> {{"Scan Barcode"|translate}}</button></ion-col>\n        </ion-row>\n  </ion-grid>\n\n</ion-content>\n\n\n<ion-footer>\n    <ion-grid>\n        <ion-row>\n          <ion-col col-4>\n            <button ion-button full color="dark" (click)="saveRec()"> <ion-icon name="checkmark"></ion-icon>\n            </button>\n          </ion-col>\n          <ion-col col-4>\n            <button ion-button full color="dark" (click)="printRec()"> <ion-icon name="print"></ion-icon>\n            </button>\n          </ion-col>\n          <ion-col col-4>\n              <button ion-button full color="dark" (click)="cancelRec()">  <ion-icon name="close"></ion-icon>\n              </button>\n            </ion-col>\n        </ion-row>\n      </ion-grid>\n</ion-footer>\n'/*ion-inline-end:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/income-transaction/income-transaction.html"*/,
+        }),
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_4__providers_translation_translate_config_service__["a" /* TranslateConfigService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_translation_translate_config_service__["a" /* TranslateConfigService */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_native_barcode_scanner__["a" /* BarcodeScanner */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_native_barcode_scanner__["a" /* BarcodeScanner */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_5__providers_printer_printer__["a" /* PrinterProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__providers_printer_printer__["a" /* PrinterProvider */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_8__providers_geolocation_geolocation_service__["a" /* GeolocationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__providers_geolocation_geolocation_service__["a" /* GeolocationService */]) === "function" && _l || Object])
+    ], IncomeTransactionPage);
+    return IncomeTransactionPage;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
+}());
+
+//# sourceMappingURL=income-transaction.js.map
+
+/***/ }),
+
+/***/ 239:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AllTransactionPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__ = __webpack_require__(11);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
+
+
+
+/**
+ * Generated class for the AllTransactionPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var AllTransactionPage = /** @class */ (function () {
+    function AllTransactionPage(navCtrl, translateConfigService, navParams, events, sp) {
+        var _this = this;
+        this.navCtrl = navCtrl;
+        this.translateConfigService = translateConfigService;
+        this.navParams = navParams;
+        this.events = events;
+        this.sp = sp;
+        this.itemsname = [];
+        this.loitems = [];
+        this.result = "";
+        this.flag_mode = 0;
+        this.showSampleRec = true;
+        this.itemsprice = [];
+        this.itemsqty = [];
+        this.ctr = 0;
+        this.lastsum = 0;
+        this.lastchar = "NIL";
+        this.lastdigit = 0;
+        this.userdata = { business_address: "",
+            business_name: "",
+            cash_balance: "",
+            currency: "",
+            created: "",
+            language: "en",
+            owner: "",
+            owner_name: "",
+            ph_no: "",
+            businesstype: "",
+            taxrate: 0.0,
+            discount: 0.0,
+        };
+        this.getUserData();
+        this.events.subscribe('addRecCalc:created', function (data) {
+            console.log("ENTERED!");
+            console.log("Received 0 " + data);
+            //SET itemsprice here? - make new addgen - diff button calls diff event that pushes rather than replaces
+            //Same for Product Transaction Page
+            //console.log(this.showSampleRec);
+            var tempdat = JSON.parse(data);
+            // this.itemsname=null;
+            // this.itemsprice=null;
+            // this.itemsqty=null;
+            tempdat.forEach(function (element) {
+                _this.itemsname.push(element.name);
+                _this.itemsprice.push(element.price);
+                _this.itemsqty.push(element.qty);
+                _this.loitems.push(element);
+            });
+            console.log(_this.itemsprice);
+        });
+    }
+    AllTransactionPage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        console.log('ionViewDidLoad AllTransactionPage');
+        console.log("Size of array: " + this.itemsprice.length);
+        if (this.itemsprice.length > 0) {
+            this.showSampleRec = false;
+            this.flag_mode = 1;
+        }
+        this.delay(3000).then(function () {
+            _this.getUserData();
+        });
+    };
+    AllTransactionPage.prototype.delay = function (ms) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, new Promise(function (resolve) { return setTimeout(function () { return resolve(); }, ms); }).then(function () { return console.log("fired"); })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AllTransactionPage.prototype.getUserData = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                this.sp.storageReady().then(function () {
+                    _this.sp.getUserDat().then(function (val) {
+                        _this.userdata = JSON.parse(val);
+                        console.log(_this.userdata);
+                    }).catch(function (err) {
+                        alert("Error: " + err);
+                    });
+                });
+                return [2 /*return*/];
+            });
+        });
+    };
+    AllTransactionPage.prototype.createRec = function () {
+        var _this = this;
+        var tempJSON = { "itemslist": [], };
+        this.itemsprice.forEach(function (element, index) {
+            if (_this.itemsname.length > 0 && index < _this.itemsname.length) {
+                tempJSON.itemslist.push(_this.loitems[index]);
+            }
+            else {
+                tempJSON.itemslist.push({
+                    'code': '000000',
+                    'cat': 'NIL',
+                    'stock_qty': 0,
+                    'name': "Item",
+                    'price': parseInt(element),
+                    'qty': _this.itemsqty[index],
+                    'discount': 0,
+                });
+            }
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
+        });
+        //var sampledat={ 'itemslist': myJsonString,};
+        var myObjStr = JSON.stringify(tempJSON);
+        this.navCtrl.parent.select(2);
+        this.delay(300).then(function (any) {
+            _this.events.publish('genRec:created', myObjStr);
+            console.log("Sent: " + myObjStr);
+            //your task after delay.
+        });
+        this.result = "";
+        this.itemsname = [];
+        this.itemsprice = [];
+        this.lastsum = 0;
+        this.itemsqty = [];
+        this.loitems = [];
+    };
+<<<<<<< HEAD
+    IncomeTransactionPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-income-transaction',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\income-transaction\income-transaction.html"*/'<!--\n\n  Generated template for the IncomeTransactionPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n\n\n<ion-content padding>\n\n \n\n\n\n    <ion-card >\n\n\n\n      <ion-grid>\n\n\n\n        <ion-row> <ion-col style="text-align: center; padding-top: 5px;"> {{userdata?userdata.business_name:null}}  </ion-col> </ion-row>\n\n\n\n        <ion-row>\n\n            <ion-col col-12 style="color: grey;  text-align: center"> {{userdata?userdata.business_address:null}}</ion-col>\n\n        </ion-row>\n\n        <ion-row>\n\n            <ion-col col-12 style="color: grey; text-align: center">  {{userdata?userdata.ph_no:null}}</ion-col>\n\n        </ion-row>\n\n\n\n            <ion-row style="padding-top: 5px;">\n\n            <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><b>{{"Sl" | translate}}</b></ion-col>\n\n            <ion-col col-4 style="color: black; font-size: 10px; text-align: center"><b>{{"Name" | translate}}</b></ion-col>\n\n            <ion-col col-2 style="color: black; font-size: 10px; text-align: center"><b>{{"Price"| translate}}</b></ion-col>\n\n            <ion-col col-2 style="color: black; font-size: 10px; text-align: center"><b>{{"Qty"| translate}}</b></ion-col>\n\n            <ion-col col-3></ion-col>\n\n             </ion-row>\n\n       \n\n\n\n        <ion-list *ngFor="let item of datastore.itemslist; let i = index" no-lines>\n\n\n\n    \n\n          <ion-row>\n\n              <ion-col col-1 style="color: black; text-align: center;">{{i+1}}.</ion-col>\n\n              <ion-col col-4 style="color: black; text-align: center;">\n\n                <div *ngIf="item.name==\'Item\'; else itemexist">\n\n                  <button ion-button small (click)="addSingleProd(item,i)">{{"Choose"|translate}}</button>\n\n                </div>\n\n                <ng-template #itemexist>{{item.name}}</ng-template>\n\n              </ion-col>\n\n              <ion-col col-2 style="color: black;   text-align: center;">{{item.price}}</ion-col>\n\n              <ion-col col-2 style="color: black;   text-align: center;">{{item.qty}}</ion-col>\n\n              <ion-col col-1 style="color: black;   text-align: center;"><ion-icon name="add" style=" color: green" (click)="addQty(i)"></ion-icon></ion-col>\n\n              <ion-col col-1 style="color: black;   text-align: center;"><ion-icon name="remove" style=" color: red" (click)="removeQty(i)"></ion-icon></ion-col>\n\n              <ion-col col-1 style="color: black;   text-align: center;"><ion-icon name="close" style=" color: red" (click)="removeItem(i)"></ion-icon></ion-col>\n\n          </ion-row>\n\n          <ion-row>\n\n            <ion-col col-1></ion-col>\n\n            <ion-col col-4 style="color: grey">{{ \'Discount\' | translate }}</ion-col>\n\n            <ion-col col-4>\n\n              <ion-input type="number" [(ngModel)]="item.discount" (ionChange)="updateRec()" min="0" max="100"></ion-input>\n\n            </ion-col>\n\n          </ion-row>\n\n          <!-- <ion-row>\n\n          <ion-col col-12 style="text-align: center"><ion-icon name="cut" style=" color: maroon"></ion-icon></ion-col>\n\n          </ion-row> -->\n\n        </ion-list>\n\n        <ion-row padding>\n\n            <ion-col col-1></ion-col>  \n\n          <ion-col col-4 style="text-align: center; font-size: 1.0rem; "><b>{{"Grand total:"|translate}}</b> </ion-col>\n\n            <ion-col col-2 style="text-align: center; ">{{lastsumAfterIndividualDiscount}} </ion-col>\n\n            <ion-col col-5></ion-col>\n\n          </ion-row>\n\n\n\n\n\n          <ion-row *ngIf="discbtn==0">\n\n              <button ion-button small (click)="setDisc()">{{"Add Discount"|translate}}</button>\n\n            </ion-row>\n\n          <ion-row *ngIf="discbtn==1">\n\n            <ion-col col-5>   <ion-label style="font-size: 1.0rem;">{{"Discount Rate %:"|translate}}</ion-label></ion-col>\n\n            <ion-col col-7>\n\n                <ion-input type="number" placeholder="အရေအတွက်" [(ngModel)]="discount" style="font-size: 1.3rem; " (input)="updateRec()" ngDefaultControl min="0" max="100">\n\n                  </ion-input>\n\n            </ion-col>       \n\n          </ion-row>\n\n          <ion-row *ngIf="discount!=0">\n\n            <ion-col col-5 style="text-align: left; font-size: 1.0rem; ">{{"Discounted Total:"|translate}}</ion-col>\n\n              <ion-col col-7 style="text-align: left; ">{{lastsumdisc}}</ion-col>\n\n            </ion-row>\n\n            <ion-row *ngIf="discbtn==1">\n\n                <button ion-button small (click)="remDisc()">{{"Remove Discount"|translate}}</button>\n\n              </ion-row>\n\n\n\n\n\n\n\n\n\n            <ion-row *ngIf="taxbtn==0">\n\n              <button ion-button small (click)="setTax()">{{"Add Tax"|translate}}</button>\n\n            </ion-row>\n\n\n\n            <ion-row *ngIf="taxbtn==1">\n\n                <ion-col col-5>   <ion-label style="font-size: 1.0rem;">{{"Tax Rate %:"|translate}}</ion-label></ion-col>\n\n                <ion-col col-7>\n\n                    <ion-input type="number" placeholder="အရေအတွက်" [(ngModel)]="taxrate" style="font-size: 1.3rem;" (input)="updateRec()" ngDefaultControl min="0" max="100">\n\n                      </ion-input>\n\n                </ion-col>       \n\n              </ion-row>\n\n          <ion-row *ngIf="taxrate!=0">\n\n            <ion-col col-5 style="text-align: left;font-size: 1.0rem; ">{{"Total after tax:"|translate}}</ion-col>\n\n              <ion-col col-7 style="text-align: left; ">{{lastsumtax}}</ion-col>\n\n            </ion-row>\n\n            <ion-row *ngIf="taxbtn==1">\n\n                <button ion-button small (click)="remTax()">{{"Remove Tax"|translate}}</button>\n\n              </ion-row>\n\n      </ion-grid>\n\n      </ion-card>\n\n  <!-- Dynamically Generate All expense from backend - see feed from prev -->\n\n\n\n  <ion-card padding>\n\n   \n\n          <ion-item>\n\n          <span style="vertical-align: middle; display: inline-block; color: black; font-size: 1.0rem;" item-start>\n\n              {{"Additional Charges"|translate}}\n\n            </span>\n\n             <ion-toggle color="dark" style="vertical-align: middle; display: inline-block" item-end (ionChange)="dispM()"></ion-toggle>\n\n          \n\n        </ion-item>\n\n          \n\n\n\n     \n\n     \n\n       <div *ngIf="displayManual==1;">\n\n     \n\n        <ion-item>\n\n            <ion-label style="font-size: 1.0rem;">{{"Name"|translate}}</ion-label>\n\n            <ion-input type="text" placeholder="{{\'Enter Product Name\'|translate}}" [(ngModel)]="newItemName" ngDefaultControl></ion-input>\n\n          </ion-item>\n\n          <ion-item>\n\n              <ion-label style="font-size: 1.0rem;">{{"Price"|translate}}</ion-label>\n\n              <ion-input  type="number" placeholder="{{\'Enter Price\'|translate}}" [(ngModel)]="newUnitPrice" ngDefaultControl></ion-input>\n\n            </ion-item>\n\n              <!-- <ion-item>\n\n                  <ion-label style="font-size: 1.0rem;" >Select Category</ion-label>\n\n                  <ion-select multiple="false" [(ngModel)]=\'newItemCat\'>\n\n                      <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>    \n\n                  </ion-select>\n\n                </ion-item> -->\n\n         <!-- <ion-item>\n\n           <ion-label style="font-size: 1.0rem;">{{"Discount"|translate}}</ion-label>\n\n           <ion-input type="number" placeholder="{{\'Enter Discount\'|translate}}" [(ngModel)]="newItemDiscount" ngDefaultControl></ion-input>\n\n         </ion-item> -->\n\n                <button ion-button style="font-size: 1.0rem;" full (click)="addNewItem()"> {{"Add Charges"|translate}} </button>\n\n              </div>\n\n  </ion-card>\n\n  <ion-grid>\n\n      <ion-row>\n\n          <ion-col col-6 style="text-align: center;"> <button ion-button style="font-size: 1.0rem;" (click)="addCalc()"> {{"Add from Calculator"|translate}}</button></ion-col>\n\n          <ion-col col-6 style="text-align: center;"> <button ion-button style="font-size: 1.0rem;" (click)="addProdList()"> {{"Add from Product List"|translate}}</button></ion-col>\n\n          </ion-row>\n\n          <ion-row>\n\n          <ion-col col-12 style="text-align: center;"> <button ion-button style="font-size: 1.0rem;" (click)="qrscan()"> {{"Scan Barcode"|translate}}</button></ion-col>\n\n        </ion-row>\n\n  </ion-grid>\n\n\n\n</ion-content>\n\n\n\n\n\n<ion-footer>\n\n    <ion-grid>\n\n        <ion-row>\n\n          <ion-col col-4>\n\n            <button ion-button full color="dark" (click)="saveRec()"> <ion-icon name="checkmark"></ion-icon>\n\n            </button>\n\n          </ion-col>\n\n          <ion-col col-4>\n\n            <button ion-button full color="dark" (click)="printRec()"> <ion-icon name="print"></ion-icon>\n\n            </button>\n\n          </ion-col>\n\n          <ion-col col-4>\n\n              <button ion-button full color="dark" (click)="cancelRec()">  <ion-icon name="close"></ion-icon>\n\n              </button>\n\n            </ion-col>\n\n        </ion-row>\n\n      </ion-grid>\n\n</ion-footer>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\income-transaction\income-transaction.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */],
@@ -2967,6 +3693,117 @@ var IncomeTransactionPage = /** @class */ (function () {
 /***/ }),
 
 /***/ 241:
+=======
+    AllTransactionPage.prototype.btnClicked = function (btn) {
+        var _this = this;
+        this.getUserData();
+        try {
+            console.log('CalculatorPage::btnClicked = ' + btn);
+            if (btn == "C") {
+                this.result = "";
+                this.itemsprice = [];
+                this.lastsum = 0;
+                this.itemsqty = [];
+            }
+            else if (btn == "=") {
+                this.showSampleRec = true;
+                //IF LAST = character then remove that character 
+                var answ = this.result.split('+');
+                if (this.result.includes('-')) {
+                    answ = this.result.split('+').join('-').split('-');
+                }
+                var temp;
+                answ.forEach(function (element, index) {
+                    if (element.includes("*")) {
+                        answ[index] = element.substring(0, element.indexOf("*"));
+                        _this.itemsprice.push(answ[index]);
+                        temp = parseInt(element.substring(element.indexOf("*") + 1));
+                        console.log(element.substring(element.indexOf("*") + 1));
+                        _this.itemsqty.push(temp);
+                    }
+                    else if (element.includes("/")) {
+                        answ[index] = element.substring(0, element.indexOf("/"));
+                        _this.itemsprice.push(answ[index]);
+                        temp = Math.round(1 / (parseInt((element.substring(element.indexOf("/") + 1)))) * 100) / 100;
+                        console.log(temp);
+                        _this.itemsqty.push(temp);
+                    }
+                    else {
+                        if (element != "") {
+                            _this.itemsprice.push(element);
+                            _this.itemsqty.push(parseInt("1"));
+                        }
+                    }
+                    // this.itemsprice.push(
+                    //   {'name': "Blank_Item",
+                    //   'price': parseInt(element),
+                    //   'qty': 0,
+                    //   })      
+                });
+                //flag_mode=0 means normal (sample reciept is generated)
+                //if(flag_mode==1) then go to reciept page directly - call createRec()
+                //if(flag_mode=2) then just use as calc - no reciept is generated
+                console.log(this.itemsprice);
+                console.log(this.itemsqty);
+                this.result = eval(this.result) + "";
+                this.lastsum = 0;
+                //this.lastsum=parseInt(this.result);
+                for (var i = 0; i < this.itemsprice.length; i++) {
+                    this.lastsum = this.lastsum + (parseInt(this.itemsprice[i]) * this.itemsqty[i]);
+                    console.log(this.lastsum);
+                }
+            }
+            else if (btn == "b") {
+                this.result = this.result.substring(0, this.result.length - 1);
+            }
+            else if (btn == "squareroot") {
+                this.result = Math.sqrt(eval(this.result)) + "";
+            }
+            else if (btn == "square") {
+                this.result = eval("(" + this.result + ") * ( " + this.result + ")");
+            }
+            else if (btn == "reciproc") {
+                this.result = eval(1 + "/ (" + this.result + ")");
+            }
+            else {
+                if (parseInt(this.result) == this.lastsum) {
+                    this.result = this.result.substring(0, 0);
+                }
+                console.log("Lastchar: " + this.lastchar + " Result: " + this.result);
+                if ((btn == '+' || btn == '-' || btn == '*' || btn == '/') && (this.lastchar == '+' || this.lastchar == '-' || this.lastchar == '*' || this.lastchar == '/')) {
+                    this.result = this.result = this.result.substring(0, this.result.length - 1);
+                }
+                this.lastchar = btn;
+                this.result += btn;
+            }
+        }
+        catch (err) {
+            this.result = "Input Error!";
+            this.itemsprice = [];
+            this.lastsum = 0;
+            this.itemsqty = [];
+            this.loitems = [];
+        }
+        finally {
+        }
+    };
+    AllTransactionPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-all-transaction',template:/*ion-inline-start:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/all-transaction/all-transaction.html"*/'<!--\n  Generated template for the AllTransactionPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n\n<ion-content padding>\n    <!-- <ion-fab bottom right>\n        <button ion-fab color="primary" item-right><ion-icon name="calculator"></ion-icon></button>\n      </ion-fab> -->\n      <!-- <ion-card *ngIf="showSampleRec==false">\n        ကျေးဇူးပြုပြီးပစ္စည်းအတွက်ပမာဏကိုမြှောက်ပါ၊ ရှိပြီးသားငွေတောင်းခံလွှာကိုထည့်ရန်တူညီသောစာလုံးကိုနှိပ်ပါ။\n\n        အလွတ်ပစ္စည်းပေါင်းများစွာကိုထည့်သွင်းလိုပါက * qty တစ်ခုချင်းစီကိုရိုက်ထည့်ပြီးနောက်တစ်ခုကိုရိုက်ထည့်ရန် + သင်္ကေတကိုနှိပ်ပါ\n      </ion-card>\n       -->\n  <ion-grid>\n    <ion-row>\n\n      <ion-col col-12 col-md-6>\n\n          <div class="calculator">\n            <div class="header">\n              <div class="window"></div>\n              <div class="input">\n                <ion-row>\n                  <ion-input type="text" placeholder="0" name="display" [(ngModel)]="result">\n                  </ion-input>\n                  <ion-icon name="backspace" (click)="btnClicked(\'b\')"></ion-icon>\n                  \n                </ion-row> \n               \n                    \n                \n              </div>\n             \n              \n            </div>\n            <div class="keys">\n              <div class="row">\n                <div class="number">\n                  <span (click)="btnClicked(\'7\')">7</span>\n                  <span (click)="btnClicked(\'8\')">8</span>\n                  <span (click)="btnClicked(\'9\')">9</span>\n                </div>\n                <div class="symbol">\n                  <span (click)="btnClicked(\'*\')">×</span>\n\n                </div>\n              </div>\n\n              <div class="row">\n                <div class="number">\n                  <span (click)="btnClicked(\'4\')">4</span>\n                  <span (click)="btnClicked(\'5\')">5</span>\n                  <span (click)="btnClicked(\'6\')">6</span>\n                </div>\n\n                <div class="symbol">\n                  <span (click)="btnClicked(\'+\')">+</span>\n           </div>\n              </div>\n\n              <div class="row">\n                <div class="number">\n                  <span (click)="btnClicked(\'1\')">1</span>\n                  <span (click)="btnClicked(\'2\')">2</span>\n                  <span (click)="btnClicked(\'3\')">3</span>\n                </div>\n\n                <div class="symbol">\n                  <span (click)="btnClicked(\'/\')">÷</span>\n                  <span (click)="btnClicked(\'squareroot\')">√x</span>\n                </div>\n\n\n              </div>\n\n\n              <div class="row">\n                <div class="number">\n                  <span (click)="btnClicked(\'C\')">C</span>\n                  <span (click)="btnClicked(\'0\')">0</span>\n                  <span (click)="btnClicked(\'-\')">-</span>\n\n\n\n                </div>\n\n                <div class="symbol action">\n                  <span (click)="btnClicked(\'=\')">=</span>\n                </div>\n\n              </div>\n            </div>\n          </div>\n\n    \n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n\n        <ion-card *ngIf="showSampleRec==true"> \n\n                <ion-grid>\n          \n                  <ion-row> <ion-col style="text-align: center; padding-top: 5px;">{{userdata? userdata.business_name: null}} </ion-col> </ion-row>\n          \n                  <ion-row>\n                      <ion-col col-12 style="color: grey; font-size: 10px; text-align: center"> {{userdata?userdata.business_address:null}}</ion-col>\n                  </ion-row>\n                  <ion-row>\n                      <ion-col col-12 style="color: grey; font-size: 10px; text-align: center"> {{userdata?userdata.ph_no:null}}</ion-col>\n                  </ion-row>          \n                  <ion-row style="padding-top: 5px;">\n                      <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><b>{{"Sl" | translate}}</b></ion-col>\n                      <ion-col col-4 style="color: black; font-size: 10px; text-align: center"><b>{{"Name" | translate}}</b></ion-col>\n                      <ion-col col-2 style="color: black; font-size: 10px; text-align: center"><b>{{"Price"| translate}}</b></ion-col>\n                      <ion-col col-2 style="color: black; font-size: 10px; text-align: center"><b>{{"Qty"| translate}}</b></ion-col>\n                      <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="arrow-dropup-circle" style=" color: green"></ion-icon></ion-col>\n                      <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="arrow-dropdown-circle" style=" color: red"></ion-icon></ion-col>\n                      <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="close" style=" color: red"></ion-icon></ion-col>\n                  </ion-row>\n          \n                 \n          \n                  <ion-list *ngFor="let item of itemsprice; let i = index" no-lines>\n          \n              \n                    <ion-row>\n                        <ion-col col-1 style="color: black; font-size: 10px; text-align: center">{{i+1}}.</ion-col>\n                        <ion-col col-4 style="color: black; font-size: 10px; text-align: center">\n                         Item {{i+1}}</ion-col>   \n                        <ion-col col-2 style="color: black; font-size: 10px; text-align: center">{{item}}</ion-col>\n                        <ion-col col-2 style="color: black; font-size: 10px; text-align: center">{{itemsqty[i]}}</ion-col>\n                        <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="arrow-dropup-circle" style=" color: green"></ion-icon></ion-col>\n                        <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="arrow-dropdown-circle" style=" color: red"></ion-icon></ion-col>\n                        <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="close" style=" color: red"></ion-icon></ion-col>\n                    </ion-row>\n                \n          \n                  </ion-list>\n          \n                  <ion-row padding>\n                      <ion-col col-1></ion-col>  \n                    <ion-col col-4 style="text-align: center;font-size: 10px;"><b>{{"Total"| translate}}</b> </ion-col>\n                      <ion-col col-2 style="text-align: center;font-size: 10px;"><b>{{lastsum}}</b> </ion-col>\n                      <ion-col col-5></ion-col>\n                    </ion-row>\n          \n          \n                   \n          \n          \n                </ion-grid>\n          \n          \n          \n\n        </ion-card>\n\n      </ion-col>\n\n\n\n    </ion-row>\n\n\n  </ion-grid>\n\n\n\n  <!-- Dynamically Generate All transactions from backend - see feed from prev -->\n\n</ion-content>\n\n<ion-footer>\n\n    <ion-grid>\n      <ion-row>\n        <ion-col>\n            <button ion-button (click)="createRec()" full style="background-color: #222">{{"Create Receipt"|translate}}</button>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n   \n</ion-footer>\n'/*ion-inline-end:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/all-transaction/all-transaction.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__["a" /* TranslateConfigService */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */]])
+    ], AllTransactionPage);
+    return AllTransactionPage;
+}());
+
+//# sourceMappingURL=all-transaction.js.map
+
+/***/ }),
+
+/***/ 240:
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3249,7 +4086,7 @@ var TransactionProductPage = /** @class */ (function () {
     };
     TransactionProductPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-transaction-product',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\transaction-product\transaction-product.html"*/'<ion-content padding>\n\n  <ion-searchbar showCancelButton="always" [(ngModel)]="searchterm" (ionChange)="filteredProduct()"></ion-searchbar>\n\n  \n\n    <ion-item>\n\n      <ion-label>{{"Select category"|translate}}</ion-label>\n\n      <ion-select multiple="true" [(ngModel)]=\'selectedCat\' (ionChange)="filteredProduct()">\n\n          <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>    \n\n      </ion-select>\n\n    </ion-item>\n\n  \n\n  \n\n  <!-- <ion-card>\n\n      <ion-grid line>\n\n        <ion-row>\n\n        <ion-col col-2>\n\n          <ion-row>\n\n            <ion-avatar>\n\n                <img src="https://i0.wp.com/mainlymiles.com/wp-content/uploads/2019/04/Yew-Mee.jpg?w=256&h=256&crop=1&ssl=1">\n\n              </ion-avatar>\n\n            </ion-row>\n\n        </ion-col>\n\n        <ion-col col-10>\n\n            <ion-row>\n\n                <ion-col col-7>\n\n                  Shan Noodle\n\n                </ion-col>\n\n                <ion-col col-3>\n\n                  568 - N/A?\n\n                  </ion-col>\n\n                  <ion-col col-1>\n\n                      <ion-icon name="arrow-dropup-circle" style=" color: green"></ion-icon>\n\n                  </ion-col>\n\n                  <ion-col col-1>\n\n                      <ion-icon name="arrow-dropdown-circle" style=" color: red"></ion-icon>\n\n                  </ion-col>\n\n              </ion-row>\n\n              <ion-row>\n\n                <ion-col col-6 style="color: grey; font-size: 10px;"> Price 3500 MMK </ion-col>\n\n                <ion-col col-6 style="color: grey; font-size: 10px; text-align: end;"> Category: Noodle </ion-col>\n\n              </ion-row>\n\n              <ion-row>\n\n                <ion-col col-6></ion-col>\n\n                <ion-col col-6> <button ion-button full end color="dark">View/Edit</button> </ion-col>\n\n              </ion-row>\n\n  \n\n        </ion-col>\n\n      </ion-row>\n\n      </ion-grid>\n\n    </ion-card>  -->\n\n  \n\n  \n\n  \n\n    <ion-list inset  *ngFor="let product of filteredList; let i=index">\n\n      \n\n        <ion-card>\n\n            <ion-grid> \n\n              <ion-row>\n\n              <ion-col col-2>\n\n                <ion-row> \n\n                  <ion-avatar>\n\n                      <img [src]="product.url">\n\n                    </ion-avatar>\n\n                  </ion-row>\n\n              </ion-col>\n\n              <ion-col col-10>\n\n                  <ion-row>\n\n                      <ion-col col-6>\n\n                          {{product.name}} \n\n                      </ion-col>\n\n                      <ion-col col-2>\n\n                        {{product.qty}}\n\n                      </ion-col>\n\n                        <ion-col col-2>\n\n                            <ion-icon name="add" style=" color: green" (click)="addUp(i)"></ion-icon>\n\n                        </ion-col>\n\n                        <ion-col col-2>\n\n                            <ion-icon name="remove" style=" color: red" (click)="addDown(i)"></ion-icon>\n\n                        </ion-col>\n\n                    </ion-row>\n\n                    <ion-row>\n\n                      <ion-col col-4 style="color: grey; font-size: 10px;"> {{"Retail Price"|translate}} {{product.price}} MMK </ion-col>\n\n                      <ion-col col-4 style="color: grey; font-size: 10px; text-align: center;"> {{"Wholesale Price"|translate}} {{product.wholesale_price}} MMK </ion-col>\n\n                      <ion-col col-4 style="color: grey; font-size: 10px; text-align: end;"> {{"Category"|translate}} {{product.cat}} </ion-col>\n\n                    </ion-row>\n\n              </ion-col>\n\n            </ion-row>\n\n            <ion-row *ngIf="event1==true">\n\n              <ion-col col-12> <button ion-button full end color="dark" (click)="singleProduct(product)">{{"Add"|translate}}</button> </ion-col>\n\n            </ion-row>\n\n            </ion-grid>\n\n          </ion-card> \n\n       \n\n      </ion-list>\n\n    \n\n  \n\n    \n\n  \n\n  \n\n  \n\n  \n\n  </ion-content>\n\n  \n\n  \n\n<ion-footer>\n\n\n\n    <ion-grid>\n\n      <ion-row *ngIf="event1==false">\n\n        <ion-col>\n\n            <button ion-button (click)="createRec()" full style="background-color: #222">{{"Create Receipt"|translate}}</button>\n\n        </ion-col>\n\n      </ion-row>\n\n      <ion-row *ngIf="event1==true">\n\n        <ion-col>\n\n            <button ion-button (click)="reset()" full style="background-color: #222">{{"Reset"|translate}}</button>\n\n        </ion-col>\n\n      </ion-row>\n\n    </ion-grid>\n\n   \n\n</ion-footer>\n\n\n\n\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\transaction-product\transaction-product.html"*/,
+            selector: 'page-transaction-product',template:/*ion-inline-start:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/transaction-product/transaction-product.html"*/'<ion-content padding>\n  <ion-searchbar showCancelButton="always" [(ngModel)]="searchterm" (ionChange)="filteredProduct()"></ion-searchbar>\n  \n    <ion-item>\n      <ion-label>{{"Select category"|translate}}</ion-label>\n      <ion-select multiple="true" [(ngModel)]=\'selectedCat\' (ionChange)="filteredProduct()">\n          <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>    \n      </ion-select>\n    </ion-item>\n  \n  \n  <!-- <ion-card>\n      <ion-grid line>\n        <ion-row>\n        <ion-col col-2>\n          <ion-row>\n            <ion-avatar>\n                <img src="https://i0.wp.com/mainlymiles.com/wp-content/uploads/2019/04/Yew-Mee.jpg?w=256&h=256&crop=1&ssl=1">\n              </ion-avatar>\n            </ion-row>\n        </ion-col>\n        <ion-col col-10>\n            <ion-row>\n                <ion-col col-7>\n                  Shan Noodle\n                </ion-col>\n                <ion-col col-3>\n                  568 - N/A?\n                  </ion-col>\n                  <ion-col col-1>\n                      <ion-icon name="arrow-dropup-circle" style=" color: green"></ion-icon>\n                  </ion-col>\n                  <ion-col col-1>\n                      <ion-icon name="arrow-dropdown-circle" style=" color: red"></ion-icon>\n                  </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col col-6 style="color: grey; font-size: 10px;"> Price 3500 MMK </ion-col>\n                <ion-col col-6 style="color: grey; font-size: 10px; text-align: end;"> Category: Noodle </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col col-6></ion-col>\n                <ion-col col-6> <button ion-button full end color="dark">View/Edit</button> </ion-col>\n              </ion-row>\n  \n        </ion-col>\n      </ion-row>\n      </ion-grid>\n    </ion-card>  -->\n  \n  \n  \n    <ion-list inset  *ngFor="let product of filteredList; let i=index">\n      \n        <ion-card>\n            <ion-grid> \n              <ion-row>\n              <ion-col col-2>\n                <ion-row> \n                  <ion-avatar>\n                      <img [src]="product.url">\n                    </ion-avatar>\n                  </ion-row>\n              </ion-col>\n              <ion-col col-10>\n                  <ion-row>\n                      <ion-col col-6>\n                          {{product.name}} \n                      </ion-col>\n                      <ion-col col-2>\n                        {{product.qty}}\n                      </ion-col>\n                        <ion-col col-2>\n                            <ion-icon name="add" style=" color: green" (click)="addUp(i)"></ion-icon>\n                        </ion-col>\n                        <ion-col col-2>\n                            <ion-icon name="remove" style=" color: red" (click)="addDown(i)"></ion-icon>\n                        </ion-col>\n                    </ion-row>\n                    <ion-row>\n                      <ion-col col-4 style="color: grey; font-size: 10px;"> {{"Retail Price"|translate}} {{product.price}} MMK </ion-col>\n                      <ion-col col-4 style="color: grey; font-size: 10px; text-align: center;"> {{"Wholesale Price"|translate}} {{product.wholesale_price}} MMK </ion-col>\n                      <ion-col col-4 style="color: grey; font-size: 10px; text-align: end;"> {{"Category"|translate}} {{product.cat}} </ion-col>\n                    </ion-row>\n              </ion-col>\n            </ion-row>\n            <ion-row *ngIf="event1==true">\n              <ion-col col-12> <button ion-button full end color="dark" (click)="singleProduct(product)">{{"Add"|translate}}</button> </ion-col>\n            </ion-row>\n            </ion-grid>\n          </ion-card> \n       \n      </ion-list>\n    \n  \n    \n  \n  \n  \n  \n  </ion-content>\n  \n  \n<ion-footer>\n\n    <ion-grid>\n      <ion-row *ngIf="event1==false">\n        <ion-col>\n            <button ion-button (click)="createRec()" full style="background-color: #222">{{"Create Receipt"|translate}}</button>\n        </ion-col>\n      </ion-row>\n      <ion-row *ngIf="event1==true">\n        <ion-col>\n            <button ion-button (click)="reset()" full style="background-color: #222">{{"Reset"|translate}}</button>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n   \n</ion-footer>\n\n\n'/*ion-inline-end:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/transaction-product/transaction-product.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__["a" /* TranslateConfigService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */]])
@@ -3261,7 +4098,11 @@ var TransactionProductPage = /** @class */ (function () {
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 242:
+=======
+/***/ 241:
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3333,6 +4174,8 @@ var SummaryHomePage = /** @class */ (function () {
                 alert("Error: " + err);
             });
         });
+<<<<<<< HEAD
+=======
     };
     SummaryHomePage.prototype.getDateTime = function (datetime) {
         //return (datetime.getDate() + "/" + (datetime.getMonth() + 1) + "/" + datetime. getFullYear())
@@ -3354,7 +4197,166 @@ var SummaryHomePage = /** @class */ (function () {
     };
     SummaryHomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-summary-home',template:/*ion-inline-start:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/summary-home/summary-home.html"*/'<!--\n  Generated template for the SummaryHomePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n    <ion-navbar color="dark">\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title> {{"Business"|translate}} </ion-title>\n    </ion-navbar>\n  </ion-header>\n\n  <ion-content>\n\n    <ion-item>\n        <span style="vertical-align: middle; display: inline-block; color: black; font-size: 1.5rem;" item-start>\n          {{"Summarize"|translate}}:\n          </span>\n           <ion-toggle  color="dark" style="vertical-align: middle; display: inline-block" item-end [(ngModel)]="expanded"></ion-toggle>\n        \n      </ion-item>\n      <ion-item>\n          {{"Total sales today"|translate}}: {{tstoday}}\n          \n        </ion-item>\n        <ion-item>\n            {{"Total sales for this month"|translate}}: {{tsmonth}}\n        </ion-item>\n        <ion-item>\n            {{"Total sales for last 30 days"|translate}} : {{ts30}}\n        </ion-item>\n        \n\n      <ion-list inset  *ngFor="let transac of listtransacrev">\n        \n          <ion-card>\n              <ion-grid line>\n                  <ion-row style="padding-left: 10px; padding-bottom: 5px; ">\n                    <ion-col col-10 style="color: grey; font-size: 10px;"> {{getDateTime(transac.datetime)}} </ion-col>\n                    <ion-col col-2 style="text-align: center "><ion-icon name="cash" style="color: green"></ion-icon> </ion-col>\n                  </ion-row>\n\n                  <ion-list *ngFor="let item of transac.itemslist" [hidden]="expanded">\n                      \n                      <ion-row  style="padding: 0px;text-align: center ;  background-color: indigo; color: palevioletred;">\n                          <ion-col col-8>\n                            {{item.name}}\n                          </ion-col>\n                          <ion-col col-2 >\n                              {{item.price}}\n                          </ion-col>\n                          <ion-col col-2>\n                              {{item.qty}}\n                          </ion-col>\n                        </ion-row>\n                        <ion-row *ngIf="transac.totaldisc!=transac.totalsum" style="padding: 0px;text-align: center ;  background-color: silver; color: palevioletred;">\n                            <ion-col col-8>\n                               {{"Discounted total:"|translate}} ({{transac.discount}}%)\n                              </ion-col>\n                              <ion-col col-4 >\n                                  {{transac.totaldisc}}\n                              </ion-col>\n                        </ion-row>\n                        <ion-row *ngIf="transac.totalsum!=transac.totalatax" style="padding: 0px; text-align: center ;  background-color: silver; color: palevioletred;">\n                            <ion-col col-8>\n                                {{"Total after tax:"|translate}} ({{transac.taxrate}}%)\n                              </ion-col>\n                              <ion-col col-4 >\n                                  {{transac.totalatax}}\n                              </ion-col>\n                        </ion-row>\n              </ion-list> \n                  <ion-row style="padding-left: 10px; padding-bottom: 10px;">\n                    <ion-col col-10><h2><b>{{"Grand Total:"|translate}} {{transac.totaldisc}}</b></h2></ion-col>\n                  </ion-row>\n\n               \n               \n              </ion-grid>\n            </ion-card>   \n        </ion-list>\n      \n    \n      \n    \n    \n    \n    \n    </ion-content>\n\n\n'/*ion-inline-end:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/summary-home/summary-home.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__["a" /* TranslateConfigService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */]])
+    ], SummaryHomePage);
+    return SummaryHomePage;
+}());
+
+//# sourceMappingURL=summary-home.js.map
+
+/***/ }),
+
+/***/ 242:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserProfilePage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__transaction_home_transaction_home__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash__ = __webpack_require__(340);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_lodash__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_firebase__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_firebase__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_translation_translate_config_service__ = __webpack_require__(11);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+/**
+ * Generated class for the UserProfilePage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var UserProfilePage = /** @class */ (function () {
+    function UserProfilePage(navCtrl, navParams, sp, formBuilder, toastCtrl, translateConfigService) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.sp = sp;
+        this.formBuilder = formBuilder;
+        this.toastCtrl = toastCtrl;
+        this.translateConfigService = translateConfigService;
+        this.listOfBType = [];
+        this.listOfCurrency = [];
+        this.listOfLang = [];
+        this.user = {};
+        this.oldUser = {};
+        this.submitButton = false;
+        this.loadDropDowns();
+        this.formUser = this.formBuilder.group({
+            business_name: new __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["g" /* Validators */].required),
+            business_address: new __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["g" /* Validators */].required),
+            owner_name: new __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["g" /* Validators */].required),
+            businesstype: new __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["g" /* Validators */].required),
+            ph_no: new __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["g" /* Validators */].required),
+            currency: new __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["g" /* Validators */].required),
+            cash_balance: new __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormControl */](0, __WEBPACK_IMPORTED_MODULE_3__angular_forms__["g" /* Validators */].required),
+            discount: new __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormControl */](0, __WEBPACK_IMPORTED_MODULE_3__angular_forms__["g" /* Validators */].required),
+            taxrate: new __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormControl */](0, __WEBPACK_IMPORTED_MODULE_3__angular_forms__["g" /* Validators */].required),
+            language: new __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["g" /* Validators */].required),
+        });
+    }
+    UserProfilePage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad UserProfilePage');
+        this.getUser();
+        this.oldUser = Object(__WEBPACK_IMPORTED_MODULE_5_lodash__["cloneDeep"])(this.user);
+    };
+    UserProfilePage.prototype.loadDropDowns = function () {
+        var _this = this;
+        __WEBPACK_IMPORTED_MODULE_6_firebase___default.a.firestore().collection("sign-up").get()
+            .then(function (doc) {
+            doc.docs[0].data().businessType.forEach(function (b) {
+                _this.listOfBType.push(b);
+            });
+            doc.docs[0].data().currency.forEach(function (c) {
+                _this.listOfCurrency.push(c);
+            });
+            doc.docs[0].data().language.forEach(function (l) {
+                _this.listOfLang.push(l);
+            });
+        });
+    };
+    UserProfilePage.prototype.getUser = function () {
+        var _this = this;
+        this.sp.storageReady().then(function () {
+            _this.sp.getUserDat().then(function (user) {
+                _this.user = JSON.parse(user);
+            });
+        });
+    };
+    UserProfilePage.prototype.setUser = function () {
+        var _this = this;
+        if (!this.formUser.valid) {
+            console.log('invalid user update');
+            var message = this.translateConfigService.getTranslatedMessage('Incomplete');
+            this.toastCtrl.create({
+                // @ts-ignore
+                message: message.value,
+                duration: 1000,
+            }).present();
+        }
+        else {
+            this.sp.storageReady().then(function () {
+                _this.sp.setUserDat(_this.user).then(function () {
+                    console.log('new user data saved in storage');
+                    _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__transaction_home_transaction_home__["a" /* TransactionHomePage */]);
+                }).catch(function (error) {
+                    console.error(error);
+                });
+            });
+            var message = this.translateConfigService.getTranslatedMessage('Update profile successful');
+            this.toastCtrl.create({
+                // @ts-ignore
+                message: message.value,
+                duration: 2000,
+            }).present();
+        }
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
+    };
+    SummaryHomePage.prototype.getDateTime = function (datetime) {
+        //return (datetime.getDate() + "/" + (datetime.getMonth() + 1) + "/" + datetime. getFullYear())
+        var temp = new Date(datetime);
+        var temp1 = temp;
+        var t = temp.getDate() + "/" + (temp.getMonth() + 1) + "/" + temp.getFullYear() + " " + temp.getHours() + ":" + temp.getMinutes();
+        return (t);
+    };
+    SummaryHomePage.prototype.getDate = function (datetime) {
+        var temp = new Date(datetime);
+        var temp1 = temp;
+        var t = temp.getDate();
+        return (t);
+    };
+    SummaryHomePage.prototype.getMonth = function (datetime) {
+        var temp = new Date(datetime);
+        var t = temp.getMonth();
+        return (t);
+    };
+    SummaryHomePage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+<<<<<<< HEAD
             selector: 'page-summary-home',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\summary-home\summary-home.html"*/'<!--\n\n  Generated template for the SummaryHomePage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n    <ion-navbar color="dark">\n\n      <button ion-button menuToggle>\n\n        <ion-icon name="menu"></ion-icon>\n\n      </button>\n\n      <ion-title> {{"Business"|translate}} </ion-title>\n\n    </ion-navbar>\n\n  </ion-header>\n\n\n\n  <ion-content>\n\n\n\n    <ion-item>\n\n        <span style="vertical-align: middle; display: inline-block; color: black; font-size: 1.5rem;" item-start>\n\n          {{"Summarize"|translate}}:\n\n          </span>\n\n           <ion-toggle  color="dark" style="vertical-align: middle; display: inline-block" item-end [(ngModel)]="expanded"></ion-toggle>\n\n        \n\n      </ion-item>\n\n      <ion-item>\n\n          {{"Total sales today"|translate}}: {{tstoday}}\n\n          \n\n        </ion-item>\n\n        <ion-item>\n\n            {{"Total sales for this month"|translate}}: {{tsmonth}}\n\n        </ion-item>\n\n        <ion-item>\n\n            {{"Total sales for last 30 days"|translate}} : {{ts30}}\n\n        </ion-item>\n\n        \n\n\n\n      <ion-list inset  *ngFor="let transac of listtransacrev">\n\n        \n\n          <ion-card>\n\n              <ion-grid line>\n\n                  <ion-row style="padding-left: 10px; padding-bottom: 5px; ">\n\n                    <ion-col col-10 style="color: grey; font-size: 10px;"> {{getDateTime(transac.datetime)}} </ion-col>\n\n                    <ion-col col-2 style="text-align: center "><ion-icon name="cash" style="color: green"></ion-icon> </ion-col>\n\n                  </ion-row>\n\n\n\n                  <ion-list *ngFor="let item of transac.itemslist" [hidden]="expanded">\n\n                      \n\n                      <ion-row  style="padding: 0px;text-align: center ;  background-color: indigo; color: palevioletred;">\n\n                          <ion-col col-8>\n\n                            {{item.name}}\n\n                          </ion-col>\n\n                          <ion-col col-2 >\n\n                              {{item.price}}\n\n                          </ion-col>\n\n                          <ion-col col-2>\n\n                              {{item.qty}}\n\n                          </ion-col>\n\n                        </ion-row>\n\n                        <ion-row *ngIf="transac.totaldisc!=transac.totalsum" style="padding: 0px;text-align: center ;  background-color: silver; color: palevioletred;">\n\n                            <ion-col col-8>\n\n                               {{"Discounted total:"|translate}} ({{transac.discount}}%)\n\n                              </ion-col>\n\n                              <ion-col col-4 >\n\n                                  {{transac.totaldisc}}\n\n                              </ion-col>\n\n                        </ion-row>\n\n                        <ion-row *ngIf="transac.totalsum!=transac.totalatax" style="padding: 0px; text-align: center ;  background-color: silver; color: palevioletred;">\n\n                            <ion-col col-8>\n\n                                {{"Total after tax:"|translate}} ({{transac.taxrate}}%)\n\n                              </ion-col>\n\n                              <ion-col col-4 >\n\n                                  {{transac.totalatax}}\n\n                              </ion-col>\n\n                        </ion-row>\n\n              </ion-list> \n\n                  <ion-row style="padding-left: 10px; padding-bottom: 10px;">\n\n                    <ion-col col-10><h2><b>{{"Grand Total:"|translate}} {{transac.totaldisc}}</b></h2></ion-col>\n\n                  </ion-row>\n\n\n\n               \n\n               \n\n              </ion-grid>\n\n            </ion-card>   \n\n        </ion-list>\n\n      \n\n    \n\n      \n\n    \n\n    \n\n    \n\n    \n\n    </ion-content>\n\n\n\n\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\summary-home\summary-home.html"*/,
+=======
+            selector: 'page-user-profile',template:/*ion-inline-start:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/user-profile/user-profile.html"*/'<!--\n  Generated template for the UserProfilePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar color="dark">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>{{ \'User Profile\' | translate }}</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <form [formGroup]="formUser">\n    <ion-list inset>\n      <ion-item>\n        <ion-label>{{ \'Business Name\' | translate }}</ion-label>\n        <ion-input type="text" formControlName="business_name" [(ngModel)]="user.business_name" (ionChange)="onChange()"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label>{{ \'Full Business Address\' | translate }}</ion-label>\n        <ion-input type="text" formControlName="business_address" [(ngModel)]="user.business_address" (ionChange)="onChange()"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label>{{ \'Owner\' | translate }}</ion-label>\n        <ion-input type="text" formControlName="owner_name" [(ngModel)]="user.owner_name" (ionChange)="onChange()"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-icon name="globe" color="semi-light" class="icon"></ion-icon>\n        <ion-label>{{"Business Type"|translate}}</ion-label>\n        <ion-select formControlName="businesstype" [(ngModel)]="user.businesstype" (ionChange)="onChange()">\n          <ion-option *ngFor="let b of listOfBType" value="{{ b }}">{{ b }}</ion-option>\n        </ion-select>\n      </ion-item>\n      <ion-item>\n        <ion-label>{{ \'Phone Number\' | translate }}</ion-label>\n        <ion-input type="text" formControlName="ph_no" [(ngModel)]="user.ph_no" (ionChange)="onChange()"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-icon name="logo-usd" color="semi-light" class="icon"></ion-icon>\n        <ion-label>{{"Currency"|translate}}</ion-label>\n        <ion-select formControlName="currency" [(ngModel)]="user.currency" (ionChange)="onChange()">\n          <ion-option *ngFor="let c of listOfCurrency" value = "{{ c }}">{{ c }}</ion-option>\n        </ion-select>\n      </ion-item>\n      <ion-item>\n        <ion-label>{{ \'Balance\' | translate }}</ion-label>\n        <ion-input type="number" formControlName="cash_balance" [(ngModel)]="user.cash_balance" (ionChange)="onChange()"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label>{{ \'Usual Discount %\' | translate }}</ion-label>\n        <ion-input type="number" formControlName="discount" [(ngModel)]="user.discount" (ionChange)="onChange()"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label>{{ \'Tax Rate %:\' | translate }}</ion-label>\n        <ion-input type="number" formControlName="taxrate" [(ngModel)]="user.taxrate" (ionChange)="onChange()"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label>{{"Language"|translate}}</ion-label>\n        <ion-select formControlName="language" [(ngModel)]="user.language" (ionChange)="onChange()">\n          <ion-option *ngFor="let l of listOfLang" value="{{ l }}">{{ l }}</ion-option>\n        </ion-select>\n      </ion-item>\n    </ion-list>\n\n    <button *ngIf="submitButton" ion-button block color="primary" (click)="setUser()"  color="dark">{{\'Update Profile\'| translate}}</button>\n  </form>\n</ion-content>\n'/*ion-inline-end:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/user-profile/user-profile.html"*/,
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__["a" /* TranslateConfigService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */]])
@@ -3389,10 +4391,11 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 "use strict";
 /* unused harmony export HttpLoaderFactory */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(16);
+<<<<<<< HEAD
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__(363);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_login_login__ = __webpack_require__(100);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_sign_up_sign_up__ = __webpack_require__(99);
@@ -3423,6 +4426,39 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_singleproduct_singleproduct__ = __webpack_require__(97);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__pages_singleproduct_singleproduct_module__ = __webpack_require__(368);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__providers_global_global__ = __webpack_require__(93);
+=======
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__(359);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_login_login__ = __webpack_require__(99);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_sign_up_sign_up__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_transaction_home_transaction_home__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_dashboard_dashboard__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_addproduct_addproduct__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_status_bar__ = __webpack_require__(233);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_splash_screen__ = __webpack_require__(234);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_barcode_scanner__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__providers_storage_storage__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_storage__ = __webpack_require__(178);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__providers_gettersetter_gettersetter__ = __webpack_require__(183);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__ionic_native_camera__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__ionic_native_facebook__ = __webpack_require__(191);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__angular_common_http__ = __webpack_require__(360);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__ngx_translate_core__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__ngx_translate_http_loader__ = __webpack_require__(365);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__providers_translation_translate_config_service__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__ionic_native_bluetooth_serial__ = __webpack_require__(186);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__providers_printer_printer__ = __webpack_require__(185);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__ionic_native_geolocation__ = __webpack_require__(184);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__providers_geolocation_geolocation_service__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26_firebase__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_26_firebase__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_login_login_module__ = __webpack_require__(190);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pages_sign_up_sign_up_module__ = __webpack_require__(192);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_transaction_home_transaction_home_module__ = __webpack_require__(193);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_dashboard_dashboard_module__ = __webpack_require__(367);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__pages_addproduct_addproduct_module__ = __webpack_require__(368);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__pages_singleproduct_singleproduct__ = __webpack_require__(96);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__pages_singleproduct_singleproduct_module__ = __webpack_require__(369);
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3463,6 +4499,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 // var config = {
 //   apiKey: "AIzaSyADjIbI3_GRS4eRHGVGFsT2hrkKvH9K06M",
 //   authDomain: "trialapp-1cb3d.firebaseapp.com",
@@ -3480,7 +4520,7 @@ var config = {
     messagingSenderId: "1001643033524",
     measurementId: "G-CECMRG504L"
 };
-__WEBPACK_IMPORTED_MODULE_24_firebase__["initializeApp"](config);
+__WEBPACK_IMPORTED_MODULE_26_firebase__["initializeApp"](config);
 // language translation service
 function HttpLoaderFactory(http) {
     return new __WEBPACK_IMPORTED_MODULE_20__ngx_translate_http_loader__["a" /* TranslateHttpLoader */](http, '../assets/i18n/', '.json');
@@ -3505,31 +4545,36 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["f" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* MyApp */], { preloadModules: true }, {
                     links: [
                         { loadChildren: '../pages/add-product-category/add-product-category.module#AddProductCategoryPageModule', name: 'AddProductCategoryPage', segment: 'add-product-category', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/all-transaction/all-transaction.module#AllTransactionPageModule', name: 'AllTransactionPage', segment: 'all-transaction', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/coach-businesstips/coach-businesstips.module#CoachBusinesstipsPageModule', name: 'CoachBusinesstipsPage', segment: 'coach-businesstips', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/coach-coach/coach-coach.module#CoachCoachPageModule', name: 'CoachCoachPage', segment: 'coach-coach', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/coach-goals/coach-goals.module#CoachGoalsPageModule', name: 'CoachGoalsPage', segment: 'coach-goals', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/coach-home/coach-home.module#CoachHomePageModule', name: 'CoachHomePage', segment: 'coach-home', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/coach-goals/coach-goals.module#CoachGoalsPageModule', name: 'CoachGoalsPage', segment: 'coach-goals', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/contact-us/contact-us.module#ContactUsPageModule', name: 'ContactUsPage', segment: 'contact-us', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/expense-transaction/expense-transaction.module#ExpenseTransactionPageModule', name: 'ExpenseTransactionPage', segment: 'expense-transaction', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/expenses-home/expenses-home.module#ExpensesHomePageModule', name: 'ExpensesHomePage', segment: 'expenses-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/income-transaction/income-transaction.module#IncomeTransactionPageModule', name: 'IncomeTransactionPage', segment: 'income-transaction', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/product-list/product-list.module#ProductListPageModule', name: 'ProductListPage', segment: 'product-list', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/sign-up/sign-up.module#SignUpPageModule', name: 'SignUpPage', segment: 'sign-up', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/summary-home/summary-home.module#SummaryHomePageModule', name: 'SummaryHomePage', segment: 'summary-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/transaction-home/transaction-home.module#TransactionHomePageModule', name: 'TransactionHomePage', segment: 'transaction-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/transaction-product/transaction-product.module#TransactionProductPageModule', name: 'TransactionProductPage', segment: 'transaction-product', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/user-profile/user-profile.module#UserProfilePageModule', name: 'UserProfilePage', segment: 'user-profile', priority: 'low', defaultHistory: [] },
+<<<<<<< HEAD
                         { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] }
+=======
+                        { loadChildren: '../pages/all-transaction/all-transaction.module#AllTransactionPageModule', name: 'AllTransactionPage', segment: 'all-transaction', priority: 'low', defaultHistory: [] }
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
                     ]
                 }),
                 __WEBPACK_IMPORTED_MODULE_14__ionic_storage__["a" /* IonicStorageModule */].forRoot(),
-                __WEBPACK_IMPORTED_MODULE_25__pages_login_login_module__["LoginPageModule"],
-                __WEBPACK_IMPORTED_MODULE_26__pages_sign_up_sign_up_module__["SignUpPageModule"],
-                __WEBPACK_IMPORTED_MODULE_27__pages_transaction_home_transaction_home_module__["TransactionHomePageModule"],
-                __WEBPACK_IMPORTED_MODULE_28__pages_dashboard_dashboard_module__["a" /* DashboardPageModule */],
-                __WEBPACK_IMPORTED_MODULE_29__pages_addproduct_addproduct_module__["a" /* AddProductPageModule */],
-                __WEBPACK_IMPORTED_MODULE_31__pages_singleproduct_singleproduct_module__["a" /* SingleProductPageModule */],
+                __WEBPACK_IMPORTED_MODULE_27__pages_login_login_module__["LoginPageModule"],
+                __WEBPACK_IMPORTED_MODULE_28__pages_sign_up_sign_up_module__["SignUpPageModule"],
+                __WEBPACK_IMPORTED_MODULE_29__pages_transaction_home_transaction_home_module__["TransactionHomePageModule"],
+                __WEBPACK_IMPORTED_MODULE_30__pages_dashboard_dashboard_module__["a" /* DashboardPageModule */],
+                __WEBPACK_IMPORTED_MODULE_31__pages_addproduct_addproduct_module__["a" /* AddProductPageModule */],
+                __WEBPACK_IMPORTED_MODULE_33__pages_singleproduct_singleproduct_module__["a" /* SingleProductPageModule */],
                 __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* ReactiveFormsModule */],
                 __WEBPACK_IMPORTED_MODULE_18__angular_common_http__["b" /* HttpClientModule */],
                 __WEBPACK_IMPORTED_MODULE_19__ngx_translate_core__["b" /* TranslateModule */].forRoot({
@@ -3538,7 +4583,7 @@ var AppModule = /** @class */ (function () {
                         useFactory: (HttpLoaderFactory),
                         deps: [__WEBPACK_IMPORTED_MODULE_18__angular_common_http__["a" /* HttpClient */]]
                     }
-                })
+                }),
             ],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["d" /* IonicApp */]],
             entryComponents: [
@@ -3548,7 +4593,7 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_7__pages_transaction_home_transaction_home__["a" /* TransactionHomePage */],
                 __WEBPACK_IMPORTED_MODULE_8__pages_dashboard_dashboard__["a" /* DashboardPage */],
                 __WEBPACK_IMPORTED_MODULE_9__pages_addproduct_addproduct__["a" /* AddProductPage */],
-                __WEBPACK_IMPORTED_MODULE_30__pages_singleproduct_singleproduct__["a" /* SingleProductPage */],
+                __WEBPACK_IMPORTED_MODULE_32__pages_singleproduct_singleproduct__["a" /* SingleProductPage */],
             ],
             providers: [
                 __WEBPACK_IMPORTED_MODULE_10__ionic_native_status_bar__["a" /* StatusBar */],
@@ -3564,7 +4609,12 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_21__providers_translation_translate_config_service__["a" /* TranslateConfigService */],
                 __WEBPACK_IMPORTED_MODULE_22__ionic_native_bluetooth_serial__["a" /* BluetoothSerial */],
                 __WEBPACK_IMPORTED_MODULE_23__providers_printer_printer__["a" /* PrinterProvider */],
+<<<<<<< HEAD
                 __WEBPACK_IMPORTED_MODULE_32__providers_global_global__["a" /* GlobalProvider */],
+=======
+                __WEBPACK_IMPORTED_MODULE_24__ionic_native_geolocation__["a" /* Geolocation */],
+                __WEBPACK_IMPORTED_MODULE_25__providers_geolocation_geolocation_service__["a" /* GeolocationService */],
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
             ]
         })
     ], AppModule);
@@ -3575,7 +4625,11 @@ var AppModule = /** @class */ (function () {
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 315:
+=======
+/***/ 311:
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3682,27 +4736,40 @@ var commands = {
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 338:
+=======
+/***/ 334:
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 339:
+=======
+/***/ 335:
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 363:
+=======
+/***/ 359:
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+<<<<<<< HEAD
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(234);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(235);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_dashboard_dashboard__ = __webpack_require__(62);
@@ -3715,6 +4782,20 @@ var commands = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__providers_storage_storage__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_expenses_home_expenses_home__ = __webpack_require__(239);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_user_profile_user_profile__ = __webpack_require__(123);
+=======
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(233);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(234);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_dashboard_dashboard__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_login_login__ = __webpack_require__(99);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_firebase__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_firebase__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_transaction_home_transaction_home__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_summary_home_summary_home__ = __webpack_require__(241);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_contact_us_contact_us__ = __webpack_require__(235);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__providers_storage_storage__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_expenses_home_expenses_home__ = __webpack_require__(237);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_user_profile_user_profile__ = __webpack_require__(242);
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__providers_translation_translate_config_service__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ngx_translate_core__ = __webpack_require__(23);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -3884,7 +4965,7 @@ var MyApp = /** @class */ (function () {
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Nav */])
     ], MyApp.prototype, "nav", void 0);
     MyApp = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\app\app.html"*/'<ion-menu [content]="content" type="overlay">\n\n  <ion-header>\n\n    <ion-toolbar>\n\n      <ion-row>\n\n        <button ion-button block medium color="dark">{{\'Menu\' | translate}}</button> \n\n      </ion-row>\n\n\n\n      <ion-row>\n\n          <button ion-button block small outline color="dark" (click)="openUserProfilePage()" menuClose>{{\'View User Profile\' | translate}}</button>\n\n      </ion-row>\n\n      \n\n\n\n\n\n      \n\n    </ion-toolbar>\n\n  </ion-header>\n\n\n\n  <ion-content>\n\n    <ion-list>\n\n      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">\n\n        {{p.title | translate}}\n\n      </button>\n\n      <button menuClose ion-item (click)="logout()" >\n\n        {{\'Logout\'| translate}}\n\n      </button>\n\n      \n\n       \n\n      \n\n    </ion-list>\n\n  </ion-content>\n\n\n\n</ion-menu>\n\n\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\app\app.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/app/app.html"*/'<ion-menu [content]="content" type="overlay">\n  <ion-header>\n    <ion-toolbar>\n      <ion-row>\n        <button ion-button block medium color="dark">{{\'Menu\' | translate}}</button> \n      </ion-row>\n\n      <ion-row>\n          <button ion-button block small outline color="dark" (click)="openUserProfilePage()" menuClose>{{\'View User Profile\' | translate}}</button>\n      </ion-row>\n      \n\n\n      \n    </ion-toolbar>\n  </ion-header>\n\n  <ion-content>\n    <ion-list>\n      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">\n        {{p.title | translate}}\n      </button>\n      <button menuClose ion-item (click)="logout()" >\n        {{\'Logout\'| translate}}\n      </button>\n      \n       \n      \n    </ion-list>\n  </ion-content>\n\n</ion-menu>\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>\n'/*ion-inline-end:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/app/app.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */],
@@ -3902,7 +4983,11 @@ var MyApp = /** @class */ (function () {
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 366:
+=======
+/***/ 367:
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3943,14 +5028,22 @@ var DashboardPageModule = /** @class */ (function () {
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 367:
+=======
+/***/ 368:
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddProductPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+<<<<<<< HEAD
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__addproduct__ = __webpack_require__(94);
+=======
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__addproduct__ = __webpack_require__(93);
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(23);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -3984,14 +5077,18 @@ var AddProductPageModule = /** @class */ (function () {
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 368:
+=======
+/***/ 369:
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SingleProductPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__singleproduct__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__singleproduct__ = __webpack_require__(96);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(23);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4032,9 +5129,15 @@ var SingleProductPageModule = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TransactionHomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+<<<<<<< HEAD
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__all_transaction_all_transaction__ = __webpack_require__(238);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__income_transaction_income_transaction__ = __webpack_require__(240);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__transaction_product_transaction_product__ = __webpack_require__(241);
+=======
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__all_transaction_all_transaction__ = __webpack_require__(239);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__income_transaction_income_transaction__ = __webpack_require__(238);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__transaction_product_transaction_product__ = __webpack_require__(240);
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_storage_storage__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_translation_translate_config_service__ = __webpack_require__(11);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -4211,7 +5314,7 @@ var TransactionHomePage = /** @class */ (function () {
     ], TransactionHomePage.prototype, "tabRef", void 0);
     TransactionHomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-transaction-home',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\transaction-home\transaction-home.html"*/'<!--\n\n  Generated template for the TransactionHomePage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n\n\n\n\n<ion-header>\n\n  <ion-navbar color="dark">\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>{{"Sales"|translate}}</ion-title>\n\n    <ion-buttons end><button ion-button (click)="uploadbtn()"><ion-icon name="cloud-upload" style="align-self: center; color: white;" padding></ion-icon></button></ion-buttons>\n\n    <ion-buttons end><button ion-button (click)="cashbtn()"><ion-icon name="logo-usd" style="align-self: center; color: white;" padding></ion-icon></button></ion-buttons>\n\n  </ion-navbar>\n\n  \n\n</ion-header>\n\n \n\n  \n\n<ion-content padding>\n\n  \n\n  <ion-tabs tabsPlacement="top" #myTabs>\n\n    <ion-tab [root]="AllTransactions" tabTitle="{{\'Calculator\'|translate}}" tabIcon="calculator"></ion-tab>\n\n    <ion-tab [root]="ExpenseTransactions" tabTitle="{{\'Stock\'|translate}}" tabIcon="apps"></ion-tab>\n\n    <ion-tab [root]="IncomeTransactions" tabTitle="{{\'Receipt\'|translate}}" tabIcon="list-box"></ion-tab>\n\n\n\n   </ion-tabs>\n\n\n\n\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\transaction-home\transaction-home.html"*/,
+            selector: 'page-transaction-home',template:/*ion-inline-start:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/transaction-home/transaction-home.html"*/'<!--\n  Generated template for the TransactionHomePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n\n<ion-header>\n  <ion-navbar color="dark">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>{{"Sales"|translate}}</ion-title>\n    <ion-buttons end><button ion-button (click)="uploadbtn()"><ion-icon name="cloud-upload" style="align-self: center; color: white;" padding></ion-icon></button></ion-buttons>\n    <ion-buttons end><button ion-button (click)="cashbtn()"><ion-icon name="logo-usd" style="align-self: center; color: white;" padding></ion-icon></button></ion-buttons>\n  </ion-navbar>\n  \n</ion-header>\n \n  \n<ion-content padding>\n  \n  <ion-tabs tabsPlacement="top" #myTabs>\n    <ion-tab [root]="AllTransactions" tabTitle="{{\'Calculator\'|translate}}" tabIcon="calculator"></ion-tab>\n    <ion-tab [root]="ExpenseTransactions" tabTitle="{{\'Stock\'|translate}}" tabIcon="apps"></ion-tab>\n    <ion-tab [root]="IncomeTransactions" tabTitle="{{\'Receipt\'|translate}}" tabIcon="list-box"></ion-tab>\n\n   </ion-tabs>\n\n\n\n</ion-content>\n'/*ion-inline-end:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/transaction-home/transaction-home.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_6__providers_translation_translate_config_service__["a" /* TranslateConfigService */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */], __WEBPACK_IMPORTED_MODULE_5__providers_storage_storage__["a" /* StorageProvider */],
@@ -4231,12 +5334,21 @@ var TransactionHomePage = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DashboardPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+<<<<<<< HEAD
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__addproduct_addproduct__ = __webpack_require__(94);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_barcode_scanner__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_gettersetter_gettersetter__ = __webpack_require__(185);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__product_list_product_list__ = __webpack_require__(122);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__add_product_category_add_product_category__ = __webpack_require__(237);
+=======
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__addproduct_addproduct__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_barcode_scanner__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_gettersetter_gettersetter__ = __webpack_require__(183);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__product_list_product_list__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__add_product_category_add_product_category__ = __webpack_require__(236);
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_translation_translate_config_service__ = __webpack_require__(11);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4471,7 +5583,7 @@ var DashboardPage = /** @class */ (function () {
     ], DashboardPage.prototype, "tabRef", void 0);
     DashboardPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-dashboard',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\dashboard\dashboard.html"*/'<ion-header>\n\n  <ion-navbar color="dark">\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>{{"Products"|translate}}</ion-title>\n\n    <ion-buttons end><button ion-button (click)="uploadbtn()"><ion-icon name="cloud-upload" style="align-self: center; color: white;" padding></ion-icon></button></ion-buttons>\n\n    <ion-buttons end><button ion-button (click)="cashbtn()"><ion-icon name="logo-usd" style="align-self: center; color: white;" padding></ion-icon></button></ion-buttons>\n\n  \n\n  </ion-navbar>\n\n \n\n</ion-header>\n\n<ion-content>\n\n\n\n    <ion-tabs tabsPlacement="top" #myTabs>\n\n        <ion-tab [root]="ViewList" tabTitle="{{\'Stock\'|translate}}" tabIcon="list-box"></ion-tab>\n\n        <ion-tab [root]="AddProd" tabTitle="{{\'Add Product\'|translate}}" tabIcon="pricetag"></ion-tab>\n\n        <ion-tab [root]="AddCat" tabTitle="{{\'Add Category\'|translate}}" tabIcon="albums"></ion-tab>\n\n  \n\n    \n\n       </ion-tabs>\n\n\n\n<!-- <ion-content>\n\n  <ion-grid>\n\n    <ion-row>\n\n      <ion-col>\n\n        <div>\n\n          <ion-list>\n\n            <ion-item>\n\n              <ion-label>Total</ion-label>\n\n            </ion-item>\n\n            <ion-item>\n\n              <ion-label>{{total}} USD</ion-label>\n\n            </ion-item>\n\n          </ion-list>\n\n        </div>\n\n      </ion-col>\n\n      <ion-col>\n\n        <div>\n\n          <ion-list>\n\n            <ion-item>\n\n              <ion-label>Items</ion-label>\n\n            </ion-item>\n\n            <ion-item>\n\n              <ion-label>{{count}} Pcs</ion-label>\n\n            </ion-item>\n\n          </ion-list>\n\n        </div>\n\n      </ion-col>\n\n      <ion-col>\n\n        <div>\n\n          <ion-list>\n\n            <ion-item>\n\n              <ion-label>VAT</ion-label>\n\n            </ion-item>\n\n            <ion-item>\n\n              <ion-label>{{vat}} USD</ion-label>\n\n            </ion-item>\n\n          </ion-list>\n\n        </div>\n\n      </ion-col>\n\n    </ion-row>\n\n  </ion-grid>\n\n\n\n  <ion-grid>\n\n    <ion-row>\n\n      <ion-col>\n\n        <button ion-button block color="primary" (click)="manual()">Manual Entry</button>\n\n      </ion-col>\n\n      <ion-col>\n\n        <button ion-button block color="primary" (click)="qrscan()">Sales QR Scan</button>\n\n      </ion-col>\n\n    </ion-row>\n\n  </ion-grid>\n\n\n\n  <ion-grid>\n\n    <ion-row>\n\n      <ion-col>\n\n        <button ion-button block color="secondary" (click)="addproduct()">Add Products</button>\n\n      </ion-col>\n\n      <ion-col>\n\n        <button ion-button block color="secondary" (click)="showproduct()">Show Products</button>\n\n      </ion-col>\n\n    </ion-row>\n\n    <ion-row>\n\n      <ion-col>\n\n        <button ion-button round block color="secondary" (click)="reset()">Reset</button>\n\n      </ion-col>\n\n    </ion-row>\n\n  </ion-grid>\n\n -->\n\n\n\n\n\n  \n\n\n\n\n\n<!-- \n\n  <ion-tabs tabsPlacement="top">\n\n    <ion-tab [root]="ListRoot" tabTitle="List" tabIcon="chat"></ion-tab>\n\n    <ion-tab [root]="AddRoot" tabTitle="Add" tabIcon="add"></ion-tab>\n\n   </ion-tabs> -->\n\n<!-- \n\n  <ion-footer>\n\n    <ion-toolbar>\n\n      <ion-title>Track💰2Make💰</ion-title>\n\n    </ion-toolbar>\n\n  </ion-footer> -->\n\n\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\dashboard\dashboard.html"*/
+            selector: 'page-dashboard',template:/*ion-inline-start:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/dashboard/dashboard.html"*/'<ion-header>\n  <ion-navbar color="dark">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>{{"Products"|translate}}</ion-title>\n    <ion-buttons end><button ion-button (click)="uploadbtn()"><ion-icon name="cloud-upload" style="align-self: center; color: white;" padding></ion-icon></button></ion-buttons>\n    <ion-buttons end><button ion-button (click)="cashbtn()"><ion-icon name="logo-usd" style="align-self: center; color: white;" padding></ion-icon></button></ion-buttons>\n  \n  </ion-navbar>\n \n</ion-header>\n<ion-content>\n\n    <ion-tabs tabsPlacement="top" #myTabs>\n        <ion-tab [root]="ViewList" tabTitle="{{\'Stock\'|translate}}" tabIcon="list-box"></ion-tab>\n        <ion-tab [root]="AddProd" tabTitle="{{\'Add Product\'|translate}}" tabIcon="pricetag"></ion-tab>\n        <ion-tab [root]="AddCat" tabTitle="{{\'Add Category\'|translate}}" tabIcon="albums"></ion-tab>\n  \n    \n       </ion-tabs>\n\n<!-- <ion-content>\n  <ion-grid>\n    <ion-row>\n      <ion-col>\n        <div>\n          <ion-list>\n            <ion-item>\n              <ion-label>Total</ion-label>\n            </ion-item>\n            <ion-item>\n              <ion-label>{{total}} USD</ion-label>\n            </ion-item>\n          </ion-list>\n        </div>\n      </ion-col>\n      <ion-col>\n        <div>\n          <ion-list>\n            <ion-item>\n              <ion-label>Items</ion-label>\n            </ion-item>\n            <ion-item>\n              <ion-label>{{count}} Pcs</ion-label>\n            </ion-item>\n          </ion-list>\n        </div>\n      </ion-col>\n      <ion-col>\n        <div>\n          <ion-list>\n            <ion-item>\n              <ion-label>VAT</ion-label>\n            </ion-item>\n            <ion-item>\n              <ion-label>{{vat}} USD</ion-label>\n            </ion-item>\n          </ion-list>\n        </div>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <ion-grid>\n    <ion-row>\n      <ion-col>\n        <button ion-button block color="primary" (click)="manual()">Manual Entry</button>\n      </ion-col>\n      <ion-col>\n        <button ion-button block color="primary" (click)="qrscan()">Sales QR Scan</button>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <ion-grid>\n    <ion-row>\n      <ion-col>\n        <button ion-button block color="secondary" (click)="addproduct()">Add Products</button>\n      </ion-col>\n      <ion-col>\n        <button ion-button block color="secondary" (click)="showproduct()">Show Products</button>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col>\n        <button ion-button round block color="secondary" (click)="reset()">Reset</button>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n -->\n\n\n  \n\n\n<!-- \n  <ion-tabs tabsPlacement="top">\n    <ion-tab [root]="ListRoot" tabTitle="List" tabIcon="chat"></ion-tab>\n    <ion-tab [root]="AddRoot" tabTitle="Add" tabIcon="add"></ion-tab>\n   </ion-tabs> -->\n<!-- \n  <ion-footer>\n    <ion-toolbar>\n      <ion-title>Track💰2Make💰</ion-title>\n    </ion-toolbar>\n  </ion-footer> -->\n\n'/*ion-inline-end:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/dashboard/dashboard.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_8__providers_translation_translate_config_service__["a" /* TranslateConfigService */],
             __WEBPACK_IMPORTED_MODULE_3__ionic_native_barcode_scanner__["a" /* BarcodeScanner */],
@@ -4489,6 +5601,7 @@ var DashboardPage = /** @class */ (function () {
 /***/ }),
 
 /***/ 93:
+<<<<<<< HEAD
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4530,15 +5643,17 @@ var GlobalProvider = /** @class */ (function () {
 /***/ }),
 
 /***/ 94:
+=======
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddProductPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_barcode_scanner__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_barcode_scanner__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_camera__ = __webpack_require__(96);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_camera__ = __webpack_require__(95);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_firebase__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_firebase__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_forms__ = __webpack_require__(16);
@@ -4856,7 +5971,7 @@ var AddProductPage = /** @class */ (function () {
     };
     AddProductPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-add-product',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\addproduct\addproduct.html"*/'<!-- <ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>Add Product</ion-title>\n\n  </ion-navbar>\n\n</ion-header> -->\n\n\n\n<ion-content padding>\n\n    <ion-item>\n\n        <b>{{"Enter Information:" | translate}}</b>\n\n    \n\n    </ion-item>\n\n\n\n    <ion-item>\n\n        <button ion-button block color="primary" (click)="launchCamera()">{{\'Take Picture\' | translate}}</button>\n\n        <img *ngIf="image!=null" [src]="image" style="width: 100px;">\n\n      </ion-item>\n\n  \n\n  <form [formGroup]="formProduct">\n\n    <ion-list inset>\n\n      <!-- <button ion-button full color="dark" (click)="getProdPic()">Upload Picture</button> -->\n\n      <button ion-button block color="primary" (click)="scanQR()"  color="dark">{{\'Scan Barcode\'| translate}}</button>\n\n      <ion-item>\n\n        <ion-label>{{\'Product Code:\'| translate}}</ion-label>\n\n        <ion-input type="text" formControlName="prodCode" [(ngModel)]=\'prodCode\'></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label>{{\'Product Name:\'| translate}}</ion-label>\n\n        <ion-input type="text" formControlName="prodName" [(ngModel)]=\'prodName\'></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label>{{\'Product Retail Price:\'| translate}}</ion-label>\n\n        <ion-input type="number" formControlName="prodPrice" [(ngModel)]=\'prodPrice\'></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label>{{\'Product Wholesale Price:\'| translate}}</ion-label>\n\n        <ion-input type="number" formControlName="prodWholesalePrice" [(ngModel)]=\'prodWholesalePrice\'></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label>{{\'Product Buying Cost:\'| translate}}</ion-label>\n\n        <ion-input type="number" formControlName="prodCost" [(ngModel)]=\'prodCost\'></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label>{{\'Current Stock Qty:\'| translate}}</ion-label>\n\n        <ion-input type="number" formControlName="currstock" [(ngModel)]=\'currstock\'></ion-input>\n\n      </ion-item>\n\n      <!-- OPTIONAL EXPIRY/Shelf Life in time -->\n\n\n\n      <ion-item>\n\n\n\n        <ion-label>{{\'Product Category\' | translate}}</ion-label>\n\n        <ion-select multiple="false" formControlName="prodCat" [(ngModel)]=\'prodCat\'>\n\n\n\n          <!-- <ion-option>New</ion-option> -->\n\n          <ion-option value="New"> {{\'Add New Category\'| translate}}</ion-option>\n\n          <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>\n\n\n\n        </ion-select>\n\n\n\n        <!-- <ion-label>Select Category</ion-label>\n\n        <ion-select multiple="false" [(ngModel)]=\'prodCat\'>\n\n              <ion-option>New</ion-option>\n\n              <ion-option>Snacks</ion-option>\n\n              <ion-option>Drinks</ion-option>\n\n              <ion-option>Noodles</ion-option>\n\n        </ion-select> -->\n\n      </ion-item>\n\n\n\n\n\n\n\n\n\n      <ion-item *ngIf="prodCat==\'New\'">\n\n        <ion-label >{{\'Enter New Category Name\' | translate}}</ion-label>\n\n        <ion-input type="text" placeholder="{{\'Enter Category Here\' | translate}}" formControlName="newprodCat" [(ngModel)]=\'newprodCat\'></ion-input>\n\n      </ion-item>\n\n\n\n    </ion-list>\n\n  </form>\n\n  <button ion-button block color="primary" (click)="addproduct()"  color="dark">{{\'Add Product\'| translate}}</button>\n\n  <button ion-button block style="background-color: red; color: white;" (click)="clearFields()">Clear Fields</button>\n\n\n\n  \n\n</ion-content>'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\addproduct\addproduct.html"*/
+            selector: 'page-add-product',template:/*ion-inline-start:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/addproduct/addproduct.html"*/'<!-- <ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Add Product</ion-title>\n  </ion-navbar>\n</ion-header> -->\n\n<ion-content padding>\n    <ion-item>\n        <b>{{"Enter Information:" | translate}}</b>\n    \n    </ion-item>\n\n    <ion-item>\n        <button ion-button block color="primary" (click)="launchCamera()">{{\'Take Picture\' | translate}}</button>\n        <img *ngIf="image!=null" [src]="image" style="width: 100px;">\n      </ion-item>\n  \n  <form [formGroup]="formProduct">\n    <ion-list inset>\n      <!-- <button ion-button full color="dark" (click)="getProdPic()">Upload Picture</button> -->\n      <button ion-button block color="primary" (click)="scanQR()"  color="dark">{{\'Scan Barcode\'| translate}}</button>\n      <ion-item>\n        <ion-label>{{\'Product Code:\'| translate}}</ion-label>\n        <ion-input type="text" formControlName="prodCode" [(ngModel)]=\'prodCode\'></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label>{{\'Product Name:\'| translate}}</ion-label>\n        <ion-input type="text" formControlName="prodName" [(ngModel)]=\'prodName\'></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label>{{\'Product Retail Price:\'| translate}}</ion-label>\n        <ion-input type="number" formControlName="prodPrice" [(ngModel)]=\'prodPrice\'></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label>{{\'Product Wholesale Price:\'| translate}}</ion-label>\n        <ion-input type="number" formControlName="prodWholesalePrice" [(ngModel)]=\'prodWholesalePrice\'></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label>{{\'Product Buying Cost:\'| translate}}</ion-label>\n        <ion-input type="number" formControlName="prodCost" [(ngModel)]=\'prodCost\'></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label>{{\'Current Stock Qty:\'| translate}}</ion-label>\n        <ion-input type="number" formControlName="currstock" [(ngModel)]=\'currstock\'></ion-input>\n      </ion-item>\n      <!-- OPTIONAL EXPIRY/Shelf Life in time -->\n\n      <ion-item>\n\n        <ion-label>{{\'Product Category\' | translate}}</ion-label>\n        <ion-select multiple="false" formControlName="prodCat" [(ngModel)]=\'prodCat\'>\n\n          <!-- <ion-option>New</ion-option> -->\n          <ion-option value="New"> {{\'Add New Category\'| translate}}</ion-option>\n          <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>\n\n        </ion-select>\n\n        <!-- <ion-label>Select Category</ion-label>\n        <ion-select multiple="false" [(ngModel)]=\'prodCat\'>\n              <ion-option>New</ion-option>\n              <ion-option>Snacks</ion-option>\n              <ion-option>Drinks</ion-option>\n              <ion-option>Noodles</ion-option>\n        </ion-select> -->\n      </ion-item>\n\n\n\n\n      <ion-item *ngIf="prodCat==\'New\'">\n        <ion-label >{{\'Enter New Category Name\' | translate}}</ion-label>\n        <ion-input type="text" placeholder="{{\'Enter Category Here\' | translate}}" formControlName="newprodCat" [(ngModel)]=\'newprodCat\'></ion-input>\n      </ion-item>\n\n    </ion-list>\n  </form>\n  <button ion-button block color="primary" (click)="addproduct()"  color="dark">{{\'Add Product\'| translate}}</button>\n  <button ion-button block style="background-color: red; color: white;" (click)="clearFields()">Clear Fields</button>\n\n  \n</ion-content>'/*ion-inline-end:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/addproduct/addproduct.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_2__ionic_native_barcode_scanner__["a" /* BarcodeScanner */], __WEBPACK_IMPORTED_MODULE_7__providers_translation_translate_config_service__["a" /* TranslateConfigService */],
@@ -4874,17 +5989,21 @@ var AddProductPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 97:
+/***/ 96:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SingleProductPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_barcode_scanner__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_barcode_scanner__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__product_list_product_list__ = __webpack_require__(122);
+<<<<<<< HEAD
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_camera__ = __webpack_require__(96);
+=======
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_camera__ = __webpack_require__(95);
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_firebase__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_firebase__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_forms__ = __webpack_require__(16);
@@ -5186,7 +6305,7 @@ var SingleProductPage = /** @class */ (function () {
     };
     SingleProductPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-single-product',template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\singleproduct\singleproduct.html"*/'<!-- <ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>Update Product</ion-title>\n\n  </ion-navbar> \n\n</ion-header> -->\n\n\n\n<ion-content padding>\n\n  <form [formGroup]="formProduct">\n\n    <ion-list inset>\n\n\n\n      <!-- <ion-item>\n\n        <ion-label>Photo</ion-label>\n\n            <ion-input type="number" [(ngModel)]=\'product.price\'></ion-input>\n\n        </ion-item> -->\n\n\n\n      <ion-item>\n\n        <button ion-button (click)="launchCamera()">{{\'Take Picture\' | translate}}</button>\n\n        <img *ngIf="image!=null" [src]="image" style="width: 100px;">\n\n      </ion-item>\n\n      <button ion-button block color="primary" (click)="scanQR()">{{\'Scan Barcode\'| translate}}</button>\n\n\n\n      <ion-item>\n\n        <ion-label>{{\'Product Code:\'| translate}}</ion-label>\n\n        <ion-input type="text" formControlName="prodCode" [(ngModel)]=\'product.code\'></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label>{{\'Product Name:\'| translate}}</ion-label>\n\n        <ion-input type="text" formControlName="prodName" [(ngModel)]=\'product.name\'></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label>{{\'Product Retail Price:\'| translate}}</ion-label>\n\n        <ion-input type="number" formControlName="prodPrice" [(ngModel)]=\'product.price\'></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label>{{\'Product Wholesale Price:\'| translate}}</ion-label>\n\n        <ion-input type="number" formControlName="prodWholesalePrice" [(ngModel)]=\'product.wholesale_price\'></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label>{{\'Product Buying Cost:\'| translate}}</ion-label>\n\n        <ion-input type="number" formControlName="prodCost" [(ngModel)]=\'product.cost\'></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label>{{\'Current Stock Qty:\'| translate}}</ion-label>\n\n        <ion-input type="number" formControlName="currstock" [(ngModel)]=\'product.stock_qty\'></ion-input>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label>{{\'Product Category\' | translate}}</ion-label>\n\n        <ion-select multiple="false" formControlName="prodCat" [(ngModel)]=\'product.cat\'>\n\n          <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n\n\n\n\n\n\n    </ion-list>\n\n  </form>\n\n  <button ion-button block color="primary" (click)="updateProduct()">{{\'Update Product\'| translate}}</button>\n\n  <button ion-button block style="color: whitesmoke; background-color: gray;" (click)="discardChange()">Discard Changes</button>\n\n  <button ion-button block color="danger" (click)="deleteproduct(product)">{{\'Delete Product\'| translate}}</button>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\191119open-fintech\open-pos\src\pages\singleproduct\singleproduct.html"*/
+            selector: 'page-single-product',template:/*ion-inline-start:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/singleproduct/singleproduct.html"*/'<!-- <ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Update Product</ion-title>\n  </ion-navbar> \n</ion-header> -->\n\n<ion-content padding>\n  <form [formGroup]="formProduct">\n    <ion-list inset>\n\n      <!-- <ion-item>\n        <ion-label>Photo</ion-label>\n            <ion-input type="number" [(ngModel)]=\'product.price\'></ion-input>\n        </ion-item> -->\n\n      <ion-item>\n        <button ion-button (click)="launchCamera()">{{\'Take Picture\' | translate}}</button>\n        <img *ngIf="image!=null" [src]="image" style="width: 100px;">\n      </ion-item>\n      <button ion-button block color="primary" (click)="scanQR()">{{\'Scan Barcode\'| translate}}</button>\n\n      <ion-item>\n        <ion-label>{{\'Product Code:\'| translate}}</ion-label>\n        <ion-input type="text" formControlName="prodCode" [(ngModel)]=\'product.code\'></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label>{{\'Product Name:\'| translate}}</ion-label>\n        <ion-input type="text" formControlName="prodName" [(ngModel)]=\'product.name\'></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label>{{\'Product Retail Price:\'| translate}}</ion-label>\n        <ion-input type="number" formControlName="prodPrice" [(ngModel)]=\'product.price\'></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label>{{\'Product Wholesale Price:\'| translate}}</ion-label>\n        <ion-input type="number" formControlName="prodWholesalePrice" [(ngModel)]=\'product.wholesale_price\'></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label>{{\'Product Buying Cost:\'| translate}}</ion-label>\n        <ion-input type="number" formControlName="prodCost" [(ngModel)]=\'product.cost\'></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label>{{\'Current Stock Qty:\'| translate}}</ion-label>\n        <ion-input type="number" formControlName="currstock" [(ngModel)]=\'product.stock_qty\'></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label>{{\'Product Category\' | translate}}</ion-label>\n        <ion-select multiple="false" formControlName="prodCat" [(ngModel)]=\'product.cat\'>\n          <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>\n        </ion-select>\n      </ion-item>\n\n\n\n\n    </ion-list>\n  </form>\n  <button ion-button block color="primary" (click)="updateProduct()">{{\'Update Product\'| translate}}</button>\n  <button ion-button block style="color: whitesmoke; background-color: gray;" (click)="discardChange()">Discard Changes</button>\n  <button ion-button block color="danger" (click)="deleteproduct(product)">{{\'Delete Product\'| translate}}</button>\n</ion-content>\n'/*ion-inline-end:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/singleproduct/singleproduct.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_8__providers_translation_translate_config_service__["a" /* TranslateConfigService */],
             __WEBPACK_IMPORTED_MODULE_2__ionic_native_barcode_scanner__["a" /* BarcodeScanner */],
@@ -5203,18 +6322,15 @@ var SingleProductPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 99:
+<<<<<<< HEAD
+=======
+/***/ 97:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignUpPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GeolocationService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__transaction_home_transaction_home__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_translation_translate_config_service__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_native_geolocation__ = __webpack_require__(184);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5224,6 +6340,70 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
+
+// @ts-ignore
+var GeolocationService = /** @class */ (function () {
+    function GeolocationService(geolocation) {
+        this.geolocation = geolocation;
+    }
+    GeolocationService.prototype.getCoordinates = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.geolocation.getCurrentPosition().then(function (position) {
+                console.log("geolocation -> latitude: " + position.coords.latitude + ", longitude: " + position.coords.longitude);
+                resolve(position.coords);
+            }).catch(reject);
+        });
+    };
+    GeolocationService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__ionic_native_geolocation__["a" /* Geolocation */]])
+    ], GeolocationService);
+    return GeolocationService;
+}());
+
+//# sourceMappingURL=geolocation.service.js.map
+
+/***/ }),
+
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
+/***/ 99:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+<<<<<<< HEAD
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignUpPage; });
+=======
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
+<<<<<<< HEAD
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__transaction_home_transaction_home__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_translation_translate_config_service__ = __webpack_require__(11);
+=======
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__sign_up_sign_up__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__transaction_home_transaction_home__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_storage_storage__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_facebook__ = __webpack_require__(191);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_translation_translate_config_service__ = __webpack_require__(11);
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+<<<<<<< HEAD
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -5259,6 +6439,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+=======
+
+
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 
 
 
@@ -5266,11 +6450,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 
 
 /**
+<<<<<<< HEAD
  * Generated class for the SignUpPage page.
+=======
+ * Generated class for the LoginPage page.
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
+<<<<<<< HEAD
 var SignUpPage = /** @class */ (function () {
     function SignUpPage(navCtrl, navParams, toastCtrl, sp, translateConfigService, alertCtrl) {
         this.navCtrl = navCtrl;
@@ -5377,6 +6566,74 @@ var SignUpPage = /** @class */ (function () {
                 }); }).catch(function (err) {
                     console.log(err);
                 });
+=======
+var LoginPage = /** @class */ (function () {
+    function LoginPage(navCtrl, zone, navParams, toastCtrl, facebook, sp, alertCtrl, translateConfigService) {
+        this.navCtrl = navCtrl;
+        this.zone = zone;
+        this.navParams = navParams;
+        this.toastCtrl = toastCtrl;
+        this.facebook = facebook;
+        this.sp = sp;
+        this.alertCtrl = alertCtrl;
+        this.translateConfigService = translateConfigService;
+        this.email = "";
+        this.password = "";
+        this.listOfLang = [];
+        this.loadDropDowns();
+        __WEBPACK_IMPORTED_MODULE_2_firebase___default.a.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                //sp.clearMem();
+                sp.setMem().then(function () {
+                    zone.run(function () {
+                        navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__transaction_home_transaction_home__["a" /* TransactionHomePage */]);
+                    });
+                });
+            }
+            else {
+                // No user is signed in.
+                console.log("no-user is signed in");
+            }
+        });
+        this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
+    }
+    LoginPage.prototype.loadDropDowns = function () {
+        var _this = this;
+        __WEBPACK_IMPORTED_MODULE_2_firebase___default.a.firestore().collection("sign-up").get()
+            .then(function (doc) {
+            doc.docs[0].data().language.forEach(function (l) {
+                _this.listOfLang.push(l);
+                console.log(_this.listOfLang);
+            });
+        });
+    };
+    LoginPage.prototype.loginWithFB = function () {
+        var _this = this;
+        this.facebook.login(['email'])
+            .then(function (res) {
+            console.log('Logged into Facebook!', res);
+            __WEBPACK_IMPORTED_MODULE_2_firebase___default.a.auth().signInWithCredential(__WEBPACK_IMPORTED_MODULE_2_firebase___default.a.auth.FacebookAuthProvider.credential(res.authResponse.accessToken))
+                .then(function (success) {
+                console.log("Firebase success", success);
+                var temp = success;
+                _this.loginProcedure();
+            })
+                .catch(function (err) {
+                console.log("Firebase error", err);
+            });
+        })
+            .catch(function (e) { return console.log('Error logging into Facebook', e); });
+    };
+    LoginPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad LoginPage');
+    };
+    LoginPage.prototype.login = function () {
+        var _this = this;
+        __WEBPACK_IMPORTED_MODULE_2_firebase___default.a.auth().setPersistence(__WEBPACK_IMPORTED_MODULE_2_firebase___default.a.auth.Auth.Persistence.LOCAL).then(function () {
+            __WEBPACK_IMPORTED_MODULE_2_firebase___default.a.auth().signInWithEmailAndPassword(_this.email, _this.password)
+                .then(function (user) {
+                _this.loginProcedure();
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
             }).catch(function (err) {
                 console.log(err);
                 _this.toastCtrl.create({
@@ -5385,6 +6642,7 @@ var SignUpPage = /** @class */ (function () {
                 }).present();
             });
         });
+<<<<<<< HEAD
     };
     SignUpPage.prototype.goBack = function () {
         this.navCtrl.pop();
@@ -5401,6 +6659,44 @@ var SignUpPage = /** @class */ (function () {
 }());
 
 //# sourceMappingURL=sign-up.js.map
+=======
+        //console.log(user)
+    };
+    LoginPage.prototype.loginAction = function () {
+        var message = this.translateConfigService.getTranslatedMessage('This feature will open shortly');
+        this.toastCtrl.create({
+            // @ts-ignore
+            message: message.value,
+            duration: 2000,
+        }).present();
+    };
+    LoginPage.prototype.gotoSignUp = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__sign_up_sign_up__["a" /* SignUpPage */]);
+    };
+    LoginPage.prototype.loginProcedure = function () {
+        var _this = this;
+        this.zone.run(function () {
+            // this.sp.clearMem();
+            _this.sp.setMem().then(function () { _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__transaction_home_transaction_home__["a" /* TransactionHomePage */]); });
+        });
+    };
+    LoginPage.prototype.languageChanged = function () {
+        console.log("selected language: " + this.selectedLanguage);
+        this.translateConfigService.setLanguage(this.selectedLanguage);
+    };
+    LoginPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-login',template:/*ion-inline-start:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/login/login.html"*/'<ion-header>\n  <ion-row>\n      <ion-col col-4>\n          <ion-select multiple="false" [(ngModel)]="selectedLanguage" (ionChange)="languageChanged()">\n              <ion-option *ngFor="let l of listOfLang">{{ l }}</ion-option>\n            </ion-select>\n      </ion-col>\n      <ion-col col-8></ion-col>\n  </ion-row>\n\n         \n</ion-header>\n\n\n<ion-content padding>\n\n  <button ion-button block clear color="light" class="nametop"><b>Open</b></button>\n\n  <ion-grid style="width: 75%;">\n    \n    <ion-row class="row-style">\n      \n      <ion-icon name="mail" color="semi-light" class="icon"></ion-icon>\n      <ion-input type="email" placeholder="{{ \'email\' | translate }}" [(ngModel)]="email"></ion-input>\n    </ion-row>\n    <ion-row class="row-style">\n      <ion-icon name="key" color="semi-light" class="icon"></ion-icon>\n      <ion-input type="password" placeholder="{{ \'password\' | translate }}" [(ngModel)]="password" ></ion-input>\n    </ion-row>\n    <ion-row>\n      <button ion-button block round outline color="light" style="margin-top: 20px;" (click)="login()">{{"Sign in"|translate}}</button>\n    </ion-row>\n    <!-- <div class="btn_container">\n      <button ion-button full (click)="loginWithFB();">Facebook ဖြင့်ဝင်ပါ</button>\n  </div> -->\n  \n  </ion-grid>\n\n\n  <button ion-button block clear color="light" style="margin-top: 10px;" (click)="gotoSignUp()">{{"Don\'t have an account?"|translate}}</button>\n\n\n\n \n  \n\n</ion-content>\n'/*ion-inline-end:"/Users/seanchok/Documents/Programming/open-fintech/ionic/src/pages/login/login.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgZone */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */], __WEBPACK_IMPORTED_MODULE_6__ionic_native_facebook__["a" /* Facebook */],
+            __WEBPACK_IMPORTED_MODULE_5__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_7__providers_translation_translate_config_service__["a" /* TranslateConfigService */]])
+    ], LoginPage);
+    return LoginPage;
+}());
+
+//# sourceMappingURL=login.js.map
+>>>>>>> 76992e2f... add geolocation to income and expense transactions
 
 /***/ })
 
