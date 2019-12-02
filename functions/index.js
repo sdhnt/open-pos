@@ -8,7 +8,7 @@ exports.createUserArchive = functions.firestore.document('users/{id}').onCreate(
   db.collection('users-archive').doc(context.params.id).set(newUser);
 });
 
-exports.updateUserArchive = functions.pubsub.schedule('every day 03:00').timeZone('Asia/Hong_Kong').onRun(async context => {
+exports.syncTransactions = functions.pubsub.schedule('every day 03:00').timeZone('Asia/Hong_Kong').onRun(async context => {
   const limit = 100;
   db.collection('users').get().then(snapshot => {
     snapshot.forEach(async doc => {
