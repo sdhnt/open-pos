@@ -163,7 +163,8 @@ module.exports.metadata =
     "cordova-plugin-facebook4": "1.7.4",
     "cordova-android-support-gradle-release": "3.0.1",
     "cordova-plugin-bluetooth-serial": "0.4.7",
-    "cordova-plugin-backbutton": "0.3.0"
+    "cordova-plugin-backbutton": "0.3.0",
+    "cordova-plugin-geolocation": "4.0.2"
 }
 // BOTTOM OF METADATA
 });
