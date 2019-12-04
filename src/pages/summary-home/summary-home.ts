@@ -26,7 +26,7 @@ export class SummaryHomePage {
     public toastCtrl: ToastController,
   ) {}
 
-  expanded: boolean = true;
+  expanded = true;
   tstoday = 0;
   tsmonth = 0;
   ts30 = 0;
@@ -42,7 +42,7 @@ export class SummaryHomePage {
   listtransac: any;
   currentdatetime = new Date();
   listtransacrev: any;
-  totalsaletoday: number = 0;
+  totalsaletoday = 0;
   getTransac() {
     this.sp.storageReady().then(() => {
       this.sp
@@ -72,9 +72,9 @@ export class SummaryHomePage {
 
   getDateTime(datetime) {
     //return (datetime.getDate() + "/" + (datetime.getMonth() + 1) + "/" + datetime. getFullYear())
-    var temp = new Date(datetime);
-    var temp1 = temp;
-    var t =
+    const temp = new Date(datetime);
+    const temp1 = temp;
+    const t =
       temp.getDate() +
       "/" +
       (temp.getMonth() + 1) +
@@ -88,15 +88,15 @@ export class SummaryHomePage {
   }
 
   getDate(datetime) {
-    var temp = new Date(datetime);
-    var temp1 = temp;
-    var t = temp.getDate();
+    const temp = new Date(datetime);
+    const temp1 = temp;
+    const t = temp.getDate();
     return t;
   }
 
   getMonth(datetime) {
-    var temp = new Date(datetime);
-    var t = temp.getMonth();
+    const temp = new Date(datetime);
+    const t = temp.getMonth();
     return t;
   }
 }

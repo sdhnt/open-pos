@@ -57,9 +57,9 @@ export const commands = {
     TXT_4SQUARE: [0x1b, 0x21, 0x30], // Double width & height text
     TXT_CUSTOM_SIZE: function(width, height) {
       // other sizes
-      var widthDec = (width - 1) * 16;
-      var heightDec = height - 1;
-      var sizeDec = widthDec + heightDec;
+      const widthDec = (width - 1) * 16;
+      const heightDec = height - 1;
+      const sizeDec = widthDec + heightDec;
       return [0x1d, 0x21, String.fromCharCode(sizeDec)];
     },
 

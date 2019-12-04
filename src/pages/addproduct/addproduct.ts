@@ -96,7 +96,7 @@ export class AddProductPage {
   image: any = "";
 
   launchCamera() {
-    let options: CameraOptions = {
+    const options: CameraOptions = {
       quality: 20,
       //sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -122,9 +122,9 @@ export class AddProductPage {
     return new Promise((resolve, reject) => {
       this.temp = "prodImages/" + this.uid + this.prodCode + name;
       //LET REF be tied to a particular product- we save the url in the products db
-      let ref = firebase.storage().ref("prodImages/" + this.uid + this.prodCode + name);
+      const ref = firebase.storage().ref("prodImages/" + this.uid + this.prodCode + name);
 
-      let uploadTask = ref.putString(this.image.split(",")[1], "base64");
+      const uploadTask = ref.putString(this.image.split(",")[1], "base64");
 
       this.temp = "UPTask";
 
@@ -151,7 +151,7 @@ export class AddProductPage {
         this.sp.addCategory(data);
         setTimeout(() => {
           const message = this.translateConfigService.getTranslatedMessage("Finish");
-          let toast = this.toastCtrl.create({
+          const toast = this.toastCtrl.create({
             // @ts-ignore
             message: message.value,
             duration: 3000,
@@ -233,7 +233,7 @@ export class AddProductPage {
           this.sp.addProduct(data);
           setTimeout(() => {
             const message = this.translateConfigService.getTranslatedMessage("Finish");
-            let toast = this.toastCtrl.create({
+            const toast = this.toastCtrl.create({
               // @ts-ignore
               message: message.value,
               duration: 3000,
@@ -284,7 +284,7 @@ export class AddProductPage {
             this.sp.addProduct(data);
             setTimeout(() => {
               const message = this.translateConfigService.getTranslatedMessage("Finish");
-              let toast = this.toastCtrl.create({
+              const toast = this.toastCtrl.create({
                 // @ts-ignore
                 message: message.value,
                 duration: 3000,

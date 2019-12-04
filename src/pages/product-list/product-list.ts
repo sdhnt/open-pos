@@ -94,7 +94,7 @@ export class ProductListPage {
       console.log(item);
       if (item.name.toLowerCase().includes(this.searchterm.toLowerCase())) {
         if (this.selectedCat.length > 0) {
-          for (var i = 0; i < this.selectedCat.length; i++) {
+          for (let i = 0; i < this.selectedCat.length; i++) {
             if (this.selectedCat == null || item.cat.includes(this.selectedCat[i])) {
               return true;
             }

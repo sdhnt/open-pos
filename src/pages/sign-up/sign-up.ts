@@ -20,19 +20,19 @@ import { TranslateConfigService } from "../../providers/translation/translate-co
   templateUrl: "sign-up.html",
 })
 export class SignUpPage {
-  listOfBType: String[] = [];
-  listOfCurrency: String[] = [];
-  listOfLang: String[] = [];
+  listOfBType: string[] = [];
+  listOfCurrency: string[] = [];
+  listOfLang: string[] = [];
 
-  name: string = "";
-  email: string = "";
-  password: string = "";
-  businessname: string = "";
-  businessaddress: string = "";
-  businesstype: string = "";
-  phno: string = "";
-  language: string = "";
-  currency: string = "";
+  name = "";
+  email = "";
+  password = "";
+  businessname = "";
+  businessaddress = "";
+  businesstype = "";
+  phno = "";
+  language = "";
+  currency = "";
   cb: number;
   discount: number;
   taxrate: number;
@@ -92,7 +92,7 @@ export class SignUpPage {
       .auth()
       .createUserWithEmailAndPassword(this.email, this.password)
       .then(data => {
-        let newUser: firebase.User = data.user;
+        const newUser: firebase.User = data.user;
         newUser
           .updateProfile({
             displayName: this.name,

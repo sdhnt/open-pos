@@ -57,7 +57,7 @@ export class ExpensesHomePage {
   listCat: any;
   totalamt = 0.0;
   userdata: any;
-  hideButton: boolean = true;
+  hideButton = true;
   geolocation: {};
 
   ionViewDidLoad() {
@@ -128,7 +128,7 @@ export class ExpensesHomePage {
       console.log(item);
       if (item.name.toLowerCase().includes(this.searchterm.toLowerCase())) {
         if (this.selectedCat.length > 0) {
-          for (var i = 0; i < this.selectedCat.length; i++) {
+          for (let i = 0; i < this.selectedCat.length; i++) {
             if (this.selectedCat == null || item.cat.includes(this.selectedCat[i])) {
               return true;
             }
@@ -145,10 +145,10 @@ export class ExpensesHomePage {
   product;
 
   async addinventoryexpense() {
-    var itemslist = [];
-    var prodidlist = [];
-    var pnllist = [];
-    var discountlist = [];
+    const itemslist = [];
+    const prodidlist = [];
+    const pnllist = [];
+    const discountlist = [];
     itemslist.push(this.product);
     prodidlist.push(this.expirydate);
     const dataexp = {
@@ -189,7 +189,7 @@ export class ExpensesHomePage {
         console.log("update");
       });
       const message = this.translateConfigService.getTranslatedMessage("Finish");
-      let toast = this.toastCtrl.create({
+      const toast = this.toastCtrl.create({
         // @ts-ignore
         message: message.value,
         duration: 3000,
@@ -226,7 +226,7 @@ export class ExpensesHomePage {
         this.sp.searchProduct(barcodeData.text).then(val => {
           if (val[0] != null) {
             const message = this.translateConfigService.getTranslatedMessage("Found Product");
-            let toast = this.toastCtrl.create({
+            const toast = this.toastCtrl.create({
               // @ts-ignore
               message: message.value + " " + val[0].name,
               duration: 2000,
@@ -235,7 +235,7 @@ export class ExpensesHomePage {
             this.chooseProd(val[0]);
           } else {
             const message = this.translateConfigService.getTranslatedMessage("Not found!");
-            let toast = this.toastCtrl.create({
+            const toast = this.toastCtrl.create({
               // @ts-ignore
               message: message.value,
               duration: 2000,

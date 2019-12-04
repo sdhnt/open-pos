@@ -21,9 +21,9 @@ export class SingleProductPage {
 
   prodCode: any = "";
   prodName: any = "";
-  prodPrice: number = 0;
-  prodWholesalePrice: number = 0;
-  prodCost: number = 0;
+  prodPrice = 0;
+  prodWholesalePrice = 0;
+  prodCost = 0;
   prodCat: any = "";
   listProduct: any;
 
@@ -117,7 +117,7 @@ export class SingleProductPage {
   }
   image: any = "";
   launchCamera() {
-    let options: CameraOptions = {
+    const options: CameraOptions = {
       quality: 20,
       //sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -151,9 +151,9 @@ export class SingleProductPage {
         .present();
       this.temp = "prodImages/" + this.uid + this.prodCode + name;
       //LET REF be tied to a particular product- we save the url in the products db
-      let ref = firebase.storage().ref("prodImages/" + this.uid + this.prodCode + name);
+      const ref = firebase.storage().ref("prodImages/" + this.uid + this.prodCode + name);
 
-      let uploadTask = ref.putString(this.image.split(",")[1], "base64");
+      const uploadTask = ref.putString(this.image.split(",")[1], "base64");
 
       this.temp = "UPTask";
 
@@ -188,7 +188,7 @@ export class SingleProductPage {
         this.sp.addCategory(data);
         setTimeout(() => {
           const message = this.translateConfigService.getTranslatedMessage("Finish");
-          let toast = this.toastCtrl.create({
+          const toast = this.toastCtrl.create({
             // @ts-ignore
             message: message.value,
             duration: 3000,
@@ -241,7 +241,7 @@ export class SingleProductPage {
         this.sp.backupStorage();
         setTimeout(() => {
           const message = this.translateConfigService.getTranslatedMessage("Finish");
-          let toast = this.toastCtrl.create({
+          const toast = this.toastCtrl.create({
             // @ts-ignore
             message: message.value,
             duration: 2000,
@@ -264,7 +264,7 @@ export class SingleProductPage {
 
         setTimeout(() => {
           const message = this.translateConfigService.getTranslatedMessage("Finish");
-          let toast = this.toastCtrl.create({
+          const toast = this.toastCtrl.create({
             // @ts-ignore
             message: message.value,
             duration: 2000,
@@ -290,7 +290,7 @@ export class SingleProductPage {
     this.product.stock_qty = this.orgData["stock"];
     this.product.cat = this.orgData["prodCat"];
 
-    let toast = this.toastCtrl
+    const toast = this.toastCtrl
       .create({
         // @ts-ignore
         message: message.value,
