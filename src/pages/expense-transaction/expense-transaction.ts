@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 
 /**
@@ -11,17 +11,16 @@ import { TranslateConfigService } from "../../providers/translation/translate-co
 
 @IonicPage()
 @Component({
-  selector: "page-expense-transaction",
-  templateUrl: "expense-transaction.html",
+  selector: 'page-expense-transaction',
+  templateUrl: 'expense-transaction.html',
 })
 export class ExpenseTransactionPage {
-  constructor(
-    public navCtrl: NavController,
-    private translateConfigService: TranslateConfigService,
-    public navParams: NavParams,
-  ) {}
+
+  constructor(public navCtrl: NavController, private translateConfigService: TranslateConfigService,public navParams: NavParams) {
+  }
 
   ionViewDidLoad() {
-    console.log("ionViewDidLoad ExpenseTransactionPage");
+    console.log('ionViewDidLoad ExpenseTransactionPage');
   }
+
 }

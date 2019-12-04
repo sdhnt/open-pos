@@ -1,16 +1,15 @@
-import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, Events, Tabs, ToastController, DateTime } from "ionic-angular";
-import { AllTransactionPage } from "../all-transaction/all-transaction";
-import firebase from "firebase";
-import { StorageProvider } from "../../providers/storage/storage";
-import { BarcodeScanner } from "@ionic-native/barcode-scanner";
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams, Events, Tabs, ToastController, DateTime} from 'ionic-angular';
+import { AllTransactionPage } from '../all-transaction/all-transaction';
+import firebase from 'firebase';
+import { StorageProvider } from '../../providers/storage/storage';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
-import { TransactionHomePage } from "../transaction-home/transaction-home";
-import { AlertController, LoadingController } from "ionic-angular";
-import { PrinterProvider } from "./../../providers/printer/printer";
-import { commands } from "./../../providers/printer/printer-commands";
-import { GlobalProvider } from "../../providers/global/global";
-import EscPosEncoder from "esc-pos-encoder-ionic";
+import { TransactionHomePage } from '../transaction-home/transaction-home';
+import {  AlertController,  LoadingController} from 'ionic-angular';
+import {  PrinterProvider } from './../../providers/printer/printer';
+import {  commands } from './../../providers/printer/printer-commands';
+import EscPosEncoder from 'esc-pos-encoder-ionic';
 import { GeolocationService } from "../../providers/geolocation/geolocation.service";
 
 /**
@@ -22,80 +21,71 @@ import { GeolocationService } from "../../providers/geolocation/geolocation.serv
 
 @IonicPage()
 @Component({
-  selector: "page-income-transaction",
-  templateUrl: "income-transaction.html",
+  selector: 'page-income-transaction',
+  templateUrl: 'income-transaction.html',
 })
 export class IncomeTransactionPage {
-  constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
-    public events: Events,
-    public sp: StorageProvider,
-    public toastCtrl: ToastController,
-    private translateConfigService: TranslateConfigService,
+
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, 
+    public sp: StorageProvider, public toastCtrl: ToastController, private translateConfigService: TranslateConfigService,
     private barcodeScanner: BarcodeScanner,
     private printer: PrinterProvider,
     private alertCtrl: AlertController,
     private loadCtrl: LoadingController,
-    public global: GlobalProvider,
     private gps: GeolocationService,
-  ) {
+    ) {
+    
     //console.log("Recieved -1" + this.navParams.get('itemslist'));
     this.getUserData();
-    this.gps
-      .getCoordinates()
-      .then(coordinates => {
-        this.geolocation = coordinates;
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    this.gps.getCoordinates().then(coordinates => {this.geolocation = coordinates}).catch(error => {console.log(error)});
+
   }
 
   async delay(ms: number) {
-    await new Promise(resolve => setTimeout(() => resolve(), ms)).then(() => console.log("fired"));
-  }
+    await new Promise(resolve => setTimeout(()=>resolve(), ms)).then(()=>console.log("fired"));
+}
 
-  taxbtn = 0;
 
-  userdata: any = {
-    business_address: "",
-    business_name: "",
-    cash_balance: "",
-    currency: "",
-    created: "",
-    language: "en",
-    owner: "",
-    owner_name: "",
-    ph_no: "",
-    businesstype: "",
-    taxrate: 0.0,
-    discount: 0.0,
-  };
 
-  discount = 0.0;
-  lastsumdisc = 0.0;
-  taxrate = 0.0;
+taxbtn=0;
 
-  async getUserData() {
-    this.sp.storageReady().then(() => {
-      this.sp
-        .getUserDat()
-        .then(val => {
-          this.userdata = JSON.parse(val);
-          console.log(this.userdata);
-        })
-        .catch(err => {
-          alert("Error: " + err);
-        });
-    });
-  }
+userdata: any = {business_address: "",
+  business_name: "",
+  cash_balance: "",
+  currency: "",
+  created: "",
+  language: "en",
+  owner: "", 
+  owner_name: "",
+  ph_no: "",
+  businesstype: "",
+  taxrate: 0.0,
+  discount: 0.0,
+}
+
+discount:number=0.0;
+lastsumdisc=0.0;
+taxrate: number=0.0;
+
+async getUserData(){
+  this.sp.storageReady().then(() => {
+    this.sp.getUserDat().then((val) => {
+     this.userdata=JSON.parse(val);
+     console.log(this.userdata)
+    }).catch(err => {
+      alert("Error: "+ err);
+    })
+  })
+ }
+
+
 
   ionViewDidLoad() {
-    console.log("ionViewDidLoad IncomeTransactionPage");
+    console.log('ionViewDidLoad IncomeTransactionPage');
     this.getCategories();
     this.getUserData();
-    this.events.subscribe("genRec:created", data => {
+      this.events.subscribe('genRec:created',(data) => {
       console.log("ENTERED!");
       console.log("Received 0 " + data);
       this.datastore = JSON.parse(data);
@@ -104,468 +94,493 @@ export class IncomeTransactionPage {
       // });
       this.updateRec();
     });
-  }
-  temp;
+  
+}
+temp;
 
-  updateRec() {
-    this.lastsum = 0;
-    let totalDiscount = 0,
-      totalIndividualDiscount = 0;
-    this.datastore.itemslist.forEach(item => {
-      if (item.discount != 0) {
-        totalIndividualDiscount += ((item.price * parseInt(item.discount)) / 100) * item.qty;
-        console.log(((parseInt(item.price) * parseInt(item.discount)) / 100) * item.qty);
-      }
-      this.lastsum += item.price * item.qty;
-    });
-    totalDiscount += totalIndividualDiscount;
-    console.log(this.lastsum + " " + totalDiscount);
-    this.lastsumAfterIndividualDiscount = this.lastsum - totalIndividualDiscount;
-    console.log(this.lastsum + " " + this.lastsumAfterIndividualDiscount);
-    this.lastsumdisc = Math.round((this.lastsum - totalDiscount) * ((100 - this.discount) / 100) * 100) / 100;
-    this.lastsumtax = Math.round(this.lastsumdisc * (1.0 + this.taxrate / 100) * 100) / 100;
-  }
-
-  setTax() {
-    this.taxrate = this.userdata.taxrate;
-    this.taxbtn = 1;
-    this.updateRec();
-  }
-  remTax() {
-    this.taxbtn = 0;
-    this.taxrate = 0.0;
-    this.updateRec();
-  }
-  discbtn = 0;
-  setDisc() {
-    this.discount = this.userdata.discount;
-    this.discbtn = 1;
-    this.updateRec();
-  }
-  remDisc() {
-    this.discount = 0.0;
-    this.discbtn = 0;
-    this.updateRec();
-  }
-
-  qrscan() {
-    let curprod;
-    this.barcodeScanner
-      .scan()
-      .then(barcodeData => {
-        this.sp.searchProduct(barcodeData.text).then(val => {
-          if (val[0] != null) {
-            curprod = val[0];
-            const message = this.translateConfigService.getTranslatedMessage("Found Product");
-            const toast = this.toastCtrl.create({
-              // @ts-ignore
-              message: message.value + " " + val[0].name,
-              duration: 2000,
-            });
-            toast.present();
-            curprod.qty = 1;
-            this.temp = curprod;
-
-            // addQty(index){
-            //   //this.lastsum=this.lastsum+this.datastore.itemslist[index].price;
-            //   this.datastore.itemslist[index].qty=parseInt(this.datastore.itemslist[index].qty)+1;
-
-            //   this.lastsum=0;
-            //   for(let i = 0; i < this.datastore.itemslist.length; i++){
-            //     this.lastsum  = this.lastsum + (this.datastore.itemslist[i].price*this.datastore.itemslist[i].qty);
-            //   }
-            // }
-            curprod.discount = 0;
-            this.datastore.itemslist.push(curprod);
-            //this.lastsum=this.lastsum+curprod.price;
-            this.updateRec();
-          } else {
-            const message = this.translateConfigService.getTranslatedMessage("Get Product!!!");
-            const toast = this.toastCtrl.create({
-              // @ts-ignore
-              message: message.value,
-              duration: 2000,
-            });
-            toast.present();
-          }
-        });
-      })
-      .catch(err => {
-        console.log("Error", err);
-      });
-  }
-
-  dispM() {
-    console.log("DisM = " + this.displayManual);
-    if (this.displayManual == 0) {
-      this.displayManual = 1;
-    } else {
-      this.displayManual = 0;
+updateRec(){
+  this.lastsum=0;
+  let totalDiscount = 0, totalIndividualDiscount = 0;
+  this.datastore.itemslist.forEach(item => {
+    if (item.discount != 0) {
+      totalIndividualDiscount += item.price * parseInt(item.discount) / 100 * item.qty;
+      console.log(parseInt(item.price) * parseInt(item.discount) / 100 * item.qty);
     }
+    this.lastsum += item.price * item.qty;
+  });
+  totalDiscount += totalIndividualDiscount;
+  console.log(this.lastsum+" "+totalDiscount)
+  this.lastsumAfterIndividualDiscount = this.lastsum - totalIndividualDiscount;
+  console.log(this.lastsum+ " "+this.lastsumAfterIndividualDiscount)
+  this.lastsumdisc = Math.round((this.lastsum - totalDiscount)*((100-this.discount)/100)   *100)/100 ;
+  this.lastsumtax=Math.round(this.lastsumdisc * (1.0 + (this.taxrate / 100))  *100)/100;
+}
+
+setTax(){
+  this.taxrate=this.userdata.taxrate;
+  this.taxbtn=1;
+  this.updateRec();
+}
+remTax(){
+  this.taxbtn=0;
+  this.taxrate=0.0;
+  this.updateRec();
+}
+discbtn=0;
+setDisc(){
+  this.discount=this.userdata.discount;
+  this.discbtn=1;
+  this.updateRec();
+}
+remDisc(){
+  this.discount=0.0;
+  this.discbtn=0; 
+  this.updateRec();
+}
+
+qrscan(){
+  var curprod;
+  this.barcodeScanner.scan().then(barcodeData => {
+    this.sp.searchProduct(barcodeData.text).then(val => {
+      if(val[0] != null){
+        curprod=val[0];
+        const message = this.translateConfigService.getTranslatedMessage('Found Product');
+        let toast = this.toastCtrl.create({
+          // @ts-ignore
+          message: message.value + " "+ val[0].name,
+          duration: 2000
+        });
+        toast.present();
+        curprod.qty=1;
+        this.temp=curprod;
+
+        // addQty(index){
+        //   //this.lastsum=this.lastsum+this.datastore.itemslist[index].price;
+        //   this.datastore.itemslist[index].qty=parseInt(this.datastore.itemslist[index].qty)+1;  
+      
+        //   this.lastsum=0;
+        //   for(let i = 0; i < this.datastore.itemslist.length; i++){
+        //     this.lastsum  = this.lastsum + (this.datastore.itemslist[i].price*this.datastore.itemslist[i].qty);
+        //   }
+        // }
+        curprod.discount = 0;
+        this.datastore.itemslist.push(curprod);
+        //this.lastsum=this.lastsum+curprod.price;
+        this.updateRec();
+
+      
+      }else{
+        const message = this.translateConfigService.getTranslatedMessage('Get Product!!!');
+        let toast = this.toastCtrl.create({
+          // @ts-ignore
+          message: message.value,
+          duration: 2000
+        });
+        toast.present();
+      }
+    })
+  }).catch(err => {
+      console.log('Error', err);
+  });
+}
+
+
+    
+  dispM(){
+    console.log("DisM = "+ this.displayManual)
+    if(this.displayManual==0)
+    {this.displayManual=1;}
+    else
+    {this.displayManual=0;}
   }
+
+
+
 
   result = "";
-  displayManual = 0;
-  datastore = { itemslist: [] };
-  flag_mode = 0;
-  showSampleRec = true;
-  itemsprice: string[] = [];
-  ctr = 0;
-  lastsum = 0;
+  displayManual=0;
+  datastore={'itemslist':[]};
+  flag_mode=0;
+  showSampleRec=true;
+  itemsprice: string[] = [] ;
+  ctr=0;
+  lastsum=0;
   lastsumAfterIndividualDiscount = 0;
-  lastchar = "NIL";
-  lastdigit = 0;
+  lastchar="NIL"
+  lastdigit=0;
 
-  ngOnInit() {
+	ngOnInit() {
+
     //this.itemsprice=JSON.parse(this.dataparm);
   }
 
-  createRec() {
+  createRec(){
     //Nav to Rec Page
     //Build Expand Feature on REC Page
   }
 
-  removeItem(index) {
+  removeItem(index){
     //this.lastsum=this.lastsum-(this.datastore.itemslist[index].price*this.datastore.itemslist[index].qty);
 
-    const rem = this.datastore.itemslist.splice(index, 1);
+    var rem=this.datastore.itemslist.splice(index,1);
 
     this.updateRec();
-    console.log("I: " + index);
-    console.log(this.datastore.itemslist[index]);
-  }
+    console.log("I: "+ index)
+    console.log(this.datastore.itemslist[index])
+    }
 
-  addQty(index) {
+  addQty(index){
     //this.lastsum=this.lastsum+this.datastore.itemslist[index].price;
-    this.datastore.itemslist[index].qty = parseInt(this.datastore.itemslist[index].qty) + 1;
+    this.datastore.itemslist[index].qty=parseInt(this.datastore.itemslist[index].qty)+1;  
 
     this.updateRec();
   }
 
-  removeQty(index) {
+  removeQty(index){
     //this.lastsum=this.lastsum-this.datastore.itemslist[index].price;
-    this.datastore.itemslist[index].qty = this.datastore.itemslist[index].qty - 1;
-    if (this.datastore.itemslist[index].qty == 0) {
+    this.datastore.itemslist[index].qty=this.datastore.itemslist[index].qty-1;
+    if(this.datastore.itemslist[index].qty==0){
       this.removeItem(index);
     }
 
     this.updateRec();
   }
 
-  newItemName = "";
-  newUnitPrice: number = null;
-  newUnitQty = 1;
-  newItemCat = "";
-  newItemDiscount: number = null;
+  newItemName: string="";
+  newUnitPrice: number=null;
+  newUnitQty: number=1;
+  newItemCat: string="";
+  newItemDiscount: number=null;
 
-  addNewItem() {
-    if (this.newItemName != "" && this.newUnitPrice != null && this.newUnitQty != null) {
+  addNewItem(){
+
+    if(this.newItemName!="" && this.newUnitPrice!=null && this.newUnitQty!=null){
+
       const newitem = {
         code: "000000",
         name: this.newItemName,
         price: this.newUnitPrice,
         qty: this.newUnitQty,
-        discount: this.newItemDiscount ? this.newItemDiscount : 0,
+        discount: this.newItemDiscount ? this.newItemDiscount : 0
       };
 
       this.datastore.itemslist.push(newitem);
-      this.newItemCat = "";
-      this.newItemName = "";
-      this.newUnitPrice = null;
-      this.newUnitQty = 1;
+      this.newItemCat="";
+      this.newItemName="";
+      this.newUnitPrice=null;
+      this.newUnitQty=1;
       this.newItemDiscount = 0;
 
       this.updateRec();
     }
+
+
   }
+
 
   listProducts: any;
   filteredList: any;
-  listArray: any = [];
-  listCat: any;
+  listArray: any =[];
+  listCat : any;
   lastsumtax;
-
-  getCategories() {
+  
+  getCategories(){
     //console.log(this.listCat + " and "+this.newprodCat);
     this.sp.storageReady().then(() => {
-      this.sp
-        .getCategories()
-        .then(val => {
-          this.listCat = JSON.parse(val);
-          //console.log("Addprodpg: "+this.listCat)
-          this.getCategories();
-        })
-        .catch(err => {
-          alert("Error: " + err);
-        });
-    });
-  }
-
-  cancelRec() {
-    this.datastore.itemslist = [];
-    this.lastsum = 0;
-    this.lastsumdisc = 0;
-    this.lastsumtax = 0;
-    this.discount = 0;
-    this.taxrate = 0;
-    this.taxbtn = 0;
-    this.discbtn = 0;
-    this.updateRec();
-    const message = this.translateConfigService.getTranslatedMessage("Receipt was cancelled");
-    this.toastCtrl
-      .create({
-        // @ts-ignore
-        message: message.value,
-        duration: 2000,
+      this.sp.getCategories().then((val) => {
+       this.listCat = JSON.parse(val);
+        //console.log("Addprodpg: "+this.listCat)
+        this.getCategories();
+      }).catch(err => {
+        alert("Error: "+ err);
       })
-      .present();
+    })
   }
 
-  prodidlist: any = [];
-  pnllist: any = [];
+  cancelRec(){
+    this.datastore.itemslist=[];
+    this.lastsum=0;
+    this.lastsumdisc=0;
+    this.lastsumtax=0;
+    this.discount=0;
+    this.taxrate=0;
+    this.taxbtn=0;
+    this.discbtn=0;
+    this.updateRec();
+    const message = this.translateConfigService.getTranslatedMessage('Receipt was cancelled');
+    this.toastCtrl.create({
+      // @ts-ignore
+      message: message.value,
+      duration: 2000,
+    }).present();
+    
+  }
+
+  prodidlist: any=[];
+  pnllist: any=[];
   datetime = Date.now();
   tax_vat: any = [];
   geolocation: {};
 
-  updateProduct() {}
 
-  async updateCb(postransacsum) {
-    this.getUserData();
-    this.userdata.cash_balance = (parseInt(this.userdata.cash_balance) + parseInt(postransacsum)).toString();
-    await this.sp.setUserDat(this.userdata);
+  updateProduct(){
+    
+      
+  
+  
+    
   }
 
-  saveRec() {
-    if (this.datastore.itemslist.length == 0) {
-    } else {
-      const data = {
-        itemslist: this.datastore.itemslist,
-        totalsum: this.lastsum,
-        prodidlist: this.prodidlist,
-        pnllist: this.pnllist,
-        datetime: this.datetime,
-        taxrate: this.taxrate,
-        discountlist: [],
-        discount: this.discount,
-        totaldisc: this.lastsumdisc,
-        totalatax: this.lastsumtax,
-        geolocation: this.geolocation,
+
+  async updateCb(postransacsum){
+
+    this.getUserData();
+    this.userdata.cash_balance= (parseInt(this.userdata.cash_balance)+parseInt(postransacsum)).toString();
+    await this.sp.setUserDat(this.userdata);
+ }
+  
+
+  saveRec(){
+    if(this.datastore.itemslist.length==0){     
+    }
+    else{
+      let data = {
+        "itemslist": this.datastore.itemslist,
+        "totalsum": this.lastsum,
+        "prodidlist": this.prodidlist,
+        "pnllist": this.pnllist,
+        "datetime": this.datetime,
+        "taxrate": this.taxrate,
+        "discountlist": [],
+        "discount": this.discount,
+        "totaldisc": this.lastsumdisc,
+        "totalatax":this.lastsumtax,
+        "geolocation": this.geolocation,
       };
 
       this.datastore.itemslist.forEach(async product => {
-        if (product.code != "000000") {
+        if(product.code!="000000"){
           const data1 = {
-            code: product.code,
-            name: product.name,
-            price: product.price,
-            wholesale_price: product.wholesale_price,
-            cost: product.cost,
-            cat: product.cat,
-            url: product.url,
-            stock_qty: product.stock_qty - product.qty,
+            "code": product.code,
+            "name": product.name,
+            "price": product.price,
+            "wholesale_price": product.wholesale_price,
+            "cost": product.cost,
+            "cat": product.cat,
+            "url": product.url,
+            "stock_qty":(product.stock_qty-product.qty),
           };
           await this.sp.updateProduct(data1, product.code);
           data.discountlist.push(product.discount);
-          this.discountlist.push(product.discount);
-          console.log(this.discountlist);
-        } else {
+          this.discountlist.push(product.discount)
+          console.log(this.discountlist)
+        }
+        else{
           data.discountlist.push(product.discount);
           this.discountlist.push(product.discount);
         }
       });
 
+
+
+
       this.sp.storageReady().then(async () => {
-        console.log(data);
+        console.log(data)
         this.sp.addTransactions(data);
-        await this.updateCb(this.lastsum).then(() => {
-          this.events.publish("cbUpdate:created", 0);
-        });
-        const message = this.translateConfigService.getTranslatedMessage("Finish");
-        const toast = this.toastCtrl.create({
-          // @ts-ignore
-          message: message.value,
-          duration: 3000,
-        });
+        await this.updateCb(this.lastsum).then(()=>{this.events.publish('cbUpdate:created', 0);});
+          const message = this.translateConfigService.getTranslatedMessage('Finish');
+          let toast = this.toastCtrl.create({
+            // @ts-ignore
+            message: message.value,
+            duration: 3000
+          });
 
-        //REFLECT CHANGE ON CASH BALANCE HERE & Reflect change in inventory here as well
-
-        this.datastore.itemslist = [];
-        this.lastsum = 0;
-        this.lastsumtax = 0;
-        this.lastsumdisc = 0;
-        this.discount = 0;
-        this.taxrate = 0;
-        this.taxbtn = 0;
-        this.discbtn = 0;
-        this.sp.backupStorage();
-        toast.present();
+      //REFLECT CHANGE ON CASH BALANCE HERE & Reflect change in inventory here as well 
+      
+      this.datastore.itemslist=[];
+      this.lastsum=0;
+      this.lastsumtax=0;
+      this.lastsumdisc=0;
+      this.discount=0;
+      this.taxrate=0;
+      this.taxbtn=0;
+      this.discbtn=0;
+      this.sp.backupStorage();
+      toast.present();
+      
       });
     }
     (this.navCtrl.parent as Tabs).select(0);
   }
-  discountlist = [];
-  addCalc() {
-    this.global.CalcToReceipt = "Update Receipt";
+discountlist=[];
+  addCalc(){
     (this.navCtrl.parent as Tabs).select(0);
-    this.delay(300).then(any => {
-      this.events.publish("addRecCalc:created", JSON.stringify(this.datastore.itemslist)); //SEND ITEMS PRICE
-
-      console.log("Sent: 1332 ");
-
+    this.delay(300).then(any=>{
+      this.events.publish('addRecCalc:created', JSON.stringify(this.datastore.itemslist));//SEND ITEMS PRICE
+    
+    console.log("Sent: 1332 ");
+    
       //your task after delay.
     });
+
+
   }
 
-  addSingleProd(item, index) {
+  addSingleProd(item, index){
+
+      
     (this.navCtrl.parent as Tabs).select(1);
-    this.delay(300).then(any => {
-      this.events.publish(
-        "addSingleProd:created",
-        JSON.stringify(item),
-        JSON.stringify(index),
-        JSON.stringify(this.datastore.itemslist),
-      );
-
-      console.log("Sent: 1330 ");
-
+    this.delay(300).then(any=>{
+      this.events.publish('addSingleProd:created', JSON.stringify(item), JSON.stringify(index),JSON.stringify(this.datastore.itemslist));
+    
+    console.log("Sent: 1330 ");
+    
       //your task after delay.
     });
+
+   
   }
 
-  addProdList() {
+  addProdList(){
+    
     (this.navCtrl.parent as Tabs).select(1);
-    this.delay(300).then(any => {
-      this.events.publish("addRecProd:created", JSON.stringify(this.datastore.itemslist));
-
-      console.log("Sent: 1331 ");
-
+    this.delay(300).then(any=>{
+      this.events.publish('addRecProd:created', JSON.stringify(this.datastore.itemslist));
+    
+    console.log("Sent: 1331 ");
+    
       //your task after delay.
     });
+
   }
 
-  printRec() {
-    if (this.datastore.itemslist.length == 0) {
-    } else {
-      const data = {
-        itemslist: this.datastore.itemslist,
-        totalsum: this.lastsum,
-        prodidlist: this.prodidlist,
-        pnllist: this.pnllist,
-        datetime: this.datetime,
-        taxrate: this.taxrate,
-        discountlist: this.discountlist,
-        discount: this.discount,
-        totaldisc: this.lastsumdisc,
-        totalatax: this.lastsumtax,
-      };
+  printRec(){
 
-      this.datastore.itemslist.forEach(product => {
-        if (product.code != "000000") {
-          const data1 = {
-            code: product.code,
-            name: product.name,
-            price: product.price,
-            cost: product.cost,
-            cat: product.cat,
-            url: product.url,
-            stock_qty: product.stock_qty - product.qty,
-          };
-          this.sp.updateProduct(data1, product.code).then(() => {});
-        }
-      });
-
-      this.sp.storageReady().then(async () => {
-        console.log(data);
-        this.sp.addTransactions(data);
-        await this.updateCb(this.lastsum).then(() => {
-          this.events.publish("cbUpdate:created", 0);
-        });
-        this.sp.backupStorage();
-        this.prepareToPrint();
-      });
+    if(this.datastore.itemslist.length==0){     
     }
-  }
+    else{
+        const data = {
+          "itemslist": this.datastore.itemslist,
+          "totalsum": this.lastsum,
+          "prodidlist": this.prodidlist,
+          "pnllist": this.pnllist,
+          "datetime": this.datetime,
+          "taxrate": this.taxrate,
+          "discountlist": this.discountlist,
+          "discount": this.discount,
+          "totaldisc": this.lastsumdisc,
+          "totalatax":this.lastsumtax,
+        };
+  
+        this.datastore.itemslist.forEach(product => {
+          if(product.code!="000000"){
+            const data1 = {
+              "code": product.code,
+              "name": product.name,
+              "price": product.price,
+              "cost": product.cost,
+              "cat": product.cat,
+              "url": product.url,
+              "stock_qty":(product.stock_qty-product.qty),
+            }
+            this.sp.updateProduct(data1, product.code).then(()=>{
+            })
+          }
+        });
 
-  ///////////////////////
+        this.sp.storageReady().then(async () => {
+          console.log(data)
+          this.sp.addTransactions(data);
+          await this.updateCb(this.lastsum).then(()=>{this.events.publish('cbUpdate:created', 0);});
+          this.sp.backupStorage();
+          this.prepareToPrint()
+        
+      
+        
+        });
+      }
+    }
 
+
+
+    ///////////////////////
+
+
+
+    
   receipt: any;
   inputData: any = {};
 
   showToast(data) {
-    const toast = this.toastCtrl.create({
+    let toast = this.toastCtrl.create({
       duration: 3000,
       message: data,
-      position: "bottom",
+      position: 'bottom',
     });
     toast.present();
   }
   print(device, data) {
-    console.log("Device mac: ", device);
-    console.log("Data: ", JSON.stringify(data));
-    const load = this.loadCtrl.create({
-      content: "Printing...",
+    console.log('Device mac: ', device);
+    console.log('Data: ', JSON.stringify(data));
+    let load = this.loadCtrl.create({
+      content: 'Printing...',
     });
     load.present();
     this.printer.connectBluetooth(device).subscribe(
-      status => {
+      (status) => {
         console.log(status);
         this.printer
           .printData(data)
-          .then(printStatus => {
+          .then((printStatus) => {
             console.log(printStatus);
-            const alert = this.alertCtrl.create({
-              title: "Successful print!",
-              buttons: [
-                {
-                  text: "Ok",
-                  handler: () => {
-                    load.dismiss();
-                    this.printer.disconnectBluetooth();
-                  },
+            let alert = this.alertCtrl.create({
+              title: 'Successful print!',
+              buttons: [{
+                text: 'Ok',
+                handler: () => {
+                  load.dismiss();
+                  this.printer.disconnectBluetooth();
                 },
-              ],
+              }, ],
             });
-            this.datastore.itemslist = [];
-            this.lastsum = 0;
-            this.lastsumtax = 0;
-            this.lastsumdisc = 0;
-            this.discount = 0;
-            this.taxrate = 0;
-            this.taxbtn = 0;
-            this.discbtn = 0;
+            this.datastore.itemslist=[];
+            this.lastsum=0;
+            this.lastsumtax=0;
+            this.lastsumdisc=0;
+            this.discount=0;
+            this.taxrate=0;
+            this.taxbtn=0;
+            this.discbtn=0;
             alert.present();
             (this.navCtrl.parent as Tabs).select(0);
+            
           })
-          .catch(error => {
+          .catch((error) => {
             console.log(error);
-            const alert = this.alertCtrl.create({
-              title: "There was an error printing, please try again!",
-              buttons: [
-                {
-                  text: "Ok",
-                  handler: () => {
-                    load.dismiss();
-                    //this.printer.disconnectBluetooth();
-                  },
+            let alert = this.alertCtrl.create({
+              title: 'There was an error printing, please try again!',
+              buttons: [{
+                text: 'Ok',
+                handler: () => {
+                  load.dismiss();
+                  //this.printer.disconnectBluetooth();
                 },
-              ],
+              }, ],
             });
             alert.present();
           });
       },
-      error => {
+      (error) => {
         console.log(error);
-        const alert = this.alertCtrl.create({
-          title: "There was an error connecting to the printer, please try again!",
-          buttons: [
-            {
-              text: "Ok",
-              handler: () => {
-                load.dismiss();
-                //this.printer.disconnectBluetooth();
-              },
+        let alert = this.alertCtrl.create({
+          title: 'There was an error connecting to the printer, please try again!',
+          buttons: [{
+            text: 'Ok',
+            handler: () => {
+              load.dismiss();
+              //this.printer.disconnectBluetooth();
             },
-          ],
+          }, ],
         });
         alert.present();
       },
@@ -596,8 +611,8 @@ export class IncomeTransactionPage {
     const result = encoder.initialize();
 
     result
-      .codepage("cp936")
-      .align("center")
+      .codepage('cp936')
+      .align('center')
       .raw(commands.TEXT_FORMAT.TXT_4SQUARE)
       .line(this.userdata.business_name)
       .newline()
@@ -608,79 +623,75 @@ export class IncomeTransactionPage {
       .newline()
       .text(commands.HORIZONTAL_LINE.HR_58MM)
       .newline();
-    if (this.datastore != null) {
-      result
-        .align("left")
-        .raw(commands.FEED_CONTROL_SEQUENCES.RST_HT)
-        .raw(commands.FEED_CONTROL_SEQUENCES.SET_HT)
-        .text("Sl ")
-        .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
-        .text("Item Name ")
-        .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
-        .text("Qty ")
-        .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
-        .text("Price")
-        .newline();
-
-      this.datastore.itemslist.forEach((element, index) => {
-        result
-          .text(index + 1 + " ")
+      if(this.datastore!=null){
+        result.align('left')
+         .raw(commands.FEED_CONTROL_SEQUENCES.RST_HT)
+         .raw(commands.FEED_CONTROL_SEQUENCES.SET_HT)
+         .text("Sl ").raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+         .text("Item Name ")
+         .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+         .text("Qty ")
+         .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+         .text("Price")
+         .newline()
+         
+        this.datastore.itemslist.forEach((element, index) => {
+          result.text((index+1)+" ").raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+          .text(element.name +" ", 30)
           .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
-          .text(element.name + " ", 30)
+          .text(element.qty+" ")
           .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
-          .text(element.qty + " ")
+          .text(element.price+" ")
+          .newline()
+          if(parseInt(element.discount)!=0){
+          result.text(" ").raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+          .text("Discount ("+element.discount+"%) :", 30)
           .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
-          .text(element.price + " ")
-          .newline();
-        if (parseInt(element.discount) != 0) {
-          result
-            .text(" ")
-            .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
-            .text("Discount (" + element.discount + "%) :", 30)
-            .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
-            .text(" ")
-            .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
-            .text("-" + Math.round(element.price * (parseInt(element.discount) * element.qty)) / 100)
-            .newline();
-        }
-      });
-      result.newline();
-      result.align("right").line("Total: " + this.lastsumAfterIndividualDiscount);
-      if (this.lastsumAfterIndividualDiscount != this.lastsumdisc) {
-        result.line(" After Discount (" + this.discount + "%): " + this.lastsumdisc);
+          .text(" ")
+          .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+          .text("-"+Math.round((element.price)*(parseInt(element.discount)*element.qty))/100)
+          .newline()
+          }
+        });
+         result.newline()
+         result.align('right')
+         .line("Total: "+ this.lastsumAfterIndividualDiscount)
+         if(this.lastsumAfterIndividualDiscount!=this.lastsumdisc){
+          result.line(" After Discount (" + this.discount+ "%): "+ this.lastsumdisc)
+         }
+         if(this.lastsumAfterIndividualDiscount!=this.lastsumtax){
+          result.line("After Tax (" + this.taxrate+ "%): "+ this.lastsumtax)
+         }
       }
-      if (this.lastsumAfterIndividualDiscount != this.lastsumtax) {
-        result.line("After Tax (" + this.taxrate + "%): " + this.lastsumtax);
-      }
-    }
+    
+      
 
-    result
-      .raw(commands.TEXT_FORMAT.TXT_4SQUARE)
+      result.raw(commands.TEXT_FORMAT.TXT_4SQUARE)
       .newline()
       .line("")
       .newline()
       .line("")
-      .newline()
-      .cut("full");
+      .newline().cut('full');
+
 
     this.mountAlertBt(result.encode());
   }
 
   mountAlertBt(data) {
+
     this.receipt = data;
-    console.log(this.receipt);
-    const alert = this.alertCtrl.create({
-      title: "Select your printer",
-      buttons: [
-        {
-          text: "Cancel",
-          role: "cancel",
+    console.log(this.receipt)
+    let alert = this.alertCtrl.create({
+      title: 'Select your printer',
+      buttons: [{
+          text: 'Cancel',
+          role: 'cancel',
         },
         {
-          text: "Select printer",
-          handler: device => {
+          text: 'Select printer',
+          handler: (device) => {
             if (!device) {
-              this.showToast("Select a printer!");
+              this.showToast('Select a printer!');
               return false;
             }
             console.log(device);
@@ -690,33 +701,34 @@ export class IncomeTransactionPage {
       ],
     });
 
-    this.printer
-      .enableBluetooth()
-      .then(() => {
+    this.printer.enableBluetooth().then(() => {
         this.printer
           .searchBluetooth()
-          .then(devices => {
-            devices.forEach(device => {
-              console.log("Devices: ", JSON.stringify(device));
+          .then((devices) => {
+            devices.forEach((device) => {
+              console.log('Devices: ', JSON.stringify(device));
               alert.addInput({
-                name: "printer",
+                name: 'printer',
                 value: device.address,
                 label: device.name,
-                type: "radio",
+                type: 'radio',
               });
             });
             alert.present();
           })
-          .catch(error => {
+          .catch((error) => {
             console.log(error);
-            this.showToast("There was an error connecting the printer, please try again!");
+            this.showToast(
+              'There was an error connecting the printer, please try again!',
+            );
             this.mountAlertBt(this.receipt);
           });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
-        this.showToast("Error activating bluetooth, please try again!");
+        this.showToast('Error activating bluetooth, please try again!');
         this.mountAlertBt(this.receipt);
       });
   }
+
 }

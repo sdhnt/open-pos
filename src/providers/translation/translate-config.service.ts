@@ -1,26 +1,30 @@
 //translate-config.service.ts
-import { Injectable } from "@angular/core";
-import { TranslateService } from "@ngx-translate/core";
+import { Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 // @ts-ignore
 @Injectable({
-  providedIn: "root",
+    providedIn: 'root'
 })
 export class TranslateConfigService {
-  constructor(private translate: TranslateService) {}
 
-  getDefaultLanguage() {
-    const language = this.translate.getBrowserLang();
-    this.translate.setDefaultLang(language);
-    console.log(`device default language: ${language}`);
-    return language;
-  }
+    constructor(
+        private translate: TranslateService
+    ) { }
 
-  setLanguage(setLang) {
-    this.translate.use(setLang);
-  }
+    getDefaultLanguage(){
+        let language = this.translate.getBrowserLang();
+        this.translate.setDefaultLang(language);
+        console.log(`device default language: ${language}`)
+        return language;
+    }
 
-  getTranslatedMessage(message) {
-    return this.translate.get(message);
-  }
+    setLanguage(setLang) {
+        this.translate.use(setLang);
+    }
+
+    getTranslatedMessage(message) {
+        return this.translate.get(message);
+    }
+
 }

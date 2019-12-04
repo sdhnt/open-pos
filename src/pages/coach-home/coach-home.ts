@@ -1,10 +1,10 @@
-import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
-import { CoachGoalsPage } from "../coach-goals/coach-goals";
-import { CoachCoachPage } from "../coach-coach/coach-coach";
-import { CoachBusinesstipsPage } from "../coach-businesstips/coach-businesstips";
-import { ContactUsPageModule } from "../contact-us/contact-us.module";
-import { ContactUsPage } from "../contact-us/contact-us";
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { CoachGoalsPage } from '../coach-goals/coach-goals';
+import { CoachCoachPage } from '../coach-coach/coach-coach';
+import { CoachBusinesstipsPage } from '../coach-businesstips/coach-businesstips';
+import { ContactUsPageModule } from '../contact-us/contact-us.module';
+import { ContactUsPage } from '../contact-us/contact-us';
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 
 /**
@@ -16,25 +16,26 @@ import { TranslateConfigService } from "../../providers/translation/translate-co
 
 @IonicPage()
 @Component({
-  selector: "page-coach-home",
-  templateUrl: "coach-home.html",
+  selector: 'page-coach-home',
+  templateUrl: 'coach-home.html',
 })
 export class CoachHomePage {
-  Goals = CoachGoalsPage;
-  Coach = CoachCoachPage;
-  Tips = CoachBusinesstipsPage;
 
-  constructor(
-    public navCtrl: NavController,
-    private translateConfigService: TranslateConfigService,
-    public navParams: NavParams,
-  ) {}
+  
+
+  Goals=CoachGoalsPage;
+  Coach=CoachCoachPage;
+  Tips=CoachBusinesstipsPage;
+
+  constructor(public navCtrl: NavController,private translateConfigService: TranslateConfigService, public navParams: NavParams) {
+  }
 
   ionViewDidLoad() {
-    console.log("ionViewDidLoad CoachHomePage");
+    console.log('ionViewDidLoad CoachHomePage');
   }
 
-  contactpg() {
+  contactpg(){
     this.navCtrl.push(ContactUsPage);
   }
+
 }

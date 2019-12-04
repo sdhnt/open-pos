@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 
 /**
@@ -11,17 +11,16 @@ import { TranslateConfigService } from "../../providers/translation/translate-co
 
 @IonicPage()
 @Component({
-  selector: "page-coach-coach",
-  templateUrl: "coach-coach.html",
+  selector: 'page-coach-coach',
+  templateUrl: 'coach-coach.html',
 })
 export class CoachCoachPage {
-  constructor(
-    public navCtrl: NavController,
-    private translateConfigService: TranslateConfigService,
-    public navParams: NavParams,
-  ) {}
+
+  constructor(public navCtrl: NavController,private translateConfigService: TranslateConfigService, public navParams: NavParams) {
+  }
 
   ionViewDidLoad() {
-    console.log("ionViewDidLoad CoachCoachPage");
+    console.log('ionViewDidLoad CoachCoachPage');
   }
+
 }
