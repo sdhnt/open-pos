@@ -55,7 +55,7 @@ export class IncomeTransactionPage {
   }
 
   taxbtn = 0;
-
+  showrec=false;
   userdata: any = {
     business_address: "",
     business_name: "",
@@ -97,6 +97,7 @@ export class IncomeTransactionPage {
       console.log("ENTERED!");
       console.log("Received 0 " + data);
       this.datastore = JSON.parse(data);
+      this.showrec=true;
       // this.datastore.itemslist.forEach((item) => {
       //   //item.discount = 0;
       // });
@@ -300,6 +301,7 @@ export class IncomeTransactionPage {
   }
 
   cancelRec() {
+    this.showrec=false;
     this.datastore.itemslist = [];
     this.lastsum = 0;
     this.lastsumdisc = 0;
@@ -334,6 +336,7 @@ export class IncomeTransactionPage {
   }
 
   saveRec() {
+
     if (this.datastore.itemslist.length == 0) {
     } else {
       const data = {
@@ -397,6 +400,7 @@ export class IncomeTransactionPage {
         this.discbtn = 0;
         this.sp.backupStorage();
         toast.present();
+        this.showrec=false;
       });
     }
     (this.navCtrl.parent as Tabs).select(0);
@@ -462,6 +466,7 @@ export class IncomeTransactionPage {
             code: product.code,
             name: product.name,
             price: product.price,
+            wholesale_price: product.wholesale_price,
             cost: product.cost,
             cat: product.cat,
             url: product.url,
@@ -570,6 +575,7 @@ export class IncomeTransactionPage {
   }
 
   prepareToPrint() {
+    this.showrec=false;
     /*
         let receipt = '';
         receipt += commands.HARDWARE.HW_INIT;
