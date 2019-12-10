@@ -36,7 +36,6 @@ import { DashboardPageModule } from "../pages/dashboard/dashboard.module";
 import { AddProductPageModule } from "../pages/addproduct/addproduct.module";
 import { SingleProductPage } from "../pages/singleproduct/singleproduct";
 import { SingleProductPageModule } from "../pages/singleproduct/singleproduct.module";
-import { GlobalProvider } from "../providers/global/global";
 
 // var config = {
 //   apiKey: "AIzaSyADjIbI3_GRS4eRHGVGFsT2hrkKvH9K06M",
@@ -58,11 +57,18 @@ const config = {
 
 firebase.initializeApp(config);
 
+// language translation service
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "../assets/i18n/", ".json");
 }
+// export function initTranslation(translate: TranslateService) {
+//   return () => {
+//     translate.setDefaultLang('my');
+//     translate.use('my');
+//     return Promise.resolve();
+//   };
+// }
 
-// @ts-ignore
 @NgModule({
   declarations: [MyApp],
   imports: [
@@ -109,7 +115,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     TranslateConfigService,
     BluetoothSerial,
     PrinterProvider,
-    GlobalProvider,
     Geolocation,
     GeolocationService,
   ],

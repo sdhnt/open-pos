@@ -9,7 +9,6 @@ import { TransactionHomePage } from "../transaction-home/transaction-home";
 import { AlertController, LoadingController } from "ionic-angular";
 import { PrinterProvider } from "./../../providers/printer/printer";
 import { commands } from "./../../providers/printer/printer-commands";
-import { GlobalProvider } from "../../providers/global/global";
 import EscPosEncoder from "esc-pos-encoder-ionic";
 import { GeolocationService } from "../../providers/geolocation/geolocation.service";
 
@@ -37,7 +36,6 @@ export class IncomeTransactionPage {
     private printer: PrinterProvider,
     private alertCtrl: AlertController,
     private loadCtrl: LoadingController,
-    public global: GlobalProvider,
     private gps: GeolocationService,
   ) {
     //console.log("Recieved -1" + this.navParams.get('itemslist'));
@@ -405,7 +403,6 @@ export class IncomeTransactionPage {
   }
   discountlist = [];
   addCalc() {
-    this.global.CalcToReceipt = "Update Receipt";
     (this.navCtrl.parent as Tabs).select(0);
     this.delay(300).then(any => {
       this.events.publish("addRecCalc:created", JSON.stringify(this.datastore.itemslist)); //SEND ITEMS PRICE

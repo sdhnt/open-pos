@@ -16,6 +16,8 @@ import { TranslateConfigService } from "../../providers/translation/translate-co
   templateUrl: "transaction-product.html",
 })
 export class TransactionProductPage {
+  updateOrCreate = "Create Receipt";
+
   constructor(
     public navCtrl: NavController,
     private translateConfigService: TranslateConfigService,
@@ -29,6 +31,7 @@ export class TransactionProductPage {
     this.events.subscribe("addRecProd:created", data => {
       console.log("ENTERED!");
       console.log("Received 0 " + data);
+      this.updateOrCreate = "Update Receipt";
 
       const tempdat = JSON.parse(data);
       this.getProducts();
@@ -69,6 +72,10 @@ export class TransactionProductPage {
       this.filteredProductPrice(tempdat.price);
       //console.log(this.listProducts)
     });
+  }
+
+  ionViewDidLeave() {
+    this.updateOrCreate = "Create Receipt";
   }
 
   calcitems: any = [];

@@ -97,7 +97,6 @@
 
                 <div class="symbol">
                   <span (click)="btnClicked('/')">÷</span>
-                  <span (click)="btnClicked('squareroot')">√x</span>
                 </div>
 
 
@@ -118,6 +117,14 @@
                   <span (click)="btnClicked('=')">=</span>
                 </div>
 
+              </div>
+
+              <div class="row">
+                <div class="number">
+                  <span (click)="btnClicked('.')">.</span>
+                  <span (click)="btnClicked('%')">%</span>
+                  <span (click)="btnClicked('squareroot')">√x</span>
+                </div>
               </div>
             </div>
           </div>
@@ -208,7 +215,7 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-            <button ion-button (click)="createRec()" full style="background-color: #222">{{this.global.CalcToReceipt|translate}}</button>
+            <button ion-button (click)="createRec()" full style="background-color: #222">{{updateOrCreate|translate}}</button>
         </ion-col>
       </ion-row>
     </ion-grid>

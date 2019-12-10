@@ -4,7 +4,6 @@ import { IncomeTransactionPage } from "../income-transaction/income-transaction"
 import firebase from "firebase";
 import { StorageProvider } from "../../providers/storage/storage";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
-import { GlobalProvider } from "../../providers/global/global";
 //import { threadId } from 'worker_threads';
 
 /**
@@ -20,6 +19,8 @@ import { GlobalProvider } from "../../providers/global/global";
   templateUrl: "all-transaction.html",
 })
 export class AllTransactionPage {
+  updateOrCreate = "Create Receipt";
+
   constructor(
     public navCtrl: NavController,
     private translateConfigService: TranslateConfigService,
@@ -27,10 +28,10 @@ export class AllTransactionPage {
     public events: Events,
     public sp: StorageProvider,
     public tstCtrl: ToastController,
-    public global: GlobalProvider,
   ) {
     this.getUserData();
     this.events.subscribe("addRecCalc:created", data => {
+      this.updateOrCreate = "Update Receipt";
       console.log("ENTERED!");
       console.log("Received 0 " + data);
       //SET itemsprice here? - make new addgen - diff button calls diff event that pushes rather than replaces
@@ -45,6 +46,7 @@ export class AllTransactionPage {
         this.itemsprice.push(element.price);
         this.itemsqty.push(element.qty);
         this.loitems.push(element);
+        this.itemsDiscount.push(element.discount);
       });
       console.log(this.itemsprice);
     });
@@ -66,7 +68,7 @@ export class AllTransactionPage {
   }
 
   ionViewWillLeave() {
-    this.global.CalcToReceipt = "Create Receipt";
+    this.updateOrCreate = "Create Receipt";
   }
 
   result = "";
@@ -74,6 +76,7 @@ export class AllTransactionPage {
   showSampleRec = true;
   itemsprice: string[] = [];
   itemsqty: number[] = [];
+  itemsDiscount: number[] = [];
   ctr = 0;
   lastsum = 0;
   lastchar = "NIL";
@@ -126,7 +129,7 @@ export class AllTransactionPage {
           name: "Item",
           price: parseInt(element),
           qty: this.itemsqty[index],
-          discount: 0,
+          discount: this.itemsDiscount[index],
         });
       }
     });
@@ -149,6 +152,7 @@ export class AllTransactionPage {
     this.itemsprice = [];
     this.lastsum = 0;
     this.itemsqty = [];
+    this.itemsDiscount = [];
     this.loitems = [];
   }
 
@@ -162,21 +166,27 @@ export class AllTransactionPage {
         this.itemsprice = [];
         this.lastsum = 0;
         this.itemsqty = [];
+        this.itemsDiscount = [];
       } else if (btn == "=") {
         this.showSampleRec = true;
 
         //IF LAST = character then remove that character
 
-        let answ = this.result.split("+");
-        if (this.result.includes("-")) {
-          answ = this.result
-            .split("+")
-            .join("-")
-            .split("-");
-        }
+        const answ = this.result.split("+");
+        // if(this.result.includes('-')){
+        //   answ=this.result.split('+').join('-').split('-');
+        // }
         let temp;
 
         answ.forEach((element, index) => {
+          let discAmt;
+          if (!element.includes("-")) discAmt = 0;
+          else {
+            discAmt = parseInt(element.substring(element.indexOf("-") + 1));
+            answ[index] = element.substring(0, element.indexOf("-"));
+            element = answ[index];
+          }
+
           if (element.includes("*")) {
             answ[index] = element.substring(0, element.indexOf("*"));
             this.itemsprice.push(answ[index]);
@@ -195,6 +205,8 @@ export class AllTransactionPage {
               this.itemsqty.push(parseInt("1"));
             }
           }
+
+          this.itemsDiscount.push((discAmt * 100) / (parseInt(this.itemsprice[index]) * this.itemsqty[index]));
 
           // this.itemsprice.push(
           //   {'name': "Blank_Item",
@@ -245,6 +257,7 @@ export class AllTransactionPage {
       this.itemsprice = [];
       this.lastsum = 0;
       this.itemsqty = [];
+      this.itemsDiscount = [];
       this.loitems = [];
     } finally {
     }
