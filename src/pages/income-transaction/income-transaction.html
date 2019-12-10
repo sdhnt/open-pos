@@ -57,7 +57,7 @@
                {{item.price*(item.discount)/100}}
               </ion-col>
               <ion-col col-3 style="color: black;   text-align: center;">
-                  {{item.price*((100-item.discount))/100}}
+                  {{item.price*((100-item.discount))/100*item.qty}}
                  </ion-col>
           </ion-row>
           <!-- <ion-row>

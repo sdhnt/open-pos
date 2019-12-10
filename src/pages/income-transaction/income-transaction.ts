@@ -619,7 +619,6 @@ export class IncomeTransactionPage {
         .align("left")
         .raw(commands.FEED_CONTROL_SEQUENCES.RST_HT)
         .raw(commands.FEED_CONTROL_SEQUENCES.SET_HT)
-        .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
         .text("Item Name ")
         .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
         .text("Qty ")
@@ -629,7 +628,6 @@ export class IncomeTransactionPage {
 
       this.datastore.itemslist.forEach((element, index) => {
         result
-          .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
           .text(element.name + " ", 30)
           .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
           .text(element.qty + " ")
@@ -638,8 +636,6 @@ export class IncomeTransactionPage {
           .newline();
         if (parseInt(element.discount) != 0) {
           result
-            .text(" ")
-            .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
             .text("Discount (" + element.discount + "%) :", 30)
             .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
             .text(" ")
