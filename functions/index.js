@@ -33,24 +33,24 @@ exports.syncTransactions = functions.pubsub
               .doc(doc.id)
               .get();
           }
-          const userInArchive = snapshotInArchive.data();
-          const archiveLength = userInArchive.transactions.length;
-          userInArchive.transactions.splice(Math.max(archiveLength - limit, 0), Math.min(limit, archiveLength));
-          userInArchive.transactions = userInArchive.transactions.concat(user.transactions);
-
-          const userLength = user.transactions.length;
-          if (userLength > limit) {
-            user.transactions.splice(0, userLength - limit);
-          } else if (userLength < limit) {
-            user.transactions = userInArchive.transactions.slice(Math.max(userLength - limit, 0));
-          }
-
-          db.collection("users")
-            .doc(doc.id)
-            .update(user);
-          db.collection("users-archive")
-            .doc(doc.id)
-            .update(userInArchive);
+          // const userInArchive = snapshotInArchive.data();
+          // const archiveLength = userInArchive.transactions.length;
+          // userInArchive.transactions.splice(Math.max(archiveLength - limit, 0), Math.min(limit, archiveLength));
+          // userInArchive.transactions = userInArchive.transactions.concat(user.transactions);
+          //
+          // const userLength = user.transactions.length;
+          // if (userLength > limit) {
+          //   user.transactions.splice(0, userLength - limit);
+          // } else if (userLength < limit) {
+          //   user.transactions = userInArchive.transactions.slice(Math.max(userLength - limit, 0));
+          // }
+          //
+          // db.collection("users")
+          //   .doc(doc.id)
+          //   .update(user);
+          // db.collection("users-archive")
+          //   .doc(doc.id)
+          //   .update(userInArchive);
         });
       });
   });
