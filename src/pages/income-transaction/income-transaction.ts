@@ -228,6 +228,9 @@ export class IncomeTransactionPage {
     //this.lastsum=this.lastsum-(this.datastore.itemslist[index].price*this.datastore.itemslist[index].qty);
 
     const rem = this.datastore.itemslist.splice(index, 1);
+    if(this.datastore.itemslist.length==0){
+      this.cancelRec();
+    }
 
     this.updateRec();
     console.log("I: " + index);
@@ -616,7 +619,6 @@ export class IncomeTransactionPage {
         .align("left")
         .raw(commands.FEED_CONTROL_SEQUENCES.RST_HT)
         .raw(commands.FEED_CONTROL_SEQUENCES.SET_HT)
-        .text("Sl ")
         .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
         .text("Item Name ")
         .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
@@ -627,7 +629,6 @@ export class IncomeTransactionPage {
 
       this.datastore.itemslist.forEach((element, index) => {
         result
-          .text(index + 1 + " ")
           .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
           .text(element.name + " ", 30)
           .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)

@@ -117,5 +117,10 @@
   "Additional Charges":"Additional Charges",
   "Add Charges":"Add Charges",
   "Enter Category Here":"Enter Category Here",
-  "Press home button to exit": "Press home button to exit"
+  "Press home button to exit": "Press home button to exit",
+  "Update Receipt": "Update Receipt",
+  "Subtotal": "SubTotal",
+  "SAVE ":"SAVE ",
+  "PRINT ":"PRINT ",
+  "CANCEL ":"CANCEL "
 }

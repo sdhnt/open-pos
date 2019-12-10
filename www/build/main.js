@@ -1,257 +1,5 @@
 webpackJsonp([14],{
 
-/***/ 100:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignUpPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__transaction_home_transaction_home__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_translation_translate_config_service__ = __webpack_require__(11);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [0, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-
-
-
-
-
-
-/**
- * Generated class for the SignUpPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var SignUpPage = /** @class */ (function () {
-    function SignUpPage(navCtrl, navParams, toastCtrl, sp, translateConfigService, alertCtrl) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.toastCtrl = toastCtrl;
-        this.sp = sp;
-        this.translateConfigService = translateConfigService;
-        this.alertCtrl = alertCtrl;
-        this.listOfBType = [];
-        this.listOfCurrency = [];
-        this.listOfLang = [];
-        this.name = "";
-        this.email = "";
-        this.password = "";
-        this.businessname = "";
-        this.businessaddress = "";
-        this.businesstype = "";
-        this.phno = "";
-        this.language = "";
-        this.currency = "";
-        this.nextbtn = 0;
-        this.nextbtn = 0;
-        this.loadDropDowns();
-    }
-    SignUpPage.prototype.ionViewDidLoad = function () {
-        console.log("ionViewDidLoad SignUpPage");
-        this.nextbtn = 0;
-    };
-    SignUpPage.prototype.nextPg = function () {
-        this.nextbtn = 1;
-    };
-    SignUpPage.prototype.prevPg = function () {
-        this.nextbtn = 0;
-    };
-    SignUpPage.prototype.loadDropDowns = function () {
-        var _this = this;
-        __WEBPACK_IMPORTED_MODULE_2_firebase___default.a
-            .firestore()
-            .collection("sign-up")
-            .get()
-            .then(function (doc) {
-            doc.docs[0].data().businessType.forEach(function (b) {
-                _this.listOfBType.push(b);
-            });
-            doc.docs[0].data().currency.forEach(function (c) {
-                _this.listOfCurrency.push(c);
-            });
-            doc.docs[0].data().language.forEach(function (l) {
-                _this.listOfLang.push(l);
-            });
-        });
-    };
-    SignUpPage.prototype.signup = function () {
-        var _this = this;
-        var message = this.translateConfigService.getTranslatedMessage("Please wait while creating your profile ...");
-        this.toastCtrl
-            .create({
-            // @ts-ignore
-            message: message.value,
-            duration: 3000,
-        })
-            .present();
-        __WEBPACK_IMPORTED_MODULE_2_firebase___default.a
-            .auth()
-            .createUserWithEmailAndPassword(this.email, this.password)
-            .then(function (data) {
-            var newUser = data.user;
-            newUser
-                .updateProfile({
-                displayName: _this.name,
-            })
-                .then(function (res) {
-                console.log("Profile Updated");
-                __WEBPACK_IMPORTED_MODULE_2_firebase___default.a
-                    .firestore()
-                    .collection("users")
-                    .add({
-                    // file_name: this.text,
-                    created: __WEBPACK_IMPORTED_MODULE_2_firebase___default.a.firestore.FieldValue.serverTimestamp(),
-                    owner: __WEBPACK_IMPORTED_MODULE_2_firebase___default.a.auth().currentUser.uid,
-                    owner_name: __WEBPACK_IMPORTED_MODULE_2_firebase___default.a.auth().currentUser.displayName,
-                    business_name: _this.businessname,
-                    businesstype: _this.businesstype,
-                    business_address: _this.businessaddress,
-                    ph_no: _this.phno,
-                    language: _this.language,
-                    currency: _this.currency,
-                    cash_balance: _this.cb,
-                    discount: _this.discount,
-                    taxrate: _this.taxrate,
-                    categories: [{ name: "Example" }],
-                    products: [
-                        {
-                            cat: "Example",
-                            code: "0000",
-                            cost: "0",
-                            name: "Example Product",
-                            price: "0",
-                            stock_qty: "0",
-                            url: "https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y",
-                            wholesale_price: "0",
-                        },
-                    ],
-                    transactions: [
-                        {
-                            datetime: new Date(),
-                            discount: 0,
-                            discountlist: [],
-                            itemslist: [
-                                { cat: "Example", code: "0000", cost: "0", name: "Example Product", price: "0", stock_qty: "0" },
-                            ],
-                            pnllist: [],
-                            prodidlist: [],
-                            taxrate: 0,
-                            totalatax: 0,
-                            totaldisc: 0,
-                            totalsum: 0,
-                        },
-                    ],
-                })
-                    .then(function (doc) { return __awaiter(_this, void 0, void 0, function () {
-                    var _this = this;
-                    var title, message;
-                    return __generator(this, function (_a) {
-                        console.log(doc);
-                        title = this.translateConfigService.getTranslatedMessage("Account Created");
-                        message = this.translateConfigService.getTranslatedMessage("Your account has been created successfully");
-                        this.alertCtrl
-                            .create({
-                            // @ts-ignore
-                            title: title.value,
-                            // @ts-ignore
-                            message: message.value,
-                            buttons: [
-                                {
-                                    text: "OK",
-                                    handler: function () {
-                                        //this.sp.clearMem();
-                                        _this.sp.setMem();
-                                        _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_3__transaction_home_transaction_home__["a" /* TransactionHomePage */]); //navigate to feeds page
-                                    },
-                                },
-                            ],
-                        })
-                            .present();
-                        return [2 /*return*/];
-                    });
-                }); })
-                    .catch(function (err) {
-                    console.log(err);
-                });
-            })
-                .catch(function (err) {
-                console.log(err);
-                _this.toastCtrl
-                    .create({
-                    message: err.message,
-                    duration: 3000,
-                })
-                    .present();
-            });
-        });
-    };
-    SignUpPage.prototype.goBack = function () {
-        this.navCtrl.pop();
-    };
-    SignUpPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: "page-sign-up",template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\open-fintech-december\open-pos\src\pages\sign-up\sign-up.html"*/'<ion-header>\n\n		<ion-navbar transparent>\n\n		</ion-navbar>\n\n	  </ion-header>\n\n	  <ion-content padding>\n\n		  \n\n			  <button ion-button block clear color="light" class="nametop"><b>Open</b></button> \n\n	  \n\n	  <ion-grid style="width: 75%;">\n\n	  \n\n		  <div *ngIf="nextbtn!=1">\n\n		  <ion-row class="row-style1" justify-content-center align-items-center style="height: 100%">{{"Register a business"|translate}}</ion-row>\n\n		  <ion-row class="row-style"> \n\n			  <ion-icon name="person" color="semi-light" class="icon"></ion-icon>\n\n			  <ion-input type="text" placeholder="{{\'Name\'|translate}}" [(ngModel)]="name"></ion-input>\n\n		  </ion-row>\n\n		  <ion-row class="row-style">\n\n			  <ion-icon name="mail" color="semi-light" class="icon"></ion-icon>\n\n			  <ion-input type="email" placeholder="{{ \'email\' | translate }}" [(ngModel)]="email"> </ion-input>\n\n		  </ion-row>\n\n		  <ion-row class="row-style">\n\n			  <ion-icon name="key" color="semi-light" class="icon"></ion-icon>\n\n			  <ion-input type="password" placeholder="{{\'password\'|translate}}"  [(ngModel)]="password"></ion-input>\n\n		  </ion-row>\n\n		  <ion-row class="row-style">\n\n			  <ion-icon name="home" color="semi-light" class="icon"></ion-icon>\n\n			  <ion-input type="text" placeholder="{{\'Business Name\'|translate}} "  [(ngModel)]="businessname"></ion-input>\n\n		  </ion-row>\n\n		  <ion-row class="row-style">\n\n			  <ion-icon name="pin" color="semi-light" class="icon"></ion-icon>\n\n			  <ion-input type="text" placeholder="{{\'Full Business Address\'|translate}}"  [(ngModel)]="businessaddress"></ion-input>\n\n		  </ion-row>\n\n		  <ion-row class="row-style">\n\n			  <ion-icon name="call" color="semi-light" class="icon"></ion-icon>\n\n			  <ion-input type="text" placeholder="{{\'Phone Number\'|translate}}"  [(ngModel)]="phno"></ion-input>\n\n		  </ion-row>\n\n	  <button ion-button block round outline color="light" style="margin-top: 10px;" (click)="nextPg()">{{\'Next Page\'|translate}}</button>\n\n	  </div>\n\n	  <div *ngIf="nextbtn==1">\n\n			  <button ion-button block round outline color="light" style="margin-bottom: 10px;" (click)="prevPg()">{{\'Back\'|translate}}</button>\n\n		  <ion-row class="row-style">\n\n				  <ion-icon name="globe" color="semi-light" class="icon"></ion-icon>\n\n				  <ion-label>{{"Business Type"|translate}}</ion-label>\n\n				  <ion-select [(ngModel)]="businesstype">\n\n					  <ion-option *ngFor="let b of listOfBType" value="{{ b }}">{{ b }}</ion-option>\n\n				  </ion-select>\n\n				  <!-- <ion-input type="text" placeholder="Language"  [(ngModel)]="businessname"></ion-input> -->\n\n		 </ion-row>\n\n	  \n\n	  \n\n		  <ion-row class="row-style">\n\n			  <ion-icon name="chatboxes" color="semi-light" class="icon"></ion-icon>\n\n			  <ion-label>{{"Language"|translate}}</ion-label>\n\n			  <ion-select [(ngModel)]="language">\n\n				  <ion-option *ngFor="let l of listOfLang" value="{{ l }}">{{ l }}</ion-option>\n\n			  </ion-select>\n\n			  <!-- <ion-input type="text" placeholder="Language"  [(ngModel)]="businessname"></ion-input> -->\n\n		  </ion-row>\n\n	  \n\n		  <ion-row class="row-style">\n\n				  <ion-icon name="logo-usd" color="semi-light" class="icon"></ion-icon>\n\n				  <ion-label>{{"Currency"|translate}}</ion-label>\n\n				  <ion-select [(ngModel)]="currency">\n\n					  <ion-option *ngFor="let c of listOfCurrency" value = "{{ c }}">{{ c }}</ion-option>\n\n				  </ion-select>\n\n				  <!-- <ion-input type="text" placeholder="Language"  [(ngModel)]="businessname"></ion-input> -->\n\n			  </ion-row>\n\n	  \n\n	  \n\n		  <ion-row class="row-style">\n\n			  <ion-icon name="cash" color="semi-light" class="icon"></ion-icon>\n\n			  <ion-input type="number" placeholder="{{\'Starting Cash Balance\'|translate}}"  [(ngModel)]="cb"></ion-input>\n\n		  </ion-row>\n\n	  \n\n		  <ion-row class="row-style">\n\n				  <ion-icon name="cash" color="semi-light" class="icon"></ion-icon>\n\n				  <ion-input type="number" placeholder="{{\'Usual Discount %\'|translate}}"  [(ngModel)]="discount"></ion-input>\n\n			  </ion-row>\n\n	  \n\n			  <ion-row class="row-style">\n\n					  <ion-icon name="cash" color="semi-light" class="icon"></ion-icon>\n\n					  <ion-input type="number" placeholder="{{ \'Usual Tax %\' | translate }}"  [(ngModel)]="taxrate"></ion-input>\n\n				  </ion-row>\n\n		  <ion-row>\n\n			  <button ion-button block round outline color="light" style="margin-top: 20px;" (click)="signup()">{{"Sign Up"|translate}}</button>\n\n		  </ion-row>\n\n	  </div>\n\n	  </ion-grid>\n\n	  <button ion-button block clear color="light" style="margin-top: 10px;" (click)="goBack()">{{"Already have an account? Log-in"|translate}}</button>\n\n	  </ion-content>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\open-fintech-december\open-pos\src\pages\sign-up\sign-up.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */],
-            __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__["a" /* StorageProvider */],
-            __WEBPACK_IMPORTED_MODULE_5__providers_translation_translate_config_service__["a" /* TranslateConfigService */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
-    ], SignUpPage);
-    return SignUpPage;
-}());
-
-//# sourceMappingURL=sign-up.js.map
-
-/***/ }),
-
 /***/ 11:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -457,7 +205,7 @@ var ProductListPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__transaction_home_transaction_home__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__transaction_home_transaction_home__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash__ = __webpack_require__(340);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_lodash__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_firebase__ = __webpack_require__(27);
@@ -1313,19 +1061,19 @@ var map = {
 		13
 	],
 	"../pages/all-transaction/all-transaction.module": [
-		371,
+		381,
 		12
 	],
 	"../pages/coach-businesstips/coach-businesstips.module": [
-		372,
+		371,
 		4
 	],
 	"../pages/coach-coach/coach-coach.module": [
-		373,
+		372,
 		3
 	],
 	"../pages/coach-goals/coach-goals.module": [
-		375,
+		373,
 		2
 	],
 	"../pages/coach-home/coach-home.module": [
@@ -1333,40 +1081,40 @@ var map = {
 		0
 	],
 	"../pages/contact-us/contact-us.module": [
-		376,
+		375,
 		11
 	],
 	"../pages/expense-transaction/expense-transaction.module": [
-		377,
+		376,
 		1
 	],
 	"../pages/expenses-home/expenses-home.module": [
-		378,
+		377,
 		10
 	],
 	"../pages/income-transaction/income-transaction.module": [
-		379,
+		380,
 		9
 	],
 	"../pages/login/login.module": [
-		191
+		186
 	],
 	"../pages/product-list/product-list.module": [
-		380,
+		378,
 		8
 	],
 	"../pages/sign-up/sign-up.module": [
 		193
 	],
 	"../pages/summary-home/summary-home.module": [
-		382,
+		379,
 		7
 	],
 	"../pages/transaction-home/transaction-home.module": [
 		194
 	],
 	"../pages/transaction-product/transaction-product.module": [
-		381,
+		382,
 		6
 	],
 	"../pages/user-profile/user-profile.module": [
@@ -1451,8 +1199,45 @@ var GettersetterProvider = /** @class */ (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginPageModule", function() { return LoginPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__login__ = __webpack_require__(98);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(23);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+var LoginPageModule = /** @class */ (function () {
+    function LoginPageModule() {
+    }
+    LoginPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
+            declarations: [__WEBPACK_IMPORTED_MODULE_2__login__["a" /* LoginPage */]],
+            imports: [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__login__["a" /* LoginPage */]), __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__["b" /* TranslateModule */].forChild()],
+            exports: [__WEBPACK_IMPORTED_MODULE_2__login__["a" /* LoginPage */]],
+        })
+    ], LoginPageModule);
+    return LoginPageModule;
+}());
+
+//# sourceMappingURL=login.module.js.map
+
+/***/ }),
+
+/***/ 187:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PrinterProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ionic_native_bluetooth_serial__ = __webpack_require__(187);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ionic_native_bluetooth_serial__ = __webpack_require__(188);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1495,43 +1280,6 @@ var PrinterProvider = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 191:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginPageModule", function() { return LoginPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__login__ = __webpack_require__(99);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(23);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-
-var LoginPageModule = /** @class */ (function () {
-    function LoginPageModule() {
-    }
-    LoginPageModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
-            declarations: [__WEBPACK_IMPORTED_MODULE_2__login__["a" /* LoginPage */]],
-            imports: [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__login__["a" /* LoginPage */]), __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__["b" /* TranslateModule */].forChild()],
-            exports: [__WEBPACK_IMPORTED_MODULE_2__login__["a" /* LoginPage */]],
-        })
-    ], LoginPageModule);
-    return LoginPageModule;
-}());
-
-//# sourceMappingURL=login.module.js.map
-
-/***/ }),
-
 /***/ 193:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1540,7 +1288,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SignUpPageModule", function() { return SignUpPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__sign_up__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__sign_up__ = __webpack_require__(99);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(23);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1577,7 +1325,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TransactionHomePageModule", function() { return TransactionHomePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__transaction_home__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__transaction_home__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngx_translate_core__ = __webpack_require__(23);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1800,336 +1548,6 @@ var AddProductCategoryPage = /** @class */ (function () {
 /***/ }),
 
 /***/ 238:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AllTransactionPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__ = __webpack_require__(11);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [0, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-
-
-
-
-//import { threadId } from 'worker_threads';
-/**
- * Generated class for the AllTransactionPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var AllTransactionPage = /** @class */ (function () {
-    function AllTransactionPage(navCtrl, translateConfigService, navParams, events, sp, tstCtrl) {
-        var _this = this;
-        this.navCtrl = navCtrl;
-        this.translateConfigService = translateConfigService;
-        this.navParams = navParams;
-        this.events = events;
-        this.sp = sp;
-        this.tstCtrl = tstCtrl;
-        this.updateOrCreate = "Create Receipt";
-        this.itemsname = [];
-        this.loitems = [];
-        this.result = "";
-        this.flag_mode = 0;
-        this.showSampleRec = true;
-        this.itemsprice = [];
-        this.itemsqty = [];
-        this.itemsDiscount = [];
-        this.ctr = 0;
-        this.lastsum = 0;
-        this.lastchar = "NIL";
-        this.lastdigit = 0;
-        this.userdata = {
-            business_address: "",
-            business_name: "",
-            cash_balance: "",
-            currency: "",
-            created: "",
-            language: "en",
-            owner: "",
-            owner_name: "",
-            ph_no: "",
-            businesstype: "",
-            taxrate: 0.0,
-            discount: 0.0,
-        };
-        this.getUserData();
-        this.events.subscribe("addRecCalc:created", function (data) {
-            _this.updateOrCreate = "Update Receipt";
-            console.log("ENTERED!");
-            console.log("Received 0 " + data);
-            //SET itemsprice here? - make new addgen - diff button calls diff event that pushes rather than replaces
-            //Same for Product Transaction Page
-            //console.log(this.showSampleRec);
-            var tempdat = JSON.parse(data);
-            _this.showSampleRec = true;
-            // this.itemsname=null;
-            // this.itemsprice=null;
-            // this.itemsqty=null;
-            tempdat.forEach(function (element) {
-                _this.itemsname.push(element.name);
-                _this.itemsprice.push(element.price);
-                _this.itemsqty.push(element.qty);
-                _this.loitems.push(element);
-                _this.itemsDiscount.push(element.discount);
-            });
-            console.log(_this.itemsprice);
-        });
-    }
-    AllTransactionPage.prototype.ionViewDidLoad = function () {
-        var _this = this;
-        console.log("ionViewDidLoad AllTransactionPage");
-        console.log("Size of array: " + this.itemsprice.length);
-        if (this.itemsprice.length > 0) {
-            this.showSampleRec = false;
-            this.flag_mode = 1;
-        }
-        this.showSampleRec = false;
-        this.delay(3000).then(function () {
-            _this.getUserData();
-        });
-    };
-    AllTransactionPage.prototype.ionViewWillLeave = function () {
-        this.updateOrCreate = "Create Receipt";
-    };
-    AllTransactionPage.prototype.delay = function (ms) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, new Promise(function (resolve) { return setTimeout(function () { return resolve(); }, ms); }).then(function () { return console.log("fired"); })];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    AllTransactionPage.prototype.getUserData = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
-            return __generator(this, function (_a) {
-                this.sp.storageReady().then(function () {
-                    _this.sp
-                        .getUserDat()
-                        .then(function (val) {
-                        _this.userdata = JSON.parse(val);
-                        console.log(_this.userdata);
-                    })
-                        .catch(function (err) {
-                        alert("Error: " + err);
-                    });
-                });
-                return [2 /*return*/];
-            });
-        });
-    };
-    AllTransactionPage.prototype.createRec = function () {
-        var _this = this;
-        var tempJSON = { itemslist: [] };
-        this.showSampleRec = false;
-        this.itemsprice.forEach(function (element, index) {
-            if (_this.itemsname.length > 0 && index < _this.itemsname.length) {
-                tempJSON.itemslist.push(_this.loitems[index]);
-            }
-            else {
-                tempJSON.itemslist.push({
-                    code: "000000",
-                    cat: "NIL",
-                    stock_qty: 0,
-                    name: "Item",
-                    price: parseInt(element),
-                    qty: _this.itemsqty[index],
-                    discount: _this.itemsDiscount[index],
-                });
-            }
-        });
-        //var sampledat={ 'itemslist': myJsonString,};
-        var myObjStr = JSON.stringify(tempJSON);
-        this.navCtrl.parent.select(2);
-        this.delay(300).then(function (any) {
-            _this.events.publish("genRec:created", myObjStr);
-            console.log("Sent: " + myObjStr);
-            //your task after delay.
-        });
-        this.result = "";
-        this.itemsname = [];
-        this.itemsprice = [];
-        this.lastsum = 0;
-        this.itemsqty = [];
-        this.itemsDiscount = [];
-        this.loitems = [];
-    };
-    AllTransactionPage.prototype.btnClicked = function (btn) {
-        var _this = this;
-        this.getUserData();
-        try {
-            console.log("CalculatorPage::btnClicked = " + btn);
-            if (btn == "C") {
-                this.result = "";
-                this.itemsprice = [];
-                this.lastsum = 0;
-                this.itemsqty = [];
-                this.itemsDiscount = [];
-                this.showSampleRec = false;
-            }
-            else if (btn == "=") {
-                this.showSampleRec = true;
-                //IF LAST = character then remove that character
-                var answ_1 = this.result.split("+");
-                // if(this.result.includes('-')){
-                //   answ=this.result.split('+').join('-').split('-');
-                // }
-                var temp_1;
-                answ_1.forEach(function (element, index) {
-                    var discAmt;
-                    if (!element.includes("-"))
-                        discAmt = 0;
-                    else {
-                        discAmt = parseInt(element.substring(element.indexOf("-") + 1));
-                        answ_1[index] = element.substring(0, element.indexOf("-"));
-                        element = answ_1[index];
-                    }
-                    if (element.includes("*")) {
-                        answ_1[index] = element.substring(0, element.indexOf("*"));
-                        _this.itemsprice.push(answ_1[index]);
-                        temp_1 = parseInt(element.substring(element.indexOf("*") + 1));
-                        console.log(element.substring(element.indexOf("*") + 1));
-                        _this.itemsqty.push(temp_1);
-                    }
-                    else if (element.includes("/")) {
-                        answ_1[index] = element.substring(0, element.indexOf("/"));
-                        _this.itemsprice.push(answ_1[index]);
-                        temp_1 = Math.round((1 / parseInt(element.substring(element.indexOf("/") + 1))) * 100) / 100;
-                        console.log(temp_1);
-                        _this.itemsqty.push(temp_1);
-                    }
-                    else {
-                        if (element != "") {
-                            _this.itemsprice.push(element);
-                            _this.itemsqty.push(parseInt("1"));
-                        }
-                    }
-                    _this.itemsDiscount.push((discAmt * 100) / (parseInt(_this.itemsprice[index]) * _this.itemsqty[index]));
-                    // this.itemsprice.push(
-                    //   {'name': "Blank_Item",
-                    //   'price': parseInt(element),
-                    //   'qty': 0,
-                    //   })
-                });
-                //flag_mode=0 means normal (sample reciept is generated)
-                //if(flag_mode==1) then go to reciept page directly - call createRec()
-                //if(flag_mode=2) then just use as calc - no reciept is generated
-                console.log(this.itemsprice);
-                console.log(this.itemsqty);
-                this.result = eval(this.result) + "";
-                this.lastsum = 0;
-                //this.lastsum=parseInt(this.result);
-                for (var i = 0; i < this.itemsprice.length; i++) {
-                    this.lastsum = this.lastsum + parseInt(this.itemsprice[i]) * this.itemsqty[i];
-                    console.log(this.lastsum);
-                }
-            }
-            else if (btn == "b") {
-                this.result = this.result.substring(0, this.result.length - 1);
-            }
-            else if (btn == "squareroot") {
-                this.result = Math.sqrt(eval(this.result)) + "";
-            }
-            else if (btn == "square") {
-                this.result = eval("(" + this.result + ") * ( " + this.result + ")");
-            }
-            else if (btn == "reciproc") {
-                this.result = eval(1 + "/ (" + this.result + ")");
-            }
-            else {
-                if (parseInt(this.result) == this.lastsum) {
-                    this.result = this.result.substring(0, 0);
-                }
-                console.log("Lastchar: " + this.lastchar + " Result: " + this.result);
-                if ((btn == "+" || btn == "-" || btn == "*" || btn == "/") &&
-                    (this.lastchar == "+" || this.lastchar == "-" || this.lastchar == "*" || this.lastchar == "/")) {
-                    this.result = this.result = this.result.substring(0, this.result.length - 1);
-                }
-                this.lastchar = btn;
-                this.result += btn;
-            }
-        }
-        catch (err) {
-            this.result = "Input Error!";
-            this.itemsprice = [];
-            this.lastsum = 0;
-            this.itemsqty = [];
-            this.itemsDiscount = [];
-            this.loitems = [];
-        }
-        finally {
-        }
-    };
-    AllTransactionPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: "page-all-transaction",template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\open-fintech-december\open-pos\src\pages\all-transaction\all-transaction.html"*/'<!--\n\n  Generated template for the AllTransactionPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n\n\n\n\n<ion-content padding>\n\n    <!-- <ion-fab bottom right>\n\n        <button ion-fab color="primary" item-right><ion-icon name="calculator"></ion-icon></button>\n\n      </ion-fab> -->\n\n      <!-- <ion-card *ngIf="showSampleRec==false">\n\n        ကျေးဇူးပြုပြီးပစ္စည်းအတွက်ပမာဏကိုမြှောက်ပါ၊ ရှိပြီးသားငွေတောင်းခံလွှာကိုထည့်ရန်တူညီသောစာလုံးကိုနှိပ်ပါ။\n\n\n\n        အလွတ်ပစ္စည်းပေါင်းများစွာကိုထည့်သွင်းလိုပါက * qty တစ်ခုချင်းစီကိုရိုက်ထည့်ပြီးနောက်တစ်ခုကိုရိုက်ထည့်ရန် + သင်္ကေတကိုနှိပ်ပါ\n\n      </ion-card>\n\n       -->\n\n  <ion-grid>\n\n    <ion-row>\n\n\n\n      <ion-col col-12 col-md-6>\n\n\n\n          <div class="calculator">\n\n            <div class="header">\n\n              <div class="window"></div>\n\n              <div class="input">\n\n                <!-- <ion-row>\n\n                  \n\n                  <ion-input type="text" placeholder="0" name="display" [(ngModel)]="result">\n\n                  </ion-input>\n\n                  \n\n                 \n\n                  <ion-icon name="backspace" (click)="btnClicked(\'b\')"></ion-icon>\n\n                  \n\n                </ion-row>  -->\n\n                <ion-row>\n\n                    <ion-col col-10>\n\n                      <div style="text-align: left; overflow-y: scroll; height: 80px;">\n\n                      {{result}}\n\n                  </div>\n\n                  </ion-col>\n\n\n\n                   <!-- <ion-col col-10>\n\n                      <ion-scroll scrollX="true" style="  white-space: nowrap; height: 80px;">\n\n                        <div style="text-align: right;">\n\n                          {{result}}\n\n                        </div>\n\n                      </ion-scroll>\n\n                  </ion-col> -->\n\n\n\n    \n\n                \n\n                  \n\n                  <ion-col col-2> <ion-icon name="backspace" (click)="btnClicked(\'b\')"></ion-icon>\n\n                  </ion-col>\n\n                  \n\n                </ion-row>\n\n               \n\n                    \n\n                \n\n              </div>\n\n             \n\n              \n\n            </div>\n\n            <div class="keys">\n\n              <div class="row">\n\n                <div class="number">\n\n                  <span (click)="btnClicked(\'7\')">7</span>\n\n                  <span (click)="btnClicked(\'8\')">8</span>\n\n                  <span (click)="btnClicked(\'9\')">9</span>\n\n                </div>\n\n                <div class="symbol">\n\n                  <span (click)="btnClicked(\'*\')">×</span>\n\n\n\n                </div>\n\n              </div>\n\n\n\n              <div class="row">\n\n                <div class="number">\n\n                  <span (click)="btnClicked(\'4\')">4</span>\n\n                  <span (click)="btnClicked(\'5\')">5</span>\n\n                  <span (click)="btnClicked(\'6\')">6</span>\n\n                </div>\n\n\n\n                <div class="symbol">\n\n                  <span (click)="btnClicked(\'+\')">+</span>\n\n           </div>\n\n              </div>\n\n\n\n              <div class="row">\n\n                <div class="number">\n\n                  <span (click)="btnClicked(\'1\')">1</span>\n\n                  <span (click)="btnClicked(\'2\')">2</span>\n\n                  <span (click)="btnClicked(\'3\')">3</span>\n\n                </div>\n\n\n\n                <div class="symbol">\n\n                  <span (click)="btnClicked(\'/\')">÷</span>\n\n                </div>\n\n\n\n\n\n              </div>\n\n\n\n\n\n              <div class="row">\n\n                <div class="number">\n\n                    \n\n                    <span (click)="btnClicked(\'.\')">.</span>\n\n                  <span (click)="btnClicked(\'0\')">0</span>\n\n                  <span (click)="btnClicked(\'%\')">%</span>\n\n                  \n\n\n\n                </div>\n\n\n\n                <div class="symbol">\n\n                    <span (click)="btnClicked(\'-\')">-</span>\n\n                  </div>\n\n\n\n              </div>\n\n\n\n              <div class="row">\n\n                <div class="number">\n\n                \n\n                  <span (click)="btnClicked(\'C\')"></span>\n\n                  <span (click)="btnClicked(\'C\')">CLEAR</span>\n\n                  <span (click)="btnClicked(\'C\')"></span>\n\n             \n\n                \n\n                </div>\n\n                <div class="symbol action">\n\n                    <span (click)="btnClicked(\'=\')">=</span>\n\n                  </div>\n\n              </div>\n\n\n\n\n\n            </div>\n\n          </div>\n\n\n\n    \n\n\n\n      </ion-col>\n\n\n\n      <ion-col col-12 col-md-6>\n\n\n\n\n\n        <ion-card *ngIf="showSampleRec==true"> \n\n\n\n                <ion-grid>\n\n          \n\n                  <ion-row> <ion-col style="text-align: center; padding-top: 5px;">{{userdata? userdata.business_name: null}} </ion-col> </ion-row>\n\n          \n\n                  <ion-row>\n\n                      <ion-col col-12 style="color: grey; font-size: 10px; text-align: center"> {{userdata?userdata.business_address:null}}</ion-col>\n\n                  </ion-row>\n\n                  <ion-row>\n\n                      <ion-col col-12 style="color: grey; font-size: 10px; text-align: center"> {{userdata?userdata.ph_no:null}}</ion-col>\n\n                  </ion-row>          \n\n                  <ion-row style="padding-top: 5px;">\n\n                      <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><b>{{"Sl" | translate}}</b></ion-col>\n\n                      <ion-col col-5 style="color: black; font-size: 10px; text-align: center"><b>{{"Name" | translate}}</b></ion-col>\n\n                      <ion-col col-3 style="color: black; font-size: 10px; text-align: center"><b>{{"Price"| translate}}</b></ion-col>\n\n                      <ion-col col-3 style="color: black; font-size: 10px; text-align: center"><b>{{"Qty"| translate}}</b></ion-col>\n\n                 </ion-row>\n\n          \n\n                 \n\n          \n\n                  <ion-list *ngFor="let item of itemsprice; let i = index" no-lines>\n\n          \n\n              \n\n                    <ion-row>\n\n                        <ion-col col-1 style="color: black; font-size: 10px; text-align: center">{{i+1}}.</ion-col>\n\n                        <ion-col col-5 style="color: black; font-size: 10px; text-align: center">\n\n                         Item {{i+1}}</ion-col>   \n\n                        <ion-col col-3 style="color: black; font-size: 10px; text-align: center">{{item}}</ion-col>\n\n                        <ion-col col-3 style="color: black; font-size: 10px; text-align: center">{{itemsqty[i]}}</ion-col>\n\n\n\n                    </ion-row>\n\n                \n\n          \n\n                  </ion-list>\n\n          \n\n                  <ion-row padding>\n\n                      <ion-col col-1></ion-col>  \n\n                    <ion-col col-4 style="text-align: center;font-size: 10px;"><b>{{"Total"| translate}}</b> </ion-col>\n\n                      <ion-col col-2 style="text-align: center;font-size: 10px;"><b>{{lastsum}}</b> </ion-col>\n\n                      <ion-col col-5></ion-col>\n\n                    </ion-row>\n\n          \n\n          \n\n                   \n\n          \n\n          \n\n                </ion-grid>\n\n          \n\n          \n\n          \n\n\n\n        </ion-card>\n\n\n\n      </ion-col>\n\n\n\n\n\n\n\n    </ion-row>\n\n\n\n\n\n  </ion-grid>\n\n\n\n\n\n\n\n  <!-- Dynamically Generate All transactions from backend - see feed from prev -->\n\n\n\n</ion-content>\n\n\n\n<ion-footer *ngIf="showSampleRec==true" style="background-color: #ffffff">\n\n\n\n    <ion-grid>\n\n      <ion-row>\n\n        <ion-col>\n\n            <button ion-button (click)="createRec()" full style="background-color: #FFA500">{{updateOrCreate|translate}}</button>\n\n        </ion-col>\n\n      </ion-row>\n\n    </ion-grid>\n\n   \n\n</ion-footer>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\open-fintech-december\open-pos\src\pages\all-transaction\all-transaction.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__["a" /* TranslateConfigService */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */],
-            __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */]])
-    ], AllTransactionPage);
-    return AllTransactionPage;
-}());
-
-//# sourceMappingURL=all-transaction.js.map
-
-/***/ }),
-
-/***/ 239:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2463,6 +1881,336 @@ var ExpensesHomePage = /** @class */ (function () {
 
 /***/ }),
 
+/***/ 239:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AllTransactionPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__ = __webpack_require__(11);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
+
+
+
+//import { threadId } from 'worker_threads';
+/**
+ * Generated class for the AllTransactionPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var AllTransactionPage = /** @class */ (function () {
+    function AllTransactionPage(navCtrl, translateConfigService, navParams, events, sp, tstCtrl) {
+        var _this = this;
+        this.navCtrl = navCtrl;
+        this.translateConfigService = translateConfigService;
+        this.navParams = navParams;
+        this.events = events;
+        this.sp = sp;
+        this.tstCtrl = tstCtrl;
+        this.updateOrCreate = "Create Receipt";
+        this.itemsname = [];
+        this.loitems = [];
+        this.result = "";
+        this.flag_mode = 0;
+        this.showSampleRec = true;
+        this.itemsprice = [];
+        this.itemsqty = [];
+        this.itemsDiscount = [];
+        this.ctr = 0;
+        this.lastsum = 0;
+        this.lastchar = "NIL";
+        this.lastdigit = 0;
+        this.userdata = {
+            business_address: "",
+            business_name: "",
+            cash_balance: "",
+            currency: "",
+            created: "",
+            language: "en",
+            owner: "",
+            owner_name: "",
+            ph_no: "",
+            businesstype: "",
+            taxrate: 0.0,
+            discount: 0.0,
+        };
+        this.getUserData();
+        this.events.subscribe("addRecCalc:created", function (data) {
+            _this.updateOrCreate = "Update Receipt";
+            console.log("ENTERED!");
+            console.log("Received 0 " + data);
+            //SET itemsprice here? - make new addgen - diff button calls diff event that pushes rather than replaces
+            //Same for Product Transaction Page
+            //console.log(this.showSampleRec);
+            var tempdat = JSON.parse(data);
+            _this.showSampleRec = true;
+            // this.itemsname=null;
+            // this.itemsprice=null;
+            // this.itemsqty=null;
+            tempdat.forEach(function (element) {
+                _this.itemsname.push(element.name);
+                _this.itemsprice.push(element.price);
+                _this.itemsqty.push(element.qty);
+                _this.loitems.push(element);
+                _this.itemsDiscount.push(element.discount);
+            });
+            console.log(_this.itemsprice);
+        });
+    }
+    AllTransactionPage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        console.log("ionViewDidLoad AllTransactionPage");
+        console.log("Size of array: " + this.itemsprice.length);
+        if (this.itemsprice.length > 0) {
+            this.showSampleRec = false;
+            this.flag_mode = 1;
+        }
+        this.showSampleRec = false;
+        this.delay(3000).then(function () {
+            _this.getUserData();
+        });
+    };
+    AllTransactionPage.prototype.ionViewWillLeave = function () {
+        this.updateOrCreate = "Create Receipt";
+    };
+    AllTransactionPage.prototype.delay = function (ms) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, new Promise(function (resolve) { return setTimeout(function () { return resolve(); }, ms); }).then(function () { return console.log("fired"); })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AllTransactionPage.prototype.getUserData = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                this.sp.storageReady().then(function () {
+                    _this.sp
+                        .getUserDat()
+                        .then(function (val) {
+                        _this.userdata = JSON.parse(val);
+                        console.log(_this.userdata);
+                    })
+                        .catch(function (err) {
+                        alert("Error: " + err);
+                    });
+                });
+                return [2 /*return*/];
+            });
+        });
+    };
+    AllTransactionPage.prototype.createRec = function () {
+        var _this = this;
+        var tempJSON = { itemslist: [] };
+        this.showSampleRec = false;
+        this.itemsprice.forEach(function (element, index) {
+            if (_this.itemsname.length > 0 && index < _this.itemsname.length) {
+                tempJSON.itemslist.push(_this.loitems[index]);
+            }
+            else {
+                tempJSON.itemslist.push({
+                    code: "000000",
+                    cat: "NIL",
+                    stock_qty: 0,
+                    name: "Item",
+                    price: parseInt(element),
+                    qty: _this.itemsqty[index],
+                    discount: _this.itemsDiscount[index],
+                });
+            }
+        });
+        //var sampledat={ 'itemslist': myJsonString,};
+        var myObjStr = JSON.stringify(tempJSON);
+        this.navCtrl.parent.select(2);
+        this.delay(300).then(function (any) {
+            _this.events.publish("genRec:created", myObjStr);
+            console.log("Sent: " + myObjStr);
+            //your task after delay.
+        });
+        this.result = "";
+        this.itemsname = [];
+        this.itemsprice = [];
+        this.lastsum = 0;
+        this.itemsqty = [];
+        this.itemsDiscount = [];
+        this.loitems = [];
+    };
+    AllTransactionPage.prototype.btnClicked = function (btn) {
+        var _this = this;
+        this.getUserData();
+        try {
+            console.log("CalculatorPage::btnClicked = " + btn);
+            if (btn == "C") {
+                this.result = "";
+                this.itemsprice = [];
+                this.lastsum = 0;
+                this.itemsqty = [];
+                this.itemsDiscount = [];
+                this.showSampleRec = false;
+            }
+            else if (btn == "=") {
+                this.showSampleRec = true;
+                //IF LAST = character then remove that character
+                var answ_1 = this.result.split("+");
+                // if(this.result.includes('-')){
+                //   answ=this.result.split('+').join('-').split('-');
+                // }
+                var temp_1;
+                answ_1.forEach(function (element, index) {
+                    var discAmt;
+                    if (!element.includes("-"))
+                        discAmt = 0;
+                    else {
+                        discAmt = parseInt(element.substring(element.indexOf("-") + 1));
+                        answ_1[index] = element.substring(0, element.indexOf("-"));
+                        element = answ_1[index];
+                    }
+                    if (element.includes("*")) {
+                        answ_1[index] = element.substring(0, element.indexOf("*"));
+                        _this.itemsprice.push(answ_1[index]);
+                        temp_1 = parseInt(element.substring(element.indexOf("*") + 1));
+                        console.log(element.substring(element.indexOf("*") + 1));
+                        _this.itemsqty.push(temp_1);
+                    }
+                    else if (element.includes("/")) {
+                        answ_1[index] = element.substring(0, element.indexOf("/"));
+                        _this.itemsprice.push(answ_1[index]);
+                        temp_1 = Math.round((1 / parseInt(element.substring(element.indexOf("/") + 1))) * 100) / 100;
+                        console.log(temp_1);
+                        _this.itemsqty.push(temp_1);
+                    }
+                    else {
+                        if (element != "") {
+                            _this.itemsprice.push(element);
+                            _this.itemsqty.push(parseInt("1"));
+                        }
+                    }
+                    _this.itemsDiscount.push((discAmt * 100) / (parseInt(_this.itemsprice[index]) * _this.itemsqty[index]));
+                    // this.itemsprice.push(
+                    //   {'name': "Blank_Item",
+                    //   'price': parseInt(element),
+                    //   'qty': 0,
+                    //   })
+                });
+                //flag_mode=0 means normal (sample reciept is generated)
+                //if(flag_mode==1) then go to reciept page directly - call createRec()
+                //if(flag_mode=2) then just use as calc - no reciept is generated
+                console.log(this.itemsprice);
+                console.log(this.itemsqty);
+                this.result = eval(this.result) + "";
+                this.lastsum = 0;
+                //this.lastsum=parseInt(this.result);
+                for (var i = 0; i < this.itemsprice.length; i++) {
+                    this.lastsum = this.lastsum + parseInt(this.itemsprice[i]) * this.itemsqty[i];
+                    console.log(this.lastsum);
+                }
+            }
+            else if (btn == "b") {
+                this.result = this.result.substring(0, this.result.length - 1);
+            }
+            else if (btn == "squareroot") {
+                this.result = Math.sqrt(eval(this.result)) + "";
+            }
+            else if (btn == "square") {
+                this.result = eval("(" + this.result + ") * ( " + this.result + ")");
+            }
+            else if (btn == "reciproc") {
+                this.result = eval(1 + "/ (" + this.result + ")");
+            }
+            else {
+                if (parseInt(this.result) == this.lastsum) {
+                    this.result = this.result.substring(0, 0);
+                }
+                console.log("Lastchar: " + this.lastchar + " Result: " + this.result);
+                if ((btn == "+" || btn == "-" || btn == "*" || btn == "/") &&
+                    (this.lastchar == "+" || this.lastchar == "-" || this.lastchar == "*" || this.lastchar == "/")) {
+                    this.result = this.result = this.result.substring(0, this.result.length - 1);
+                }
+                this.lastchar = btn;
+                this.result += btn;
+            }
+        }
+        catch (err) {
+            this.result = "Input Error!";
+            this.itemsprice = [];
+            this.lastsum = 0;
+            this.itemsqty = [];
+            this.itemsDiscount = [];
+            this.loitems = [];
+        }
+        finally {
+        }
+    };
+    AllTransactionPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: "page-all-transaction",template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\open-fintech-december\open-pos\src\pages\all-transaction\all-transaction.html"*/'<!--\n\n  Generated template for the AllTransactionPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n\n\n\n\n<ion-content padding>\n\n    <!-- <ion-fab bottom right>\n\n        <button ion-fab color="primary" item-right><ion-icon name="calculator"></ion-icon></button>\n\n      </ion-fab> -->\n\n      <!-- <ion-card *ngIf="showSampleRec==false">\n\n        ကျေးဇူးပြုပြီးပစ္စည်းအတွက်ပမာဏကိုမြှောက်ပါ၊ ရှိပြီးသားငွေတောင်းခံလွှာကိုထည့်ရန်တူညီသောစာလုံးကိုနှိပ်ပါ။\n\n\n\n        အလွတ်ပစ္စည်းပေါင်းများစွာကိုထည့်သွင်းလိုပါက * qty တစ်ခုချင်းစီကိုရိုက်ထည့်ပြီးနောက်တစ်ခုကိုရိုက်ထည့်ရန် + သင်္ကေတကိုနှိပ်ပါ\n\n      </ion-card>\n\n       -->\n\n  <ion-grid>\n\n    <ion-row>\n\n\n\n      <ion-col col-12 col-md-6>\n\n\n\n          <div class="calculator">\n\n            <div class="header">\n\n              <div class="window"></div>\n\n              <div class="input">\n\n                <!-- <ion-row>\n\n                  \n\n                  <ion-input type="text" placeholder="0" name="display" [(ngModel)]="result">\n\n                  </ion-input>\n\n                  \n\n                 \n\n                  <ion-icon name="backspace" (click)="btnClicked(\'b\')"></ion-icon>\n\n                  \n\n                </ion-row>  -->\n\n                <ion-row>\n\n                    <ion-col col-10>\n\n                      <div style="text-align: left; overflow-y: scroll; height: 80px;">\n\n                      {{result}}\n\n                  </div>\n\n                  </ion-col>\n\n\n\n                   <!-- <ion-col col-10>\n\n                      <ion-scroll scrollX="true" style="  white-space: nowrap; height: 80px;">\n\n                        <div style="text-align: right;">\n\n                          {{result}}\n\n                        </div>\n\n                      </ion-scroll>\n\n                  </ion-col> -->\n\n\n\n    \n\n                \n\n                  \n\n                  <ion-col col-2> <ion-icon name="backspace" (click)="btnClicked(\'b\')"></ion-icon>\n\n                  </ion-col>\n\n                  \n\n                </ion-row>\n\n               \n\n                    \n\n                \n\n              </div>\n\n             \n\n              \n\n            </div>\n\n            <div class="keys">\n\n              <div class="row">\n\n                <div class="number">\n\n                  <span (click)="btnClicked(\'7\')">7</span>\n\n                  <span (click)="btnClicked(\'8\')">8</span>\n\n                  <span (click)="btnClicked(\'9\')">9</span>\n\n                </div>\n\n                <div class="symbol">\n\n                  <span (click)="btnClicked(\'*\')">×</span>\n\n\n\n                </div>\n\n              </div>\n\n\n\n              <div class="row">\n\n                <div class="number">\n\n                  <span (click)="btnClicked(\'4\')">4</span>\n\n                  <span (click)="btnClicked(\'5\')">5</span>\n\n                  <span (click)="btnClicked(\'6\')">6</span>\n\n                </div>\n\n\n\n                <div class="symbol">\n\n                  <span (click)="btnClicked(\'+\')">+</span>\n\n           </div>\n\n              </div>\n\n\n\n              <div class="row">\n\n                <div class="number">\n\n                  <span (click)="btnClicked(\'1\')">1</span>\n\n                  <span (click)="btnClicked(\'2\')">2</span>\n\n                  <span (click)="btnClicked(\'3\')">3</span>\n\n                </div>\n\n\n\n                <div class="symbol">\n\n                  <span (click)="btnClicked(\'/\')">÷</span>\n\n                </div>\n\n\n\n\n\n              </div>\n\n\n\n\n\n              <div class="row">\n\n                <div class="number">\n\n                    \n\n                    <span (click)="btnClicked(\'.\')">.</span>\n\n                  <span (click)="btnClicked(\'0\')">0</span>\n\n                  <span (click)="btnClicked(\'%\')">%</span>\n\n                  \n\n\n\n                </div>\n\n\n\n                <div class="symbol">\n\n                    <span (click)="btnClicked(\'-\')">-</span>\n\n                  </div>\n\n\n\n              </div>\n\n\n\n              <div class="row">\n\n                <div class="number">\n\n                \n\n                  <span (click)="btnClicked(\'C\')"></span>\n\n                  <span (click)="btnClicked(\'C\')">CLEAR</span>\n\n                  <span (click)="btnClicked(\'C\')"></span>\n\n             \n\n                \n\n                </div>\n\n                <div class="symbol action">\n\n                    <span (click)="btnClicked(\'=\')">=</span>\n\n                  </div>\n\n              </div>\n\n\n\n\n\n            </div>\n\n          </div>\n\n\n\n    \n\n\n\n      </ion-col>\n\n\n\n      <ion-col col-12 col-md-6>\n\n\n\n\n\n        <ion-card *ngIf="showSampleRec==true"> \n\n\n\n                <ion-grid>\n\n          \n\n                  <ion-row> <ion-col style="text-align: center; padding-top: 5px;">{{userdata? userdata.business_name: null}} </ion-col> </ion-row>\n\n          \n\n                  <ion-row>\n\n                      <ion-col col-12 style="color: grey; font-size: 10px; text-align: center"> {{userdata?userdata.business_address:null}}</ion-col>\n\n                  </ion-row>\n\n                  <ion-row>\n\n                      <ion-col col-12 style="color: grey; font-size: 10px; text-align: center"> {{userdata?userdata.ph_no:null}}</ion-col>\n\n                  </ion-row>          \n\n                  <ion-row style="padding-top: 5px;">\n\n                      <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><b>{{"Sl" | translate}}</b></ion-col>\n\n                      <ion-col col-5 style="color: black; font-size: 10px; text-align: center"><b>{{"Name" | translate}}</b></ion-col>\n\n                      <ion-col col-3 style="color: black; font-size: 10px; text-align: center"><b>{{"Price"| translate}}</b></ion-col>\n\n                      <ion-col col-3 style="color: black; font-size: 10px; text-align: center"><b>{{"Qty"| translate}}</b></ion-col>\n\n                 </ion-row>\n\n          \n\n                 \n\n          \n\n                  <ion-list *ngFor="let item of itemsprice; let i = index" no-lines>\n\n          \n\n              \n\n                    <ion-row>\n\n                        <ion-col col-1 style="color: black; font-size: 10px; text-align: center">{{i+1}}.</ion-col>\n\n                        <ion-col col-5 style="color: black; font-size: 10px; text-align: center">\n\n                         Item {{i+1}}</ion-col>   \n\n                        <ion-col col-3 style="color: black; font-size: 10px; text-align: center">{{item}}</ion-col>\n\n                        <ion-col col-3 style="color: black; font-size: 10px; text-align: center">{{itemsqty[i]}}</ion-col>\n\n\n\n                    </ion-row>\n\n                \n\n          \n\n                  </ion-list>\n\n          \n\n                  <ion-row padding>\n\n                      <ion-col col-1></ion-col>  \n\n                    <ion-col col-4 style="text-align: center;font-size: 10px;"><b>{{"Total"| translate}}</b> </ion-col>\n\n                      <ion-col col-2 style="text-align: center;font-size: 10px;"><b>{{lastsum}}</b> </ion-col>\n\n                      <ion-col col-5></ion-col>\n\n                    </ion-row>\n\n          \n\n          \n\n                   \n\n          \n\n          \n\n                </ion-grid>\n\n          \n\n          \n\n          \n\n\n\n        </ion-card>\n\n\n\n      </ion-col>\n\n\n\n\n\n\n\n    </ion-row>\n\n\n\n\n\n  </ion-grid>\n\n\n\n\n\n\n\n  <!-- Dynamically Generate All transactions from backend - see feed from prev -->\n\n\n\n</ion-content>\n\n\n\n<ion-footer *ngIf="showSampleRec==true" style="background-color: #ffffff">\n\n\n\n    <ion-grid>\n\n      <ion-row>\n\n        <ion-col>\n\n            <button ion-button (click)="createRec()" full style="background-color: #FFA500">{{updateOrCreate|translate}}</button>\n\n        </ion-col>\n\n      </ion-row>\n\n    </ion-grid>\n\n   \n\n</ion-footer>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\open-fintech-december\open-pos\src\pages\all-transaction\all-transaction.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_translation_translate_config_service__["a" /* TranslateConfigService */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */]])
+    ], AllTransactionPage);
+    return AllTransactionPage;
+}());
+
+//# sourceMappingURL=all-transaction.js.map
+
+/***/ }),
+
 /***/ 240:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2473,7 +2221,7 @@ var ExpensesHomePage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_barcode_scanner__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_translation_translate_config_service__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_printer_printer__ = __webpack_require__(186);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_printer_printer__ = __webpack_require__(187);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_printer_printer_commands__ = __webpack_require__(311);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_esc_pos_encoder_ionic__ = __webpack_require__(312);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_esc_pos_encoder_ionic___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_esc_pos_encoder_ionic__);
@@ -2756,6 +2504,9 @@ var IncomeTransactionPage = /** @class */ (function () {
     IncomeTransactionPage.prototype.removeItem = function (index) {
         //this.lastsum=this.lastsum-(this.datastore.itemslist[index].price*this.datastore.itemslist[index].qty);
         var rem = this.datastore.itemslist.splice(index, 1);
+        if (this.datastore.itemslist.length == 0) {
+            this.cancelRec();
+        }
         this.updateRec();
         console.log("I: " + index);
         console.log(this.datastore.itemslist[index]);
@@ -3128,7 +2879,6 @@ var IncomeTransactionPage = /** @class */ (function () {
                 .align("left")
                 .raw(__WEBPACK_IMPORTED_MODULE_6__providers_printer_printer_commands__["a" /* commands */].FEED_CONTROL_SEQUENCES.RST_HT)
                 .raw(__WEBPACK_IMPORTED_MODULE_6__providers_printer_printer_commands__["a" /* commands */].FEED_CONTROL_SEQUENCES.SET_HT)
-                .text("Sl ")
                 .raw(__WEBPACK_IMPORTED_MODULE_6__providers_printer_printer_commands__["a" /* commands */].FEED_CONTROL_SEQUENCES.CTL_HT)
                 .text("Item Name ")
                 .raw(__WEBPACK_IMPORTED_MODULE_6__providers_printer_printer_commands__["a" /* commands */].FEED_CONTROL_SEQUENCES.CTL_HT)
@@ -3138,7 +2888,6 @@ var IncomeTransactionPage = /** @class */ (function () {
                 .newline();
             this.datastore.itemslist.forEach(function (element, index) {
                 result
-                    .text(index + 1 + " ")
                     .raw(__WEBPACK_IMPORTED_MODULE_6__providers_printer_printer_commands__["a" /* commands */].FEED_CONTROL_SEQUENCES.CTL_HT)
                     .text(element.name + " ", 30)
                     .raw(__WEBPACK_IMPORTED_MODULE_6__providers_printer_printer_commands__["a" /* commands */].FEED_CONTROL_SEQUENCES.CTL_HT)
@@ -3712,9 +3461,9 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__(359);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_login_login__ = __webpack_require__(99);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_sign_up_sign_up__ = __webpack_require__(100);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_transaction_home_transaction_home__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_login_login__ = __webpack_require__(98);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_sign_up_sign_up__ = __webpack_require__(99);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_transaction_home_transaction_home__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_dashboard_dashboard__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_addproduct_addproduct__ = __webpack_require__(93);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_status_bar__ = __webpack_require__(234);
@@ -3729,13 +3478,13 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__ngx_translate_core__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__ngx_translate_http_loader__ = __webpack_require__(365);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__providers_translation_translate_config_service__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__ionic_native_bluetooth_serial__ = __webpack_require__(187);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__providers_printer_printer__ = __webpack_require__(186);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__ionic_native_bluetooth_serial__ = __webpack_require__(188);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__providers_printer_printer__ = __webpack_require__(187);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__ionic_native_geolocation__ = __webpack_require__(185);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__providers_geolocation_geolocation_service__ = __webpack_require__(97);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26_firebase__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_26_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_login_login_module__ = __webpack_require__(191);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_login_login_module__ = __webpack_require__(186);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pages_sign_up_sign_up_module__ = __webpack_require__(193);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_transaction_home_transaction_home_module__ = __webpack_require__(194);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_dashboard_dashboard_module__ = __webpack_require__(367);
@@ -3823,21 +3572,21 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["f" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* MyApp */], { preloadModules: true }, {
                     links: [
                         { loadChildren: '../pages/add-product-category/add-product-category.module#AddProductCategoryPageModule', name: 'AddProductCategoryPage', segment: 'add-product-category', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/all-transaction/all-transaction.module#AllTransactionPageModule', name: 'AllTransactionPage', segment: 'all-transaction', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/coach-businesstips/coach-businesstips.module#CoachBusinesstipsPageModule', name: 'CoachBusinesstipsPage', segment: 'coach-businesstips', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/coach-coach/coach-coach.module#CoachCoachPageModule', name: 'CoachCoachPage', segment: 'coach-coach', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/coach-home/coach-home.module#CoachHomePageModule', name: 'CoachHomePage', segment: 'coach-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/coach-goals/coach-goals.module#CoachGoalsPageModule', name: 'CoachGoalsPage', segment: 'coach-goals', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/coach-home/coach-home.module#CoachHomePageModule', name: 'CoachHomePage', segment: 'coach-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/contact-us/contact-us.module#ContactUsPageModule', name: 'ContactUsPage', segment: 'contact-us', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/expense-transaction/expense-transaction.module#ExpenseTransactionPageModule', name: 'ExpenseTransactionPage', segment: 'expense-transaction', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/expenses-home/expenses-home.module#ExpensesHomePageModule', name: 'ExpensesHomePage', segment: 'expenses-home', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/income-transaction/income-transaction.module#IncomeTransactionPageModule', name: 'IncomeTransactionPage', segment: 'income-transaction', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/product-list/product-list.module#ProductListPageModule', name: 'ProductListPage', segment: 'product-list', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/sign-up/sign-up.module#SignUpPageModule', name: 'SignUpPage', segment: 'sign-up', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/transaction-product/transaction-product.module#TransactionProductPageModule', name: 'TransactionProductPage', segment: 'transaction-product', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/summary-home/summary-home.module#SummaryHomePageModule', name: 'SummaryHomePage', segment: 'summary-home', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/income-transaction/income-transaction.module#IncomeTransactionPageModule', name: 'IncomeTransactionPage', segment: 'income-transaction', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/all-transaction/all-transaction.module#AllTransactionPageModule', name: 'AllTransactionPage', segment: 'all-transaction', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/transaction-home/transaction-home.module#TransactionHomePageModule', name: 'TransactionHomePage', segment: 'transaction-home', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/transaction-product/transaction-product.module#TransactionProductPageModule', name: 'TransactionProductPage', segment: 'transaction-product', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/user-profile/user-profile.module#UserProfilePageModule', name: 'UserProfilePage', segment: 'user-profile', priority: 'low', defaultHistory: [] }
                     ]
                 }),
@@ -3925,7 +3674,7 @@ var commands = {
         CTL_HT: [0x09],
         CTL_VT: [0x0b],
         RST_HT: [0x1b, 0x44, 0x00],
-        SET_HT: [0x1b, 0x44, 0x05, 0x23, 0x28, 0x00],
+        SET_HT: [0x1b, 0x44, 0x23, 0x28, 0x00],
     },
     LINE_SPACING: {
         LS_DEFAULT: [0x1b, 0x32],
@@ -4026,14 +3775,14 @@ var commands = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(234);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(235);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_dashboard_dashboard__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_login_login__ = __webpack_require__(99);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_login_login__ = __webpack_require__(98);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_firebase__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_transaction_home_transaction_home__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_transaction_home_transaction_home__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_summary_home_summary_home__ = __webpack_require__(242);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_contact_us_contact_us__ = __webpack_require__(236);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__providers_storage_storage__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_expenses_home_expenses_home__ = __webpack_require__(239);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_expenses_home_expenses_home__ = __webpack_require__(238);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_user_profile_user_profile__ = __webpack_require__(123);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__providers_translation_translate_config_service__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ngx_translate_core__ = __webpack_require__(23);
@@ -4334,14 +4083,14 @@ var SingleProductPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 43:
+/***/ 42:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TransactionHomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__all_transaction_all_transaction__ = __webpack_require__(238);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__all_transaction_all_transaction__ = __webpack_require__(239);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__income_transaction_income_transaction__ = __webpack_require__(240);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__transaction_product_transaction_product__ = __webpack_require__(241);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_storage_storage__ = __webpack_require__(14);
@@ -5592,7 +5341,7 @@ var GeolocationService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 99:
+/***/ 98:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5601,8 +5350,8 @@ var GeolocationService = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__sign_up_sign_up__ = __webpack_require__(100);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__transaction_home_transaction_home__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__sign_up_sign_up__ = __webpack_require__(99);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__transaction_home_transaction_home__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_storage_storage__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_facebook__ = __webpack_require__(192);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_translation_translate_config_service__ = __webpack_require__(11);
@@ -5853,6 +5602,258 @@ var LoginPage = /** @class */ (function () {
 }());
 
 //# sourceMappingURL=login.js.map
+
+/***/ }),
+
+/***/ 99:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignUpPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__transaction_home_transaction_home__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_translation_translate_config_service__ = __webpack_require__(11);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
+
+
+
+
+
+/**
+ * Generated class for the SignUpPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var SignUpPage = /** @class */ (function () {
+    function SignUpPage(navCtrl, navParams, toastCtrl, sp, translateConfigService, alertCtrl) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.toastCtrl = toastCtrl;
+        this.sp = sp;
+        this.translateConfigService = translateConfigService;
+        this.alertCtrl = alertCtrl;
+        this.listOfBType = [];
+        this.listOfCurrency = [];
+        this.listOfLang = [];
+        this.name = "";
+        this.email = "";
+        this.password = "";
+        this.businessname = "";
+        this.businessaddress = "";
+        this.businesstype = "";
+        this.phno = "";
+        this.language = "";
+        this.currency = "";
+        this.nextbtn = 0;
+        this.nextbtn = 0;
+        this.loadDropDowns();
+    }
+    SignUpPage.prototype.ionViewDidLoad = function () {
+        console.log("ionViewDidLoad SignUpPage");
+        this.nextbtn = 0;
+    };
+    SignUpPage.prototype.nextPg = function () {
+        this.nextbtn = 1;
+    };
+    SignUpPage.prototype.prevPg = function () {
+        this.nextbtn = 0;
+    };
+    SignUpPage.prototype.loadDropDowns = function () {
+        var _this = this;
+        __WEBPACK_IMPORTED_MODULE_2_firebase___default.a
+            .firestore()
+            .collection("sign-up")
+            .get()
+            .then(function (doc) {
+            doc.docs[0].data().businessType.forEach(function (b) {
+                _this.listOfBType.push(b);
+            });
+            doc.docs[0].data().currency.forEach(function (c) {
+                _this.listOfCurrency.push(c);
+            });
+            doc.docs[0].data().language.forEach(function (l) {
+                _this.listOfLang.push(l);
+            });
+        });
+    };
+    SignUpPage.prototype.signup = function () {
+        var _this = this;
+        var message = this.translateConfigService.getTranslatedMessage("Please wait while creating your profile ...");
+        this.toastCtrl
+            .create({
+            // @ts-ignore
+            message: message.value,
+            duration: 3000,
+        })
+            .present();
+        __WEBPACK_IMPORTED_MODULE_2_firebase___default.a
+            .auth()
+            .createUserWithEmailAndPassword(this.email, this.password)
+            .then(function (data) {
+            var newUser = data.user;
+            newUser
+                .updateProfile({
+                displayName: _this.name,
+            })
+                .then(function (res) {
+                console.log("Profile Updated");
+                __WEBPACK_IMPORTED_MODULE_2_firebase___default.a
+                    .firestore()
+                    .collection("users")
+                    .add({
+                    // file_name: this.text,
+                    created: __WEBPACK_IMPORTED_MODULE_2_firebase___default.a.firestore.FieldValue.serverTimestamp(),
+                    owner: __WEBPACK_IMPORTED_MODULE_2_firebase___default.a.auth().currentUser.uid,
+                    owner_name: __WEBPACK_IMPORTED_MODULE_2_firebase___default.a.auth().currentUser.displayName,
+                    business_name: _this.businessname,
+                    businesstype: _this.businesstype,
+                    business_address: _this.businessaddress,
+                    ph_no: _this.phno,
+                    language: _this.language,
+                    currency: _this.currency,
+                    cash_balance: _this.cb,
+                    discount: _this.discount,
+                    taxrate: _this.taxrate,
+                    categories: [{ name: "Example" }],
+                    products: [
+                        {
+                            cat: "Example",
+                            code: "0000",
+                            cost: "0",
+                            name: "Example Product",
+                            price: "0",
+                            stock_qty: "0",
+                            url: "https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y",
+                            wholesale_price: "0",
+                        },
+                    ],
+                    transactions: [
+                        {
+                            datetime: new Date(),
+                            discount: 0,
+                            discountlist: [],
+                            itemslist: [
+                                { cat: "Example", code: "0000", cost: "0", name: "Example Product", price: "0", stock_qty: "0" },
+                            ],
+                            pnllist: [],
+                            prodidlist: [],
+                            taxrate: 0,
+                            totalatax: 0,
+                            totaldisc: 0,
+                            totalsum: 0,
+                        },
+                    ],
+                })
+                    .then(function (doc) { return __awaiter(_this, void 0, void 0, function () {
+                    var _this = this;
+                    var title, message;
+                    return __generator(this, function (_a) {
+                        console.log(doc);
+                        title = this.translateConfigService.getTranslatedMessage("Account Created");
+                        message = this.translateConfigService.getTranslatedMessage("Your account has been created successfully");
+                        this.alertCtrl
+                            .create({
+                            // @ts-ignore
+                            title: title.value,
+                            // @ts-ignore
+                            message: message.value,
+                            buttons: [
+                                {
+                                    text: "OK",
+                                    handler: function () {
+                                        //this.sp.clearMem();
+                                        _this.sp.setMem();
+                                        _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_3__transaction_home_transaction_home__["a" /* TransactionHomePage */]); //navigate to feeds page
+                                    },
+                                },
+                            ],
+                        })
+                            .present();
+                        return [2 /*return*/];
+                    });
+                }); })
+                    .catch(function (err) {
+                    console.log(err);
+                });
+            })
+                .catch(function (err) {
+                console.log(err);
+                _this.toastCtrl
+                    .create({
+                    message: err.message,
+                    duration: 3000,
+                })
+                    .present();
+            });
+        });
+    };
+    SignUpPage.prototype.goBack = function () {
+        this.navCtrl.pop();
+    };
+    SignUpPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: "page-sign-up",template:/*ion-inline-start:"C:\Users\supre\Downloads\Coding\easycredit\open-fintech-december\open-pos\src\pages\sign-up\sign-up.html"*/'<ion-header>\n\n		<ion-navbar transparent>\n\n		</ion-navbar>\n\n	  </ion-header>\n\n	  <ion-content padding>\n\n		  \n\n			  <button ion-button block clear color="light" class="nametop"><b>Open</b></button> \n\n	  \n\n	  <ion-grid style="width: 75%;">\n\n	  \n\n		  <div *ngIf="nextbtn!=1">\n\n		  <ion-row class="row-style1" justify-content-center align-items-center style="height: 100%">{{"Register a business"|translate}}</ion-row>\n\n		  <ion-row class="row-style"> \n\n			  <ion-icon name="person" color="semi-light" class="icon"></ion-icon>\n\n			  <ion-input type="text" placeholder="{{\'Name\'|translate}}" [(ngModel)]="name"></ion-input>\n\n		  </ion-row>\n\n		  <ion-row class="row-style">\n\n			  <ion-icon name="mail" color="semi-light" class="icon"></ion-icon>\n\n			  <ion-input type="email" placeholder="{{ \'email\' | translate }}" [(ngModel)]="email"> </ion-input>\n\n		  </ion-row>\n\n		  <ion-row class="row-style">\n\n			  <ion-icon name="key" color="semi-light" class="icon"></ion-icon>\n\n			  <ion-input type="password" placeholder="{{\'password\'|translate}}"  [(ngModel)]="password"></ion-input>\n\n		  </ion-row>\n\n		  <ion-row class="row-style">\n\n			  <ion-icon name="home" color="semi-light" class="icon"></ion-icon>\n\n			  <ion-input type="text" placeholder="{{\'Business Name\'|translate}} "  [(ngModel)]="businessname"></ion-input>\n\n		  </ion-row>\n\n		  <ion-row class="row-style">\n\n			  <ion-icon name="pin" color="semi-light" class="icon"></ion-icon>\n\n			  <ion-input type="text" placeholder="{{\'Full Business Address\'|translate}}"  [(ngModel)]="businessaddress"></ion-input>\n\n		  </ion-row>\n\n		  <ion-row class="row-style">\n\n			  <ion-icon name="call" color="semi-light" class="icon"></ion-icon>\n\n			  <ion-input type="text" placeholder="{{\'Phone Number\'|translate}}"  [(ngModel)]="phno"></ion-input>\n\n		  </ion-row>\n\n	  <button ion-button block round outline color="light" style="margin-top: 10px;" (click)="nextPg()">{{\'Next Page\'|translate}}</button>\n\n	  </div>\n\n	  <div *ngIf="nextbtn==1">\n\n			  <button ion-button block round outline color="light" style="margin-bottom: 10px;" (click)="prevPg()">{{\'Back\'|translate}}</button>\n\n		  <ion-row class="row-style">\n\n				  <ion-icon name="globe" color="semi-light" class="icon"></ion-icon>\n\n				  <ion-label>{{"Business Type"|translate}}</ion-label>\n\n				  <ion-select [(ngModel)]="businesstype">\n\n					  <ion-option *ngFor="let b of listOfBType" value="{{ b }}">{{ b }}</ion-option>\n\n				  </ion-select>\n\n				  <!-- <ion-input type="text" placeholder="Language"  [(ngModel)]="businessname"></ion-input> -->\n\n		 </ion-row>\n\n	  \n\n	  \n\n		  <ion-row class="row-style">\n\n			  <ion-icon name="chatboxes" color="semi-light" class="icon"></ion-icon>\n\n			  <ion-label>{{"Language"|translate}}</ion-label>\n\n			  <ion-select [(ngModel)]="language">\n\n				  <ion-option *ngFor="let l of listOfLang" value="{{ l }}">{{ l }}</ion-option>\n\n			  </ion-select>\n\n			  <!-- <ion-input type="text" placeholder="Language"  [(ngModel)]="businessname"></ion-input> -->\n\n		  </ion-row>\n\n	  \n\n		  <ion-row class="row-style">\n\n				  <ion-icon name="logo-usd" color="semi-light" class="icon"></ion-icon>\n\n				  <ion-label>{{"Currency"|translate}}</ion-label>\n\n				  <ion-select [(ngModel)]="currency">\n\n					  <ion-option *ngFor="let c of listOfCurrency" value = "{{ c }}">{{ c }}</ion-option>\n\n				  </ion-select>\n\n				  <!-- <ion-input type="text" placeholder="Language"  [(ngModel)]="businessname"></ion-input> -->\n\n			  </ion-row>\n\n	  \n\n	  \n\n		  <ion-row class="row-style">\n\n			  <ion-icon name="cash" color="semi-light" class="icon"></ion-icon>\n\n			  <ion-input type="number" placeholder="{{\'Starting Cash Balance\'|translate}}"  [(ngModel)]="cb"></ion-input>\n\n		  </ion-row>\n\n	  \n\n		  <ion-row class="row-style">\n\n				  <ion-icon name="cash" color="semi-light" class="icon"></ion-icon>\n\n				  <ion-input type="number" placeholder="{{\'Usual Discount %\'|translate}}"  [(ngModel)]="discount"></ion-input>\n\n			  </ion-row>\n\n	  \n\n			  <ion-row class="row-style">\n\n					  <ion-icon name="cash" color="semi-light" class="icon"></ion-icon>\n\n					  <ion-input type="number" placeholder="{{ \'Usual Tax %\' | translate }}"  [(ngModel)]="taxrate"></ion-input>\n\n				  </ion-row>\n\n		  <ion-row>\n\n			  <button ion-button block round outline color="light" style="margin-top: 20px;" (click)="signup()">{{"Sign Up"|translate}}</button>\n\n		  </ion-row>\n\n	  </div>\n\n	  </ion-grid>\n\n	  <button ion-button block clear color="light" style="margin-top: 10px;" (click)="goBack()">{{"Already have an account? Log-in"|translate}}</button>\n\n	  </ion-content>\n\n'/*ion-inline-end:"C:\Users\supre\Downloads\Coding\easycredit\open-fintech-december\open-pos\src\pages\sign-up\sign-up.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */],
+            __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__["a" /* StorageProvider */],
+            __WEBPACK_IMPORTED_MODULE_5__providers_translation_translate_config_service__["a" /* TranslateConfigService */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
+    ], SignUpPage);
+    return SignUpPage;
+}());
+
+//# sourceMappingURL=sign-up.js.map
 
 /***/ })
 
