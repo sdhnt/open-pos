@@ -54,7 +54,7 @@ export class AddProductPage {
   ionViewDidLoad() {
     console.log("ionViewDidLoad AddProductCategoryPage");
     this.getCategories();
-    this.disabled=false;
+    this.disabled = false;
   }
 
   userdata;
@@ -191,10 +191,10 @@ export class AddProductPage {
       });
   }
   produrl: any = "";
-  disabled=false;
+  disabled = false;
 
   addproduct() {
-    this.disabled=true;
+    this.disabled = true;
     if (!this.formProduct.valid || (this.prodCat == "New" && this.newprodCat == "")) {
       const message = this.translateConfigService.getTranslatedMessage("Incomplete");
       this.toastCtrl
@@ -204,7 +204,7 @@ export class AddProductPage {
           duration: 1000,
         })
         .present();
-        this.disabled=false;
+      this.disabled = false;
     } else {
       //old
       if (this.newprodCat != "") {
@@ -253,7 +253,7 @@ export class AddProductPage {
             this.produrl = "";
             this.currstock = null;
             this.image = "";
-            this.disabled=false;
+            this.disabled = false;
 
             this.sp.backupStorage();
 
@@ -306,7 +306,7 @@ export class AddProductPage {
               this.prodCost = 0;
               this.produrl = "";
               this.image = "";
-              this.disabled=false;
+              this.disabled = false;
 
               this.sp.backupStorage();
               //this.navCtrl.push(ProductListPage);

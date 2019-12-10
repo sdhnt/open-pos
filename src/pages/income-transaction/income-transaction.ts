@@ -112,8 +112,8 @@ export class IncomeTransactionPage {
       totalIndividualDiscount = 0;
     this.datastore.itemslist.forEach(item => {
       if (item.discount != 0) {
-        totalIndividualDiscount += ((item.price * parseInt(item.discount)) / 100) * item.qty;
-        console.log(((parseInt(item.price) * parseInt(item.discount)) / 100) * item.qty);
+        totalIndividualDiscount += ((item.price * parseFloat(item.discount)) / 100) * item.qty;
+        console.log(((parseFloat(item.price) * parseFloat(item.discount)) / 100) * item.qty);
       }
       this.lastsum += item.price * item.qty;
     });
@@ -334,7 +334,7 @@ export class IncomeTransactionPage {
 
   async updateCb(postransacsum) {
     this.getUserData();
-    this.userdata.cash_balance = (parseInt(this.userdata.cash_balance) + parseInt(postransacsum)).toString();
+    this.userdata.cash_balance = (parseFloat(this.userdata.cash_balance) + parseFloat(postransacsum)).toString();
     await this.sp.setUserDat(this.userdata);
   }
 
@@ -672,7 +672,8 @@ export class IncomeTransactionPage {
         .text("Qty ")
         .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
         .text("Price")
-        .newline();
+        .newline().newline();
+        
 
       this.datastore.itemslist.forEach((element, index) => {
         result
@@ -682,23 +683,23 @@ export class IncomeTransactionPage {
           .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
           .text(element.price + " ")
           .newline();
-        if (parseInt(element.discount) != 0) {
+        if (parseFloat(element.discount) != 0) {
           result
-            .text("Discount (" + element.discount + "%) :", 30)
+            .text("Discount (" + Math.round(parseFloat(element.discount)*100)/100 + "%) :", 30)
             .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
             .text("")
             .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
-            .text("-" + Math.round(element.price * (parseInt(element.discount) * element.qty)) / 100)
+            .text("-" + Math.round(element.price * element.discount * element.qty/100))
             .newline();
         }
       });
       result.newline();
       result.align("right").line("Total: " + this.lastsumAfterIndividualDiscount);
       if (this.lastsumAfterIndividualDiscount != this.lastsumdisc) {
-        result.line(" After Discount (" + this.discount + "%): " + this.lastsumdisc);
+        result.line(" After Discount (" + Math.round(this.discount*100)/100 + "%): " + this.lastsumdisc);
       }
       if (this.lastsumAfterIndividualDiscount != this.lastsumtax) {
-        result.line("After Tax (" + this.taxrate + "%): " + this.lastsumtax);
+        result.line("After Tax (" + Math.round(this.taxrate*100)/100 + "%): " + this.lastsumtax);
       }
     }
 
