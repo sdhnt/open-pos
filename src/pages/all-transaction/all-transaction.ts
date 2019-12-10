@@ -38,6 +38,7 @@ export class AllTransactionPage {
       //Same for Product Transaction Page
       //console.log(this.showSampleRec);
       const tempdat = JSON.parse(data);
+      this.showSampleRec=true;
       // this.itemsname=null;
       // this.itemsprice=null;
       // this.itemsqty=null;
@@ -61,7 +62,7 @@ export class AllTransactionPage {
       this.showSampleRec = false;
       this.flag_mode = 1;
     }
-
+    this.showSampleRec=false;
     this.delay(3000).then(() => {
       this.getUserData();
     });
@@ -117,6 +118,7 @@ export class AllTransactionPage {
 
   createRec() {
     const tempJSON = { itemslist: [] };
+    this.showSampleRec=false;
 
     this.itemsprice.forEach((element, index) => {
       if (this.itemsname.length > 0 && index < this.itemsname.length) {
@@ -167,6 +169,7 @@ export class AllTransactionPage {
         this.lastsum = 0;
         this.itemsqty = [];
         this.itemsDiscount = [];
+        this.showSampleRec= false;
       } else if (btn == "=") {
         this.showSampleRec = true;
 

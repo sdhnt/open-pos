@@ -105,27 +105,35 @@
 
               <div class="row">
                 <div class="number">
-                  <span (click)="btnClicked('C')">C</span>
+                    
+                    <span (click)="btnClicked('.')">.</span>
                   <span (click)="btnClicked('0')">0</span>
-                  <span (click)="btnClicked('-')">-</span>
-
-
+                  <span (click)="btnClicked('%')">%</span>
+                  
 
                 </div>
 
-                <div class="symbol action">
-                  <span (click)="btnClicked('=')">=</span>
-                </div>
+                <div class="symbol">
+                    <span (click)="btnClicked('-')">-</span>
+                  </div>
 
               </div>
 
               <div class="row">
                 <div class="number">
-                  <span (click)="btnClicked('.')">.</span>
-                  <span (click)="btnClicked('%')">%</span>
-                  <span (click)="btnClicked('squareroot')">√x</span>
+                
+                  <span (click)="btnClicked('C')"></span>
+                  <span (click)="btnClicked('C')">CLEAR</span>
+                  <span (click)="btnClicked('C')"></span>
+             
+                
                 </div>
+                <div class="symbol action">
+                    <span (click)="btnClicked('=')">=</span>
+                  </div>
               </div>
+
+
             </div>
           </div>
 
@@ -150,13 +158,10 @@
                   </ion-row>          
                   <ion-row style="padding-top: 5px;">
                       <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><b>{{"Sl" | translate}}</b></ion-col>
-                      <ion-col col-4 style="color: black; font-size: 10px; text-align: center"><b>{{"Name" | translate}}</b></ion-col>
-                      <ion-col col-2 style="color: black; font-size: 10px; text-align: center"><b>{{"Price"| translate}}</b></ion-col>
-                      <ion-col col-2 style="color: black; font-size: 10px; text-align: center"><b>{{"Qty"| translate}}</b></ion-col>
-                      <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="arrow-dropup-circle" style=" color: green"></ion-icon></ion-col>
-                      <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="arrow-dropdown-circle" style=" color: red"></ion-icon></ion-col>
-                      <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="close" style=" color: red"></ion-icon></ion-col>
-                  </ion-row>
+                      <ion-col col-5 style="color: black; font-size: 10px; text-align: center"><b>{{"Name" | translate}}</b></ion-col>
+                      <ion-col col-3 style="color: black; font-size: 10px; text-align: center"><b>{{"Price"| translate}}</b></ion-col>
+                      <ion-col col-3 style="color: black; font-size: 10px; text-align: center"><b>{{"Qty"| translate}}</b></ion-col>
+                 </ion-row>
           
                  
           
@@ -165,13 +170,11 @@
               
                     <ion-row>
                         <ion-col col-1 style="color: black; font-size: 10px; text-align: center">{{i+1}}.</ion-col>
-                        <ion-col col-4 style="color: black; font-size: 10px; text-align: center">
+                        <ion-col col-5 style="color: black; font-size: 10px; text-align: center">
                          Item {{i+1}}</ion-col>   
-                        <ion-col col-2 style="color: black; font-size: 10px; text-align: center">{{item}}</ion-col>
-                        <ion-col col-2 style="color: black; font-size: 10px; text-align: center">{{itemsqty[i]}}</ion-col>
-                        <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="arrow-dropup-circle" style=" color: green"></ion-icon></ion-col>
-                        <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="arrow-dropdown-circle" style=" color: red"></ion-icon></ion-col>
-                        <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><ion-icon name="close" style=" color: red"></ion-icon></ion-col>
+                        <ion-col col-3 style="color: black; font-size: 10px; text-align: center">{{item}}</ion-col>
+                        <ion-col col-3 style="color: black; font-size: 10px; text-align: center">{{itemsqty[i]}}</ion-col>
+
                     </ion-row>
                 
           
@@ -210,12 +213,12 @@
 
 </ion-content>
 
-<ion-footer>
+<ion-footer *ngIf="showSampleRec==true" style="background-color: #ffffff">
 
     <ion-grid>
       <ion-row>
         <ion-col>
-            <button ion-button (click)="createRec()" full style="background-color: #222">{{updateOrCreate|translate}}</button>
+            <button ion-button (click)="createRec()" full style="background-color: #FFA500">{{updateOrCreate|translate}}</button>
         </ion-col>
       </ion-row>
     </ion-grid>

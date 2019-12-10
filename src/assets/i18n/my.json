@@ -117,5 +117,10 @@
  "Additional Charges":"အပိုစွဲချက်",
  "Add Charges":"စွဲချက်ထည့်ပါ",
  "Enter Category Here":"ဤနေရာတွင်အမျိုးအစားထည့်ပါ",
- "Press home button to exit": "ထွက်ရန်အိမ်ခလုတ်ကိုနှိပ်ပါ"
+ "Press home button to exit": "ထွက်ရန်အိမ်ခလုတ်ကိုနှိပ်ပါ",
+ "Update Receipt": "နောက်ဆုံးသတင်း",
+ "Subtotal": "အထွေထွေ",
+ "SAVE ":"စောင့်ပါ ",
+ "PRINT ":"ပုံနှိပ် ",
+ "CANCEL ":"ပယ်ဖျက် "
 }
