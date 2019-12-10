@@ -1093,7 +1093,7 @@ var map = {
 		10
 	],
 	"../pages/income-transaction/income-transaction.module": [
-		381,
+		380,
 		9
 	],
 	"../pages/login/login.module": [
@@ -1107,7 +1107,7 @@ var map = {
 		193
 	],
 	"../pages/summary-home/summary-home.module": [
-		380,
+		381,
 		7
 	],
 	"../pages/transaction-home/transaction-home.module": [
@@ -2772,6 +2772,14 @@ var IncomeTransactionPage = /** @class */ (function () {
         var _this = this;
         console.log("Device mac: ", device);
         console.log("Data: ", JSON.stringify(data));
+        this.datastore.itemslist = [];
+        this.lastsum = 0;
+        this.lastsumtax = 0;
+        this.lastsumdisc = 0;
+        this.discount = 0;
+        this.taxrate = 0;
+        this.taxbtn = 0;
+        this.discbtn = 0;
         var load = this.loadCtrl.create({
             content: "Printing...",
             enableBackdropDismiss: true,
@@ -2820,7 +2828,16 @@ var IncomeTransactionPage = /** @class */ (function () {
                         },
                     ],
                 });
+                _this.datastore.itemslist = [];
+                _this.lastsum = 0;
+                _this.lastsumtax = 0;
+                _this.lastsumdisc = 0;
+                _this.discount = 0;
+                _this.taxrate = 0;
+                _this.taxbtn = 0;
+                _this.discbtn = 0;
                 alert.present();
+                _this.navCtrl.parent.select(0);
             });
         }, function (error) {
             console.log(error);
@@ -2893,12 +2910,11 @@ var IncomeTransactionPage = /** @class */ (function () {
             .align("center")
             .raw(__WEBPACK_IMPORTED_MODULE_6__providers_printer_printer_commands__["a" /* commands */].TEXT_FORMAT.TXT_4SQUARE)
             .line(this.userdata.business_name)
-            .newline()
             .raw(__WEBPACK_IMPORTED_MODULE_6__providers_printer_printer_commands__["a" /* commands */].TEXT_FORMAT.TXT_NORMAL)
             .line(this.userdata.business_address)
-            .newline()
             .line(this.userdata.ph_no)
             .align("left")
+            .newline()
             .line(this.getDateTime(this.datetime))
             .align("center")
             .text(__WEBPACK_IMPORTED_MODULE_6__providers_printer_printer_commands__["a" /* commands */].HORIZONTAL_LINE.HR_58MM)
@@ -3605,11 +3621,11 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/expenses-home/expenses-home.module#ExpensesHomePageModule', name: 'ExpensesHomePage', segment: 'expenses-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/product-list/product-list.module#ProductListPageModule', name: 'ProductListPage', segment: 'product-list', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/income-transaction/income-transaction.module#IncomeTransactionPageModule', name: 'IncomeTransactionPage', segment: 'income-transaction', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/sign-up/sign-up.module#SignUpPageModule', name: 'SignUpPage', segment: 'sign-up', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/summary-home/summary-home.module#SummaryHomePageModule', name: 'SummaryHomePage', segment: 'summary-home', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/income-transaction/income-transaction.module#IncomeTransactionPageModule', name: 'IncomeTransactionPage', segment: 'income-transaction', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/transaction-product/transaction-product.module#TransactionProductPageModule', name: 'TransactionProductPage', segment: 'transaction-product', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/transaction-home/transaction-home.module#TransactionHomePageModule', name: 'TransactionHomePage', segment: 'transaction-home', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/transaction-product/transaction-product.module#TransactionProductPageModule', name: 'TransactionProductPage', segment: 'transaction-product', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/user-profile/user-profile.module#UserProfilePageModule', name: 'UserProfilePage', segment: 'user-profile', priority: 'low', defaultHistory: [] }
                     ]
                 }),

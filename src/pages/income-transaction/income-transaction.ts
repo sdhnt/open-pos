@@ -506,6 +506,14 @@ export class IncomeTransactionPage {
   print(device, data) {
     console.log("Device mac: ", device);
     console.log("Data: ", JSON.stringify(data));
+    this.datastore.itemslist = [];
+    this.lastsum = 0;
+    this.lastsumtax = 0;
+    this.lastsumdisc = 0;
+    this.discount = 0;
+    this.taxrate = 0;
+    this.taxbtn = 0;
+    this.discbtn = 0;
     const load = this.loadCtrl.create({
       content: "Printing...",
       enableBackdropDismiss: true,
@@ -555,7 +563,16 @@ export class IncomeTransactionPage {
                 },
               ],
             });
+            this.datastore.itemslist = [];
+            this.lastsum = 0;
+            this.lastsumtax = 0;
+            this.lastsumdisc = 0;
+            this.discount = 0;
+            this.taxrate = 0;
+            this.taxbtn = 0;
+            this.discbtn = 0;
             alert.present();
+            (this.navCtrl.parent as Tabs).select(0);
           });
       },
       error => {
@@ -636,12 +653,11 @@ export class IncomeTransactionPage {
       .align("center")
       .raw(commands.TEXT_FORMAT.TXT_4SQUARE)
       .line(this.userdata.business_name)
-      .newline()
       .raw(commands.TEXT_FORMAT.TXT_NORMAL)
       .line(this.userdata.business_address)
-      .newline()
       .line(this.userdata.ph_no)
       .align("left")
+      .newline()
       .line(this.getDateTime(this.datetime))
       .align("center")
       .text(commands.HORIZONTAL_LINE.HR_58MM)
