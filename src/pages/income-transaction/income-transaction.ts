@@ -577,6 +577,36 @@ export class IncomeTransactionPage {
     );
   }
 
+  getDateTime(datetime) {
+    //return (datetime.getDate() + "/" + (datetime.getMonth() + 1) + "/" + datetime. getFullYear())
+    const temp = new Date(datetime);
+    const temp1 = temp;
+    const t =
+      temp.getDate() +
+      "/" +
+      (temp.getMonth() + 1) +
+      "/" +
+      temp.getFullYear() +
+      " " +
+      temp.getHours() +
+      ":" +
+      temp.getMinutes();
+    return t;
+  }
+
+  getDate(datetime) {
+    const temp = new Date(datetime);
+    const temp1 = temp;
+    const t = temp.getDate();
+    return t;
+  }
+
+  getMonth(datetime) {
+    const temp = new Date(datetime);
+    const t = temp.getMonth();
+    return t;
+  }
+
   prepareToPrint() {
     this.showrec = false;
     /*
@@ -611,7 +641,9 @@ export class IncomeTransactionPage {
       .line(this.userdata.business_address)
       .newline()
       .line(this.userdata.ph_no)
-      .line(Date.now().toString())
+      .align("left")
+      .line(this.getDateTime(this.datetime))
+      .align("center")
       .text(commands.HORIZONTAL_LINE.HR_58MM)
       .newline();
     if (this.datastore != null) {

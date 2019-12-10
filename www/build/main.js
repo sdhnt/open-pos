@@ -1093,7 +1093,7 @@ var map = {
 		10
 	],
 	"../pages/income-transaction/income-transaction.module": [
-		380,
+		381,
 		9
 	],
 	"../pages/login/login.module": [
@@ -1107,7 +1107,7 @@ var map = {
 		193
 	],
 	"../pages/summary-home/summary-home.module": [
-		381,
+		380,
 		7
 	],
 	"../pages/transaction-home/transaction-home.module": [
@@ -2839,6 +2839,32 @@ var IncomeTransactionPage = /** @class */ (function () {
             alert.present();
         });
     };
+    IncomeTransactionPage.prototype.getDateTime = function (datetime) {
+        //return (datetime.getDate() + "/" + (datetime.getMonth() + 1) + "/" + datetime. getFullYear())
+        var temp = new Date(datetime);
+        var temp1 = temp;
+        var t = temp.getDate() +
+            "/" +
+            (temp.getMonth() + 1) +
+            "/" +
+            temp.getFullYear() +
+            " " +
+            temp.getHours() +
+            ":" +
+            temp.getMinutes();
+        return t;
+    };
+    IncomeTransactionPage.prototype.getDate = function (datetime) {
+        var temp = new Date(datetime);
+        var temp1 = temp;
+        var t = temp.getDate();
+        return t;
+    };
+    IncomeTransactionPage.prototype.getMonth = function (datetime) {
+        var temp = new Date(datetime);
+        var t = temp.getMonth();
+        return t;
+    };
     IncomeTransactionPage.prototype.prepareToPrint = function () {
         this.showrec = false;
         /*
@@ -2872,7 +2898,9 @@ var IncomeTransactionPage = /** @class */ (function () {
             .line(this.userdata.business_address)
             .newline()
             .line(this.userdata.ph_no)
-            .newline()
+            .align("left")
+            .line(this.getDateTime(this.datetime))
+            .align("center")
             .text(__WEBPACK_IMPORTED_MODULE_6__providers_printer_printer_commands__["a" /* commands */].HORIZONTAL_LINE.HR_58MM)
             .newline();
         if (this.datastore != null) {
@@ -3578,10 +3606,10 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/product-list/product-list.module#ProductListPageModule', name: 'ProductListPage', segment: 'product-list', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/sign-up/sign-up.module#SignUpPageModule', name: 'SignUpPage', segment: 'sign-up', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/income-transaction/income-transaction.module#IncomeTransactionPageModule', name: 'IncomeTransactionPage', segment: 'income-transaction', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/summary-home/summary-home.module#SummaryHomePageModule', name: 'SummaryHomePage', segment: 'summary-home', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/transaction-home/transaction-home.module#TransactionHomePageModule', name: 'TransactionHomePage', segment: 'transaction-home', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/income-transaction/income-transaction.module#IncomeTransactionPageModule', name: 'IncomeTransactionPage', segment: 'income-transaction', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/transaction-product/transaction-product.module#TransactionProductPageModule', name: 'TransactionProductPage', segment: 'transaction-product', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/transaction-home/transaction-home.module#TransactionHomePageModule', name: 'TransactionHomePage', segment: 'transaction-home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/user-profile/user-profile.module#UserProfilePageModule', name: 'UserProfilePage', segment: 'user-profile', priority: 'low', defaultHistory: [] }
                     ]
                 }),
