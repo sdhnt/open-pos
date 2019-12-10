@@ -22,7 +22,6 @@
         </ion-row>
 
             <ion-row style="padding-top: 5px;">
-            <ion-col col-1 style="color: black; font-size: 10px; text-align: center"><b>{{"Sl" | translate}}</b></ion-col>
             <ion-col col-4 style="color: black; font-size: 10px; text-align: center"><b>{{"Name" | translate}}</b></ion-col>
             <ion-col col-2 style="color: black; font-size: 10px; text-align: center"><b>{{"Price"| translate}}</b></ion-col>
             <ion-col col-2 style="color: black; font-size: 10px; text-align: center"><b>{{"Qty"| translate}}</b></ion-col>
@@ -34,7 +33,6 @@
 
     
           <ion-row>
-              <ion-col col-1 style="color: black; text-align: center;">{{i+1}}.</ion-col>
               <ion-col col-4 style="color: black; text-align: center;">
                 <div *ngIf="item.name=='Item'; else itemexist">
                   <button ion-button small (click)="addSingleProd(item,i)">{{"Choose"|translate}}</button>
@@ -132,16 +130,6 @@
               <ion-label style="font-size: 1.0rem;">{{"Price"|translate}}</ion-label>
               <ion-input  type="number" placeholder="{{'Enter Price'|translate}}" [(ngModel)]="newUnitPrice" ngDefaultControl></ion-input>
             </ion-item>
-              <!-- <ion-item>
-                  <ion-label style="font-size: 1.0rem;" >Select Category</ion-label>
-                  <ion-select multiple="false" [(ngModel)]='newItemCat'>
-                      <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>    
-                  </ion-select>
-                </ion-item> -->
-         <!-- <ion-item>
-           <ion-label style="font-size: 1.0rem;">{{"Discount"|translate}}</ion-label>
-           <ion-input type="number" placeholder="{{'Enter Discount'|translate}}" [(ngModel)]="newItemDiscount" ngDefaultControl></ion-input>
-         </ion-item> -->
                 <button ion-button style="font-size: 1.0rem;" full (click)="addNewItem()"> {{"Add Charges"|translate}} </button>
               </div>
   </ion-card>
