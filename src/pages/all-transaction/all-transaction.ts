@@ -127,7 +127,7 @@ export class AllTransactionPage {
           cat: "NIL",
           stock_qty: 0,
           name: "Item",
-          price: parseInt(element),
+          price: parseFloat(element),
           qty: this.itemsqty[index],
           discount: this.itemsDiscount[index],
         });
@@ -182,7 +182,7 @@ export class AllTransactionPage {
           let discAmt;
           if (!element.includes("-")) discAmt = 0;
           else {
-            discAmt = parseInt(element.substring(element.indexOf("-") + 1));
+            discAmt = parseFloat(element.substring(element.indexOf("-") + 1));
             answ[index] = element.substring(0, element.indexOf("-"));
             element = answ[index];
           }
@@ -206,7 +206,7 @@ export class AllTransactionPage {
             }
           }
 
-          this.itemsDiscount.push((discAmt * 100) / (parseInt(this.itemsprice[index]) * this.itemsqty[index]));
+          this.itemsDiscount.push((discAmt * 100) / (parseFloat(this.itemsprice[index]) * this.itemsqty[index]));
 
           // this.itemsprice.push(
           //   {'name': "Blank_Item",
@@ -225,7 +225,7 @@ export class AllTransactionPage {
 
         //this.lastsum=parseInt(this.result);
         for (let i = 0; i < this.itemsprice.length; i++) {
-          this.lastsum = this.lastsum + parseInt(this.itemsprice[i]) * this.itemsqty[i];
+          this.lastsum = this.lastsum + parseFloat(this.itemsprice[i]) * this.itemsqty[i];
           console.log(this.lastsum);
         }
       } else if (btn == "b") {
@@ -237,7 +237,7 @@ export class AllTransactionPage {
       } else if (btn == "reciproc") {
         this.result = eval(1 + "/ (" + this.result + ")");
       } else {
-        if (parseInt(this.result) == this.lastsum) {
+        if (parseFloat(this.result) == this.lastsum) {
           this.result = this.result.substring(0, 0);
         }
 
