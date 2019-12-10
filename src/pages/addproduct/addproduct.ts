@@ -202,6 +202,8 @@ export class AddProductPage {
         })
         .present();
     } else {
+
+
       //old
       if (this.newprodCat != "") {
         this.addCategory();
@@ -213,7 +215,7 @@ export class AddProductPage {
           // @ts-ignore
           message: message.value,
           duration: 2000,
-        });
+        }).present();
 
         const data = {
           code: this.prodCode,
@@ -263,7 +265,7 @@ export class AddProductPage {
           // @ts-ignore
           message: message.value,
           duration: 2000,
-        });
+        }).present();
         this.upload_new(this.prodName).then(() => {
           const data = {
             code: this.prodCode,
