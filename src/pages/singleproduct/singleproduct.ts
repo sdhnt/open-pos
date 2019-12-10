@@ -78,6 +78,7 @@ export class SingleProductPage {
   ionViewDidLoad() {
     console.log("ionViewDidLoad AddProductCategoryPage");
     this.getCategories();
+    this.disabled=false;
   }
 
   newprodCat: any = "";
@@ -216,15 +217,33 @@ export class SingleProductPage {
         console.log("Error", err);
       });
   }
+  disabled=false;
 
   updateProduct() {
+    this.disabled=true;
     if (!this.formProduct.valid) {
       console.log("invalid product with missing fields");
+      const message = this.translateConfigService.getTranslatedMessage("Please fill all the information!");
+      const toast = this.toastCtrl.create({
+        // @ts-ignore
+        message: message.value,
+        duration: 2000,
+      });
+      toast.present();
+      this.disabled=false;
     } else {
       if (this.newprodCat != "") {
         this.addCategory();
         this.product.cat = this.newprodCat;
       }
+
+      const message = this.translateConfigService.getTranslatedMessage("Modifying item, please wait a moment");
+      const toast = this.toastCtrl.create({
+        // @ts-ignore
+        message: message.value,
+        duration: 2000,
+      });
+      toast.present();
 
       const data = {
         code: this.product.code,
@@ -247,6 +266,7 @@ export class SingleProductPage {
             duration: 2000,
           });
           toast.present();
+          this.disabled=false;
           this.navCtrl.push(ProductListPage);
         }, 1000);
         this.prodCode = "";
@@ -257,6 +277,17 @@ export class SingleProductPage {
   produrl: any = "";
 
   deleteproduct(data) {
+    this.disabled=true;
+    
+    const message = this.translateConfigService.getTranslatedMessage("Deleting item, please wait a moment");
+    const toast = this.toastCtrl.create({
+      // @ts-ignore
+      message: message.value,
+      duration: 2000,
+    });
+    toast.present();
+    this.disabled=false;
+
     this.sp
       .storageReady()
       .then(() => {

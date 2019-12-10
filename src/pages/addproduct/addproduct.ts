@@ -54,6 +54,7 @@ export class AddProductPage {
   ionViewDidLoad() {
     console.log("ionViewDidLoad AddProductCategoryPage");
     this.getCategories();
+    this.disabled=false;
   }
 
   userdata;
@@ -190,8 +191,10 @@ export class AddProductPage {
       });
   }
   produrl: any = "";
+  disabled=false;
 
   addproduct() {
+    this.disabled=true;
     if (!this.formProduct.valid || (this.prodCat == "New" && this.newprodCat == "")) {
       const message = this.translateConfigService.getTranslatedMessage("Incomplete");
       this.toastCtrl
@@ -201,9 +204,8 @@ export class AddProductPage {
           duration: 1000,
         })
         .present();
+        this.disabled=false;
     } else {
-
-
       //old
       if (this.newprodCat != "") {
         this.addCategory();
@@ -211,11 +213,13 @@ export class AddProductPage {
       }
       if (this.image == "") {
         const message = this.translateConfigService.getTranslatedMessage("Creating item, please wait a moment");
-        this.toastCtrl.create({
-          // @ts-ignore
-          message: message.value,
-          duration: 2000,
-        }).present();
+        this.toastCtrl
+          .create({
+            // @ts-ignore
+            message: message.value,
+            duration: 2000,
+          })
+          .present();
 
         const data = {
           code: this.prodCode,
@@ -249,6 +253,7 @@ export class AddProductPage {
             this.produrl = "";
             this.currstock = null;
             this.image = "";
+            this.disabled=false;
 
             this.sp.backupStorage();
 
@@ -261,11 +266,13 @@ export class AddProductPage {
       } else {
         this.temp = this.prodName;
         const message = this.translateConfigService.getTranslatedMessage("Creating item, please wait a moment");
-        this.toastCtrl.create({
-          // @ts-ignore
-          message: message.value,
-          duration: 2000,
-        }).present();
+        this.toastCtrl
+          .create({
+            // @ts-ignore
+            message: message.value,
+            duration: 2000,
+          })
+          .present();
         this.upload_new(this.prodName).then(() => {
           const data = {
             code: this.prodCode,
@@ -299,6 +306,7 @@ export class AddProductPage {
               this.prodCost = 0;
               this.produrl = "";
               this.image = "";
+              this.disabled=false;
 
               this.sp.backupStorage();
               //this.navCtrl.push(ProductListPage);
