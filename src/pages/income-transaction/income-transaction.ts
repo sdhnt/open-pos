@@ -55,7 +55,7 @@ export class IncomeTransactionPage {
   }
 
   taxbtn = 0;
-  showrec=false;
+  showrec = false;
   userdata: any = {
     business_address: "",
     business_name: "",
@@ -97,7 +97,7 @@ export class IncomeTransactionPage {
       console.log("ENTERED!");
       console.log("Received 0 " + data);
       this.datastore = JSON.parse(data);
-      this.showrec=true;
+      this.showrec = true;
       // this.datastore.itemslist.forEach((item) => {
       //   //item.discount = 0;
       // });
@@ -228,7 +228,7 @@ export class IncomeTransactionPage {
     //this.lastsum=this.lastsum-(this.datastore.itemslist[index].price*this.datastore.itemslist[index].qty);
 
     const rem = this.datastore.itemslist.splice(index, 1);
-    if(this.datastore.itemslist.length==0){
+    if (this.datastore.itemslist.length == 0) {
       this.cancelRec();
     }
 
@@ -304,7 +304,7 @@ export class IncomeTransactionPage {
   }
 
   cancelRec() {
-    this.showrec=false;
+    this.showrec = false;
     this.datastore.itemslist = [];
     this.lastsum = 0;
     this.lastsumdisc = 0;
@@ -339,7 +339,6 @@ export class IncomeTransactionPage {
   }
 
   saveRec() {
-
     if (this.datastore.itemslist.length == 0) {
     } else {
       const data = {
@@ -403,7 +402,7 @@ export class IncomeTransactionPage {
         this.discbtn = 0;
         this.sp.backupStorage();
         toast.present();
-        this.showrec=false;
+        this.showrec = false;
       });
     }
     (this.navCtrl.parent as Tabs).select(0);
@@ -509,6 +508,7 @@ export class IncomeTransactionPage {
     console.log("Data: ", JSON.stringify(data));
     const load = this.loadCtrl.create({
       content: "Printing...",
+      enableBackdropDismiss: true,
     });
     load.present();
     this.printer.connectBluetooth(device).subscribe(
@@ -578,7 +578,7 @@ export class IncomeTransactionPage {
   }
 
   prepareToPrint() {
-    this.showrec=false;
+    this.showrec = false;
     /*
         let receipt = '';
         receipt += commands.HARDWARE.HW_INIT;
@@ -611,14 +611,14 @@ export class IncomeTransactionPage {
       .line(this.userdata.business_address)
       .newline()
       .line(this.userdata.ph_no)
-      .newline()
+      .line(Date.now().toString())
       .text(commands.HORIZONTAL_LINE.HR_58MM)
       .newline();
     if (this.datastore != null) {
       result
         .align("left")
-        .raw(commands.FEED_CONTROL_SEQUENCES.RST_HT)
-        .raw(commands.FEED_CONTROL_SEQUENCES.SET_HT)
+        // .raw(commands.FEED_CONTROL_SEQUENCES.RST_HT)
+        // .raw(commands.FEED_CONTROL_SEQUENCES.SET_HT)
         .text("Item Name ")
         .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
         .text("Qty ")
@@ -638,7 +638,7 @@ export class IncomeTransactionPage {
           result
             .text("Discount (" + element.discount + "%) :", 30)
             .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
-            .text(" ")
+            .text("")
             .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
             .text("-" + Math.round(element.price * (parseInt(element.discount) * element.qty)) / 100)
             .newline();
