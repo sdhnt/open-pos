@@ -98,9 +98,9 @@ export class IncomeTransactionPage {
       console.log("Received 0 " + data);
       this.datastore = JSON.parse(data);
       this.showrec = true;
-      // this.datastore.itemslist.forEach((item) => {
-      //   //item.discount = 0;
-      // });
+
+      //Here if 2 items have same code then coagulate/merge
+      
       this.updateRec();
     });
   }
@@ -720,7 +720,7 @@ export class IncomeTransactionPage {
   mountAlertBt(data) {
     this.receipt = data;
     console.log(this.receipt);
-    const alert = this.alertCtrl.create({
+    const alert = this.alertCtrl.create({ //TRANSLATE THIS
       title: "Select your printer",
       buttons: [
         {
