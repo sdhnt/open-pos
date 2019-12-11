@@ -1,14 +1,14 @@
 <ion-content padding>
   <ion-searchbar showCancelButton="always" [(ngModel)]="searchterm" (ionChange)="filteredProduct()"></ion-searchbar>
-  
-    <ion-item>
-      <ion-label>{{"Select category"|translate}}</ion-label>
-      <ion-select multiple="true" [(ngModel)]='selectedCat' (ionChange)="filteredProduct()">
-          <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>    
-      </ion-select>
-    </ion-item>
-  
-  
+
+  <ion-item>
+    <ion-label>{{"Select category"|translate}}</ion-label>
+    <ion-select multiple="true" [(ngModel)]='selectedCat' (ionChange)="filteredProduct()">
+      <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+
   <!-- <ion-card>
       <ion-grid line>
         <ion-row>
@@ -47,75 +47,79 @@
       </ion-row>
       </ion-grid>
     </ion-card>  -->
-  
-  
-  
-    <ion-list inset  *ngFor="let product of filteredList; let i=index">
-      
-        <ion-card>
-            <ion-grid> 
-              <ion-row>
-              <ion-col col-2>
-                <ion-row> 
-                  <ion-avatar>
-                      <img [src]="product.url">
-                    </ion-avatar>
-                  </ion-row>
+
+
+
+  <ion-list inset *ngFor="let product of filteredList; let i=index">
+
+    <ion-card>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-2>
+            <ion-row>
+              <ion-avatar>
+                <img [src]="product.url">
+              </ion-avatar>
+            </ion-row>
+          </ion-col>
+          <ion-col col-10>
+            <ion-row>
+              <ion-col col-6>
+                {{product.name}}
               </ion-col>
-              <ion-col col-10>
-                  <ion-row>
-                      <ion-col col-6>
-                          {{product.name}} 
-                      </ion-col>
-                      <ion-col col-2>
-                        {{product.qty}}
-                      </ion-col>
-                        <ion-col col-2>
-                            <ion-icon name="add" style=" color: green" (click)="addUp(i)"></ion-icon>
-                        </ion-col>
-                        <ion-col col-2>
-                            <ion-icon name="remove" style=" color: red" (click)="addDown(i)"></ion-icon>
-                        </ion-col>
-                    </ion-row>
-                    <ion-row>
-                      <ion-col col-4 style="color: grey; font-size: 10px;"> {{"Retail Price"|translate}} {{product.price}} MMK </ion-col>
-                      <ion-col col-4 style="color: grey; font-size: 10px; text-align: center;"> {{"Wholesale Price"|translate}} {{product.wholesale_price}} MMK </ion-col>
-                      <ion-col col-4 style="color: grey; font-size: 10px; text-align: end;"> {{"Category"|translate}} {{product.cat}} </ion-col>
-                    </ion-row>
+
+              <ion-col col-2 style="border: solid silver; text-align: center;">
+                <ion-icon name="add" style=" color: green" (click)="addUp(i)"></ion-icon>
+              </ion-col>
+              <ion-col col-2 style="border: solid silver; text-align: center;">
+                {{product.qty}}
+              </ion-col>
+              <ion-col col-2 style="border: solid silver; text-align: center;">
+                <ion-icon name="remove" style=" color: red" (click)="addDown(i)"></ion-icon>
               </ion-col>
             </ion-row>
-            <ion-row *ngIf="event1==true">
-              <ion-col col-12> <button ion-button full end color="dark" (click)="singleProduct(product)">{{"Add"|translate}}</button> </ion-col>
+            <ion-row>
+              <ion-col col-4 style="color: grey; font-size: 10px;"> {{"Retail Price"|translate}} {{product.price}} MMK
+              </ion-col>
+              <ion-col col-4 style="color: grey; font-size: 10px; text-align: center;"> {{"Wholesale Price"|translate}}
+                {{product.wholesale_price}} MMK </ion-col>
+              <ion-col col-4 style="color: grey; font-size: 10px; text-align: end;"> {{"Category"|translate}}
+                {{product.cat}} </ion-col>
             </ion-row>
-            </ion-grid>
-          </ion-card> 
-       
-      </ion-list>
-    
-  
-    
-  
-  
-  
-  
-  </ion-content>
-  
-  
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="event1==true">
+          <ion-col col-12> <button ion-button full end color="dark"
+              (click)="singleProduct(product)">{{"Add"|translate}}</button> </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+
+  </ion-list>
+
+
+
+
+
+
+
+</ion-content>
+
+
 <ion-footer>
 
-    <ion-grid>
-      <ion-row *ngIf="event1==false">
-        <ion-col>
-            <button ion-button (click)="createRec()" full style="background-color: #222">{{updateOrCreate|translate}}</button>
-        </ion-col>
-      </ion-row>
-      <ion-row *ngIf="event1==true">
-        <ion-col>
-            <button ion-button (click)="reset()" full style="background-color: #222">{{"Reset"|translate}}</button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-   
+  <ion-grid>
+    <ion-row *ngIf="event1==false">
+      <ion-col>
+        <button ion-button (click)="createRec()" full
+          style="background-color: #222">{{updateOrCreate|translate}}</button>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="event1==true">
+      <ion-col>
+        <button ion-button (click)="reset()" full style="background-color: #222">{{"Reset"|translate}}</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-footer>
-
-

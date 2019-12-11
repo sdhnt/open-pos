@@ -102,7 +102,7 @@ export class DashboardPage {
     this.toastCtrl
       .create({
         // @ts-ignore
-        message: message.value +": "+ this.userdata.cash_balance,
+        message: message.value + ": " + this.userdata.cash_balance,
         duration: 3000,
       })
       .present();

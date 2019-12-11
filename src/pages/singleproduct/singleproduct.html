@@ -39,7 +39,7 @@
         <ion-input type="number" formControlName="prodWholesalePrice" [(ngModel)]='product.wholesale_price'></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label>{{'Product Buying Cost:'| translate}}</ion-label>
+        <ion-label>{{'Average Buying Cost:'| translate}}</ion-label>
         <ion-input type="number" formControlName="prodCost" [(ngModel)]='product.cost'></ion-input>
       </ion-item>
       <ion-item>
@@ -59,6 +59,6 @@
     </ion-list>
   </form>
   <button ion-button block color="primary" [disabled]="disabled" (click)="updateProduct()">{{'Update Product'| translate}}</button>
-  <button ion-button block style="color: whitesmoke; background-color: gray;" (click)="discardChange()">Discard Changes</button>
+  <button ion-button block style="color: whitesmoke; background-color: gray;" (click)="discardChange()">{{"Discard Changes"|translate}}</button>
   <button ion-button block color="danger" [disabled]="disabled" (click)="deleteproduct(product)">{{'Delete Product'| translate}}</button>
 </ion-content>

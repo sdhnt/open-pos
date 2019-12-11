@@ -689,7 +689,7 @@ export class IncomeTransactionPage {
             .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
             .text("")
             .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
-            .text("-" + Math.round((element.price * element.discount * element.qty)/ 100))
+            .text("-" + Math.round((element.price * element.discount * element.qty) / 100))
             .newline();
         }
       });
