@@ -131,6 +131,9 @@
  "Login with Facebook":"ဖေ့စ်ဘုတ်ဖြင့်ဝင်ရောက်ပါ",
  "Discard Changes":"အပြောင်းအလဲများကိုပယ်",
  "Average Buying Cost:":"ပျမ်းမျှ ၀ ယ်တဲ့ကုန်ကျစရိတ်:",
- "Clear Fields":"သတင်းအချက်အလက်ဖျက်ပစ်"
+ "Clear Fields":"သတင်းအချက်အလက်ဖျက်ပစ်",
+ "Update Stock":"နောက်ဆုံးသတင်းစတော့ရှယ်ယာ",
+ "Update Inventory for existing products:":"ရှိပြီးသားထုတ်ကုန်များအတွက်စာရင်း update:"
+
 
 }
