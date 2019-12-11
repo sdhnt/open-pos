@@ -276,6 +276,8 @@ export class IncomeTransactionPage {
       this.newUnitPrice = null;
       this.newUnitQty = 1;
       this.newItemDiscount = 0;
+      this.showrec=true;
+      this.displayManual=0;
 
       this.updateRec();
     }
