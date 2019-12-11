@@ -114,7 +114,7 @@
  "Done uploading": "တင်ပြီးပါပြီ",
  "Changes Discarded":"ပြောင်းလဲပစ်စွန့်ပစ်",
  "Printer Test":"ပရင်တာစမ်းသပ်မှု",
- "Additional Charges":"အပိုစွဲချက်",
+ "Add Additional Charges":"အပိုစွဲချက်",
  "Add Charges":"စွဲချက်ထည့်ပါ",
  "Enter Category Here":"ဤနေရာတွင်အမျိုးအစားထည့်ပါ",
  "Press home button to exit": "ထွက်ရန်အိမ်ခလုတ်ကိုနှိပ်ပါ",
@@ -126,4 +126,15 @@
  "Deleting item, please wait a moment":"item ကိုဖျက်ခြင်းခဏစောင့်ပါ",
  "Modifying item, please wait a moment":"ပစ္စည်းကိုပြုပြင်မွမ်းမံရန်ခဏစောင့်ပါ",
  "Please fill all the information!": "အချက်အလက်အားလုံးကိုဖြည့်ပါ",
+ "Backup Online":"အွန်လိုင်းအရန်ကူးခြင်း",
+ "Cash Balance":"ငွေလက်ကျန်",
+ "Login with Facebook":"ဖေ့စ်ဘုတ်ဖြင့်ဝင်ရောက်ပါ",
+ "Discard Changes":"အပြောင်းအလဲများကိုပယ်",
+ "Average Buying Cost:":"ပျမ်းမျှ ၀ ယ်တဲ့ကုန်ကျစရိတ်:",
+ "Clear Fields":"သတင်းအချက်အလက်ဖျက်ပစ်",
+ "Update Stock":"နောက်ဆုံးသတင်းစတော့ရှယ်ယာ",
+ "Update Inventory for existing products:":"ရှိပြီးသားထုတ်ကုန်များအတွက်စာရင်း update:",
+ "Settings":"ချိန်ညှိချက်များ"
+
+
 }

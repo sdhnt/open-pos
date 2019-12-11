@@ -57,12 +57,17 @@
                   {{"Stock"|translate}}: {{product.stock_qty}}
                 </ion-col>
                 </ion-row>
-              <ion-row>
-                <ion-col col-4 style="color: grey; font-size: 10px;"> {{"Retail Price"|translate}} {{product.price}} MMK </ion-col> 
-                <!-- change currency units to those that are selected by user -Pranay -->
-                <ion-col col-4 style="color: grey; font-size: 10px; text-align: center;"> {{"Wholesale Price"|translate}} {{product.wholesale_price}} MMK </ion-col>
-                <ion-col col-4 style="color: grey; font-size: 10px; text-align: end;"> {{"Category"|translate}} {{product.cat}} </ion-col>
-              </ion-row>
+                <ion-row>
+                    <ion-col style="color: grey; font-size: 10px;"> {{"Retail Price"|translate}} : {{product.price}} </ion-col>
+                    
+                  </ion-row>
+                  <ion-row>
+                      <ion-col style="color: grey; font-size: 10px; text-align: left;"> {{"Wholesale Price"|translate}} : {{product.wholesale_price}} </ion-col>
+                  </ion-row>  
+                  <ion-row>
+                      <ion-col style="color: grey; font-size: 10px; text-align: left;">  {{"Category"|translate}} : {{product.cat}} </ion-col>
+                    
+                  </ion-row>
         </ion-col>
       </ion-row>
       <ion-row>

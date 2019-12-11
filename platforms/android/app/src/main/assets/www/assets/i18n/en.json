@@ -114,7 +114,7 @@
   "Done uploading": "Done uploading",
   "Changes Discarded":"Changes Discarded",
   "Printer Test":"Printer Test",
-  "Additional Charges":"Additional Charges",
+  "Add Additional Charges":"Add Additional Charges",
   "Add Charges":"Add Charges",
   "Enter Category Here":"Enter Category Here",
   "Press home button to exit": "Press home button to exit",
@@ -125,6 +125,15 @@
   "CANCEL ":"CANCEL ",
   "Deleting item, please wait a moment":"Deleting item, please wait a moment",
   "Modifying item, please wait a moment":"Modifying item, please wait a moment",
-  "Please fill all the information!": "Please fill all the information!"
+  "Please fill all the information!": "Please fill all the information!",
+  "Backup Online":"Backup Online",
+  "Cash Balance":"Cash Balance",
+  "Login with Facebook":"Login with Facebook",
+  "Discard Changes":"Discard Changes",
+  "Average Buying Cost:":"Average Buying Cost:",
+  "Clear Fields":"Clear Fields",
+  "Update Stock":"Update Stock",
+  "Update Inventory for existing products:":"Update Inventory for existing products:",
+  "Settings":"Settings"
 
 }
