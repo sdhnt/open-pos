@@ -125,6 +125,9 @@
   "CANCEL ":"CANCEL ",
   "Deleting item, please wait a moment":"Deleting item, please wait a moment",
   "Modifying item, please wait a moment":"Modifying item, please wait a moment",
-  "Please fill all the information!": "Please fill all the information!"
+  "Please fill all the information!": "Please fill all the information!",
+  "Backup Online":"Backup Online",
+  "Cash Balance":"Cash Balance",
+  "Login with Facebook":"Login with Facebook"
 
 }

@@ -672,8 +672,8 @@ export class IncomeTransactionPage {
         .text("Qty ")
         .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
         .text("Price")
-        .newline().newline();
-        
+        .newline()
+        .newline();
 
       this.datastore.itemslist.forEach((element, index) => {
         result
@@ -685,21 +685,21 @@ export class IncomeTransactionPage {
           .newline();
         if (parseFloat(element.discount) != 0) {
           result
-            .text("Discount (" + Math.round(parseFloat(element.discount)*100)/100 + "%) :", 30)
+            .text("Discount (" + Math.round(parseFloat(element.discount) * 100) / 100 + "%) :", 30)
             .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
             .text("")
             .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
-            .text("-" + Math.round(element.price * element.discount * element.qty/100))
+            .text("-" + Math.round((element.price * element.discount * element.qty)/ 100))
             .newline();
         }
       });
       result.newline();
       result.align("right").line("Total: " + this.lastsumAfterIndividualDiscount);
       if (this.lastsumAfterIndividualDiscount != this.lastsumdisc) {
-        result.line(" After Discount (" + Math.round(this.discount*100)/100 + "%): " + this.lastsumdisc);
+        result.line(" After Discount (" + Math.round(this.discount * 100) / 100 + "%): " + this.lastsumdisc);
       }
       if (this.lastsumAfterIndividualDiscount != this.lastsumtax) {
-        result.line("After Tax (" + Math.round(this.taxrate*100)/100 + "%): " + this.lastsumtax);
+        result.line("After Tax (" + Math.round(this.taxrate * 100) / 100 + "%): " + this.lastsumtax);
       }
     }
 
