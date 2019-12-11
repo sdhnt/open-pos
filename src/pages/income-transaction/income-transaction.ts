@@ -100,7 +100,7 @@ export class IncomeTransactionPage {
       this.showrec = true;
 
       //Here if 2 items have same code then coagulate/merge
-      
+
       this.updateRec();
     });
   }
@@ -600,30 +600,41 @@ export class IncomeTransactionPage {
     //return (datetime.getDate() + "/" + (datetime.getMonth() + 1) + "/" + datetime. getFullYear())
     const temp = new Date(datetime);
     const temp1 = temp;
+    
     const t =
-      temp.getDate() +
+      temp.getDate().toString() +
       "/" +
-      (temp.getMonth() + 1) +
+      (temp.getMonth() + 1).toString() +
       "/" +
-      temp.getFullYear() +
+      temp.getFullYear().toString() +
       " " +
-      temp.getHours() +
+      this.getHours(temp)+
       ":" +
-      temp.getMinutes();
+      this.getMinutes(temp);
     return t;
+    //if any hours or mins <0 then need to add 0 4 use cases
   }
 
-  getDate(datetime) {
-    const temp = new Date(datetime);
-    const temp1 = temp;
-    const t = temp.getDate();
-    return t;
+  getHours(datetime){
+    const temp= new Date(datetime);
+    const t = temp.getHours();
+    if(t>9){
+      return t.toString();
+    }
+    else{
+      return ("0"+t.toString())
+    }
   }
 
-  getMonth(datetime) {
-    const temp = new Date(datetime);
-    const t = temp.getMonth();
-    return t;
+  getMinutes(datetime){
+    const temp= new Date(datetime);
+    const t = temp.getMinutes();
+    if(t>9){
+      return t.toString();
+    }
+    else{
+      return ("0"+t.toString())
+    }
   }
 
   prepareToPrint() {
@@ -720,7 +731,8 @@ export class IncomeTransactionPage {
   mountAlertBt(data) {
     this.receipt = data;
     console.log(this.receipt);
-    const alert = this.alertCtrl.create({ //TRANSLATE THIS
+    const alert = this.alertCtrl.create({
+      //TRANSLATE THIS
       title: "Select your printer",
       buttons: [
         {

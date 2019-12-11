@@ -69,8 +69,8 @@ export class TransactionProductPage {
 
       const tempdat = JSON.parse(data);
       this.event1 = true;
-      this.getProducts(); 
-      this.price=tempdat.price;
+      this.getProducts();
+      this.price = tempdat.price;
       this.filteredProductPrice(tempdat.price);
       //console.log(this.listProducts)
     });
@@ -184,26 +184,23 @@ export class TransactionProductPage {
 
   singleProduct(product) {
     const tempqty = this.recitemslist[this.index].qty;
-    var tempdisc=   this.recitemslist[this.index].discount;
-    if(this.price==product.price)
-    {
+    let tempdisc = this.recitemslist[this.index].discount;
+    if (this.price == product.price) {
       console.log("Discount == Regular");
-      tempdisc=   this.recitemslist[this.index].discount;
+      tempdisc = this.recitemslist[this.index].discount;
+    } else if (this.price == product.wholesale_price) {
+      console.log("discount==wholesale");
+
+      const wholesaledisc = ((product.price - product.wholesale_price) / product.price) * 100;
+      tempdisc = this.recitemslist[this.index].discount + wholesaledisc;
     }
-    else if(this.price == product.wholesale_price){
-      console.log("discount==wholesale")
-    
-      var wholesaledisc=(product.price-product.wholesale_price)/product.price*100;
-      tempdisc=   this.recitemslist[this.index].discount+wholesaledisc;
-    }
-    
+
     //const tempdsc = this.recitemslist[this.index].disc;
     //check if search w wholesale or retail price
     this.recitemslist[this.index] = product;
 
-
     this.recitemslist[this.index].qty = tempqty;
-    this.recitemslist[this.index].discount=tempdisc;
+    this.recitemslist[this.index].discount = tempdisc;
 
     const tempJSON = { itemslist: this.recitemslist };
 
@@ -220,64 +217,64 @@ export class TransactionProductPage {
     this.getProducts();
   }
 
-  singleitemname="";
+  singleitemname = "";
 
   filteredProductPrice(price) {
     console.log(price);
-     this.filteredList = this.listProducts.filter(item => {
+    this.filteredList = this.listProducts.filter(item => {
       console.log(item.price + " and " + price);
       //console.log(this.searchterm);
 
-      if (item.price == price || item.wholesale_price== price) {
+      if (item.price == price || item.wholesale_price == price) {
         return true;
       } else {
         false;
       }
     });
-      if(this.filteredList.length==0){
-        const alert = this.alertCtrl.create({
-          title: "ALERT!",//translate this 
-          subTitle: "There is no item with "+price+" price in database."+'\n'+"Please type the name:",
+    if (this.filteredList.length == 0) {
+      const alert = this.alertCtrl
+        .create({
+          title: "ALERT!", //translate this
+          subTitle: "There is no item with " + price + " price in database." + "\n" + "Please type the name:",
           inputs: [
             {
-              name: 'singleitemname',
-              placeholder: 'Enter Name Here'
+              name: "singleitemname",
+              placeholder: "Enter Name Here",
             },
           ],
-      
+
           buttons: [
             {
               text: "Cancel",
               role: "cancel",
               handler: data => {
                 this.reset();
-              }
+              },
             },
             {
               text: "Update Receipt",
               handler: data => {
-                 
-                if(data.singleitemname==""){
-                  this.reset(); 
+                if (data.singleitemname == "") {
+                  this.reset();
+                } else {
+                  console.log("Create Rec");
+                  const data1 = {
+                    code: "000000",
+                    cat: "NIL",
+                    stock_qty: 0,
+                    name: data.singleitemname,
+                    price: price,
+                    qty: this.recitemslist[this.index].qty,
+                    discount: this.recitemslist[this.index].discount,
+                  };
+                  this.singleProduct(data1);
                 }
-                else{
-                  console.log("Create Rec");               
-                    const data1 = {
-                      code: "000000",
-                      cat: "NIL",
-                      stock_qty: 0,
-                      name: data.singleitemname,
-                      price: price,
-                      qty: this.recitemslist[this.index].qty,
-                      discount: this.recitemslist[this.index].discount,
-                }
-                this.singleProduct(data1)
-              }    
               },
             },
           ],
-        }).present();
-      }
+        })
+        .present();
+    }
   }
 
   datlist: any = [];
