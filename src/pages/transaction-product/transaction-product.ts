@@ -240,12 +240,13 @@ export class TransactionProductPage {
     });
     if (this.filteredList.length == 0) {
       const message1 = this.translateConfigService.getTranslatedMessage("Alert!");
-      const message20 =  this.translateConfigService.getTranslatedMessage("There is no item with ");
-      const message21 =  this.translateConfigService.getTranslatedMessage(" price in database. Please type the item name:");
+      const message20 = this.translateConfigService.getTranslatedMessage("There is no item with ");
+      const message21 = this.translateConfigService.getTranslatedMessage(
+        " price in database. Please type the item name:",
+      );
       const message3 = this.translateConfigService.getTranslatedMessage("Enter Name Here");
       const message4 = this.translateConfigService.getTranslatedMessage("Cancel");
       const message5 = this.translateConfigService.getTranslatedMessage("Update Receipt");
-      
 
       const alert = this.alertCtrl
         .create({

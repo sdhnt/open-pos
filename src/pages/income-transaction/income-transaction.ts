@@ -106,7 +106,8 @@ export class IncomeTransactionPage {
       this.datastore.itemslist.forEach((item, index) => {
         this.datastore.itemslist.forEach((item1, index1) => {
           if (index1 != index) {
-            if (item.code == item1.code && item.price==item1.price && item.name==item1.name) { //ALL the 0000 might get combined
+            if (item.code == item1.code && item.price == item1.price && item.name == item1.name) {
+              //ALL the 0000 might get combined
               const totaldiscsumx = (item.price * (item.discount * item.qty + item1.discount * item1.qty)) / 100;
               console.log("Total Disc Sum " + totaldiscsumx);
               item.qty = item.qty + item1.qty;

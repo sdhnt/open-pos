@@ -128,7 +128,7 @@ export class AllTransactionPage {
           code: "000000",
           cat: "NIL",
           stock_qty: 0,
-          name: "Item "+index,
+          name: "Item " + index,
           price: parseInt(element),
           qty: this.itemsqty[index],
           discount: this.itemsDiscount[index],
