@@ -32,7 +32,7 @@ export class AllTransactionPage {
     this.getUserData();
     this.events.subscribe("addRecCalc:created", data => {
       this.updateOrCreate = "Update Receipt";
-      console.log("ENTERED!");
+      //console.log("ENTERED!");
       console.log("Received 0 " + data);
       //SET itemsprice here? - make new addgen - diff button calls diff event that pushes rather than replaces
       //Same for Product Transaction Page
@@ -49,15 +49,15 @@ export class AllTransactionPage {
         this.loitems.push(element);
         this.itemsDiscount.push(element.discount);
       });
-      console.log(this.itemsprice);
+      //console.log(this.itemsprice);
     });
   }
   itemsname: string[] = [];
   loitems: any = [];
 
   ionViewDidLoad() {
-    console.log("ionViewDidLoad AllTransactionPage");
-    console.log("Size of array: " + this.itemsprice.length);
+    //console.log("ionViewDidLoad AllTransactionPage");
+    //console.log("Size of array: " + this.itemsprice.length);
     if (this.itemsprice.length > 0) {
       this.showSampleRec = false;
       this.flag_mode = 1;
@@ -108,7 +108,7 @@ export class AllTransactionPage {
         .getUserDat()
         .then(val => {
           this.userdata = JSON.parse(val);
-          console.log(this.userdata);
+          //console.log(this.userdata);
         })
         .catch(err => {
           alert("Error: " + err);
@@ -162,7 +162,7 @@ export class AllTransactionPage {
     this.getUserData();
 
     try {
-      console.log("CalculatorPage::btnClicked = " + btn);
+      //console.log("CalculatorPage::btnClicked = " + btn);
       if (btn == "C") {
         this.result = "";
         this.itemsprice = [];
@@ -185,7 +185,8 @@ export class AllTransactionPage {
           let discAmt;
           if (!element.includes("-")) discAmt = 0;
           else {
-            discAmt = parseInt(element.substring(element.indexOf("-") + 1));
+            
+            discAmt = parseFloat(element.substring(element.indexOf("-") + 1));
             answ[index] = element.substring(0, element.indexOf("-"));
             element = answ[index];
           }
@@ -193,8 +194,8 @@ export class AllTransactionPage {
           if (element.includes("*")) {
             answ[index] = element.substring(0, element.indexOf("*"));
             this.itemsprice.push(answ[index]);
+            //console.log(answ[index]+" "+this.itemsprice[index])
             temp = parseInt(element.substring(element.indexOf("*") + 1));
-            console.log(element.substring(element.indexOf("*") + 1));
             this.itemsqty.push(temp);
           } else if (element.includes("/")) {
             answ[index] = element.substring(0, element.indexOf("/"));
@@ -206,11 +207,15 @@ export class AllTransactionPage {
             if (element != "") {
               this.itemsprice.push(element);
               this.itemsqty.push(parseInt("1"));
+              temp=1;
             }
           }
+          
+          console.log("ItemsPrice[index]: "+answ[index]+" Qty: "+temp)
 
-          this.itemsDiscount.push((discAmt * 100) / (parseInt(this.itemsprice[index]) * this.itemsqty[index]));
-
+          this.itemsDiscount.push((discAmt * 100) / (parseFloat(answ[index]) * temp));
+          //console.log("Element: "+element+" DiscAmt: "+discAmt+" Discount: "+(discAmt * 100) / (parseFloat(this.itemsprice[index]) * this.itemsqty[index]))
+          
           // this.itemsprice.push(
           //   {'name': "Blank_Item",
           //   'price': parseInt(element),

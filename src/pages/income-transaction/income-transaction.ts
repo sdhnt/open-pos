@@ -637,9 +637,9 @@ export class IncomeTransactionPage {
     }
   }
 
-  showOldRec(){
+  showOldRec() {
     this.app.getRootNav().setRoot(SummaryHomePage);
-   }
+  }
 
   prepareToPrint() {
     this.showrec = false;
