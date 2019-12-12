@@ -38,7 +38,7 @@ export class AllTransactionPage {
       //Same for Product Transaction Page
       //console.log(this.showSampleRec);
       const tempdat = JSON.parse(data);
-      this.showSampleRec=true;
+      this.showSampleRec = true;
       // this.itemsname=null;
       // this.itemsprice=null;
       // this.itemsqty=null;
@@ -62,7 +62,7 @@ export class AllTransactionPage {
       this.showSampleRec = false;
       this.flag_mode = 1;
     }
-    this.showSampleRec=false;
+    this.showSampleRec = false;
     this.delay(3000).then(() => {
       this.getUserData();
     });
@@ -118,7 +118,7 @@ export class AllTransactionPage {
 
   createRec() {
     const tempJSON = { itemslist: [] };
-    this.showSampleRec=false;
+    this.showSampleRec = false;
 
     this.itemsprice.forEach((element, index) => {
       if (this.itemsname.length > 0 && index < this.itemsname.length) {
@@ -169,7 +169,7 @@ export class AllTransactionPage {
         this.lastsum = 0;
         this.itemsqty = [];
         this.itemsDiscount = [];
-        this.showSampleRec= false;
+        this.showSampleRec = false;
       } else if (btn == "=") {
         this.showSampleRec = true;
 
@@ -185,7 +185,6 @@ export class AllTransactionPage {
           let discAmt;
           if (!element.includes("-")) discAmt = 0;
           else {
-            
             discAmt = parseFloat(element.substring(element.indexOf("-") + 1));
             answ[index] = element.substring(0, element.indexOf("-"));
             element = answ[index];
@@ -201,21 +200,21 @@ export class AllTransactionPage {
             answ[index] = element.substring(0, element.indexOf("/"));
             this.itemsprice.push(answ[index]);
             temp = Math.round((1 / parseInt(element.substring(element.indexOf("/") + 1))) * 100) / 100;
-            console.log(temp);
+            //console.log(temp);
             this.itemsqty.push(temp);
           } else {
             if (element != "") {
               this.itemsprice.push(element);
               this.itemsqty.push(parseInt("1"));
-              temp=1;
+              temp = 1;
             }
           }
-          
-          console.log("ItemsPrice[index]: "+answ[index]+" Qty: "+temp)
+
+          //console.log("ItemsPrice[index]: " + answ[index] + " Qty: " + temp);
 
           this.itemsDiscount.push((discAmt * 100) / (parseFloat(answ[index]) * temp));
           //console.log("Element: "+element+" DiscAmt: "+discAmt+" Discount: "+(discAmt * 100) / (parseFloat(this.itemsprice[index]) * this.itemsqty[index]))
-          
+
           // this.itemsprice.push(
           //   {'name': "Blank_Item",
           //   'price': parseInt(element),

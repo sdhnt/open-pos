@@ -193,10 +193,10 @@ export class TransactionProductPage {
     const tempqty = this.recitemslist[this.index].qty;
     let tempdisc = this.recitemslist[this.index].discount;
     if (this.price == product.price) {
-      console.log("Discount == Regular");
+      //console.log("Discount == Regular");
       tempdisc = this.recitemslist[this.index].discount;
     } else if (this.price == product.wholesale_price) {
-      console.log("discount==wholesale");
+      //console.log("discount==wholesale");
 
       const wholesaledisc = ((product.price - product.wholesale_price) / product.price) * 100;
       tempdisc = this.recitemslist[this.index].discount + wholesaledisc;

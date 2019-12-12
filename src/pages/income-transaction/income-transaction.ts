@@ -101,7 +101,27 @@ export class IncomeTransactionPage {
       this.datastore = JSON.parse(data);
       this.showrec = true;
 
-      //Here if 2 items have same code then coagulate/merge
+      //Here if 2 items have same code then coagulate/merge - price is always full price, merge discounts accordingly
+
+      this.datastore.itemslist.forEach((item, index) => {
+        this.datastore.itemslist.forEach((item1, index1)=>{
+          if(index1!=index){
+            if(item.code==item1.code){
+
+              
+              var totaldiscsumx=(item.price*(item.discount*item.qty+item1.discount*item1.qty))/100;
+              console.log("Total Disc Sum "+totaldiscsumx)
+              item.qty=item.qty+item1.qty;
+              item.discount= (totaldiscsumx)/(item.price*item.qty)*100;//new qty
+
+
+              const rem = this.datastore.itemslist.splice(index1, 1);
+              //remove item1, merge qty and manage discount as avg
+            }
+          }
+        })
+    
+      })
 
       this.updateRec();
     });

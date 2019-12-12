@@ -81,7 +81,7 @@
             </ion-row>
             <div *ngIf="event1==false">
             <ion-row *ngIf="product.qty>0">
-              <ion-col *ngIf="product.discount==null">
+              <ion-col *ngIf="product.discount==null || product.discount==0">
                 <button full ion-button style="font-size: 0.9rem;" (click)="addwholesaledisc(product)">{{"Add Wholesale Discount"|translate}}</button>
               </ion-col>
               <ion-col *ngIf="product.discount==(((product.price - product.wholesale_price) / product.price) * 100)">
