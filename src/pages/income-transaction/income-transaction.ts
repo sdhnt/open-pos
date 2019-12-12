@@ -600,7 +600,7 @@ export class IncomeTransactionPage {
     //return (datetime.getDate() + "/" + (datetime.getMonth() + 1) + "/" + datetime. getFullYear())
     const temp = new Date(datetime);
     const temp1 = temp;
-    
+
     const t =
       temp.getDate().toString() +
       "/" +
@@ -608,32 +608,30 @@ export class IncomeTransactionPage {
       "/" +
       temp.getFullYear().toString() +
       " " +
-      this.getHours(temp)+
+      this.getHours(temp) +
       ":" +
       this.getMinutes(temp);
     return t;
     //if any hours or mins <0 then need to add 0 4 use cases
   }
 
-  getHours(datetime){
-    const temp= new Date(datetime);
+  getHours(datetime) {
+    const temp = new Date(datetime);
     const t = temp.getHours();
-    if(t>9){
+    if (t > 9) {
       return t.toString();
-    }
-    else{
-      return ("0"+t.toString())
+    } else {
+      return "0" + t.toString();
     }
   }
 
-  getMinutes(datetime){
-    const temp= new Date(datetime);
+  getMinutes(datetime) {
+    const temp = new Date(datetime);
     const t = temp.getMinutes();
-    if(t>9){
+    if (t > 9) {
       return t.toString();
-    }
-    else{
-      return ("0"+t.toString())
+    } else {
+      return "0" + t.toString();
     }
   }
 

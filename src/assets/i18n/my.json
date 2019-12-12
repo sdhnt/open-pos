@@ -134,7 +134,10 @@
  "Clear Fields":"သတင်းအချက်အလက်ဖျက်ပစ်",
  "Update Stock":"နောက်ဆုံးသတင်းစတော့ရှယ်ယာ",
  "Update Inventory for existing products:":"ရှိပြီးသားထုတ်ကုန်များအတွက်စာရင်း update:",
- "Settings":"ချိန်ညှိချက်များ"
+ "Settings":"ချိန်ညှိချက်များ",
+ "Add Wholesale Discount":"လက်ကားလျှော့စျေးထည့်ပါ",
+ "Remove Wholesale Discount":"လက်ကားလျှော့လျှော့ပါ"
+
 
 
 }

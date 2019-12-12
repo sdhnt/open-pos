@@ -79,6 +79,16 @@
                 <ion-icon name="remove" style=" color: red" (click)="addDown(i)"></ion-icon>
               </ion-col>
             </ion-row>
+            <div *ngIf="event1==false">
+            <ion-row *ngIf="product.qty>0">
+              <ion-col *ngIf="product.discount==null">
+                <button full ion-button style="font-size: 0.9rem;" (click)="addwholesaledisc(product)">{{"Add Wholesale Discount"|translate}}</button>
+              </ion-col>
+              <ion-col *ngIf="product.discount==(((product.price - product.wholesale_price) / product.price) * 100)">
+                  <button full ion-button style="font-size: 0.9rem;" (click)="remwholesaledisc(product)">{{"Remove Wholesale Discount"|translate}}</button>
+                </ion-col>
+            </ion-row>
+          </div>
 
 <!-- 
             <ion-row>
@@ -90,18 +100,41 @@
                 {{product.cat}} </ion-col>
             </ion-row> -->
 
-            
+            <div *ngIf="product.qty==0">
             <ion-row>
-                <ion-col style="color: grey; font-size: 10px;"> {{"Retail Price"|translate}} : {{product.price}} </ion-col>
-                
+                <ion-col col-6 style="color: grey; font-size: 10px;">{{"Retail Price"|translate}} : {{product.price}} </ion-col>   
               </ion-row>
               <ion-row>
-                  <ion-col style="color: grey; font-size: 10px; text-align: left;"> {{"Wholesale Price"|translate}} : {{product.wholesale_price}} </ion-col>
-              </ion-row>  
+                  <ion-col col-6 style="color: grey; font-size: 10px; text-align: left;"> {{"Wholesale Price"|translate}} : {{product.wholesale_price}} </ion-col>
+                </ion-row>  
               <ion-row>
-                  <ion-col style="color: grey; font-size: 10px; text-align: left;">  {{"Category"|translate}} : {{product.cat}} </ion-col>
-                
+                  <ion-col style="color: grey; font-size: 10px; text-align: left;">  {{"Category"|translate}} : {{product.cat}} </ion-col>  
               </ion-row>
+            </div>
+            <div *ngIf="product.qty!=0 && product.discount!=(((product.price - product.wholesale_price) / product.price) * 100)">
+                <ion-row>
+                    <ion-col col-6 style="color: grey; font-size: 10px;"><b>{{"Retail Price"|translate}} : {{product.price}} </b> </ion-col>   
+                  </ion-row>
+                  <ion-row>
+                      <ion-col col-6 style="color: grey; font-size: 10px; text-align: left;"> {{"Wholesale Price"|translate}} : {{product.wholesale_price}} </ion-col>
+                    </ion-row>  
+                  <ion-row>
+                      <ion-col style="color: grey; font-size: 10px; text-align: left;">  {{"Category"|translate}} : {{product.cat}} </ion-col>  
+                  </ion-row>
+                </div>
+                <div *ngIf="product.qty!=0 && product.discount==(((product.price - product.wholesale_price) / product.price) * 100)">
+                    <ion-row>
+                        <ion-col col-6 style="color: grey; font-size: 10px;">{{"Retail Price"|translate}} : {{product.price}}  </ion-col>   
+                      </ion-row>
+                      <ion-row>
+                          <ion-col col-6 style="color: grey; font-size: 10px; text-align: left;"> <b>{{"Wholesale Price"|translate}} : {{product.wholesale_price}} </b></ion-col>
+                        </ion-row>  
+                      <ion-row>
+                          <ion-col style="color: grey; font-size: 10px; text-align: left;">  {{"Category"|translate}} : {{product.cat}} </ion-col>  
+                      </ion-row>
+                </div>
+            
+
 
 
 
