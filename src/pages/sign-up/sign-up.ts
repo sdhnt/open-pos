@@ -23,7 +23,7 @@ export class SignUpPage {
   listOfBType: string[] = [];
   listOfCurrency: string[] = [];
   listOfLang: string[] = [];
-  disabled=false;
+  disabled = false;
 
   name = "";
   email = "";
@@ -83,7 +83,32 @@ export class SignUpPage {
   datet = new Date();
 
   signup() {
-    this.disabled=true;
+
+    if(
+      this.name == "" ||
+      this.email == "" ||
+      this.password == "" ||
+      this.businessname == "" ||
+      this.businessaddress == "" ||
+      this.businesstype == "" ||
+      this.phno == "" ||
+      this.language == "" ||
+      this.currency == "" ||
+      this.cb == null ||
+      this.discount == null ||
+      this.taxrate == null
+    ){
+      const message=this.translateConfigService.getTranslatedMessage("Incomplete");
+      this.toastCtrl.create({
+        //@ts-ignore
+        message: message.value,
+        duration: 2000,
+      }).present()
+    }
+    else{
+    this.disabled = true;
+
+
     const message = this.translateConfigService.getTranslatedMessage("Please wait while creating your profile ...");
     this.toastCtrl
       .create({
@@ -191,9 +216,20 @@ export class SignUpPage {
               })
               .present();
           });
+      }).catch((error)=>{
+        this.alertCtrl.create({
+
+          message: error.message,
+          buttons: [{
+            text: "Cancel",
+            role: "cancel"
+          }]
+
+        }).present()
       });
-  }
+  }}
   goBack() {
     this.navCtrl.pop();
   }
+  
 }
