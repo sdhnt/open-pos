@@ -147,6 +147,10 @@
  "Select printer":"ပရင်တာကိုရွေးပါ",
  "Select a printer!":"ပရင်တာကိုရွေးပါ",
  "There was an error connecting the printer, please try again!":"ပရင်တာကိုဆက်သွယ်တဲ့အမှားတစ်ခုရှိတယ်။ ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ။",
- "Error activating bluetooth, please try again!":"ဘလူးတုသ်ကိုဖွင့်ခြင်းအမှားပြုပါ၊ ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ။"
+ "Error activating bluetooth, please try again!":"ဘလူးတုသ်ကိုဖွင့်ခြင်းအမှားပြုပါ၊ ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ။",
+ "Printing...":"ပုံနှိပ်နေသည် ...",
+ "Successful print!":"အောင်မြင်သောပုံနှိပ်!",
+ "Ok":"အဆင်ပြေလား",
+ "There was an error printing, please try again!":"ပုံနှိပ်မှားယွင်းမှုတစ်ခုရှိခဲ့သည်၊ ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ။"
 
 }

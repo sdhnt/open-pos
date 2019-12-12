@@ -534,8 +534,13 @@ export class IncomeTransactionPage {
     this.taxrate = 0;
     this.taxbtn = 0;
     this.discbtn = 0;
+    const msg1 = this.translateConfigService.getTranslatedMessage("Printing...");
+    const msg2 = this.translateConfigService.getTranslatedMessage("Successful print!");
+    const msg3 = this.translateConfigService.getTranslatedMessage("Ok");
+    const msg4 = this.translateConfigService.getTranslatedMessage("There was an error printing, please try again!");
     const load = this.loadCtrl.create({
-      content: "Printing...",
+      // @ts-ignore
+      content: msg1.value,
       enableBackdropDismiss: true,
     });
     load.present();
@@ -547,10 +552,12 @@ export class IncomeTransactionPage {
           .then(printStatus => {
             console.log(printStatus);
             const alert = this.alertCtrl.create({
-              title: "Successful print!",
+              //@ts-ignore
+              title: msg2.value,
               buttons: [
                 {
-                  text: "Ok",
+                  //@ts-ignore
+                  text: msg3.value,
                   handler: () => {
                     load.dismiss();
                     this.printer.disconnectBluetooth();
@@ -572,10 +579,12 @@ export class IncomeTransactionPage {
           .catch(error => {
             console.log(error);
             const alert = this.alertCtrl.create({
-              title: "There was an error printing, please try again!",
+              //@ts-ignore
+              title: msg4.value,
               buttons: [
                 {
-                  text: "Ok",
+                  //@ts-ignore
+                  text: msg3.value,
                   handler: () => {
                     load.dismiss();
                     //this.printer.disconnectBluetooth();
@@ -751,12 +760,14 @@ export class IncomeTransactionPage {
   mountAlertBt(data) {
     this.receipt = data;
     console.log(this.receipt);
-    const msg1=this.translateConfigService.getTranslatedMessage("Select your printer");
-    const msg2=this.translateConfigService.getTranslatedMessage("Cancel");
-    const msg3=this.translateConfigService.getTranslatedMessage("Select printer");
-    const msg4=this.translateConfigService.getTranslatedMessage("Select a printer!");
-    const msg5=this.translateConfigService.getTranslatedMessage("There was an error connecting the printer, please try again!");
-    const msg6=this.translateConfigService.getTranslatedMessage("Error activating bluetooth, please try again!");
+    const msg1 = this.translateConfigService.getTranslatedMessage("Select your printer");
+    const msg2 = this.translateConfigService.getTranslatedMessage("Cancel");
+    const msg3 = this.translateConfigService.getTranslatedMessage("Select printer");
+    const msg4 = this.translateConfigService.getTranslatedMessage("Select a printer!");
+    const msg5 = this.translateConfigService.getTranslatedMessage(
+      "There was an error connecting the printer, please try again!",
+    );
+    const msg6 = this.translateConfigService.getTranslatedMessage("Error activating bluetooth, please try again!");
 
     const alert = this.alertCtrl.create({
       //TRANSLATE THIS
