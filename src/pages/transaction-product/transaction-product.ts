@@ -239,27 +239,40 @@ export class TransactionProductPage {
       }
     });
     if (this.filteredList.length == 0) {
+      const message1 = this.translateConfigService.getTranslatedMessage("Alert!");
+      const message20 =  this.translateConfigService.getTranslatedMessage("There is no item with ");
+      const message21 =  this.translateConfigService.getTranslatedMessage(" price in database. Please type the item name:");
+      const message3 = this.translateConfigService.getTranslatedMessage("Enter Name Here");
+      const message4 = this.translateConfigService.getTranslatedMessage("Cancel");
+      const message5 = this.translateConfigService.getTranslatedMessage("Update Receipt");
+      
+
       const alert = this.alertCtrl
         .create({
-          title: "ALERT!", //translate this
-          subTitle: "There is no item with " + price + " price in database." + "\n" + "Please type the name:",
+          // @ts-ignore
+          title: message1.value, //translate this
+          // @ts-ignore
+          message: message20.value + price + message21.value,
           inputs: [
             {
               name: "singleitemname",
-              placeholder: "Enter Name Here",
+              // @ts-ignore
+              placeholder: message3.value,
             },
           ],
 
           buttons: [
             {
-              text: "Cancel",
+              // @ts-ignore
+              text: message4.value,
               role: "cancel",
               handler: data => {
                 this.reset();
               },
             },
             {
-              text: "Update Receipt",
+              // @ts-ignore
+              text: message5.value,
               handler: data => {
                 if (data.singleitemname == "") {
                   this.reset();

@@ -137,6 +137,12 @@
   "Settings":"Settings",
   "Add Wholesale Discount":"Add Wholesale Discount",
   "Remove Wholesale Discount":"Remove Wholesale Discount",
-  "SHOW PREVIOUS RECEIPTS ":"SHOW PREVIOUS RECEIPTS "
+  "SHOW PREVIOUS RECEIPTS ":"SHOW PREVIOUS RECEIPTS ",
+  "Alert!":"Alert!",
+  "There is no item with ":"There is no item with ",
+  " price in database. Please type the item name:":" price in database. Please type the item name:",
+  "Enter Name Here":"Enter Name Here",
+  "Cancel":"Cancel"
+  
 
 }

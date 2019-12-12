@@ -52,7 +52,7 @@
             </ion-row>
             <ion-row>
               <ion-col col-4 style="color: black; text-align: center;">
-                <div *ngIf="item.name=='Item'; else itemexist">
+                <div *ngIf="item.name.includes('Item'); else itemexist">
                   <button ion-button small (click)="addSingleProd(item,i)">{{"Choose"|translate}}</button>
                 </div>
                 <ng-template #itemexist>{{item.name}}</ng-template>
