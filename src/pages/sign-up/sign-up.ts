@@ -83,8 +83,7 @@ export class SignUpPage {
   datet = new Date();
 
   signup() {
-
-    if(
+    if (
       this.name == "" ||
       this.email == "" ||
       this.password == "" ||
@@ -97,139 +96,149 @@ export class SignUpPage {
       this.cb == null ||
       this.discount == null ||
       this.taxrate == null
-    ){
-      const message=this.translateConfigService.getTranslatedMessage("Incomplete");
-      this.toastCtrl.create({
-        //@ts-ignore
-        message: message.value,
-        duration: 2000,
-      }).present()
+    ) {
+      const message = this.translateConfigService.getTranslatedMessage("Incomplete");
+      this.toastCtrl
+        .create({
+          //@ts-ignore
+          message: message.value,
+          duration: 2000,
+        })
+        .present();
+    } else {
+      this.disabled = true;
+
+      const message = this.translateConfigService.getTranslatedMessage("Please wait while creating your profile ...");
+      this.toastCtrl
+        .create({
+          // @ts-ignore
+          message: message.value,
+          duration: 3000,
+        })
+        .present();
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.email, this.password)
+        .then(data => {
+          const newUser: firebase.User = data.user;
+          newUser
+            .updateProfile({
+              displayName: this.name,
+            })
+            .then(res => {
+              console.log("Profile Updated");
+              console.log(this.datet);
+
+              firebase
+                .firestore()
+                .collection("users")
+                .add({
+                  // file_name: this.text,
+                  created: firebase.firestore.FieldValue.serverTimestamp(),
+                  owner: firebase.auth().currentUser.uid,
+                  owner_name: firebase.auth().currentUser.displayName,
+                  business_name: this.businessname,
+                  businesstype: this.businesstype,
+                  business_address: this.businessaddress,
+                  ph_no: this.phno,
+                  language: this.language,
+                  currency: this.currency,
+                  cash_balance: this.cb,
+                  discount: this.discount,
+                  taxrate: this.taxrate,
+                  categories: [{ name: "Example" }],
+                  products: [
+                    {
+                      cat: "Example",
+                      code: "0000",
+                      cost: "0",
+                      name: "Example Product",
+                      price: "0",
+                      stock_qty: "0",
+                      url: "https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y",
+                      wholesale_price: "0",
+                    },
+                  ],
+
+                  transactions: [
+                    {
+                      datetime: new Date(this.datet).getTime(),
+                      discount: 0,
+                      discountlist: [],
+                      itemslist: [
+                        {
+                          cat: "Example",
+                          code: "0000",
+                          cost: "0",
+                          name: "Example Product",
+                          price: "0",
+                          stock_qty: "0",
+                        },
+                      ],
+                      pnllist: [],
+                      prodidlist: [],
+                      taxrate: 0,
+                      totalatax: 0,
+                      totaldisc: 0,
+                      totalsum: 0,
+                    },
+                  ],
+                })
+                .then(async doc => {
+                  console.log(doc);
+                  const title = this.translateConfigService.getTranslatedMessage("Account Created");
+                  const message = this.translateConfigService.getTranslatedMessage(
+                    "Your account has been created successfully",
+                  );
+                  this.alertCtrl
+                    .create({
+                      // @ts-ignore
+                      title: title.value,
+                      // @ts-ignore
+                      message: message.value,
+                      buttons: [
+                        {
+                          text: "OK",
+                          handler: () => {
+                            //this.sp.clearMem();
+                            this.sp.setMem();
+                            this.navCtrl.setRoot(TransactionHomePage); //navigate to feeds page
+                          }, //end handler
+                        },
+                      ], //end button
+                    })
+                    .present();
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+            })
+            .catch(err => {
+              console.log(err);
+              this.toastCtrl
+                .create({
+                  message: err.message,
+                  duration: 3000,
+                })
+                .present();
+            });
+        })
+        .catch(error => {
+          this.alertCtrl
+            .create({
+              message: error.message,
+              buttons: [
+                {
+                  text: "Cancel",
+                  role: "cancel",
+                },
+              ],
+            })
+            .present();
+        });
     }
-    else{
-    this.disabled = true;
-
-
-    const message = this.translateConfigService.getTranslatedMessage("Please wait while creating your profile ...");
-    this.toastCtrl
-      .create({
-        // @ts-ignore
-        message: message.value,
-        duration: 3000,
-      })
-      .present();
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(this.email, this.password)
-      .then(data => {
-        const newUser: firebase.User = data.user;
-        newUser
-          .updateProfile({
-            displayName: this.name,
-          })
-          .then(res => {
-            console.log("Profile Updated");
-            console.log(this.datet);
-
-            firebase
-              .firestore()
-              .collection("users")
-              .add({
-                // file_name: this.text,
-                created: firebase.firestore.FieldValue.serverTimestamp(),
-                owner: firebase.auth().currentUser.uid,
-                owner_name: firebase.auth().currentUser.displayName,
-                business_name: this.businessname,
-                businesstype: this.businesstype,
-                business_address: this.businessaddress,
-                ph_no: this.phno,
-                language: this.language,
-                currency: this.currency,
-                cash_balance: this.cb,
-                discount: this.discount,
-                taxrate: this.taxrate,
-                categories: [{ name: "Example" }],
-                products: [
-                  {
-                    cat: "Example",
-                    code: "0000",
-                    cost: "0",
-                    name: "Example Product",
-                    price: "0",
-                    stock_qty: "0",
-                    url: "https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y",
-                    wholesale_price: "0",
-                  },
-                ],
-
-                transactions: [
-                  {
-                    datetime: new Date(this.datet).getTime(),
-                    discount: 0,
-                    discountlist: [],
-                    itemslist: [
-                      { cat: "Example", code: "0000", cost: "0", name: "Example Product", price: "0", stock_qty: "0" },
-                    ],
-                    pnllist: [],
-                    prodidlist: [],
-                    taxrate: 0,
-                    totalatax: 0,
-                    totaldisc: 0,
-                    totalsum: 0,
-                  },
-                ],
-              })
-              .then(async doc => {
-                console.log(doc);
-                const title = this.translateConfigService.getTranslatedMessage("Account Created");
-                const message = this.translateConfigService.getTranslatedMessage(
-                  "Your account has been created successfully",
-                );
-                this.alertCtrl
-                  .create({
-                    // @ts-ignore
-                    title: title.value,
-                    // @ts-ignore
-                    message: message.value,
-                    buttons: [
-                      {
-                        text: "OK",
-                        handler: () => {
-                          //this.sp.clearMem();
-                          this.sp.setMem();
-                          this.navCtrl.setRoot(TransactionHomePage); //navigate to feeds page
-                        }, //end handler
-                      },
-                    ], //end button
-                  })
-                  .present();
-              })
-              .catch(err => {
-                console.log(err);
-              });
-          })
-          .catch(err => {
-            console.log(err);
-            this.toastCtrl
-              .create({
-                message: err.message,
-                duration: 3000,
-              })
-              .present();
-          });
-      }).catch((error)=>{
-        this.alertCtrl.create({
-
-          message: error.message,
-          buttons: [{
-            text: "Cancel",
-            role: "cancel"
-          }]
-
-        }).present()
-      });
-  }}
+  }
   goBack() {
     this.navCtrl.pop();
   }
-  
 }
