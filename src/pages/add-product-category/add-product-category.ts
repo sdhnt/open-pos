@@ -22,7 +22,7 @@ export class AddProductCategoryPage {
     public navParams: NavParams,
     public sp: StorageProvider,
     public toastCtrl: ToastController,
-  ) { }
+  ) {}
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad AddProductCategoryPage");

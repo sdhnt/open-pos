@@ -8,4 +8,4 @@ import { TranslateModule } from "@ngx-translate/core";
   imports: [IonicPageModule.forChild(AddProductCategoryPage), TranslateModule.forChild()],
   exports: [AddProductCategoryPage],
 })
-export class AddProductCategoryPageModule { }
+export class AddProductCategoryPageModule {}
