@@ -13,7 +13,7 @@ import { UserProfilePage } from "../user-profile/user-profile";
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
- */
+ */ 
 
 @IonicPage()
 @Component({
@@ -41,8 +41,6 @@ export class LoginPage {
 
     firebase.auth().onAuthStateChanged(async function(user) {
       if (user) {
-        //sp.clearMem();
-
         await firebase
           .firestore()
           .collection("users")
@@ -50,11 +48,16 @@ export class LoginPage {
           .get()
           .then(function(querySnapshot) {
             if (querySnapshot.size == 0) {
-              console.log("Not permitted - no sign up 1");
-              navCtrl.setRoot(UserProfilePage, {
-                uid: firebase.auth().currentUser.uid,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-              });
+              // console.log("Not permitted - this account has not filled their data (Fb Login) or no internet");
+              // navCtrl.setRoot(UserProfilePage, {
+              //   uid: firebase.auth().currentUser.uid,
+              //   timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+              //});
+              console.log("No Internet")
+              this.toastCtrl.create({
+                message: "Check your connection",
+                duration: 2000,
+              }).present();
             } else {
               sp.setMem().then(() => {
                 zone.run(() => {
@@ -63,10 +66,17 @@ export class LoginPage {
                 });
               });
             }
+          }).catch((error)=>{
+            this.toastCtrl.create({
+              message: error,
+              duration: 2000,
+            });
+
+
           });
       } else {
         // No user is signed in.
-        console.log("no-user is signed in");
+        console.log("no-user is previously signed in");
       }
     });
 
@@ -83,8 +93,15 @@ export class LoginPage {
       .then(doc => {
         doc.docs[0].data().language.forEach(l => {
           this.listOfLang.push(l);
-          console.log(this.listOfLang);
+          //console.log(this.listOfLang);
         });
+      }).catch((error)=>{
+        this.toastCtrl.create({
+          message: error,
+          duration: 2000,
+        });
+
+
       });
   }
 

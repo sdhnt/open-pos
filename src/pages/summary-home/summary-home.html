@@ -56,30 +56,31 @@
                               {{item.qty}}
                           </ion-col>
                         </ion-row>
-                        <ion-row *ngIf="transac.totaldisc!=transac.totalsum" style="padding: 0px;text-align: center ;  background-color: silver; color: palevioletred;">
-                            <ion-col col-8>
-                               {{"Discounted total:"|translate}} ({{transac.discount}}%)
-                              </ion-col>
-                              <ion-col col-4 >
-                                  {{transac.totaldisc}}
-                              </ion-col>
-                        </ion-row>
-                        <ion-row *ngIf="transac.totalsum!=transac.totalatax" style="padding: 0px; text-align: center ;  background-color: silver; color: palevioletred;">
-                            <ion-col col-8>
-                                {{"Total after tax:"|translate}} ({{transac.taxrate}}%)
-                              </ion-col>
-                              <ion-col col-4 >
-                                  {{transac.totalatax}}
-                              </ion-col>
-                        </ion-row>
+                      
               </ion-list> 
-                  <ion-row style="padding-left: 10px; padding-bottom: 10px;">
-                    <ion-col col-10><h2><b>{{"Grand Total:"|translate}} {{transac.totaldisc}}</b></h2></ion-col>
+              
+              <ion-row style="padding-left: 10px; padding-bottom: 10px;" >
+                  <ion-col col-10><h2><b>{{"Grand Total:"|translate}} {{transac.totaldisc}}</b></h2></ion-col>
+                </ion-row>
+                  <ion-row *ngIf="transac.totaldisc!=transac.totalsum" style="padding: 0px;text-align: center ; " [hidden]="expanded">
+                      <ion-col col-8>
+                         {{"Discounted total:"|translate}} ({{transac.discount}}%)
+                        </ion-col>
+                        <ion-col col-4 >
+                            {{transac.totaldisc}}
+                        </ion-col>
                   </ion-row>
-
-               
-               
+                  <ion-row *ngIf="transac.totalsum!=transac.totalatax" style="padding: 0px; text-align: center ;" [hidden]="expanded">
+                      <ion-col col-8>
+                          {{"Total after tax:"|translate}} ({{transac.taxrate}}%)
+                        </ion-col>
+                        <ion-col col-4 >
+                            {{transac.totalatax}}
+                        </ion-col>
+                  </ion-row>
+                
               </ion-grid>
+              <button ion-button (click)="delTransac(transac)">Delete Transaction</button>
             </ion-card>   
         </ion-list>
       

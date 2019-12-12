@@ -63,7 +63,7 @@
               </ion-col>
             </ion-row>
             <ion-row>
-              <ion-col col-4 style="color: grey">{{ 'Discount' | translate }} %</ion-col>
+              <ion-col col-4 style="color: grey; text-align: center;">{{ 'Discount' | translate }} %</ion-col>
               <ion-col col-2 style="color: black;   text-align: center;">
                 <ion-input type="number" [(ngModel)]="item.discount" (ionChange)="updateRec()" min="0" max="100">
                 </ion-input>

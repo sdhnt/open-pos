@@ -147,7 +147,11 @@
   "Select printer":"Select printer",
   "Select a printer!":"Select a printer!",
   "There was an error connecting the printer, please try again!":"There was an error connecting the printer, please try again!",
-  "Error activating bluetooth, please try again!":"Error activating bluetooth, please try again!"
+  "Error activating bluetooth, please try again!":"Error activating bluetooth, please try again!",
+  "Printing...":"Printing...",
+  "Successful print!":"Successful print!",
+  "Ok":"Ok",
+  "There was an error printing, please try again!":"There was an error printing, please try again!"
 
   
 

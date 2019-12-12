@@ -80,7 +80,9 @@ export class StorageProvider {
             uid = doc.id;
             const usdat = doc.data();
             tempprod = usdat.products;
-            temptransac = usdat.transactions.slice(Math.max(usdat.transactions.length - 10, 0));
+            temptransac = usdat.transactions
+            //.slice(Math.max(usdat.transactions.length - 10, 0))
+            ;
             tempcat = usdat.categories;
             tempuser = {
               business_address: usdat.business_address,
@@ -146,16 +148,16 @@ export class StorageProvider {
                         querySnapshot.forEach(function(doc) {
                           uid = doc.id;
                           console.log(uid);
-                          let existingTransactions = doc.data().transactions;
-                          existingTransactions = existingTransactions.slice(Math.max(existingTransactions - 10, 0));
-                          const updatedTransactions = existingTransactions.concat(parsetransac);
+                          // let existingTransactions = doc.data().transactions;
+                          // existingTransactions = existingTransactions.slice(Math.max(existingTransactions - 10, 0));
+                          // const updatedTransactions = existingTransactions.concat(parsetransac);
                           firebase
                             .firestore()
                             .collection("users")
                             .doc(uid)
                             .update({
                               products: parseprod,
-                              transactions: updatedTransactions,
+                              transactions: parsetransac,
                               categories: parsecat,
                             })
                             .then(async doc => {})
@@ -361,6 +363,28 @@ export class StorageProvider {
   getTransactions() {
     return this.storage.get("transactions");
   }
+
+  deleteTransactions(data) {
+    this.storage.ready().then(() => {
+      this.storage
+        .get("transactions")
+        .then(val => {
+          this.transactions = JSON.parse(val);
+          let arr = [];
+          let arr2 = [];
+          arr = this.transactions;
+          arr2 = arr.filter(val => {
+            return val.datetime != data.datetime;
+          });
+          console.log(arr2)
+          this.storage.set("transactions", JSON.stringify(arr2));
+        })
+        .catch(err => {
+          alert(err);
+        });
+    });
+  }
+
 
   searchProduct(barcode) {
     let needle = null;

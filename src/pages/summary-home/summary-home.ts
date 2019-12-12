@@ -44,6 +44,9 @@ export class SummaryHomePage {
   listtransacrev: any;
   totalsaletoday = 0;
   getTransac() {
+    this.tstoday = 0;
+    this.tsmonth = 0;
+    this.ts30 = 0;
     this.sp.storageReady().then(() => {
       this.sp
         .getTransactions()
@@ -99,4 +102,26 @@ export class SummaryHomePage {
     const t = temp.getMonth();
     return t;
   }
+
+  delTransac(transac){
+    this.sp.storageReady().then(async ()=>{
+      await this.sp.deleteTransactions(transac);
+      this.sp.backupStorage();
+      setTimeout(() => {
+        const message = this.translateConfigService.getTranslatedMessage("Finish");
+        const toast = this.toastCtrl.create({
+          // @ts-ignore
+          message: message.value,
+          duration: 3000,
+        });
+        this.getTransac();
+        toast.present();
+      }, 1000);
+      this.ionViewDidLoad();
+    });
+    
+  }
+
+
+
 }
