@@ -8,20 +8,20 @@
 </ion-header> -->
 
 <ion-content padding>
-    <ion-item>
-        <b>{{"Enter Information:" | translate}}</b>
-    
-    </ion-item>
+  <ion-item>
+    <b>{{"Enter Information:" | translate}}</b>
 
-    <ion-item>
-        <button ion-button block color="primary" (click)="launchCamera()">{{'Take Picture' | translate}}</button>
-        <img *ngIf="image!=null" [src]="image" style="width: 100px;">
-      </ion-item>
-  
+  </ion-item>
+
+  <ion-item>
+    <button ion-button block color="primary" (click)="launchCamera()">{{'Take Picture' | translate}}</button>
+    <img *ngIf="image!=null" [src]="image" style="width: 100px;">
+  </ion-item>
+
   <form [formGroup]="formProduct">
     <ion-list inset>
       <!-- <button ion-button full color="dark" (click)="getProdPic()">Upload Picture</button> -->
-      <button ion-button block color="primary" (click)="scanQR()"  color="dark">{{'Scan Barcode'| translate}}</button>
+      <button ion-button block color="primary" (click)="scanQR()" color="dark">{{'Scan Barcode'| translate}}</button>
       <ion-item>
         <ion-label>{{'Product Code:'| translate}}</ion-label>
         <ion-input type="text" formControlName="prodCode" [(ngModel)]='prodCode'></ion-input>
@@ -72,14 +72,17 @@
 
 
       <ion-item *ngIf="prodCat=='New'">
-        <ion-label >{{'Enter New Category Name' | translate}}</ion-label>
-        <ion-input type="text" placeholder="{{'Enter Category Here' | translate}}" formControlName="newprodCat" [(ngModel)]='newprodCat'></ion-input>
+        <ion-label>{{'Enter New Category Name' | translate}}</ion-label>
+        <ion-input type="text" placeholder="{{'Enter Category Here' | translate}}" formControlName="newprodCat"
+          [(ngModel)]='newprodCat'></ion-input>
       </ion-item>
 
     </ion-list>
   </form>
-  <button ion-button block color="primary" [disabled]="disabled" (click)="addproduct()"  color="dark">{{'Add Product'| translate}}</button>
-  <button ion-button block style="background-color: red; color: white;" (click)="clearFields()">{{"Clear Fields"|translate}}</button>
+  <button ion-button block color="primary" [disabled]="disabled" (click)="addproduct()"
+    color="dark">{{'Add Product'| translate}}</button>
+  <button ion-button block style="background-color: red; color: white;"
+    (click)="clearFields()">{{"Clear Fields"|translate}}</button>
 
-  
+
 </ion-content>

@@ -80,9 +80,8 @@ export class StorageProvider {
             uid = doc.id;
             const usdat = doc.data();
             tempprod = usdat.products;
-            temptransac = usdat.transactions
+            temptransac = usdat.transactions;
             //.slice(Math.max(usdat.transactions.length - 10, 0))
-            ;
             tempcat = usdat.categories;
             tempuser = {
               business_address: usdat.business_address,
@@ -376,7 +375,7 @@ export class StorageProvider {
           arr2 = arr.filter(val => {
             return val.datetime != data.datetime;
           });
-          console.log(arr2)
+          console.log(arr2);
           this.storage.set("transactions", JSON.stringify(arr2));
         })
         .catch(err => {
@@ -384,7 +383,6 @@ export class StorageProvider {
         });
     });
   }
-
 
   searchProduct(barcode) {
     let needle = null;

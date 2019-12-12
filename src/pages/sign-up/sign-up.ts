@@ -79,7 +79,7 @@ export class SignUpPage {
       });
   }
 
-  datet=new Date();
+  datet = new Date();
 
   signup() {
     const message = this.translateConfigService.getTranslatedMessage("Please wait while creating your profile ...");
@@ -106,7 +106,7 @@ export class SignUpPage {
             firebase
               .firestore()
               .collection("users")
-              .add({  
+              .add({
                 // file_name: this.text,
                 created: firebase.firestore.FieldValue.serverTimestamp(),
                 owner: firebase.auth().currentUser.uid,
@@ -133,10 +133,9 @@ export class SignUpPage {
                     wholesale_price: "0",
                   },
                 ],
-             
+
                 transactions: [
                   {
-        
                     datetime: new Date(this.datet).getTime(),
                     discount: 0,
                     discountlist: [],

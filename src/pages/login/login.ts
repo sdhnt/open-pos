@@ -13,7 +13,7 @@ import { UserProfilePage } from "../user-profile/user-profile";
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
- */ 
+ */
 
 @IonicPage()
 @Component({
@@ -53,11 +53,13 @@ export class LoginPage {
               //   uid: firebase.auth().currentUser.uid,
               //   timestamp: firebase.firestore.FieldValue.serverTimestamp(),
               //});
-              console.log("No Internet")
-              this.toastCtrl.create({
-                message: "Check your connection",
-                duration: 2000,
-              }).present();
+              console.log("No Internet");
+              this.toastCtrl
+                .create({
+                  message: "Check your connection",
+                  duration: 2000,
+                })
+                .present();
             } else {
               sp.setMem().then(() => {
                 zone.run(() => {
@@ -66,13 +68,12 @@ export class LoginPage {
                 });
               });
             }
-          }).catch((error)=>{
+          })
+          .catch(error => {
             this.toastCtrl.create({
               message: error,
               duration: 2000,
             });
-
-
           });
       } else {
         // No user is signed in.
@@ -95,13 +96,12 @@ export class LoginPage {
           this.listOfLang.push(l);
           //console.log(this.listOfLang);
         });
-      }).catch((error)=>{
+      })
+      .catch(error => {
         this.toastCtrl.create({
           message: error,
           duration: 2000,
         });
-
-
       });
   }
 

@@ -3,36 +3,36 @@
   <ion-grid>
     <ion-row>
       <ion-col col-8>
-          <ion-item>
-              <ion-input type="text" placeholder="Enter Category Here"  [(ngModel)]='newprodCat'></ion-input>
-          </ion-item>
+        <ion-item>
+          <ion-input type="text" placeholder="Enter Category Here" [(ngModel)]='newprodCat'></ion-input>
+        </ion-item>
       </ion-col>
       <ion-col col-4>
-          <button ion-button full color="dark" (click)="addCategory()"> {{'Add Category' | translate}}</button>
+        <button ion-button full color="dark" (click)="addCategory()"> {{'Add Category' | translate}}</button>
 
       </ion-col>
     </ion-row>
   </ion-grid>
 
-   
-    
+
+
 
   <ion-item>
-     <h2> <b>{{'View/Delete Category' | translate}} </b> </h2>
+    <h2> <b>{{'View/Delete Category' | translate}} </b> </h2>
   </ion-item>
- 
-  <ion-list  *ngFor="let element of listCat">
 
-      <ion-item>
-          {{element.name}}
-          <ion-icon item-end name="close-circle" (click)="delCat(element)" color="danger"></ion-icon> 
-      </ion-item>
+  <ion-list *ngFor="let element of listCat">
+
+    <ion-item>
+      {{element.name}}
+      <ion-icon item-end name="close-circle" (click)="delCat(element)" color="danger"></ion-icon>
+    </ion-item>
   </ion-list>
- 
 
 
-  
 
- 
-    
+
+
+
+
 </ion-content>

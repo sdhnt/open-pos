@@ -103,8 +103,8 @@ export class SummaryHomePage {
     return t;
   }
 
-  delTransac(transac){
-    this.sp.storageReady().then(async ()=>{
+  delTransac(transac) {
+    this.sp.storageReady().then(async () => {
       await this.sp.deleteTransactions(transac);
       this.sp.backupStorage();
       setTimeout(() => {
@@ -119,9 +119,5 @@ export class SummaryHomePage {
       }, 1000);
       this.ionViewDidLoad();
     });
-    
   }
-
-
-
 }
