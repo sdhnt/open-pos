@@ -1,6 +1,14 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
   module.exports = [
     {
+      "id": "cordova-plugin-backbutton.Backbutton",
+      "file": "plugins/cordova-plugin-backbutton/www/Backbutton.js",
+      "pluginId": "cordova-plugin-backbutton",
+      "clobbers": [
+        "navigator.Backbutton"
+      ]
+    },
+    {
       "id": "cordova-plugin-bluetooth-serial.bluetoothSerial",
       "file": "plugins/cordova-plugin-bluetooth-serial/www/bluetoothSerial.js",
       "pluginId": "cordova-plugin-bluetooth-serial",
@@ -73,6 +81,20 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       ]
     },
     {
+      "id": "cordova-plugin-geolocation.geolocation",
+      "file": "plugins/cordova-plugin-geolocation/www/android/geolocation.js",
+      "pluginId": "cordova-plugin-geolocation",
+      "clobbers": [
+        "navigator.geolocation"
+      ]
+    },
+    {
+      "id": "cordova-plugin-geolocation.PositionError",
+      "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
+      "pluginId": "cordova-plugin-geolocation",
+      "runs": true
+    },
+    {
       "id": "cordova-plugin-ionic-keyboard.keyboard",
       "file": "plugins/cordova-plugin-ionic-keyboard/www/android/keyboard.js",
       "pluginId": "cordova-plugin-ionic-keyboard",
@@ -127,40 +149,20 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "clobbers": [
         "cordova.plugins.barcodeScanner"
       ]
-    },
-    {
-      "id": "cordova-plugin-backbutton.Backbutton",
-      "file": "plugins/cordova-plugin-backbutton/www/Backbutton.js",
-      "pluginId": "cordova-plugin-backbutton",
-      "clobbers": [
-        "navigator.Backbutton"
-      ]
-    },
-    {
-      "id": "cordova-plugin-geolocation.geolocation",
-      "file": "plugins/cordova-plugin-geolocation/www/android/geolocation.js",
-      "pluginId": "cordova-plugin-geolocation",
-      "clobbers": [
-        "navigator.geolocation"
-      ]
-    },
-    {
-      "id": "cordova-plugin-geolocation.PositionError",
-      "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
-      "pluginId": "cordova-plugin-geolocation",
-      "runs": true
     }
   ];
   module.exports.metadata = {
     "cordova-android-support-gradle-release": "3.0.1",
     "cordova-plugin-androidx": "1.0.2",
     "cordova-plugin-androidx-adapter": "1.1.0",
+    "cordova-plugin-backbutton": "0.3.0",
     "cordova-plugin-bluetooth-serial": "0.4.7",
     "cordova-plugin-camera": "4.1.0",
     "cordova-plugin-datepicker": "0.9.3",
     "cordova-plugin-device": "2.0.2",
     "cordova-plugin-facebook4": "1.7.4",
     "cordova-plugin-firebasex": "6.1.0",
+    "cordova-plugin-geolocation": "4.0.2",
     "cordova-plugin-ionic-keyboard": "2.2.0",
     "cordova-plugin-ionic-webview": "4.1.3",
     "cordova-plugin-splashscreen": "5.0.2",
@@ -168,8 +170,6 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-whitelist": "1.3.3",
     "cordova-plugin-x-toast": "2.7.2",
     "cordova-sqlite-storage": "3.4.0",
-    "phonegap-plugin-barcodescanner": "8.1.0",
-    "cordova-plugin-backbutton": "0.3.0",
-    "cordova-plugin-geolocation": "4.0.2"
+    "phonegap-plugin-barcodescanner": "8.1.0"
   };
 });

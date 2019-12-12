@@ -26,13 +26,11 @@
       },
       "res/xml/config.xml": {
         "parents": {
-          "/widget": [
-            {
-              "xml": "<feature name=\"BluetoothSerial\"><param name=\"android-package\" value=\"com.megster.cordova.BluetoothSerial\" /></feature>",
-              "count": 1
-            }
-          ],
           "/*": [
+            {
+              "xml": "<feature name=\"BackbuttonPlugin\"><param name=\"android-package\" value=\"com.badrit.Backbutton.BackbuttonPlugin\" /></feature>",
+              "count": 1
+            },
             {
               "xml": "<feature name=\"Camera\"><param name=\"android-package\" value=\"org.apache.cordova.camera.CameraLauncher\" /></feature>",
               "count": 1
@@ -78,6 +76,10 @@
               "count": 1
             },
             {
+              "xml": "<feature name=\"Geolocation\"><param name=\"android-package\" value=\"org.apache.cordova.geolocation.Geolocation\" /></feature>",
+              "count": 1
+            },
+            {
               "xml": "<feature name=\"SplashScreen\"><param name=\"android-package\" value=\"org.apache.cordova.splashscreen.SplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
               "count": 1
             },
@@ -100,13 +102,11 @@
             {
               "xml": "<feature name=\"BarcodeScanner\"><param name=\"android-package\" value=\"com.phonegap.plugins.barcodescanner.BarcodeScanner\" /></feature>",
               "count": 1
-            },
+            }
+          ],
+          "/widget": [
             {
-              "xml": "<feature name=\"BackbuttonPlugin\"><param name=\"android-package\" value=\"com.badrit.Backbutton.BackbuttonPlugin\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"Geolocation\"><param name=\"android-package\" value=\"org.apache.cordova.geolocation.Geolocation\" /></feature>",
+              "xml": "<feature name=\"BluetoothSerial\"><param name=\"android-package\" value=\"com.megster.cordova.BluetoothSerial\" /></feature>",
               "count": 1
             }
           ]
@@ -291,31 +291,34 @@
   "installed_plugins": {
     "cordova-android-support-gradle-release": {
       "ANDROID_SUPPORT_VERSION": "27.+",
-      "PACKAGE_NAME": "com.openfintech.pos"
+      "PACKAGE_NAME": "com.openfintech.openpos"
     },
     "cordova-plugin-androidx": {
-      "PACKAGE_NAME": "com.openfintech.pos"
+      "PACKAGE_NAME": "com.openfintech.openpos"
     },
     "cordova-plugin-androidx-adapter": {
-      "PACKAGE_NAME": "com.openfintech.pos"
+      "PACKAGE_NAME": "com.openfintech.openpos"
+    },
+    "cordova-plugin-backbutton": {
+      "PACKAGE_NAME": "com.openfintech.openpos"
     },
     "cordova-plugin-bluetooth-serial": {
-      "PACKAGE_NAME": "com.openfintech.pos"
+      "PACKAGE_NAME": "com.openfintech.openpos"
     },
     "cordova-plugin-camera": {
       "ANDROID_SUPPORT_V4_VERSION": "27.+",
-      "PACKAGE_NAME": "com.openfintech.pos"
+      "PACKAGE_NAME": "com.openfintech.openpos"
     },
     "cordova-plugin-datepicker": {
-      "PACKAGE_NAME": "com.openfintech.pos"
+      "PACKAGE_NAME": "com.openfintech.openpos"
     },
     "cordova-plugin-device": {
-      "PACKAGE_NAME": "com.openfintech.pos"
+      "PACKAGE_NAME": "com.openfintech.openpos"
     },
     "cordova-plugin-facebook4": {
       "APP_ID": "1521978867943856",
       "APP_NAME": "Open-Fintech",
-      "PACKAGE_NAME": "com.openfintech.pos"
+      "PACKAGE_NAME": "com.openfintech.openpos"
     },
     "cordova-plugin-firebasex": {
       "FIREBASE_ANALYTICS_COLLECTION_ENABLED": "true",
@@ -331,43 +334,48 @@
       "ANDROID_CRASHLYTICS_VERSION": "2.10.1",
       "ANDROID_CRASHLYTICS_NDK_VERSION": "2.1.0",
       "ANDROID_SHORTCUTBADGER_VERSION": "1.1.22",
-      "PACKAGE_NAME": "com.openfintech.pos"
+      "PACKAGE_NAME": "com.openfintech.openpos"
+    },
+    "cordova-plugin-geolocation": {
+      "PACKAGE_NAME": "com.openfintech.openpos"
     },
     "cordova-plugin-ionic-keyboard": {
-      "PACKAGE_NAME": "com.openfintech.pos"
+      "PACKAGE_NAME": "com.openfintech.openpos"
     },
     "cordova-plugin-ionic-webview": {
       "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+",
-      "PACKAGE_NAME": "com.openfintech.pos"
+      "PACKAGE_NAME": "com.openfintech.openpos"
     },
     "cordova-plugin-splashscreen": {
-      "PACKAGE_NAME": "com.openfintech.pos"
+      "PACKAGE_NAME": "com.openfintech.openpos"
     },
     "cordova-plugin-statusbar": {
-      "PACKAGE_NAME": "com.openfintech.pos"
+      "PACKAGE_NAME": "com.openfintech.openpos"
     },
     "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.openfintech.pos"
+      "PACKAGE_NAME": "com.openfintech.openpos"
     },
     "cordova-plugin-x-toast": {
-      "PACKAGE_NAME": "com.openfintech.pos"
+      "PACKAGE_NAME": "com.openfintech.openpos"
     },
     "cordova-sqlite-storage": {
-      "PACKAGE_NAME": "com.openfintech.pos"
+      "PACKAGE_NAME": "com.openfintech.openpos"
     },
     "phonegap-plugin-barcodescanner": {
       "ANDROID_SUPPORT_V4_VERSION": "27.+",
-      "PACKAGE_NAME": "com.openfintech.pos"
-    },
-    "cordova-plugin-backbutton": {
-      "PACKAGE_NAME": "com.openfintech.pos"
-    },
-    "cordova-plugin-geolocation": {
-      "PACKAGE_NAME": "com.openfintech.pos"
+      "PACKAGE_NAME": "com.openfintech.openpos"
     }
   },
   "dependent_plugins": {},
   "modules": [
+    {
+      "id": "cordova-plugin-backbutton.Backbutton",
+      "file": "plugins/cordova-plugin-backbutton/www/Backbutton.js",
+      "pluginId": "cordova-plugin-backbutton",
+      "clobbers": [
+        "navigator.Backbutton"
+      ]
+    },
     {
       "id": "cordova-plugin-bluetooth-serial.bluetoothSerial",
       "file": "plugins/cordova-plugin-bluetooth-serial/www/bluetoothSerial.js",
@@ -441,6 +449,20 @@
       ]
     },
     {
+      "id": "cordova-plugin-geolocation.geolocation",
+      "file": "plugins/cordova-plugin-geolocation/www/android/geolocation.js",
+      "pluginId": "cordova-plugin-geolocation",
+      "clobbers": [
+        "navigator.geolocation"
+      ]
+    },
+    {
+      "id": "cordova-plugin-geolocation.PositionError",
+      "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
+      "pluginId": "cordova-plugin-geolocation",
+      "runs": true
+    },
+    {
       "id": "cordova-plugin-ionic-keyboard.keyboard",
       "file": "plugins/cordova-plugin-ionic-keyboard/www/android/keyboard.js",
       "pluginId": "cordova-plugin-ionic-keyboard",
@@ -495,40 +517,20 @@
       "clobbers": [
         "cordova.plugins.barcodeScanner"
       ]
-    },
-    {
-      "id": "cordova-plugin-backbutton.Backbutton",
-      "file": "plugins/cordova-plugin-backbutton/www/Backbutton.js",
-      "pluginId": "cordova-plugin-backbutton",
-      "clobbers": [
-        "navigator.Backbutton"
-      ]
-    },
-    {
-      "id": "cordova-plugin-geolocation.geolocation",
-      "file": "plugins/cordova-plugin-geolocation/www/android/geolocation.js",
-      "pluginId": "cordova-plugin-geolocation",
-      "clobbers": [
-        "navigator.geolocation"
-      ]
-    },
-    {
-      "id": "cordova-plugin-geolocation.PositionError",
-      "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
-      "pluginId": "cordova-plugin-geolocation",
-      "runs": true
     }
   ],
   "plugin_metadata": {
     "cordova-android-support-gradle-release": "3.0.1",
     "cordova-plugin-androidx": "1.0.2",
     "cordova-plugin-androidx-adapter": "1.1.0",
+    "cordova-plugin-backbutton": "0.3.0",
     "cordova-plugin-bluetooth-serial": "0.4.7",
     "cordova-plugin-camera": "4.1.0",
     "cordova-plugin-datepicker": "0.9.3",
     "cordova-plugin-device": "2.0.2",
     "cordova-plugin-facebook4": "1.7.4",
     "cordova-plugin-firebasex": "6.1.0",
+    "cordova-plugin-geolocation": "4.0.2",
     "cordova-plugin-ionic-keyboard": "2.2.0",
     "cordova-plugin-ionic-webview": "4.1.3",
     "cordova-plugin-splashscreen": "5.0.2",
@@ -536,8 +538,6 @@
     "cordova-plugin-whitelist": "1.3.3",
     "cordova-plugin-x-toast": "2.7.2",
     "cordova-sqlite-storage": "3.4.0",
-    "phonegap-plugin-barcodescanner": "8.1.0",
-    "cordova-plugin-backbutton": "0.3.0",
-    "cordova-plugin-geolocation": "4.0.2"
+    "phonegap-plugin-barcodescanner": "8.1.0"
   }
 }

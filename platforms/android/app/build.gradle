@@ -98,9 +98,9 @@ ext {
 }
 
 // PLUGIN GRADLE EXTENSIONS START
-apply from: "../cordova-android-support-gradle-release/pos-cordova-android-support-gradle-release.gradle"
-apply from: "../cordova-plugin-firebasex/pos-build.gradle"
-apply from: "../phonegap-plugin-barcodescanner/pos-barcodescanner.gradle"
+apply from: "../cordova-android-support-gradle-release/openpos-cordova-android-support-gradle-release.gradle"
+apply from: "../cordova-plugin-firebasex/openpos-build.gradle"
+apply from: "../phonegap-plugin-barcodescanner/openpos-barcodescanner.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 def hasBuildExtras1 = file('build-extras.gradle').exists()

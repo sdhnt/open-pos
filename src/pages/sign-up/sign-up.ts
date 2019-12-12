@@ -23,6 +23,7 @@ export class SignUpPage {
   listOfBType: string[] = [];
   listOfCurrency: string[] = [];
   listOfLang: string[] = [];
+  disabled=false;
 
   name = "";
   email = "";
@@ -82,6 +83,7 @@ export class SignUpPage {
   datet = new Date();
 
   signup() {
+    this.disabled=true;
     const message = this.translateConfigService.getTranslatedMessage("Please wait while creating your profile ...");
     this.toastCtrl
       .create({
