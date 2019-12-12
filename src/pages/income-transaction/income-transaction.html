@@ -189,7 +189,7 @@
 
 <ion-footer>
   <ion-grid>
-    <ion-row>
+    <ion-row *ngIf="showrec==true">
       <ion-col col-4>
         <button ion-button full style="background-color:#FFAF00" (click)="saveRec()"> {{'SAVE '|translate}} <br>
           <ion-icon name="checkmark"></ion-icon>
@@ -205,6 +205,13 @@
           <ion-icon name="close"></ion-icon>
         </button>
       </ion-col>
+    </ion-row>
+    <ion-row *ngIf="showrec!=true">
+        <ion-col col-12>
+            <button ion-button full (click)="showOldRec()"> {{'SHOW PREVIOUS RECEIPTS '|translate}} <br>
+              <ion-icon name="list-box"></ion-icon>
+            </button>
+          </ion-col>     
     </ion-row>
   </ion-grid>
 </ion-footer>

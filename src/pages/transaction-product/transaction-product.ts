@@ -182,11 +182,11 @@ export class TransactionProductPage {
     });
   }
 
-  addwholesaledisc(product){
-    product.discount=((product.price - product.wholesale_price) / product.price) * 100;
+  addwholesaledisc(product) {
+    product.discount = ((product.price - product.wholesale_price) / product.price) * 100;
   }
-  remwholesaledisc(product){
-    product.discount=null;
+  remwholesaledisc(product) {
+    product.discount = null;
   }
 
   singleProduct(product) {

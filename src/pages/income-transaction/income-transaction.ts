@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, Events, Tabs, ToastController, DateTime } from "ionic-angular";
+import { IonicPage, NavController, NavParams, Events, Tabs, ToastController, DateTime, App } from "ionic-angular";
 import { AllTransactionPage } from "../all-transaction/all-transaction";
 import firebase from "firebase";
 import { StorageProvider } from "../../providers/storage/storage";
@@ -11,6 +11,7 @@ import { PrinterProvider } from "./../../providers/printer/printer";
 import { commands } from "./../../providers/printer/printer-commands";
 import EscPosEncoder from "esc-pos-encoder-ionic";
 import { GeolocationService } from "../../providers/geolocation/geolocation.service";
+import { SummaryHomePage } from "../summary-home/summary-home";
 
 /**
  * Generated class for the IncomeTransactionPage page.
@@ -37,6 +38,7 @@ export class IncomeTransactionPage {
     private alertCtrl: AlertController,
     private loadCtrl: LoadingController,
     private gps: GeolocationService,
+    public app: App,
   ) {
     //console.log("Recieved -1" + this.navParams.get('itemslist'));
     this.getUserData();
@@ -634,6 +636,10 @@ export class IncomeTransactionPage {
       return "0" + t.toString();
     }
   }
+
+  showOldRec(){
+    this.app.getRootNav().setRoot(SummaryHomePage);
+   }
 
   prepareToPrint() {
     this.showrec = false;
