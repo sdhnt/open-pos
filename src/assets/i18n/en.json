@@ -142,7 +142,13 @@
   "There is no item with ":"There is no item with ",
   " price in database. Please type the item name:":" price in database. Please type the item name:",
   "Enter Name Here":"Enter Name Here",
-  "Cancel":"Cancel"
+  "Cancel":"Cancel",
+  "Select your printer":"Select your printer",
+  "Select printer":"Select printer",
+  "Select a printer!":"Select a printer!",
+  "There was an error connecting the printer, please try again!":"There was an error connecting the printer, please try again!",
+  "Error activating bluetooth, please try again!":"Error activating bluetooth, please try again!"
+
   
 
 }

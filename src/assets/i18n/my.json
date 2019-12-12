@@ -142,6 +142,11 @@
  "There is no item with ":"ပစ္စည်းမရှိပါဘူး ",
  " price in database. Please type the item name:":"ဒေတာဘေ့စ်၏စျေးနှုန်း။ ကျေးဇူးပြု၍ ပစ္စည်းအမည်ကိုရိုက်ထည့်ပါ:",
  "Enter Name Here":"ဒီမှာနာမည်ထည့်ပါ",
- "Cancel":"ပယ်ဖျက်ပါ"
+ "Cancel":"ပယ်ဖျက်ပါ",
+ "Select your printer":"သင်၏ပရင်တာကိုရွေးပါ",
+ "Select printer":"ပရင်တာကိုရွေးပါ",
+ "Select a printer!":"ပရင်တာကိုရွေးပါ",
+ "There was an error connecting the printer, please try again!":"ပရင်တာကိုဆက်သွယ်တဲ့အမှားတစ်ခုရှိတယ်။ ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ။",
+ "Error activating bluetooth, please try again!":"ဘလူးတုသ်ကိုဖွင့်ခြင်းအမှားပြုပါ၊ ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ။"
 
 }

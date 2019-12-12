@@ -12,7 +12,6 @@ import { commands } from "./../../providers/printer/printer-commands";
 import EscPosEncoder from "esc-pos-encoder-ionic";
 import { GeolocationService } from "../../providers/geolocation/geolocation.service";
 import { SummaryHomePage } from "../summary-home/summary-home";
-
 /**
  * Generated class for the IncomeTransactionPage page.
  *
@@ -752,19 +751,30 @@ export class IncomeTransactionPage {
   mountAlertBt(data) {
     this.receipt = data;
     console.log(this.receipt);
+    const msg1=this.translateConfigService.getTranslatedMessage("Select your printer");
+    const msg2=this.translateConfigService.getTranslatedMessage("Cancel");
+    const msg3=this.translateConfigService.getTranslatedMessage("Select printer");
+    const msg4=this.translateConfigService.getTranslatedMessage("Select a printer!");
+    const msg5=this.translateConfigService.getTranslatedMessage("There was an error connecting the printer, please try again!");
+    const msg6=this.translateConfigService.getTranslatedMessage("Error activating bluetooth, please try again!");
+
     const alert = this.alertCtrl.create({
       //TRANSLATE THIS
-      title: "Select your printer",
+      // @ts-ignore
+      title: msg1.value,
       buttons: [
         {
-          text: "Cancel",
+          // @ts-ignore
+          text: msg2.value,
           role: "cancel",
         },
         {
-          text: "Select printer",
+          // @ts-ignore
+          text: msg3.value,
           handler: device => {
             if (!device) {
-              this.showToast("Select a printer!");
+              // @ts-ignore
+              this.showToast(msg4.value);
               return false;
             }
             console.log(device);
@@ -793,13 +803,15 @@ export class IncomeTransactionPage {
           })
           .catch(error => {
             console.log(error);
-            this.showToast("There was an error connecting the printer, please try again!");
+            // @ts-ignore
+            this.showToast(msg5.value);
             this.mountAlertBt(this.receipt);
           });
       })
       .catch(error => {
         console.log(error);
-        this.showToast("Error activating bluetooth, please try again!");
+        // @ts-ignore
+        this.showToast(ms6.value);
         this.mountAlertBt(this.receipt);
       });
   }

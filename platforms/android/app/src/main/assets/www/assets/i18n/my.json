@@ -134,7 +134,19 @@
  "Clear Fields":"သတင်းအချက်အလက်ဖျက်ပစ်",
  "Update Stock":"နောက်ဆုံးသတင်းစတော့ရှယ်ယာ",
  "Update Inventory for existing products:":"ရှိပြီးသားထုတ်ကုန်များအတွက်စာရင်း update:",
- "Settings":"ချိန်ညှိချက်များ"
-
+ "Settings":"ချိန်ညှိချက်များ",
+ "Add Wholesale Discount":"လက်ကားလျှော့စျေးထည့်ပါ",
+ "Remove Wholesale Discount":"လက်ကားလျှော့လျှော့ပါ",
+ "SHOW PREVIOUS RECEIPTS ":"အရင်မှတ်တမ်းများကိုပြပါ ",
+ "Alert!":"သတိပေး!",
+ "There is no item with ":"ပစ္စည်းမရှိပါဘူး ",
+ " price in database. Please type the item name:":"ဒေတာဘေ့စ်၏စျေးနှုန်း။ ကျေးဇူးပြု၍ ပစ္စည်းအမည်ကိုရိုက်ထည့်ပါ:",
+ "Enter Name Here":"ဒီမှာနာမည်ထည့်ပါ",
+ "Cancel":"ပယ်ဖျက်ပါ",
+ "Select your printer":"သင်၏ပရင်တာကိုရွေးပါ",
+ "Select printer":"ပရင်တာကိုရွေးပါ",
+ "Select a printer!":"ပရင်တာကိုရွေးပါ",
+ "There was an error connecting the printer, please try again!":"ပရင်တာကိုဆက်သွယ်တဲ့အမှားတစ်ခုရှိတယ်။ ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ။",
+ "Error activating bluetooth, please try again!":"ဘလူးတုသ်ကိုဖွင့်ခြင်းအမှားပြုပါ၊ ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ။"
 
 }
