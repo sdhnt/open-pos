@@ -40,10 +40,10 @@ export class MyApp {
   ) {
     this.initializeApp();
     this.pages = [
-      { title: "Sales", component: TransactionHomePage },
-      { title: "Products", component: DashboardPage },
-      { title: "Stock", component: ExpensesHomePage },
-      { title: "Business", component: SummaryHomePage },
+      { title: "Create New Sales", component: TransactionHomePage },
+      { title: "View/Edit Products", component: DashboardPage },
+      { title: "Update Stock", component: ExpensesHomePage },
+      { title: "Business Performance", component: SummaryHomePage },
       // { title: 'Coach', component: CoachHomePage },
       { title: "Contact Us", component: ContactUsPage },
     ];

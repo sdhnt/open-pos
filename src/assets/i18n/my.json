@@ -151,6 +151,10 @@
  "Printing...":"ပုံနှိပ်နေသည် ...",
  "Successful print!":"အောင်မြင်သောပုံနှိပ်!",
  "Ok":"အဆင်ပြေလား",
- "There was an error printing, please try again!":"ပုံနှိပ်မှားယွင်းမှုတစ်ခုရှိခဲ့သည်၊ ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ။"
+ "There was an error printing, please try again!":"ပုံနှိပ်မှားယွင်းမှုတစ်ခုရှိခဲ့သည်၊ ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ။",
+ "Create New Sales":"အရောင်းအသစ်ဖန်တီးပါ",
+ "View/Edit Products":"ထုတ်ကုန်များကိုကြည့်ရန်/တည်းဖြတ်ရန်",
+ "Business Performance":"စီးပွားရေးစွမ်းဆောင်ရည်",
+ "Shopping Cart":"ဈေးဝယ်လှည်း"
 
 }
