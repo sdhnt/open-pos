@@ -21,8 +21,6 @@ import { TranslateConfigService } from "../../providers/translation/translate-co
 })
 export class SignUpPage {
   listOfBType: string[] = [];
-  listOfCurrency: string[] = [];
-  listOfLang: string[] = [];
   disabled = false;
 
   name = "";
@@ -53,6 +51,7 @@ export class SignUpPage {
     this.cb = 0;
     this.discount = 0;
     this.taxrate = 0;
+    this.language = this.translateConfigService.getCurrentLanguage();
   }
 
   loadDropDowns() {
@@ -63,12 +62,6 @@ export class SignUpPage {
       .then(doc => {
         doc.docs[0].data().businessType.forEach(b => {
           this.listOfBType.push(b);
-        });
-        doc.docs[0].data().currency.forEach(c => {
-          this.listOfCurrency.push(c);
-        });
-        doc.docs[0].data().language.forEach(l => {
-          this.listOfLang.push(l);
         });
       });
   }
@@ -81,8 +74,8 @@ export class SignUpPage {
       this.email == "" ||
       this.password == "" ||
       this.businessname == "" ||
-      this.phno == "" ||
-      this.language == ""
+      this.businesstype == "" ||
+      this.phno == ""
     ) {
       const message = this.translateConfigService.getTranslatedMessage("Incomplete");
       this.toastCtrl

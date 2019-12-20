@@ -23,4 +23,8 @@ export class TranslateConfigService {
   getTranslatedMessage(message) {
     return this.translate.get(message);
   }
+
+  getCurrentLanguage() {
+    return this.translate.currentLang;
+  }
 }

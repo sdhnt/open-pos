@@ -25,16 +25,15 @@
 				<ion-input type="text" placeholder="{{'Business Name'|translate}} "  [(ngModel)]="businessname"></ion-input>
 			</ion-row>
 			<ion-row class="row-style">
-				<ion-icon name="call" color="semi-light" class="icon"></ion-icon>
-				<ion-input type="text" placeholder="{{'Phone Number'|translate}}"  [(ngModel)]="phno"></ion-input>
+				<ion-icon name="globe" color="semi-light" class="icon"></ion-icon>
+				<ion-label>{{"Business Type"|translate}}</ion-label>
+				<ion-select [(ngModel)]="businesstype">
+					<ion-option *ngFor="let b of listOfBType" value="{{ b }}">{{ b }}</ion-option>
+				</ion-select>
 			</ion-row>
 			<ion-row class="row-style">
-				<ion-icon name="chatboxes" color="semi-light" class="icon"></ion-icon>
-				<ion-label>{{"Language"|translate}}</ion-label>
-				<ion-select [(ngModel)]="language">
-					<ion-option *ngFor="let l of listOfLang" value="{{ l }}">{{ l }}</ion-option>
-				</ion-select>
-				<!-- <ion-input type="text" placeholder="Language"  [(ngModel)]="businessname"></ion-input> -->
+				<ion-icon name="call" color="semi-light" class="icon"></ion-icon>
+				<ion-input type="text" placeholder="{{'Phone Number'|translate}}"  [(ngModel)]="phno"></ion-input>
 			</ion-row>
 			<ion-row>
 				<button ion-button block round outline [disabled]="disabled" color="light" style="margin-top: 20px;" (click)="signup()">{{"Sign Up"|translate}}</button>
