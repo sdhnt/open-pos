@@ -37,7 +37,6 @@ export class SignUpPage {
   cb: number;
   discount: number;
   taxrate: number;
-  nextbtn = 0;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -46,20 +45,14 @@ export class SignUpPage {
     private translateConfigService: TranslateConfigService,
     public alertCtrl: AlertController,
   ) {
-    this.nextbtn = 0;
     this.loadDropDowns();
   }
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad SignUpPage");
-    this.nextbtn = 0;
-  }
-
-  nextPg() {
-    this.nextbtn = 1;
-  }
-  prevPg() {
-    this.nextbtn = 0;
+    this.cb = 0;
+    this.discount = 0;
+    this.taxrate = 0;
   }
 
   loadDropDowns() {
@@ -88,14 +81,8 @@ export class SignUpPage {
       this.email == "" ||
       this.password == "" ||
       this.businessname == "" ||
-      this.businessaddress == "" ||
-      this.businesstype == "" ||
       this.phno == "" ||
-      this.language == "" ||
-      this.currency == "" ||
-      this.cb == null ||
-      this.discount == null ||
-      this.taxrate == null
+      this.language == ""
     ) {
       const message = this.translateConfigService.getTranslatedMessage("Incomplete");
       this.toastCtrl

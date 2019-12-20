@@ -7,84 +7,38 @@
 			  <button ion-button block clear color="light" class="nametop"><b>Open</b></button> 
 	  
 	  <ion-grid style="width: 75%;">
-	  
-		  <div *ngIf="nextbtn!=1">
-		  <ion-row class="row-style1" justify-content-center align-items-center style="height: 100%">{{"Register a business"|translate}}</ion-row>
-		  <ion-row class="row-style"> 
-			  <ion-icon name="person" color="semi-light" class="icon"></ion-icon>
-			  <ion-input type="text" placeholder="{{'Name'|translate}}" [(ngModel)]="name"></ion-input>
-		  </ion-row>
-		  <ion-row class="row-style">
-			  <ion-icon name="mail" color="semi-light" class="icon"></ion-icon>
-			  <ion-input type="email" placeholder="{{ 'email' | translate }}" [(ngModel)]="email"> </ion-input>
-		  </ion-row>
-		  <ion-row class="row-style">
-			  <ion-icon name="key" color="semi-light" class="icon"></ion-icon>
-			  <ion-input type="password" placeholder="{{'password'|translate}}"  [(ngModel)]="password"></ion-input>
-		  </ion-row>
-		  <ion-row class="row-style">
-			  <ion-icon name="home" color="semi-light" class="icon"></ion-icon>
-			  <ion-input type="text" placeholder="{{'Business Name'|translate}} "  [(ngModel)]="businessname"></ion-input>
-		  </ion-row>
-		  <ion-row class="row-style">
-			  <ion-icon name="pin" color="semi-light" class="icon"></ion-icon>
-			  <ion-input type="text" placeholder="{{'Full Business Address'|translate}}"  [(ngModel)]="businessaddress"></ion-input>
-		  </ion-row>
-		  <ion-row class="row-style">
-			  <ion-icon name="call" color="semi-light" class="icon"></ion-icon>
-			  <ion-input type="text" placeholder="{{'Phone Number'|translate}}"  [(ngModel)]="phno"></ion-input>
-		  </ion-row>
-	  <button ion-button block round outline color="light" style="margin-top: 10px;" (click)="nextPg()">{{'Next Page'|translate}}</button>
-	  </div>
-	  <div *ngIf="nextbtn==1">
-			  <button ion-button block round outline color="light" style="margin-bottom: 10px;" (click)="prevPg()">{{'Back'|translate}}</button>
-		  <ion-row class="row-style">
-				  <ion-icon name="globe" color="semi-light" class="icon"></ion-icon>
-				  <ion-label>{{"Business Type"|translate}}</ion-label>
-				  <ion-select [(ngModel)]="businesstype">
-					  <ion-option *ngFor="let b of listOfBType" value="{{ b }}">{{ b }}</ion-option>
-				  </ion-select>
-				  <!-- <ion-input type="text" placeholder="Language"  [(ngModel)]="businessname"></ion-input> -->
-		 </ion-row>
-	  
-	  
-		  <ion-row class="row-style">
-			  <ion-icon name="chatboxes" color="semi-light" class="icon"></ion-icon>
-			  <ion-label>{{"Language"|translate}}</ion-label>
-			  <ion-select [(ngModel)]="language">
-				  <ion-option *ngFor="let l of listOfLang" value="{{ l }}">{{ l }}</ion-option>
-			  </ion-select>
-			  <!-- <ion-input type="text" placeholder="Language"  [(ngModel)]="businessname"></ion-input> -->
-		  </ion-row>
-	  
-		  <ion-row class="row-style">
-				  <ion-icon name="logo-usd" color="semi-light" class="icon"></ion-icon>
-				  <ion-label>{{"Currency"|translate}}</ion-label>
-				  <ion-select [(ngModel)]="currency">
-					  <ion-option *ngFor="let c of listOfCurrency" value = "{{ c }}">{{ c }}</ion-option>
-				  </ion-select>
-				  <!-- <ion-input type="text" placeholder="Language"  [(ngModel)]="businessname"></ion-input> -->
-			  </ion-row>
-	  
-	  
-		  <ion-row class="row-style">
-			  <ion-icon name="cash" color="semi-light" class="icon"></ion-icon>
-			  <ion-input type="number" placeholder="{{'Starting Cash Balance'|translate}}"  [(ngModel)]="cb"></ion-input>
-		  </ion-row>
-	  
-		  <ion-row class="row-style">
-				  <ion-icon name="cash" color="semi-light" class="icon"></ion-icon>
-				  <ion-input type="number" placeholder="{{'Usual Discount %'|translate}}"  [(ngModel)]="discount"></ion-input>
-			  </ion-row>
-	  
-			  <ion-row class="row-style">
-					  <ion-icon name="cash" color="semi-light" class="icon"></ion-icon>
-					  <ion-input type="number" placeholder="{{ 'Usual Tax %' | translate }}"  [(ngModel)]="taxrate"></ion-input>
-				  </ion-row>
-		  <ion-row>
-			  <button ion-button block round outline [disabled]="disabled" color="light" style="margin-top: 20px;" (click)="signup()">{{"Sign Up"|translate}}</button>
-		  </ion-row>
-	  </div>
+			<ion-row class="row-style1" justify-content-center align-items-center style="height: 100%">{{"Register a business"|translate}}</ion-row>
+			<ion-row class="row-style">
+				<ion-icon name="person" color="semi-light" class="icon"></ion-icon>
+				<ion-input type="text" placeholder="{{'Name'|translate}}" [(ngModel)]="name"></ion-input>
+			</ion-row>
+			<ion-row class="row-style">
+				<ion-icon name="mail" color="semi-light" class="icon"></ion-icon>
+				<ion-input type="email" placeholder="{{ 'email' | translate }}" [(ngModel)]="email"> </ion-input>
+			</ion-row>
+			<ion-row class="row-style">
+				<ion-icon name="key" color="semi-light" class="icon"></ion-icon>
+				<ion-input type="password" placeholder="{{'password'|translate}}"  [(ngModel)]="password"></ion-input>
+			</ion-row>
+			<ion-row class="row-style">
+				<ion-icon name="home" color="semi-light" class="icon"></ion-icon>
+				<ion-input type="text" placeholder="{{'Business Name'|translate}} "  [(ngModel)]="businessname"></ion-input>
+			</ion-row>
+			<ion-row class="row-style">
+				<ion-icon name="call" color="semi-light" class="icon"></ion-icon>
+				<ion-input type="text" placeholder="{{'Phone Number'|translate}}"  [(ngModel)]="phno"></ion-input>
+			</ion-row>
+			<ion-row class="row-style">
+				<ion-icon name="chatboxes" color="semi-light" class="icon"></ion-icon>
+				<ion-label>{{"Language"|translate}}</ion-label>
+				<ion-select [(ngModel)]="language">
+					<ion-option *ngFor="let l of listOfLang" value="{{ l }}">{{ l }}</ion-option>
+				</ion-select>
+				<!-- <ion-input type="text" placeholder="Language"  [(ngModel)]="businessname"></ion-input> -->
+			</ion-row>
+			<ion-row>
+				<button ion-button block round outline [disabled]="disabled" color="light" style="margin-top: 20px;" (click)="signup()">{{"Sign Up"|translate}}</button>
+			</ion-row>
 	  </ion-grid>
 	  <button ion-button block clear color="light" style="margin-top: 10px;" (click)="goBack()">{{"Already have an account? Log-in"|translate}}</button>
 	  </ion-content>
