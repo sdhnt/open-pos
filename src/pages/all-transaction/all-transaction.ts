@@ -158,8 +158,15 @@ export class AllTransactionPage {
     this.loitems = [];
   }
 
+  flag : boolean = false;
+
   btnClicked(btn) {
     this.getUserData();
+
+    if(this.flag){
+      this.flag = false;
+      this.btnClicked("C");
+    }
 
     try {
       //console.log("CalculatorPage::btnClicked = " + btn);
@@ -174,6 +181,12 @@ export class AllTransactionPage {
         this.showSampleRec = true;
 
         //IF LAST = character then remove that character
+        while(this.result.includes("%")){
+          let index1 = this.result.indexOf("%");
+          let index2 = this.result.substring(0, index1).lastIndexOf("*");
+          let num = parseFloat(this.result.substring(index2+1, index1))/100;
+          this.result = this.result.substring(0, index2+1) + num + this.result.substring(index1+1);
+        }
 
         const answ = this.result.split("+");
         // if(this.result.includes('-')){
@@ -191,11 +204,11 @@ export class AllTransactionPage {
           }
 
           if (element.includes("*")) {
-            answ[index] = element.substring(0, element.indexOf("*"));
-            this.itemsprice.push(answ[index]);
-            //console.log(answ[index]+" "+this.itemsprice[index])
-            temp = parseInt(element.substring(element.indexOf("*") + 1));
-            this.itemsqty.push(temp);
+            console.log(this.discEval(element));
+            const l = this.discEval(element).split("/");
+            this.itemsqty.push(parseInt(l[0]));
+            this.itemsprice.push(l[1]);
+            discAmt += parseFloat(l[2]);
           } else if (element.includes("/")) {
             answ[index] = element.substring(0, element.indexOf("/"));
             this.itemsprice.push(answ[index]);
@@ -212,7 +225,7 @@ export class AllTransactionPage {
 
           //console.log("ItemsPrice[index]: " + answ[index] + " Qty: " + temp);
 
-          this.itemsDiscount.push((discAmt * 100) / (parseFloat(answ[index]) * temp));
+          this.itemsDiscount.push((discAmt * 100) / (parseFloat(this.itemsprice[index]) * this.itemsqty[index]));
           //console.log("Element: "+element+" DiscAmt: "+discAmt+" Discount: "+(discAmt * 100) / (parseFloat(this.itemsprice[index]) * this.itemsqty[index]))
 
           // this.itemsprice.push(
@@ -237,6 +250,7 @@ export class AllTransactionPage {
         }
       } else if (btn == "b") {
         this.result = this.result.substring(0, this.result.length - 1);
+        this.lastchar = this.result.charAt(this.result.length-1);
       } else if (btn == "squareroot") {
         this.result = Math.sqrt(eval(this.result)) + "";
       } else if (btn == "square") {
@@ -251,9 +265,12 @@ export class AllTransactionPage {
         console.log("Lastchar: " + this.lastchar + " Result: " + this.result);
 
         if (
-          (btn == "+" || btn == "-" || btn == "*" || btn == "/") &&
+          (btn == "+" || btn == "-" || btn == "*" || btn == "/" || btn == "%") &&
           (this.lastchar == "+" || this.lastchar == "-" || this.lastchar == "*" || this.lastchar == "/")
         ) {
+          this.result = this.result = this.result.substring(0, this.result.length - 1);
+        }
+        if(this.lastchar=="%" && btn!="+"){
           this.result = this.result = this.result.substring(0, this.result.length - 1);
         }
         this.lastchar = btn;
@@ -266,7 +283,33 @@ export class AllTransactionPage {
       this.itemsqty = [];
       this.itemsDiscount = [];
       this.loitems = [];
+      this.flag = true;
     } finally {
     }
+  }
+
+  discEval(expression){
+    const l = expression.split("*");
+    let s="";
+    if(l.length==3){
+      if(l[2]>1){
+        console.log("Discount amount exceeds 1");
+        throw Error;
+      }
+      else{
+        l[2] = (1-parseFloat(l[2]))*parseFloat(l[1])*l[0];
+        s = l.join("/");
+      }
+    } else if(l.length==2){
+      if(parseFloat(l[1])<=1){
+        l[1] = (1-parseFloat(l[1]))*parseFloat(l[0]);
+        s = "1/"+l[0]+"/"+l[1];
+      } else {
+        s = l[0]+"/"+l[1]+"/0";
+      }
+    } else {
+      console.log(l.length+" is length of temp list");
+    }
+    return s;
   }
 }
