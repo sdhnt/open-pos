@@ -207,8 +207,8 @@ export class AllTransactionPage {
           if (element.includes("*")) {
             console.log(this.discEval(element));
             const l = this.discEval(element).split("/");
-            this.itemsqty.push(parseInt(l[0]));
-            this.itemsprice.push(l[1]);
+            this.itemsqty.push(parseInt(l[1]));
+            this.itemsprice.push(l[0]);
             discAmt += parseFloat(l[2]);
           } else if (element.includes("/")) {
             answ[index] = element.substring(0, element.indexOf("/"));
