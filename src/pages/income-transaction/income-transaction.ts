@@ -39,12 +39,11 @@ export class IncomeTransactionPage {
     private gps: GeolocationService,
     public app: App,
   ) {
-
-    let nav = app._appRoot._getActivePortal() || app.getActiveNav();
-    let activeView = nav.getActive();
+    const nav = app._appRoot._getActivePortal() || app.getActiveNav();
+    const activeView = nav.getActive();
     if (activeView != null) {
       if (activeView.isOverlay) {
-        console.log("Alert Prev")
+        console.log("Alert Prev");
         activeView.dismiss();
       }
     }
@@ -133,6 +132,52 @@ export class IncomeTransactionPage {
     });
   }
   temp;
+
+  addNewItembtn(){
+
+    const message1 = this.translateConfigService.getTranslatedMessage("CANCEL");
+    const message2 = this.translateConfigService.getTranslatedMessage("Add from Calculator");
+    const message3 = this.translateConfigService.getTranslatedMessage("Scan Barcode");
+    const message4 = this.translateConfigService.getTranslatedMessage("Add from Product List");
+    const message5 = this.translateConfigService.getTranslatedMessage("Add Additional Charges");
+    
+    const alert = this.alertCtrl
+            .create({
+              // @ts-ignore
+              title: "Add From", //translate this
+              // @ts-ignore
+              enableBackdropDismiss: true,
+              buttons: [
+                {
+                  // @ts-ignore
+                  text: message1.value,
+                  role: "cancel",
+                },
+                {
+                  // @ts-ignore
+                  text: message2.value,
+                  handler: ()=>{this.addCalc()},
+                },
+                {
+                  // @ts-ignore
+                  text: message3.value,
+                  handler: ()=>{this.qrscan()},
+                },
+                {
+                  // @ts-ignore
+                  text: message4.value,
+                  handler: ()=>{this.addProdList()},
+                },
+                {
+                  // @ts-ignore
+                  text: message5.value,
+                  handler: ()=>{this.dispM()},
+                }
+              ],
+            })
+            .present()
+ 
+  }
 
   updateRec() {
     this.lastsum = 0;
@@ -343,6 +388,7 @@ export class IncomeTransactionPage {
     this.discount = 0;
     this.taxrate = 0;
     this.taxbtn = 0;
+    this.displayManual = 0;
     this.discbtn = 0;
     this.updateRec();
     const message = this.translateConfigService.getTranslatedMessage("Receipt was cancelled");
@@ -361,7 +407,7 @@ export class IncomeTransactionPage {
   tax_vat: any = [];
   geolocation: {};
 
-  updateProduct() { }
+  updateProduct() {}
 
   async updateCb(postransacsum) {
     this.getUserData();
@@ -505,7 +551,7 @@ export class IncomeTransactionPage {
             url: product.url,
             stock_qty: product.stock_qty - product.qty,
           };
-          this.sp.updateProduct(data1, product.code).then(() => { });
+          this.sp.updateProduct(data1, product.code).then(() => {});
         }
       });
 

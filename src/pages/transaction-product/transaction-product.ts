@@ -1,5 +1,15 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, ToastController, Events, Tabs, AlertController, Platform, App } from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  ToastController,
+  Events,
+  Tabs,
+  AlertController,
+  Platform,
+  App,
+} from "ionic-angular";
 import { StorageProvider } from "../../providers/storage/storage";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 
@@ -26,13 +36,12 @@ export class TransactionProductPage {
     public events: Events,
     public toastCtrl: ToastController,
     public alertCtrl: AlertController,
-    public platform: Platform, 
-    public app: App
+    public platform: Platform,
+    public app: App,
   ) {
     this.event = false;
-    this.showmanual=0;  
-    this.itname="";
-
+    this.showmanual = 0;
+    this.itname = "";
 
     this.events.subscribe("addRecProd:created", data => {
       console.log("ENTERED!");
@@ -81,17 +90,16 @@ export class TransactionProductPage {
     });
   }
   price;
-  itname="";
+  itname = "";
 
-  updateName(){
-
+  updateName() {
     if (this.itname == "") {
       this.event1 = false;
       this.event = false;
-      this.showmanual=0;  
-      this.itname="";
+      this.showmanual = 0;
+      this.itname = "";
       this.ionViewDidLoad();
-     (this.navCtrl.parent as Tabs).select(2);
+      (this.navCtrl.parent as Tabs).select(2);
     } else {
       console.log("Create Rec");
       const data1 = {
@@ -105,8 +113,6 @@ export class TransactionProductPage {
       };
       this.singleProduct(data1);
     }
-
-
   }
 
   ionViewDidLeave() {
@@ -118,8 +124,8 @@ export class TransactionProductPage {
   reset() {
     this.event1 = false;
     this.event = false;
-    this.showmanual=0;  
-    this.itname="";
+    this.showmanual = 0;
+    this.itname = "";
     this.ionViewDidLoad();
     (this.navCtrl.parent as Tabs).select(2);
   }
@@ -247,8 +253,8 @@ export class TransactionProductPage {
 
     const myObjStr = JSON.stringify(tempJSON);
 
-    this.showmanual=0;  
-    this.itname="";
+    this.showmanual = 0;
+    this.itname = "";
     this.ionViewDidLoad();
     (this.navCtrl.parent as Tabs).select(2);
     this.delay(300).then(any => {
@@ -264,13 +270,11 @@ export class TransactionProductPage {
 
   singleitemname = "";
 
-  setfilter(price){
-
-    return new Promise(async (resolve) => {
-
+  setfilter(price) {
+    return new Promise(async resolve => {
       this.filteredList = await this.listProducts.filter(item => {
         console.log(item.price + " and " + price);
-  
+
         if (item.price == price || item.wholesale_price == price) {
           return true;
         } else {
@@ -279,96 +283,86 @@ export class TransactionProductPage {
       });
       resolve();
     });
-
-  
   }
-  showmanual=0;
-
+  showmanual = 0;
 
   filteredProductPrice(price) {
-  
-    
-    this.setfilter(price).then(()=>{
+    this.setfilter(price).then(() => {
+      if (this.filteredList.length == 0) {
+        this.showmanual = 1;
+        console.log("No Items");
 
-       if (this.filteredList.length == 0) {
+        // create event and send back
+        //at other end if event received,
 
-        this.showmanual=1;
-        console.log("No Items")
+        //   const message1 = this.translateConfigService.getTranslatedMessage("Alert!");
+        //   const message20 = this.translateConfigService.getTranslatedMessage("There is no item with ");
+        //   const message21 = this.translateConfigService.getTranslatedMessage(
+        //     " price in database. Please type the item name:",
+        //   );
+        //   const message3 = this.translateConfigService.getTranslatedMessage("Enter Name Here");
+        //   const message4 = this.translateConfigService.getTranslatedMessage("Cancel");
+        //   const message5 = this.translateConfigService.getTranslatedMessage("Update Receipt");
 
+        //   const alert = this.alertCtrl
+        //     .create({
+        //       // @ts-ignore
+        //       title: message1.value, //translate this
+        //       // @ts-ignore
+        //       message: message20.value + price + message21.value,
+        //       enableBackdropDismiss: true,
+        //       inputs: [
+        //         {
+        //           name: "singleitemname",
+        //           // @ts-ignore
+        //           placeholder: message3.value,
+        //         },
+        //       ],
 
-      // create event and send back 
-      //at other end if event received, 
+        //       buttons: [
+        //         {
+        //           // @ts-ignore
+        //           text: message4.value,
+        //           role: "cancel",
+        //           handler: data => {
 
-      //   const message1 = this.translateConfigService.getTranslatedMessage("Alert!");
-      //   const message20 = this.translateConfigService.getTranslatedMessage("There is no item with ");
-      //   const message21 = this.translateConfigService.getTranslatedMessage(
-      //     " price in database. Please type the item name:",
-      //   );
-      //   const message3 = this.translateConfigService.getTranslatedMessage("Enter Name Here");
-      //   const message4 = this.translateConfigService.getTranslatedMessage("Cancel");
-      //   const message5 = this.translateConfigService.getTranslatedMessage("Update Receipt");
-  
-      //   const alert = this.alertCtrl
-      //     .create({
-      //       // @ts-ignore
-      //       title: message1.value, //translate this
-      //       // @ts-ignore
-      //       message: message20.value + price + message21.value,
-      //       enableBackdropDismiss: true,
-      //       inputs: [
-      //         {
-      //           name: "singleitemname",
-      //           // @ts-ignore
-      //           placeholder: message3.value,
-      //         },
-      //       ],
-  
-      //       buttons: [
-      //         {
-      //           // @ts-ignore
-      //           text: message4.value,
-      //           role: "cancel",
-      //           handler: data => {
-  
-      //         this.event1 = false;
-      //         this.event = false;
-              
-      //        //(this.navCtrl.parent as Tabs).select(2).catch(err=>{
-      //        //  console.log("ERRORZONE"+ err)
-      //       // });
+        //         this.event1 = false;
+        //         this.event = false;
 
-      //           },
-      //         },
-      //         {
-      //           // @ts-ignore
-      //           text: message5.value,
-      //           handler: data => {
-                //   if (data.singleitemname == "") {
-                //     this.event1 = false;
-                //     this.event = false;
-                //    //(this.navCtrl.parent as Tabs).select(2);
-                //   } else {
-                //     console.log("Create Rec");
-                //     const data1 = {
-                //       code: "000000",
-                //       cat: "NIL",
-                //       stock_qty: 0,
-                //       name: data.singleitemname,
-                //       price: price,
-                //       qty: this.recitemslist[this.index].qty,
-                //       discount: this.recitemslist[this.index].discount,
-                //     };
-                //     this.singleProduct(data1);
-                //   }
-                // },
-      //         },
-      //       ],
-      //     })
-      //     .present()
-       }
-    })
-    
-    
+        //        //(this.navCtrl.parent as Tabs).select(2).catch(err=>{
+        //        //  console.log("ERRORZONE"+ err)
+        //       // });
+
+        //           },
+        //         },
+        //         {
+        //           // @ts-ignore
+        //           text: message5.value,
+        //           handler: data => {
+        //   if (data.singleitemname == "") {
+        //     this.event1 = false;
+        //     this.event = false;
+        //    //(this.navCtrl.parent as Tabs).select(2);
+        //   } else {
+        //     console.log("Create Rec");
+        //     const data1 = {
+        //       code: "000000",
+        //       cat: "NIL",
+        //       stock_qty: 0,
+        //       name: data.singleitemname,
+        //       price: price,
+        //       qty: this.recitemslist[this.index].qty,
+        //       discount: this.recitemslist[this.index].discount,
+        //     };
+        //     this.singleProduct(data1);
+        //   }
+        // },
+        //         },
+        //       ],
+        //     })
+        //     .present()
+      }
+    });
   }
 
   datlist: any = [];

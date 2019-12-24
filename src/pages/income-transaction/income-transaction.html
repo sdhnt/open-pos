@@ -123,6 +123,13 @@
       </div>
 
       <ion-row>
+
+        <ion-col col-12 style="text-align: center;"> <button full ion-button style="font-size: 1.2rem;"
+          (click)="addNewItembtn()"> {{"Add New Item"|translate}}</button></ion-col>
+      </ion-row>
+
+      <!-- <ion-row>
+
         <ion-col col-12 style="text-align: center;"> <button full ion-button style="font-size: 1.2rem;"
             (click)="addCalc()"> {{"Add from Calculator"|translate}}</button></ion-col>
         <ion-col col-12 style="text-align: center;"> <button full ion-button style="font-size: 1.2rem;"
@@ -132,7 +139,9 @@
             (click)="addProdList()"> {{"Add from Product List"|translate}}</button></ion-col>
         <ion-col col-12 style="text-align: center;"> <button full ion-button style="font-size: 1.2rem;"
             (click)="dispM()"> {{"Add Additional Charges"|translate}}</button></ion-col>
-      </ion-row>
+
+      </ion-row> -->
+
       <div *ngIf="showrec==true">
         <ion-row *ngIf="discbtn==0">
           <button ion-button small (click)="setDisc()">{{"Add Discount"|translate}}</button>
