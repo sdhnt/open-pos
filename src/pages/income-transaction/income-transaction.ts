@@ -39,6 +39,15 @@ export class IncomeTransactionPage {
     private gps: GeolocationService,
     public app: App,
   ) {
+
+    let nav = app._appRoot._getActivePortal() || app.getActiveNav();
+    let activeView = nav.getActive();
+    if (activeView != null) {
+      if (activeView.isOverlay) {
+        console.log("Alert Prev")
+        activeView.dismiss();
+      }
+    }
     //console.log("Recieved -1" + this.navParams.get('itemslist'));
     this.getUserData();
     this.gps
@@ -57,6 +66,7 @@ export class IncomeTransactionPage {
 
   taxbtn = 0;
   showrec = false;
+
   userdata: any = {
     business_address: "",
     business_name: "",
@@ -194,10 +204,11 @@ export class IncomeTransactionPage {
             // }
             curprod.discount = 0;
             this.datastore.itemslist.push(curprod);
+            this.showrec = true;
             //this.lastsum=this.lastsum+curprod.price;
             this.updateRec();
           } else {
-            const message = this.translateConfigService.getTranslatedMessage("Get Product!!!");
+            const message = this.translateConfigService.getTranslatedMessage("No Product!!!");
             const toast = this.toastCtrl.create({
               // @ts-ignore
               message: message.value,
@@ -350,7 +361,7 @@ export class IncomeTransactionPage {
   tax_vat: any = [];
   geolocation: {};
 
-  updateProduct() {}
+  updateProduct() { }
 
   async updateCb(postransacsum) {
     this.getUserData();
@@ -494,7 +505,7 @@ export class IncomeTransactionPage {
             url: product.url,
             stock_qty: product.stock_qty - product.qty,
           };
-          this.sp.updateProduct(data1, product.code).then(() => {});
+          this.sp.updateProduct(data1, product.code).then(() => { });
         }
       });
 

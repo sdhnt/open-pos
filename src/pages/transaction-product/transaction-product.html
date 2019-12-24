@@ -1,4 +1,6 @@
 <ion-content padding>
+ 
+ <div *ngIf="showmanual==0">
   <ion-searchbar showCancelButton="always" [(ngModel)]="searchterm" (ionChange)="filteredProduct()"></ion-searchbar>
 
   <ion-item>
@@ -7,6 +9,8 @@
       <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>
     </ion-select>
   </ion-item>
+
+</div>
 
 
   <!-- <ion-card>
@@ -42,11 +46,29 @@
                 <ion-col col-6></ion-col>
                 <ion-col col-6> <button ion-button full end color="dark">View/Edit</button> </ion-col>
               </ion-row>
-  
         </ion-col>
       </ion-row>
       </ion-grid>
     </ion-card>  -->
+
+    <ion-card *ngIf="showmanual==1" padding>
+     <h2> {{"There is no item with "|translate}} {{price}} {{" price in database. Please type the item name:"|translate}} </h2>
+      <ion-input autofocus="true" type="text" [(ngModel)]="itname" placeholder="{{'Enter Name Here'|translate}}"></ion-input>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-6>
+            <button ion-button full (click)="updateName()"> {{"CANCEL"|translate}}</button>
+          </ion-col>
+          <ion-col col-6>
+            <button ion-button full (click)="updateName()"> {{"Update Receipt"|translate}}</button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+     
+     
+      
+    </ion-card>
+  
 
 
 
