@@ -1,6 +1,6 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { ErrorHandler, NgModule } from "@angular/core";
-import { IonicApp, IonicErrorHandler, IonicModule } from "ionic-angular";
+import { AlertController, IonicApp, IonicErrorHandler, IonicModule, ToastController } from "ionic-angular";
 import { ReactiveFormsModule } from "@angular/forms";
 
 import { MyApp } from "./app.component";
@@ -15,7 +15,6 @@ import { SplashScreen } from "@ionic-native/splash-screen";
 import { BarcodeScanner } from "@ionic-native/barcode-scanner";
 import { StorageProvider } from "../providers/storage/storage";
 import { IonicStorageModule } from "@ionic/storage";
-import { ToastController } from "ionic-angular";
 import { GettersetterProvider } from "../providers/gettersetter/gettersetter";
 import { Camera } from "@ionic-native/camera";
 import { Facebook } from "@ionic-native/facebook";
@@ -109,6 +108,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BarcodeScanner,
     IonicStorageModule,
     ToastController,
+    AlertController,
     GettersetterProvider,
     Camera,
     Facebook,

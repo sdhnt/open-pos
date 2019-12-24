@@ -21,8 +21,6 @@ import { TranslateConfigService } from "../../providers/translation/translate-co
 })
 export class SignUpPage {
   listOfBType: string[] = [];
-  listOfCurrency: string[] = [];
-  listOfLang: string[] = [];
   disabled = false;
 
   name = "";
@@ -37,7 +35,6 @@ export class SignUpPage {
   cb: number;
   discount: number;
   taxrate: number;
-  nextbtn = 0;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -46,20 +43,15 @@ export class SignUpPage {
     private translateConfigService: TranslateConfigService,
     public alertCtrl: AlertController,
   ) {
-    this.nextbtn = 0;
     this.loadDropDowns();
   }
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad SignUpPage");
-    this.nextbtn = 0;
-  }
-
-  nextPg() {
-    this.nextbtn = 1;
-  }
-  prevPg() {
-    this.nextbtn = 0;
+    this.cb = 0;
+    this.discount = 0;
+    this.taxrate = 0;
+    this.language = this.translateConfigService.getCurrentLanguage();
   }
 
   loadDropDowns() {
@@ -70,12 +62,6 @@ export class SignUpPage {
       .then(doc => {
         doc.docs[0].data().businessType.forEach(b => {
           this.listOfBType.push(b);
-        });
-        doc.docs[0].data().currency.forEach(c => {
-          this.listOfCurrency.push(c);
-        });
-        doc.docs[0].data().language.forEach(l => {
-          this.listOfLang.push(l);
         });
       });
   }
@@ -88,14 +74,8 @@ export class SignUpPage {
       this.email == "" ||
       this.password == "" ||
       this.businessname == "" ||
-      this.businessaddress == "" ||
       this.businesstype == "" ||
-      this.phno == "" ||
-      this.language == "" ||
-      this.currency == "" ||
-      this.cb == null ||
-      this.discount == null ||
-      this.taxrate == null
+      this.phno == ""
     ) {
       const message = this.translateConfigService.getTranslatedMessage("Incomplete");
       this.toastCtrl
