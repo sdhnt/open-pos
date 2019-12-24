@@ -182,6 +182,7 @@ export class AllTransactionPage {
 
         //IF LAST = character then remove that character
         while(this.result.includes("%")){
+          if(!this.result.includes("*")) throw Error;
           let index1 = this.result.indexOf("%");
           let index2 = this.result.substring(0, index1).lastIndexOf("*");
           let num = parseFloat(this.result.substring(index2+1, index1))/100;
@@ -270,7 +271,7 @@ export class AllTransactionPage {
         ) {
           this.result = this.result = this.result.substring(0, this.result.length - 1);
         }
-        if(this.lastchar=="%" && btn!="+"){
+        if(this.lastchar=="%" && btn!="+" && btn!="-"){
           this.result = this.result = this.result.substring(0, this.result.length - 1);
         }
         this.lastchar = btn;
