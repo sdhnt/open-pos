@@ -135,7 +135,7 @@ export class IncomeTransactionPage {
 
   addNewItembtn(){
 
-    const message1 = this.translateConfigService.getTranslatedMessage("CANCEL");
+    const message1 = this.translateConfigService.getTranslatedMessage("CANCEL ");
     const message2 = this.translateConfigService.getTranslatedMessage("Add from Calculator");
     const message3 = this.translateConfigService.getTranslatedMessage("Scan Barcode");
     const message4 = this.translateConfigService.getTranslatedMessage("Add from Product List");
@@ -192,7 +192,7 @@ export class IncomeTransactionPage {
     });
     totalDiscount += totalIndividualDiscount;
     console.log(this.lastsum + " " + totalDiscount);
-    this.lastsumAfterIndividualDiscount = this.lastsum - totalIndividualDiscount;
+    this.lastsumAfterIndividualDiscount = Math.round((this.lastsum - totalIndividualDiscount)*100)/100;
     console.log(this.lastsum + " " + this.lastsumAfterIndividualDiscount);
     this.lastsumdisc = Math.round((this.lastsum - totalDiscount) * ((100 - this.discount) / 100) * 100) / 100;
     this.lastsumtax = Math.round(this.lastsumdisc * (1.0 + this.taxrate / 100) * 100) / 100;

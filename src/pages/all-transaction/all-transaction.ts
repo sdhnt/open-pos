@@ -54,6 +54,8 @@ export class AllTransactionPage {
   }
   itemsname: string[] = [];
   loitems: any = [];
+  buttonColor="#ffa100";
+  buttonColor1="#ff0300";
 
   ionViewDidLoad() {
     //console.log("ionViewDidLoad AllTransactionPage");
@@ -179,6 +181,16 @@ export class AllTransactionPage {
         this.showSampleRec = false;
       } else if (btn == "=") {
         this.showSampleRec = true;
+
+        if(this.buttonColor=="#ffa100"){
+          this.buttonColor="#ff0300";
+          this.buttonColor1="#ffa100";
+          
+        }
+        else{
+          this.buttonColor="#ffa100";
+          this.buttonColor1="#ff0300";
+        }
 
         //IF LAST = character then remove that character
         while(this.result.includes("%")){

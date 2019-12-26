@@ -97,7 +97,7 @@
   "Already have an account? Log-in":"Already have an account? Log-in",
   "Add Stock":"Add Stock",
   "Add New Stock":"Add New Stock",
-  "Clear":"Clear",
+  "Clear":"CLEAR",
   "Finish": "Finish",
   "Incomplete": "Incomplete",
   "Creating item, please wait a moment": "Creating item, please wait a moment",
@@ -155,7 +155,8 @@
   "Create New Sales":"Create New Sales",
   "View/Edit Products":"View/Edit Products",
   "Business Performance":"Business Performance",
-  "Shopping Cart":"Shopping Cart"
+  "Shopping Cart":"Shopping Cart",
+  "Add New Item":"Add New Item"
 
   
 
