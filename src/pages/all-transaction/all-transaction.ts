@@ -54,8 +54,8 @@ export class AllTransactionPage {
   }
   itemsname: string[] = [];
   loitems: any = [];
-  buttonColor="#ffa100";
-  buttonColor1="#ff0300";
+  buttonColor = "#ffa100";
+  buttonColor1 = "#ff0300";
 
   ionViewDidLoad() {
     //console.log("ionViewDidLoad AllTransactionPage");
@@ -160,12 +160,12 @@ export class AllTransactionPage {
     this.loitems = [];
   }
 
-  flag : boolean = false;
+  flag = false;
 
   btnClicked(btn) {
     this.getUserData();
 
-    if(this.flag){
+    if (this.flag) {
       this.flag = false;
       this.btnClicked("C");
     }
@@ -182,23 +182,21 @@ export class AllTransactionPage {
       } else if (btn == "=") {
         this.showSampleRec = true;
 
-        if(this.buttonColor=="#ffa100"){
-          this.buttonColor="#ff0300";
-          this.buttonColor1="#ffa100";
-          
-        }
-        else{
-          this.buttonColor="#ffa100";
-          this.buttonColor1="#ff0300";
+        if (this.buttonColor == "#ffa100") {
+          this.buttonColor = "#ff0300";
+          this.buttonColor1 = "#ffa100";
+        } else {
+          this.buttonColor = "#ffa100";
+          this.buttonColor1 = "#ff0300";
         }
 
         //IF LAST = character then remove that character
-        while(this.result.includes("%")){
-          if(!this.result.includes("*")) throw Error;
-          let index1 = this.result.indexOf("%");
-          let index2 = this.result.substring(0, index1).lastIndexOf("*");
-          let num = parseFloat(this.result.substring(index2+1, index1))/100;
-          this.result = this.result.substring(0, index2+1) + num + this.result.substring(index1+1);
+        while (this.result.includes("%")) {
+          if (!this.result.includes("*")) throw Error;
+          const index1 = this.result.indexOf("%");
+          const index2 = this.result.substring(0, index1).lastIndexOf("*");
+          const num = parseFloat(this.result.substring(index2 + 1, index1)) / 100;
+          this.result = this.result.substring(0, index2 + 1) + num + this.result.substring(index1 + 1);
         }
 
         const answ = this.result.split("+");
@@ -263,7 +261,7 @@ export class AllTransactionPage {
         }
       } else if (btn == "b") {
         this.result = this.result.substring(0, this.result.length - 1);
-        this.lastchar = this.result.charAt(this.result.length-1);
+        this.lastchar = this.result.charAt(this.result.length - 1);
       } else if (btn == "squareroot") {
         this.result = Math.sqrt(eval(this.result)) + "";
       } else if (btn == "square") {
@@ -283,7 +281,7 @@ export class AllTransactionPage {
         ) {
           this.result = this.result = this.result.substring(0, this.result.length - 1);
         }
-        if(this.lastchar=="%" && btn!="+" && btn!="-"){
+        if (this.lastchar == "%" && btn != "+" && btn != "-") {
           this.result = this.result = this.result.substring(0, this.result.length - 1);
         }
         this.lastchar = btn;
@@ -301,27 +299,26 @@ export class AllTransactionPage {
     }
   }
 
-  discEval(expression){
+  discEval(expression) {
     const l = expression.split("*");
-    let s="";
-    if(l.length==3){
-      if(l[2]>1){
+    let s = "";
+    if (l.length == 3) {
+      if (l[2] > 1) {
         console.log("Discount amount exceeds 1");
         throw Error;
-      }
-      else{
-        l[2] = (1-parseFloat(l[2]))*parseFloat(l[1])*l[0];
+      } else {
+        l[2] = (1 - parseFloat(l[2])) * parseFloat(l[1]) * l[0];
         s = l.join("/");
       }
-    } else if(l.length==2){
-      if(parseFloat(l[1])<=1){
-        l[1] = (1-parseFloat(l[1]))*parseFloat(l[0]);
-        s = "1/"+l[0]+"/"+l[1];
+    } else if (l.length == 2) {
+      if (parseFloat(l[1]) <= 1) {
+        l[1] = (1 - parseFloat(l[1])) * parseFloat(l[0]);
+        s = "1/" + l[0] + "/" + l[1];
       } else {
-        s = l[0]+"/"+l[1]+"/0";
+        s = l[0] + "/" + l[1] + "/0";
       }
     } else {
-      console.log(l.length+" is length of temp list");
+      console.log(l.length + " is length of temp list");
     }
     return s;
   }

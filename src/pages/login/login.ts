@@ -142,7 +142,16 @@ export class LoginPage {
   }
   ionViewDidLoad() {
     console.log("ionViewDidLoad LoginPage");
+    
   }
+
+  // ionViewDidEnter(){
+  //   firebase.auth().useDeviceLanguage();
+  //   this.applicationVerifier = new firebase.auth.RecaptchaVerifier(
+  //     'recaptcha-container');
+  // }
+
+  applicationVerifier;
 
   login() {
     firebase
@@ -198,4 +207,26 @@ export class LoginPage {
     console.log(`selected language: ${this.selectedLanguage}`);
     this.translateConfigService.setLanguage(this.selectedLanguage);
   }
+
+
+  phone;
+  signIn() {
+    // add a local variable to store navCtrl object
+    let thatNavCtrl = this.navCtrl;
+    //Step 1 — Pass the mobile number for verification
+    let tell= "+" + this.phone;
+
+    firebase.auth().signInWithPhoneNumber(tell,this.applicationVerifier).then(function(confirmationResult) {
+      var verificationCode = window.prompt('Please enter the verification ' +
+          'code that was sent to your mobile device.');
+      return confirmationResult.confirm(verificationCode);
+    })
+    .catch(function(error) {
+      // Handle Errors here.
+    });
+
+
+    }
+
+
 }

@@ -133,50 +133,56 @@ export class IncomeTransactionPage {
   }
   temp;
 
-  addNewItembtn(){
-
+  addNewItembtn() {
     const message1 = this.translateConfigService.getTranslatedMessage("CANCEL ");
     const message2 = this.translateConfigService.getTranslatedMessage("Add from Calculator");
     const message3 = this.translateConfigService.getTranslatedMessage("Scan Barcode");
     const message4 = this.translateConfigService.getTranslatedMessage("Add from Product List");
     const message5 = this.translateConfigService.getTranslatedMessage("Add Additional Charges");
-    
+
     const alert = this.alertCtrl
-            .create({
-              // @ts-ignore
-              title: "Add From", //translate this
-              // @ts-ignore
-              enableBackdropDismiss: true,
-              buttons: [
-                {
-                  // @ts-ignore
-                  text: message1.value,
-                  role: "cancel",
-                },
-                {
-                  // @ts-ignore
-                  text: message2.value,
-                  handler: ()=>{this.addCalc()},
-                },
-                {
-                  // @ts-ignore
-                  text: message3.value,
-                  handler: ()=>{this.qrscan()},
-                },
-                {
-                  // @ts-ignore
-                  text: message4.value,
-                  handler: ()=>{this.addProdList()},
-                },
-                {
-                  // @ts-ignore
-                  text: message5.value,
-                  handler: ()=>{this.dispM()},
-                }
-              ],
-            })
-            .present()
- 
+      .create({
+        // @ts-ignore
+        title: "Add From", //translate this
+        // @ts-ignore
+        enableBackdropDismiss: true,
+        buttons: [
+          {
+            // @ts-ignore
+            text: message1.value,
+            role: "cancel",
+          },
+          {
+            // @ts-ignore
+            text: message2.value,
+            handler: () => {
+              this.addCalc();
+            },
+          },
+          {
+            // @ts-ignore
+            text: message3.value,
+            handler: () => {
+              this.qrscan();
+            },
+          },
+          {
+            // @ts-ignore
+            text: message4.value,
+            handler: () => {
+              this.addProdList();
+            },
+          },
+          {
+            // @ts-ignore
+            text: message5.value,
+            handler: () => {
+              this.dispM();
+            },
+          },
+        ],
+      })
+      .present();
   }
 
   updateRec() {
@@ -192,7 +198,7 @@ export class IncomeTransactionPage {
     });
     totalDiscount += totalIndividualDiscount;
     console.log(this.lastsum + " " + totalDiscount);
-    this.lastsumAfterIndividualDiscount = Math.round((this.lastsum - totalIndividualDiscount)*100)/100;
+    this.lastsumAfterIndividualDiscount = Math.round((this.lastsum - totalIndividualDiscount) * 100) / 100;
     console.log(this.lastsum + " " + this.lastsumAfterIndividualDiscount);
     this.lastsumdisc = Math.round((this.lastsum - totalDiscount) * ((100 - this.discount) / 100) * 100) / 100;
     this.lastsumtax = Math.round(this.lastsumdisc * (1.0 + this.taxrate / 100) * 100) / 100;
