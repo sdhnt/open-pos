@@ -39,6 +39,7 @@ export class LoginPage {
     private translateConfigService: TranslateConfigService,
   ) {
     this.loadDropDowns();
+    this.getInfo();
 
     firebase.auth().onAuthStateChanged(async function(user) {
       if (user) {
@@ -86,6 +87,18 @@ export class LoginPage {
     });
 
     this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
+  }
+
+  
+contactphone;
+  getInfo() {
+    firebase
+      .firestore()
+      .collection("contact-us")
+      .get()
+      .then(doc => {
+        this.contactphone = doc.docs[0].data().phone;
+      });
   }
 
   language;

@@ -45,19 +45,25 @@
   <div id="recaptcha-container"></div>
   <ion-grid  style="width: 75%;">
     <ion-row class="row-style">
-      <ion-input type=”text” placeholder="Ex: 852 51385925" [(ngModel)]="phone"></ion-input>
+      <ion-input type=”text” placeholder="852 51385925" [(ngModel)]="phone"></ion-input>
       </ion-row>
-      <button ion-button ion-button block round outline color="light" style="margin-top: 20px;" (click)="signInPhone()">Login/Sign Up</button>
+      <button ion-button ion-button block round outline color="light" style="margin-top: 20px;" (click)="signInPhone()">Login with Phone Number</button>
+      <ion-row padding></ion-row>
       <div class="btn_container">
         <button ion-button full (click)="loginWithFB();">{{"Login with Facebook"|translate}}</button>
       </div>
-
+    
+      
      
   </ion-grid>
   
 </div>
 
 </ion-content>
+
+<ion-footer padding *ngIf="contactphone!=null">
+  Helpline: {{contactphone}}
+</ion-footer>
 
 
 
