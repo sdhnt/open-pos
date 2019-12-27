@@ -360,7 +360,7 @@ export class LoginPage {
           message: "Please enter your details to create an account",
           inputs: [
             { name: "UserName", placeholder: "Your Name" },
-            { name:"PhoneNumber", placeholder: "Phone Number", value: this.phone},
+            { name: "PhoneNumber", placeholder: "Phone Number", value: this.phone },
             { name: "BusinessName", placeholder: "Business Name" },
             { name: "BusinessType", placeholder: "Business Type" },
             { name: "Email", placeholder: "Email: example@abc.com" },
