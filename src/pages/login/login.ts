@@ -40,14 +40,14 @@ export class LoginPage {
   ) {
     this.loadDropDowns();
 
-    firebase.auth().onAuthStateChanged(async function (user) {
+    firebase.auth().onAuthStateChanged(async function(user) {
       if (user) {
         await firebase
           .firestore()
           .collection("users")
           .where("owner", "==", firebase.auth().currentUser.uid)
           .get()
-          .then(function (querySnapshot) {
+          .then(function(querySnapshot) {
             if (querySnapshot.size == 0) {
               // console.log("Not permitted - this account has not filled their data (Fb Login) or no internet");
               // navCtrl.setRoot(UserProfilePage, {
@@ -114,35 +114,37 @@ export class LoginPage {
       .login(["email"])
       .then((res: FacebookLoginResponse) => {
         console.log("Logged into Facebook!", res);
-        this.checkifexist();
+      
+          firebase
+            .auth()
+            .signInWithCredential(firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken))
+            .then(async success => {
 
-      //   firebase
-      //     .auth()
-      //     .signInWithCredential(firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken))
-      //     .then(async success => {
-      //       console.log("Firebase success", success);
-      //       const temp = success;
-      //       await firebase
-      //         .firestore()
-      //         .collection("users")
-      //         .where("owner", "==", firebase.auth().currentUser.uid)
-      //         .get()
-      //         .then(function (querySnapshot) {
-      //           if (querySnapshot.size == 0) {
-      //             console.log("Not permitted - no sign up");
-      //             this.navCtrl.setRoot(UserProfilePage, {
-      //               uid: firebase.auth().currentUser.uid,
-      //               timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      //             });
-      //           } else {
-      //             this.loginProcedure();
-      //           }
-      //         });
-      //     })
-      //     .catch(err => {
-      //       console.log("Firebase error", err);
-      //     });
-       })
+              this.checkifexist();
+              
+              console.log("Firebase success", success);
+              // const temp = success;
+              // await firebase
+              //   .firestore()
+              //   .collection("users")
+              //   .where("owner", "==", firebase.auth().currentUser.uid)
+              //   .get()
+              //   .then(function (querySnapshot) {
+              //     if (querySnapshot.size == 0) {
+              //       console.log("Not permitted - no sign up");
+              //       this.navCtrl.setRoot(UserProfilePage, {
+              //         uid: firebase.auth().currentUser.uid,
+              //         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+              //       });
+              //     } else {
+              //       this.loginProcedure();
+              //     }
+              //   });
+            })
+            .catch(err => {
+              console.log("Firebase error", err);
+            });
+      })
       .catch(e => console.log("Error logging into Facebook", e));
   }
   ionViewDidLoad() {
@@ -151,14 +153,12 @@ export class LoginPage {
 
   ionViewDidEnter() {
     firebase.auth().useDeviceLanguage();
-    this.applicationVerifier = new firebase.auth.RecaptchaVerifier(
-      'recaptcha-container', {
-      'size': 'invisible',
-      "callback": function (response) {
+    this.applicationVerifier = new firebase.auth.RecaptchaVerifier("recaptcha-container", {
+      size: "invisible",
+      callback: function(response) {
         // reCAPTCHA solved, allow signInWithPhoneNumber.
         this.signInPhone();
-      }
-
+      },
     });
   }
 
@@ -229,19 +229,18 @@ export class LoginPage {
     firebase
       .auth()
       .signInWithPhoneNumber(tell, this.applicationVerifier)
-      .then(function (confirmationResult) {
+      .then(function(confirmationResult) {
         const verificationCode = window.prompt(
           "Please enter the verification " + "code that was sent to your mobile device.",
         );
         return confirmationResult.confirm(verificationCode);
       })
-      .catch(function (error) {
+      .catch(function(error) {
         // Handle Errors here.
       });
   }
 
   datet = new Date();
-
 
   newaccOwnName;
   newaccBName;
@@ -260,7 +259,7 @@ export class LoginPage {
         businesstype: this.newaccBType,
         business_address: "Sample Address",
         email: this.newaccemail,
-        ph_no: '+' + this.phone,
+        ph_no: "+" + this.phone,
         language: this.translateConfigService.getCurrentLanguage(),
         currency: "USD",
         cash_balance: 0,
@@ -305,12 +304,9 @@ export class LoginPage {
         ],
       })
       .then(async doc => {
-
         console.log(doc);
         const title = this.translateConfigService.getTranslatedMessage("Account Created");
-        const message = this.translateConfigService.getTranslatedMessage(
-          "Your account has been created successfully",
-        );
+        const message = this.translateConfigService.getTranslatedMessage("Your account has been created successfully");
         this.alertCtrl
           .create({
             // @ts-ignore
@@ -334,146 +330,148 @@ export class LoginPage {
         console.log(err);
       });
 
-    console.log("Done")
+    console.log("Done");
   }
 
-  async checkifexist(){
-    var flag=0;
-    
+  async checkifexist() {
+    let flag = 0;
+
     await firebase
-    .firestore()
-    .collection("users")
-    .where("owner", "==", firebase.auth().currentUser.uid)
-    .get()
-    .then(async function (querySnapshot) {
-
-      if (querySnapshot.size == 0) {
-        console.log("Bun")
-        flag=1;
-      }
-      else {
-        console.log("loggin you in")
-        flag = 0;
-      }
-    }).catch((error)=>{
-      console.log(error)
-    })
-
-    
-    if(flag==1){
-      this.alertCtrl.create({
-
-        title:"Sign Up",//translate
-        message: "Please enter your details to create an account",
-        inputs: [
-          { name: 'UserName', placeholder: 'Your Name' },
-          { name: 'BusinessName', placeholder: 'Business Name' },
-          { name: 'BusinessType', placeholder: 'Business Type' },
-          { name: 'Email', placeholder: 'Email: example@abc.com' },
-
-        ],
-          buttons: [
-            {
-              text: 'Cancel',
-              handler: data => { console.log('Cancel clicked'); }
-            },
-            {
-              text: 'Submit',
-              handler: data => { 
-                this.newaccOwnName=data.UserName;
-                 this.newaccBName=data.BusinessName;
-                this.newaccBType=data.BusinessType;
-              this.newaccemail=data.Email;
-              this.createAccount();}
-            },
-          ]
-      }).present();
-    }
-    else{
-      console.log("flag!=1")
-      this.loginProcedure();
-    }
-  
-  }
-
-
-  async signInPhone() {
-    if(this.phone==null){
-      console.log("hi")
-      this.alertCtrl.create({
-        message:"No Phone Number Entered",
-        buttons :[
-          {
-            text: 'Cancel',
-            role: 'cancel'
-          },
-
-        ]
-      }).present();
-      
-    }
-    else{
-    var phoneNumber = '+' + this.phone;
-    var appVerifier = this.applicationVerifier;
-
-    var flag = 0;
-    await firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
-      .then((confirmationResult) => {
-        // SMS sent. Prompt user to type the code from the message, then sign the
-        // user in with confirmationResult.confirm(code).
-        let prompt = this.alertCtrl.create({
-          title: 'Enter the Confirmation code',
-          message: "A 6 digit code will be sent to you in the next few minutes. Please enter that number in the box below to verify your number and login:",
-          inputs: [{ name: 'confirmationCode', placeholder: 'Confirmation Code' }],
-          buttons: [
-            {
-              text: 'Cancel',
-              handler: data => { console.log('Cancel clicked'); }
-            },
-            {
-              text: 'Send',
-              handler: async data => {
-                await confirmationResult.confirm(data.confirmationCode)
-                  .then(async function (result) {
-                    // User signed in successfully.
-                    console.log(result.user);
-                    flag=1;
-                    // ...
-                  }).catch(function (error) {
-                    // User couldn't sign in (bad verification code?)
-                    // ...
-                    console.log(error)
-                  })
-                  .finally(()=>{
-                    if(flag==1){
-                      this.checkifexist();
-                    }
-                  });
-              }
-            }
-          ]
-        });
-        prompt.present();
-        console.log(confirmationResult);
-      }).catch((error) => {
-        // Error; SMS not sent
-        // ...
-        this.toastCtrl.create({
-          message: error,
-          duration: 2000,
-        }).present();
-        console.log("SMS Not Sent: "+error)
+      .firestore()
+      .collection("users")
+      .where("owner", "==", firebase.auth().currentUser.uid)
+      .get()
+      .then(async function(querySnapshot) {
+        if (querySnapshot.size == 0) {
+          console.log("Bun");
+          flag = 1;
+        } else {
+          console.log("loggin you in");
+          flag = 0;
+        }
+      })
+      .catch(error => {
+        console.log(error);
       });
 
-    // if(flag==1){
-    //   console.log("yeahh")
-    //   this.createAccount();
-    // }
-
+    if (flag == 1) {
+      this.alertCtrl
+        .create({
+          title: "Sign Up", //translate
+          message: "Please enter your details to create an account",
+          inputs: [
+            { name: "UserName", placeholder: "Your Name" },
+            { name: "BusinessName", placeholder: "Business Name" },
+            { name: "BusinessType", placeholder: "Business Type" },
+            { name: "Email", placeholder: "Email: example@abc.com" },
+          ],
+          buttons: [
+            {
+              text: "Cancel",
+              handler: data => {
+                console.log("Cancel clicked");
+              },
+            },
+            {
+              text: "Submit",
+              handler: data => {
+                this.newaccOwnName = data.UserName;
+                this.newaccBName = data.BusinessName;
+                this.newaccBType = data.BusinessType;
+                this.newaccemail = data.Email;
+                this.createAccount();
+              },
+            },
+          ],
+        })
+        .present();
+    } else {
+      console.log("flag!=1");
+      this.loginProcedure();
+    }
   }
 
-  
-}
+  async signInPhone() {
+    if (this.phone == null) {
+      console.log("hi");
+      this.alertCtrl
+        .create({
+          message: "No Phone Number Entered",
+          buttons: [
+            {
+              text: "Cancel",
+              role: "cancel",
+            },
+          ],
+        })
+        .present();
+    } else {
+      const phoneNumber = "+" + this.phone;
+      const appVerifier = this.applicationVerifier;
 
+      let flag = 0;
+      await firebase
+        .auth()
+        .signInWithPhoneNumber(phoneNumber, appVerifier)
+        .then(confirmationResult => {
+          // SMS sent. Prompt user to type the code from the message, then sign the
+          // user in with confirmationResult.confirm(code).
+          const prompt = this.alertCtrl.create({
+            title: "Enter the Confirmation code",
+            message:
+              "A 6 digit code will be sent to you in the next few minutes. Please enter that number in the box below to verify your number and login:",
+            inputs: [{ name: "confirmationCode", placeholder: "Confirmation Code" }],
+            buttons: [
+              {
+                text: "Cancel",
+                handler: data => {
+                  console.log("Cancel clicked");
+                },
+              },
+              {
+                text: "Send",
+                handler: async data => {
+                  await confirmationResult
+                    .confirm(data.confirmationCode)
+                    .then(async function(result) {
+                      // User signed in successfully.
+                      console.log(result.user);
+                      flag = 1;
+                      // ...
+                    })
+                    .catch(function(error) {
+                      // User couldn't sign in (bad verification code?)
+                      // ...
+                      console.log(error);
+                    })
+                    .finally(() => {
+                      if (flag == 1) {
+                        this.checkifexist();
+                      }
+                    });
+                },
+              },
+            ],
+          });
+          prompt.present();
+          console.log(confirmationResult);
+        })
+        .catch(error => {
+          // Error; SMS not sent
+          // ...
+          this.toastCtrl
+            .create({
+              message: error,
+              duration: 2000,
+            })
+            .present();
+          console.log("SMS Not Sent: " + error);
+        });
 
+      // if(flag==1){
+      //   console.log("yeahh")
+      //   this.createAccount();
+      // }
+    }
+  }
 }
