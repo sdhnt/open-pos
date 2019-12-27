@@ -35,6 +35,8 @@ import { DashboardPageModule } from "../pages/dashboard/dashboard.module";
 import { AddProductPageModule } from "../pages/addproduct/addproduct.module";
 import { SingleProductPage } from "../pages/singleproduct/singleproduct";
 import { SingleProductPageModule } from "../pages/singleproduct/singleproduct.module";
+import { AllTransactionPage } from "../pages/all-transaction/all-transaction";
+import { AllTransactionPageModule } from "../pages/all-transaction/all-transaction.module";
 
 // var config = {
 //   apiKey: "AIzaSyADjIbI3_GRS4eRHGVGFsT2hrkKvH9K06M",
@@ -77,6 +79,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoginPageModule,
     SignUpPageModule,
     TransactionHomePageModule,
+    AllTransactionPageModule,
     DashboardPageModule,
     AddProductPageModule,
     SingleProductPageModule,
@@ -96,6 +99,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoginPage,
     SignUpPage,
     TransactionHomePage,
+    AllTransactionPage,
     DashboardPage,
     AddProductPage,
     SingleProductPage,

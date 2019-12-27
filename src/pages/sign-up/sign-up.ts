@@ -68,19 +68,6 @@ export class SignUpPage {
 
   datet = new Date();
 
-  signup2(){
-
-    // admin.auth().createUser({
-    //   email: 'user@example.com',
-    //   emailVerified: false,
-    //   phoneNumber: '+11234567890',
-    //   password: 'secretPassword',
-    //   displayName: 'John Doe',
-    //   photoURL: 'http://www.example.com/12345678/photo.png',
-    //   disabled: false
-    // })
-  }
-
   signup() {
     if (
       this.name == "" ||
@@ -134,7 +121,7 @@ export class SignUpPage {
                   businesstype: this.businesstype,
                   business_address: this.businessaddress,
                   ph_no: this.phno,
-                  language: this.language,
+                  language: this.translateConfigService.getCurrentLanguage(),
                   currency: this.currency,
                   cash_balance: this.cb,
                   discount: this.discount,
