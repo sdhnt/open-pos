@@ -16,7 +16,7 @@
 
   <button ion-button block clear color="light" class="nametop"><b>Open</b></button>
 
-  <button ion-button block clear color="light" style="margin-top: 10px;" >Enter your Phone Number</button>
+  <button ion-button block clear color="light" style="margin-top: 10px;" >{{"Enter your Phone Number"|translate}}</button>
 
 <!-- 
   <ion-grid style="width: 75%;">
@@ -47,11 +47,11 @@
     <ion-row class="row-style">
       <ion-input type=”text” placeholder="852 51385925" [(ngModel)]="phone"></ion-input>
       </ion-row>
-      <button ion-button ion-button block round outline color="light" style="margin-top: 20px;" (click)="signInPhone()">Login with Phone Number</button>
+      <button ion-button ion-button block round outline color="light" style="margin-top: 20px;" (click)="signInPhone()">{{"Login with Phone Number"|translate}}</button>
       <ion-row padding></ion-row>
-      <div class="btn_container">
+      <!-- <div class="btn_container">
         <button ion-button full (click)="loginWithFB();">{{"Login with Facebook"|translate}}</button>
-      </div>
+      </div> -->
     
       
      
@@ -62,7 +62,7 @@
 </ion-content>
 
 <ion-footer padding *ngIf="contactphone!=null">
-  Helpline: {{contactphone}}
+  {{"Helpline"|translate}}: {{contactphone}}
 </ion-footer>
 
 

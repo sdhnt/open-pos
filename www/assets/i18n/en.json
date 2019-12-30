@@ -156,7 +156,20 @@
   "View/Edit Products":"View/Edit Products",
   "Business Performance":"Business Performance",
   "Shopping Cart":"Shopping Cart",
-  "Add New Item":"Add New Item"
+  "Add New Item":"Add New Item",
+  "Enter your Phone Number":"Enter your Phone Number",
+  "Internet Unavailable":"Internet Unavailable",
+  "Login with Phone Number":"Login with Phone Number",
+  "Helpline":"Helpline",
+  "No Phone Number Entered":"No Phone Number Entered",
+  "SEND":"SEND",
+  "Enter the Confirmation code":"Enter the Confirmation code",
+  "A 6 Digit Code":"A 6 digit code will be sent to you in the next few minutes. Please enter that number in the box below to verify your number and login:",
+  "Please enter your details to create an account":"Please enter your details to create an account",
+  "Email: example@abc.com":"Email: example@abc.com",
+  "Your Name":"Your Name",
+  "SUBMIT":"SUBMIT"
+
 
   
 

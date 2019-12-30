@@ -157,6 +157,19 @@
  "View/Edit Products":"ထုတ်ကုန်များကိုကြည့်ရန်/တည်းဖြတ်ရန်",
  "Business Performance":"စီးပွားရေးစွမ်းဆောင်ရည်",
  "Shopping Cart":"ဈေးဝယ်လှည်း",
- "Add New Item":"ပစ္စည်းအသစ်ထည့်ပါ"
+ "Add New Item":"ပစ္စည်းအသစ်ထည့်ပါ",
+ "Enter your Phone Number":"သင့်ဖုန်းနံပါတ်ကိုရိုက်ထည့်ပါ",
+ "Internet Unavailable":"အင်တာနက်မရနိုင်ပါ",
+ "Login with Phone Number":"ဖုန်းနံပါတ်ကိုသုံးပါ",
+ "Helpline":"တိုင်ကြားမှု",
+ "No Phone Number Entered":"ဖုန်းနံပါတ်ကိုမထည့်ရ",
+ "SEND":"ပို့ပါ",
+ "Enter the Confirmation code":"အတည်ပြုချက်ကုဒ်ကိုထည့်ပါ",
+ "A 6 Digit Code":"နောက်မိနစ်အနည်းငယ်အတွင်းသင့်အားဂဏန်း ၆ လုံးပါသောကုဒ်ကိုသင့်ထံပို့ပေးပါလိမ့်မည်။ ကျေးဇူးပြု၍ သင်၏နံပါတ်နှင့်ဝင်ရန်အတည်ပြုရန်အောက်ပါကွက်လပ်၌ဖြည့်ပါ။",
+ "Please enter your details to create an account":"အကောင့်ပြုလုပ်ရန် အောက်ဖော်ပြပါ အချက်အလက်များကိုဖြည့်သွင်းပါ။",
+ "Email: example@abc.com":"အီးမေးလ်: example@abc.com",
+ "Your Name":"မင်းနာမည်",
+ "SUBMIT":"တင်သွင်းပါ"
+
 
 }

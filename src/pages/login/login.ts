@@ -59,9 +59,12 @@ export class LoginPage {
               // console.log(firebase.auth().currentUser.uid);
               //MOVE SIGN UP OPTIONS RIGHT HERE AND CREATE A DOCUMENT
 
+              const msg=this.translateConfigService.getTranslatedMessage("Internet Unavailable");
+
               this.toastCtrl
                 .create({
-                  message: "Check your connection",
+                  // @ts-ignore
+                  message: msg.value,
                   duration: 2000,
                 })
                 .present();
@@ -89,8 +92,7 @@ export class LoginPage {
     this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
   }
 
-  
-contactphone;
+  contactphone;
   getInfo() {
     firebase
       .firestore()
@@ -243,7 +245,7 @@ contactphone;
       .signInWithPhoneNumber(tell, this.applicationVerifier)
       .then(function(confirmationResult) {
         const verificationCode = window.prompt(
-          "Please enter the verification " + "code that was sent to your mobile device.",
+          "Please enter the verification code that was sent to your mobile device.",
         );
         return confirmationResult.confirm(verificationCode);
       })
@@ -317,6 +319,8 @@ contactphone;
       })
       .then(async doc => {
         console.log(doc);
+
+        
         const title = this.translateConfigService.getTranslatedMessage("Account Created");
         const message = this.translateConfigService.getTranslatedMessage("Your account has been created successfully");
         this.alertCtrl
@@ -367,26 +371,47 @@ contactphone;
       });
 
     if (flag == 1) {
+
+      const msg=this.translateConfigService.getTranslatedMessage("Sign Up")
+      const msg1=this.translateConfigService.getTranslatedMessage("Please enter your details to create an account")
+      const msg2=this.translateConfigService.getTranslatedMessage("Your Name")
+      const msg3=this.translateConfigService.getTranslatedMessage("Phone Number")
+      const msg4=this.translateConfigService.getTranslatedMessage("Business Name")
+      const msg5=this.translateConfigService.getTranslatedMessage("Business Type")
+      const msg6=this.translateConfigService.getTranslatedMessage("CANCEL")
+      const msg7=this.translateConfigService.getTranslatedMessage("SUBMIT")
+      const msg8=this.translateConfigService.getTranslatedMessage("Email: example@abc.com")
+
+      
       this.alertCtrl
         .create({
-          title: "Sign Up", //translate
-          message: "Please enter your details to create an account",
+          //@ts-ignore
+          title: msg.value, 
+          //@ts-ignore
+          message: msg1.value,
           inputs: [
-            { name: "UserName", placeholder: "Your Name" },
-            { name: "PhoneNumber", placeholder: "Phone Number", value: this.phone },
-            { name: "BusinessName", placeholder: "Business Name" },
-            { name: "BusinessType", placeholder: "Business Type" },
-            { name: "Email", placeholder: "Email: example@abc.com" },
+            //@ts-ignore
+            { name: "UserName", placeholder: msg2.value },
+            //@ts-ignore
+            { name: "PhoneNumber", placeholder: msg3.value, value: this.phone },
+            //@ts-ignore
+            { name: "BusinessName", placeholder: msg4.value },
+            //@ts-ignore
+            { name: "BusinessType", placeholder: msg5.value },
+            //@ts-ignore
+            { name: "Email", placeholder: msg8.value },
           ],
           buttons: [
-            {
-              text: "Cancel",
+            { 
+              // @ts-ignore
+              text:  msg6.value,
               handler: data => {
                 console.log("Cancel clicked");
               },
             },
-            {
-              text: "Submit",
+            { 
+              //@ts-ignore
+              text: msg7.value,
               handler: data => {
                 this.newaccOwnName = data.UserName;
                 this.newaccBName = data.BusinessName;
@@ -407,12 +432,17 @@ contactphone;
   async signInPhone() {
     if (this.phone == null) {
       console.log("hi");
+      const msg=this.translateConfigService.getTranslatedMessage("No Phone Number Entered")
+      const msg1=this.translateConfigService.getTranslatedMessage("CANCEL")
+      
       this.alertCtrl
         .create({
-          message: "No Phone Number Entered",
+          // @ts-ignore
+          message: msg.value,
           buttons: [
             {
-              text: "Cancel",
+              //@ts-ignore
+              text: msg1.value,
               role: "cancel",
             },
           ],
@@ -429,20 +459,33 @@ contactphone;
         .then(confirmationResult => {
           // SMS sent. Prompt user to type the code from the message, then sign the
           // user in with confirmationResult.confirm(code).
+
+
+          const msg=this.translateConfigService.getTranslatedMessage("Enter the Confirmation code");
+          const msg1=this.translateConfigService.getTranslatedMessage("A 6 Digit Code") ;
+          const msg2=this.translateConfigService.getTranslatedMessage("SEND");
+          const msg3=this.translateConfigService.getTranslatedMessage("CANCEL");
+
+
+
           const prompt = this.alertCtrl.create({
-            title: "Enter the Confirmation code",
+            //@ts-ignore
+            title: msg.value,
             message:
-              "A 6 digit code will be sent to you in the next few minutes. Please enter that number in the box below to verify your number and login:",
+            //@ts-ignore
+              msg1.value,
             inputs: [{ name: "confirmationCode", placeholder: "Confirmation Code" }],
             buttons: [
               {
-                text: "Cancel",
+                //@ts-ignore
+                text: msg3.value,
                 handler: data => {
                   console.log("Cancel clicked");
                 },
               },
               {
-                text: "Send",
+                //@ts-ignore
+                text: msg2.value,
                 handler: async data => {
                   await confirmationResult
                     .confirm(data.confirmationCode)
