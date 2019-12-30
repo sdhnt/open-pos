@@ -499,6 +499,10 @@ export class LoginPage {
                       // User couldn't sign in (bad verification code?)
                       // ...
                       console.log(error);
+                      this.toastCtrl.create({
+                        message: error,
+                        duration: 2000,
+                      }).present();
                     })
                     .finally(() => {
                       if (flag == 1) {

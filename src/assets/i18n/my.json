@@ -169,7 +169,8 @@
  "Please enter your details to create an account":"အကောင့်ပြုလုပ်ရန် အောက်ဖော်ပြပါ အချက်အလက်များကိုဖြည့်သွင်းပါ။",
  "Email: example@abc.com":"အီးမေးလ်: example@abc.com",
  "Your Name":"မင်းနာမည်",
- "SUBMIT":"တင်သွင်းပါ"
+ "SUBMIT":"တင်သွင်းပါ",
+ "CANCEL":"ပယ်ဖျက်"
 
 
 }
