@@ -59,7 +59,7 @@ export class LoginPage {
               // console.log(firebase.auth().currentUser.uid);
               //MOVE SIGN UP OPTIONS RIGHT HERE AND CREATE A DOCUMENT
 
-              const msg=this.translateConfigService.getTranslatedMessage("Internet Unavailable");
+              const msg = this.translateConfigService.getTranslatedMessage("Internet Unavailable");
 
               this.toastCtrl
                 .create({
@@ -320,7 +320,6 @@ export class LoginPage {
       .then(async doc => {
         console.log(doc);
 
-        
         const title = this.translateConfigService.getTranslatedMessage("Account Created");
         const message = this.translateConfigService.getTranslatedMessage("Your account has been created successfully");
         this.alertCtrl
@@ -371,22 +370,20 @@ export class LoginPage {
       });
 
     if (flag == 1) {
+      const msg = this.translateConfigService.getTranslatedMessage("Sign Up");
+      const msg1 = this.translateConfigService.getTranslatedMessage("Please enter your details to create an account");
+      const msg2 = this.translateConfigService.getTranslatedMessage("Your Name");
+      const msg3 = this.translateConfigService.getTranslatedMessage("Phone Number");
+      const msg4 = this.translateConfigService.getTranslatedMessage("Business Name");
+      const msg5 = this.translateConfigService.getTranslatedMessage("Business Type");
+      const msg6 = this.translateConfigService.getTranslatedMessage("CANCEL");
+      const msg7 = this.translateConfigService.getTranslatedMessage("SUBMIT");
+      const msg8 = this.translateConfigService.getTranslatedMessage("Email: example@abc.com");
 
-      const msg=this.translateConfigService.getTranslatedMessage("Sign Up")
-      const msg1=this.translateConfigService.getTranslatedMessage("Please enter your details to create an account")
-      const msg2=this.translateConfigService.getTranslatedMessage("Your Name")
-      const msg3=this.translateConfigService.getTranslatedMessage("Phone Number")
-      const msg4=this.translateConfigService.getTranslatedMessage("Business Name")
-      const msg5=this.translateConfigService.getTranslatedMessage("Business Type")
-      const msg6=this.translateConfigService.getTranslatedMessage("CANCEL")
-      const msg7=this.translateConfigService.getTranslatedMessage("SUBMIT")
-      const msg8=this.translateConfigService.getTranslatedMessage("Email: example@abc.com")
-
-      
       this.alertCtrl
         .create({
           //@ts-ignore
-          title: msg.value, 
+          title: msg.value,
           //@ts-ignore
           message: msg1.value,
           inputs: [
@@ -402,14 +399,14 @@ export class LoginPage {
             { name: "Email", placeholder: msg8.value },
           ],
           buttons: [
-            { 
+            {
               // @ts-ignore
-              text:  msg6.value,
+              text: msg6.value,
               handler: data => {
                 console.log("Cancel clicked");
               },
             },
-            { 
+            {
               //@ts-ignore
               text: msg7.value,
               handler: data => {
@@ -432,9 +429,9 @@ export class LoginPage {
   async signInPhone() {
     if (this.phone == null) {
       console.log("hi");
-      const msg=this.translateConfigService.getTranslatedMessage("No Phone Number Entered")
-      const msg1=this.translateConfigService.getTranslatedMessage("CANCEL")
-      
+      const msg = this.translateConfigService.getTranslatedMessage("No Phone Number Entered");
+      const msg1 = this.translateConfigService.getTranslatedMessage("CANCEL");
+
       this.alertCtrl
         .create({
           // @ts-ignore
@@ -460,19 +457,16 @@ export class LoginPage {
           // SMS sent. Prompt user to type the code from the message, then sign the
           // user in with confirmationResult.confirm(code).
 
-
-          const msg=this.translateConfigService.getTranslatedMessage("Enter the Confirmation code");
-          const msg1=this.translateConfigService.getTranslatedMessage("A 6 Digit Code") ;
-          const msg2=this.translateConfigService.getTranslatedMessage("SEND");
-          const msg3=this.translateConfigService.getTranslatedMessage("CANCEL");
-
-
+          const msg = this.translateConfigService.getTranslatedMessage("Enter the Confirmation code");
+          const msg1 = this.translateConfigService.getTranslatedMessage("A 6 Digit Code");
+          const msg2 = this.translateConfigService.getTranslatedMessage("SEND");
+          const msg3 = this.translateConfigService.getTranslatedMessage("CANCEL");
 
           const prompt = this.alertCtrl.create({
             //@ts-ignore
             title: msg.value,
             message:
-            //@ts-ignore
+              //@ts-ignore
               msg1.value,
             inputs: [{ name: "confirmationCode", placeholder: "Confirmation Code" }],
             buttons: [
@@ -499,10 +493,12 @@ export class LoginPage {
                       // User couldn't sign in (bad verification code?)
                       // ...
                       console.log(error);
-                      this.toastCtrl.create({
-                        message: error,
-                        duration: 2000,
-                      }).present();
+                      this.toastCtrl
+                        .create({
+                          message: error,
+                          duration: 2000,
+                        })
+                        .present();
                     })
                     .finally(() => {
                       if (flag == 1) {
