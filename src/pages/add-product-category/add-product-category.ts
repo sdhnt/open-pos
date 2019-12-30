@@ -32,15 +32,15 @@ export class AddProductCategoryPage {
   newprodCat: any = "";
   listCat: any;
   getCategories() {
-    console.log(this.listCat + " and " + this.newprodCat);
+    //console.log(this.listCat + " and " + this.newprodCat);
     this.sp.storageReady().then(() => {
       this.sp
         .getCategories()
         .then(val => {
-          console.log("val = " + val);
+          //console.log("val = " + val);
           this.listCat = JSON.parse(val);
 
-          console.log(this.listCat);
+          //console.log(this.listCat);
           this.getCategories();
         })
         .catch(err => {
@@ -50,7 +50,7 @@ export class AddProductCategoryPage {
   }
 
   addCategory() {
-    console.log(this.listCat + " and " + this.newprodCat);
+    //console.log(this.listCat + " and " + this.newprodCat);
     if (this.newprodCat != "") {
       const data = {
         name: this.newprodCat,

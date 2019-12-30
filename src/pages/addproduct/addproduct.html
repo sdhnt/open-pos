@@ -17,15 +17,16 @@
     <button ion-button block color="primary" (click)="launchCamera()">{{'Take Picture' | translate}}</button>
     <img *ngIf="image!=null" [src]="image" style="width: 100px;">
   </ion-item>
-
+  <ion-list inset>
+    <button ion-button block color="primary" (click)="scanQR()" color="dark">{{'Scan Barcode'| translate}}</button>
+    <ion-item>
+      <ion-label>{{'Product Code:'| translate}}</ion-label>
+      <ion-input type="text" [(ngModel)]='prodCode'></ion-input>
+    </ion-item>
   <form [formGroup]="formProduct">
-    <ion-list inset>
+    
       <!-- <button ion-button full color="dark" (click)="getProdPic()">Upload Picture</button> -->
-      <button ion-button block color="primary" (click)="scanQR()" color="dark">{{'Scan Barcode'| translate}}</button>
-      <ion-item>
-        <ion-label>{{'Product Code:'| translate}}</ion-label>
-        <ion-input type="text" formControlName="prodCode" [(ngModel)]='prodCode'></ion-input>
-      </ion-item>
+     
       <ion-item>
         <ion-label>{{'Product Name:'| translate}}</ion-label>
         <ion-input type="text" formControlName="prodName" [(ngModel)]='prodName'></ion-input>
@@ -77,8 +78,9 @@
           [(ngModel)]='newprodCat'></ion-input>
       </ion-item>
 
-    </ion-list>
+    
   </form>
+</ion-list>
   <button ion-button block color="primary" [disabled]="disabled" (click)="addproduct()"
     color="dark">{{'Add Product'| translate}}</button>
   <button ion-button block style="background-color: red; color: white;"

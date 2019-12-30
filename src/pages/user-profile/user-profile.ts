@@ -215,6 +215,7 @@ export class UserProfilePage {
         })
         .present();
     } else {
+      this.translateConfigService.setLanguage(this.user.language);
       this.sp.storageReady().then(() => {
         this.sp
           .setUserDat(this.user)

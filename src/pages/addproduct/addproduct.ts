@@ -40,7 +40,6 @@ export class AddProductPage {
     this.prodCode = this.navParams.get("code");
     this.getUserData();
     this.formProduct = this.formBuilder.group({
-      prodCode: new FormControl("", Validators.required),
       prodName: new FormControl("", Validators.required),
       prodPrice: new FormControl(0, Validators.required),
       prodWholesalePrice: new FormControl(0, Validators.required),
@@ -195,6 +194,7 @@ export class AddProductPage {
 
   addproduct() {
     this.disabled = true;
+    
     if (!this.formProduct.valid || (this.prodCat == "New" && this.newprodCat == "")) {
       const message = this.translateConfigService.getTranslatedMessage("Incomplete");
       this.toastCtrl
@@ -207,6 +207,12 @@ export class AddProductPage {
       this.disabled = false;
     } else {
       //old
+      if(this.prodCode=="" || this.prodCode==null || this.prodCode==undefined){
+      
+        this.prodCode=(Math.round((Math.random()*10000000000))).toString();
+        console.log("No Code ::"+this.prodCode)
+      }
+
       if (this.newprodCat != "") {
         this.addCategory();
         this.prodCat = this.newprodCat;
