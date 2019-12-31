@@ -49,44 +49,39 @@ export class ProductListPage {
     this.getProducts();
   }
 
-  addprocat(){
-
+  addprocat() {
     const message = this.translateConfigService.getTranslatedMessage("Add Category");
     const message1 = this.translateConfigService.getTranslatedMessage("Add Product");
     const message2 = this.translateConfigService.getTranslatedMessage("Add");
     const message3 = this.translateConfigService.getTranslatedMessage("Cancel");
 
-    
-    
-    
-    
-    
-      this.alertCtrl.create({
+    this.alertCtrl
+      .create({
         // @ts-ignore
         title: message2.value,
         buttons: [
           {
             // @ts-ignore
             text: message1.value,
-            handler: data=>{
+            handler: data => {
               (this.navCtrl.parent as Tabs).select(1);
-            }
+            },
           },
           {
             // @ts-ignore
             text: message.value,
-            handler: data=>{
+            handler: data => {
               (this.navCtrl.parent as Tabs).select(2);
-            }
+            },
           },
           {
             // @ts-ignore
             text: message3.value,
             role: "Cancel",
           },
-        ]
-
-      }).present();
+        ],
+      })
+      .present();
   }
 
   getCategories() {
