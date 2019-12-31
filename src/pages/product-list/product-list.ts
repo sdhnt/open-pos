@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, Events, ToastController } from "ionic-angular";
+import { IonicPage, NavController, NavParams, Events, ToastController, AlertController, Tabs } from "ionic-angular";
 import { StorageProvider } from "../../providers/storage/storage";
 import { SingleProductPage } from "../singleproduct/singleproduct";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
@@ -34,6 +34,7 @@ export class ProductListPage {
     public sp: StorageProvider,
     public events: Events,
     public toastCtrl: ToastController,
+    public alertCtrl: AlertController,
   ) {
     this.events.subscribe("prodAdd:created", data => {
       console.log("ENTERED!");
@@ -46,6 +47,46 @@ export class ProductListPage {
 
   ionViewDidLoad() {
     this.getProducts();
+  }
+
+  addprocat(){
+
+    const message = this.translateConfigService.getTranslatedMessage("Add Category");
+    const message1 = this.translateConfigService.getTranslatedMessage("Add Product");
+    const message2 = this.translateConfigService.getTranslatedMessage("Add");
+    const message3 = this.translateConfigService.getTranslatedMessage("Cancel");
+
+    
+    
+    
+    
+    
+      this.alertCtrl.create({
+        // @ts-ignore
+        title: message2.value,
+        buttons: [
+          {
+            // @ts-ignore
+            text: message1.value,
+            handler: data=>{
+              (this.navCtrl.parent as Tabs).select(1);
+            }
+          },
+          {
+            // @ts-ignore
+            text: message.value,
+            handler: data=>{
+              (this.navCtrl.parent as Tabs).select(2);
+            }
+          },
+          {
+            // @ts-ignore
+            text: message3.value,
+            role: "Cancel",
+          },
+        ]
+
+      }).present();
   }
 
   getCategories() {
