@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import { IonicPage, NavController, NavParams, Tabs, ToastController, Events } from "ionic-angular";
+import { IonicPage, NavController, NavParams, Tabs, ToastController, Events, AlertController } from "ionic-angular";
 import firebase from "firebase";
 import { AddProductPage } from "../addproduct/addproduct";
 import { AllTransactionPage } from "../all-transaction/all-transaction";
@@ -39,6 +39,7 @@ export class TransactionHomePage {
     public toastCtrl: ToastController,
     public sp: StorageProvider,
     public events: Events,
+    public alertCtrl: AlertController,
   ) {
     //this.getUserData();
 
@@ -115,13 +116,61 @@ export class TransactionHomePage {
   async cashbtn() {
     await this.getUserData();
     const message = this.translateConfigService.getTranslatedMessage("Balance");
-    this.toastCtrl
+    const message1 = this.translateConfigService.getTranslatedMessage("Edit");
+    const message2= this.translateConfigService.getTranslatedMessage("Enter Current Cash Balance");
+    const message3 = this.translateConfigService.getTranslatedMessage("Update");
+    const message4= this.translateConfigService.getTranslatedMessage("Cancel");
+    const message5 = this.translateConfigService.getTranslatedMessage("OK");
+  
+    this.alertCtrl
       .create({
-        // @ts-ignore
+        //@ts-ignore
         message: message.value + ": " + this.userdata.cash_balance,
-        duration: 3000,
-      })
-      .present();
+        
+        buttons: [
+          
+          {
+            //@ts-ignore
+            text: message1.value,
+            handler: data =>{
+              this.alertCtrl.create({
+                inputs: [
+                  //@ts-ignore
+                  { name: "cb", placeholder: message2.value },
+                ],
+                buttons: [
+                  {
+                    //@ts-ignore
+                    text: message3.value,
+                    handler: data1=>{
+                      if(data1.cb!=null){
+                        //console.log("Update CB to :"+data1.cb)
+                          this.getUserData();
+                          this.userdata.cash_balance = parseFloat(data1.cb).toString();
+                          this.sp.setUserDat(this.userdata);
+                      }
+                    },
+                  },
+                  {
+                    //@ts-ignore
+                    text: message4.value,
+                    role: 'cancel'
+                  }
+
+                ]
+                
+              }).present();
+            }
+          }, // end Edit Button
+          {  //translate these buttons
+            //@ts-ignore
+            text: message5.value,
+            role: 'Cancel'
+          }, // end OK Button
+
+        ], //end button
+
+      }).present();
   }
 
   setUsrLang() {

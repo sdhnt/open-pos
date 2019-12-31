@@ -170,7 +170,10 @@
  "Email: example@abc.com":"အီးမေးလ်: example@abc.com",
  "Your Name":"မင်းနာမည်",
  "SUBMIT":"တင်သွင်းပါ",
- "CANCEL":"ပယ်ဖျက်"
-
+ "CANCEL":"ပယ်ဖျက်",
+ "Edit":"တည်းဖြတ်ပါ",
+ "Enter Current Cash Balance":"လက်ရှိငွေလက်ကျန်ကိုထည့်ပါ",
+ "Update":"မွမ်းမံ",
+ "OK":"ရလား"
 
 }
