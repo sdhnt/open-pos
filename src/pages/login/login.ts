@@ -1,5 +1,12 @@
 import { Component, NgZone } from "@angular/core";
-import { IonicPage, NavController, NavParams, ToastController, AlertController, LoadingController } from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  ToastController,
+  AlertController,
+  LoadingController,
+} from "ionic-angular";
 import firebase, { auth } from "firebase";
 import { SignUpPage } from "../sign-up/sign-up";
 import { TransactionHomePage } from "../transaction-home/transaction-home";
@@ -42,17 +49,17 @@ export class LoginPage {
     this.loadDropDowns();
     this.getInfo();
 
-    let loading = this.loadingCtrl.create({
+    const loading = this.loadingCtrl.create({
       content: `
         <div class="custom-spinner-container">
           <div class="custom-spinner-box"></div>
         </div>`,
-    })
+    });
 
     firebase.auth().onAuthStateChanged(async function(user) {
       if (user) {
+        //console.log(user);
         loading.present();
-        
 
         await firebase
           .firestore()
@@ -80,7 +87,6 @@ export class LoginPage {
                 })
                 .present();
             } else {
-             
               sp.setMem().then(() => {
                 zone.run(() => {
                   console.log("firing from constructor");

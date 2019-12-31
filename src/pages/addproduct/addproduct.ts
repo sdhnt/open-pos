@@ -194,7 +194,7 @@ export class AddProductPage {
 
   addproduct() {
     this.disabled = true;
-    
+
     if (!this.formProduct.valid || (this.prodCat == "New" && this.newprodCat == "")) {
       const message = this.translateConfigService.getTranslatedMessage("Incomplete");
       this.toastCtrl
@@ -207,10 +207,9 @@ export class AddProductPage {
       this.disabled = false;
     } else {
       //old
-      if(this.prodCode=="" || this.prodCode==null || this.prodCode==undefined){
-      
-        this.prodCode=(Math.round((Math.random()*10000000000))).toString();
-        console.log("No Code ::"+this.prodCode)
+      if (this.prodCode == "" || this.prodCode == null || this.prodCode == undefined) {
+        this.prodCode = Math.round(Math.random() * 10000000000).toString();
+        console.log("No Code ::" + this.prodCode);
       }
 
       if (this.newprodCat != "") {

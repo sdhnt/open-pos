@@ -101,6 +101,21 @@ page-all-transaction {
                         user-select: none;
                         cursor: pointer;
                     }
+                    .lastrow{
+                        width: 100%;
+                        display: flex;
+                        color: #ffffff;
+                        span{
+                        width: calc(100%);
+                        height: 70px;
+                        text-align: center;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        user-select: none;
+                        cursor: pointer;
+                        }
+                    }
                 }
                 .symbol {
                     width: 25%;
