@@ -32,6 +32,7 @@
     "@ionic-native/date-picker": "^4.20.0",
     "@ionic-native/facebook": "^4.20.0",
     "@ionic-native/firebase": "^4.20.0",
+    "@ionic-native/firebase-x": "^5.19.0",
     "@ionic-native/geolocation": "^4.20.0",
     "@ionic-native/http": "^4.20.0",
     "@ionic-native/native-storage": "^4.20.0",

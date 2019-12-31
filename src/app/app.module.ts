@@ -26,6 +26,7 @@ import { BluetoothSerial } from "@ionic-native/bluetooth-serial";
 import { PrinterProvider } from "./../providers/printer/printer";
 import { Geolocation } from "@ionic-native/geolocation";
 import { GeolocationService } from "../providers/geolocation/geolocation.service";
+import { FcmService } from "../providers/firebase-cloud-messaging/fcm.service";
 
 import * as firebase from "firebase";
 import { LoginPageModule } from "../pages/login/login.module";
@@ -121,6 +122,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     PrinterProvider,
     Geolocation,
     GeolocationService,
+    FcmService,
   ],
 })
 export class AppModule {}
