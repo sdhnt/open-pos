@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { FirebaseX } from "@ionic-native/firebase-x/ngx";
-import firebase from "firebase";
+import * as firebase from "firebase/app";
 
 @Injectable()
 export class FcmService {
@@ -18,7 +18,7 @@ export class FcmService {
 
     const data = {
       token,
-      userId: firebase.auth().currentUser.uid,
+      userId: firebase.auth().currentUser.uid || "userId",
     };
 
     return devicesRef.doc(token).set(data);

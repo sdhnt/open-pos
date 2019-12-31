@@ -114,5 +114,6 @@
     </plugin>
     <plugin name="cordova-sqlite-storage" spec="^3.3.0" />
     <plugin name="cordova-plugin-x-toast" spec="^2.7.2" />
+    <plugin name="cordova-plugin-firebasex" spec="^7.0.1" />
     <allow-navigation href="http://localhost:8101" sessionid="1b7a093e" />
 </widget>

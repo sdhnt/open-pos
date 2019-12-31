@@ -54,7 +54,7 @@
     "cordova-plugin-datepicker": "0.9.3",
     "cordova-plugin-device": "2.0.2",
     "cordova-plugin-facebook4": "^1.7.4",
-    "cordova-plugin-firebasex": "^6.1.0",
+    "cordova-plugin-firebasex": "^7.0.1",
     "cordova-plugin-geolocation": "^4.0.2",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
     "cordova-plugin-ionic-webview": "4.1.3",

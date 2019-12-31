@@ -26,9 +26,10 @@ import { BluetoothSerial } from "@ionic-native/bluetooth-serial";
 import { PrinterProvider } from "./../providers/printer/printer";
 import { Geolocation } from "@ionic-native/geolocation";
 import { GeolocationService } from "../providers/geolocation/geolocation.service";
+import { FirebaseX } from "@ionic-native/firebase-x/ngx";
 import { FcmService } from "../providers/firebase-cloud-messaging/fcm.service";
 
-import * as firebase from "firebase";
+import * as firebase from "firebase/app";
 import { LoginPageModule } from "../pages/login/login.module";
 import { SignUpPageModule } from "../pages/sign-up/sign-up.module";
 import { TransactionHomePageModule } from "../pages/transaction-home/transaction-home.module";
@@ -39,14 +40,6 @@ import { SingleProductPageModule } from "../pages/singleproduct/singleproduct.mo
 import { AllTransactionPage } from "../pages/all-transaction/all-transaction";
 import { AllTransactionPageModule } from "../pages/all-transaction/all-transaction.module";
 
-// var config = {
-//   apiKey: "AIzaSyADjIbI3_GRS4eRHGVGFsT2hrkKvH9K06M",
-//   authDomain: "trialapp-1cb3d.firebaseapp.com",
-//   databaseURL: "https://trialapp-1cb3d.firebaseio.com",
-//   projectId: "trialapp-1cb3d",
-//   storageBucket: "trialapp-1cb3d.appspot.com",
-//   messagingSenderId: "591467524421"
-// };
 const config = {
   apiKey: "AIzaSyBlxUkCX8OPsb9QL2p_jN8vaHdb5LhsS7A",
   authDomain: "open-fintech.firebaseapp.com",
@@ -63,13 +56,6 @@ firebase.initializeApp(config);
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "../assets/i18n/", ".json");
 }
-// export function initTranslation(translate: TranslateService) {
-//   return () => {
-//     translate.setDefaultLang('my');
-//     translate.use('my');
-//     return Promise.resolve();
-//   };
-// }
 
 @NgModule({
   declarations: [MyApp],
@@ -122,6 +108,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     PrinterProvider,
     Geolocation,
     GeolocationService,
+    FirebaseX,
     FcmService,
   ],
 })
