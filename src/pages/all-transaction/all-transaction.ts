@@ -313,7 +313,7 @@ export class AllTransactionPage {
     } else if (l.length == 2) {
       if (parseFloat(l[1]) <= 1) {
         l[1] = (1 - parseFloat(l[1])) * parseFloat(l[0]);
-        s = "1/" + l[0] + "/" + l[1];
+        s = l[0] + "/1/" + l[1];
       } else {
         s = l[0] + "/" + l[1] + "/0";
       }
