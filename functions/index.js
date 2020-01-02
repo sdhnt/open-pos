@@ -19,7 +19,8 @@ exports.syncTransactions = functions.pubsub
   .timeZone("Asia/Hong_Kong")
   .onRun(async context => {
     const limit = 100;
-    db.collection("users")
+    await db
+      .collection("users")
       .get()
       .then(snapshot => {
         snapshot.forEach(async doc => {
@@ -49,16 +50,19 @@ exports.syncTransactions = functions.pubsub
             user.transactions = userInArchive.transactions.slice(Math.max(userLength - limit, 0));
           }
 
-          db.collection("users")
+          await db
+            .collection("users")
             .doc(doc.id)
             .update(user);
-          db.collection("users-archive")
+          await db
+            .collection("users-archive")
             .doc(doc.id)
             .update(userInArchive);
         });
       });
 
-    db.collection("users-archive")
+    await db
+      .collection("users-archive")
       .get()
       .then(snapshot => {
         snapshot.forEach(async doc => {
