@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ToastController, Events } from 'ionic-angular';
-import { TranslateConfigService } from '../../providers/translation/translate-config.service';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-import { StorageProvider } from '../../providers/storage/storage';
-import { GettersetterProvider } from '../../providers/gettersetter/gettersetter';
+import { Component } from "@angular/core";
+import { IonicPage, NavController, NavParams, AlertController, ToastController, Events } from "ionic-angular";
+import { TranslateConfigService } from "../../providers/translation/translate-config.service";
+import { BarcodeScanner } from "@ionic-native/barcode-scanner";
+import { StorageProvider } from "../../providers/storage/storage";
+import { GettersetterProvider } from "../../providers/gettersetter/gettersetter";
 
 /**
  * Generated class for the LoanHomePage page.
@@ -14,20 +14,21 @@ import { GettersetterProvider } from '../../providers/gettersetter/gettersetter'
 
 @IonicPage()
 @Component({
-  selector: 'page-loan-home',
-  templateUrl: 'loan-home.html',
+  selector: "page-loan-home",
+  templateUrl: "loan-home.html",
 })
 export class LoanHomePage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
     private translateConfigService: TranslateConfigService,
     private barcodeScanner: BarcodeScanner,
     public alertCtrl: AlertController,
     public sp: StorageProvider,
     public getset: GettersetterProvider,
     private toastCtrl: ToastController,
-    public events: Events,) {
-
+    public events: Events,
+  ) {
     this.getUserData();
 
     this.events.subscribe("cbUpdate:created", data => {
@@ -64,8 +65,7 @@ export class LoanHomePage {
     });
   }
 
-  ionViewDidLoad() {
-  }
+  ionViewDidLoad() {}
 
   uploadbtn() {
     this.sp.backupStorage();
@@ -137,6 +137,4 @@ export class LoanHomePage {
       })
       .present();
   }
-
-
 }
