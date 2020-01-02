@@ -1,17 +1,16 @@
 import { Injectable } from "@angular/core";
+import { ToastController } from "ionic-angular";
 import * as firebase from "firebase/app";
-const messaging = firebase.messaging();
 
 @Injectable()
 export class FcmService {
-  constructor() {}
+  constructor(private toastCtrl: ToastController) {}
 
-  getToken() {
-    messaging.onTokenRefresh(() => {
-      messaging.getToken().then(token => {
-        console.log(`latest device token: ${token}`);
-        this.saveToken(token);
-      });
+  async getToken() {
+    const messaging = firebase.messaging();
+    await messaging.getToken().then(token => {
+      console.log(`latest device token: ${token}`);
+      this.saveToken(token);
     });
   }
 
@@ -28,9 +27,19 @@ export class FcmService {
     return devicesRef.doc(token).set(data);
   }
 
+  private async presentToast(message) {
+    const toast = await this.toastCtrl.create({
+      message,
+      duration: 3000,
+    });
+    await toast.present();
+  }
+
   onNotifications() {
-    return messaging.onMessage(payload => {
+    const messaging = firebase.messaging();
+    messaging.onMessage(payload => {
       console.log(`payload: ${payload}`);
+      this.presentToast(payload.notification.body);
     });
   }
 }

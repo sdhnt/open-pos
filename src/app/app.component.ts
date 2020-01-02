@@ -93,21 +93,13 @@ export class MyApp {
 
   resetBackButton: any;
 
-  ionViewDidEnter() {}
-
-  private async presentToast(message) {
-    const toast = await this.toastCtrl.create({
-      message,
-      duration: 3000,
-    });
-    await toast.present();
-  }
-
-  private notificationSetup() {
+  private setupNotifications() {
+    console.log("setting up notifications");
     this.fcm.getToken();
-    const message = this.fcm.onNotifications();
-    console.log(message);
+    this.fcm.onNotifications();
   }
+
+  ionViewDidEnter() {}
 
   initializeApp() {
     this.platform.ready().then(() => {
@@ -117,8 +109,7 @@ export class MyApp {
       this.translateService.addLangs(["en", "pt"]);
       this.translateService.setDefaultLang("en");
       this.translateService.use("en");
-
-      this.notificationSetup();
+      this.setupNotifications();
     });
   }
 
