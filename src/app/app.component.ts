@@ -119,7 +119,7 @@ export class MyApp {
       this.translateService.setDefaultLang("en");
       this.translateService.use("en");
 
-      this.notificationSetup();
+      // this.notificationSetup();
     });
   }
 
