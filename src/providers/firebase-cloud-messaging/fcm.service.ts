@@ -1,14 +1,18 @@
 import { Injectable } from "@angular/core";
-import { FirebaseX } from "@ionic-native/firebase-x/ngx";
 import * as firebase from "firebase/app";
+const messaging = firebase.messaging();
 
 @Injectable()
 export class FcmService {
-  constructor(private firebaseX: FirebaseX) {}
+  constructor() {}
 
-  async getToken() {
-    const token = await this.firebaseX.getToken();
-    this.saveToken(token);
+  getToken() {
+    messaging.onTokenRefresh(() => {
+      messaging.getToken().then(token => {
+        console.log(`latest device token: ${token}`);
+        this.saveToken(token);
+      });
+    });
   }
 
   private saveToken(token) {
@@ -25,6 +29,8 @@ export class FcmService {
   }
 
   onNotifications() {
-    return this.firebaseX.onMessageReceived();
+    return messaging.onMessage(payload => {
+      console.log(`payload: ${payload}`);
+    });
   }
 }

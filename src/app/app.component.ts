@@ -105,9 +105,8 @@ export class MyApp {
 
   private notificationSetup() {
     this.fcm.getToken();
-    this.fcm.onNotifications().subscribe(message => {
-      this.presentToast(message.body);
-    });
+    const message = this.fcm.onNotifications();
+    console.log(message);
   }
 
   initializeApp() {
@@ -119,7 +118,7 @@ export class MyApp {
       this.translateService.setDefaultLang("en");
       this.translateService.use("en");
 
-      // this.notificationSetup();
+      this.notificationSetup();
     });
   }
 
