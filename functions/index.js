@@ -9,6 +9,7 @@ const db = admin.firestore();
 
 exports.createUserArchive = functions.firestore.document("users/{id}").onCreate(async (snap, context) => {
   const newUser = snap.data();
+  console.log(`create new user of id: ${context.params.id} in archive`);
   db.collection("users-archive")
     .doc(context.params.id)
     .set(newUser);
