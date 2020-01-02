@@ -17,6 +17,7 @@ import { UserProfilePage } from "../pages/user-profile/user-profile";
 import { TranslateConfigService } from "../providers/translation/translate-config.service";
 import { TranslateService } from "@ngx-translate/core";
 import { LoanHomePage } from "../pages/loan-home/loan-home";
+import { FcmService } from "../providers/firebase-cloud-messaging/fcm.service";
 
 @Component({
   templateUrl: "app.html",
@@ -38,6 +39,7 @@ export class MyApp {
     public splashScreen: SplashScreen,
     public toastCtrl: ToastController,
     public sp: StorageProvider,
+    private fcm: FcmService,
   ) {
     this.initializeApp();
     this.pages = [
@@ -91,38 +93,14 @@ export class MyApp {
 
   resetBackButton: any;
 
-  ionViewDidEnter() {
-    // while(true){
-    // this.resetBackButton = this.platform.registerBackButtonAction(() => {
-    //   //(navigator as any).Backbutton.goHome();
-    //   console.log("yo")
-    // });
-    //   this.platform.registerBackButtonAction(() => {
-    //     console.log("yo")
-    //   });
-    // }
-    // let lastTimeBackPress = 0;
-    // const debounceTime = 2000;
-    // this.platform.registerBackButtonAction(() => {
-    //   let view = this.nav.getActive();
-    //   if (view.component.name == "TransactionHomePage") {
-    //     if (new Date().getTime() - lastTimeBackPress < debounceTime) {
-    //       // prompt user to exit from app
-    //       const message = this.translateConfigService.getTranslatedMessage('Press home button to exit');
-    //       let toast = this.toastCtrl.create({
-    //         // @ts-ignore
-    //         message: message.value,
-    //         duration: 3000,
-    //       });
-    //       toast.present();
-    //     } else {
-    //       lastTimeBackPress = new Date().getTime();
-    //     }
-    //   } else {
-    //     this.nav.pop({});
-    //   }
-    // });
+  private setupNotifications() {
+    console.log("setting up notifications");
+    this.fcm.getToken();
+    this.fcm.onNotifications();
   }
+
+  ionViewDidEnter() {}
+
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
@@ -131,6 +109,7 @@ export class MyApp {
       this.translateService.addLangs(["en", "pt"]);
       this.translateService.setDefaultLang("en");
       this.translateService.use("en");
+      this.setupNotifications();
     });
   }
 
