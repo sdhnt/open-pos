@@ -19,7 +19,7 @@ exports.syncTransactions = functions.pubsub
   .schedule("every day 03:00")
   .timeZone("Asia/Hong_Kong")
   .onRun(async context => {
-    const limit = 100;
+    const limit = 10;
     await db
       .collection("users")
       .get()
@@ -50,6 +50,11 @@ exports.syncTransactions = functions.pubsub
           } else if (userLength < limit) {
             user.transactions = userInArchive.transactions.slice(Math.max(userLength - limit, 0));
           }
+
+          if (userInArchive.transactions.length > limit)
+            console.log(
+              `user transactions: ${user.transactions.length}, userInArchive transactions: ${user.transactions.length}`,
+            );
 
           await db
             .collection("users")
