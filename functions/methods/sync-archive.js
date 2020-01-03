@@ -1,4 +1,7 @@
-const syncArchive = async (db, limit) => {
+const syncArchive = async db => {
+  // limit on number of transactions saved in user documents
+  const limit = 100; // important note: do not change this limit as it would completely mess up the syncing algorithm
+
   await db
     .collection("users")
     .get()

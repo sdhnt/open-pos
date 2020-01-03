@@ -20,5 +20,10 @@ exports.syncArchive = functions.pubsub
   .schedule("every day 03:00")
   .timeZone("Asia/Hong_Kong")
   .onRun(async context => {
-    await syncArchive(db, 100); // limit on number of transactions saved in user documents
+    await syncArchive(db);
   });
+
+exports.syncArchiveCallable = functions.https.onRequest(async (req, res) => {
+  await syncArchive(db);
+  res.status(200).send(`request received with limit: 100`);
+});
