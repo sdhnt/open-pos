@@ -55,10 +55,11 @@ exports.syncTransactions = functions.pubsub
             .collection("users")
             .doc(doc.id)
             .update(user);
+          user.transactions = userInArchive.transactions;
           await db
             .collection("users-archive")
             .doc(doc.id)
-            .update(userInArchive);
+            .update(user);
         });
       });
 
