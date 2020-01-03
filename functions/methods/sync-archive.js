@@ -1,3 +1,5 @@
+const { calculateDailyPerformance } = require("./calculate-business-performance");
+
 const syncArchive = async db => {
   // limit on number of transactions saved in user documents
   const limit = 100; // important note: do not change this limit as it would completely mess up the syncing algorithm
@@ -27,6 +29,16 @@ const syncArchive = async db => {
         const archiveLength = userInArchive.transactions.length;
         userInArchive.transactions.splice(Math.max(archiveLength - limit, 0), Math.min(limit, archiveLength));
         userInArchive.transactions = userInArchive.transactions.concat(user.transactions);
+
+        // calculate performance based on latest user transactions
+        const nullPerformance = { revenue: 0, profit: 0, expenses: 0 };
+        if (!user.businessPerformance) user.businessPerformance = [];
+        for (let i = 0; i < 29 - user.businessPerformance.length; i++) {
+          user.businessPerformance.push(nullPerformance);
+        }
+        user.businessPerformance.shift();
+        user.businessPerformance[user.businessPerformance.length - 1] = calculateDailyPerformance(user.transactions);
+        user.businessPerformance.push(nullPerformance);
 
         // remove extra user transactions if number is above the limit
         const userLength = user.transactions.length;
