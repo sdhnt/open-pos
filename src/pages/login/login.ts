@@ -37,6 +37,7 @@ export class LoginPage {
   listOfLang: string[] = [];
   country_code: any;
 
+
   constructor(
     public navCtrl: NavController,
     public zone: NgZone,
@@ -79,9 +80,9 @@ export class LoginPage {
               // console.log(firebase.auth().currentUser.uid);
               //MOVE SIGN UP OPTIONS RIGHT HERE AND CREATE A DOCUMENT
               //zone.run(() => {
-                //console.log("firing from constructor");
-                loading.dismiss();
-                //navCtrl.setRoot(TransactionHomePage);
+              //console.log("firing from constructor");
+              loading.dismiss();
+              //navCtrl.setRoot(TransactionHomePage);
               //});
 
               const msg = this.translateConfigService.getTranslatedMessage("Internet Unavailable");
@@ -264,7 +265,7 @@ export class LoginPage {
     // add a local variable to store navCtrl object
     const thatNavCtrl = this.navCtrl;
     //Step 1 — Pass the mobile number for verification
-    const tell = "+" + this.country_code+ this.phone;
+    const tell = "+" + this.country_code + this.phone;
 
     firebase
       .auth()
@@ -418,7 +419,7 @@ export class LoginPage {
             //@ts-ignore
             { name: "UserName", placeholder: msg2.value },
             //@ts-ignore
-            { name: "PhoneNumber", placeholder: msg3.value, value: "+" +this.country_code+ this.phone },
+            { name: "PhoneNumber", placeholder: msg3.value, value: "+" + this.country_code + this.phone },
             //@ts-ignore
             { name: "BusinessName", placeholder: msg4.value },
             //@ts-ignore
@@ -438,23 +439,34 @@ export class LoginPage {
               //@ts-ignore
               text: msg7.value,
               handler: data => {
-                if(data.UserName==null || data.UserName=="" || data.UserName==undefined ||
-                data.BusinessName==null || data.BusinessName=="" || data.BusinessName==undefined ||
-                data.BusinessType==null || data.BusinessType=="" || data.BusinessType==undefined  ||
-                data.Email==null || data.Email=="" || data.Email==undefined )
-                {
-                  this.toastCtrl.create({
-                    //@ts-ignore
-                    message: msg9.value,
-                    duration:5000,
-                  }).present()
-                }else{
-                this.newaccOwnName = data.UserName;
-                this.newaccBName = data.BusinessName;
-                this.newaccBType = data.BusinessType;
-                this.newaccemail = data.Email;
-                this.createAccount();
-              }
+                if (
+                  data.UserName == null ||
+                  data.UserName == "" ||
+                  data.UserName == undefined ||
+                  data.BusinessName == null ||
+                  data.BusinessName == "" ||
+                  data.BusinessName == undefined ||
+                  data.BusinessType == null ||
+                  data.BusinessType == "" ||
+                  data.BusinessType == undefined ||
+                  data.Email == null ||
+                  data.Email == "" ||
+                  data.Email == undefined
+                ) {
+                  this.toastCtrl
+                    .create({
+                      //@ts-ignore
+                      message: msg9.value,
+                      duration: 5000,
+                    })
+                    .present();
+                } else {
+                  this.newaccOwnName = data.UserName;
+                  this.newaccBName = data.BusinessName;
+                  this.newaccBType = data.BusinessType;
+                  this.newaccemail = data.Email;
+                  this.createAccount();
+                }
               },
             },
           ],
@@ -467,7 +479,7 @@ export class LoginPage {
   }
 
   async signInPhone() {
-    if (this.phone == null || this.country_code==null) {
+    if (this.phone == null || this.country_code == null) {
       console.log("hi");
       const msg = this.translateConfigService.getTranslatedMessage("No Phone Number Entered");
       const msg1 = this.translateConfigService.getTranslatedMessage("CANCEL");
@@ -486,7 +498,7 @@ export class LoginPage {
         })
         .present();
     } else {
-      const phoneNumber = "+" +this.country_code+ this.phone;
+      const phoneNumber = "+" + this.country_code + this.phone;
       const appVerifier = this.applicationVerifier;
 
       let flag = 0;

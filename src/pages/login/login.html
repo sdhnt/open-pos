@@ -13,6 +13,7 @@
 
 
 <ion-content padding>
+ 
 
   
   <!-- <countryflag country="mm"></countryflag>  -->
@@ -45,15 +46,17 @@
 
 -->
 
+
   <div id="PhoneLogin">
   <div id="recaptcha-container"></div>
+
   <ion-grid  style="width: 75%;">
     <ion-row class="row-style">
+
       <ion-select [(ngModel)]="country_code">
-        <ion-option value="95">+95 Myanmar/မြန်မာ
-        </ion-option>
-        <ion-option value="852">+852 Hong Kong/香港 <span class="flag-icon flag-icon-hk flag-icon-squared"></span></ion-option>
-        <ion-option value="91">+91 India/भारत <span class="flag-icon flag-icon-in flag-icon-squared"></span></ion-option>
+        <ion-option value="95" selected>🇲🇲 +95 </ion-option>
+        <ion-option value="852">🇭🇰 +852 </ion-option>
+        <ion-option value="91">🇮🇳 +91 </ion-option>
       </ion-select>
       <ion-input type=”text” placeholder="9964758505" [(ngModel)]="phone"></ion-input>
       </ion-row>
