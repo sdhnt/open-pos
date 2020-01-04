@@ -225,7 +225,6 @@ export class IncomeTransactionPage {
           { name: "Line4", placeholder: message3.value, value: this.userdata.ph_no },
         ],
         buttons: [
-          
           {
             //@ts-ignore
             text: message1.value,
