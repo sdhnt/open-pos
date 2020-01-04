@@ -409,7 +409,7 @@ export class LoginPage {
             //@ts-ignore
             { name: "UserName", placeholder: msg2.value },
             //@ts-ignore
-            { name: "PhoneNumber", placeholder: msg3.value, value: "+"+this.phone },
+            { name: "PhoneNumber", placeholder: msg3.value, value: "+" + this.phone },
             //@ts-ignore
             { name: "BusinessName", placeholder: msg4.value },
             //@ts-ignore
