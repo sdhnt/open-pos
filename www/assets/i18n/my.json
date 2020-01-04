@@ -175,5 +175,9 @@
  "Enter Current Cash Balance":"လက်ရှိငွေလက်ကျန်ကိုထည့်ပါ",
  "Update":"မွမ်းမံ",
  "OK":"ရလား",
- "Apply for Loan":"ချေးငွေလျှောက်ထားပါ"
+ "Apply for Loan":"ချေးငွေလျှောက်ထားပါ",
+ "Edit Receipt Heading":"ငွေတောင်းခံတံဆိပ်တည်းဖြတ်ပါ",
+ "Save":"စောင့်ပါ",
+ "Enter Information":"အချက်အလက်ထည့်ပါ",
+ "Edit Receipt Details":"ငွေတောင်းခံတံဆိပ်တည်းဖြတ်ပါ"
 }

@@ -13,11 +13,6 @@
     <ion-grid>
       <div *ngIf="showrec==true">
 
-        <!-- <ion-row>
-          <ion-col style="text-align: center; padding-top: 5px;"></ion-col>
-         <button ion-button full small>Edit Receipt Top Details</button>
-        </ion-row> -->
-
         <ion-row>
           <ion-col style="text-align: center; padding-top: 5px;"> {{userdata?userdata.business_name:null}} </ion-col>
         </ion-row>
@@ -27,7 +22,16 @@
           </ion-col>
         </ion-row>
         <ion-row>
+          <ion-col col-12 style="color: grey;  text-align: center"> {{userdata?userdata.businesstype:null}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
           <ion-col col-12 style="color: grey; text-align: center"> {{userdata?userdata.ph_no:null}}</ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col style="text-align: center; padding-top: 5px;"></ion-col>
+         <button ion-button full small (click)="editRecTop()">{{"Edit Receipt Heading"|translate}}</button>
         </ion-row>
 
         <ion-row style="padding-top: 5px;">

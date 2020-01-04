@@ -204,6 +204,46 @@ export class IncomeTransactionPage {
     this.lastsumtax = Math.round(this.lastsumdisc * (1.0 + this.taxrate / 100) * 100) / 100;
   }
 
+  editRecTop(){
+    const message = this.translateConfigService.getTranslatedMessage("Cancel");
+    const message1 = this.translateConfigService.getTranslatedMessage("Save");
+    const message2 = this.translateConfigService.getTranslatedMessage("Edit Receipt Details");
+    const message3 = this.translateConfigService.getTranslatedMessage('Enter Information');
+
+
+    this.alertCtrl.create({
+      //@ts-ignore
+    title:message2.value,
+    inputs:[
+      //@ts-ignore
+      { name: "Line1", placeholder: message3.value, value: this.userdata.business_name },
+      //@ts-ignore
+      { name: "Line2", placeholder: message3.value, value: this.userdata.business_address },
+      //@ts-ignore
+      { name: "Line3", placeholder: message3.value, value: this.userdata.businesstype },
+      //@ts-ignore
+      { name: "Line4", placeholder: message3.value , value: this.userdata.ph_no},
+    ],
+    buttons:[
+      //@ts-ignore
+      {text: message1.value,
+        handler: data => {
+          this.userdata.business_name=data.Line1;
+          this.userdata.business_address=data.Line2;
+          this.userdata.businesstype=data.Line3;
+          this.userdata.ph_no=data.Line4;
+          this.sp.setUserDat(this.userdata);
+        },
+      },
+      //@ts-ignore
+      {text: message.value,
+        role: 'cancel',
+    },
+    ],
+
+  }).present();;
+}
+
   setTax() {
     this.taxrate = this.userdata.taxrate;
     this.taxbtn = 1;
@@ -760,6 +800,7 @@ export class IncomeTransactionPage {
       .line(this.userdata.business_name)
       .raw(commands.TEXT_FORMAT.TXT_NORMAL)
       .line(this.userdata.business_address)
+      .line(this.userdata.businesstype)
       .line(this.userdata.ph_no)
       .align("left")
       .newline()
