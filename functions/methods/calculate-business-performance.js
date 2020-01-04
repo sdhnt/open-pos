@@ -24,7 +24,9 @@ const calculateDailyPerformance = transactions => {
       let transactionCost = 0;
       if (transaction.itemslist)
         transaction.itemslist.forEach(item => {
-          transactionCost += Number(item.cost) * Number(item.qty);
+          const cost = Number(item.cost);
+          const qty = Number(item.qty);
+          if (!isNaN(cost) && !isNaN(qty)) transactionCost += cost * qty;
         });
       profit += transactionAmount - transactionCost;
     } else expenses += transactionAmount;
