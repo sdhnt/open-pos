@@ -14,6 +14,10 @@
 
 <ion-content padding>
 
+  
+  <!-- <countryflag country="mm"></countryflag>  -->
+  <!-- <span class="flag-icon flag-icon-gr flag-icon-squared"></span> -->
+
   <button ion-button block clear color="light" class="nametop"><b>Open</b></button>
 
   <button ion-button block clear color="light" style="margin-top: 10px;" >{{"Enter your Phone Number"|translate}}</button>
@@ -45,7 +49,13 @@
   <div id="recaptcha-container"></div>
   <ion-grid  style="width: 75%;">
     <ion-row class="row-style">
-      <ion-input type=”text” placeholder="95 9964758505" [(ngModel)]="phone"></ion-input>
+      <ion-select [(ngModel)]="country_code">
+        <ion-option value="95">+95 Myanmar/မြန်မာ
+        </ion-option>
+        <ion-option value="852">+852 Hong Kong/香港 <span class="flag-icon flag-icon-hk flag-icon-squared"></span></ion-option>
+        <ion-option value="91">+91 India/भारत <span class="flag-icon flag-icon-in flag-icon-squared"></span></ion-option>
+      </ion-select>
+      <ion-input type=”text” placeholder="9964758505" [(ngModel)]="phone"></ion-input>
       </ion-row>
       <button ion-button ion-button block round outline color="light" style="margin-top: 20px;" (click)="signInPhone()">{{"Login with Phone Number"|translate}}</button>
       <ion-row padding></ion-row>

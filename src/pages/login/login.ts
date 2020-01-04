@@ -15,6 +15,7 @@ import { Facebook, FacebookLoginResponse } from "@ionic-native/facebook";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import { UserProfilePage } from "../user-profile/user-profile";
 import { Message, Placeholder } from "@angular/compiler/src/i18n/i18n_ast";
+import { duration } from "moment";
 
 /**
  * Generated class for the LoginPage page.
@@ -34,6 +35,7 @@ export class LoginPage {
   selectedLanguage: string;
 
   listOfLang: string[] = [];
+  country_code: any;
 
   constructor(
     public navCtrl: NavController,
@@ -76,6 +78,11 @@ export class LoginPage {
               console.log("No Internet");
               // console.log(firebase.auth().currentUser.uid);
               //MOVE SIGN UP OPTIONS RIGHT HERE AND CREATE A DOCUMENT
+              //zone.run(() => {
+                //console.log("firing from constructor");
+                loading.dismiss();
+                //navCtrl.setRoot(TransactionHomePage);
+              //});
 
               const msg = this.translateConfigService.getTranslatedMessage("Internet Unavailable");
 
@@ -257,7 +264,7 @@ export class LoginPage {
     // add a local variable to store navCtrl object
     const thatNavCtrl = this.navCtrl;
     //Step 1 — Pass the mobile number for verification
-    const tell = "+" + this.phone;
+    const tell = "+" + this.country_code+ this.phone;
 
     firebase
       .auth()
@@ -292,7 +299,7 @@ export class LoginPage {
         businesstype: this.newaccBType,
         business_address: "Sample Address",
         email: this.newaccemail,
-        ph_no: "+" + this.phone,
+        ph_no: "+" + this.country_code + this.phone,
         language: this.translateConfigService.getCurrentLanguage(),
         currency: "USD",
         cash_balance: 0,
@@ -398,18 +405,20 @@ export class LoginPage {
       const msg6 = this.translateConfigService.getTranslatedMessage("CANCEL");
       const msg7 = this.translateConfigService.getTranslatedMessage("SUBMIT");
       const msg8 = this.translateConfigService.getTranslatedMessage("Email: example@abc.com");
+      const msg9 = this.translateConfigService.getTranslatedMessage("Incomplete. Try Again.");
 
       this.alertCtrl
         .create({
           //@ts-ignore
           title: msg.value,
+          enableBackdropDismiss: false, // <- Here! :)
           //@ts-ignore
           message: msg1.value,
           inputs: [
             //@ts-ignore
             { name: "UserName", placeholder: msg2.value },
             //@ts-ignore
-            { name: "PhoneNumber", placeholder: msg3.value, value: "+" + this.phone },
+            { name: "PhoneNumber", placeholder: msg3.value, value: "+" +this.country_code+ this.phone },
             //@ts-ignore
             { name: "BusinessName", placeholder: msg4.value },
             //@ts-ignore
@@ -429,11 +438,23 @@ export class LoginPage {
               //@ts-ignore
               text: msg7.value,
               handler: data => {
+                if(data.UserName==null || data.UserName=="" || data.UserName==undefined ||
+                data.BusinessName==null || data.BusinessName=="" || data.BusinessName==undefined ||
+                data.BusinessType==null || data.BusinessType=="" || data.BusinessType==undefined  ||
+                data.Email==null || data.Email=="" || data.Email==undefined )
+                {
+                  this.toastCtrl.create({
+                    //@ts-ignore
+                    message: msg9.value,
+                    duration:5000,
+                  }).present()
+                }else{
                 this.newaccOwnName = data.UserName;
                 this.newaccBName = data.BusinessName;
                 this.newaccBType = data.BusinessType;
                 this.newaccemail = data.Email;
                 this.createAccount();
+              }
               },
             },
           ],
@@ -446,7 +467,7 @@ export class LoginPage {
   }
 
   async signInPhone() {
-    if (this.phone == null) {
+    if (this.phone == null || this.country_code==null) {
       console.log("hi");
       const msg = this.translateConfigService.getTranslatedMessage("No Phone Number Entered");
       const msg1 = this.translateConfigService.getTranslatedMessage("CANCEL");
@@ -465,7 +486,7 @@ export class LoginPage {
         })
         .present();
     } else {
-      const phoneNumber = "+" + this.phone;
+      const phoneNumber = "+" +this.country_code+ this.phone;
       const appVerifier = this.applicationVerifier;
 
       let flag = 0;
