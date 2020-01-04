@@ -37,7 +37,6 @@ export class LoginPage {
   listOfLang: string[] = [];
   country_code: any;
 
-
   constructor(
     public navCtrl: NavController,
     public zone: NgZone,

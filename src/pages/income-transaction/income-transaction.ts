@@ -498,13 +498,18 @@ export class IncomeTransactionPage {
           this.discountlist.push(product.discount);
         }
       });
-
+     
+        
+    
       this.sp.storageReady().then(async () => {
+
+       // for(var i=0;i<160;i++){
         console.log(data);
-        this.sp.addTransactions(data);
+        await this.sp.addTransactions(data);
         await this.updateCb(this.lastsum).then(() => {
           this.events.publish("cbUpdate:created", 0);
         });
+      //}
         const message = this.translateConfigService.getTranslatedMessage("Finish");
         const toast = this.toastCtrl.create({
           // @ts-ignore
@@ -925,7 +930,7 @@ export class IncomeTransactionPage {
       .catch(error => {
         console.log(error);
         // @ts-ignore
-        this.showToast(ms6.value);
+        this.showToast(msg6.value);
         this.mountAlertBt(this.receipt);
       });
   }
