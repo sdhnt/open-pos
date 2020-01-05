@@ -54,10 +54,12 @@ const syncArchive = async (db, { syncTransactions, calculateBusinessPerformance,
             user.transactions = userInArchive.transactions.slice(Math.max(userLength - limit, 0));
           }
 
-          if (userInArchive.transactions.length > limit)
+          if (userInArchive.transactions.length > limit) {
+            console.log(`user with id: ${doc.id} have trimmed transactions`);
             console.log(
               `user transactions: ${user.transactions.length}, userInArchive transactions: ${userInArchive.transactions.length}`,
             );
+          }
 
           // update user and userInArchive
           await db
