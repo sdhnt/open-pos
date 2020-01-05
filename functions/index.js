@@ -16,11 +16,18 @@ exports.createUserArchive = functions.firestore.document("users/{id}").onCreate(
     .set(newUser);
 });
 
-exports.syncArchive = functions.pubsub
+exports.syncTransactionsAndCalculateBusinessPerforamnce = functions.pubsub
   .schedule("every day 03:00")
   .timeZone("Asia/Hong_Kong")
   .onRun(async context => {
-    await syncArchive(db, { calculateBusinessPerformance: true });
+    await syncArchive(db, { syncTransactions: true, calculateBusinessPerformance: true });
+  });
+
+exports.syncUserCount = functions.pubsub
+  .schedule("every day 03:30")
+  .timeZone("Asia/Hong_Kong")
+  .onRun(async context => {
+    await syncArchive(db, { syncUserCount: true });
   });
 
 exports.syncArchiveCallable = functions.https.onRequest(async (req, res) => {
