@@ -504,7 +504,7 @@ export class IncomeTransactionPage {
         console.log(data);
         await this.sp.addTransactions(data);
         await this.updateCb(this.lastsum).then(() => {
-          this.events.publish("cbUpdate:created", 0);
+          this.events.publish("cbUpdate:created", 0);  
         });
         //}
         const message = this.translateConfigService.getTranslatedMessage("Finish");
