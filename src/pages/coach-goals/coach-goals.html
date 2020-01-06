@@ -12,7 +12,15 @@
 
 <ion-content padding>
 
+    <ion-card *ngFor="let item of videoLinks">
+      <ion-card-title style="padding-left: 14px; font-size: 10;">
+        {{item.title}}
+      </ion-card-title>
 
+      <ion-card-content>
+        <iframe width="100%" [height]="item.height" [src]="linkValue(item.link)" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </ion-card-content>
+    </ion-card>
       
     <ion-card>
         <ion-grid line>
@@ -36,7 +44,7 @@
         </ion-grid>
       </ion-card> 
 
-      <ion-card>
+      <!--<ion-card>
           <ion-grid line>
               <ion-row style="padding-left: 10px; padding-bottom: 5px; ">
                 <ion-col col-10 style="color: grey; font-size: 10px;"> Thus, 12th October 2018 </ion-col>
@@ -56,6 +64,6 @@
    
             </ion-row>
           </ion-grid>
-        </ion-card> 
+        </ion-card> -->
 
 </ion-content>
