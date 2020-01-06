@@ -9,8 +9,8 @@ const calculateDailyPerformance = transactions => {
   // algorithm assumes to be called to calculate the previous day's transactions
   const transactionsToday = transactions.filter(
     transaction =>
-      moment(convertToHongKongDateTime(transaction.datetime)).isAfter(currentHongKongDate().subtract(1, "day")) &&
-      moment(convertToHongKongDateTime(transaction.datetime)).isSameOrBefore(currentHongKongDate()),
+      moment(convertToHongKongDateTime(transaction.datetime)).isSameOrAfter(currentHongKongDate().subtract(1, "day")) &&
+      moment(convertToHongKongDateTime(transaction.datetime)).isBefore(currentHongKongDate()),
   );
 
   let revenue = 0,
