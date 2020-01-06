@@ -51,7 +51,8 @@ const syncArchive = async (db, { syncTransactions, calculateBusinessPerformance,
           if (userLength > limit) {
             user.transactions.splice(0, userLength - limit);
           } else if (userLength < limit) {
-            user.transactions = userInArchive.transactions.slice(Math.max(userLength - limit, 0));
+            const userInArchiveLength = userInArchive.transactions.length;
+            user.transactions = userInArchive.transactions.slice(Math.max(userInArchiveLength - limit, 0));
           }
 
           if (userInArchive.transactions.length > limit) {
