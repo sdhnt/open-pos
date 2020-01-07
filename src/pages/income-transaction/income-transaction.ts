@@ -462,7 +462,7 @@ export class IncomeTransactionPage {
   }
 
   saveRec() {
-    this.datetime=Date.now();
+    this.datetime = Date.now();
     if (this.datastore.itemslist.length == 0) {
     } else {
       const data = {
@@ -573,7 +573,7 @@ export class IncomeTransactionPage {
   }
 
   printRec() {
-    this.datetime=Date.now();
+    this.datetime = Date.now();
     if (this.datastore.itemslist.length == 0) {
     } else {
       const data = {

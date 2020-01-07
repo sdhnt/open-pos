@@ -36,16 +36,15 @@ export class SummaryHomePage {
   tsmonth = 0;
   ts30 = 0;
 
-  toggleExpanded(){
-    console.log("changing: "+ this.expanded);
-    if(this.expanded==true){
-      this.expanded=false;
-
-    }else if(this.expanded==false){
-      this.expanded=true;
+  toggleExpanded() {
+    console.log("changing: " + this.expanded);
+    if (this.expanded == true) {
+      this.expanded = false;
+    } else if (this.expanded == false) {
+      this.expanded = true;
     }
-    
-    console.log("changed: "+ this.expanded);
+
+    console.log("changed: " + this.expanded);
   }
 
   ionViewDidLoad() {
@@ -71,8 +70,8 @@ export class SummaryHomePage {
       " " +
       this.getHours(temp) +
       ":" +
-      this.getMinutes(temp)+
-      ":"+
+      this.getMinutes(temp) +
+      ":" +
       this.getSeconds(temp);
     //console.log(t)
     return t;
@@ -88,7 +87,7 @@ export class SummaryHomePage {
       return "0" + t.toString();
     }
   }
-  
+
   getSeconds(datetime) {
     const temp = new Date(datetime);
     const t = temp.getSeconds();
@@ -109,6 +108,15 @@ export class SummaryHomePage {
     }
   }
 
+  expandTransac(transac){
+    if(transac.expanded==true){
+      transac.expanded=false;
+    }else{
+      transac.expanded=true;
+    }
+    
+  }
+
   listtransac: any;
   currentdatetime = new Date();
   listtransacrev: any;
@@ -124,6 +132,7 @@ export class SummaryHomePage {
           this.listtransac = JSON.parse(val);
           this.listtransac.forEach(element => {
             element.datetime1 = this.getDateTime(element.datetime);
+            element.expanded=true;
           });
           this.listtransacrev = this.listtransac.reverse();
           console.log(this.listtransac);

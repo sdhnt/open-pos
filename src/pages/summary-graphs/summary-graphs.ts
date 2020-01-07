@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
-import { Chart } from 'chart.js';
+import { Chart } from "chart.js";
 
 /**
  * Generated class for the SummaryGraphsPage page.
@@ -15,13 +15,12 @@ import { Chart } from 'chart.js';
   templateUrl: "summary-graphs.html",
 })
 export class SummaryGraphsPage {
-
   @ViewChild("barCanvas") barCanvas: ElementRef;
   @ViewChild("lineCanvas") lineCanvas: ElementRef;
 
   private barChart: Chart;
   private lineChart: Chart;
-  
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
   ionViewDidLoad() {
@@ -43,7 +42,7 @@ export class SummaryGraphsPage {
               "rgba(255, 206, 86, 0.2)",
               "rgba(75, 192, 192, 0.2)",
               "rgba(153, 102, 255, 0.2)",
-              "rgba(255, 159, 64, 0.2)"
+              "rgba(255, 159, 64, 0.2)",
             ],
             borderColor: [
               "rgba(255,99,132,1)",
@@ -51,25 +50,25 @@ export class SummaryGraphsPage {
               "rgba(255, 206, 86, 1)",
               "rgba(75, 192, 192, 1)",
               "rgba(153, 102, 255, 1)",
-              "rgba(255, 159, 64, 1)"
+              "rgba(255, 159, 64, 1)",
             ],
-            borderWidth: 1
-          }
-        ]
+            borderWidth: 1,
+          },
+        ],
       },
       options: {
         scales: {
           yAxes: [
             {
               ticks: {
-                beginAtZero: true
-              }
-            }
-          ]
-        }
-      }
+                beginAtZero: true,
+              },
+            },
+          ],
+        },
+      },
     });
-    
+
     this.lineChart = new Chart(this.lineCanvas.nativeElement, {
       type: "line",
       data: {
@@ -95,11 +94,10 @@ export class SummaryGraphsPage {
             pointRadius: 1,
             pointHitRadius: 10,
             data: [65, 59, 80, 81, 56, 55, 40],
-            spanGaps: false
-          }
-        ]
-      }
+            spanGaps: false,
+          },
+        ],
+      },
     });
   }
-
 }
