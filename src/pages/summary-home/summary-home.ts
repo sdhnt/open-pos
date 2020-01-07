@@ -25,10 +25,9 @@ export class SummaryHomePage {
     public events: Events,
     public toastCtrl: ToastController,
   ) {
-    
-    this.events.subscribe("ViewRecs", (data)=> {
+    this.events.subscribe("ViewRecs", data => {
       (this.navCtrl.parent as Tabs).select(2);
-      console.log("ViewRecs Event")      
+      console.log("ViewRecs Event");
     });
   }
 
@@ -61,7 +60,7 @@ export class SummaryHomePage {
       this.getHours(temp) +
       ":" +
       this.getMinutes(temp);
-      //console.log(t)  
+    //console.log(t)
     return t;
     //if any hours or mins <0 then need to add 0 4 use cases
   }
@@ -86,7 +85,6 @@ export class SummaryHomePage {
     }
   }
 
-
   listtransac: any;
   currentdatetime = new Date();
   listtransacrev: any;
@@ -101,12 +99,11 @@ export class SummaryHomePage {
         .then(val => {
           this.listtransac = JSON.parse(val);
           this.listtransac.forEach(element => {
-            element.datetime1=this.getDateTime(element.datetime)  
+            element.datetime1 = this.getDateTime(element.datetime);
           });
           this.listtransacrev = this.listtransac.reverse();
           console.log(this.listtransac);
 
-          
           this.listtransacrev.forEach(element => {
             if (this.getDate(element.datetime) == this.getDate(this.currentdatetime)) {
               this.tstoday += parseInt(element.totaldisc);
@@ -118,7 +115,6 @@ export class SummaryHomePage {
               this.tsmonth += parseInt(element.totaldisc);
             }
           });
-          
         })
         .catch(err => {
           alert("Error: " + err);

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component } from "@angular/core";
+import { IonicPage, NavController, NavParams } from "ionic-angular";
 
 /**
  * Generated class for the SummaryAccountsPage page.
@@ -10,16 +10,13 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-summary-accounts',
-  templateUrl: 'summary-accounts.html',
+  selector: "page-summary-accounts",
+  templateUrl: "summary-accounts.html",
 })
 export class SummaryAccountsPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SummaryAccountsPage');
+    console.log("ionViewDidLoad SummaryAccountsPage");
   }
-
 }

@@ -768,9 +768,9 @@ export class IncomeTransactionPage {
   }
 
   showOldRec() {
-    this.app.getRootNav().setRoot(SummarySummaryPage, {item:"ViewRecs"});
+    this.app.getRootNav().setRoot(SummarySummaryPage, { item: "ViewRecs" });
     //this.events.publish("ViewRecs", 0);
-    console.log("View Recs Called")    
+    console.log("View Recs Called");
   }
 
   prepareToPrint() {
