@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
-import firebase from 'firebase';
+import firebase from "firebase";
 
 /**
  * Generated class for the CoachCoachPage page.
@@ -29,7 +29,7 @@ export class CoachCoachPage {
       .get()
       .then(doc => {
         doc.docs.forEach(element => {
-          let temp = element.data();
+          const temp = element.data();
           temp.date = this.getDateTime(parseInt(temp.date));
           this.notifList.push(temp);
         });
