@@ -36,6 +36,18 @@ export class SummaryHomePage {
   tsmonth = 0;
   ts30 = 0;
 
+  toggleExpanded(){
+    console.log("changing: "+ this.expanded);
+    if(this.expanded==true){
+      this.expanded=false;
+
+    }else if(this.expanded==false){
+      this.expanded=true;
+    }
+    
+    console.log("changed: "+ this.expanded);
+  }
+
   ionViewDidLoad() {
     console.log("ionViewDidLoad SummaryHomePage");
     this.tstoday = 0;
@@ -59,7 +71,9 @@ export class SummaryHomePage {
       " " +
       this.getHours(temp) +
       ":" +
-      this.getMinutes(temp);
+      this.getMinutes(temp)+
+      ":"+
+      this.getSeconds(temp);
     //console.log(t)
     return t;
     //if any hours or mins <0 then need to add 0 4 use cases
@@ -68,6 +82,16 @@ export class SummaryHomePage {
   getHours(datetime) {
     const temp = new Date(datetime);
     const t = temp.getHours();
+    if (t > 9) {
+      return t.toString();
+    } else {
+      return "0" + t.toString();
+    }
+  }
+  
+  getSeconds(datetime) {
+    const temp = new Date(datetime);
+    const t = temp.getSeconds();
     if (t > 9) {
       return t.toString();
     } else {

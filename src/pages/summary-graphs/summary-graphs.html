@@ -11,5 +11,45 @@
 </ion-header> -->
 
 <ion-content padding>
-YOYO HONEY SINGHH
+
+<ion-select style="background-color: silver;max-width: 100%;" >
+  <ion-option value="today" selected>Today</ion-option>
+  <ion-option value="week">This Week</ion-option>
+  <ion-option value="last7">Last 7 days</ion-option>
+  <ion-option value="month">This Month</ion-option>
+  <ion-option value="last30">Last 30 days</ion-option>
+</ion-select>
+<ion-item>
+  <ion-row>
+    <ion-col col-6 style="text-align: left;">Revenue:</ion-col>
+    <ion-col col-6 style="text-align: end;">50005</ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col col-6 style="text-align: left;">Expenditure:</ion-col>
+    <ion-col col-6 style="text-align: end;">40000</ion-col>
+  </ion-row> <ion-row>
+    <ion-col col-6 style="text-align: left;">Profit:</ion-col>
+    <ion-col col-6 style="text-align: end;">10005</ion-col>
+  </ion-row>
+</ion-item>
+
+<div class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      Bar Chart
+    </ion-card-header>
+    <ion-card-content>
+      <canvas #barCanvas></canvas>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      Line Chart
+    </ion-card-header>
+    <ion-card-content>
+      <canvas #lineCanvas></canvas>
+    </ion-card-content>
+  </ion-card>
+</div>
+
 </ion-content>
