@@ -13,7 +13,7 @@
 <ion-content padding>
 
     <ion-card *ngFor="let item of videoLinks">
-
+      <div *ngIf="item.lang==userlang">
       <ion-grid line>
    
           <ion-row style="padding-left: 10px;">
@@ -38,6 +38,7 @@
 
       </ion-row> -->
       </ion-grid>
+    </div>
   
     </ion-card>
 <!--       

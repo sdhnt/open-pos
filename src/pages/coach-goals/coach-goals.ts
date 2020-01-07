@@ -31,12 +31,15 @@ export class CoachGoalsPage {
       .then(doc => {
         this.videoLinks = doc.docs[1].data().video;
         this.videoLinks.forEach(element => {
-          element.date=this.getDateTime( parseInt(element.date));      
+          element.date = this.getDateTime(parseInt(element.date));
           //var date1=new Date(parseInt(element.date));
           console.log(element.date);
-        });
+        });   
       });
+    console.log(this.userlang)
   }
+
+  userlang=this.translateConfigService.getCurrentLanguage();
 
   getDateTime(datetime) {
     //return (datetime.getDate() + "/" + (datetime.getMonth() + 1) + "/" + datetime. getFullYear())
@@ -78,9 +81,7 @@ export class CoachGoalsPage {
     }
   }
 
-  playVid(){
-
-  }
+  playVid() {}
 
   //  player;
   //     onYouTubeIframeAPIReady() {
@@ -95,7 +96,7 @@ export class CoachGoalsPage {
     console.log("ionViewDidLoad CoachGoalsPage");
   }
 
-  linkValue(val: string){
+  linkValue(val: string) {
     return this.dom.bypassSecurityTrustResourceUrl(val);
   }
 }
