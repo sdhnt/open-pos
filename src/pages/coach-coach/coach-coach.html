@@ -13,17 +13,18 @@
 <ion-content padding>
 
     <ion-card *ngFor="let item of notifList">
+      <div *ngIf="item.lang==userlang">
         <ion-grid line>
             <ion-row style="padding-left: 10px; padding-bottom: 5px; ">
               <ion-col col-10 style="color: grey; font-size: 10px;"> {{item.date}} </ion-col>
               <ion-col col-2 style="text-align: center "><ion-icon name="bulb" style="color: green"></ion-icon> </ion-col>
             </ion-row>
             <ion-row style="padding-left: 10px; padding-bottom: 10px;">
-              <ion-col><h2><b>{{item.title}}</b></h2></ion-col>
+              <ion-col><h2><b>{{ item.title | translate}}</b></h2></ion-col>
             </ion-row>
     
           <ion-row style="padding-left: 15px; padding-bottom: 10px;">
-              {{item.text}}
+              {{ item.text | translate }}
           </ion-row>
           <!-- <ion-row  style="background-color: #f0f0f0">
             <ion-col col-6 style="text-align: center ">
@@ -37,6 +38,7 @@
             <ion-img [src]="item.optionalImage" *ngIf="item.optionalImage"></ion-img>
           </ion-row>
         </ion-grid>
+      </div>
       </ion-card> 
 
       

@@ -45,7 +45,7 @@ export class CoachGoalsPage {
     //return (datetime.getDate() + "/" + (datetime.getMonth() + 1) + "/" + datetime. getFullYear())
     const temp = new Date(datetime);
     //console.log(temp);
-    const temp1 = temp;
+    //const temp1 = temp;
 
     const t =
       temp.getDate().toString() +

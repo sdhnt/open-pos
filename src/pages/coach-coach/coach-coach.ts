@@ -17,6 +17,7 @@ import firebase from 'firebase';
 })
 export class CoachCoachPage {
   notifList = [];
+  userlang = this.translateConfigService.getCurrentLanguage();
   constructor(
     public navCtrl: NavController,
     private translateConfigService: TranslateConfigService,
@@ -44,7 +45,7 @@ export class CoachCoachPage {
     //return (datetime.getDate() + "/" + (datetime.getMonth() + 1) + "/" + datetime. getFullYear())
     const temp = new Date(datetime);
     //console.log(temp);
-    const temp1 = temp;
+    //const temp1 = temp;
 
     const t =
       temp.getDate().toString() +
