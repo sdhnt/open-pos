@@ -30,8 +30,66 @@ export class CoachGoalsPage {
       .get()
       .then(doc => {
         this.videoLinks = doc.docs[1].data().video;
+        this.videoLinks.forEach(element => {
+          element.date=this.getDateTime( parseInt(element.date));      
+          //var date1=new Date(parseInt(element.date));
+          console.log(element.date);
+        });
       });
   }
+
+  getDateTime(datetime) {
+    //return (datetime.getDate() + "/" + (datetime.getMonth() + 1) + "/" + datetime. getFullYear())
+    const temp = new Date(datetime);
+    //console.log(temp);
+    const temp1 = temp;
+
+    const t =
+      temp.getDate().toString() +
+      "/" +
+      (temp.getMonth() + 1).toString() +
+      "/" +
+      temp.getFullYear().toString() +
+      " " +
+      this.getHours(temp) +
+      ":" +
+      this.getMinutes(temp);
+    return t;
+    //if any hours or mins <0 then need to add 0 4 use cases
+  }
+
+  getHours(datetime) {
+    const temp = new Date(datetime);
+    const t = temp.getHours();
+    if (t > 9) {
+      return t.toString();
+    } else {
+      return "0" + t.toString();
+    }
+  }
+
+  getMinutes(datetime) {
+    const temp = new Date(datetime);
+    const t = temp.getMinutes();
+    if (t > 9) {
+      return t.toString();
+    } else {
+      return "0" + t.toString();
+    }
+  }
+
+  playVid(){
+
+  }
+
+  //  player;
+  //     onYouTubeIframeAPIReady() {
+  //       this.player = new YT.Player('player', {
+  //         height: '390',
+  //         width: '640',
+  //         videoId: 'M7lc1UVf-VE',
+  //       });
+  //     }
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad CoachGoalsPage");

@@ -13,15 +13,34 @@
 <ion-content padding>
 
     <ion-card *ngFor="let item of videoLinks">
-      <ion-card-title style="padding-left: 14px; font-size: 10;">
-        {{item.title}}
-      </ion-card-title>
 
-      <ion-card-content>
-        <iframe width="100%" [height]="item.height" [src]="linkValue(item.link)" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </ion-card-content>
+      <ion-grid line>
+   
+          <ion-row style="padding-left: 10px;">
+            <ion-col col-10 style="color: grey; font-size: 10px;"> {{item.date}} </ion-col>
+            <ion-col col-2 style="text-align: center "><ion-icon name="bulb" style="color: green"></ion-icon> </ion-col>
+   
+        </ion-row>
+        <ion-row style="padding-left: 10px;">
+          <ion-col><h2><b> {{item.title}}</b></h2></ion-col>
+        </ion-row>
+
+      <ion-row style="padding-left: 15px; padding-bottom: 10px;">
+          {{item.descrip}}              
+      </ion-row>
+      <ion-row>
+        <iframe width="100%" [height]="item.height" id="player" [src]="linkValue(item.link)" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </ion-row>
+      <!-- <ion-row  style="background-color: #f0f0f0; padding-top: 5px;">
+        <ion-col col-12 style="text-align: center ; background-color: indigo; color: palevioletred;">
+            <b (click)="playVid()">Go</b>
+        </ion-col>
+
+      </ion-row> -->
+      </ion-grid>
+  
     </ion-card>
-      
+<!--       
     <ion-card>
         <ion-grid line>
             <ion-row style="padding-left: 10px; padding-bottom: 5px; ">
@@ -42,7 +61,7 @@
  
           </ion-row>
         </ion-grid>
-      </ion-card> 
+      </ion-card>  -->
 
       <!--<ion-card>
           <ion-grid line>

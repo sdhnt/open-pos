@@ -47,7 +47,7 @@ export class MyApp {
       { title: "View/Edit Products", component: DashboardPage },
       { title: "Update Stock", component: ExpensesHomePage },
       { title: "Business Performance", component: SummaryHomePage },
-      { title: 'Coach', component: CoachHomePage },
+      { title: "Coach", component: CoachHomePage },
       { title: "Apply for Loan", component: LoanHomePage },
       { title: "Contact Us", component: ContactUsPage },
     ];
