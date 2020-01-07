@@ -4,14 +4,14 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<!-- <ion-header>
     <ion-navbar color="dark">
       <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
       <ion-title> {{"Business"|translate}} </ion-title>
     </ion-navbar>
-  </ion-header>
+  </ion-header> -->
 
   <ion-content>
 
@@ -22,7 +22,7 @@
            <ion-toggle  color="dark" style="vertical-align: middle; display: inline-block" item-end [(ngModel)]="expanded"></ion-toggle>
         
       </ion-item>
-      <ion-item>
+      <!-- <ion-item>
           {{"Total sales today"|translate}}: {{tstoday}}
           
         </ion-item>
@@ -32,14 +32,14 @@
         <ion-item>
             {{"Total sales for last 30 days"|translate}} : {{ts30}}
         </ion-item>
-        
+         -->
 
       <ion-list inset  *ngFor="let transac of listtransacrev">
         
           <ion-card>
               <ion-grid line>
                   <ion-row style="padding-left: 10px; padding-bottom: 5px; ">
-                    <ion-col col-10 style="color: grey; font-size: 10px;"> {{getDateTime(transac.datetime)}} </ion-col>
+                    <ion-col col-10 style="color: grey; font-size: 10px;"> {{getDateTime(transac.datetime1)}} </ion-col>
                     <ion-col col-2 style="text-align: center "><ion-icon name="cash" style="color: green"></ion-icon> </ion-col>
                   </ion-row>
 

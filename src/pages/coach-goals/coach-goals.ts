@@ -34,12 +34,12 @@ export class CoachGoalsPage {
           element.date = this.getDateTime(parseInt(element.date));
           //var date1=new Date(parseInt(element.date));
           console.log(element.date);
-        });   
+        });
       });
-    console.log(this.userlang)
+    console.log(this.userlang);
   }
 
-  userlang=this.translateConfigService.getCurrentLanguage();
+  userlang = this.translateConfigService.getCurrentLanguage();
 
   getDateTime(datetime) {
     //return (datetime.getDate() + "/" + (datetime.getMonth() + 1) + "/" + datetime. getFullYear())

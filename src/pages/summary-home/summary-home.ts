@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, ToastController, Events } from "ionic-angular";
+import { IonicPage, NavController, NavParams, ToastController, Events, Tabs } from "ionic-angular";
 import { StorageProvider } from "../../providers/storage/storage";
 import Moment from "moment";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
@@ -24,7 +24,13 @@ export class SummaryHomePage {
     public sp: StorageProvider,
     public events: Events,
     public toastCtrl: ToastController,
-  ) {}
+  ) {
+    
+    this.events.subscribe("ViewRecs", (data)=> {
+      (this.navCtrl.parent as Tabs).select(2);
+      console.log("ViewRecs Event")      
+    });
+  }
 
   expanded = true;
   tstoday = 0;
@@ -39,6 +45,48 @@ export class SummaryHomePage {
     this.getTransac();
   }
 
+  getDateTime(datetime) {
+    //return (datetime.getDate() + "/" + (datetime.getMonth() + 1) + "/" + datetime. getFullYear())
+    const temp = new Date(datetime);
+    //console.log(temp);
+    const temp1 = temp;
+
+    const t =
+      temp.getDate().toString() +
+      "/" +
+      (temp.getMonth() + 1).toString() +
+      "/" +
+      temp.getFullYear().toString() +
+      " " +
+      this.getHours(temp) +
+      ":" +
+      this.getMinutes(temp);
+      //console.log(t)  
+    return t;
+    //if any hours or mins <0 then need to add 0 4 use cases
+  }
+
+  getHours(datetime) {
+    const temp = new Date(datetime);
+    const t = temp.getHours();
+    if (t > 9) {
+      return t.toString();
+    } else {
+      return "0" + t.toString();
+    }
+  }
+
+  getMinutes(datetime) {
+    const temp = new Date(datetime);
+    const t = temp.getMinutes();
+    if (t > 9) {
+      return t.toString();
+    } else {
+      return "0" + t.toString();
+    }
+  }
+
+
   listtransac: any;
   currentdatetime = new Date();
   listtransacrev: any;
@@ -52,9 +100,13 @@ export class SummaryHomePage {
         .getTransactions()
         .then(val => {
           this.listtransac = JSON.parse(val);
+          this.listtransac.forEach(element => {
+            element.datetime1=this.getDateTime(element.datetime)  
+          });
           this.listtransacrev = this.listtransac.reverse();
           console.log(this.listtransac);
 
+          
           this.listtransacrev.forEach(element => {
             if (this.getDate(element.datetime) == this.getDate(this.currentdatetime)) {
               this.tstoday += parseInt(element.totaldisc);
@@ -66,6 +118,7 @@ export class SummaryHomePage {
               this.tsmonth += parseInt(element.totaldisc);
             }
           });
+          
         })
         .catch(err => {
           alert("Error: " + err);
@@ -73,22 +126,22 @@ export class SummaryHomePage {
     });
   }
 
-  getDateTime(datetime) {
-    //return (datetime.getDate() + "/" + (datetime.getMonth() + 1) + "/" + datetime. getFullYear())
-    const temp = new Date(datetime);
-    const temp1 = temp;
-    const t =
-      temp.getDate() +
-      "/" +
-      (temp.getMonth() + 1) +
-      "/" +
-      temp.getFullYear() +
-      " " +
-      temp.getHours() +
-      ":" +
-      temp.getMinutes();
-    return t;
-  }
+  // getDateTime(datetime) {
+  //   //return (datetime.getDate() + "/" + (datetime.getMonth() + 1) + "/" + datetime. getFullYear())
+  //   const temp = new Date(datetime);
+  //   const temp1 = temp;
+  //   const t =
+  //     temp.getDate() +
+  //     "/" +
+  //     (temp.getMonth() + 1) +
+  //     "/" +
+  //     temp.getFullYear() +
+  //     " " +
+  //     temp.getHours() +
+  //     ":" +
+  //     temp.getMinutes();
+  //   return t;
+  // }
 
   getDate(datetime) {
     const temp = new Date(datetime);

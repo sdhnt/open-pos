@@ -38,7 +38,6 @@ export class LoanHomePage {
 
   userdata: any = {
     business_address: "",
-
     business_name: "",
     cash_balance: "",
     currency: "",

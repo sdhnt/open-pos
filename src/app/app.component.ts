@@ -18,6 +18,7 @@ import { TranslateConfigService } from "../providers/translation/translate-confi
 import { TranslateService } from "@ngx-translate/core";
 import { LoanHomePage } from "../pages/loan-home/loan-home";
 import { FcmService } from "../providers/firebase-cloud-messaging/fcm.service";
+import { SummarySummaryPage } from "../pages/summary-summary/summary-summary";
 
 @Component({
   templateUrl: "app.html",
@@ -46,7 +47,7 @@ export class MyApp {
       { title: "Create New Sales", component: TransactionHomePage },
       { title: "View/Edit Products", component: DashboardPage },
       { title: "Update Stock", component: ExpensesHomePage },
-      { title: "Business Performance", component: SummaryHomePage },
+      { title: "Business Performance", component: SummarySummaryPage },
       { title: "Coach", component: CoachHomePage },
       { title: "Apply for Loan", component: LoanHomePage },
       { title: "Contact Us", component: ContactUsPage },
