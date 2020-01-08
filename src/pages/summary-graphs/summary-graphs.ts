@@ -23,29 +23,171 @@ export class SummaryGraphsPage {
   private lineChart: Chart;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public sp: StorageProvider) {
-
     this.getSummary();
+    //this.setvalues();
   }
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad SummaryGraphsPage");
+    this.rev = 0;
+    this.exp = 0;
+    this.pro = 0;
+    this.group = "today";
+
+    this.getSummary();
+    //this.setvalues()
   }
 
   rev = 0;
   exp = 0;
   pro = 0;
   summary: any = [];
+  group = "today";
+  listtransac: any = [];
 
-  getSummary(){
-    this.sp.storageReady().then(()=>{
-     this.sp.getSummary().then((val)=>{
-       this.summary=JSON.parse(val);
-     })
-    })
-    console.log(this.summary);
+  getSummary() {
+    this.sp.storageReady().then(() => {
+      this.sp.getSummary().then(val => {
+        this.summary = JSON.parse(val);
+        console.log(this.summary);
+        this.getTransac();
+      });
+    });
+  }
+  setvalues() {
+    this.rev = 0;
+    this.exp = 0;
+    this.pro = 0;
+    //  if(this.group=="today"){
+    this.listtransac.forEach(element => {
+      if (this.getDate(element.datetime) == this.getDate(this.currentdatetime)) {
+        if (element.totalatax >= 0) {
+          this.rev += parseInt(element.totalatax);
+          //console.log(element.totalatax)
+          //CALCULATE PROFIT BASED ON EACH ITEM
+        } else {
+          this.exp = parseInt(element.totalatax);
+        }
+      }
+    });
+    //}
+    if (this.group == "last7") {
+      console.log("1");
+      for (let i = 29; i > 22; i--) {
+        this.rev += this.summary[i].revenue;
+        this.exp += this.summary[i].expenses;
+        this.pro += this.summary[i].profit;
+      }
+    }
+    if (this.group == "last30") {
+      for (let i = 29; i >= 0; i--) {
+        this.rev += this.summary[i].revenue;
+        this.exp += this.summary[i].expenses;
+        this.pro += this.summary[i].profit;
+      }
+    }
+    if (this.group == "month") {
+      const currday = this.getDate(this.currentdatetime);
+      console.log(currday);
+      for (let i = 29; i > 29 - currday && i > -1; i--) {
+        this.rev += this.summary[i].revenue;
+        this.exp += this.summary[i].expenses;
+        this.pro += this.summary[i].profit;
+      }
+    }
+  }
+
+  currentdatetime = Date.now();
+
+  getTransac() {
+    this.rev = 0;
+    this.exp = 0;
+    this.pro = 0;
+    this.sp.storageReady().then(() => {
+      this.sp
+        .getTransactions()
+        .then(val => {
+          this.listtransac = JSON.parse(val);
+          //console.log(this.listtransac);
+          this.setvalues();
+        })
+        .catch(err => {
+          alert("Error: " + err);
+        });
+    });
+  }
+
+  getDateTime(datetime) {
+    //return (datetime.getDate() + "/" + (datetime.getMonth() + 1) + "/" + datetime. getFullYear())
+    const temp = new Date(datetime);
+    //console.log(temp);
+    const temp1 = temp;
+
+    const t =
+      temp.getDate().toString() +
+      "/" +
+      (temp.getMonth() + 1).toString() +
+      "/" +
+      temp.getFullYear().toString() +
+      " " +
+      this.getHours(temp) +
+      ":" +
+      this.getMinutes(temp) +
+      ":" +
+      this.getSeconds(temp);
+    //console.log(t)
+    return t;
+    //if any hours or mins <0 then need to add 0 4 use cases
+  }
+
+  getDate(datetime) {
+    const temp = new Date(datetime);
+    const temp1 = temp;
+    const t = temp.getDate();
+    return t;
+  }
+
+  getMonth(datetime) {
+    const temp = new Date(datetime);
+    const t = temp.getMonth();
+    return t;
+  }
+
+  getHours(datetime) {
+    const temp = new Date(datetime);
+    const t = temp.getHours();
+    if (t > 9) {
+      return t.toString();
+    } else {
+      return "0" + t.toString();
+    }
+  }
+
+  getSeconds(datetime) {
+    const temp = new Date(datetime);
+    const t = temp.getSeconds();
+    if (t > 9) {
+      return t.toString();
+    } else {
+      return "0" + t.toString();
+    }
+  }
+
+  getMinutes(datetime) {
+    const temp = new Date(datetime);
+    const t = temp.getMinutes();
+    if (t > 9) {
+      return t.toString();
+    } else {
+      return "0" + t.toString();
+    }
   }
 
   ngOnInit() {
+    this.generateGraphs();
+  }
+
+  generateGraphs() {
     this.barChart = new Chart(this.barCanvas.nativeElement, {
       type: "bar",
       data: {
@@ -74,6 +216,7 @@ export class SummaryGraphsPage {
           },
         ],
       },
+
       options: {
         scales: {
           yAxes: [
