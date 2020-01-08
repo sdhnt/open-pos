@@ -24,22 +24,22 @@ export class SummaryGraphsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public sp: StorageProvider) {
 
-    this.getSummary()
+    this.getSummary();
   }
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad SummaryGraphsPage");
   }
 
-  rev=0;
-  exp=0;
-  pro=0;
+  rev = 0;
+  exp = 0;
+  pro = 0;
   summary: any = [];
 
   getSummary(){
     this.sp.storageReady().then(()=>{
-     this.sp.getSummary().then(val=>{
-       this.summary=val;
+     this.sp.getSummary().then((val)=>{
+       this.summary=JSON.parse(val);
      })
     })
     console.log(this.summary);
