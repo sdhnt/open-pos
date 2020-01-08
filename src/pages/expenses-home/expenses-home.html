@@ -13,7 +13,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <ion-item>
       <b>{{'Update Inventory for existing products:'|translate}}</b> 
   </ion-item>
@@ -26,7 +26,7 @@
             <ion-searchbar showCancelButton="always" [(ngModel)]="searchterm" (ionChange)="filteredProduct()"></ion-searchbar>
         </ion-col>
         <ion-col col-4>
-            <button ion-button small block color="primary" (click)="scanQR()"  color="dark">{{"Scan Barcode"|translate}}</button>
+            <button ion-button block color="primary" (click)="scanQR()"  color="dark">{{"Scan Barcode"|translate}}</button>
         </ion-col>
       </ion-row>
     </ion-grid>

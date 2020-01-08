@@ -411,7 +411,7 @@ export class LoginPage {
         .create({
           //@ts-ignore
           title: msg.value,
-          enableBackdropDismiss: false, // <- Here! :)
+          //enableBackdropDismiss: false, // <- Here! :)
           //@ts-ignore
           message: msg1.value,
           inputs: [

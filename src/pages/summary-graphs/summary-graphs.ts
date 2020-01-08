@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { Chart } from "chart.js";
+import { StorageProvider } from "../../providers/storage/storage";
 
 /**
  * Generated class for the SummaryGraphsPage page.
@@ -21,10 +22,27 @@ export class SummaryGraphsPage {
   private barChart: Chart;
   private lineChart: Chart;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public sp: StorageProvider) {
+
+    this.getSummary()
+  }
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad SummaryGraphsPage");
+  }
+
+  rev=0;
+  exp=0;
+  pro=0;
+  summary: any = [];
+
+  getSummary(){
+    this.sp.storageReady().then(()=>{
+     this.sp.getSummary().then(val=>{
+       this.summary=val;
+     })
+    })
+    console.log(this.summary);
   }
 
   ngOnInit() {

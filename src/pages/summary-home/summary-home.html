@@ -1,4 +1,8 @@
 <ion-content>
+  <ion-select style="background-color: silver;max-width: 100%;" >
+    <ion-option value="today" selected>Today</ion-option>
+    <ion-option value="last100">Last 100</ion-option>
+  </ion-select>
       <ion-list *ngFor="let transac of listtransacrev">
           <ion-card >
             <ion-grid>

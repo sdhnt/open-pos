@@ -108,13 +108,12 @@ export class SummaryHomePage {
     }
   }
 
-  expandTransac(transac){
-    if(transac.expanded==true){
-      transac.expanded=false;
-    }else{
-      transac.expanded=true;
+  expandTransac(transac) {
+    if (transac.expanded == true) {
+      transac.expanded = false;
+    } else {
+      transac.expanded = true;
     }
-    
   }
 
   listtransac: any;
@@ -132,7 +131,7 @@ export class SummaryHomePage {
           this.listtransac = JSON.parse(val);
           this.listtransac.forEach(element => {
             element.datetime1 = this.getDateTime(element.datetime);
-            element.expanded=true;
+            element.expanded = true;
           });
           this.listtransacrev = this.listtransac.reverse();
           console.log(this.listtransac);
