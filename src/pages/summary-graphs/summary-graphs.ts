@@ -247,7 +247,7 @@ export class SummaryGraphsPage {
     }
 
     if (this.group == "last7") {
-      let d = new Date();
+      const d = new Date();
       for (let i = 28; i > 22; i--) {
         d.setDate(d.getDate() - 1);
         datarev.push(this.summary[i].revenue);
@@ -258,7 +258,7 @@ export class SummaryGraphsPage {
     }
     if (this.group == "month") {
       const currday = this.getDate(this.currentdatetime);
-      let d = new Date();
+      const d = new Date();
       for (let i = 29; i > 29 - currday && i > -1; i--) {
         d.setDate(d.getDate() - 1);
         datarev.push(this.summary[i].revenue);
@@ -268,7 +268,7 @@ export class SummaryGraphsPage {
       }
     }
     if (this.group == "last30") {
-      let d = new Date();
+      const d = new Date();
       for (let i = 28; i >= 0; i--) {
         d.setDate(d.getDate() - 1);
         datarev.push(this.summary[i].revenue);

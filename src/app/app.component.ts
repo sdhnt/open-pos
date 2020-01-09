@@ -19,6 +19,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { LoanHomePage } from "../pages/loan-home/loan-home";
 import { FcmService } from "../providers/firebase-cloud-messaging/fcm.service";
 import { SummarySummaryPage } from "../pages/summary-summary/summary-summary";
+import { ExpenseTransactionPage } from "../pages/expense-transaction/expense-transaction";
 
 @Component({
   templateUrl: "app.html",
@@ -46,7 +47,7 @@ export class MyApp {
     this.pages = [
       { title: "Create New Sales", component: TransactionHomePage },
       { title: "View/Edit Products", component: DashboardPage },
-      { title: "Update Stock", component: ExpensesHomePage },
+      { title: "Update Stock", component: ExpenseTransactionPage },
       { title: "Business Performance", component: SummarySummaryPage },
       { title: "Coach", component: CoachHomePage },
       { title: "Apply for Loan", component: LoanHomePage },
