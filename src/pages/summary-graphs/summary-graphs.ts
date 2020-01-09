@@ -95,6 +95,7 @@ export class SummaryGraphsPage {
         this.pro += this.summary[i].profit;
       }
     }
+    this.generateGraphs();
   }
 
   currentdatetime = Date.now();
@@ -123,21 +124,15 @@ export class SummaryGraphsPage {
     //console.log(temp);
     const temp1 = temp;
 
-    const t =
-      temp.getDate().toString() +
-      "/" +
-      (temp.getMonth() + 1).toString() +
-      "/" +
-      temp.getFullYear().toString() +
-      " " +
-      this.getHours(temp) +
-      ":" +
-      this.getMinutes(temp) +
-      ":" +
-      this.getSeconds(temp);
-    //console.log(t)
+    const t = temp.getDate().toString() + "/" + (temp.getMonth() + 1).toString();
     return t;
     //if any hours or mins <0 then need to add 0 4 use cases
+  }
+
+  getTime(datetime) {
+    const temp = new Date(datetime);
+    const t = this.getHours(temp) + ":" + this.getMinutes(temp) + ":" + this.getSeconds(temp);
+    return t;
   }
 
   getDate(datetime) {
@@ -191,32 +186,17 @@ export class SummaryGraphsPage {
     this.barChart = new Chart(this.barCanvas.nativeElement, {
       type: "bar",
       data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        labels: ["Revenue", "Expenses", "Profit"],
         datasets: [
           {
-            label: "# of Votes",
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-              "rgba(255, 99, 132, 0.2)",
-              "rgba(54, 162, 235, 0.2)",
-              "rgba(255, 206, 86, 0.2)",
-              "rgba(75, 192, 192, 0.2)",
-              "rgba(153, 102, 255, 0.2)",
-              "rgba(255, 159, 64, 0.2)",
-            ],
-            borderColor: [
-              "rgba(255,99,132,1)",
-              "rgba(54, 162, 235, 1)",
-              "rgba(255, 206, 86, 1)",
-              "rgba(75, 192, 192, 1)",
-              "rgba(153, 102, 255, 1)",
-              "rgba(255, 159, 64, 1)",
-            ],
+            label: "Amount",
+            data: [this.rev, -this.exp, this.pro],
+            backgroundColor: ["rgba(255, 99, 132, 0.2)", "rgba(54, 162, 235, 0.2)", "rgba(255, 206, 86, 0.2)"],
+            borderColor: ["rgba(255,99,132,1)", "rgba(54, 162, 235, 1)", "rgba(255, 206, 86, 1)"],
             borderWidth: 1,
           },
         ],
       },
-
       options: {
         scales: {
           yAxes: [
@@ -230,13 +210,81 @@ export class SummaryGraphsPage {
       },
     });
 
+    let temprev = 0;
+    let tempexp = 0;
+    const temppro = 0;
+    const labels = [];
+    const datarev = [];
+    const dataexp = [];
+    const datapro = [];
+    const k = 0;
+    this.listtransac.forEach(element => {
+      if (this.getDate(element.datetime) == this.getDate(this.currentdatetime)) {
+        if (element.totalatax >= 0) {
+          temprev += parseInt(element.totalatax);
+          if (this.group == "today") {
+            datarev.push(element.totalatax);
+            dataexp.push(0);
+            datapro.push(0);
+            labels.push(this.getTime(element.datetime));
+          }
+        } else {
+          tempexp = parseInt(element.totalatax);
+          if (this.group == "today") {
+            datarev.push(0);
+            dataexp.push(-element.totalatax);
+            datapro.push(0);
+            labels.push(this.getTime(element.datetime));
+          }
+        }
+      }
+    });
+    if (this.group != "today" || this.listtransac.length == 0) {
+      datarev.push(temprev);
+      dataexp.push(tempexp);
+      datapro.push(temppro);
+      labels.push(this.getDateTime(this.currentdatetime));
+    }
+
+    if (this.group == "last7") {
+      let d = new Date();
+      for (let i = 28; i > 22; i--) {
+        d.setDate(d.getDate() - 1);
+        datarev.push(this.summary[i].revenue);
+        dataexp.push(this.summary[i].expenses);
+        datapro.push(this.summary[i].profit);
+        labels.push(this.getDateTime(d));
+      }
+    }
+    if (this.group == "month") {
+      const currday = this.getDate(this.currentdatetime);
+      let d = new Date();
+      for (let i = 29; i > 29 - currday && i > -1; i--) {
+        d.setDate(d.getDate() - 1);
+        datarev.push(this.summary[i].revenue);
+        dataexp.push(this.summary[i].expenses);
+        datapro.push(this.summary[i].profit);
+        labels.push(this.getDateTime(d));
+      }
+    }
+    if (this.group == "last30") {
+      let d = new Date();
+      for (let i = 28; i >= 0; i--) {
+        d.setDate(d.getDate() - 1);
+        datarev.push(this.summary[i].revenue);
+        dataexp.push(this.summary[i].expenses);
+        datapro.push(this.summary[i].profit);
+        labels.push(this.getDateTime(d));
+      }
+    }
+
     this.lineChart = new Chart(this.lineCanvas.nativeElement, {
       type: "line",
       data: {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        labels: labels.reverse(),
         datasets: [
           {
-            label: "My First dataset",
+            label: "Revenue",
             fill: false,
             lineTension: 0.1,
             backgroundColor: "rgba(75,192,192,0.4)",
@@ -254,7 +302,51 @@ export class SummaryGraphsPage {
             pointHoverBorderWidth: 2,
             pointRadius: 1,
             pointHitRadius: 10,
-            data: [65, 59, 80, 81, 56, 55, 40],
+            data: datarev.reverse(),
+            spanGaps: false,
+          },
+          {
+            label: "Expenses",
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: "rgba(54, 162, 235, 0.4)",
+            borderColor: "rgba(54, 162, 235, 11)",
+            borderCapStyle: "butt",
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: "miter",
+            pointBorderColor: "rgba(54, 162, 235, 1)",
+            pointBackgroundColor: "#fff",
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: "rgba(54, 162, 235, 1)",
+            pointHoverBorderColor: "rgba(220,220,220,1)",
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: dataexp.reverse(),
+            spanGaps: false,
+          },
+          {
+            label: "Revenue",
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: "rgba(255, 206, 86, 0.4)",
+            borderColor: "rgba(255, 206, 86, 1)",
+            borderCapStyle: "butt",
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: "miter",
+            pointBorderColor: "rgba(255, 206, 86, 1)",
+            pointBackgroundColor: "#fff",
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: "rgba(255, 206, 86, 1)",
+            pointHoverBorderColor: "rgba(220,220,220,1)",
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: datapro.reverse(),
             spanGaps: false,
           },
         ],
