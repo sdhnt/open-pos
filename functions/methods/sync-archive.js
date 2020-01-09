@@ -36,7 +36,7 @@ const syncArchive = async (db, { syncTransactions, calculateBusinessPerformance,
             const nullPerformance = { revenue: 0, profit: 0, expenses: 0 };
             if (!user.businessPerformance) user.businessPerformance = [];
             const currentLength = user.businessPerformance.length;
-            for (let i = 0; i < 30 - currentLength; i++) {
+            for (let i = 0; i < 31 - currentLength; i++) {
               user.businessPerformance.unshift(nullPerformance);
             }
             user.businessPerformance.shift();
