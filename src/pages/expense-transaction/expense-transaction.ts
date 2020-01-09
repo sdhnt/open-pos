@@ -17,24 +17,18 @@ import { ExpenseGeneralPage } from "../expense-general/expense-general";
   templateUrl: "expense-transaction.html",
 })
 export class ExpenseTransactionPage {
-
   @ViewChild("myTabs") tabRef: Tabs;
 
   ViewList = ExpensesHomePage;
   AddProd = ExpenseGeneralPage;
 
-  
   constructor(
     public navCtrl: NavController,
     private translateConfigService: TranslateConfigService,
     public navParams: NavParams,
   ) {}
 
-
-
   ionViewDidLoad() {
     console.log("ionViewDidLoad ExpenseTransactionPage");
   }
 }
-
-
