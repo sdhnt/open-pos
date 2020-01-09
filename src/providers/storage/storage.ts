@@ -5,6 +5,7 @@ import { convertDataToISO } from "ionic-angular/umd/util/datetime-util";
 import { LoginPage } from "../../pages/login/login";
 import { ToastController, NavController, Nav } from "ionic-angular";
 import { notImplemented } from "@angular/core/src/render3/util";
+import { templateVisitAll } from "@angular/compiler";
 
 @Injectable()
 export class StorageProvider {
@@ -15,6 +16,7 @@ export class StorageProvider {
   categories: any = [];
   transactions: any = [];
   user: any = [];
+  summary: any = [];
 
   static get parameters() {
     return [[Storage]];
@@ -30,6 +32,7 @@ export class StorageProvider {
   tempcat: any;
   temptransac: any;
   tempuser: any;
+  tempsummary: any;
   uid;
 
   async saveinMem() {
@@ -39,23 +42,29 @@ export class StorageProvider {
         this.storage.get("products").then(valNullprod => {
           this.storage.get("transactions").then(valNulltransac => {
             this.storage.get("user").then(valNulluser => {
-              // console.log("b4set");
-              // console.log(JSON.stringify(this.tempcat));
-              // console.log(JSON.stringify(this.tempprod));
-              // console.log(JSON.stringify(this.temptransac))  ;
-              this.storage.set("categories", "[]").then(() => {
-                this.storage.set("categories", JSON.stringify(this.tempcat));
+              this.storage.get("summary").then(valNullSummary => {
+                // console.log("b4set");
+                // console.log(JSON.stringify(this.tempcat));
+                // console.log(JSON.stringify(this.tempprod));
+                // console.log(JSON.stringify(this.temptransac))  ;
+                this.storage.set("categories", "[]").then(() => {
+                  this.storage.set("categories", JSON.stringify(this.tempcat));
+                });
+                this.storage.set("products", "[]").then(() => {
+                  this.storage.set("products", JSON.stringify(this.tempprod));
+                });
+                this.storage.set("transactions", "[]").then(() => {
+                  this.storage.set("transactions", JSON.stringify(this.temptransac));
+                });
+                this.storage.set("user", "[]").then(() => {
+                  this.storage.set("user", JSON.stringify(this.tempuser));
+                });
+                this.storage.set("summary", "[]").then(() => {
+                  this.storage.set("summary", JSON.stringify(this.tempsummary));
+                  console.log(JSON.stringify(this.tempsummary));
+                });
+                resolve();
               });
-              this.storage.set("products", "[]").then(() => {
-                this.storage.set("products", JSON.stringify(this.tempprod));
-              });
-              this.storage.set("transactions", "[]").then(() => {
-                this.storage.set("transactions", JSON.stringify(this.temptransac));
-              });
-              this.storage.set("user", "[]").then(() => {
-                this.storage.set("user", JSON.stringify(this.tempuser));
-              });
-              resolve();
             });
           });
         });
@@ -69,6 +78,7 @@ export class StorageProvider {
     let temptransac;
     let uid;
     let tempuser;
+    let tempsummary;
     this.storage.ready().then(async () => {
       await firebase
         .firestore()
@@ -83,6 +93,7 @@ export class StorageProvider {
             temptransac = usdat.transactions;
             //.slice(Math.max(usdat.transactions.length - 10, 0))
             tempcat = usdat.categories;
+            tempsummary = usdat.businessPerformance;
             tempuser = {
               business_address: usdat.business_address,
               business_name: usdat.business_name,
@@ -108,10 +119,12 @@ export class StorageProvider {
       this.temptransac = temptransac;
       this.uid = uid;
       this.tempuser = tempuser;
+      this.tempsummary = tempsummary;
       // console.log("setglobal");
       // console.log(JSON.stringify(tempcat));
       // console.log(JSON.stringify(tempprod));
       // console.log(JSON.stringify(temptransac))  ;
+
       await this.saveinMem();
       return await (this.uid != null);
     });
@@ -136,7 +149,6 @@ export class StorageProvider {
                 .get("categories")
                 .then(val => {
                   parsecat = JSON.parse(val);
-
                   if (parseprod != null && parsetransac != null && parsecat != null) {
                     const snapshot = firebase
                       .firestore()
@@ -298,6 +310,10 @@ export class StorageProvider {
           alert(err + 1);
         });
     });
+  }
+
+  getSummary() {
+    return this.storage.get("summary");
   }
 
   addProduct(data) {
