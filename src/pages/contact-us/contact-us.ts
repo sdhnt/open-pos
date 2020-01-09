@@ -16,8 +16,8 @@ import { TranslateConfigService } from "../../providers/translation/translate-co
   templateUrl: "contact-us.html",
 })
 export class ContactUsPage {
-  email = "";
-  phone = "";
+  email = "Loading...";
+  phone = "Loading...";
   chatbot = "";
 
   constructor(
