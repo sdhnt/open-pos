@@ -64,13 +64,15 @@ export class SummaryGraphsPage {
         if (element.totalatax >= 0) {
           this.rev += parseInt(element.totalatax);
 
-          element.itemslist.forEach((product,index) =>{
-            if(product.code!="000000")
-            {
-              this.pro=this.pro+((parseFloat(product.price)*(1-parseFloat(product.discount)) - parseFloat(product.cost))*parseFloat(product.qty));
-              console.log(product)
+          element.itemslist.forEach((product, index) => {
+            if (product.code != "000000") {
+              this.pro =
+                this.pro +
+                (parseFloat(product.price) * (1 - parseFloat(product.discount)) - parseFloat(product.cost)) *
+                  parseFloat(product.qty);
+              console.log(product);
             }
-          })
+          });
           //console.log(element.totalatax)
           //CALCULATE PROFIT BASED ON EACH ITEM
         } else {
