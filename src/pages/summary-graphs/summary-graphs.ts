@@ -229,7 +229,7 @@ export class SummaryGraphsPage {
             labels.push(this.getTime(element.datetime));
           }
         } else {
-          tempexp = parseInt(element.totalatax);
+          tempexp = - parseInt(element.totalatax);
           if (this.group == "today") {
             datarev.push(0);
             dataexp.push(-element.totalatax);
@@ -248,10 +248,10 @@ export class SummaryGraphsPage {
 
     if (this.group == "last7") {
       const d = new Date();
-      for (let i = 28; i > 22; i--) {
+      for (let i = 29; i > 23; i--) {
         d.setDate(d.getDate() - 1);
         datarev.push(this.summary[i].revenue);
-        dataexp.push(this.summary[i].expenses);
+        dataexp.push(-(this.summary[i].expenses));
         datapro.push(this.summary[i].profit);
         labels.push(this.getDateTime(d));
       }
@@ -259,20 +259,20 @@ export class SummaryGraphsPage {
     if (this.group == "month") {
       const currday = this.getDate(this.currentdatetime);
       const d = new Date();
-      for (let i = 29; i > 29 - currday && i > -1; i--) {
+      for (let i = 30; i > 30 - currday && i > -1; i--) {
         d.setDate(d.getDate() - 1);
         datarev.push(this.summary[i].revenue);
-        dataexp.push(this.summary[i].expenses);
+        dataexp.push(-(this.summary[i].expenses));
         datapro.push(this.summary[i].profit);
         labels.push(this.getDateTime(d));
       }
     }
     if (this.group == "last30") {
       const d = new Date();
-      for (let i = 28; i >= 0; i--) {
+      for (let i = 30; i >= 0; i--) {
         d.setDate(d.getDate() - 1);
         datarev.push(this.summary[i].revenue);
-        dataexp.push(this.summary[i].expenses);
+        dataexp.push(-(this.summary[i].expenses));
         datapro.push(this.summary[i].profit);
         labels.push(this.getDateTime(d));
       }
@@ -285,7 +285,7 @@ export class SummaryGraphsPage {
         datasets: [
           {
             label: "Revenue",
-            fill: false,
+            fill: true,
             lineTension: 0.1,
             backgroundColor: "rgba(75,192,192,0.4)",
             borderColor: "rgba(75,192,192,1)",
@@ -307,7 +307,7 @@ export class SummaryGraphsPage {
           },
           {
             label: "Expenses",
-            fill: false,
+            fill: true,
             lineTension: 0.1,
             backgroundColor: "rgba(54, 162, 235, 0.4)",
             borderColor: "rgba(54, 162, 235, 11)",
@@ -329,7 +329,7 @@ export class SummaryGraphsPage {
           },
           {
             label: "Revenue",
-            fill: false,
+            fill: true,
             lineTension: 0.1,
             backgroundColor: "rgba(255, 206, 86, 0.4)",
             borderColor: "rgba(255, 206, 86, 1)",

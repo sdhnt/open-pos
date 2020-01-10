@@ -66,7 +66,8 @@ export class SummaryHomePage {
       "/" +
       (temp.getMonth() + 1).toString() +
       "/" +
-      temp.getFullYear().toString() +
+      temp.getFullYear().toString() 
+      +
       " " +
       this.getHours(temp) +
       ":" +

@@ -13,20 +13,61 @@
 <ion-content padding>
 <ion-grid>
   <ion-row style="border: solid 1px black;">
-    <ion-col style="border: solid 1px black; background-color: black;color: white; text-align: left;"><b>Current Cash Balance:</b></ion-col>
-    <ion-col style="border: solid 1px black; background-color: black;color: white; text-align: end;"><b>50000</b></ion-col>
+    <ion-col style="border: solid 1px black; background-color: black;color: white; text-align: left;"><b>Current Cash Balance</b></ion-col>
+    <ion-col style="border: solid 1px black ;color: white; text-align: end;"><b>
+      <div *ngIf="userdata.cash_balance>=0" style="background-color: green;">
+        {{userdata.cash_balance}}
+      </div>
+      <div *ngIf="!(userdata.cash_balance>=0)" style="background-color: red;">
+        {{userdata.cash_balance}}
+      </div>   
+    </b></ion-col>
+  </ion-row>
+
+
+  <ion-row style="border: solid 1px black;">
+    <ion-col style="border: solid 1px black; background-color: black;color: white; text-align: left;"><b>Net Cashflow today</b></ion-col>
+    <ion-col style="border: solid 1px black;color: white; text-align: end;"><b> 
+      <div *ngIf="netcashtoday>=0" style="background-color: green;">
+        {{netcashtoday}}
+      </div>
+      <div *ngIf="!(netcashtoday>=0)" style="background-color: red;">
+        {{netcashtoday}}
+      </div>
+    </b></ion-col>
+  </ion-row>
+
+
+  <ion-row style="border: solid 1px black;">
+    <ion-col style="border: solid 1px black; background-color: black;color: white; text-align: left;"><b>Net Cashflow 7 days</b></ion-col>
+    <ion-col style="border: solid 1px black; color: white; text-align: end;"><b>
+      <div *ngIf="netcashweek>=0" style="background-color: green;">
+        {{netcashweek}}
+      </div>
+      <div *ngIf="!(netcashweek>=0)" style="background-color: red;">
+        {{netcashweek}}
+      </div> </b></ion-col>
   </ion-row>
   <ion-row style="border: solid 1px black;">
-    <ion-col style="border: solid 1px black; background-color: black;color: white; text-align: left;"><b>Net Cashflow (today):</b></ion-col>
-    <ion-col style="border: solid 1px black; background-color: green;color: white; text-align: end;"><b>10000</b></ion-col>
+    <ion-col style="border: solid 1px black; background-color: black;color: white; text-align: left;"><b>Net Cashflow 30 days</b></ion-col>
+    <ion-col style="border: solid 1px black;color:white; text-align: end;"><b>
+      <div *ngIf="netcashlast30>=0" style="background-color: green;">
+        {{netcashlast30}}
+      </div>
+      <div *ngIf="!(netcashlast30>=0)" style="background-color: red;">
+        {{netcashlast30}}
+      </div></b></ion-col>
   </ion-row>
   <ion-row style="border: solid 1px black;">
-    <ion-col style="border: solid 1px black; background-color: black;color: white; text-align: left;"><b>Net Cashflow (this week):</b></ion-col>
-    <ion-col style="border: solid 1px black; background-color: red;color: white; text-align: end;"><b>-3000</b></ion-col>
-  </ion-row>
-  <ion-row style="border: solid 1px black;">
-    <ion-col style="border: solid 1px black; background-color: black;color: white; text-align: left;"><b>Net Cashflow (this month):</b></ion-col>
-    <ion-col style="border: solid 1px black; background-color: green;color: white; text-align: end;"><b>50000</b></ion-col>
+    <ion-col style="border: solid 1px black; background-color: black;color: white; text-align: left;"><b>Net Cashflow this month:</b></ion-col>
+    <ion-col style="border: solid 1px black; color: white; text-align: end;"><b>
+      <div *ngIf="netcashmonth>=0" style="background-color: green;">
+        {{netcashmonth}}
+      </div>
+      <div *ngIf="!(netcashmonth>=0)" style="background-color: red;">
+        {{netcashmonth}}
+      </div>
+      </b></ion-col>
   </ion-row>
   <ion-row style="border: solid 1px black;">
     <ion-col style="border: solid 1px black; background-color: black;color: white; text-align: center;"><b>Date</b></ion-col>
@@ -34,38 +75,31 @@
     <ion-col style="border: solid 1px black; background-color: black;color: white; text-align: center;"><b>Amount</b></ion-col>
     <ion-col style="border: solid 1px black; background-color: black;color: white; text-align: center;"><b>Type</b></ion-col>
   </ion-row>
-  <ion-row style="border: solid 1px black;">
-    <ion-col style="border: solid 1px black;  text-align: center;">12/2/20</ion-col>
-    <ion-col style="border: solid 1px black;  text-align: center;">6 Item Sale</ion-col>
-    <ion-col style="border: solid 1px black; text-align: center;">Income</ion-col>
-    <ion-col style="border: solid 1px black; background-color: green; color:white;text-align: center;">10093</ion-col>
+  <ion-row style="border: solid 1px black;"  *ngFor="let transac of listtransac; let i = index">
+    <ion-col style="border: solid 1px black;  text-align: center;">{{transac.datetime1}}</ion-col>
+    <ion-col style="border: solid 1px black;  text-align: center;">
+      <div *ngIf="transac.totalatax>=0">
+        {{transac.itemslist[0].name}} ..
+      </div>
+      <div *ngIf="!(transac.totalatax>=0)">
+        {{transac.itemslist[0].name}}
+      </div>   
+    </ion-col>
+    <ion-col style="border: solid 1px black;  text-align: center;">
+      <div *ngIf="transac.totalatax>=0">
+      Income
+    </div>
+    <div *ngIf="!(transac.totalatax>=0)">
+      Expense
+    </div>   
+    </ion-col>
+    <ion-col style="border: solid 1px black; color:white; text-align: center;">
+      <div *ngIf="transac.totalatax>=0" style="background-color: green">     {{transac.totalatax}}  </div>
+      <div *ngIf="!(transac.totalatax>=0)" style="background-color: red">       {{transac.totalatax}}</div>
+    </ion-col>
   </ion-row>
-  <ion-row style="border: solid 1px black;">
-    <ion-col style="border: solid 1px black;  text-align: center;">12/2/20</ion-col>
-    <ion-col style="border: solid 1px black;  text-align: center;">6 Item Sale</ion-col>
-    <ion-col style="border: solid 1px black; text-align: center;">Income</ion-col>
-    <ion-col style="border: solid 1px black; background-color: green; color:white;text-align: center;">10093</ion-col>
-  </ion-row>
-  <ion-row style="border: solid 1px black;">
-    <ion-col style="border: solid 1px black;  text-align: center;">12/2/20</ion-col>
-    <ion-col style="border: solid 1px black;  text-align: center;">HR Expense</ion-col>
-    
-    <ion-col style="border: solid 1px black;  text-align: center;">Expense</ion-col>
-    <ion-col style="border: solid 1px black; background-color: red; color:white; text-align: center;">-1093</ion-col>
-  </ion-row>
-  <ion-row style="border: solid 1px black;">
-    <ion-col style="border: solid 1px black;  text-align: center;">12/2/20</ion-col>
-    <ion-col style="border: solid 1px black;  text-align: center;">6 Item</ion-col>
-    <ion-col style="border: solid 1px black; text-align: center;">Income</ion-col>
-    <ion-col style="border: solid 1px black; background-color: green; color:white;text-align: center;">10093</ion-col>
-  </ion-row>
-  <ion-row style="border: solid 1px black;">
-    <ion-col style="border: solid 1px black;  text-align: center;">12/2/20</ion-col>
-    <ion-col style="border: solid 1px black;  text-align: center;">HR Expense</ion-col>
-    
-    <ion-col style="border: solid 1px black;  text-align: center;">Expense</ion-col>
-    <ion-col style="border: solid 1px black; background-color: red; color:white; text-align: center;">-1093</ion-col>
-  </ion-row>
+
+  
   
 </ion-grid>
 </ion-content>
