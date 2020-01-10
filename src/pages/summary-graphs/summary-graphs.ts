@@ -63,6 +63,14 @@ export class SummaryGraphsPage {
       if (this.getDate(element.datetime) == this.getDate(this.currentdatetime)) {
         if (element.totalatax >= 0) {
           this.rev += parseInt(element.totalatax);
+
+          element.itemslist.forEach((product,index) =>{
+            if(product.code!="000000")
+            {
+              this.pro=this.pro+((parseFloat(product.price)*(1-parseFloat(product.discount)) - parseFloat(product.cost))*parseFloat(product.qty));
+              console.log(product)
+            }
+          })
           //console.log(element.totalatax)
           //CALCULATE PROFIT BASED ON EACH ITEM
         } else {
@@ -229,7 +237,7 @@ export class SummaryGraphsPage {
             labels.push(this.getTime(element.datetime));
           }
         } else {
-          tempexp = - parseInt(element.totalatax);
+          tempexp = -parseInt(element.totalatax);
           if (this.group == "today") {
             datarev.push(0);
             dataexp.push(-element.totalatax);
@@ -251,7 +259,7 @@ export class SummaryGraphsPage {
       for (let i = 29; i > 23; i--) {
         d.setDate(d.getDate() - 1);
         datarev.push(this.summary[i].revenue);
-        dataexp.push(-(this.summary[i].expenses));
+        dataexp.push(-this.summary[i].expenses);
         datapro.push(this.summary[i].profit);
         labels.push(this.getDateTime(d));
       }
@@ -262,7 +270,7 @@ export class SummaryGraphsPage {
       for (let i = 30; i > 30 - currday && i > -1; i--) {
         d.setDate(d.getDate() - 1);
         datarev.push(this.summary[i].revenue);
-        dataexp.push(-(this.summary[i].expenses));
+        dataexp.push(-this.summary[i].expenses);
         datapro.push(this.summary[i].profit);
         labels.push(this.getDateTime(d));
       }
@@ -272,7 +280,7 @@ export class SummaryGraphsPage {
       for (let i = 30; i >= 0; i--) {
         d.setDate(d.getDate() - 1);
         datarev.push(this.summary[i].revenue);
-        dataexp.push(-(this.summary[i].expenses));
+        dataexp.push(-this.summary[i].expenses);
         datapro.push(this.summary[i].profit);
         labels.push(this.getDateTime(d));
       }

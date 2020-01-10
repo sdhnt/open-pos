@@ -21,13 +21,13 @@ export class SummaryAccountsPage {
     console.log("ionViewDidLoad SummaryAccountsPage");
     this.getTransac();
     this.getUserData();
-    this.netcashtoday=0;
-    this.netcashweek=0;
-    this.netcashmonth=0;
-    this.netcashlast30=0;
+    this.netcashtoday = 0;
+    this.netcashweek = 0;
+    this.netcashmonth = 0;
+    this.netcashlast30 = 0;
   }
 
-  listtransac:any=[];
+  listtransac: any = [];
   userdata: any = {
     business_address: "",
     business_name: "",
@@ -58,7 +58,6 @@ export class SummaryAccountsPage {
   }
 
   getTransac() {
-
     this.sp.storageReady().then(() => {
       this.sp
         .getTransactions()
@@ -95,19 +94,18 @@ export class SummaryAccountsPage {
     const t = temp.getDate();
     return t;
   }
-  currentdatetime=Date.now();
-  netcashtoday=0;
-  netcashweek=0;
-  netcashmonth=0;
-  netcashlast30=0;
-  summary: any=[];
-
+  currentdatetime = Date.now();
+  netcashtoday = 0;
+  netcashweek = 0;
+  netcashmonth = 0;
+  netcashlast30 = 0;
+  summary: any = [];
 
   getSummary() {
-    this.netcashtoday=0;
-    this.netcashweek=0;
-    this.netcashmonth=0;
-    this.netcashlast30=0;
+    this.netcashtoday = 0;
+    this.netcashweek = 0;
+    this.netcashmonth = 0;
+    this.netcashlast30 = 0;
     this.sp.storageReady().then(() => {
       this.sp.getSummary().then(val => {
         this.summary = JSON.parse(val);
@@ -115,24 +113,24 @@ export class SummaryAccountsPage {
 
         this.listtransac.forEach(element => {
           if (this.getDate(element.datetime) == this.getDate(this.currentdatetime)) {
-            this.netcashtoday+=element.totalatax;
+            this.netcashtoday += element.totalatax;
           }
         });
 
-        this.netcashweek=this.netcashtoday;
-        this.netcashmonth=this.netcashtoday;
-        this.netcashlast30=this.netcashtoday
+        this.netcashweek = this.netcashtoday;
+        this.netcashmonth = this.netcashtoday;
+        this.netcashlast30 = this.netcashtoday;
         for (let i = 29; i > 23; i--) {
-          this.netcashweek+=this.summary[i].revenue - this.summary[i].expenses;
+          this.netcashweek += this.summary[i].revenue - this.summary[i].expenses;
         }
-          for (let i = 29; i >= 0; i--) {
-            this.netcashlast30 += this.summary[i].revenue- this.summary[i].expenses;
-          }
-      
-          const currday = this.getDate(this.currentdatetime);
-          console.log(currday);
-          for (let i = 29; i > 29 - currday && i > -1; i--) {
-            this.netcashmonth += this.summary[i].revenue- this.summary[i].expenses;
+        for (let i = 29; i >= 0; i--) {
+          this.netcashlast30 += this.summary[i].revenue - this.summary[i].expenses;
+        }
+
+        const currday = this.getDate(this.currentdatetime);
+        console.log(currday);
+        for (let i = 29; i > 29 - currday && i > -1; i--) {
+          this.netcashmonth += this.summary[i].revenue - this.summary[i].expenses;
         }
         //this.getTransac();
       });
@@ -154,13 +152,11 @@ export class SummaryAccountsPage {
       this.getHours(temp) +
       ":" +
       this.getMinutes(temp);
-     // this.getSeconds(temp);
+    // this.getSeconds(temp);
     //console.log(t)
     return t;
     //if any hours or mins <0 then need to add 0 4 use cases
   }
-
-
 
   getHours(datetime) {
     const temp = new Date(datetime);
@@ -191,5 +187,4 @@ export class SummaryAccountsPage {
       return "0" + t.toString();
     }
   }
-
 }
