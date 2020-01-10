@@ -23,6 +23,7 @@ export class AddProductPage {
   prodCost: number = null;
   prodCat: any = "";
   listProduct: any;
+  isProdCode000000: boolean;
 
   formProduct: FormGroup;
 
@@ -37,6 +38,7 @@ export class AddProductPage {
     public camera: Camera,
     private formBuilder: FormBuilder,
   ) {
+    this.isProdCode000000 = false;
     this.prodCode = this.navParams.get("code");
     this.getUserData();
     this.formProduct = this.formBuilder.group({
@@ -193,6 +195,19 @@ export class AddProductPage {
   disabled = false;
 
   addproduct() {
+    if(this.prodCode=="000000"){
+      const msg = "The code 000000 is not permitted. Please use a different code"; //Conversion required
+      let toast = this.toastCtrl.create({
+        message: msg,
+        duration: 3000
+      })
+      .present();
+      this.isProdCode000000 = true;
+      return;
+    } else {
+      this.isProdCode000000 = false;
+    }
+
     this.disabled = true;
 
     if (!this.formProduct.valid || (this.prodCat == "New" && this.newprodCat == "")) {

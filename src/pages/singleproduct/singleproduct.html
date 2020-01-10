@@ -24,6 +24,7 @@
 
       <ion-item>
         <ion-label>{{'Product Code:'| translate}}</ion-label>
+        <ion-label style="color: red; font-size: 25px;" *ngIf="isProdCode000000"><b>!</b></ion-label>
         <ion-input type="text" formControlName="prodCode" [(ngModel)]='product.code'></ion-input>
       </ion-item>
       <ion-item>

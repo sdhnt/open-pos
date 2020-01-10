@@ -26,9 +26,10 @@ export class SingleProductPage {
   prodCost = 0;
   prodCat: any = "";
   listProduct: any;
+  isProdCode000000: boolean = false;
 
   orgData = {
-    prodCode: 0,
+    prodCode: "",
     prodName: "",
     prodPrice: 0,
     prodWholesalePrice: 0,
@@ -220,6 +221,18 @@ export class SingleProductPage {
   disabled = false;
 
   updateProduct() {
+    if(this.product.code=="000000"){
+      const msg = "The code 000000 is not permitted. Please use a different code"; //Conversion required
+      let toast = this.toastCtrl.create({
+        message: msg,
+        duration: 3000
+      })
+      .present();
+      this.isProdCode000000 = true;
+      return;
+    } else {
+      this.isProdCode000000 = false;
+    }
     this.disabled = true;
     if (!this.formProduct.valid) {
       console.log("invalid product with missing fields");
