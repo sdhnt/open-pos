@@ -196,9 +196,10 @@ export class AddProductPage {
 
   addproduct() {
     if(this.prodCode=="000000"){
-      const msg = "The code 000000 is not permitted. Please use a different code"; //Conversion required
+      const msg = this.translateConfigService.getTranslatedMessage("Code not permitted. Please use a different code");
       let toast = this.toastCtrl.create({
-        message: msg,
+        //@ts-ignore
+        message: msg.value,
         duration: 3000
       })
       .present();
