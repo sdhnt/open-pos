@@ -35,7 +35,7 @@ export class SummaryHomePage {
   tstoday = 0;
   tsmonth = 0;
   ts30 = 0;
-  usrchoice="today";
+  usrchoice = "today";
 
   toggleExpanded() {
     console.log("changing: " + this.expanded);
@@ -53,7 +53,7 @@ export class SummaryHomePage {
     this.tstoday = 0;
     this.tsmonth = 0;
     this.ts30 = 0;
-    this.usrchoice="today";
+    this.usrchoice = "today";
     this.getTransac();
   }
 
