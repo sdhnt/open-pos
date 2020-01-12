@@ -35,7 +35,6 @@ export class LoanHomePage {
     this.events.subscribe("cbUpdate:created", data => {
       this.getUserData();
     });
-
   }
 
   userdata: any = {
@@ -108,40 +107,45 @@ export class LoanHomePage {
     });
     this.loanvar.push({
       q: this.loanq2,
-      a: this.loan2
-    })
+      a: this.loan2,
+    });
     this.loanvar.push({
       q: this.loanq3,
-      a: this.loan3
-    })
+      a: this.loan3,
+    });
     this.loanvar.push({
       q: this.loanq4,
-      a: this.loan4
-    })
+      a: this.loan4,
+    });
     this.loanvar.push({
       q: this.loanq5,
-      a: this.loan5
-    })
+      a: this.loan5,
+    });
     this.loanvar.push({
       q: this.loanq6,
-      a: this.loan6
-    })
+      a: this.loan6,
+    });
 
-    firebase.firestore()
-      .collection("users")
+    firebase
+      .firestore()
+      .collection("loan_apps")
       .add({
         user: this.userdata,
         loan_details: this.loanvar,
       })
-      .then(async doc => { })
+      .then(async doc => {})
       .catch(err => {
         console.log(err);
       });
-
+      this.loanvar=[];
+      this.showloan=0;
+      const msg = this.translateConfigService.getTranslatedMessage("Submitted!")
+      this.toastCtrl.create({
+        //@ts-ignore
+        message: msg.value,
+        duration: 3000,
+      }).present();
   }
-
-
-
 
   async cashbtn() {
     await this.getUserData();
