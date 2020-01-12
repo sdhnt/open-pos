@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController, ToastController, 
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import { BarcodeScanner } from "@ionic-native/barcode-scanner";
 import { StorageProvider } from "../../providers/storage/storage";
+import firebase from "firebase";
 import { GettersetterProvider } from "../../providers/gettersetter/gettersetter";
 
 /**
@@ -34,7 +35,7 @@ export class LoanHomePage {
     this.events.subscribe("cbUpdate:created", data => {
       this.getUserData();
     });
-   
+
   }
 
   userdata: any = {
@@ -66,8 +67,8 @@ export class LoanHomePage {
   }
 
   ionViewDidLoad() {
-    this.showloan=0;
-    this.loanvar=[];
+    this.showloan = 0;
+    this.loanvar = [];
   }
 
   uploadbtn() {
@@ -82,10 +83,10 @@ export class LoanHomePage {
       .present();
   }
 
-  showloan=0;
-  loanvar: any=[];
-  showloanform(){
-    this.showloan=1;
+  showloan = 0;
+  loanvar: any = [];
+  showloanform() {
+    this.showloan = 1;
   }
 
   loan1;
@@ -94,21 +95,53 @@ export class LoanHomePage {
   loan4;
   loan5;
   loan6;
-  loanq1="1. How interested are you in getting a loan? ";
-  loanq2="2. When would you like to get this loan?  ";
-  loanq3="3. How much would you like to borrow? ";
-  loanq4="4. How long will you need to pay it back?  ";
-  loanq5="5. What do you need  to loan for? ";
-  loanq6="6. What's the best way to contact you about the loan?";  
-  submitloanform(){
-      this.loanvar.push({
-        q: this.loanq1,
-        a: this.loan1
+  loanq1 = "1. How interested are you in getting a loan? ";
+  loanq2 = "2. When would you like to get this loan?  ";
+  loanq3 = "3. How much would you like to borrow? ";
+  loanq4 = "4. How long will you need to pay it back?  ";
+  loanq5 = "5. What do you need  to loan for? ";
+  loanq6 = "6. What's the best way to contact you about the loan?";
+  submitloanform() {
+    this.loanvar.push({
+      q: this.loanq1,
+      a: this.loan1,
+    });
+    this.loanvar.push({
+      q: this.loanq2,
+      a: this.loan2
+    })
+    this.loanvar.push({
+      q: this.loanq3,
+      a: this.loan3
+    })
+    this.loanvar.push({
+      q: this.loanq4,
+      a: this.loan4
+    })
+    this.loanvar.push({
+      q: this.loanq5,
+      a: this.loan5
+    })
+    this.loanvar.push({
+      q: this.loanq6,
+      a: this.loan6
+    })
+
+    firebase.firestore()
+      .collection("users")
+      .add({
+        user: this.userdata,
+        loan_details: this.loanvar,
       })
+      .then(async doc => { })
+      .catch(err => {
+        console.log(err);
+      });
+
   }
 
 
-  
+
 
   async cashbtn() {
     await this.getUserData();

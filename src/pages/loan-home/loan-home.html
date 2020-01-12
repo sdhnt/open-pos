@@ -56,14 +56,14 @@
       {{loanq1}}
       <ion-input style="background-color: #d8d7d7;" placeholder="Enter Details Here"  [(ngModel)]="loan1"></ion-input>
      {{loanq2}}
-      <ion-input style="background-color: #d8d7d7;"  placeholder="Enter Details Here" [(ngModel)]="loan2"></ion-input>
-      3. How much would you like to borrow? 
-      <ion-input style="background-color: #d8d7d7;"  placeholder="Enter Details Here" [(ngModel)]="loan3"></ion-input>
-      4. How long will you need to pay it back? 
-      <ion-input style="background-color: #d8d7d7;"  placeholder="Enter Details Here" [(ngModel)]="loan4"></ion-input>
-      5. What do you need  to loan for? 
-      <ion-input style="background-color: #d8d7d7;"  placeholder="Enter Details Here" [(ngModel)]="loan5"></ion-input>
-      6. What's the best way to contact you about the loan?
+      <ion-input style="background-color: #d8d7d7;"  placeholder="Enter Details Here" [(ngModel)]="loan2"></ion-input>{{loanq3}}
+     
+      <ion-input style="background-color: #d8d7d7;"  placeholder="Enter Details Here" [(ngModel)]="loan3"></ion-input>{{loanq4}}
+      
+      <ion-input style="background-color: #d8d7d7;"  placeholder="Enter Details Here" [(ngModel)]="loan4"></ion-input>{{loanq5}}
+     
+      <ion-input style="background-color: #d8d7d7;"  placeholder="Enter Details Here" [(ngModel)]="loan5"></ion-input>{{loanq6}}
+      
       <ion-input style="background-color: #d8d7d7;"  placeholder="Enter Details Here" [(ngModel)]="loan6"></ion-input>
       <button ion-button style="background-color: orange;" (click)="submitloanform()">Send Details</button>
     </ion-card>
