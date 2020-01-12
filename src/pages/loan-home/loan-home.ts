@@ -94,7 +94,7 @@ export class LoanHomePage {
   loan4;
   loan5;
   loan6;
-  loanq1 = "1. How interested are you in getting a loan? ";
+  loanq1 = "1. How urgently do you need a loan? ";
   loanq2 = "2. When would you like to get this loan?  ";
   loanq3 = "3. How much would you like to borrow? ";
   loanq4 = "4. How long will you need to pay it back?  ";
