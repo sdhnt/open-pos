@@ -34,6 +34,7 @@ export class LoanHomePage {
     this.events.subscribe("cbUpdate:created", data => {
       this.getUserData();
     });
+   
   }
 
   userdata: any = {
@@ -64,7 +65,10 @@ export class LoanHomePage {
     });
   }
 
-  ionViewDidLoad() {}
+  ionViewDidLoad() {
+    this.showloan=0;
+    this.loanvar=[];
+  }
 
   uploadbtn() {
     this.sp.backupStorage();
@@ -77,6 +81,34 @@ export class LoanHomePage {
       })
       .present();
   }
+
+  showloan=0;
+  loanvar: any=[];
+  showloanform(){
+    this.showloan=1;
+  }
+
+  loan1;
+  loan2;
+  loan3;
+  loan4;
+  loan5;
+  loan6;
+  loanq1="1. How interested are you in getting a loan? ";
+  loanq2="2. When would you like to get this loan?  ";
+  loanq3="3. How much would you like to borrow? ";
+  loanq4="4. How long will you need to pay it back?  ";
+  loanq5="5. What do you need  to loan for? ";
+  loanq6="6. What's the best way to contact you about the loan?";  
+  submitloanform(){
+      this.loanvar.push({
+        q: this.loanq1,
+        a: this.loan1
+      })
+  }
+
+
+  
 
   async cashbtn() {
     await this.getUserData();

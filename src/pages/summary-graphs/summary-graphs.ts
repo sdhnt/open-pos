@@ -68,7 +68,7 @@ export class SummaryGraphsPage {
             if (product.code != "000000") {
               this.pro =
                 this.pro +
-                (parseFloat(product.price) * (1 - parseFloat(product.discount)) - parseFloat(product.cost)) *
+                (parseFloat(product.price) * (100 - parseFloat(product.discount))/100 - parseFloat(product.cost)) *
                   parseFloat(product.qty);
               console.log(product);
             }

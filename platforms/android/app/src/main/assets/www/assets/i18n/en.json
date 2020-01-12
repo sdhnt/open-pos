@@ -133,6 +133,7 @@
   "Average Buying Cost:":"Average Buying Cost:",
   "Clear Fields":"Clear Fields",
   "Update Stock":"Update Stock",
+  "Update Stock/Expenses":"Update Stock/Expenses",
   "Update Inventory for existing products:":"Update Inventory for existing products:",
   "Settings":"Settings",
   "Add Wholesale Discount":"Add Wholesale Discount",
@@ -169,8 +170,17 @@
   "Email: example@abc.com":"Email: example@abc.com",
   "Your Name":"Your Name",
   "SUBMIT":"SUBMIT",
-  "CANCEL":"CANCEL"
-
+  "CANCEL":"CANCEL",
+  "Edit":"Edit",
+  "Enter Current Cash Balance":"Enter Current Cash Balance",
+  "Update":"Update",
+  "OK":"OK",
+  "Apply for Loan":"Apply for Loan",
+  "Edit Receipt Heading":"Edit Receipt Heading",
+  "Save":"Save",
+  "Enter Information":"Enter Information",
+  "Edit Receipt Details":"Edit Receipt Details",
+  "Incomplete. Try Again.":"Incomplete. Try Again."
 
   
 
