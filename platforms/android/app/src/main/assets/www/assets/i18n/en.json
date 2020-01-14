@@ -180,8 +180,9 @@
   "Save":"Save",
   "Enter Information":"Enter Information",
   "Edit Receipt Details":"Edit Receipt Details",
-  "Incomplete. Try Again.":"Incomplete. Try Again."
-
+  "Incomplete. Try Again.":"Incomplete. Try Again.",
+  "Code not permitted. Please use a different code": "Code not permitted. Please use a different code",
+  "Submitted!":"Submitted!"
   
 
 }

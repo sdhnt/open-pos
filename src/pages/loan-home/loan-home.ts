@@ -137,14 +137,16 @@ export class LoanHomePage {
       .catch(err => {
         console.log(err);
       });
-      this.loanvar=[];
-      this.showloan=0;
-      const msg = this.translateConfigService.getTranslatedMessage("Submitted!")
-      this.toastCtrl.create({
+    this.loanvar = [];
+    this.showloan = 0;
+    const msg = this.translateConfigService.getTranslatedMessage("Submitted!");
+    this.toastCtrl
+      .create({
         //@ts-ignore
         message: msg.value,
         duration: 3000,
-      }).present();
+      })
+      .present();
   }
 
   async cashbtn() {

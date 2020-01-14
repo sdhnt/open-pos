@@ -181,5 +181,7 @@
  "Save":"စောင့်ပါ",
  "Enter Information":"အချက်အလက်ထည့်ပါ",
  "Edit Receipt Details":"ငွေတောင်းခံတံဆိပ်တည်းဖြတ်ပါ",
- "Incomplete. Try Again.":"မပြည့်စုံဘူး။ ထပ်ကြိုးစားပါ ဦး"
+ "Incomplete. Try Again.":"မပြည့်စုံဘူး။ ထပ်ကြိုးစားပါ ဦး",
+ "Code not permitted. Please use a different code": "ကုဒ်ကခွင့်မပြုပါ။ ကျေးဇူးပြု၍ အခြားကုဒ်တစ်ခုကိုသုံးပါ",
+ "Submitted!":"တင်ပြီး"
 }
