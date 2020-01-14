@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, Events, ToastController } from "ionic-angular";
+import { IonicPage, NavController, NavParams, Events, ToastController , App} from "ionic-angular";
 import { StorageProvider } from "../../providers/storage/storage";
 import firebase from "firebase";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
@@ -30,6 +30,7 @@ export class ExpensesHomePage {
     public toastCtrl: ToastController,
     public barcodeScanner: BarcodeScanner,
     private gps: GeolocationService,
+    public app: App,
   ) {
     this.getUserData();
     this.gps
@@ -207,7 +208,8 @@ export class ExpensesHomePage {
       this.product = null;
       this.sp.backupStorage();
       toast.present();
-      this.navCtrl.setRoot(DashboardPage);
+      //this.navCtrl.setRoot(DashboardPage);
+      this.app.getRootNav().setRoot(DashboardPage)
     });
 
     //REFLECT CHANGE ON CASH BALANCE HERE & Reflect change in inventory here as well
