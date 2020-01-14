@@ -36,7 +36,7 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col col-6><button ion-button small full style="background-color: gray; color: white"
+          <ion-col col-6 *ngIf="getDate(transac.datetime) == getDate(currentdatetime)"><button ion-button small full style="background-color: gray; color: white"
               (click)="delTransac(transac)">{{"Delete Transaction"|translate}}</button></ion-col>
           <ion-col col-6><button ion-button small full style="background-color: gray; color: white"
               (click)="expandTransac(transac)">{{transac.expanded?"Expand":"Close"}}</button></ion-col>

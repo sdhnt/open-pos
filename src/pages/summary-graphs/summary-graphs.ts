@@ -76,7 +76,7 @@ export class SummaryGraphsPage {
           //console.log(element.totalatax)
           //CALCULATE PROFIT BASED ON EACH ITEM
         } else {
-          console.log(element.totalatax)
+          console.log(element.totalatax);
           this.exp += parseInt(element.totalatax);
         }
       }
