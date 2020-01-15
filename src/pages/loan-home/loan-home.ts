@@ -107,8 +107,8 @@ export class LoanHomePage {
   //@ts-ignore
   loanq6 = this.translateConfigService.getTranslatedMessage("6. What's the best way to contact you about the loan?").value;
   //@ts-ignore
+  randovar = this.translateConfigService.getTranslatedMessage("Close")
 
-  
   submitloanform() {
     this.loanvar.push({
       q: this.loanq1,
