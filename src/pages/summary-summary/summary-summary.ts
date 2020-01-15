@@ -26,8 +26,13 @@ export class SummarySummaryPage {
   SumAcc = SummaryAccountsPage;
   SumRec = SummaryHomePage;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events,
-    public alertCtrl: AlertController, private modal: ModalController) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public events: Events,
+    public alertCtrl: AlertController,
+    private modal: ModalController,
+  ) {
     // this.events.subscribe("ViewRecs", (data)=> {
     //   (this.navCtrl.parent as Tabs).select(2);
     //   console.log("ViewRecs Event")
@@ -42,12 +47,12 @@ export class SummarySummaryPage {
     console.log("ionViewDidLoad SummarySummaryPage");
   }
 
-  help(){
-    const passedData = { //youtube link, required text
+  help() {
+    const passedData = {
+      //youtube link, required text
       page: "Business Summary Page",
-
     };
-    const helpModal = this.modal.create('HelpPage', {data: passedData});
+    const helpModal = this.modal.create("HelpPage", { data: passedData });
     helpModal.present();
   }
 }

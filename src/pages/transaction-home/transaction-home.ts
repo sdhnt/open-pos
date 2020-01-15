@@ -1,5 +1,14 @@
 import { Component, ViewChild } from "@angular/core";
-import { IonicPage, NavController, NavParams, Tabs, ToastController, Events, AlertController, ModalController } from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  Tabs,
+  ToastController,
+  Events,
+  AlertController,
+  ModalController,
+} from "ionic-angular";
 import firebase from "firebase";
 import { AddProductPage } from "../addproduct/addproduct";
 import { AllTransactionPage } from "../all-transaction/all-transaction";
@@ -41,14 +50,14 @@ export class TransactionHomePage {
     public sp: StorageProvider,
     public events: Events,
     public alertCtrl: AlertController,
-    private modal: ModalController
+    private modal: ModalController,
   ) {
     //this.getUserData();
     //this.tutorial();
     this.events.subscribe("newUser", data => {
       this.events.unsubscribe("newUser");
       this.tutorial();
-    })
+    });
 
     this.events.subscribe("cbUpdate:created", async data => {
       await this.getUserData();
@@ -184,40 +193,40 @@ export class TransactionHomePage {
     console.log(this.userdata.language);
   }
 
-  tutorial(){
+  tutorial() {
     //translate messages
-    
+
     const a = this.alertCtrl.create({
       title: "First Time User",
       message: "Hello, welcome to Open Fintech",
       buttons: [
         {
           text: "Skip tutorial",
-          role: "cancel"
+          role: "cancel",
         },
         {
           text: "Show video",
           handler: () => {
-            this.navCtrl.push(CoachHomePage)
-          }
+            this.navCtrl.push(CoachHomePage);
+          },
         },
         {
           text: "Next",
           handler: () => {
-            console.log("Show next page if any")
-          }
-        }
-      ]
+            console.log("Show next page if any");
+          },
+        },
+      ],
     });
     a.present();
   }
 
-  help(){
-    const passedData = { //youtube link, required text
+  help() {
+    const passedData = {
+      //youtube link, required text
       page: "Transaction Page",
-
     };
-    const helpModal = this.modal.create('HelpPage', {data: passedData});
+    const helpModal = this.modal.create("HelpPage", { data: passedData });
     helpModal.present();
   }
 }

@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
-import { CoachHomePage } from '../coach-home/coach-home';
+import { Component } from "@angular/core";
+import { IonicPage, NavController, NavParams, ViewController } from "ionic-angular";
+import { CoachHomePage } from "../coach-home/coach-home";
 
 /**
  * Generated class for the HelpPage page.
@@ -11,24 +11,24 @@ import { CoachHomePage } from '../coach-home/coach-home';
 
 @IonicPage()
 @Component({
-  selector: 'page-help',
-  templateUrl: 'help.html',
+  selector: "page-help",
+  templateUrl: "help.html",
 })
 export class HelpPage {
   data: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, private view: ViewController) {
-    this.data = this.navParams.get('data');
+    this.data = this.navParams.get("data");
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad HelpPage');
+    console.log("ionViewDidLoad HelpPage");
   }
 
-  close(){
+  close() {
     this.view.dismiss();
   }
 
-  navigate(){
+  navigate() {
     this.navCtrl.push(CoachHomePage);
   }
 }

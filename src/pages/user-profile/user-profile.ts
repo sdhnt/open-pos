@@ -65,7 +65,7 @@ export class UserProfilePage {
     private toastCtrl: ToastController,
     private translateConfigService: TranslateConfigService,
     public alertCtrl: AlertController,
-    private modal: ModalController
+    private modal: ModalController,
   ) {
     (this.temptimes = this.navParams.get("timestamp")),
       (this.tempuser = this.navParams.get("user")),
@@ -245,12 +245,12 @@ export class UserProfilePage {
     this.submitButton = !isEqual(this.user, this.oldUser);
   }
 
-  help(){
-    const passedData = { //youtube link, required text
+  help() {
+    const passedData = {
+      //youtube link, required text
       page: "Profile Page",
-
     };
-    const helpModal = this.modal.create('HelpPage', {data: passedData});
+    const helpModal = this.modal.create("HelpPage", { data: passedData });
     helpModal.present();
   }
 }

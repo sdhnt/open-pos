@@ -1,5 +1,13 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, AlertController, ToastController, Events, ModalController } from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  AlertController,
+  ToastController,
+  Events,
+  ModalController,
+} from "ionic-angular";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import { BarcodeScanner } from "@ionic-native/barcode-scanner";
 import { StorageProvider } from "../../providers/storage/storage";
@@ -30,7 +38,7 @@ export class LoanHomePage {
     public getset: GettersetterProvider,
     private toastCtrl: ToastController,
     public events: Events,
-    private modal: ModalController
+    private modal: ModalController,
   ) {
     this.getUserData();
 
@@ -210,12 +218,12 @@ export class LoanHomePage {
       .present();
   }
 
-  help(){
-    const passedData = { //youtube link, required text
+  help() {
+    const passedData = {
+      //youtube link, required text
       page: "Loan Page",
-
     };
-    const helpModal = this.modal.create('HelpPage', {data: passedData});
+    const helpModal = this.modal.create("HelpPage", { data: passedData });
     helpModal.present();
   }
 }

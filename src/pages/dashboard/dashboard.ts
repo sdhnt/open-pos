@@ -42,7 +42,7 @@ export class DashboardPage {
     public getset: GettersetterProvider,
     private toastCtrl: ToastController,
     public events: Events,
-    private modal: ModalController
+    private modal: ModalController,
   ) {
     this.getUserData();
 
@@ -261,12 +261,12 @@ export class DashboardPage {
     toast.present();
   }
 
-  help(){
-    const passedData = { //youtube link, required text
+  help() {
+    const passedData = {
+      //youtube link, required text
       page: "Products & Stock Page",
-
     };
-    const helpModal = this.modal.create('HelpPage', {data: passedData});
+    const helpModal = this.modal.create("HelpPage", { data: passedData });
     helpModal.present();
   }
 }

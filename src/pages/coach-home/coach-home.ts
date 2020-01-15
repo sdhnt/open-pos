@@ -29,7 +29,7 @@ export class CoachHomePage {
     private translateConfigService: TranslateConfigService,
     public navParams: NavParams,
     public alertCtrl: AlertController,
-    private modal: ModalController
+    private modal: ModalController,
   ) {}
 
   ionViewDidLoad() {
@@ -40,12 +40,12 @@ export class CoachHomePage {
     this.navCtrl.push(ContactUsPage);
   }
 
-  help(){
-    const passedData = { //youtube link, required text
+  help() {
+    const passedData = {
+      //youtube link, required text
       page: "Transaction Page",
-
     };
-    const helpModal = this.modal.create('HelpPage', {data: passedData});
+    const helpModal = this.modal.create("HelpPage", { data: passedData });
     helpModal.present();
   }
 }
