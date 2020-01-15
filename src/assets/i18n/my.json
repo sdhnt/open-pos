@@ -188,18 +188,18 @@
  "Invalid! Some required fields are empty":"မမှန်ကန်ပါ။ အချို့လိုအပ်သောကွက်လပ်များသည်ကွက်လပ်ဖြစ်နေသည်",
  "Delete Expense":"အသုံးစရိတ်ပယ်ဖျက်ပါ",
 
-
-
-
-
-
+ "Transportation": "သယ်ယူပို့ဆောင်ရေး", 
+ "Salaries": "လစာ",  
+ "Utilities": "ဘီလ်", 
+ "Depreciation": "ဆုံးရှုံးမှု", 
+ "Miscellaneous": "အထွေထွေ",
 
 "Add expense" : "ကုန်ကျစရိတ်ထည့်မည်",
 "Add non-inventory expense" : "အခြားကုန်ကျစရိတ်ထည့်မည်",
 "Expense name" : "ကုန်ကျစရိတ်နာမည်",
-"Expense type": "ကုန်ကျစရိတ်အမျိုးအစား",
+"Expense Type": "ကုန်ကျစရိတ်အမျိုးအစား",
 "Add another expense" : "နောက်ထပ်ကုန်ကျစရိတ်ထည့်မည်",
-"Update expense" :  "ကုန်ကျစရိတ်များကိုပြင်ဆင်မည်။",
+"Update Expense" :  "ကုန်ကျစရိတ်များကိုပြင်ဆင်မည်။",
 "Analysis" : "လေ့လာချက်",
 "Revenue" : "ဝင်ငွေ",
 "Expenditure": "အသုံးစရိတ်",
@@ -209,7 +209,7 @@
 
 "Accounts" : "အကောင့်များ",
 
-"Current cash balance" : "လက်ရှိငွေပမာဏ",
+"Current Cash Balance" : "လက်ရှိငွေပမာဏ",
 "Net Cashflow today" : "ယနေ့အသားတင်‌ငွေလည်ပတ်မှု",
 "Net Cashflow 7 days": "၇ရက်အသားတင်‌ငွေလည်ပတ်မှု",
 "Net Cashflow 30 days" : "ရက်၃၀အသားတင်‌ငွေလည်ပတ်မှု",
@@ -219,7 +219,7 @@
 "Amount": "ပမာဏ",
 "Type": "အမျိုးအစား",
 
-
+"Add Expense": "ကုန်ကျစရိတ်ထည့်မည်",
 "Today": "ဒီနေ့",
 "Last 7 days": "နောက်ဆုံး ၇ ရက်",
 "This Month": "ဤလတွင်",

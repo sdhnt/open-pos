@@ -36,6 +36,8 @@ export class ExpenseGeneralPage {
     public toastCtrl: ToastController,
     private gps: GeolocationService,
   ) {
+
+
     this.getUserData();
     this.listOfExpenses = [];
     this.listOfExpenses.push(new Expense());
@@ -46,8 +48,16 @@ export class ExpenseGeneralPage {
     });
   }
 
+  expType1 = [];
   ionViewDidLoad() {
     console.log("ionViewDidLoad ExpenseGeneralPage");
+    this.expType.forEach(element => {
+      console.log(element)
+      //@ts-ignore
+      console.log(this.translateConfigService.getTranslatedMessage(element).value)
+      //@ts-ignore
+      this.expType1.push(this.translateConfigService.getTranslatedMessage(element).value);
+    });
   }
 
   addExpense(){

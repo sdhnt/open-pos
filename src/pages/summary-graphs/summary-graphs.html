@@ -13,11 +13,11 @@
 <ion-content padding>
 
 <ion-select style="background-color: silver;max-width: 100%;" [(ngModel)]="group"  (ionChange)="setvalues()">
-  <ion-option value="today">Today</ion-option>
+  <ion-option value="today">{{"Today"|translate}}</ion-option>
   <!-- <ion-option value="week">This Week</ion-option> -->
-  <ion-option value="last7">Last 7 days</ion-option>
-  <ion-option value="month">This Month</ion-option>
-  <ion-option value="last30">Last 30 days</ion-option>
+  <ion-option value="last7">{{"Last 7 days"|translate}}</ion-option>
+  <ion-option value="month">{{"This Month"|translate}}</ion-option>
+  <ion-option value="last30">{{"Last 30 days"|translate}}</ion-option>
 </ion-select>
 <ion-item>
   <ion-row>

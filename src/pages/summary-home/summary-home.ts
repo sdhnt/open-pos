@@ -42,18 +42,17 @@ export class SummaryHomePage {
     console.log("changing: " + this.expanded);
     if (this.expanded == true) {
       this.expanded = false;
-      
+
       // this.zone.run(()=>{
       //   //@ts-ignore
       //   this.expandedvar = this.translateConfigService.getTranslatedMessage("Close").value;
       // })
-      
     } else if (this.expanded == false) {
       this.expanded = true;
-    //   this.zone.run(()=>{
-    //   //@ts-ignore
-    //   this.expandedvar = this.translateConfigService.getTranslatedMessage("Expand").value;
-    // });
+      //   this.zone.run(()=>{
+      //   //@ts-ignore
+      //   this.expandedvar = this.translateConfigService.getTranslatedMessage("Expand").value;
+      // });
     }
 
     console.log("changed: " + this.expandedvar);
@@ -127,11 +126,12 @@ export class SummaryHomePage {
     if (transac.expanded == true) {
       transac.expanded = false;
       //@ts-ignore
-      transac.expandedvar=this.translateConfigService.getTranslatedMessage("Expand").value
+      transac.expandedvar = this.translateConfigService.getTranslatedMessage("Close").value;
     } else {
       transac.expanded = true;
       //@ts-ignore
-      transac.expandedvar=this.translateConfigService.getTranslatedMessage("Close").value
+      
+      transac.expandedvar = this.translateConfigService.getTranslatedMessage("Expand").value;
     }
   }
 
@@ -152,7 +152,7 @@ export class SummaryHomePage {
             element.datetime1 = this.getDateTime(element.datetime);
             element.expanded = true;
             //@ts-ignore
-            element.expandedvar=this.translateConfigService.getTranslatedMessage("Expand").value
+            element.expandedvar = this.translateConfigService.getTranslatedMessage("Expand").value;
           });
           this.listtransacrev = this.listtransac.reverse();
           console.log(this.listtransac);
@@ -174,8 +174,8 @@ export class SummaryHomePage {
         });
     });
   }
-  //@ts-ignore  
-  expandedvar=this.translateConfigService.getTranslatedMessage("Expand").value;
+  //@ts-ignore
+  expandedvar = this.translateConfigService.getTranslatedMessage("Expand").value;
 
   // getDateTime(datetime) {
   //   //return (datetime.getDate() + "/" + (datetime.getMonth() + 1) + "/" + datetime. getFullYear())
