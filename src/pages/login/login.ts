@@ -6,6 +6,7 @@ import {
   ToastController,
   AlertController,
   LoadingController,
+  Events,
 } from "ionic-angular";
 import firebase, { auth } from "firebase";
 import { SignUpPage } from "../sign-up/sign-up";
@@ -47,6 +48,7 @@ export class LoginPage {
     public alertCtrl: AlertController,
     private translateConfigService: TranslateConfigService,
     private loadingCtrl: LoadingController,
+    public events: Events,
   ) {
     this.loadDropDowns();
     this.getInfo();
@@ -361,6 +363,7 @@ export class LoginPage {
                   //this.sp.clearMem();
                   this.sp.setMem();
                   this.navCtrl.setRoot(TransactionHomePage); //navigate to feeds page
+                  this.events.publish("newUser");
                 }, //end handler
               },
             ], //end button

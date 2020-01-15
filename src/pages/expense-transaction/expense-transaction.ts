@@ -4,6 +4,7 @@ import { TranslateConfigService } from "../../providers/translation/translate-co
 import { ExpensesHomePage } from "../expenses-home/expenses-home";
 import { ExpenseGeneralPage } from "../expense-general/expense-general";
 import { StorageProvider } from "../../providers/storage/storage";
+import { CoachHomePage } from "../coach-home/coach-home";
 
 /**
  * Generated class for the ExpenseTransactionPage page.
@@ -149,5 +150,25 @@ export class ExpenseTransactionPage {
   setUsrLang() {
     this.translateConfigService.setLanguage(this.userdata.language);
     console.log(this.userdata.language);
+  }
+  
+  help(){
+    const a = this.alertCtrl.create({
+      title: "Help",
+      message: "Welcome to Expense home page",
+      buttons: [
+        {
+          text: "Show video",
+          handler: () => {
+            this.navCtrl.push(CoachHomePage);
+          }
+        },
+        {
+          text: "OK",
+          role: "cancel"
+        }
+      ]
+    });
+    a.present();
   }
 }

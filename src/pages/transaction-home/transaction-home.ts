@@ -9,6 +9,8 @@ import { TransactionProductPage } from "../transaction-product/transaction-produ
 import { StorageProvider } from "../../providers/storage/storage";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import { LoginPage } from "../login/login";
+import { CoachGoalsPage } from "../coach-goals/coach-goals";
+import { CoachHomePage } from "../coach-home/coach-home";
 
 /**
  * Generated class for the TransactionHomePage page.
@@ -42,6 +44,10 @@ export class TransactionHomePage {
     public alertCtrl: AlertController,
   ) {
     //this.getUserData();
+    this.tutorial();
+    this.events.subscribe("newUser", data => {
+      this.tutorial();
+    })
 
     this.events.subscribe("cbUpdate:created", async data => {
       await this.getUserData();
@@ -175,5 +181,53 @@ export class TransactionHomePage {
   setUsrLang() {
     this.translateConfigService.setLanguage(this.userdata.language);
     console.log(this.userdata.language);
+  }
+
+  tutorial(){
+    //translate messages
+    
+    const a = this.alertCtrl.create({
+      title: "First Time User",
+      message: "Hello, welcome to Open Fintech",
+      buttons: [
+        {
+          text: "Skip tutorial",
+          role: "cancel"
+        },
+        {
+          text: "Show video",
+          handler: () => {
+            this.navCtrl.push(CoachHomePage)
+          }
+        },
+        {
+          text: "Next",
+          handler: () => {
+            console.log("Show next page if any")
+          }
+        }
+      ]
+    });
+    a.present();
+  }
+
+  help(){
+    const a = this.alertCtrl.create({
+      title: "Help",
+      message: "Welcome to Transaction home page",
+      buttons: [
+        {
+          text: "Show video",
+          handler: () => {
+            this.navCtrl.push(CoachHomePage);
+          }
+        },
+        {
+          text: "OK",
+          role: "cancel"
+        }
+      ]
+    });
+    a.present();
   }
 }

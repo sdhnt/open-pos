@@ -12,6 +12,7 @@ import { ProductListPage } from "../product-list/product-list";
 import { AddProductCategoryPage } from "../add-product-category/add-product-category";
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
+import { CoachHomePage } from "../coach-home/coach-home";
 
 @Component({
   selector: "page-dashboard",
@@ -257,5 +258,25 @@ export class DashboardPage {
       duration: 2000,
     });
     toast.present();
+  }
+
+  help(){
+    const a = this.alertCtrl.create({
+      title: "Help",
+      message: "Welcome to Dashboard page",
+      buttons: [
+        {
+          text: "Show video",
+          handler: () => {
+            this.navCtrl.push(CoachHomePage);
+          }
+        },
+        {
+          text: "OK",
+          role: "cancel"
+        }
+      ]
+    });
+    a.present();
   }
 }
