@@ -7,6 +7,5 @@ import { TranslateModule } from "@ngx-translate/core";
   declarations: [ExpenseGeneralPage],
   imports: [IonicPageModule.forChild(ExpenseGeneralPage), TranslateModule.forChild()],
   exports: [ExpenseGeneralPage],
-
 })
 export class ExpenseGeneralPageModule {}

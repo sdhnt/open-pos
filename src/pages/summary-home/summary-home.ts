@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, NgZone } from "@angular/core";
 import { IonicPage, NavController, NavParams, ToastController, Events, Tabs } from "ionic-angular";
 import { StorageProvider } from "../../providers/storage/storage";
 import Moment from "moment";
@@ -24,6 +24,7 @@ export class SummaryHomePage {
     public sp: StorageProvider,
     public events: Events,
     public toastCtrl: ToastController,
+    public zone: NgZone,
   ) {
     this.events.subscribe("ViewRecs", data => {
       (this.navCtrl.parent as Tabs).select(2);
@@ -41,15 +42,21 @@ export class SummaryHomePage {
     console.log("changing: " + this.expanded);
     if (this.expanded == true) {
       this.expanded = false;
-      //@ts-ignore
-      this.expandedvar=this.translateConfigService.getTranslatedMessage("Close").value;
+      
+      // this.zone.run(()=>{
+      //   //@ts-ignore
+      //   this.expandedvar = this.translateConfigService.getTranslatedMessage("Close").value;
+      // })
+      
     } else if (this.expanded == false) {
       this.expanded = true;
-      //@ts-ignore
-      this.expandedvar=this.translateConfigService.getTranslatedMessage("Expand").value;
+    //   this.zone.run(()=>{
+    //   //@ts-ignore
+    //   this.expandedvar = this.translateConfigService.getTranslatedMessage("Expand").value;
+    // });
     }
 
-    console.log("changed: " + this.expanded);
+    console.log("changed: " + this.expandedvar);
   }
 
   ionViewDidLoad() {
@@ -59,7 +66,7 @@ export class SummaryHomePage {
     this.ts30 = 0;
     this.usrchoice = "today";
     //@ts-ignore
-    this.expandedvar=this.translateConfigService.getTranslatedMessage("Expand").value;
+    //this.expandedvar = this.translateConfigService.getTranslatedMessage("Expand").value;
     this.getTransac();
   }
 
@@ -119,8 +126,12 @@ export class SummaryHomePage {
   expandTransac(transac) {
     if (transac.expanded == true) {
       transac.expanded = false;
+      //@ts-ignore
+      transac.expandedvar=this.translateConfigService.getTranslatedMessage("Expand").value
     } else {
       transac.expanded = true;
+      //@ts-ignore
+      transac.expandedvar=this.translateConfigService.getTranslatedMessage("Close").value
     }
   }
 
@@ -140,6 +151,8 @@ export class SummaryHomePage {
           this.listtransac.forEach(element => {
             element.datetime1 = this.getDateTime(element.datetime);
             element.expanded = true;
+            //@ts-ignore
+            element.expandedvar=this.translateConfigService.getTranslatedMessage("Expand").value
           });
           this.listtransacrev = this.listtransac.reverse();
           console.log(this.listtransac);
@@ -161,8 +174,8 @@ export class SummaryHomePage {
         });
     });
   }
-
-  expandedvar;
+  //@ts-ignore  
+  expandedvar=this.translateConfigService.getTranslatedMessage("Expand").value;
 
   // getDateTime(datetime) {
   //   //return (datetime.getDate() + "/" + (datetime.getMonth() + 1) + "/" + datetime. getFullYear())
