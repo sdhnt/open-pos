@@ -130,7 +130,7 @@ export class SummaryHomePage {
     } else {
       transac.expanded = true;
       //@ts-ignore
-      
+
       transac.expandedvar = this.translateConfigService.getTranslatedMessage("Expand").value;
     }
   }

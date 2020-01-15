@@ -7,7 +7,6 @@ import { ProductListPage } from "../product-list/product-list";
 import { DashboardPage } from "../dashboard/dashboard";
 import { GeolocationService } from "../../providers/geolocation/geolocation.service";
 
-
 /**
  * Generated class for the ExpenseGeneralPage page.
  *
@@ -21,14 +20,14 @@ import { GeolocationService } from "../../providers/geolocation/geolocation.serv
   templateUrl: "expense-general.html",
 })
 export class ExpenseGeneralPage {
-  expType: string[] = ["Transportation", "Salaries",  "Utilities", "Depreciation", "Miscellaneous"];
+  expType: string[] = ["Transportation", "Salaries", "Utilities", "Depreciation", "Miscellaneous"];
   listOfExpenses: Expense[];
   geolocation: {};
   currtime = new Date();
-  userdata:any;
+  userdata: any;
 
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     private translateConfigService: TranslateConfigService,
     public sp: StorageProvider,
@@ -36,57 +35,57 @@ export class ExpenseGeneralPage {
     public toastCtrl: ToastController,
     private gps: GeolocationService,
   ) {
-
-
     this.getUserData();
     this.listOfExpenses = [];
     this.listOfExpenses.push(new Expense());
-    this.gps.getCoordinates().then(coordinates => {
-      this.geolocation = coordinates;
-    }).catch(error => {
-      console.log(error);
-    });
+    this.gps
+      .getCoordinates()
+      .then(coordinates => {
+        this.geolocation = coordinates;
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   expType1 = [];
   ionViewDidLoad() {
     console.log("ionViewDidLoad ExpenseGeneralPage");
     this.expType.forEach(element => {
-      console.log(element)
+      console.log(element);
       //@ts-ignore
-      console.log(this.translateConfigService.getTranslatedMessage(element).value)
+      console.log(this.translateConfigService.getTranslatedMessage(element).value);
       //@ts-ignore
       this.expType1.push(this.translateConfigService.getTranslatedMessage(element).value);
     });
   }
 
-  addExpense(){
+  addExpense() {
     this.listOfExpenses.push(new Expense());
   }
 
-  removeExpense(index: number){
+  removeExpense(index: number) {
     this.listOfExpenses.splice(index, 1);
   }
 
-  async updateExpenses(){
+  async updateExpenses() {
     const itemslist = [];
     let totalsum = 0;
-    this.listOfExpenses.forEach((element) => {
-      if(!element.isValid()){
+    this.listOfExpenses.forEach(element => {
+      if (!element.isValid()) {
         element.flag = false;
         return;
-      }
-      else{
-        element.flag=true;
+      } else {
+        element.flag = true;
         totalsum -= element.amount;
         const prodOfExpense = {
           cat: element.type,
           code: "EXPENSE",
           discount: 0,
           name: element.name,
-          price: element.amount*-1,
+          price: element.amount * -1,
           qty: 1,
-          stock_qty: 0
+          stock_qty: 0,
         };
         itemslist.push(prodOfExpense);
       }
@@ -104,13 +103,13 @@ export class ExpenseGeneralPage {
       discount: 0,
       totaldisc: totalsum,
       totalatax: totalsum,
-      geolocation: this.geolocation
+      geolocation: this.geolocation,
     };
     console.log(dataexp);
     this.sp.storageReady().then(() => {
       this.sp.addTransactions(dataexp);
-      this.updateCb(Math.abs(totalsum)).then(()=>{
-        this.events.publish("cbUpdate:created",0);
+      this.updateCb(Math.abs(totalsum)).then(() => {
+        this.events.publish("cbUpdate:created", 0);
       });
       const message = this.translateConfigService.getTranslatedMessage("Finish");
       const toast = this.toastCtrl.create({
@@ -119,11 +118,11 @@ export class ExpenseGeneralPage {
         duration: 3000,
       });
 
-    toast.present();
-    this.currtime = new Date();
-    this.listOfExpenses = [];
-    this.listOfExpenses.push(new Expense());
-    this.sp.backupStorage();
+      toast.present();
+      this.currtime = new Date();
+      this.listOfExpenses = [];
+      this.listOfExpenses.push(new Expense());
+      this.sp.backupStorage();
     });
   }
 
@@ -149,18 +148,18 @@ export class ExpenseGeneralPage {
 }
 
 class Expense {
-  public name: String;
-  public type: String;
+  public name: string;
+  public type: string;
   public amount: number;
   //public notes: String;
   public flag: boolean;
 
-  constructor(){
-    this.flag=true;
+  constructor() {
+    this.flag = true;
   }
 
-  isValid(){
-    if(this.name==undefined || this.type==undefined || this.amount==undefined) return false;
+  isValid() {
+    if (this.name == undefined || this.type == undefined || this.amount == undefined) return false;
     return true;
   }
 }
