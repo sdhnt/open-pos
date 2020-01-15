@@ -187,13 +187,11 @@
  "Reach us on Facebook":"ကျွန်တော်တို့ကို Facebook ကိုခေါ်သွားပါ",
  "Invalid! Some required fields are empty":"မမှန်ကန်ပါ။ အချို့လိုအပ်သောကွက်လပ်များသည်ကွက်လပ်ဖြစ်နေသည်",
  "Delete Expense":"အသုံးစရိတ်ပယ်ဖျက်ပါ",
-
  "Transportation": "သယ်ယူပို့ဆောင်ရေး", 
  "Salaries": "လစာ",  
  "Utilities": "ဘီလ်", 
  "Depreciation": "ဆုံးရှုံးမှု", 
  "Miscellaneous": "အထွေထွေ",
-
 "Add expense" : "ကုန်ကျစရိတ်ထည့်မည်",
 "Add non-inventory expense" : "အခြားကုန်ကျစရိတ်ထည့်မည်",
 "Expense name" : "ကုန်ကျစရိတ်နာမည်",
@@ -206,9 +204,7 @@
 "Profit" : "အမြတ်",
 "Bar Chart": "ဘားဂရပ်",
 "Line Chart": "မျဉ်းဂရပ်",
-
 "Accounts" : "အကောင့်များ",
-
 "Current Cash Balance" : "လက်ရှိငွေပမာဏ",
 "Net Cashflow today" : "ယနေ့အသားတင်‌ငွေလည်ပတ်မှု",
 "Net Cashflow 7 days": "၇ရက်အသားတင်‌ငွေလည်ပတ်မှု",
@@ -218,7 +214,6 @@
 "Item": "ပစ္စည်း",
 "Amount": "ပမာဏ",
 "Type": "အမျိုးအစား",
-
 "Add Expense": "ကုန်ကျစရိတ်ထည့်မည်",
 "Today": "ဒီနေ့",
 "Last 7 days": "နောက်ဆုံး ၇ ရက်",
@@ -240,7 +235,6 @@
 "Lower Interest": "အတိုးနှုန်းနည်းခြင်း",
 "Low Borrow Amount" : "ချေးငွေနည်းနည်းရခြင်း",
 "High Borrow Amount": "ချေးငွေများများရခြင်း",
-
 "Interested in Applying for Loan" : "ချေးငွေတောင်းဖို့စိတ်ဝင်စားပါသလား။",
 "1. How urgently do you need a loan?" : "သင်ချေးငွေကိုဘယ်လောက်မြန်မြန်လိုအပ်ပါသလဲ။",
 "2. When would you like to get this loan?" : "သင်ချေးငွေကိုဘယ်အချိန်နောက်ဆုံးထားပြီးရချင်ပါသလဲ။",

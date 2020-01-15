@@ -106,6 +106,9 @@ export class LoanHomePage {
   loanq5 = this.translateConfigService.getTranslatedMessage("5. What do you need the loan for?").value;
   //@ts-ignore
   loanq6 = this.translateConfigService.getTranslatedMessage("6. What's the best way to contact you about the loan?").value;
+  //@ts-ignore
+
+  
   submitloanform() {
     this.loanvar.push({
       q: this.loanq1,
