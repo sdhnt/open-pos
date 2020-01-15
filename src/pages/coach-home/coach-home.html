@@ -9,7 +9,7 @@
       <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
-      <ion-title>"{{Coach|translate}}"</ion-title>
+      <ion-title>{{"Coach"|translate}}</ion-title>
       <ion-buttons end><button ion-button (click)="contactpg()" style="align-self: right; background-color:#222"><ion-icon name="contact" style="align-self: center; color: white;" padding></ion-icon></button></ion-buttons>
           </ion-navbar>
   </ion-header>
@@ -18,7 +18,7 @@
 <ion-content padding>
 
     <ion-tabs tabsPlacement="top" #myTabs>
-        <ion-tab [root]="Goals" tabTitle="{{'Tutorials|translate'}}" tabIcon="paper-plane"></ion-tab>
+        <ion-tab [root]="Goals" tabTitle="{{'Tutorials'|translate }}" tabIcon="paper-plane"></ion-tab>
         <ion-tab [root]="Coach" tabTitle="{{'Advice'|translate}}" tabIcon="school"></ion-tab>
         <!-- <ion-tab [root]="Tips" tabTitle="စီးပွားရေးသိကောင်းစရာများ" tabIcon="cash"></ion-tab>
          -->
