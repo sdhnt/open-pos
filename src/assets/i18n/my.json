@@ -233,22 +233,23 @@
 "loan descrip": "နောက်တစ်ဆိုင်ဖွင့်ဖို့လိုနေပြီလား?  စာရင်းစာအုပ်တွေအသစ်ထပ်ဝယ်နေရပြီလား? ဈေးကျလို့ပစ္စည်းတွေအစုလိုက်ဝယ်ရပြီလား? လျင်လျင်မြန်မြန် ဈေးသက်သာစွာ နှင့် ငွေကြေးအလွယ်တကူရနိုင်သော Open ကို အခုပဲသုံးလိုက်ပါ။",
 "Traditional" : "သာမန်",
 "Long Application": "ချေးငွေလျှောက်ရကြာခြင်း",
-"Slow Application": "ချေးငွေလျှောက်ရမြန်ခြင်း",
+"Quick Application": "လျင်မြန်စွာလျှောက်လွှာ",
 "Slow Approval": "ခွင့်ပြုမိန့်ကြာခြင်း",
 "Fast Approval": "ခွင့်ပြု့မိန့်မြန်ခြင်း",
 "High Interest": "အတိုးနှုန်းများခြင်း",
 "Lower Interest": "အတိုးနှုန်းနည်းခြင်း",
-"Low Borrow amount" : "ချေးငွေနည်းနည်းရခြင်း",
-"High Borrow amount": "ချေးငွေများများရခြင်း",
+"Low Borrow Amount" : "ချေးငွေနည်းနည်းရခြင်း",
+"High Borrow Amount": "ချေးငွေများများရခြင်း",
+
 "Interested in Applying for Loan" : "ချေးငွေတောင်းဖို့စိတ်ဝင်စားပါသလား။",
-"How urgently do you need a loan" : "သင်ချေးငွေကိုဘယ်လောက်မြန်မြန်လိုအပ်ပါသလဲ။",
-"When would you like to get this loan" : "သင်ချေးငွေကိုဘယ်အချိန်နောက်ဆုံးထားပြီးရချင်ပါသလဲ။",
-"How much would you like to borrow" : "သင်ချေးငွေဘယ်လောက်ယူမှာလဲ။",
-"How long will you need to pay it back" : "သင်ချေးငွေကို ဘယ်လောက်ကြာကြာပြန်ပေးမလဲ။",
-"What do you need to loan for" : "ဘာအတွက်ကြောင့်သင်ချေးငွေလိုအပ်ရပါသလဲ။",
-"What's the best way to contact you about the loan": "ချေးငွေနှင့်ပက်သက်ပြီး သင့်ကိုဘယ်လိုဆက်သွယ်အကြောင်းကြားလို့ရမလဲ။",
-"Enter details here" : "အသေးစိတ်ရေးပေးပါ။",
-"Send details" : "ပေးပို့မည်။"
+"1. How urgently do you need a loan?" : "သင်ချေးငွေကိုဘယ်လောက်မြန်မြန်လိုအပ်ပါသလဲ။",
+"2. When would you like to get this loan?" : "သင်ချေးငွေကိုဘယ်အချိန်နောက်ဆုံးထားပြီးရချင်ပါသလဲ။",
+"3. How much would you like to borrow?" : "သင်ချေးငွေဘယ်လောက်ယူမှာလဲ။",
+"4. How long will you need to pay it back?": "သင်ချေးငွေကို ဘယ်လောက်ကြာကြာပြန်ပေးမလဲ။",
+"5. What do you need the loan for?" : "ဘာအတွက်ကြောင့်သင်ချေးငွေလိုအပ်ရပါသလဲ။",
+"6. What's the best way to contact you about the loan?": "ချေးငွေနှင့်ပက်သက်ပြီး သင့်ကိုဘယ်လိုဆက်သွယ်အကြောင်းကြားလို့ရမလဲ။",
+"Enter Details Here" : "အသေးစိတ်ရေးပေးပါ။",
+"Send Details" : "ပေးပို့မည်။"
 
 
 }
