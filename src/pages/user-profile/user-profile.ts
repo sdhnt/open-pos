@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, ToastController, AlertController } from "ionic-angular";
+import { IonicPage, NavController, NavParams, ToastController, AlertController, ModalController } from "ionic-angular";
 import { StorageProvider } from "../../providers/storage/storage";
 import { FormControl, FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { TransactionHomePage } from "../transaction-home/transaction-home";
@@ -64,7 +64,8 @@ export class UserProfilePage {
     private formBuilder: FormBuilder,
     private toastCtrl: ToastController,
     private translateConfigService: TranslateConfigService,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    private modal: ModalController
   ) {
     (this.temptimes = this.navParams.get("timestamp")),
       (this.tempuser = this.navParams.get("user")),
@@ -245,22 +246,11 @@ export class UserProfilePage {
   }
 
   help(){
-    const a = this.alertCtrl.create({
-      title: "Help",
-      message: "Welcome to Profile page",
-      buttons: [
-        {
-          text: "Show video",
-          handler: () => {
-            this.navCtrl.push(CoachHomePage);
-          }
-        },
-        {
-          text: "OK",
-          role: "cancel"
-        }
-      ]
-    });
-    a.present();
+    const passedData = { //youtube link, required text
+      page: "Profile Page",
+
+    };
+    const helpModal = this.modal.create('HelpPage', {data: passedData});
+    helpModal.present();
   }
 }

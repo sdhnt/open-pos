@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import { IonicPage, NavController, NavParams, Tabs, ToastController, Events, AlertController } from "ionic-angular";
+import { IonicPage, NavController, NavParams, Tabs, ToastController, Events, AlertController, ModalController } from "ionic-angular";
 import firebase from "firebase";
 import { AddProductPage } from "../addproduct/addproduct";
 import { AllTransactionPage } from "../all-transaction/all-transaction";
@@ -9,7 +9,6 @@ import { TransactionProductPage } from "../transaction-product/transaction-produ
 import { StorageProvider } from "../../providers/storage/storage";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import { LoginPage } from "../login/login";
-import { CoachGoalsPage } from "../coach-goals/coach-goals";
 import { CoachHomePage } from "../coach-home/coach-home";
 
 /**
@@ -42,10 +41,12 @@ export class TransactionHomePage {
     public sp: StorageProvider,
     public events: Events,
     public alertCtrl: AlertController,
+    private modal: ModalController
   ) {
     //this.getUserData();
-    this.tutorial();
+    //this.tutorial();
     this.events.subscribe("newUser", data => {
+      this.events.unsubscribe("newUser");
       this.tutorial();
     })
 
@@ -212,22 +213,11 @@ export class TransactionHomePage {
   }
 
   help(){
-    const a = this.alertCtrl.create({
-      title: "Help",
-      message: "Welcome to Transaction home page",
-      buttons: [
-        {
-          text: "Show video",
-          handler: () => {
-            this.navCtrl.push(CoachHomePage);
-          }
-        },
-        {
-          text: "OK",
-          role: "cancel"
-        }
-      ]
-    });
-    a.present();
+    const passedData = { //youtube link, required text
+      page: "Transaction Page",
+
+    };
+    const helpModal = this.modal.create('HelpPage', {data: passedData});
+    helpModal.present();
   }
 }

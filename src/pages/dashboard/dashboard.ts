@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import { NavController, Tabs, Events } from "ionic-angular";
+import { NavController, Tabs, Events, ModalController } from "ionic-angular";
 import { AddProductPage } from "../addproduct/addproduct";
 import { BarcodeScanner } from "@ionic-native/barcode-scanner";
 import { AlertController } from "ionic-angular";
@@ -42,6 +42,7 @@ export class DashboardPage {
     public getset: GettersetterProvider,
     private toastCtrl: ToastController,
     public events: Events,
+    private modal: ModalController
   ) {
     this.getUserData();
 
@@ -261,22 +262,11 @@ export class DashboardPage {
   }
 
   help(){
-    const a = this.alertCtrl.create({
-      title: "Help",
-      message: "Welcome to Dashboard page",
-      buttons: [
-        {
-          text: "Show video",
-          handler: () => {
-            this.navCtrl.push(CoachHomePage);
-          }
-        },
-        {
-          text: "OK",
-          role: "cancel"
-        }
-      ]
-    });
-    a.present();
+    const passedData = { //youtube link, required text
+      page: "Products & Stock Page",
+
+    };
+    const helpModal = this.modal.create('HelpPage', {data: passedData});
+    helpModal.present();
   }
 }
