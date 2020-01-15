@@ -94,12 +94,12 @@ export class LoanHomePage {
   loan4;
   loan5;
   loan6;
-  loanq1 = "1. How urgently do you need a loan? ";
-  loanq2 = "2. When would you like to get this loan?  ";
-  loanq3 = "3. How much would you like to borrow? ";
-  loanq4 = "4. How long will you need to pay it back?  ";
-  loanq5 = "5. What do you need  to loan for? ";
-  loanq6 = "6. What's the best way to contact you about the loan?";
+  loanq1 = this.translateConfigService.getTranslatedMessage("1. How urgently do you need a loan? ");
+  loanq2 = this.translateConfigService.getTranslatedMessage("2. When would you like to get this loan?  ");
+  loanq3 = this.translateConfigService.getTranslatedMessage("3. How much would you like to borrow? ");
+  loanq4 = this.translateConfigService.getTranslatedMessage("4. How long will you need to pay it back?  ");
+  loanq5 = this.translateConfigService.getTranslatedMessage("5. What do you need  to loan for? ");
+  loanq6 = this.translateConfigService.getTranslatedMessage("6. What's the best way to contact you about the loan?");
   submitloanform() {
     this.loanvar.push({
       q: this.loanq1,

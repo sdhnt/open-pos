@@ -21,14 +21,14 @@
 </ion-select>
 <ion-item>
   <ion-row>
-    <ion-col col-6 style="text-align: left;">Revenue:</ion-col>
+    <ion-col col-6 style="text-align: left;">{{"Revenue"|translate}}:</ion-col>
     <ion-col col-6 style="text-align: end;">{{rev}}</ion-col>
   </ion-row>
   <ion-row>
-    <ion-col col-6 style="text-align: left;">Expenditure:</ion-col>
+    <ion-col col-6 style="text-align: left;">{{"Expenditure"|translate}}:</ion-col>
     <ion-col col-6 style="text-align: end;">{{exp}}</ion-col>
   </ion-row> <ion-row>
-    <ion-col col-6 style="text-align: left;">Profit:</ion-col>
+    <ion-col col-6 style="text-align: left;">{{"Profit"|translate}}:</ion-col>
     <ion-col col-6 style="text-align: end;">{{pro}}</ion-col>
   </ion-row>
 </ion-item>
@@ -36,7 +36,7 @@
 <div class="ion-padding">
   <ion-card>
     <ion-card-header>
-      Bar Chart
+      {{"Bar Chart"|translate}}
     </ion-card-header>
     <ion-card-content>
       <canvas #barCanvas></canvas>
@@ -44,7 +44,7 @@
   </ion-card>
   <ion-card>
     <ion-card-header>
-      Line Chart
+      {{"Line Chart"|translate}}
     </ion-card-header>
     <ion-card-content>
       <canvas #lineCanvas></canvas>

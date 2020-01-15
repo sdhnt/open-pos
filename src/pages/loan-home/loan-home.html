@@ -14,7 +14,7 @@
   <ion-grid>
     <ion-row>
       <ion-col style="text-align: center; align-items: center;">
-        <h1>Apply for Loan!</h1>
+        <h1>{{"Apply for Loan"|translate}}!</h1>
       </ion-col>
     </ion-row>
     <!-- 
@@ -30,42 +30,42 @@
 
      -->
      <ion-row style="padding-left: 10px; padding-right: 10px;">
-      Need to open another shop? Buy more inventory? Buy in bulk so your products are cheaper?  Use Open to get funds easily, quickly and cheaply!
+      {{"loan descrip"|translate}}
      </ion-row>
 
     <ion-row padding>
       <ion-col style="text-align: left; align-items: left;">
       <div style="color: gray;" padding>Traditional</div>
-      <li>Long Application</li>
-      <li>Slow Approval</li>
-      <li>High Interest</li>
-      <li>Low Borrow Amount</li>
+      <li>{{"Long Application"|translate}}</li>
+      <li>{{"Slow Approval"|translate}}</li>
+      <li>{{"High Interest"|translate}</li>
+      <li>{{"Low Borrow Amount"|translate}}</li>
       </ion-col>
       <ion-col>
         <div style="font-family: 'Megrim'; color: orange;" padding>OPEN</div>
-        <li>Quick Application</li>
-      <li>Fast Approval</li>
-      <li>Lower Interest</li>
-      <li>High Borrow Amount</li>
+        <li>{{"Quick Application"|translate}}</li>
+      <li>{{"Fast Approval"|translate}}</li>
+      <li>{{"Lower Interest"|translate}}</li>
+      <li>{{"High Borrow Amount"|translate}}</li>
       </ion-col>
     </ion-row>
 
-    <button ion-button style="background-color: orange;" (click)="showloanform()"> Interested in Applying for Loan</button>
+    <button ion-button style="background-color: orange;" (click)="showloanform()"> {{"Interested in Applying for Loan"|translate}}</button>
 
     <ion-card *ngIf="showloan==1" padding>
       {{loanq1}}
-      <ion-input style="background-color: #d8d7d7;" placeholder="Enter Details Here"  [(ngModel)]="loan1"></ion-input>
+      <ion-input style="background-color: #d8d7d7;" placeholder="{{'Enter Details Here'|translate}}"  [(ngModel)]="loan1"></ion-input>
      {{loanq2}}
-      <ion-input style="background-color: #d8d7d7;"  placeholder="Enter Details Here" [(ngModel)]="loan2"></ion-input>{{loanq3}}
+      <ion-input style="background-color: #d8d7d7;"  placeholder="{{'Enter Details Here'|translate}}" [(ngModel)]="loan2"></ion-input>{{loanq3}}
      
-      <ion-input style="background-color: #d8d7d7;"  placeholder="Enter Details Here" [(ngModel)]="loan3"></ion-input>{{loanq4}}
+      <ion-input style="background-color: #d8d7d7;"  placeholder="{{'Enter Details Here'|translate}}" [(ngModel)]="loan3"></ion-input>{{loanq4}}
       
-      <ion-input style="background-color: #d8d7d7;"  placeholder="Enter Details Here" [(ngModel)]="loan4"></ion-input>{{loanq5}}
+      <ion-input style="background-color: #d8d7d7;"  placeholder="{{'Enter Details Here'|translate}}" [(ngModel)]="loan4"></ion-input>{{loanq5}}
      
-      <ion-input style="background-color: #d8d7d7;"  placeholder="Enter Details Here" [(ngModel)]="loan5"></ion-input>{{loanq6}}
+      <ion-input style="background-color: #d8d7d7;"  placeholder="{{'Enter Details Here'|translate}}" [(ngModel)]="loan5"></ion-input>{{loanq6}}
       
-      <ion-input style="background-color: #d8d7d7;"  placeholder="Enter Details Here" [(ngModel)]="loan6"></ion-input>
-      <button ion-button style="background-color: orange;" (click)="submitloanform()">Send Details</button>
+      <ion-input style="background-color: #d8d7d7;"  placeholder="{{'Enter Details Here'|translate}}" [(ngModel)]="loan6"></ion-input>
+      <button ion-button style="background-color: orange;" (click)="submitloanform()">{{"Send Details"|translate}}</button>
     </ion-card>
 
   </ion-grid>

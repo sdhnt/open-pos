@@ -1,7 +1,7 @@
 <ion-content>
   <ion-select style="background-color: silver;max-width: 100%;" [(ngModel)]="usrchoice">
-    <ion-option value="today" selected>Today</ion-option>
-    <ion-option value="last100">Last 100</ion-option>
+    <ion-option value="today" selected>{{"Today"|translate}}</ion-option>
+    <ion-option value="last100">{{"Last 100"|translate}}</ion-option>
   </ion-select>
   <ion-list *ngFor="let transac of listtransacrev">
     <ion-card *ngIf="(usrchoice=='today'&& getDate(transac.datetime) == getDate(currentdatetime)) || usrchoice=='last100'">
@@ -39,7 +39,7 @@
           <ion-col col-6 *ngIf="getDate(transac.datetime) == getDate(currentdatetime)"><button ion-button small full style="background-color: gray; color: white"
               (click)="delTransac(transac)">{{"Delete Transaction"|translate}}</button></ion-col>
           <ion-col col-6><button ion-button small full style="background-color: gray; color: white"
-              (click)="expandTransac(transac)">{{transac.expanded?"Expand":"Close"}}</button></ion-col>
+              (click)="expandTransac(transac)">{{transac.expanded?"Expand"|translate:"Close"|translate}}</button></ion-col>
         </ion-row>
       </ion-grid>
       <ion-grid line>
