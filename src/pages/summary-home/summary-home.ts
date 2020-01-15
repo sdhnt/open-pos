@@ -41,8 +41,12 @@ export class SummaryHomePage {
     console.log("changing: " + this.expanded);
     if (this.expanded == true) {
       this.expanded = false;
+      //@ts-ignore
+      this.expandedvar=this.translateConfigService.getTranslatedMessage("Close").value;
     } else if (this.expanded == false) {
       this.expanded = true;
+      //@ts-ignore
+      this.expandedvar=this.translateConfigService.getTranslatedMessage("Expand").value;
     }
 
     console.log("changed: " + this.expanded);
@@ -54,6 +58,8 @@ export class SummaryHomePage {
     this.tsmonth = 0;
     this.ts30 = 0;
     this.usrchoice = "today";
+    //@ts-ignore
+    this.expandedvar=this.translateConfigService.getTranslatedMessage("Expand").value;
     this.getTransac();
   }
 
@@ -155,6 +161,8 @@ export class SummaryHomePage {
         });
     });
   }
+
+  expandedvar;
 
   // getDateTime(datetime) {
   //   //return (datetime.getDate() + "/" + (datetime.getMonth() + 1) + "/" + datetime. getFullYear())

@@ -817,8 +817,8 @@ export class IncomeTransactionPage {
     if (this.datastore != null) {
       result
         .align("left")
-        // .raw(commands.FEED_CONTROL_SEQUENCES.RST_HT)
-        // .raw(commands.FEED_CONTROL_SEQUENCES.SET_HT)
+        .raw(commands.FEED_CONTROL_SEQUENCES.RST_HT)
+        .raw(commands.FEED_CONTROL_SEQUENCES.SET_HT)
         .text("Item Name ")
         .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
         .text("Qty ")
