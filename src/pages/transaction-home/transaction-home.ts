@@ -8,6 +8,7 @@ import {
   Events,
   AlertController,
   ModalController,
+  Modal,
 } from "ionic-angular";
 import firebase from "firebase";
 import { AddProductPage } from "../addproduct/addproduct";
@@ -18,7 +19,7 @@ import { TransactionProductPage } from "../transaction-product/transaction-produ
 import { StorageProvider } from "../../providers/storage/storage";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import { LoginPage } from "../login/login";
-import { CoachHomePage } from "../coach-home/coach-home";
+import { ContactUsPage } from "../contact-us/contact-us";
 
 /**
  * Generated class for the TransactionHomePage page.
@@ -53,9 +54,9 @@ export class TransactionHomePage {
     private modal: ModalController,
   ) {
     //this.getUserData();
-    //this.tutorial();
+    this.tutorial();
     this.events.subscribe("newUser", data => {
-      this.events.unsubscribe("newUser");
+      //this.events.unsubscribe("newUser");
       this.tutorial();
     });
 
@@ -194,31 +195,33 @@ export class TransactionHomePage {
   }
 
   tutorial() {
-    //translate messages
-
-    const a = this.alertCtrl.create({
-      title: "First Time User",
-      message: "Hello, welcome to Open Fintech",
-      buttons: [
-        {
-          text: "Skip tutorial",
-          role: "cancel",
-        },
-        {
-          text: "Show video",
-          handler: () => {
-            this.navCtrl.push(CoachHomePage);
+    const passedData = {
+      //youtube link, required text
+      //add a boolean and ngIf in case tutorial page is different from help page
+      page: "Tutorial"
+    };
+    const tutorialModal: Modal = this.modal.create("HelpPage", { data: passedData });
+    tutorialModal.present();
+    tutorialModal.onDidDismiss(()=>{
+      const helpAlert = this.alertCtrl.create({
+        title: "Help Button",
+        subTitle: "For any queries about a page, click the ? icon in the top right for more information",
+        message: "For further queries, you can reach us through the \"Contact Us\" page",
+        buttons: [
+          {
+            text: "Contact Us",
+            handler: ()=>{
+              this.navCtrl.push(ContactUsPage);
+            }
           },
-        },
-        {
-          text: "Next",
-          handler: () => {
-            console.log("Show next page if any");
-          },
-        },
-      ],
-    });
-    a.present();
+          {
+            text: "Okay",
+            role: "cancel"
+          }
+        ]
+      });
+      helpAlert.present();
+    })
   }
 
   help() {

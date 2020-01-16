@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams, ViewController } from "ionic-angular";
 import { CoachHomePage } from "../coach-home/coach-home";
+import { DomSanitizer } from "@angular/platform-browser";
 
 /**
  * Generated class for the HelpPage page.
@@ -16,7 +17,8 @@ import { CoachHomePage } from "../coach-home/coach-home";
 })
 export class HelpPage {
   data: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private view: ViewController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private view: ViewController,
+    private dom: DomSanitizer) {
     this.data = this.navParams.get("data");
   }
 
@@ -30,5 +32,9 @@ export class HelpPage {
 
   navigate() {
     this.navCtrl.push(CoachHomePage);
+  }
+
+  secureLink(val: string){
+    return this.dom.bypassSecurityTrustResourceUrl(val);
   }
 }
