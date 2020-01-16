@@ -198,30 +198,30 @@ export class TransactionHomePage {
     const passedData = {
       //youtube link, required text
       //add a boolean and ngIf in case tutorial page is different from help page
-      page: "Tutorial"
+      page: "Tutorial",
     };
     const tutorialModal: Modal = this.modal.create("HelpPage", { data: passedData });
     tutorialModal.present();
-    tutorialModal.onDidDismiss(()=>{
+    tutorialModal.onDidDismiss(() => {
       const helpAlert = this.alertCtrl.create({
         title: "Help Button",
         subTitle: "For any queries about a page, click the ? icon in the top right for more information",
-        message: "For further queries, you can reach us through the \"Contact Us\" page",
+        message: 'For further queries, you can reach us through the "Contact Us" page',
         buttons: [
           {
             text: "Contact Us",
-            handler: ()=>{
+            handler: () => {
               this.navCtrl.push(ContactUsPage);
-            }
+            },
           },
           {
             text: "Okay",
-            role: "cancel"
-          }
-        ]
+            role: "cancel",
+          },
+        ],
       });
       helpAlert.present();
-    })
+    });
   }
 
   help() {

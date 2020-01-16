@@ -17,8 +17,12 @@ import { DomSanitizer } from "@angular/platform-browser";
 })
 export class HelpPage {
   data: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private view: ViewController,
-    private dom: DomSanitizer) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private view: ViewController,
+    private dom: DomSanitizer,
+  ) {
     this.data = this.navParams.get("data");
   }
 
@@ -34,7 +38,7 @@ export class HelpPage {
     this.navCtrl.push(CoachHomePage);
   }
 
-  secureLink(val: string){
+  secureLink(val: string) {
     return this.dom.bypassSecurityTrustResourceUrl(val);
   }
 }
