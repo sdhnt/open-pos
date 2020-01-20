@@ -40,6 +40,7 @@ export class IncomeTransactionPage {
     private gps: GeolocationService,
     public app: App,
   ) {
+    this.isReady = false;
     const nav = app._appRoot._getActivePortal() || app.getActiveNav();
     const activeView = nav.getActive();
     if (activeView != null) {
@@ -66,6 +67,9 @@ export class IncomeTransactionPage {
 
   taxbtn = 0;
   showrec = false;
+
+  lastTransaction: any;
+  isReady: boolean;
 
   userdata: any = {
     business_address: "",
@@ -128,11 +132,22 @@ export class IncomeTransactionPage {
           }
         });
       });
-
       this.updateRec();
     });
+    this.getLastTransaction();
   }
   temp;
+
+  getLastTransaction(){
+    this.sp.storageReady().then(()=>{
+      this.sp.getTransactions().then(val => {
+        let listOfTransactions: any[] = JSON.parse(val);
+        listOfTransactions = listOfTransactions.reverse();
+        this.lastTransaction = listOfTransactions[0];
+        this.isReady = true;
+      });
+    });
+  }
 
   addNewItembtn() {
     const message1 = this.translateConfigService.getTranslatedMessage("CANCEL ");
@@ -531,6 +546,8 @@ export class IncomeTransactionPage {
         this.showrec = false;
       });
     }
+    this.isReady=false;
+    this.getLastTransaction();
     (this.navCtrl.parent as Tabs).select(0);
   }
   discountlist = [];
