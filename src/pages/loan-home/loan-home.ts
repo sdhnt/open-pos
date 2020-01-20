@@ -105,9 +105,9 @@ export class LoanHomePage {
   //@ts-ignore
   loanq5 = this.translateConfigService.getTranslatedMessage("5. What do you need the loan for?").value;
   //@ts-ignore
-  loanq6 = this.translateConfigService.getTranslatedMessage("6. What's the best way to contact you about the loan?").value;
+  loanq6 = this.translateConfigService.getTranslatedMessage("6. What's the best way to contact you?").value;
   //@ts-ignore
-  randovar = this.translateConfigService.getTranslatedMessage("Close")
+  randovar = this.translateConfigService.getTranslatedMessage("Close");
 
   submitloanform() {
     this.loanvar.push({
