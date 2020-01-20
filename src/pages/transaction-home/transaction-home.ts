@@ -54,7 +54,7 @@ export class TransactionHomePage {
     private modal: ModalController,
   ) {
     //this.getUserData();
-    this.tutorial();
+    //this.tutorial();
     this.events.subscribe("newUser", data => {
       //this.events.unsubscribe("newUser");
       this.tutorial();
