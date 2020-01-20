@@ -211,12 +211,17 @@
 
 </ion-content>
 
-<ion-footer *ngIf="showSampleRec==true" style="background-color: #ffffff">
+<ion-footer style="background-color: #ffffff">
 
     <ion-grid>
       <ion-row>
         <ion-col>
-            <button ion-button (click)="createRec()" full style="background-color: #FFA500">{{updateOrCreate|translate}}</button>
+            <button ion-button (click)="createRec()" full style="background-color: #FFA500" *ngIf="showSampleRec==true">
+              {{updateOrCreate|translate}}
+          </button>
+          <button ion-button (click)="addSalesExp()" full style="background-color: #FFA500" *ngIf="showSampleRec==false">
+              {{"Add Sales/Expenses" |translate}}
+          </button>
         </ion-col>
       </ion-row>
     </ion-grid>
