@@ -326,7 +326,7 @@ export class AllTransactionPage {
     return s;
   }
   
-  addSaleExp() {
+  addSalesExp() {
     const msg = this.translateConfigService.getTranslatedMessage("Add");
     const msg1 = this.translateConfigService.getTranslatedMessage("Sales");
     const msg2 = this.translateConfigService.getTranslatedMessage("Expense");
