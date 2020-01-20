@@ -819,25 +819,52 @@ export class IncomeTransactionPage {
         .align("left")
         //.raw(commands.FEED_CONTROL_SEQUENCES.RST_HT)
         //.raw(commands.FEED_CONTROL_SEQUENCES.SET_HT)
-        .text("Item Name ")
+        .text("Item Name           ")//10 char + 10 char
         .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
-        .text("Qty ")
+        .text("Qty ")//4 char
         .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
-        .text("Price")
+        .text("  Price")//8 char
         .newline()
         .newline();
 
       this.datastore.itemslist.forEach((element, index) => {
+
+        element.qty=element.qty.toString();
+        element.price=element.price.toString();
+
+        if(element.name.length()<20){
+          for(let i=element.name.length();i<20;i++){
+            element.name+=' ';
+          }
+        }else{
+          element.name=element.name.substring(0,20);
+        }
+
+        if(element.qty<10000){
+          for(let i=element.qty.length();i<4;i++){
+            element.qty+=' ';
+          }
+        }else{
+          element.qty.substring(0,4);
+        }
+        
+        if(element.price<10000000){
+          for(let i=element.price.length();i<8;i++){
+            element.price+=' ';
+          }
+        }else{
+          element.price.substring(0,8);
+        }
         result
-          .text(element.name + " ", 30)
-          .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
-          .text(element.qty + " ")
-          .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
-          .text(element.price + " ")
+          .text(element.name, 20)//19 + space
+          //.raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+          .text(element.qty,4)//4+ space
+          //.raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+          .text(element.price,8)//7+space
           .newline();
         if (parseFloat(element.discount) != 0) {
           result
-            .text("Discount (" + Math.round(parseFloat(element.discount) * 100) / 100 + "%) :", 30)
+            .text("Discount (" + Math.round(parseFloat(element.discount) * 100) / 100 + "%) : ", 30)
             .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
             .text("")
             .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
