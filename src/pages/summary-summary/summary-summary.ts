@@ -1,8 +1,9 @@
 import { Component, ViewChild } from "@angular/core";
-import { IonicPage, NavController, NavParams, Tabs, Events } from "ionic-angular";
+import { IonicPage, NavController, NavParams, Tabs, Events, AlertController, ModalController } from "ionic-angular";
 import { SummaryHomePage } from "../summary-home/summary-home";
 import { SummaryAccountsPage } from "../summary-accounts/summary-accounts";
 import { SummaryGraphsPage } from "../summary-graphs/summary-graphs";
+import { CoachHomePage } from "../coach-home/coach-home";
 
 /**
  * Generated class for the SummarySummaryPage page.
@@ -25,7 +26,13 @@ export class SummarySummaryPage {
   SumAcc = SummaryAccountsPage;
   SumRec = SummaryHomePage;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public events: Events,
+    public alertCtrl: AlertController,
+    private modal: ModalController,
+  ) {
     // this.events.subscribe("ViewRecs", (data)=> {
     //   (this.navCtrl.parent as Tabs).select(2);
     //   console.log("ViewRecs Event")
@@ -38,5 +45,14 @@ export class SummarySummaryPage {
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad SummarySummaryPage");
+  }
+
+  help() {
+    const passedData = {
+      //youtube link, required text
+      page: "Business Summary Page",
+    };
+    const helpModal = this.modal.create("HelpPage", { data: passedData });
+    helpModal.present();
   }
 }

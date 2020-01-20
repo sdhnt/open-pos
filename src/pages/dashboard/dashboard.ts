@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import { NavController, Tabs, Events } from "ionic-angular";
+import { NavController, Tabs, Events, ModalController } from "ionic-angular";
 import { AddProductPage } from "../addproduct/addproduct";
 import { BarcodeScanner } from "@ionic-native/barcode-scanner";
 import { AlertController } from "ionic-angular";
@@ -12,6 +12,7 @@ import { ProductListPage } from "../product-list/product-list";
 import { AddProductCategoryPage } from "../add-product-category/add-product-category";
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
+import { CoachHomePage } from "../coach-home/coach-home";
 
 @Component({
   selector: "page-dashboard",
@@ -41,6 +42,7 @@ export class DashboardPage {
     public getset: GettersetterProvider,
     private toastCtrl: ToastController,
     public events: Events,
+    private modal: ModalController,
   ) {
     this.getUserData();
 
@@ -257,5 +259,14 @@ export class DashboardPage {
       duration: 2000,
     });
     toast.present();
+  }
+
+  help() {
+    const passedData = {
+      //youtube link, required text
+      page: "Products & Stock Page",
+    };
+    const helpModal = this.modal.create("HelpPage", { data: passedData });
+    helpModal.present();
   }
 }

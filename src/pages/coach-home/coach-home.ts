@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { IonicPage, NavController, NavParams, AlertController, ModalController } from "ionic-angular";
 import { CoachGoalsPage } from "../coach-goals/coach-goals";
 import { CoachCoachPage } from "../coach-coach/coach-coach";
 import { CoachBusinesstipsPage } from "../coach-businesstips/coach-businesstips";
@@ -28,6 +28,8 @@ export class CoachHomePage {
     public navCtrl: NavController,
     private translateConfigService: TranslateConfigService,
     public navParams: NavParams,
+    public alertCtrl: AlertController,
+    private modal: ModalController,
   ) {}
 
   ionViewDidLoad() {
@@ -36,5 +38,14 @@ export class CoachHomePage {
 
   contactpg() {
     this.navCtrl.push(ContactUsPage);
+  }
+
+  help() {
+    const passedData = {
+      //youtube link, required text
+      page: "Transaction Page",
+    };
+    const helpModal = this.modal.create("HelpPage", { data: passedData });
+    helpModal.present();
   }
 }

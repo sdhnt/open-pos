@@ -1,9 +1,19 @@
 import { Component, ViewChild } from "@angular/core";
-import { IonicPage, NavController, NavParams, Tabs, AlertController, ToastController, Events } from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  Tabs,
+  AlertController,
+  ToastController,
+  Events,
+  ModalController,
+} from "ionic-angular";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import { ExpensesHomePage } from "../expenses-home/expenses-home";
 import { ExpenseGeneralPage } from "../expense-general/expense-general";
 import { StorageProvider } from "../../providers/storage/storage";
+import { CoachHomePage } from "../coach-home/coach-home";
 
 /**
  * Generated class for the ExpenseTransactionPage page.
@@ -46,7 +56,8 @@ export class ExpenseTransactionPage {
     public alertCtrl: AlertController,
     public sp: StorageProvider,
     public toastCtrl: ToastController,
-    public events: Events
+    public events: Events,
+    private modal: ModalController,
   ) {
     this.events.subscribe("cbUpdate:created", async data => {
       await this.getUserData();
@@ -149,5 +160,14 @@ export class ExpenseTransactionPage {
   setUsrLang() {
     this.translateConfigService.setLanguage(this.userdata.language);
     console.log(this.userdata.language);
+  }
+
+  help() {
+    const passedData = {
+      //youtube link, required text
+      page: "Expenses Page",
+    };
+    const helpModal = this.modal.create("HelpPage", { data: passedData });
+    helpModal.present();
   }
 }

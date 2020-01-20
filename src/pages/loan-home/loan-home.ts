@@ -1,10 +1,19 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, AlertController, ToastController, Events } from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  AlertController,
+  ToastController,
+  Events,
+  ModalController,
+} from "ionic-angular";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import { BarcodeScanner } from "@ionic-native/barcode-scanner";
 import { StorageProvider } from "../../providers/storage/storage";
 import firebase from "firebase";
 import { GettersetterProvider } from "../../providers/gettersetter/gettersetter";
+import { CoachHomePage } from "../coach-home/coach-home";
 
 /**
  * Generated class for the LoanHomePage page.
@@ -29,6 +38,7 @@ export class LoanHomePage {
     public getset: GettersetterProvider,
     private toastCtrl: ToastController,
     public events: Events,
+    private modal: ModalController,
   ) {
     this.getUserData();
 
@@ -215,5 +225,14 @@ export class LoanHomePage {
         ], //end button
       })
       .present();
+  }
+
+  help() {
+    const passedData = {
+      //youtube link, required text
+      page: "Loan Page",
+    };
+    const helpModal = this.modal.create("HelpPage", { data: passedData });
+    helpModal.present();
   }
 }
