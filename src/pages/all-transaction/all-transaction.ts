@@ -4,6 +4,7 @@ import { IncomeTransactionPage } from "../income-transaction/income-transaction"
 import firebase from "firebase";
 import { StorageProvider } from "../../providers/storage/storage";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
+import { ExpenseTransactionPage } from "../expense-transaction/expense-transaction";
 //import { threadId } from 'worker_threads';
 
 /**
