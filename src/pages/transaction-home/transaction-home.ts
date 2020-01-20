@@ -1,5 +1,15 @@
 import { Component, ViewChild } from "@angular/core";
-import { IonicPage, NavController, NavParams, Tabs, ToastController, Events, AlertController } from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  Tabs,
+  ToastController,
+  Events,
+  AlertController,
+  ModalController,
+  Modal,
+} from "ionic-angular";
 import firebase from "firebase";
 import { AddProductPage } from "../addproduct/addproduct";
 import { AllTransactionPage } from "../all-transaction/all-transaction";
@@ -9,6 +19,7 @@ import { TransactionProductPage } from "../transaction-product/transaction-produ
 import { StorageProvider } from "../../providers/storage/storage";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import { LoginPage } from "../login/login";
+import { ContactUsPage } from "../contact-us/contact-us";
 
 /**
  * Generated class for the TransactionHomePage page.
@@ -40,8 +51,14 @@ export class TransactionHomePage {
     public sp: StorageProvider,
     public events: Events,
     public alertCtrl: AlertController,
+    private modal: ModalController,
   ) {
     //this.getUserData();
+    this.tutorial();
+    this.events.subscribe("newUser", data => {
+      //this.events.unsubscribe("newUser");
+      this.tutorial();
+    });
 
     this.events.subscribe("cbUpdate:created", async data => {
       await this.getUserData();
@@ -175,5 +192,44 @@ export class TransactionHomePage {
   setUsrLang() {
     this.translateConfigService.setLanguage(this.userdata.language);
     console.log(this.userdata.language);
+  }
+
+  tutorial() {
+    const passedData = {
+      //youtube link, required text
+      //add a boolean and ngIf in case tutorial page is different from help page
+      page: "Tutorial",
+    };
+    const tutorialModal: Modal = this.modal.create("HelpPage", { data: passedData });
+    tutorialModal.present();
+    tutorialModal.onDidDismiss(() => {
+      const helpAlert = this.alertCtrl.create({
+        title: "Help Button",
+        subTitle: "For any queries about a page, click the ? icon in the top right for more information",
+        message: 'For further queries, you can reach us through the "Contact Us" page',
+        buttons: [
+          {
+            text: "Contact Us",
+            handler: () => {
+              this.navCtrl.push(ContactUsPage);
+            },
+          },
+          {
+            text: "Okay",
+            role: "cancel",
+          },
+        ],
+      });
+      helpAlert.present();
+    });
+  }
+
+  help() {
+    const passedData = {
+      //youtube link, required text
+      page: "Transaction Page",
+    };
+    const helpModal = this.modal.create("HelpPage", { data: passedData });
+    helpModal.present();
   }
 }

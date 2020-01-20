@@ -1,0 +1,31 @@
+<!--
+  Generated template for the HelpPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<div class="modal">
+  <ion-header>
+    <ion-navbar>
+      <h4 style="padding-left: 10px;">Info - {{ data.page }}</h4>
+      <ion-buttons end>
+        <button ion-button (click)="close()">Close</button>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+
+  <ion-content padding>
+    <h2>{{ data.page }}</h2>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus pretium dolor ac elit bibendum, eu fringilla nibh ullamcorper. Pellentesque cursus sapien purus, quis laoreet ipsum finibus in. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nullam lacus augue, pretium sit amet nisl pretium, scelerisque gravida augue. Praesent sed leo et neque aliquam auctor. Phasellus et orci in arcu venenatis blandit. Donec et fringilla nisi, ac tempus enim. Mauris tincidunt elit a scelerisque volutpat. Vestibulum feugiat ac lorem sed sodales. Praesent cursus in ligula ac semper. Proin viverra facilisis nisl sed facilisis. Donec tempus at lorem id facilisis. Morbi eget massa id ipsum faucibus accumsan. Sed et arcu cursus, pretium sapien id, convallis metus.
+    </p>
+    <p>
+      Sed nec mollis dui. Suspendisse interdum ligula est, sed pulvinar risus maximus a. In fringilla, dolor eu suscipit rutrum, nibh mauris porttitor leo, sed ultrices ex massa non urna. Integer porta risus nec lorem maximus, in elementum urna ultricies. Integer sit amet condimentum risus. Curabitur leo arcu, porttitor a erat at, venenatis feugiat lorem. Maecenas tempor arcu ligula, dapibus efficitur ligula maximus in.
+    </p>
+    <iframe width="100%" height="315" src="https://www.youtube.com/embed/AwtlNWeE8wY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </ion-content> <!--for [src] use the secureLink() function with link as param-->
+
+  <ion-footer style="padding-left: 3px; padding-right: 3px;">
+    <button ion-button block color="dark" (click)="navigate()">See Coach Videos</button>
+  </ion-footer>
+</div>

@@ -1,11 +1,12 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, ToastController } from "ionic-angular";
+import { IonicPage, NavController, NavParams, ToastController, AlertController, ModalController } from "ionic-angular";
 import { StorageProvider } from "../../providers/storage/storage";
 import { FormControl, FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { TransactionHomePage } from "../transaction-home/transaction-home";
 import { cloneDeep, isEqual } from "lodash";
 import firebase from "firebase";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
+import { CoachHomePage } from "../coach-home/coach-home";
 
 /**
  * Generated class for the UserProfilePage page.
@@ -63,6 +64,8 @@ export class UserProfilePage {
     private formBuilder: FormBuilder,
     private toastCtrl: ToastController,
     private translateConfigService: TranslateConfigService,
+    public alertCtrl: AlertController,
+    private modal: ModalController,
   ) {
     (this.temptimes = this.navParams.get("timestamp")),
       (this.tempuser = this.navParams.get("user")),
@@ -240,5 +243,14 @@ export class UserProfilePage {
 
   onChange() {
     this.submitButton = !isEqual(this.user, this.oldUser);
+  }
+
+  help() {
+    const passedData = {
+      //youtube link, required text
+      page: "Profile Page",
+    };
+    const helpModal = this.modal.create("HelpPage", { data: passedData });
+    helpModal.present();
   }
 }
