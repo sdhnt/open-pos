@@ -1,5 +1,14 @@
 import { Component, NgZone } from "@angular/core";
-import { IonicPage, NavController, NavParams, ToastController, Events, Tabs, AlertController, LoadingController } from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  ToastController,
+  Events,
+  Tabs,
+  AlertController,
+  LoadingController,
+} from "ionic-angular";
 import { StorageProvider } from "../../providers/storage/storage";
 import Moment from "moment";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
@@ -30,7 +39,7 @@ export class SummaryHomePage {
     public zone: NgZone,
     private alertCtrl: AlertController,
     private printer: PrinterProvider,
-    private loadCtrl: LoadingController
+    private loadCtrl: LoadingController,
   ) {
     this.events.subscribe("ViewRecs", data => {
       (this.navCtrl.parent as Tabs).select(2);
@@ -263,7 +272,7 @@ export class SummaryHomePage {
     });
   }
 
-  printRec(transac){
+  printRec(transac) {
     console.log(transac);
     const encoder = new EscPosEncoder();
     const result = encoder.initialize();
@@ -284,7 +293,7 @@ export class SummaryHomePage {
       .text(commands.HORIZONTAL_LINE.HR_58MM)
       .newline();
 
-    transac.itemslist.forEach((element)=>{
+    transac.itemslist.forEach(element => {
       element.qty = element.qty.toString();
       element.price = element.price.toString();
       //autotab system
@@ -360,7 +369,7 @@ export class SummaryHomePage {
   }
 
   receipt: any;
-  
+
   mountAlertBt(data) {
     this.receipt = data;
     console.log(this.receipt);
@@ -434,7 +443,6 @@ export class SummaryHomePage {
   print(device, data) {
     console.log("Device mac: ", device);
     console.log("Data: ", JSON.stringify(data));
-    
 
     const msg1 = this.translateConfigService.getTranslatedMessage("Printing...");
     const msg2 = this.translateConfigService.getTranslatedMessage("Successful print!");

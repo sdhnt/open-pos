@@ -133,24 +133,24 @@ export class MyApp {
     this.openPage({ component: UserProfilePage });
   }
 
-userdata = {
-  business_address: "",
-  business_name: "",
-  cash_balance: "",
-  currency: "",
-  created: "",
-  language: this.userLang,
-  owner: "",
-  owner_name: "",
-  ph_no: "",
-  businesstype: "",
-  taxrate: 0.0,
-  discount: 0.0,
-};
+  userdata = {
+    business_address: "",
+    business_name: "",
+    cash_balance: "",
+    currency: "",
+    created: "",
+    language: this.userLang,
+    owner: "",
+    owner_name: "",
+    ph_no: "",
+    businesstype: "",
+    taxrate: 0.0,
+    discount: 0.0,
+  };
   onLangChange() {
     this.translateConfigService.setLanguage(this.userLang);
     this.getUserData();
-    this.userdata.language=this.userLang;
+    this.userdata.language = this.userLang;
     this.sp.storageReady().then(() => {
       this.sp
         .setUserDat(this.userdata)
@@ -162,7 +162,6 @@ userdata = {
           console.error(error);
         });
     });
-
   }
 
   async getUserData() {
@@ -178,5 +177,4 @@ userdata = {
         });
     });
   }
-
 }

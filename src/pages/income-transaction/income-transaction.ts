@@ -90,7 +90,7 @@ export class IncomeTransactionPage {
   lastsumdisc = 0.0;
   taxrate = 0.0;
 
-  printOldRec(transac){
+  printOldRec(transac) {
     console.log(transac);
     const encoder = new EscPosEncoder();
     const result = encoder.initialize();
@@ -111,7 +111,7 @@ export class IncomeTransactionPage {
       .text(commands.HORIZONTAL_LINE.HR_58MM)
       .newline();
 
-    transac.itemslist.forEach((element)=>{
+    transac.itemslist.forEach(element => {
       element.qty = element.qty.toString();
       element.price = element.price.toString();
       //autotab system
