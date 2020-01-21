@@ -52,7 +52,7 @@ export class LoginPage {
   ) {
     this.loadDropDowns();
     this.getInfo();
-    this.country_code="95"
+    this.country_code = "95";
 
     const loading = this.loadingCtrl.create({
       content: `
