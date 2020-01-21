@@ -168,7 +168,7 @@ export class TransactionHomePage {
                       //@ts-ignore
                       text: message3.value,
                       handler: data1 => {
-                        if (data1.cb != null && data1.cb!="" && data.cb!=undefined) {
+                        if (data1.cb != null && data1.cb != "" && data.cb != undefined) {
                           //console.log("Update CB to :"+data1.cb)
                           this.getUserData();
                           this.userdata.cash_balance = parseFloat(data1.cb).toString();
@@ -176,7 +176,6 @@ export class TransactionHomePage {
                         }
                       },
                     },
-                
                   ],
                 })
                 .present();
