@@ -168,7 +168,7 @@ export class TransactionHomePage {
                       //@ts-ignore
                       text: message3.value,
                       handler: data1 => {
-                        if (data1.cb != null && data1.cb != "" && data.cb != undefined) {
+                        if (data1.cb != null && data1.cb != "" && data1.cb != undefined) {
                           //console.log("Update CB to :"+data1.cb)
                           this.getUserData();
                           this.userdata.cash_balance = parseFloat(data1.cb).toString();
@@ -203,22 +203,34 @@ export class TransactionHomePage {
       //add a boolean and ngIf in case tutorial page is different from help page
       page: "Tutorial",
     };
+    const msg1=this.translateConfigService.getTranslatedMessage("Help Button");
+    const msg2=this.translateConfigService.getTranslatedMessage("For any queries about a page, click the ? icon in the top right for more information");
+    const msg3=this.translateConfigService.getTranslatedMessage("For further queries, you can reach us through the Contact Us page");
+    const msg4=this.translateConfigService.getTranslatedMessage("Contact Us");
+    const msg5=this.translateConfigService.getTranslatedMessage("Okay");
+    
+
     const tutorialModal: Modal = this.modal.create("HelpPage", { data: passedData });
     tutorialModal.present();
     tutorialModal.onDidDismiss(() => {
       const helpAlert = this.alertCtrl.create({
-        title: "Help Button",
-        subTitle: "For any queries about a page, click the ? icon in the top right for more information",
-        message: 'For further queries, you can reach us through the "Contact Us" page',
+        //@ts-ignore
+        title: msg1.value,
+        //@ts-ignore
+        subTitle: msg2.value,
+        //@ts-ignore
+        message: msg3.value,
         buttons: [
           {
-            text: "Contact Us",
+            //@ts-ignore
+            text: msg4.value,
             handler: () => {
               this.navCtrl.push(ContactUsPage);
             },
           },
           {
-            text: "Okay",
+            //@ts-ignore
+            text: msg5.value,
             role: "cancel",
           },
         ],
@@ -228,9 +240,11 @@ export class TransactionHomePage {
   }
 
   help() {
+    const msg=this.translateConfigService.getTranslatedMessage("Create New Sales")
     const passedData = {
       //youtube link, required text
-      page: "Transaction Page",
+      //@ts-ignore
+      page: msg.value,
     };
     const helpModal = this.modal.create("HelpPage", { data: passedData });
     helpModal.present();

@@ -7,11 +7,11 @@
 <div class="modal">
   <ion-header>
     <ion-navbar>
-      <h4 style="padding-left: 10px;">Info - {{ data.page }}</h4>
+      <h4 style="padding-left: 10px;">{{"Info"|translate}} - {{ data.page }}</h4>
       <ion-buttons end>
-        <button ion-button (click)="close()">Close</button>
+        <button ion-button (click)="close()">{{"Close"|translate}}</button>
       </ion-buttons>
-    </ion-navbar>
+    </ion-navbar>  
   </ion-header>
 
   <ion-content padding>
@@ -26,6 +26,6 @@
   </ion-content> <!--for [src] use the secureLink() function with link as param-->
 
   <ion-footer style="padding-left: 3px; padding-right: 3px;">
-    <button ion-button block color="dark" (click)="navigate()">See Coach Videos</button>
+    <button ion-button block color="dark" (click)="navigate()">{{"More Coach"|translate}}</button>
   </ion-footer>
 </div>

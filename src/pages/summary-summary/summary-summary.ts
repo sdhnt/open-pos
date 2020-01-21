@@ -1,5 +1,14 @@
 import { Component, ViewChild } from "@angular/core";
-import { IonicPage, NavController, NavParams, Tabs, Events, AlertController, ModalController, App } from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  Tabs,
+  Events,
+  AlertController,
+  ModalController,
+  App,
+} from "ionic-angular";
 import { SummaryHomePage } from "../summary-home/summary-home";
 import { SummaryAccountsPage } from "../summary-accounts/summary-accounts";
 import { SummaryGraphsPage } from "../summary-graphs/summary-graphs";
