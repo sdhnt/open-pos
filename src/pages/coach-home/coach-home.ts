@@ -43,7 +43,7 @@ export class CoachHomePage {
   help() {
     const passedData = {
       //youtube link, required text
-      page: "Transaction Page",
+      page: "Coach Page",
     };
     const helpModal = this.modal.create("HelpPage", { data: passedData });
     helpModal.present();

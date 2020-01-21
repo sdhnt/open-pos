@@ -56,12 +56,11 @@ export class MyApp {
     ];
     this.backButtonEvent();
 
-    this.sp.getUserDat().then( user => {
-      if(user==null){
+    this.sp.getUserDat().then(user => {
+      if (user == null) {
         this.userLang = "en";
-      }
-      else{
-        let _user = JSON.parse(user);
+      } else {
+        const _user = JSON.parse(user);
         this.userLang = _user.language;
       }
     });
@@ -134,7 +133,7 @@ export class MyApp {
     this.openPage({ component: UserProfilePage });
   }
 
-  onLangChange(){
+  onLangChange() {
     this.translateConfigService.setLanguage(this.userLang);
   }
 }

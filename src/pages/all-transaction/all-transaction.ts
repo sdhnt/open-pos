@@ -1,5 +1,14 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, Events, Tabs, ToastController, AlertController, App } from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  Events,
+  Tabs,
+  ToastController,
+  AlertController,
+  App,
+} from "ionic-angular";
 import { IncomeTransactionPage } from "../income-transaction/income-transaction";
 import firebase from "firebase";
 import { StorageProvider } from "../../providers/storage/storage";
@@ -30,7 +39,7 @@ export class AllTransactionPage {
     public sp: StorageProvider,
     public tstCtrl: ToastController,
     private alertCtrl: AlertController,
-    private app: App
+    private app: App,
   ) {
     this.getUserData();
     this.events.subscribe("addRecCalc:created", data => {
@@ -325,7 +334,7 @@ export class AllTransactionPage {
     }
     return s;
   }
-  
+
   addSalesExp() {
     const msg = this.translateConfigService.getTranslatedMessage("Add");
     const msg1 = this.translateConfigService.getTranslatedMessage("Sales");
@@ -358,5 +367,4 @@ export class AllTransactionPage {
     });
     alert.present();
   }
-
 }

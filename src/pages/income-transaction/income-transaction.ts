@@ -867,7 +867,6 @@ export class IncomeTransactionPage {
         //autotab system
         if (element.name.length < 20) {
           for (let i = element.name.length; i < 20; i++) {
-
             element.name += " ";
           }
         } else {
@@ -876,7 +875,6 @@ export class IncomeTransactionPage {
 
         if (element.qty < 10000) {
           for (let i = element.qty.length; i < 4; i++) {
-
             element.qty += " ";
           }
         } else {
