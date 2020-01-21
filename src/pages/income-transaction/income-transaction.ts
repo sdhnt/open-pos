@@ -241,6 +241,8 @@ export class IncomeTransactionPage {
           { name: "Line4", placeholder: message3.value, value: this.userdata.ph_no },
         ],
         buttons: [
+          //@ts-ignore
+          { text: message.value, role: "cancel" },
           {
             //@ts-ignore
             text: message1.value,
@@ -252,8 +254,8 @@ export class IncomeTransactionPage {
               this.sp.setUserDat(this.userdata);
             },
           },
-          //@ts-ignore
-          { text: message.value, role: "cancel" },
+          
+          
         ],
       })
       .present();

@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, ViewController } from "ionic-angular";
+import { IonicPage, NavController, NavParams, ViewController, App } from "ionic-angular";
 import { CoachHomePage } from "../coach-home/coach-home";
 import { DomSanitizer } from "@angular/platform-browser";
 
@@ -22,6 +22,7 @@ export class HelpPage {
     public navParams: NavParams,
     private view: ViewController,
     private dom: DomSanitizer,
+    private app: App,
   ) {
     this.data = this.navParams.get("data");
   }
@@ -35,7 +36,9 @@ export class HelpPage {
   }
 
   navigate() {
-    this.navCtrl.push(CoachHomePage);
+    //this.navCtrl.push(CoachHomePage);
+    this.view.dismiss();
+    this.app.getRootNav().setRoot(CoachHomePage);
   }
 
   secureLink(val: string) {

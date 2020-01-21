@@ -213,6 +213,7 @@ export class SingleProductPage {
         //this.prodCode = barcodeData.text;
         //this.navCtrl.setRoot(SingleProductPage,{code: barcodeData.text})
         this.prodCode = barcodeData.text;
+        this.product.code = barcodeData.text;
       })
       .catch(err => {
         console.log("Error", err);

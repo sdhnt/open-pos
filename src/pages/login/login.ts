@@ -362,7 +362,7 @@ export class LoginPage {
                 handler: () => {
                   //this.sp.clearMem();
                   this.sp.setMem();
-                  this.navCtrl.setRoot(TransactionHomePage, {data: "newUser"}); //navigate to feeds page
+                  this.navCtrl.setRoot(TransactionHomePage, { data: "newUser" }); //navigate to feeds page
                   this.events.publish("newUser");
                 }, //end handler
               },
