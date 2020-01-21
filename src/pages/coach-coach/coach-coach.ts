@@ -37,7 +37,6 @@ export class CoachCoachPage {
         });
         console.log(this.notifList);
       });
-     
   }
 
   ionViewDidLoad() {

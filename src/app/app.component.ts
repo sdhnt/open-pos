@@ -43,6 +43,7 @@ export class MyApp {
     public toastCtrl: ToastController,
     public sp: StorageProvider,
     private fcm: FcmService,
+  
   ) {
     this.initializeApp();
     this.pages = [
@@ -137,6 +138,7 @@ export class MyApp {
   onLangChange() {
     this.translateConfigService.setLanguage(this.userLang);
     this.getUserData();
+    this.nav.setRoot(TransactionHomePage, {lang: this.userLang});
   }
 
   async getUserData() {

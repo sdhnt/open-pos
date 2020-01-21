@@ -74,7 +74,9 @@ export class TransactionHomePage {
     // document.addEventListener("backbutton",function(e) {
     //   console.log("disable back button")
     // }, false);
-
+    if(this.navParams.get("lang")!=this.userdata.language){
+      this.userdata.language=this.navParams.get("lang");
+    }
     this.delay(3000).then(() => {
       this.getUserData();
     });
@@ -245,38 +247,35 @@ export class TransactionHomePage {
   }
 
   help() {
-    
-
     const msg = this.translateConfigService.getTranslatedMessage("Create New Sales");
-    
-    let temptxt=[];
-    let tempvid=[];
+
+    const temptxt = [];
+    let tempvid = [];
 
     firebase
       .firestore()
-      .collection("tutorial").get().then( doc=> {
+      .collection("tutorial")
+      .get()
+      .then(doc => {
         //console.log(doc)
         doc.docs.forEach(element => {
-          console.log(element)  
-           if(element.id==this.userdata.language){
-             element.data().text.forEach(element1 => {
-               if(element1.page=="Sale"){
+          console.log(element);
+          if (element.id == this.userdata.language) {
+            element.data().text.forEach(element1 => {
+              if (element1.page == "Sale") {
                 temptxt.push(element1);
-               }
-             });
-
-             element.data().video.forEach(element2 => {
-              if(element2.page=="Sale"){
-               tempvid.push(element2);
               }
             });
-             tempvid = element.data().video;
-           }
-        });
-      
-      })
-      ;
 
+            element.data().video.forEach(element2 => {
+              if (element2.page == "Sale") {
+                tempvid.push(element2);
+              }
+            });
+            tempvid = element.data().video;
+          }
+        });
+      });
 
     const passedData = {
       //youtube link, required text

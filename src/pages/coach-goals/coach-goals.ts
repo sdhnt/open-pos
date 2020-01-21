@@ -39,26 +39,26 @@ export class CoachGoalsPage {
         });
       });
 
-      firebase
+    firebase
       .firestore()
-      .collection("tutorial").get().then( doc=> {
+      .collection("tutorial")
+      .get()
+      .then(doc => {
         //console.log(doc)
         doc.docs.forEach(element => {
-          console.log(element.id + " "+ this.userdata.language)  
-           if(element.id==this.userdata.language){
-             element.data().video.forEach(element2 => {
-               this.vidlist.push(element2);       
+          console.log(element.id + " " + this.userdata.language);
+          if (element.id == this.userdata.language) {
+            element.data().video.forEach(element2 => {
+              this.vidlist.push(element2);
             });
-             this.vidlist = element.data().video;
-           }
+            this.vidlist = element.data().video;
+          }
         });
-      
-      })
-      ;
-     
+      });
+
     console.log(this.userlang);
   }
-  vidlist=[];
+  vidlist = [];
   userdata: any = {
     business_address: "",
     business_name: "",

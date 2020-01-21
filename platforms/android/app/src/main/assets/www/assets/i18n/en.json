@@ -243,7 +243,15 @@
  "6. What's the best way to contact you?": "6. What's the best way to contact you about the loan?",
  "Enter Details Here" :  "Enter Details Here" ,
  "Send Details" :  "Send Details",
- "Add Sales/Expenses" : "Add Sales/Expenses"
+ "Add Sales/Expenses" : "Add Sales/Expenses",
+ "Last Receipt":"Last Receipt",
+ "Help Button":"Help Button",
+ "For any queries about a page, click the ? icon in the top right for more information":"For any queries about a page, click the ? icon in the top right for more information",
+ "For further queries, you can reach us through the Contact Us page":"For further queries, you can reach us through the Contact Us page",
+ "Okay":"Okay",
+ "Info":"Info/Help",
+ "More Coach":"See more video tutorials"
 
 
 }
+  
