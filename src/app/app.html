@@ -4,7 +4,14 @@
       <!-- <ion-row>
         <button ion-button block medium></button>{{'Menu' | translate}}</button> 
       </ion-row> -->
-
+      <ion-row>
+        <ion-select [(ngModel)]="userLang" (ionChange) = "onLangChange()" interface="popover" style="min-width: 100%; text-align: center;" padding>
+          <ion-option value="en">🇬🇧 English</ion-option>
+          <ion-option value="my">🇲🇲 ဗမာ</ion-option>
+          <ion-option value="fil">🇵🇭 wikang filipino</ion-option>
+          <ion-option value="hi">🇮🇳 हिंदी</ion-option>
+        </ion-select>
+      </ion-row>
       <ion-row>
           <button ion-button block large outline color="dark" (click)="openUserProfilePage()" menuClose>
               {{'Settings' | translate}} <br> 

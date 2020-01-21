@@ -31,6 +31,7 @@ export class MyApp {
 
   language: "en";
   pages: Array<{ title: string; component: any }>;
+  userLang: string;
 
   constructor(
     public app: App,
@@ -54,6 +55,16 @@ export class MyApp {
       { title: "Contact Us", component: ContactUsPage },
     ];
     this.backButtonEvent();
+
+    this.sp.getUserDat().then( user => {
+      if(user==null){
+        this.userLang = "en";
+      }
+      else{
+        let _user = JSON.parse(user);
+        this.userLang = _user.language;
+      }
+    });
   }
 
   backButtonEvent() {
@@ -121,5 +132,9 @@ export class MyApp {
 
   openUserProfilePage() {
     this.openPage({ component: UserProfilePage });
+  }
+
+  onLangChange(){
+    this.translateConfigService.setLanguage(this.userLang);
   }
 }

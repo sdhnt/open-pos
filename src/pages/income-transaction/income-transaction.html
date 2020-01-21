@@ -200,7 +200,50 @@
     </ion-grid>
   </ion-card>
   <!-- Dynamically Generate All expense from backend - see feed from prev -->
-
+  <ion-card *ngIf="showrec==false && isReady==true" padding>
+    <br>
+    <h2 style="text-align: center;">
+      <b>Last Receipt</b>
+    </h2>
+    <br>
+    <ion-list *ngFor="let item of lastTransaction.itemslist">
+      <ion-row>
+        <ion-col col-8>{{item.name}}</ion-col>
+        <ion-col col-2>{{item.qty}}</ion-col>
+        <ion-col col-2>{{item.price}}</ion-col>
+      </ion-row>
+    </ion-list>
+    <ion-row>
+      <ion-col col-8>
+        <b>Total</b>
+      </ion-col>
+      <ion-col col-4 style="text-align: end;">
+        {{ lastTransaction.totalsum }}
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="lastTransaction.totaldisc!=lastTransaction.totalsum" style="padding: 0px;text-align: left; ">
+      <ion-col col-8>
+        {{"Discounted total:"|translate}} ({{lastTransaction.discount}}%)
+      </ion-col>
+      <ion-col col-4 style="text-align: end;">
+        {{lastTransaction.totaldisc}}
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="lastTransaction.totalsum!=lastTransaction.totalatax" style="padding: 0px; text-align: left;">
+      <ion-col col-8>
+        {{"Total after tax:"|translate}} ({{lastTransaction.taxrate}}%)
+      </ion-col>
+      <ion-col col-4 style="text-align: end;">
+        {{lastTransaction.totalatax}}
+      </ion-col>
+    </ion-row>
+    <br>
+    <!-- <ion-row style="padding: 7px;">
+      <button ion-button full (click)="printOldRec()">
+        Re-Print
+      </button>
+    </ion-row> -->
+  </ion-card>
 
 
 </ion-content>

@@ -40,6 +40,7 @@ export class IncomeTransactionPage {
     private gps: GeolocationService,
     public app: App,
   ) {
+    this.isReady = false;
     const nav = app._appRoot._getActivePortal() || app.getActiveNav();
     const activeView = nav.getActive();
     if (activeView != null) {
@@ -66,6 +67,9 @@ export class IncomeTransactionPage {
 
   taxbtn = 0;
   showrec = false;
+
+  lastTransaction: any;
+  isReady: boolean;
 
   userdata: any = {
     business_address: "",
@@ -128,11 +132,22 @@ export class IncomeTransactionPage {
           }
         });
       });
-
       this.updateRec();
     });
+    this.getLastTransaction();
   }
   temp;
+
+  getLastTransaction() {
+    this.sp.storageReady().then(() => {
+      this.sp.getTransactions().then(val => {
+        let listOfTransactions: any[] = JSON.parse(val);
+        listOfTransactions = listOfTransactions.reverse();
+        this.lastTransaction = listOfTransactions[0];
+        this.isReady = true;
+      });
+    });
+  }
 
   addNewItembtn() {
     const message1 = this.translateConfigService.getTranslatedMessage("CANCEL ");
@@ -517,7 +532,8 @@ export class IncomeTransactionPage {
         });
 
         //REFLECT CHANGE ON CASH BALANCE HERE & Reflect change in inventory here as well
-
+        this.lastTransaction = data;
+        console.log(this.lastTransaction);
         this.datastore.itemslist = [];
         this.lastsum = 0;
         this.lastsumtax = 0;
@@ -528,9 +544,11 @@ export class IncomeTransactionPage {
         this.discbtn = 0;
         this.sp.backupStorage();
         toast.present();
+
         this.showrec = false;
       });
     }
+    //this.getLastTransaction();
     (this.navCtrl.parent as Tabs).select(0);
   }
   discountlist = [];
@@ -572,6 +590,19 @@ export class IncomeTransactionPage {
     });
   }
 
+  // printOldRec(data){
+  //   this.datastore.itemslist=data.itemslist;
+  //   this.lastsum=data.totalsum,
+  //   prodidlist: this.prodidlist,
+  //   pnllist: this.pnllist,
+  //   datetime: this.datetime,
+  //   taxrate: this.taxrate,
+  //   discountlist: this.discountlist,
+  //   discount: this.discount,
+  //   totaldisc: this.lastsumdisc,
+  //   totalatax: this.lastsumtax,
+  // }
+
   printRec() {
     this.datetime = Date.now();
     if (this.datastore.itemslist.length == 0) {
@@ -612,6 +643,8 @@ export class IncomeTransactionPage {
           this.events.publish("cbUpdate:created", 0);
         });
         this.sp.backupStorage();
+        this.lastTransaction = data;
+        console.log(this.lastTransaction);
         this.prepareToPrint();
       });
     }
@@ -641,6 +674,7 @@ export class IncomeTransactionPage {
     this.taxrate = 0;
     this.taxbtn = 0;
     this.discbtn = 0;
+
     const msg1 = this.translateConfigService.getTranslatedMessage("Printing...");
     const msg2 = this.translateConfigService.getTranslatedMessage("Successful print!");
     const msg3 = this.translateConfigService.getTranslatedMessage("Ok");
@@ -833,6 +867,7 @@ export class IncomeTransactionPage {
         //autotab system
         if (element.name.length < 20) {
           for (let i = element.name.length; i < 20; i++) {
+
             element.name += " ";
           }
         } else {
@@ -841,6 +876,7 @@ export class IncomeTransactionPage {
 
         if (element.qty < 10000) {
           for (let i = element.qty.length; i < 4; i++) {
+
             element.qty += " ";
           }
         } else {
@@ -855,11 +891,13 @@ export class IncomeTransactionPage {
           element.price.substring(0, 8);
         }
         result
+
           .text(element.name) //19 + space
           //.raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
           .text(element.qty) //4+ space
           //.raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
           .text(element.price) //7+space
+
           .newline();
         if (parseFloat(element.discount) != 0) {
           result
