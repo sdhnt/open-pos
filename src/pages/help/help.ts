@@ -17,6 +17,8 @@ import { DomSanitizer } from "@angular/platform-browser";
 })
 export class HelpPage {
   data: any;
+  text: any;
+  video_set:any;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,

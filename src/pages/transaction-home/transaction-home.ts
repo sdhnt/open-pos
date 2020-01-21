@@ -20,6 +20,7 @@ import { StorageProvider } from "../../providers/storage/storage";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import { LoginPage } from "../login/login";
 import { ContactUsPage } from "../contact-us/contact-us";
+import { text } from "@angular/core/src/render3/instructions";
 
 /**
  * Generated class for the TransactionHomePage page.
@@ -198,17 +199,21 @@ export class TransactionHomePage {
   }
 
   tutorial() {
+    const msg = this.translateConfigService.getTranslatedMessage("Create New Sales");
     const passedData = {
       //youtube link, required text
-      //add a boolean and ngIf in case tutorial page is different from help page
-      page: "Tutorial",
+      //@ts-ignore
+      page: msg.value,
     };
-    const msg1=this.translateConfigService.getTranslatedMessage("Help Button");
-    const msg2=this.translateConfigService.getTranslatedMessage("For any queries about a page, click the ? icon in the top right for more information");
-    const msg3=this.translateConfigService.getTranslatedMessage("For further queries, you can reach us through the Contact Us page");
-    const msg4=this.translateConfigService.getTranslatedMessage("Contact Us");
-    const msg5=this.translateConfigService.getTranslatedMessage("Okay");
-    
+    const msg1 = this.translateConfigService.getTranslatedMessage("Help Button");
+    const msg2 = this.translateConfigService.getTranslatedMessage(
+      "For any queries about a page, click the ? icon in the top right for more information",
+    );
+    const msg3 = this.translateConfigService.getTranslatedMessage(
+      "For further queries, you can reach us through the Contact Us page",
+    );
+    const msg4 = this.translateConfigService.getTranslatedMessage("Contact Us");
+    const msg5 = this.translateConfigService.getTranslatedMessage("Okay");
 
     const tutorialModal: Modal = this.modal.create("HelpPage", { data: passedData });
     tutorialModal.present();
@@ -240,11 +245,45 @@ export class TransactionHomePage {
   }
 
   help() {
-    const msg=this.translateConfigService.getTranslatedMessage("Create New Sales")
+    
+
+    const msg = this.translateConfigService.getTranslatedMessage("Create New Sales");
+    
+    let temptxt=[];
+    let tempvid=[];
+
+    firebase
+      .firestore()
+      .collection("tutorial").get().then( doc=> {
+        //console.log(doc)
+        doc.docs.forEach(element => {
+          console.log(element)  
+           if(element.id==this.userdata.language){
+             element.data().text.forEach(element1 => {
+               if(element1.page=="Sale"){
+                temptxt.push(element1);
+               }
+             });
+
+             element.data().video.forEach(element2 => {
+              if(element2.page=="Sale"){
+               tempvid.push(element2);
+              }
+            });
+             tempvid = element.data().video;
+           }
+        });
+      
+      })
+      ;
+
+
     const passedData = {
       //youtube link, required text
       //@ts-ignore
       page: msg.value,
+      text: temptxt,
+      video: tempvid,
     };
     const helpModal = this.modal.create("HelpPage", { data: passedData });
     helpModal.present();

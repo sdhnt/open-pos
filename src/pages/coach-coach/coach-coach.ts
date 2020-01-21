@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import firebase from "firebase";
+import { StorageProvider } from "../../providers/storage/storage";
 
 /**
  * Generated class for the CoachCoachPage page.
@@ -22,6 +23,7 @@ export class CoachCoachPage {
     public navCtrl: NavController,
     private translateConfigService: TranslateConfigService,
     public navParams: NavParams,
+    public sp: StorageProvider,
   ) {
     firebase
       .firestore()
@@ -35,10 +37,39 @@ export class CoachCoachPage {
         });
         console.log(this.notifList);
       });
+     
   }
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad CoachCoachPage");
+  }
+  userdata: any = {
+    business_address: "",
+    business_name: "",
+    cash_balance: "",
+    currency: "",
+    created: "",
+    language: this.translateConfigService.getCurrentLanguage(),
+    owner: "",
+    owner_name: "",
+    ph_no: "",
+    businesstype: "",
+    taxrate: 0.0,
+    discount: 0.0,
+  };
+
+  async getUserData() {
+    this.sp.storageReady().then(() => {
+      this.sp
+        .getUserDat()
+        .then(val => {
+          this.userdata = JSON.parse(val);
+          console.log(this.userdata);
+        })
+        .catch(err => {
+          alert("Error: " + err);
+        });
+    });
   }
 
   getDateTime(datetime) {

@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import firebase from "firebase";
 import { DomSanitizer } from "@angular/platform-browser";
+import { StorageProvider } from "../../providers/storage/storage";
 
 /**
  * Generated class for the CoachGoalsPage page.
@@ -23,6 +24,7 @@ export class CoachGoalsPage {
     private translateConfigService: TranslateConfigService,
     public navParams: NavParams,
     private dom: DomSanitizer,
+    public sp: StorageProvider,
   ) {
     firebase
       .firestore()
@@ -36,7 +38,54 @@ export class CoachGoalsPage {
           console.log(element.date);
         });
       });
+
+      firebase
+      .firestore()
+      .collection("tutorial").get().then( doc=> {
+        //console.log(doc)
+        doc.docs.forEach(element => {
+          console.log(element.id + " "+ this.userdata.language)  
+           if(element.id==this.userdata.language){
+             element.data().video.forEach(element2 => {
+               this.vidlist.push(element2);       
+            });
+             this.vidlist = element.data().video;
+           }
+        });
+      
+      })
+      ;
+     
     console.log(this.userlang);
+  }
+  vidlist=[];
+  userdata: any = {
+    business_address: "",
+    business_name: "",
+    cash_balance: "",
+    currency: "",
+    created: "",
+    language: this.translateConfigService.getCurrentLanguage(),
+    owner: "",
+    owner_name: "",
+    ph_no: "",
+    businesstype: "",
+    taxrate: 0.0,
+    discount: 0.0,
+  };
+
+  async getUserData() {
+    this.sp.storageReady().then(() => {
+      this.sp
+        .getUserDat()
+        .then(val => {
+          this.userdata = JSON.parse(val);
+          console.log(this.userdata);
+        })
+        .catch(err => {
+          alert("Error: " + err);
+        });
+    });
   }
 
   userlang = this.translateConfigService.getCurrentLanguage();

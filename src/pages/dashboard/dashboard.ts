@@ -262,11 +262,47 @@ export class DashboardPage {
   }
 
   help() {
+    
+
+    const msg = this.translateConfigService.getTranslatedMessage("View/Edit Products");
+    
+    let temptxt=[];
+    let tempvid=[];
+
+    firebase
+      .firestore()
+      .collection("tutorial").get().then( doc=> {
+        //console.log(doc)
+        doc.docs.forEach(element => {
+          console.log(element.id + " "+ this.userdata.language)  
+           if(element.id==this.userdata.language){
+             element.data().text.forEach(element1 => {
+               if(element1.page=="Product"){
+                temptxt.push(element1);
+               }
+             });
+             element.data().video.forEach(element2 => {
+              if(element2.page=="Product"){
+               tempvid.push(element2);
+              }
+            });
+             tempvid = element.data().video;
+           }
+        });
+      
+      })
+      ;
+
+
     const passedData = {
       //youtube link, required text
-      page: "Products & Stock Page",
+      //@ts-ignore
+      page: msg.value,
+      text: temptxt,
+      video: tempvid,
     };
     const helpModal = this.modal.create("HelpPage", { data: passedData });
     helpModal.present();
   }
+    
 }

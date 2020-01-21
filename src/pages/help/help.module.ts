@@ -6,6 +6,6 @@ import { TranslateModule } from "@ngx-translate/core";
 @NgModule({
   declarations: [HelpPage],
   imports: [IonicPageModule.forChild(HelpPage), TranslateModule.forChild()],
-  exports: [HelpPage]
+  exports: [HelpPage],
 })
 export class HelpPageModule {}
