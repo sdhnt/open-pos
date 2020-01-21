@@ -1,11 +1,14 @@
 <ion-header>
   <ion-row>
-      <ion-col col-4>
-          <ion-select multiple="false" [(ngModel)]="selectedLanguage" (ionChange)="languageChanged()">
-              <ion-option *ngFor="let l of listOfLang">{{ l }}</ion-option>
+      <ion-col col-8>
+          <ion-select interface="popover" [(ngModel)]="selectedLanguage" (ionChange)="languageChanged()" style="min-width: 50%;">
+            <ion-option value="en">🇬🇧 English</ion-option>
+            <ion-option value="my">🇲🇲 ဗမာ</ion-option>
+            <ion-option value="fil">🇵🇭 wikang filipino</ion-option>
+            <ion-option value="hi">🇮🇳 हिंदी</ion-option>
             </ion-select>
       </ion-col>
-      <ion-col col-8></ion-col>
+      <ion-col col-4></ion-col>
   </ion-row>
 
          
