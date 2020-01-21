@@ -200,7 +200,7 @@
     </ion-grid>
   </ion-card>
   <!-- Dynamically Generate All expense from backend - see feed from prev -->
-  <ion-card *ngIf="showrec==false && isReady==true">
+  <ion-card *ngIf="showrec==false && isReady==true" padding>
     <br>
     <h2 style="text-align: center;">
       <b>Last Receipt</b>
@@ -238,11 +238,11 @@
       </ion-col>
     </ion-row>
     <br>
-    <ion-row style="padding: 7px;">
-      <button ion-button full (click)="showOldRec()">
-        View and print
+    <!-- <ion-row style="padding: 7px;">
+      <button ion-button full (click)="printOldRec()">
+        Re-Print
       </button>
-    </ion-row>
+    </ion-row> -->
   </ion-card>
 
 

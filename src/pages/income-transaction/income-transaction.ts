@@ -532,7 +532,8 @@ export class IncomeTransactionPage {
         });
 
         //REFLECT CHANGE ON CASH BALANCE HERE & Reflect change in inventory here as well
-
+        this.lastTransaction=data;
+        console.log(this.lastTransaction)
         this.datastore.itemslist = [];
         this.lastsum = 0;
         this.lastsumtax = 0;
@@ -543,11 +544,11 @@ export class IncomeTransactionPage {
         this.discbtn = 0;
         this.sp.backupStorage();
         toast.present();
+        
         this.showrec = false;
       });
     }
-    this.isReady=false;
-    this.getLastTransaction();
+    //this.getLastTransaction();
     (this.navCtrl.parent as Tabs).select(0);
   }
   discountlist = [];
@@ -589,6 +590,19 @@ export class IncomeTransactionPage {
     });
   }
 
+  // printOldRec(data){
+  //   this.datastore.itemslist=data.itemslist;
+  //   this.lastsum=data.totalsum,
+  //   prodidlist: this.prodidlist,
+  //   pnllist: this.pnllist,
+  //   datetime: this.datetime,
+  //   taxrate: this.taxrate,
+  //   discountlist: this.discountlist,
+  //   discount: this.discount,
+  //   totaldisc: this.lastsumdisc,
+  //   totalatax: this.lastsumtax,
+  // }
+
   printRec() {
     this.datetime = Date.now();
     if (this.datastore.itemslist.length == 0) {
@@ -629,6 +643,8 @@ export class IncomeTransactionPage {
           this.events.publish("cbUpdate:created", 0);
         });
         this.sp.backupStorage();
+        this.lastTransaction=data;
+        console.log(this.lastTransaction);
         this.prepareToPrint();
       });
     }
@@ -658,6 +674,7 @@ export class IncomeTransactionPage {
     this.taxrate = 0;
     this.taxbtn = 0;
     this.discbtn = 0;
+    
     const msg1 = this.translateConfigService.getTranslatedMessage("Printing...");
     const msg2 = this.translateConfigService.getTranslatedMessage("Successful print!");
     const msg3 = this.translateConfigService.getTranslatedMessage("Ok");

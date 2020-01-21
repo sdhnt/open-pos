@@ -126,7 +126,7 @@
  "Deleting item, please wait a moment":"item ကိုဖျက်ခြင်းခဏစောင့်ပါ",
  "Modifying item, please wait a moment":"ပစ္စည်းကိုပြုပြင်မွမ်းမံရန်ခဏစောင့်ပါ",
  "Please fill all the information!": "အချက်အလက်အားလုံးကိုဖြည့်ပါ",
- "Backup Online":"အရန်ဒေတာသိမ်းမည်",
+ "Backup Online":"အရန်ကူးခြင်း",
  "Cash Balance":"ငွေလက်ကျန်",
  "Login with Facebook":"ဖေ့စ်ဘုတ်ဖြင့်ဝင်ရောက်ပါ",
  "Discard Changes":"ပြောင်းလဲမှုမလုပ်တော့ပါ",
@@ -243,7 +243,7 @@
 "5. What do you need the loan for?" : "ဘာအတွက်ကြောင့်သင်ချေးငွေလိုအပ်ရပါသလဲ။",
 "6. What's the best way to contact you?": "ချေးငွေနှင့်ပက်သက်ပြီး သင့်ကိုဘယ်လိုဆက်သွယ်အကြောင်းကြားလို့ရမလဲ။",
 "Enter Details Here" : "အသေးစိတ်ရေးပေးပါ။",
-"Send Details" : "ပေးပို့မည်။"
-
+"Send Details" : "ပေးပို့မည်။",
+"Add Sales/Expenses" : "အရောင်း / အသုံးစရိတ်ထည့်ပါ"
 
 }
