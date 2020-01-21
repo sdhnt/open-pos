@@ -254,8 +254,6 @@ export class IncomeTransactionPage {
               this.sp.setUserDat(this.userdata);
             },
           },
-          
-          
         ],
       })
       .present();

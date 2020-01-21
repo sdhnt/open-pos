@@ -26,7 +26,7 @@ export class SingleProductPage {
   prodCost = 0;
   prodCat: any = "";
   listProduct: any;
-  isProdCode000000: boolean = false;
+  isProdCode000000 = false;
 
   orgData = {
     prodCode: "",
@@ -222,12 +222,12 @@ export class SingleProductPage {
   disabled = false;
 
   updateProduct() {
-    if(this.product.code=="000000"){
+    if (this.product.code == "000000") {
       const msg = this.translateConfigService.getTranslatedMessage("Code not permitted. Please use a different code");
-      let toast = this.toastCtrl.create({
+      const toast = this.toastCtrl.create({
         //@ts-ignore
         message: msg.value,
-        duration: 3000
+        duration: 3000,
       });
       toast.present();
       this.isProdCode000000 = true;
