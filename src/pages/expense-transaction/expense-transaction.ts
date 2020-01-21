@@ -62,10 +62,21 @@ export class ExpenseTransactionPage {
     this.events.subscribe("cbUpdate:created", async data => {
       await this.getUserData();
     });
+
+  
+
+
   }
+
+   
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad ExpenseTransactionPage");
+    if (this.navParams.get("data") == "ViewExp") {
+      console.log("Yo000");
+      //change tab
+      this.tabRef.select(1);
+  }
   }
 
   uploadbtn() {

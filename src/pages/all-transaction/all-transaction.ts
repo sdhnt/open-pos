@@ -355,7 +355,7 @@ export class AllTransactionPage {
           //@ts-ignore
           text: msg2.value,
           handler: () => {
-            this.app.getRootNav().setRoot(ExpenseTransactionPage);
+            this.app.getRootNav().setRoot(ExpenseTransactionPage, {data: "ViewExp"});
           },
         },
         {

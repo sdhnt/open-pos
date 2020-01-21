@@ -148,12 +148,10 @@ export class MyApp {
           console.log(this.userdata);
           this.userdata.language = this.userLang;
           this.sp.storageReady().then(() => {
-            this.sp
-              .setUserDat(this.userdata)
-              .then(() => {
-                console.log(this.userdata)
-              });
+            this.sp.setUserDat(this.userdata).then(() => {
+              console.log(this.userdata);
             });
+          });
         })
         .catch(err => {
           alert("Error: " + err);
