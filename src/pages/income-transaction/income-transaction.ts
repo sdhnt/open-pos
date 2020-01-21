@@ -138,8 +138,8 @@ export class IncomeTransactionPage {
   }
   temp;
 
-  getLastTransaction(){
-    this.sp.storageReady().then(()=>{
+  getLastTransaction() {
+    this.sp.storageReady().then(() => {
       this.sp.getTransactions().then(val => {
         let listOfTransactions: any[] = JSON.parse(val);
         listOfTransactions = listOfTransactions.reverse();
@@ -532,8 +532,8 @@ export class IncomeTransactionPage {
         });
 
         //REFLECT CHANGE ON CASH BALANCE HERE & Reflect change in inventory here as well
-        this.lastTransaction=data;
-        console.log(this.lastTransaction)
+        this.lastTransaction = data;
+        console.log(this.lastTransaction);
         this.datastore.itemslist = [];
         this.lastsum = 0;
         this.lastsumtax = 0;
@@ -544,7 +544,7 @@ export class IncomeTransactionPage {
         this.discbtn = 0;
         this.sp.backupStorage();
         toast.present();
-        
+
         this.showrec = false;
       });
     }
@@ -643,7 +643,7 @@ export class IncomeTransactionPage {
           this.events.publish("cbUpdate:created", 0);
         });
         this.sp.backupStorage();
-        this.lastTransaction=data;
+        this.lastTransaction = data;
         console.log(this.lastTransaction);
         this.prepareToPrint();
       });
@@ -674,7 +674,7 @@ export class IncomeTransactionPage {
     this.taxrate = 0;
     this.taxbtn = 0;
     this.discbtn = 0;
-    
+
     const msg1 = this.translateConfigService.getTranslatedMessage("Printing...");
     const msg2 = this.translateConfigService.getTranslatedMessage("Successful print!");
     const msg3 = this.translateConfigService.getTranslatedMessage("Ok");
@@ -853,48 +853,47 @@ export class IncomeTransactionPage {
         .align("left")
         //.raw(commands.FEED_CONTROL_SEQUENCES.RST_HT)
         //.raw(commands.FEED_CONTROL_SEQUENCES.SET_HT)
-        .text("Item Name           ")//10 char + 10 char
+        .text("Item Name           ") //10 char + 10 char
         .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
-        .text("Qty ")//4 char
+        .text("Qty ") //4 char
         .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
-        .text("  Price")//8 char
+        .text("  Price") //8 char
         .newline()
         .newline();
 
       this.datastore.itemslist.forEach((element, index) => {
+        element.qty = element.qty.toString();
+        element.price = element.price.toString();
 
-        element.qty=element.qty.toString();
-        element.price=element.price.toString();
-
-        if(element.name.length()<20){
-          for(let i=element.name.length();i<20;i++){
-            element.name+=' ';
+        if (element.name.length() < 20) {
+          for (let i = element.name.length(); i < 20; i++) {
+            element.name += " ";
           }
-        }else{
-          element.name=element.name.substring(0,20);
+        } else {
+          element.name = element.name.substring(0, 20);
         }
 
-        if(element.qty<10000){
-          for(let i=element.qty.length();i<4;i++){
-            element.qty+=' ';
+        if (element.qty < 10000) {
+          for (let i = element.qty.length(); i < 4; i++) {
+            element.qty += " ";
           }
-        }else{
-          element.qty.substring(0,4);
+        } else {
+          element.qty.substring(0, 4);
         }
-        
-        if(element.price<10000000){
-          for(let i=element.price.length();i<8;i++){
-            element.price+=' ';
+
+        if (element.price < 10000000) {
+          for (let i = element.price.length(); i < 8; i++) {
+            element.price += " ";
           }
-        }else{
-          element.price.substring(0,8);
+        } else {
+          element.price.substring(0, 8);
         }
         result
-          .text(element.name, 20)//19 + space
+          .text(element.name, 20) //19 + space
           //.raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
-          .text(element.qty,4)//4+ space
+          .text(element.qty, 4) //4+ space
           //.raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
-          .text(element.price,8)//7+space
+          .text(element.price, 8) //7+space
           .newline();
         if (parseFloat(element.discount) != 0) {
           result
