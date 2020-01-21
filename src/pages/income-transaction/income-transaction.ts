@@ -830,7 +830,7 @@ export class IncomeTransactionPage {
       this.datastore.itemslist.forEach((element, index) => {
         element.qty = element.qty.toString();
         element.price = element.price.toString();
-//autotab system
+        //autotab system
         if (element.name.length < 20) {
           for (let i = element.name.length; i < 20; i++) {
             element.name += " ";
