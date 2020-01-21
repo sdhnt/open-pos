@@ -133,7 +133,31 @@ export class MyApp {
     this.openPage({ component: UserProfilePage });
   }
 
+  userdata: any;
   onLangChange() {
     this.translateConfigService.setLanguage(this.userLang);
+    this.getUserData();
+  }
+
+  async getUserData() {
+    this.sp.storageReady().then(() => {
+      this.sp
+        .getUserDat()
+        .then(val => {
+          this.userdata = JSON.parse(val);
+          console.log(this.userdata);
+          this.userdata.language = this.userLang;
+          this.sp.storageReady().then(() => {
+            this.sp
+              .setUserDat(this.userdata)
+              .then(() => {
+                console.log(this.userdata)
+              });
+            });
+        })
+        .catch(err => {
+          alert("Error: " + err);
+        });
+    });
   }
 }

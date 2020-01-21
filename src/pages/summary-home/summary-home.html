@@ -41,6 +41,13 @@
           <ion-col col-6><button ion-button small full style="background-color: gray; color: white"
               (click)="expandTransac(transac)">{{transac.expandedvar}}</button></ion-col>
         </ion-row>
+        <ion-row>
+          <ion-col col-12>
+            <button ion-button full style="background-color:#FFAF00" (click)="printRec(transac)"> {{'PRINT '|translate}} <br>
+              <ion-icon name="print"></ion-icon>
+            </button>
+          </ion-col>
+        </ion-row>
       </ion-grid>
       <ion-grid line>
       </ion-grid>
