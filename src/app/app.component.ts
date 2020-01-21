@@ -133,7 +133,50 @@ export class MyApp {
     this.openPage({ component: UserProfilePage });
   }
 
+userdata = {
+  business_address: "",
+  business_name: "",
+  cash_balance: "",
+  currency: "",
+  created: "",
+  language: this.userLang,
+  owner: "",
+  owner_name: "",
+  ph_no: "",
+  businesstype: "",
+  taxrate: 0.0,
+  discount: 0.0,
+};
   onLangChange() {
     this.translateConfigService.setLanguage(this.userLang);
+    this.getUserData();
+    this.userdata.language=this.userLang;
+    this.sp.storageReady().then(() => {
+      this.sp
+        .setUserDat(this.userdata)
+        .then(() => {
+          //console.log("new user data saved in storage");
+          //this.navCtrl.setRoot(TransactionHomePage);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    });
+
   }
+
+  async getUserData() {
+    this.sp.storageReady().then(() => {
+      this.sp
+        .getUserDat()
+        .then(val => {
+          this.userdata = JSON.parse(val);
+          console.log(this.userdata);
+        })
+        .catch(err => {
+          alert("Error: " + err);
+        });
+    });
+  }
+
 }

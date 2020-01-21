@@ -36,6 +36,7 @@ export class SummaryHomePage {
       (this.navCtrl.parent as Tabs).select(2);
       console.log("ViewRecs Event");
     });
+    this.getUserData();
   }
 
   expanded = true;
@@ -99,6 +100,7 @@ export class SummaryHomePage {
     this.tsmonth = 0;
     this.ts30 = 0;
     this.usrchoice = "today";
+    this.getUserData();
     //@ts-ignore
     //this.expandedvar = this.translateConfigService.getTranslatedMessage("Expand").value;
     this.getTransac();
