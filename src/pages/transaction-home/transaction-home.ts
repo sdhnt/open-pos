@@ -55,6 +55,9 @@ export class TransactionHomePage {
   ) {
     //this.getUserData();
     //this.tutorial();
+    if(this.navParams.get("data")=="newUser"){
+      this.tutorial();
+    }
     this.events.subscribe("newUser", data => {
       //this.events.unsubscribe("newUser");
       this.tutorial();
