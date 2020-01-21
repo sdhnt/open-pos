@@ -74,8 +74,8 @@ export class TransactionHomePage {
     // document.addEventListener("backbutton",function(e) {
     //   console.log("disable back button")
     // }, false);
-    if(this.navParams.get("lang")!=this.userdata.language){
-      this.userdata.language=this.navParams.get("lang");
+    if (this.navParams.get("lang") != this.userdata.language) {
+      this.userdata.language = this.navParams.get("lang");
     }
     this.delay(3000).then(() => {
       this.getUserData();
