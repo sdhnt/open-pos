@@ -339,7 +339,7 @@ export class SummaryGraphsPage {
             spanGaps: false,
           },
           {
-            label: "Revenue",
+            label: "Profit",
             fill: true,
             lineTension: 0.1,
             backgroundColor: "rgba(255, 206, 86, 0.4)",
