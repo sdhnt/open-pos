@@ -287,4 +287,9 @@ export class TransactionHomePage {
     const helpModal = this.modal.create("HelpPage", { data: passedData });
     helpModal.present();
   }
+
+  contactpg() {
+    this.navCtrl.push(ContactUsPage);
+  } 
+
 }
