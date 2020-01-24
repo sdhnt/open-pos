@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, Events, ToastController } from "ionic-angular";
+import { IonicPage, NavController, NavParams, Events, ToastController, ViewController } from "ionic-angular";
 import { StorageProvider } from "../../providers/storage/storage";
 import firebase from "firebase";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
@@ -34,6 +34,7 @@ export class ExpenseGeneralPage {
     public events: Events,
     public toastCtrl: ToastController,
     private gps: GeolocationService,
+    private view: ViewController,
   ) {
     this.getUserData();
     this.listOfExpenses = [];
@@ -123,7 +124,12 @@ export class ExpenseGeneralPage {
       this.listOfExpenses = [];
       this.listOfExpenses.push(new Expense());
       this.sp.backupStorage();
+      this.view.dismiss();
     });
+  }
+
+  close(){
+    this.view.dismiss();
   }
 
   async updateCb(negtransacsum) {

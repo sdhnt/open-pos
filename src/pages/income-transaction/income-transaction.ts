@@ -1,5 +1,15 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, Events, Tabs, ToastController, DateTime, App, ModalController } from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  Events,
+  Tabs,
+  ToastController,
+  DateTime,
+  App,
+  ModalController,
+} from "ionic-angular";
 import { AllTransactionPage } from "../all-transaction/all-transaction";
 import firebase from "firebase";
 import { StorageProvider } from "../../providers/storage/storage";
@@ -251,11 +261,7 @@ export class IncomeTransactionPage {
         // @ts-ignore
         enableBackdropDismiss: true,
         buttons: [
-          {
-            // @ts-ignore
-            text: message1.value,
-            role: "cancel",
-          },
+       
           {
             // @ts-ignore
             text: message2.value,
@@ -284,9 +290,18 @@ export class IncomeTransactionPage {
               this.dispM();
             },
           },
+          {
+            // @ts-ignore
+            text: message1.value,
+            role: "cancel",
+          },
         ],
       })
       .present();
+  }
+
+  addNewExp(){
+    this.modal.create("ExpenseGeneralPage").present();
   }
 
   updateRec() {
@@ -654,7 +669,7 @@ export class IncomeTransactionPage {
   }
 
   addSingleProd(item, index) {
-    (this.navCtrl.parent as Tabs).select(1);
+    (this.navCtrl.parent as Tabs).select(0);
     this.delay(300).then(any => {
       this.events.publish(
         "addSingleProd:created",
@@ -670,7 +685,7 @@ export class IncomeTransactionPage {
   }
 
   addProdList() {
-    (this.navCtrl.parent as Tabs).select(1);
+    (this.navCtrl.parent as Tabs).select(0);
     this.delay(300).then(any => {
       this.events.publish("addRecProd:created", JSON.stringify(this.datastore.itemslist));
 

@@ -132,7 +132,7 @@ export class AllTransactionPage {
     });
   }
 
-  close(){
+  close() {
     this.view.dismiss();
   }
 
@@ -161,10 +161,9 @@ export class AllTransactionPage {
     const myObjStr = JSON.stringify(tempJSON);
 
     //(this.navCtrl.parent as Tabs).select(2);
-    
 
     this.view.dismiss();
-  
+
     this.delay(300).then(any => {
       this.events.publish("genRec:created", myObjStr);
 

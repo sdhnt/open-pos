@@ -10,6 +10,16 @@
   </ion-navbar>
 </ion-header> -->
 
+<div class="modal">
+  <ion-header>
+    <ion-navbar>
+      <h4 style="padding-left: 10px;">Expenses</h4>
+      <ion-buttons end>
+        <button ion-button style="background-color: red; color: white" (click)="close()">{{"Close"|translate}}</button>
+      </ion-buttons>
+    </ion-navbar>  
+  </ion-header>
+
 <ion-content>
   <ion-item>
       <b>{{"Add non-inventory expense"|translate}}:</b> 
@@ -82,3 +92,4 @@
     </ion-row>
   </ion-grid>
 </ion-footer>
+</div>

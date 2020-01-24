@@ -99,7 +99,7 @@ export class TransactionProductPage {
       this.showmanual = 0;
       this.itname = "";
       this.ionViewDidLoad();
-      (this.navCtrl.parent as Tabs).select(2);
+      (this.navCtrl.parent as Tabs).select(1);
     } else {
       console.log("Create Rec");
       const data1 = {
@@ -127,7 +127,7 @@ export class TransactionProductPage {
     this.showmanual = 0;
     this.itname = "";
     this.ionViewDidLoad();
-    (this.navCtrl.parent as Tabs).select(2);
+    (this.navCtrl.parent as Tabs).select(1);
   }
 
   selectedItem: any;
@@ -256,7 +256,7 @@ export class TransactionProductPage {
     this.showmanual = 0;
     this.itname = "";
     this.ionViewDidLoad();
-    (this.navCtrl.parent as Tabs).select(2);
+    (this.navCtrl.parent as Tabs).select(1);
     this.delay(300).then(any => {
       this.events.publish("genRec:created", myObjStr);
       console.log("Sent: " + myObjStr);
@@ -402,7 +402,7 @@ export class TransactionProductPage {
     console.log(this.datlist);
     const myObjStr = JSON.stringify(tempJSON);
 
-    (this.navCtrl.parent as Tabs).select(2);
+    (this.navCtrl.parent as Tabs).select(1);
     this.delay(300).then(any => {
       this.events.publish("genRec:created", myObjStr);
 
