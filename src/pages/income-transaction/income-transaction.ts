@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, Events, Tabs, ToastController, DateTime, App } from "ionic-angular";
+import { IonicPage, NavController, NavParams, Events, Tabs, ToastController, DateTime, App, ModalController } from "ionic-angular";
 import { AllTransactionPage } from "../all-transaction/all-transaction";
 import firebase from "firebase";
 import { StorageProvider } from "../../providers/storage/storage";
@@ -39,6 +39,7 @@ export class IncomeTransactionPage {
     private loadCtrl: LoadingController,
     private gps: GeolocationService,
     public app: App,
+    private modal: ModalController,
   ) {
     this.isReady = false;
     const nav = app._appRoot._getActivePortal() || app.getActiveNav();
@@ -640,7 +641,9 @@ export class IncomeTransactionPage {
   }
   discountlist = [];
   addCalc() {
-    (this.navCtrl.parent as Tabs).select(0);
+    //(this.navCtrl.parent as Tabs).select(0);
+    const helpModal = this.modal.create("AllTransactionPage");
+    helpModal.present();
     this.delay(300).then(any => {
       this.events.publish("addRecCalc:created", JSON.stringify(this.datastore.itemslist)); //SEND ITEMS PRICE
 

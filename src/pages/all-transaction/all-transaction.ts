@@ -8,6 +8,7 @@ import {
   ToastController,
   AlertController,
   App,
+  ViewController,
 } from "ionic-angular";
 import { IncomeTransactionPage } from "../income-transaction/income-transaction";
 import firebase from "firebase";
@@ -37,6 +38,7 @@ export class AllTransactionPage {
     public navParams: NavParams,
     public events: Events,
     public sp: StorageProvider,
+    private view: ViewController,
     public tstCtrl: ToastController,
     private alertCtrl: AlertController,
     private app: App,
@@ -130,6 +132,10 @@ export class AllTransactionPage {
     });
   }
 
+  close(){
+    this.view.dismiss();
+  }
+
   createRec() {
     const tempJSON = { itemslist: [] };
     this.showSampleRec = false;
@@ -154,7 +160,11 @@ export class AllTransactionPage {
 
     const myObjStr = JSON.stringify(tempJSON);
 
-    (this.navCtrl.parent as Tabs).select(2);
+    //(this.navCtrl.parent as Tabs).select(2);
+    
+
+    this.view.dismiss();
+  
     this.delay(300).then(any => {
       this.events.publish("genRec:created", myObjStr);
 
@@ -271,6 +281,8 @@ export class AllTransactionPage {
           this.lastsum = this.lastsum + parseInt(this.itemsprice[i]) * this.itemsqty[i];
           console.log(this.lastsum);
         }
+
+        this.createRec();
       } else if (btn == "b") {
         this.result = this.result.substring(0, this.result.length - 1);
         this.lastchar = this.result.charAt(this.result.length - 1);
