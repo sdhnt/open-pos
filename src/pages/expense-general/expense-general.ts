@@ -128,7 +128,7 @@ export class ExpenseGeneralPage {
     });
   }
 
-  close(){
+  close() {
     this.view.dismiss();
   }
 

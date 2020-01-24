@@ -261,7 +261,6 @@ export class IncomeTransactionPage {
         // @ts-ignore
         enableBackdropDismiss: true,
         buttons: [
-       
           {
             // @ts-ignore
             text: message2.value,
@@ -300,7 +299,7 @@ export class IncomeTransactionPage {
       .present();
   }
 
-  addNewExp(){
+  addNewExp() {
     this.modal.create("ExpenseGeneralPage").present();
   }
 
