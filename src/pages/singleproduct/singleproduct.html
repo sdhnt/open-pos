@@ -8,6 +8,9 @@
 </ion-header> -->
 
 <ion-content padding>
+  <ion-buttons end>
+    <button ion-button style="background-color: red;" (click)="goBack()">{{ "Cancel" | translate}}</button>
+  </ion-buttons>
   <form [formGroup]="formProduct">
     <ion-list inset>
 
@@ -15,7 +18,7 @@
         <ion-label>Photo</ion-label>
             <ion-input type="number" [(ngModel)]='product.price'></ion-input>
         </ion-item> -->
-
+        
       <ion-item>
         <button ion-button (click)="launchCamera()">{{'Take Picture' | translate}}</button>
         <img *ngIf="image!=null" [src]="image" style="width: 100px;">

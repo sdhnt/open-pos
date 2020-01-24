@@ -101,7 +101,7 @@
                 <ion-icon name="remove" style=" color: red" (click)="addDown(i)"></ion-icon>
               </ion-col>
             </ion-row>
-            <div *ngIf="event1==false">
+            <!-- <div *ngIf="event1==false">
             <ion-row *ngIf="product.qty>0">
               <ion-col *ngIf="product.discount==null || product.discount==0">
                 <button full ion-button style="font-size: 0.9rem;" (click)="addwholesaledisc(product)">{{"Add Wholesale Discount"|translate}}</button>
@@ -110,7 +110,7 @@
                   <button full ion-button style="font-size: 0.9rem;" (click)="remwholesaledisc(product)">{{"Remove Wholesale Discount"|translate}}</button>
                 </ion-col>
             </ion-row>
-          </div>
+          </div> -->
 
 <!-- 
             <ion-row>
@@ -122,17 +122,30 @@
                 {{product.cat}} </ion-col>
             </ion-row> -->
 
-            <div *ngIf="product.qty==0">
-            <ion-row>
-                <ion-col col-6 style="color: grey; font-size: 10px;">{{"Retail Price"|translate}} : {{product.price}} </ion-col>   
-              </ion-row>
+            <!-- <div *ngIf="product.qty==0"> -->
               <ion-row>
-                  <ion-col col-6 style="color: grey; font-size: 10px; text-align: left;"> {{"Wholesale Price"|translate}} : {{product.wholesale_price}} </ion-col>
-                </ion-row>  
-              <ion-row>
+                <!-- <ion-col col-6 style="color: grey; font-size: 10px;">{{"Retail Price"|translate}} : {{product.price}} </ion-col>    -->
+                <ion-list radio-group (ionChange) = "addwholesaledisc($event, product)">
+                  <ion-item>
+                    <ion-radio value="r" item-left checked *ngIf="product.qty>0"></ion-radio>
+                    <ion-label style="color: grey; font-size: 12px;">{{"Retail Price"|translate}} : {{product.price}}</ion-label>
+                  </ion-item>
+                  <ion-item>
+                    <ion-radio value="w" item-left *ngIf="product.qty>0"></ion-radio>
+                    <ion-label style="color: grey; font-size: 12px;">{{"Wholesale Price"|translate}} : {{product.wholesale_price}}</ion-label>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label style="color: grey; font-size: 12px;">{{"Category"|translate}} : {{product.cat}}</ion-label>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>{{"Stock"|translate}}: {{product.stock_qty}}</ion-label>
+                  </ion-item>
+                </ion-list>
+              </ion-row> 
+              <!-- <ion-row>
                   <ion-col style="color: grey; font-size: 10px; text-align: left;">  {{"Category"|translate}} : {{product.cat}} </ion-col>  
-              </ion-row>
-            </div>
+              </ion-row> -->
+            <!-- </div>
             <div *ngIf="product.qty!=0 && product.discount!=(((product.price - product.wholesale_price) / product.price) * 100)">
                 <ion-row>
                     <ion-col col-6 style="color: grey; font-size: 10px;"><b>{{"Retail Price"|translate}} : {{product.price}} </b> </ion-col>   
@@ -154,7 +167,7 @@
                       <ion-row>
                           <ion-col style="color: grey; font-size: 10px; text-align: left;">  {{"Category"|translate}} : {{product.cat}} </ion-col>  
                       </ion-row>
-                </div>
+                </div> -->
             
 
 
@@ -162,6 +175,14 @@
 
           </ion-col>
         </ion-row>
+        <ion-row>
+          <ion-col col-12> 
+            <button ion-button full end color="dark" (click)="viewEditProduct(product)">{{"View / Edit"|translate}}</button> 
+          </ion-col>
+        </ion-row>
+        <!-- <ion-row>
+          <ion-col col-12><button ion-button full end color="dark">{{ "Update Stock" | translate }}</button></ion-col>
+        </ion-row> -->
         <ion-row *ngIf="event1==true">
           <ion-col col-12> <button ion-button full end color="dark"
               (click)="singleProduct(product)">{{"Add"|translate}}</button> </ion-col>

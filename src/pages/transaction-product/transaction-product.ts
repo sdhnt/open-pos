@@ -12,6 +12,7 @@ import {
 } from "ionic-angular";
 import { StorageProvider } from "../../providers/storage/storage";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
+import { SingleProductPage } from "../singleproduct/singleproduct";
 
 /**
  * Generated class for the TransactionProductPage page.
@@ -222,8 +223,13 @@ export class TransactionProductPage {
     });
   }
 
-  addwholesaledisc(product) {
-    product.discount = ((product.price - product.wholesale_price) / product.price) * 100;
+  addwholesaledisc(val:string, product) {
+    //product.discount = ((product.price - product.wholesale_price) / product.price) * 100;
+    if(val=="r"){
+      product.discount = null;
+    } else {
+      product.discount = ((product.price - product.wholesale_price) / product.price) * 100;
+    }
   }
   remwholesaledisc(product) {
     product.discount = null;
@@ -419,5 +425,9 @@ export class TransactionProductPage {
 
   async delay(ms: number) {
     await new Promise(resolve => setTimeout(() => resolve(), ms)).then(() => console.log("fired"));
+  }
+
+  viewEditProduct(data) {
+    this.navCtrl.push(SingleProductPage, { data: data });
   }
 }

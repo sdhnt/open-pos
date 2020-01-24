@@ -282,7 +282,7 @@ export class SingleProductPage {
           });
           toast.present();
           this.disabled = false;
-          this.navCtrl.push(ProductListPage);
+          this.navCtrl.pop()
         }, 1000);
         this.prodCode = "";
       });
@@ -317,7 +317,7 @@ export class SingleProductPage {
           });
           toast.present();
           this.sp.backupStorage();
-          this.navCtrl.push(ProductListPage);
+          this.navCtrl.pop()
         }, 1000);
       })
       .catch(err => {
@@ -343,6 +343,10 @@ export class SingleProductPage {
         duration: 2500,
       })
       .present();
-    (this.navCtrl.parent as Tabs).select(0);
+      this.navCtrl.pop()
+  }
+
+  goBack(){
+    this.navCtrl.pop();
   }
 }
