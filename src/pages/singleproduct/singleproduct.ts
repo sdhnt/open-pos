@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { NavController, NavParams, Tabs } from "ionic-angular";
+import { NavController, NavParams, Tabs, ModalController } from "ionic-angular";
 import { BarcodeScanner } from "@ionic-native/barcode-scanner";
 import { StorageProvider } from "../../providers/storage/storage";
 import { ToastController } from "ionic-angular";
@@ -10,6 +10,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms"
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import { DashboardPage } from "../dashboard/dashboard";
+import { UpdateStockPage } from "../update-stock/update-stock";
 
 @Component({
   selector: "page-single-product",
@@ -50,6 +51,7 @@ export class SingleProductPage {
     private toastCtrl: ToastController,
     public camera: Camera,
     private formBuilder: FormBuilder,
+    private modal: ModalController
   ) {
     this.product = this.navParams.get("data");
     this.prodCodeOld = this.product.code;
@@ -282,7 +284,7 @@ export class SingleProductPage {
           });
           toast.present();
           this.disabled = false;
-          this.navCtrl.push(ProductListPage);
+          this.navCtrl.pop()
         }, 1000);
         this.prodCode = "";
       });
@@ -317,7 +319,7 @@ export class SingleProductPage {
           });
           toast.present();
           this.sp.backupStorage();
-          this.navCtrl.push(ProductListPage);
+          this.navCtrl.pop()
         }, 1000);
       })
       .catch(err => {
@@ -343,6 +345,31 @@ export class SingleProductPage {
         duration: 2500,
       })
       .present();
-    (this.navCtrl.parent as Tabs).select(0);
+      this.navCtrl.pop()
+  }
+
+  goBack(){
+    this.navCtrl.pop();
+  }
+
+  goToUpdateStock(){
+    const m = this.modal.create("UpdateStockPage", { data: this.product});
+    m.present();
+    m.onDidDismiss((data)=>{
+      if(data=="cancel"){
+      }
+      else{
+        const message = this.translateConfigService.getTranslatedMessage("Finish");
+        const toast = this.toastCtrl.create({
+          // @ts-ignore
+          message: message.value,
+          duration: 2000,
+        });
+        toast.present();
+        toast.onDidDismiss(()=>{
+          this.navCtrl.pop();
+        });
+      }
+    });
   }
 }

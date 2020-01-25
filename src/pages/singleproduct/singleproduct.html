@@ -8,6 +8,19 @@
 </ion-header> -->
 
 <ion-content padding>
+  <ion-row>
+    <ion-col col-6>
+      <ion-buttons start style="display: flex;">
+        <button ion-button color="dark" (click)="goToUpdateStock()">{{ "Update Stock" | translate }}</button>
+      </ion-buttons>
+    </ion-col>
+    <ion-col col-3></ion-col>
+    <ion-col col-3>
+      <ion-buttons end>
+        <button ion-button style="background-color: red;" (click)="goBack()">{{ "Cancel" | translate}}</button>
+      </ion-buttons>
+    </ion-col>
+  </ion-row>
   <form [formGroup]="formProduct">
     <ion-list inset>
 
@@ -15,7 +28,7 @@
         <ion-label>Photo</ion-label>
             <ion-input type="number" [(ngModel)]='product.price'></ion-input>
         </ion-item> -->
-
+        
       <ion-item>
         <button ion-button (click)="launchCamera()">{{'Take Picture' | translate}}</button>
         <img *ngIf="image!=null" [src]="image" style="width: 100px;">
