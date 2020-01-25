@@ -45,6 +45,7 @@ export class ContactsPage {
   }
 
   setPermission(permission: boolean) {
+    console.log(`phone contacts permission: ${permission}`);
     this.hasPermission = permission;
   }
 }
