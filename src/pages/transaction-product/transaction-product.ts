@@ -96,6 +96,11 @@ export class TransactionProductPage {
       //console.log(this.listProducts)
     });
   }
+
+  doRefresh(refresher){
+    this.ionViewDidLoad();
+    refresher.complete();
+  }
   price;
   itname = "";
 

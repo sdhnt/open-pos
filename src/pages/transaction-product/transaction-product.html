@@ -1,4 +1,12 @@
 <ion-content padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
  <ion-fab left bottom>
    <button ion-fab style="background-color: green;"><ion-icon name="add"></ion-icon></button>
    <ion-fab-list side="top">
