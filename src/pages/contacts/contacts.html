@@ -6,10 +6,8 @@
 -->
 
 <ion-content padding>
+  Do you give us consent to access your phone's contact information?
   <ion-list>
-    <ion-item>
-      Do you give us consent to access your phone's contact information?
-    </ion-item>
     <ion-item>
       <button ion-button (click)="setPermission(true)">
         Yes
@@ -18,7 +16,7 @@
         No
       </button>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="hasPermission">
       <button ion-button (click)="importContacts()">
         Import contacts now
       </button>

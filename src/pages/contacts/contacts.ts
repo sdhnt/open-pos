@@ -20,7 +20,6 @@ export class ContactsPage {
     public navParams: NavParams,
     private contacts: Contacts,
     private toastController: ToastController,
-    private alertController: AlertController,
   ) {}
 
   hasPermission = false;
@@ -54,22 +53,7 @@ export class ContactsPage {
         .find(fields, options)
         .then(contacts => onSuccess(contacts))
         .catch(error => console.log(error));
-    else {
-      console.log("no user permission to access phone contacts");
-      const message = "You have not given us the permission to access your phone contacts. Please click Yes first.";
-      this.alertController
-        .create({
-          message,
-          buttons: [
-            {
-              text: "Ok",
-              role: "Cancel",
-            },
-          ],
-        })
-        .present()
-        .then(() => {});
-    }
+    else console.log("no user permission to access phone contacts");
   }
 
   setPermission(permission: boolean) {
