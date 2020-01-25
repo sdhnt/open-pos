@@ -703,6 +703,18 @@ export class StorageProvider {
     });
   }
 
+  saveContacts(contacts) {
+    this.storage.ready().then(() => {
+      this.storage.set("contacts", "[]").then(() => {
+        this.storage.set("contacts", JSON.stringify(contacts));
+      });
+    });
+  }
+
+  getContacts() {
+    return this.storage.get("contacts");
+  }
+
   storageReady() {
     return this.storage.ready();
   }
