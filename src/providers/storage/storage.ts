@@ -703,10 +703,20 @@ export class StorageProvider {
     });
   }
 
-  saveContacts(contacts) {
+  saveContacts(importedContacts) {
     this.storage.ready().then(() => {
-      this.storage.set("contacts", "[]").then(() => {
-        this.storage.set("contacts", JSON.stringify(contacts));
+      this.storage.get("contacts").then(value => {
+        const currentContacts = JSON.parse(value);
+        const newContacts = [];
+        importedContacts.forEach(importedContact => {
+          const index = currentContacts.findIndex(currentContact => currentContact.id === importedContact.id);
+          if (index !== -1) newContacts.push({ totalSales: currentContacts[index].totalSales, ...importedContact });
+          else newContacts.push({ totalSales: 0, ...importedContact });
+        });
+        console.log(newContacts);
+        this.storage.set("contacts", "[]").then(() => {
+          this.storage.set("contacts", JSON.stringify(newContacts));
+        });
       });
     });
   }

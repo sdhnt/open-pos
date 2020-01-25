@@ -35,7 +35,7 @@ export class ContactsPage {
 
     const options = new ContactFindOptions();
     options.multiple = true;
-    options.desiredFields = ["displayName", "phoneNumbers"];
+    options.desiredFields = ["id", "displayName", "phoneNumbers"];
     options.hasPhoneNumber = true;
 
     const onSuccess = contacts => {
