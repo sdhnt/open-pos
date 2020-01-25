@@ -44,6 +44,11 @@ export class TransactionProductPage {
     this.showmanual = 0;
     this.itname = "";
 
+
+    this.events.subscribe("productUpdate:created", data => {
+      this.ionViewDidLoad();
+    });
+
     this.events.subscribe("addRecProd:created", data => {
       console.log("ENTERED!");
       console.log("Received 0 " + data);

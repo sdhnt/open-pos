@@ -290,6 +290,5 @@ export class TransactionHomePage {
 
   contactpg() {
     this.navCtrl.push(ContactUsPage);
-  } 
-
+  }
 }

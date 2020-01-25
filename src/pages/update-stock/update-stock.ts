@@ -57,14 +57,25 @@ export class UpdateStockPage {
   }
 
   updatebalance(edited: string) {
-    if (this.prodcostitem != null && this.prodqty != null && (edited == "prodcostitem" || edited == "prodqty")) {
+    if (this.prodcostitem != null &&this.prodcostitem!=undefined && this.prodqty!=undefined && this.prodqty != null && (edited == "prodcostitem" || edited == "prodqty")) {
       this.prodcost = this.prodqty * this.prodcostitem;
-    } else if (this.prodcost != null && this.prodqty != null && (edited == "prodcost" || edited == "prodqty")) {
+    } else if (this.prodcost != null &&this.prodcost!=undefined && this.prodqty!=undefined && this.prodqty != null && (edited == "prodcost" || edited == "prodqty")) {
       this.prodcostitem = this.prodcost / this.prodqty;
     }
   }
 
   async addinventoryexpense() {
+
+    if (this.prodcost == null ||this.prodcost==undefined || this.prodqty==undefined || this.prodqty == null ||this.prodcostitem==null || this.prodcostitem==undefined){
+      const msg=this.translateConfigService.getTranslatedMessage("Incomplete");
+      this.toastCtrl.create({
+        //@ts-ignore
+        message: msg.value,
+        duration: 2000,
+      }).present();
+    }
+    else{
+    console.log(this.prodqty + " "+this.prodcost)
     const itemslist = [];
     const prodidlist = [];
     const pnllist = [];
@@ -99,12 +110,15 @@ export class UpdateStockPage {
       url: this.product.url,
       stock_qty: parseInt(this.product.stock_qty) + parseInt(this.prodqty),
     };
-    await this.sp.updateProduct(data1, this.product.code).then(() => {});
+    await this.sp.updateProduct(data1, this.product.code).then(() => {this.sp.backupStorage();
+      this.events.publish("productUpdate:created", 0);
+    });
 
     this.sp.storageReady().then(() => {
       console.log(dataexp);
       this.sp.addTransactions(dataexp);
       this.updateCb(this.prodcost).then(() => {
+        this.sp.backupStorage();
         this.events.publish("cbUpdate:created", 0);
         console.log("update");
       });
@@ -112,6 +126,7 @@ export class UpdateStockPage {
     this.view.dismiss("update");
     //REFLECT CHANGE ON CASH BALANCE HERE & Reflect change in inventory here as well
   }
+}
 
   async getUserData() {
     this.sp.storageReady().then(() => {
