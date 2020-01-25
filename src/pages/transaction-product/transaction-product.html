@@ -79,17 +79,25 @@
         <ion-row>
           <ion-col col-12>
             <ion-row>
-              <ion-col col-6>
+              <ion-col col-5>
                 {{product.name}}
               </ion-col>
-              <ion-col col-2 style="border: solid silver; text-align: center;" *ngIf="event1==false">
+              <ion-col col-6 *ngIf="product.sell==false">
+                <button ion-button (click)="sellProd(product)">Sell</button>
+              </ion-col>
+              <ion-col col-2 style="border: solid silver; text-align: center;" *ngIf="event1==false&&product.sell==true">
                 <ion-icon name="add" style=" color: green" (click)="addUp(i)"></ion-icon>
               </ion-col>
-              <ion-col col-2 style="border: solid silver; text-align: center;" *ngIf="event1==false">
+              <ion-col col-2 style="border: solid silver; text-align: center;" *ngIf="event1==false&&product.sell==true">
                 {{product.qty}}
               </ion-col>
-              <ion-col col-2 style="border: solid silver; text-align: center;" *ngIf="event1==false">
+              <ion-col col-2 style="border: solid silver; text-align: center;" *ngIf="event1==false&&product.sell==true">
                 <ion-icon name="remove" style=" color: red" (click)="addDown(i)"></ion-icon>
+              </ion-col>
+              <ion-col col-1 *ngIf="product.sell==true">
+                <button ion-button style="background-color: red; color: #FFF;" (click)="sellProd(product)">
+                  X
+                </button>
               </ion-col>
             </ion-row>
           </ion-col>
