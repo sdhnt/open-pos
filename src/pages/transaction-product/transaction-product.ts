@@ -44,7 +44,6 @@ export class TransactionProductPage {
     this.showmanual = 0;
     this.itname = "";
 
-
     this.events.subscribe("productUpdate:created", data => {
       this.ionViewDidLoad();
     });
@@ -228,9 +227,9 @@ export class TransactionProductPage {
     });
   }
 
-  addwholesaledisc(val:string, product) {
+  addwholesaledisc(val: string, product) {
     //product.discount = ((product.price - product.wholesale_price) / product.price) * 100;
-    if(val=="r"){
+    if (val == "r") {
       product.discount = null;
     } else {
       product.discount = ((product.price - product.wholesale_price) / product.price) * 100;

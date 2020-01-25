@@ -74,19 +74,10 @@
 
   <ion-list inset *ngFor="let product of filteredList; let i=index">
 
-    <ion-card>
+    <ion-card style="border: solid 1px gray;">
       <ion-grid>
         <ion-row>
-          <ion-col col-2>
-            <ion-row>
-              <ion-avatar>
-                <img [src]="product.url">
-              </ion-avatar>
-            </ion-row>
-          </ion-col>
-          <ion-col col-10>
-
-
+          <ion-col col-12>
             <ion-row>
               <ion-col col-6>
                 {{product.name}}
@@ -101,6 +92,8 @@
                 <ion-icon name="remove" style=" color: red" (click)="addDown(i)"></ion-icon>
               </ion-col>
             </ion-row>
+          </ion-col>
+        </ion-row>
             <!-- <div *ngIf="event1==false">
             <ion-row *ngIf="product.qty>0">
               <ion-col *ngIf="product.discount==null || product.discount==0">
@@ -124,23 +117,31 @@
 
             <!-- <div *ngIf="product.qty==0"> -->
               <ion-row>
+                <ion-col col-8>
+                  <div radio-group (ionChange) = "addwholesaledisc($event, product)">
+        
+                       
+                   
+                      <ion-label style="color: grey; font-size: 12px;"> <ion-radio value="r" item-left checked *ngIf="product.qty>0"></ion-radio> &nbsp; {{"Retail Price"|translate}} : {{product.price}}</ion-label>
+                  
+
+                      
+                      <ion-label style="color: grey; font-size: 12px;"><ion-radio value="w" item-left *ngIf="product.qty>0"></ion-radio> &nbsp; {{"Wholesale Price"|translate}} : {{product.wholesale_price}}</ion-label>
+                      <ion-label style="color: grey; font-size: 12px;">{{"Category"|translate}} : {{product.cat}}</ion-label>
+                      <ion-label>{{"Stock"|translate}}: {{product.stock_qty}}</ion-label>
+                   
+                  </div>
+                </ion-col>
+
+                <ion-col col-4>
+                  <ion-row>
+                    <ion-avatar>
+                      <img [src]="product.url">
+                    </ion-avatar>
+                  </ion-row>
+                </ion-col>
                 <!-- <ion-col col-6 style="color: grey; font-size: 10px;">{{"Retail Price"|translate}} : {{product.price}} </ion-col>    -->
-                <ion-list radio-group (ionChange) = "addwholesaledisc($event, product)">
-                  <ion-item>
-                    <ion-radio value="r" item-left checked *ngIf="product.qty>0"></ion-radio>
-                    <ion-label style="color: grey; font-size: 12px;">{{"Retail Price"|translate}} : {{product.price}}</ion-label>
-                  </ion-item>
-                  <ion-item>
-                    <ion-radio value="w" item-left *ngIf="product.qty>0"></ion-radio>
-                    <ion-label style="color: grey; font-size: 12px;">{{"Wholesale Price"|translate}} : {{product.wholesale_price}}</ion-label>
-                  </ion-item>
-                  <ion-item>
-                    <ion-label style="color: grey; font-size: 12px;">{{"Category"|translate}} : {{product.cat}}</ion-label>
-                  </ion-item>
-                  <ion-item>
-                    <ion-label>{{"Stock"|translate}}: {{product.stock_qty}}</ion-label>
-                  </ion-item>
-                </ion-list>
+ 
               </ion-row> 
               <!-- <ion-row>
                   <ion-col style="color: grey; font-size: 10px; text-align: left;">  {{"Category"|translate}} : {{product.cat}} </ion-col>  
@@ -169,12 +170,6 @@
                       </ion-row>
                 </div> -->
             
-
-
-
-
-          </ion-col>
-        </ion-row>
         <ion-row>
           <ion-col col-12> 
             <button ion-button full end color="dark" (click)="viewEditProduct(product)">{{"View / Edit"|translate}}</button> 

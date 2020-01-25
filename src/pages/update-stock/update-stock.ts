@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, ToastController, Events } from 'ionic-angular';
-import { TranslateConfigService } from '../../providers/translation/translate-config.service';
-import { GeolocationService } from '../../providers/geolocation/geolocation.service';
-import { StorageProvider } from '../../providers/storage/storage';
+import { Component } from "@angular/core";
+import { IonicPage, NavController, NavParams, ViewController, ToastController, Events } from "ionic-angular";
+import { TranslateConfigService } from "../../providers/translation/translate-config.service";
+import { GeolocationService } from "../../providers/geolocation/geolocation.service";
+import { StorageProvider } from "../../providers/storage/storage";
 
 /**
  * Generated class for the UpdateStockPage page.
@@ -13,16 +13,21 @@ import { StorageProvider } from '../../providers/storage/storage';
 
 @IonicPage()
 @Component({
-  selector: 'page-update-stock',
-  templateUrl: 'update-stock.html',
+  selector: "page-update-stock",
+  templateUrl: "update-stock.html",
 })
 export class UpdateStockPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-    private translateConfigService: TranslateConfigService, private view: ViewController,
-    private gps: GeolocationService, private sp: StorageProvider,
-    private events: Events, private toastCtrl: ToastController) {
-      this.gps
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private translateConfigService: TranslateConfigService,
+    private view: ViewController,
+    private gps: GeolocationService,
+    private sp: StorageProvider,
+    private events: Events,
+    private toastCtrl: ToastController,
+  ) {
+    this.gps
       .getCoordinates()
       .then(coordinates => {
         this.geolocation = coordinates;
@@ -47,86 +52,106 @@ export class UpdateStockPage {
     this.product = this.navParams.get("data");
   }
 
-  ionViewDidLoad(){
-    console.log('ionViewDidLoad UpdateStockPage');
+  ionViewDidLoad() {
+    console.log("ionViewDidLoad UpdateStockPage");
     this.getUserData();
   }
 
-  dismiss(){
+  dismiss() {
     this.view.dismiss("cancel");
   }
 
   updatebalance(edited: string) {
-    if (this.prodcostitem != null &&this.prodcostitem!=undefined && this.prodqty!=undefined && this.prodqty != null && (edited == "prodcostitem" || edited == "prodqty")) {
+    if (
+      this.prodcostitem != null &&
+      this.prodcostitem != undefined &&
+      this.prodqty != undefined &&
+      this.prodqty != null &&
+      (edited == "prodcostitem" || edited == "prodqty")
+    ) {
       this.prodcost = this.prodqty * this.prodcostitem;
-    } else if (this.prodcost != null &&this.prodcost!=undefined && this.prodqty!=undefined && this.prodqty != null && (edited == "prodcost" || edited == "prodqty")) {
+    } else if (
+      this.prodcost != null &&
+      this.prodcost != undefined &&
+      this.prodqty != undefined &&
+      this.prodqty != null &&
+      (edited == "prodcost" || edited == "prodqty")
+    ) {
       this.prodcostitem = this.prodcost / this.prodqty;
     }
   }
 
   async addinventoryexpense() {
-
-    if (this.prodcost == null ||this.prodcost==undefined || this.prodqty==undefined || this.prodqty == null ||this.prodcostitem==null || this.prodcostitem==undefined){
-      const msg=this.translateConfigService.getTranslatedMessage("Incomplete");
-      this.toastCtrl.create({
-        //@ts-ignore
-        message: msg.value,
-        duration: 2000,
-      }).present();
-    }
-    else{
-    console.log(this.prodqty + " "+this.prodcost)
-    const itemslist = [];
-    const prodidlist = [];
-    const pnllist = [];
-    const discountlist = [];
-    itemslist.push(this.product);
-    prodidlist.push(this.expiryDate);
-    const dataexp = {
-      itemslist: itemslist,
-      totalsum: this.prodcost * -1,
-      prodidlist: prodidlist,
-      pnllist: pnllist,
-      datetime: this.currtime,
-      taxrate: 0,
-      discountlist: discountlist,
-      discount: 0,
-      totaldisc: this.prodcost * -1,
-      totalatax: this.prodcost * -1,
-      geolocation: this.geolocation,
-    };
-    const data1 = {
-      code: this.product.code,
-      name: this.product.name,
-      price: this.product.price,
-      wholesale_price: this.product.wholesale_price,
-      cost:
-        Math.round(
-          ((parseInt(this.product.cost) * parseInt(this.product.stock_qty) + parseInt(this.prodcost)) /
-            (parseInt(this.prodqty) + parseInt(this.product.stock_qty))) *
-            100,
-        ) / 100,
-      cat: this.product.cat,
-      url: this.product.url,
-      stock_qty: parseInt(this.product.stock_qty) + parseInt(this.prodqty),
-    };
-    await this.sp.updateProduct(data1, this.product.code).then(() => {this.sp.backupStorage();
-      this.events.publish("productUpdate:created", 0);
-    });
-
-    this.sp.storageReady().then(() => {
-      console.log(dataexp);
-      this.sp.addTransactions(dataexp);
-      this.updateCb(this.prodcost).then(() => {
+    if (
+      this.prodcost == null ||
+      this.prodcost == undefined ||
+      this.prodqty == undefined ||
+      this.prodqty == null ||
+      this.prodcostitem == null ||
+      this.prodcostitem == undefined
+    ) {
+      const msg = this.translateConfigService.getTranslatedMessage("Incomplete");
+      this.toastCtrl
+        .create({
+          //@ts-ignore
+          message: msg.value,
+          duration: 2000,
+        })
+        .present();
+    } else {
+      console.log(this.prodqty + " " + this.prodcost);
+      const itemslist = [];
+      const prodidlist = [];
+      const pnllist = [];
+      const discountlist = [];
+      itemslist.push(this.product);
+      prodidlist.push(this.expiryDate);
+      const dataexp = {
+        itemslist: itemslist,
+        totalsum: this.prodcost * -1,
+        prodidlist: prodidlist,
+        pnllist: pnllist,
+        datetime: this.currtime,
+        taxrate: 0,
+        discountlist: discountlist,
+        discount: 0,
+        totaldisc: this.prodcost * -1,
+        totalatax: this.prodcost * -1,
+        geolocation: this.geolocation,
+      };
+      const data1 = {
+        code: this.product.code,
+        name: this.product.name,
+        price: this.product.price,
+        wholesale_price: this.product.wholesale_price,
+        cost:
+          Math.round(
+            ((parseInt(this.product.cost) * parseInt(this.product.stock_qty) + parseInt(this.prodcost)) /
+              (parseInt(this.prodqty) + parseInt(this.product.stock_qty))) *
+              100,
+          ) / 100,
+        cat: this.product.cat,
+        url: this.product.url,
+        stock_qty: parseInt(this.product.stock_qty) + parseInt(this.prodqty),
+      };
+      await this.sp.updateProduct(data1, this.product.code).then(() => {
         this.sp.backupStorage();
-        this.events.publish("cbUpdate:created", 0);
-        console.log("update");
+        this.events.publish("productUpdate:created", 0);
       });
-    });
-    this.view.dismiss("update");
-    //REFLECT CHANGE ON CASH BALANCE HERE & Reflect change in inventory here as well
+
+      this.sp.storageReady().then(() => {
+        console.log(dataexp);
+        this.sp.addTransactions(dataexp);
+        this.updateCb(this.prodcost).then(() => {
+          this.sp.backupStorage();
+          this.events.publish("cbUpdate:created", 0);
+          console.log("update");
+        });
+      });
+      this.view.dismiss("update");
+      //REFLECT CHANGE ON CASH BALANCE HERE & Reflect change in inventory here as well
+    }
   }
-}
 
   async getUserData() {
     this.sp.storageReady().then(() => {

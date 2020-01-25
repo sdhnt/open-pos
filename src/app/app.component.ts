@@ -48,7 +48,7 @@ export class MyApp {
     this.pages = [
       { title: "Create New Sales", component: TransactionHomePage },
       { title: "View/Edit Products", component: DashboardPage },
-      { title: "Update Stock/Expenses", component: ExpenseTransactionPage },
+      // { title: "Update Stock/Expenses", component: ExpenseTransactionPage },
       { title: "Business Performance", component: SummarySummaryPage },
       { title: "Coach", component: CoachHomePage },
       { title: "Apply for Loan", component: LoanHomePage },
