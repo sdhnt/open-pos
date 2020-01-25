@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { AlertController, IonicPage, NavController, NavParams, ToastController } from "ionic-angular";
 import { Contacts, ContactFindOptions } from "@ionic-native/contacts/ngx";
 
 /**
@@ -15,7 +15,13 @@ import { Contacts, ContactFindOptions } from "@ionic-native/contacts/ngx";
   templateUrl: "contacts.html",
 })
 export class ContactsPage {
-  constructor(public navCtrl: NavController, public navParams: NavParams, private contacts: Contacts) {}
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private contacts: Contacts,
+    private toastController: ToastController,
+    private alertController: AlertController,
+  ) {}
 
   hasPermission = false;
 
@@ -33,6 +39,13 @@ export class ContactsPage {
 
     const onSuccess = contacts => {
       console.log(contacts);
+      this.toastController
+        .create({
+          message: "Phone contacts have been imported.",
+          duration: 2000,
+        })
+        .present()
+        .then(() => {});
     };
 
     if (this.hasPermission)
@@ -41,7 +54,22 @@ export class ContactsPage {
         .find(fields, options)
         .then(contacts => onSuccess(contacts))
         .catch(error => console.log(error));
-    else console.log("no user permission to access phone contacts");
+    else {
+      console.log("no user permission to access phone contacts");
+      const message = "You have not given us the permission to access your phone contacts. Please click Yes first.";
+      this.alertController
+        .create({
+          message,
+          buttons: [
+            {
+              text: "Ok",
+              role: "Cancel",
+            },
+          ],
+        })
+        .present()
+        .then(() => {});
+    }
   }
 
   setPermission(permission: boolean) {
