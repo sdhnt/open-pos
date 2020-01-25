@@ -1,5 +1,11 @@
 <ion-content padding>
- 
+ <ion-fab left bottom>
+   <button ion-fab style="background-color: green;"><ion-icon name="add"></ion-icon></button>
+   <ion-fab-list side="top">
+     <button ion-button style="background-color:green;" (click)="navAdd(1)">{{ "Add Product" | translate }}</button>
+     <button ion-button style="background-color: green;" (click)="navAdd(2)">{{ "Add Category" | translate }}</button>
+   </ion-fab-list>
+ </ion-fab>
  <div *ngIf="showmanual==0">
   <ion-searchbar showCancelButton="always" [(ngModel)]="searchterm" (ionChange)="filteredProduct()"></ion-searchbar>
 

@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { NavController, NavParams, Tabs, ModalController } from "ionic-angular";
+import { NavController, NavParams, Tabs, ModalController, Events } from "ionic-angular";
 import { BarcodeScanner } from "@ionic-native/barcode-scanner";
 import { StorageProvider } from "../../providers/storage/storage";
 import { ToastController } from "ionic-angular";
@@ -51,7 +51,8 @@ export class SingleProductPage {
     private toastCtrl: ToastController,
     public camera: Camera,
     private formBuilder: FormBuilder,
-    private modal: ModalController
+    private modal: ModalController,
+    public events: Events
   ) {
     this.product = this.navParams.get("data");
     this.prodCodeOld = this.product.code;
@@ -284,7 +285,8 @@ export class SingleProductPage {
           });
           toast.present();
           this.disabled = false;
-          this.navCtrl.pop()
+          this.events.publish("productUpdate:created");
+          this.navCtrl.pop();
         }, 1000);
         this.prodCode = "";
       });
@@ -319,6 +321,7 @@ export class SingleProductPage {
           });
           toast.present();
           this.sp.backupStorage();
+          this.events.publish("productUpdate:created");
           this.navCtrl.pop()
         }, 1000);
       })
@@ -367,6 +370,7 @@ export class SingleProductPage {
         });
         toast.present();
         toast.onDidDismiss(()=>{
+          this.events.publish("productUpdate:created");
           this.navCtrl.pop();
         });
       }

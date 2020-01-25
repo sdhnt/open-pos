@@ -176,7 +176,7 @@ export class AddProductPage {
     this.prodWholesalePrice = null;
     this.prodCost = null;
     this.prodCat = "";
-    (this.navCtrl.parent as Tabs).select(0);
+    this.navCtrl.pop();
   }
 
   addProdPic() {}
@@ -280,7 +280,6 @@ export class AddProductPage {
 
             //this.navCtrl.push(ProductListPage);
             this.events.publish("prodAdd:created", 0);
-            (this.navCtrl.parent as Tabs).select(0);
             toast.present();
           }, 1000);
         });
@@ -332,12 +331,12 @@ export class AddProductPage {
               this.sp.backupStorage();
               //this.navCtrl.push(ProductListPage);
               this.events.publish("prodAdd:created", 0);
-              (this.navCtrl.parent as Tabs).select(0);
               toast.present();
             }, 1000);
           });
         });
       }
+      this.events.publish("productUpdate:created");
     }
   }
 }

@@ -13,6 +13,8 @@ import {
 import { StorageProvider } from "../../providers/storage/storage";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import { SingleProductPage } from "../singleproduct/singleproduct";
+import { AddProductPage } from "../addproduct/addproduct";
+import { AddProductCategoryPage } from "../add-product-category/add-product-category";
 
 /**
  * Generated class for the TransactionProductPage page.
@@ -96,6 +98,14 @@ export class TransactionProductPage {
   }
   price;
   itname = "";
+
+  navAdd(num: number){
+    if(num==1){
+      this.navCtrl.push(AddProductPage);
+    } else if(num==2){
+      this.navCtrl.push(AddProductCategoryPage);
+    }
+  }
 
   updateName() {
     if (this.itname == "") {
