@@ -22,7 +22,7 @@ export class AddProductCategoryPage {
     public navParams: NavParams,
     public sp: StorageProvider,
     public toastCtrl: ToastController,
-    public events: Events
+    public events: Events,
   ) {}
 
   ionViewDidLoad() {
@@ -98,7 +98,7 @@ export class AddProductCategoryPage {
     });
   }
 
-  goBack(){
+  goBack() {
     this.events.publish("productUpdate:created");
     this.navCtrl.pop();
   }

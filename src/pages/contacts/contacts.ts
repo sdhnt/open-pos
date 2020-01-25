@@ -17,6 +17,8 @@ import { Contacts, ContactFindOptions } from "@ionic-native/contacts/ngx";
 export class ContactsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private contacts: Contacts) {}
 
+  hasPermission = false;
+
   ionViewDidLoad() {
     console.log("ionViewDidLoad ContactsPage");
   }
@@ -33,10 +35,16 @@ export class ContactsPage {
       console.log(contacts);
     };
 
-    this.contacts
-      // @ts-ignore
-      .find(fields, options)
-      .then(contacts => onSuccess(contacts))
-      .catch(error => console.log(error));
+    if (this.hasPermission)
+      this.contacts
+        // @ts-ignore
+        .find(fields, options)
+        .then(contacts => onSuccess(contacts))
+        .catch(error => console.log(error));
+    else console.log("no user permission to access phone contacts");
+  }
+
+  setPermission(permission: boolean) {
+    this.hasPermission = permission;
   }
 }
