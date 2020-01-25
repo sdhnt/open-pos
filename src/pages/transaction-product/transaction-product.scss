@@ -1,6 +1,11 @@
 page-transaction-product {
 
     ion-card{ ion-input{ border: solid 1px black; margin: 5px; }
+    ion-avatar img{
+        border-radius:10%;
+        height:12rem;
+        width:12rem;
+    }
 
 
 
