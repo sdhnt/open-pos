@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
-import { AlertController, IonicPage, NavController, NavParams, ToastController } from "ionic-angular";
+import { IonicPage, NavController, NavParams, ToastController } from "ionic-angular";
 import { Contacts, ContactFindOptions } from "@ionic-native/contacts/ngx";
+import { StorageProvider } from "../../providers/storage/storage";
 
 /**
  * Generated class for the ContactsPage page.
@@ -20,6 +21,7 @@ export class ContactsPage {
     public navParams: NavParams,
     private contacts: Contacts,
     private toastController: ToastController,
+    private sp: StorageProvider,
   ) {}
 
   hasPermission = false;
@@ -38,6 +40,8 @@ export class ContactsPage {
 
     const onSuccess = contacts => {
       console.log(contacts);
+      // un-comment the next line to save in storage provider
+      // this.sp.saveContacts(contacts);
       this.toastController
         .create({
           message: "Phone contacts have been imported.",
