@@ -183,7 +183,7 @@ export class TransactionProductPage {
     }
   }
   sellProd(product){
-    product.sell = !product.sell;
+    product.qty=1;
   }
   getProducts() {
     this.sp.storageReady().then(() => {
@@ -196,7 +196,6 @@ export class TransactionProductPage {
             if (this.listProducts != null) {
               this.listProducts.forEach(element => {
                 element.qty = 0;
-                element.sell = false;
               });
             }
           }
