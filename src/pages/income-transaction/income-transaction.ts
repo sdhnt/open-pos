@@ -919,7 +919,8 @@ export class IncomeTransactionPage {
     const result = encoder.initialize();
     const img = new Image();
     img.crossOrigin = "Anonymous";
-    img.src = "https://firebasestorage.googleapis.com/v0/b/open-fintech.appspot.com/o/prodImages%2F65435757_2393255207562866_2949577797074419712_n.jpg?alt=media&token=1a481415-2e75-4473-b56f-ec18099545ad";
+    img.src =
+      "https://firebasestorage.googleapis.com/v0/b/open-fintech.appspot.com/o/prodImages%2F65435757_2393255207562866_2949577797074419712_n.jpg?alt=media&token=1a481415-2e75-4473-b56f-ec18099545ad";
     img.onload = () => {
       result
         .align("center")

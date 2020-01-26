@@ -8,7 +8,7 @@
 <ion-content padding>
 
   
-  <button full ion-button style="font-size: 1.2rem;" (click)="printLogo()" style="background-color: green; color: white;" round> Print Logo</button>
+  <!-- <button full ion-button style="font-size: 1.2rem;" (click)="printLogo()" style="background-color: green; color: white;" round> Print Logo</button> -->
 
   <div *ngIf="showrec==false">
     <ion-row>
@@ -21,9 +21,15 @@
       <ion-col col-12 style="text-align: center;"> <button full ion-button style="font-size: 1.2rem;"
         (click)="addNewExp()" style="background-color: red; color: white;" round> {{"Add New Expense"|translate}}</button></ion-col>
     </ion-row>
+
+    
+ <ion-fab right bottom>
+  <button ion-fab style="background-color: black;" (click)="addCalc()"><ion-icon name="calculator"></ion-icon></button>
+</ion-fab>
+
   </div>
 
-  <ion-card *ngIf="showrec==true">
+  <ion-card *ngIf="showrec==true" style="border: solid 1px gray;">
 
     <ion-grid>
       <div *ngIf="showrec==true">

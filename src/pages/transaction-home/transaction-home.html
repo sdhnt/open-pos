@@ -12,10 +12,10 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <!-- <ion-title>{{"Sales"|translate}}</ion-title> -->
-    <ion-buttons end><button ion-button (click)="uploadbtn()" style="border: solid grey">{{"Backup Online"|translate}}<ion-icon name="cloud-upload" style="align-self: center; color: white; padding-left: 10px;"></ion-icon></button></ion-buttons>
-    <ion-buttons end><button ion-button (click)="cashbtn()" style="border: solid grey"> {{"Cash Balance"|translate}} <ion-icon name="logo-usd" style="align-self: center; color: white; padding-left: 10px;"></ion-icon></button></ion-buttons>
-    <ion-buttons end><button ion-button (click)="help()"><ion-icon name="help-circle" style="font-size: 30px;"></ion-icon></button></ion-buttons>
-    <ion-buttons end><button ion-button (click)="contactpg()" style="align-self: right; background-color:#222"><ion-icon name="contact" style="align-self: center; color: white;" padding></ion-icon></button></ion-buttons>
+    <ion-buttons end><button ion-button (click)="uploadbtn()" style="border: solid grey"> <ion-icon name="cloud-upload" style="align-self: center; color: white; padding-left: 10px;"></ion-icon></button></ion-buttons>
+    <ion-buttons end><button ion-button (click)="cashbtn()" style="border: solid grey"> <ion-icon name="logo-usd" style="align-self: center; color: white; padding-left: 10px;"></ion-icon></button></ion-buttons>
+    <ion-buttons end><button ion-button (click)="help()"><ion-icon name="help-circle" style="font-size: 20px;"></ion-icon></button></ion-buttons>
+    <ion-buttons end><button ion-button (click)="contactpg()" style="background-color:#222"><ion-icon name="contact" style="font-size: 20px;color: white;" padding></ion-icon></button></ion-buttons>
   </ion-navbar>
   
 </ion-header>
@@ -25,7 +25,7 @@
   
   <ion-tabs tabsPlacement="top" #myTabs>
     <!-- <ion-tab [root]="AllTransactions" tabTitle="{{'Calculator'|translate}}" tabIcon="calculator"></ion-tab> -->
-    <ion-tab [root]="ExpenseTransactions" tabTitle="{{'Shopping Cart'|translate}}" tabIcon="apps"></ion-tab>
+    <ion-tab [root]="ExpenseTransactions" tabTitle="{{'Stock'|translate}}" tabIcon="apps"></ion-tab>
     <ion-tab [root]="IncomeTransactions" tabTitle="{{'Receipt'|translate}}" tabIcon="list-box"></ion-tab>
    
 

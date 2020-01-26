@@ -9,6 +9,7 @@ import {
   AlertController,
   Platform,
   App,
+  ModalController,
 } from "ionic-angular";
 import { StorageProvider } from "../../providers/storage/storage";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
@@ -41,6 +42,7 @@ export class TransactionProductPage {
     public alertCtrl: AlertController,
     public platform: Platform,
     public app: App,
+    public modal: ModalController,
   ) {
     this.event = false;
     this.showmanual = 0;
@@ -97,17 +99,17 @@ export class TransactionProductPage {
     });
   }
 
-  doRefresh(refresher){
+  doRefresh(refresher) {
     this.ionViewDidLoad();
     refresher.complete();
   }
   price;
   itname = "";
 
-  navAdd(num: number){
-    if(num==1){
+  navAdd(num: number) {
+    if (num == 1) {
       this.navCtrl.push(AddProductPage);
-    } else if(num==2){
+    } else if (num == 2) {
       this.navCtrl.push(AddProductCategoryPage);
     }
   }
@@ -197,8 +199,8 @@ export class TransactionProductPage {
       this.listProducts[index].qty--;
     }
   }
-  sellProd(product){
-    product.qty=1;
+  sellProd(product) {
+    product.qty = 1;
   }
   getProducts() {
     this.sp.storageReady().then(() => {
@@ -225,6 +227,11 @@ export class TransactionProductPage {
           alert("Error: " + err);
         });
     });
+  }
+
+  openCalc() {
+    const helpModal = this.modal.create("AllTransactionPage");
+    helpModal.present();
   }
 
   filteredProduct() {
