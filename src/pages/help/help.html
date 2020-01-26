@@ -22,9 +22,14 @@
       <p>{{item.content}}</p>
     </div>
 
-    <div *ngFor="let item of data.video">
-      <h4>{{item.heading}}</h4>
-      <iframe width="300" height="315" [src]="secureLink(item.url)" frameborder="0" allowfullscreen></iframe>
+    <div *ngFor="let item of data.video; let i = index">
+      <ion-row (click) = "openVid(i)">
+        <ion-col col-8><h4>{{item.heading}}</h4></ion-col>
+        <ion-col col-2><ion-icon name="videocam"></ion-icon></ion-col>
+        <ion-col col-2 *ngIf="i!=openVidVal"><ion-icon name="arrow-dropdown"></ion-icon></ion-col>
+        <ion-col col-2 *ngIf="i==openVidVal"><ion-icon name="arrow-dropup"></ion-icon></ion-col>
+      </ion-row>
+      <iframe width="300" height="315" [src]="secureLink(item.url)" frameborder="0" allowfullscreen [hidden]="i!=openVidVal"></iframe>
       <br>
       <br>
     </div>

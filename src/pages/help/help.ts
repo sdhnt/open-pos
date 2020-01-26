@@ -29,6 +29,16 @@ export class HelpPage {
     this.data = this.navParams.get("data");
   }
 
+  openVidVal = -1;
+
+  openVid(i:number){
+    if(i==this.openVidVal){
+      this.openVidVal = -1;
+    } else{
+      this.openVidVal = i;
+    }
+  }
+
   ionViewDidLoad() {
     console.log("ionViewDidLoad HelpPage");
   }
