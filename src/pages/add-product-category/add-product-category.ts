@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, ToastController } from "ionic-angular";
+import { IonicPage, NavController, NavParams, ToastController, Events } from "ionic-angular";
 import { StorageProvider } from "../../providers/storage/storage";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 
@@ -22,6 +22,7 @@ export class AddProductCategoryPage {
     public navParams: NavParams,
     public sp: StorageProvider,
     public toastCtrl: ToastController,
+    public events: Events
   ) {}
 
   ionViewDidLoad() {
@@ -95,5 +96,10 @@ export class AddProductCategoryPage {
         toast.present();
       }, 1000);
     });
+  }
+
+  goBack(){
+    this.events.publish("productUpdate:created");
+    this.navCtrl.pop();
   }
 }

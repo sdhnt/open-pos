@@ -176,7 +176,7 @@ export class AddProductPage {
     this.prodWholesalePrice = null;
     this.prodCost = null;
     this.prodCat = "";
-    (this.navCtrl.parent as Tabs).select(0);
+    this.navCtrl.pop();
   }
 
   addProdPic() {}
@@ -263,7 +263,7 @@ export class AddProductPage {
             const toast = this.toastCtrl.create({
               // @ts-ignore
               message: message.value,
-              duration: 3000,
+              duration: 2000,
             });
             this.prodCode = "";
             this.prodName = "";
@@ -280,8 +280,15 @@ export class AddProductPage {
 
             //this.navCtrl.push(ProductListPage);
             this.events.publish("prodAdd:created", 0);
-            (this.navCtrl.parent as Tabs).select(0);
             toast.present();
+            toast.onDidDismiss(()=>{
+              const msg = this.translateConfigService.getTranslatedMessage("Refresh page to see changes");
+              this.toastCtrl.create({
+                //@ts-ignore
+                message: msg.value,
+                duration: 1500
+              }).present();
+            });
           }, 1000);
         });
       } else {
@@ -317,7 +324,7 @@ export class AddProductPage {
               const toast = this.toastCtrl.create({
                 // @ts-ignore
                 message: message.value,
-                duration: 3000,
+                duration: 2000,
               });
               this.prodCode = "";
               this.prodName = "";
@@ -332,12 +339,21 @@ export class AddProductPage {
               this.sp.backupStorage();
               //this.navCtrl.push(ProductListPage);
               this.events.publish("prodAdd:created", 0);
-              (this.navCtrl.parent as Tabs).select(0);
               toast.present();
+              toast.onDidDismiss(()=>{
+                const msg = this.translateConfigService.getTranslatedMessage("Refresh page to see changes");
+                this.toastCtrl.create({
+                  //@ts-ignore
+                  message: msg.value,
+                  duration: 1500
+                }).present();
+              });
             }, 1000);
           });
         });
       }
+      this.events.publish("productUpdate:created");
+      this.navCtrl.pop();
     }
   }
 }

@@ -13,6 +13,8 @@ import {
 import { StorageProvider } from "../../providers/storage/storage";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import { SingleProductPage } from "../singleproduct/singleproduct";
+import { AddProductPage } from "../addproduct/addproduct";
+import { AddProductCategoryPage } from "../add-product-category/add-product-category";
 
 /**
  * Generated class for the TransactionProductPage page.
@@ -94,8 +96,21 @@ export class TransactionProductPage {
       //console.log(this.listProducts)
     });
   }
+
+  doRefresh(refresher){
+    this.ionViewDidLoad();
+    refresher.complete();
+  }
   price;
   itname = "";
+
+  navAdd(num: number){
+    if(num==1){
+      this.navCtrl.push(AddProductPage);
+    } else if(num==2){
+      this.navCtrl.push(AddProductCategoryPage);
+    }
+  }
 
   updateName() {
     if (this.itname == "") {
@@ -183,7 +198,7 @@ export class TransactionProductPage {
     }
   }
   sellProd(product){
-    product.sell = !product.sell;
+    product.qty=1;
   }
   getProducts() {
     this.sp.storageReady().then(() => {
@@ -196,7 +211,6 @@ export class TransactionProductPage {
             if (this.listProducts != null) {
               this.listProducts.forEach(element => {
                 element.qty = 0;
-                element.sell = false;
               });
             }
           }
