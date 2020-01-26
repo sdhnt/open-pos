@@ -128,6 +128,12 @@ export class TransactionHomePage {
   uploadbtn() {
     this.sp.backupStorage();
     const message = this.translateConfigService.getTranslatedMessage("Online backup ready");
+    this.alertCtrl.create({
+      title: "Backup",
+      subTitle: "This feature allows you to backup your data to the cloud so that you can restore in-case your app crashes or phone is damaged.",
+      message: "backing up online...",
+      buttons: [{ text:'OK',role: 'cancel'}]
+    }).present();
     this.toastCtrl
       .create({
         // @ts-ignore

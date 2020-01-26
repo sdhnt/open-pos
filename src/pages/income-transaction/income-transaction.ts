@@ -109,7 +109,6 @@ export class IncomeTransactionPage {
     console.log(transac);
     const encoder = new EscPosEncoder();
     const result = encoder.initialize();
-
     result
       .codepage("cp936")
       .align("center")
@@ -699,6 +698,9 @@ export class IncomeTransactionPage {
         await this.sp.addTransactions(data);
         await this.updateCb(this.lastsum).then(() => {
           this.events.publish("cbUpdate:created", 0);
+          this.events.publish("productUpdate:created",0)
+          this.sp.backupStorage();
+          console.log("backup here")
         });
         //}
         const message = this.translateConfigService.getTranslatedMessage("Finish");
@@ -820,6 +822,9 @@ export class IncomeTransactionPage {
         this.sp.addTransactions(data);
         await this.updateCb(this.lastsum).then(() => {
           this.events.publish("cbUpdate:created", 0);
+          this.events.publish("productUpdate:created",0)
+          this.sp.backupStorage();
+          console.log("backup here")
         });
         this.sp.backupStorage();
         this.lastTransaction = data;

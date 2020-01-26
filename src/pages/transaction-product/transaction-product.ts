@@ -48,8 +48,13 @@ export class TransactionProductPage {
     this.showmanual = 0;
     this.itname = "";
 
-    this.events.subscribe("productUpdate:created", data => {
-      this.ionViewDidLoad();
+    this.events.subscribe("productUpdate:created", async data => {
+
+      this.delay(500).then(()=>{
+        this.ionViewDidLoad();
+      console.log("update this page")
+      })
+      
     });
 
     this.events.subscribe("addRecProd:created", data => {
@@ -82,6 +87,12 @@ export class TransactionProductPage {
       });
       console.log(this.calcitems);
     });
+
+    // this.events.subscribe("cbUpdate:created", async ()=>{
+    //   await this.getProducts();
+    // })  
+
+
 
     this.events.subscribe("addSingleProd:created", async (data, index, fulldat) => {
       console.log("ENTERED!");
@@ -171,6 +182,7 @@ export class TransactionProductPage {
     console.log("ionViewDidLoad TransactionProductPage");
     this.getProducts();
     this.getCategories();
+    this.sp.backupStorage();
   }
 
   getCategories() {
@@ -209,7 +221,7 @@ export class TransactionProductPage {
         .then(val => {
           if (this.event != true) {
             this.listProducts = JSON.parse(val);
-            console.log(this.listProducts + "yo");
+            console.log(this.listProducts);
             if (this.listProducts != null) {
               this.listProducts.forEach(element => {
                 element.qty = 0;

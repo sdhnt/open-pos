@@ -67,7 +67,7 @@
           </ion-col>
           <ion-col col-2>
             <ion-row>
-              <button ion-button small (click)="editRecTop()"><ion-icon name="create"></ion-icon></button>
+              <button ion-button small (click)="editRecTop()" style="background-color:green"><ion-icon name="create"></ion-icon></button>
              </ion-row>
           </ion-col>
 
@@ -102,7 +102,7 @@
             <ion-row>
               <ion-col col-4 style="color: black; text-align: center;">
                 <div *ngIf="item.name.includes('Item'); else itemexist">
-                  <button ion-button small (click)="addSingleProd(item,i)">{{"Choose"|translate}}</button>
+                  <button ion-button small (click)="addSingleProd(item,i)" style="background-color:green">{{"Choose"|translate}}</button>
                 </div>
                 <ng-template #itemexist>{{item.name}}</ng-template>
               </ion-col>
@@ -154,7 +154,7 @@
               <ion-input type="number" placeholder="{{'Enter Price'|translate}}" [(ngModel)]="newUnitPrice"
                 ngDefaultControl></ion-input>
             </ion-item>
-            <button ion-button style="font-size: 1.0rem;" full (click)="addNewItem()"> {{"Add Charges"|translate}}
+            <button ion-button style="font-size: 1.0rem;" full (click)="addNewItem()" style="background-color:green" round> {{"Add Charges"|translate}}
             </button>
           </div>
         </ion-card>
@@ -174,7 +174,7 @@
       <ion-row>
 
         <ion-col col-12 style="text-align: center;"> <button full ion-button style="font-size: 1.2rem;"
-          (click)="addNewItembtn()"> {{"Add New Item"|translate}}</button></ion-col>
+          (click)="addNewItembtn()" style="background-color:green" round> {{"Add New Item"|translate}}</button></ion-col>
       </ion-row>
     
       </div>
@@ -196,7 +196,7 @@
 
       <div *ngIf="showrec==true">
         <ion-row *ngIf="discbtn==0">
-          <button ion-button small (click)="setDisc()">{{"Add Discount"|translate}}</button>
+          <button ion-button small (click)="setDisc()" style="background-color:green" round>{{"Add Discount"|translate}}</button>
         </ion-row>
         <ion-row *ngIf="discbtn==1">
           <ion-col col-5>
@@ -213,11 +213,11 @@
           <ion-col col-7 style="text-align: left; ">{{lastsumdisc}}</ion-col>
         </ion-row>
         <ion-row *ngIf="discbtn==1">
-          <button ion-button small (click)="remDisc()">{{"Remove Discount"|translate}}</button>
+          <button ion-button small (click)="remDisc()" style="background-color:red" round>{{"Remove Discount"|translate}}</button>
         </ion-row>
 
         <ion-row *ngIf="taxbtn==0">
-          <button ion-button small (click)="setTax()">{{"Add Tax"|translate}}</button>
+          <button ion-button small (click)="setTax()" style="background-color:green" round>{{"Add Tax"|translate}}</button>
         </ion-row>
 
         <ion-row *ngIf="taxbtn==1">
@@ -235,7 +235,7 @@
           <ion-col col-7 style="text-align: left; ">{{lastsumtax}}</ion-col>
         </ion-row>
         <ion-row *ngIf="taxbtn==1">
-          <button ion-button small (click)="remTax()">{{"Remove Tax"|translate}}</button>
+          <button ion-button small (click)="remTax()" style="background-color:red" round>{{"Remove Tax"|translate}}</button>
         </ion-row>
       </div>
 
@@ -315,33 +315,32 @@
 
 </ion-content>
 
-
 <ion-footer>
   <ion-grid>
     <ion-row *ngIf="showrec==true">
       <ion-col col-4>
-        <button ion-button full style="background-color:#FFAF00" (click)="saveRec()"> {{'SAVE '|translate}} <br>
+        <button ion-button full style="background-color:green" (click)="saveRec()"> {{'SAVE '|translate}} <br>
           <ion-icon name="checkmark"></ion-icon>
         </button>
       </ion-col>
       <ion-col col-4>
-        <button ion-button full style="background-color:#FFAF00" (click)="printRec()"> {{'PRINT '|translate}} <br>
+        <button ion-button full style="background-color:black" (click)="printRec()"> {{'PRINT '|translate}} <br>
           <ion-icon name="print"></ion-icon> &nbsp;+ &nbsp;
           <ion-icon name="checkmark"></ion-icon>
         </button>
       </ion-col>
       <ion-col col-4>
-        <button ion-button full style="background-color:#FFAF00" (click)="cancelRec()"> {{'CANCEL '|translate}} <br>
+        <button ion-button full style="background-color: red" (click)="cancelRec()"> {{'CANCEL '|translate}} <br>
           <ion-icon name="close"></ion-icon>
         </button>
       </ion-col>
     </ion-row>
-    <!-- <ion-row *ngIf="showrec!=true">
-        <ion-col col-12>
-            <button ion-button full (click)="showOldRec()"> {{'SHOW PREVIOUS RECEIPTS '|translate}} <br>
+    <ion-row *ngIf="showrec!=true">
+        <!-- <ion-col col-12>
+            <button ion-button full (click)="showOldRec()" > {{'SHOW PREVIOUS RECEIPTS '|translate}} <br>
               <ion-icon name="list-box"></ion-icon>
             </button>
-          </ion-col>     
-    </ion-row> -->
+          </ion-col>      -->
+    </ion-row>
   </ion-grid>
 </ion-footer>
