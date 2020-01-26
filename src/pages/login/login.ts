@@ -313,7 +313,7 @@ export class LoginPage {
           {
             cat: "Example",
             code: "0000",
-            cost: "0",
+            cost: " 0",
             name: "Example Product",
             price: "0",
             stock_qty: "0",

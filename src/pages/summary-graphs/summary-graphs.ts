@@ -33,9 +33,17 @@ export class SummaryGraphsPage {
     this.exp = 0;
     this.pro = 0;
     this.group = "today";
+    this.isgraph=1;
 
     this.getSummary();
     //this.setvalues()
+  }
+
+  toggleGL(){
+    if(this.isgraph==1)
+    this.isgraph=0;
+    else
+    this.isgraph=1
   }
 
   rev = 0;
@@ -54,6 +62,8 @@ export class SummaryGraphsPage {
       });
     });
   }
+
+  
   setvalues() {
     this.rev = 0;
     this.exp = 0;
@@ -179,6 +189,8 @@ export class SummaryGraphsPage {
     }
   }
 
+  isgraph=1;
+
   getMinutes(datetime) {
     const temp = new Date(datetime);
     const t = temp.getMinutes();
@@ -192,6 +204,7 @@ export class SummaryGraphsPage {
   ngOnInit() {
     this.generateGraphs();
   }
+  netcash=0;
 
   generateGraphs() {
     this.barChart = new Chart(this.barCanvas.nativeElement, {
