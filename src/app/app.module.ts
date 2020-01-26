@@ -100,7 +100,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AlertController,
     GettersetterProvider,
     Camera,
-    
+
     TranslateConfigService,
     BluetoothSerial,
     PrinterProvider,

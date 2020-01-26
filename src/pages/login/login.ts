@@ -43,7 +43,7 @@ export class LoginPage {
     public zone: NgZone,
     public navParams: NavParams,
     public toastCtrl: ToastController,
-    
+
     public sp: StorageProvider,
     public alertCtrl: AlertController,
     private translateConfigService: TranslateConfigService,

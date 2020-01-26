@@ -195,14 +195,15 @@ export class AddProductPage {
   disabled = false;
 
   addproduct() {
-    if(this.prodCode=="000000"){
+    if (this.prodCode == "000000") {
       const msg = this.translateConfigService.getTranslatedMessage("Code not permitted. Please use a different code");
-      let toast = this.toastCtrl.create({
-        //@ts-ignore
-        message: msg.value,
-        duration: 3000
-      })
-      .present();
+      const toast = this.toastCtrl
+        .create({
+          //@ts-ignore
+          message: msg.value,
+          duration: 3000,
+        })
+        .present();
       this.isProdCode000000 = true;
       return;
     } else {
@@ -281,13 +282,15 @@ export class AddProductPage {
             //this.navCtrl.push(ProductListPage);
             this.events.publish("prodAdd:created", 0);
             toast.present();
-            toast.onDidDismiss(()=>{
+            toast.onDidDismiss(() => {
               const msg = this.translateConfigService.getTranslatedMessage("Refresh page to see changes");
-              this.toastCtrl.create({
-                //@ts-ignore
-                message: msg.value,
-                duration: 1500
-              }).present();
+              this.toastCtrl
+                .create({
+                  //@ts-ignore
+                  message: msg.value,
+                  duration: 1500,
+                })
+                .present();
             });
           }, 1000);
         });
@@ -340,13 +343,15 @@ export class AddProductPage {
               //this.navCtrl.push(ProductListPage);
               this.events.publish("prodAdd:created", 0);
               toast.present();
-              toast.onDidDismiss(()=>{
+              toast.onDidDismiss(() => {
                 const msg = this.translateConfigService.getTranslatedMessage("Refresh page to see changes");
-                this.toastCtrl.create({
-                  //@ts-ignore
-                  message: msg.value,
-                  duration: 1500
-                }).present();
+                this.toastCtrl
+                  .create({
+                    //@ts-ignore
+                    message: msg.value,
+                    duration: 1500,
+                  })
+                  .present();
               });
             }, 1000);
           });

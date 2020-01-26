@@ -914,17 +914,21 @@ export class IncomeTransactionPage {
     console.log("View Recs Called");
   }
 
-  printLogo(){
+  printLogo() {
     const encoder = new EscPosEncoder();
     const result = encoder.initialize();
 
-    let img=new Image();
-    img.src="https://upload.wikimedia.org/wikipedia/commons/e/e5/CPTM_icon.svg"
-    img.crossOrigin="Anonymous"
-    img.onload=()=>{
-      result.align("center").image(img, 256,256, 'atkinson',128).newline().newline()
+    const img = new Image();
+    img.src = "http://pluspng.com/img-png/manchester-united-png-manchester-united-logo-png-809.png";
+    img.crossOrigin = "Anonymous";
+    img.onload = () => {
+      result
+        .align("center")
+        .image(img, 256, 256, "atkinson", 128)
+        .newline()
+        .newline();
       this.mountAlertBt(result.encode());
-    }
+    };
   }
 
   prepareToPrint() {
