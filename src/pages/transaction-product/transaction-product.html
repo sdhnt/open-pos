@@ -7,13 +7,23 @@
       refreshingText="Refreshing...">
     </ion-refresher-content>
   </ion-refresher>
- <ion-fab left bottom>
-   <button ion-fab style="background-color: green;"><ion-icon name="add"></ion-icon></button>
-   <ion-fab-list side="top">
-     <button ion-button style="background-color:green;" (click)="navAdd(1)">{{ "Add Product" | translate }}</button>
-     <button ion-button style="background-color: green;" (click)="navAdd(2)">{{ "Add Category" | translate }}</button>
+
+
+ <ion-fab right bottom>
+   <button ion-fab style="background-color: black;"><ion-icon name="add"></ion-icon></button>
+   <ion-fab-list side="left">
+     <button ion-button style="background-color:black;" (click)="navAdd(1)">{{ "Add Product" | translate }}</button>
+     <button ion-button style="background-color: black;" (click)="navAdd(2)">{{ "Add Category" | translate }}</button>
    </ion-fab-list>
  </ion-fab>
+
+<!-- 
+ <ion-fab left bottom>
+  <button ion-fab style="background-color: black;" (click)="openCalc()"><ion-icon name="calculator"></ion-icon></button>
+</ion-fab> -->
+
+
+
  <div *ngIf="showmanual==0">
   <ion-searchbar showCancelButton="always" [(ngModel)]="searchterm" (ionChange)="filteredProduct()"></ion-searchbar>
 
@@ -98,7 +108,7 @@
               </ion-col>
               <ion-col col-6 *ngIf="product.qty==0">
                 <ion-buttons end>
-                  <button ion-button (click)="sellProd(product)">Sell</button>
+                  <button ion-button full small  style="background-color:green;" (click)="sellProd(product)">Sell</button>
                 </ion-buttons>
               </ion-col>
               <ion-col col-2 style="border: solid silver; text-align: center;" *ngIf="event1==false&&product.qty>0">

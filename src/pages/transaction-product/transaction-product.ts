@@ -9,6 +9,7 @@ import {
   AlertController,
   Platform,
   App,
+  ModalController,
 } from "ionic-angular";
 import { StorageProvider } from "../../providers/storage/storage";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
@@ -41,6 +42,7 @@ export class TransactionProductPage {
     public alertCtrl: AlertController,
     public platform: Platform,
     public app: App,
+    public modal: ModalController,
   ) {
     this.event = false;
     this.showmanual = 0;
@@ -225,6 +227,11 @@ export class TransactionProductPage {
           alert("Error: " + err);
         });
     });
+  }
+
+  openCalc(){
+    const helpModal = this.modal.create("AllTransactionPage");
+    helpModal.present();
   }
 
   filteredProduct() {
