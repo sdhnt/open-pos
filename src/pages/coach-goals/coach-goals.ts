@@ -88,6 +88,16 @@ export class CoachGoalsPage {
     });
   }
 
+  openVid = -1;
+
+  open(i:number){
+    if(i==this.openVid){
+      this.openVid = -1;
+    } else {
+      this.openVid = i;
+    }
+  }
+
   userlang = this.translateConfigService.getCurrentLanguage();
 
   getDateTime(datetime) {

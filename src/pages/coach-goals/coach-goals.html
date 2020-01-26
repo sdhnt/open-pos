@@ -25,17 +25,21 @@
   
     </ion-card> -->
 
-    <ion-card *ngFor="let item of vidlist">
+    <ion-card *ngFor="let item of vidlist; let i = index">
      
       <ion-grid line>
-        <ion-row style="padding-left: 10px;">
-          <ion-col><h2><b> {{item.heading}}</b></h2></ion-col>
+        <ion-row style="padding-left: 10px;" (click)="open(i)">
+          <ion-col col-10><h2><b> {{item.heading}}</b></h2></ion-col>
+          <ion-col col-2>
+              <ion-icon name="arrow-dropdown" *ngIf="i!=openVid"></ion-icon>
+              <ion-icon name="arrow-dropup" *ngIf="i==openVid"></ion-icon>
+          </ion-col>
         </ion-row>
 
-      <ion-row style="padding-left: 15px; padding-bottom: 10px;">
+      <ion-row style="padding-left: 15px; padding-bottom: 10px;" [hidden]="i!=openVid">
           {{item.content}}              
       </ion-row>
-      <ion-row>
+      <ion-row [hidden]="i!=openVid">
         <iframe width="100%" [height]="315" id="player" [src]="linkValue(item.url)" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </ion-row>
       </ion-grid>
