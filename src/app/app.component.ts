@@ -47,7 +47,7 @@ export class MyApp {
     this.initializeApp();
     this.pages = [
       { title: "Create New Sales", component: TransactionHomePage },
-    //  { title: "View/Edit Products", component: DashboardPage },
+      //  { title: "View/Edit Products", component: DashboardPage },
       // { title: "Update Stock/Expenses", component: ExpenseTransactionPage },
       { title: "Business Performance", component: SummarySummaryPage },
       { title: "Coach", component: CoachHomePage },
@@ -121,7 +121,8 @@ export class MyApp {
       this.translateService.addLangs(["en", "pt"]);
       this.translateService.setDefaultLang("en");
       this.translateService.use("en");
-      this.setupNotifications();
+      // do not remove the next line of code, will fix FCM in due time
+      // this.setupNotifications();
     });
   }
 
