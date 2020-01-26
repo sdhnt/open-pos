@@ -99,17 +99,17 @@ export class TransactionProductPage {
     });
   }
 
-  doRefresh(refresher){
+  doRefresh(refresher) {
     this.ionViewDidLoad();
     refresher.complete();
   }
   price;
   itname = "";
 
-  navAdd(num: number){
-    if(num==1){
+  navAdd(num: number) {
+    if (num == 1) {
       this.navCtrl.push(AddProductPage);
-    } else if(num==2){
+    } else if (num == 2) {
       this.navCtrl.push(AddProductCategoryPage);
     }
   }
@@ -199,8 +199,8 @@ export class TransactionProductPage {
       this.listProducts[index].qty--;
     }
   }
-  sellProd(product){
-    product.qty=1;
+  sellProd(product) {
+    product.qty = 1;
   }
   getProducts() {
     this.sp.storageReady().then(() => {
@@ -229,7 +229,7 @@ export class TransactionProductPage {
     });
   }
 
-  openCalc(){
+  openCalc() {
     const helpModal = this.modal.create("AllTransactionPage");
     helpModal.present();
   }
