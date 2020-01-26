@@ -25811,7 +25811,7 @@ page-all-transaction .calculator .header .input ion-icon {
 
 page-all-transaction .calculator .keys {
   background: linear-gradient(135deg, #3a3a3a, #000000);
-  height: 280px;
+  height: 350px;
   border-radius: 0 0 10px 10px;
   font-size: 24px;
 }
@@ -25840,6 +25840,38 @@ page-all-transaction .calculator .keys .row .number {
 
 page-all-transaction .calculator .keys .row .number span {
   width: calc(100%/3);
+  height: 70px;
+  text-align: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+}
+
+page-all-transaction .calculator .keys .row .number .lastrow {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  color: #ffffff;
+}
+
+page-all-transaction .calculator .keys .row .number .lastrow span {
+  width: calc(100%);
   height: 70px;
   text-align: center;
   display: -webkit-box;
@@ -25904,6 +25936,25 @@ page-all-transaction .dull {
   color: #4a4a4a;
 }
 
+page-all-transaction .modal {
+  position: absolute;
+  overflow: hidden;
+  max-width: 450px;
+  border-radius: 2px;
+  border: solid 1px black;
+  width: 90%;
+  height: 75%;
+  top: 0;
+  bottom: 0%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border: 0;
+  -webkit-box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
+  background-color: #fafafa;
+}
+
 page-coach-home ion-title {
   position: absolute;
   top: 0;
@@ -25919,7 +25970,30 @@ page-dashboard ion-title {
   left: 0;
   width: 100%;
   height: 100%;
-  text-align: center;
+  text-align: left;
+}
+
+page-expense-general ion-select {
+  max-width: 100%;
+}
+
+page-expense-general .modal {
+  position: absolute;
+  overflow: hidden;
+  max-width: 450px;
+  border-radius: 2px;
+  border: solid 1px black;
+  width: 90%;
+  height: 75%;
+  top: 0;
+  bottom: 0%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border: 0;
+  -webkit-box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
+  background-color: #fafafa;
 }
 
 page-expenses-home ion-title {
@@ -25931,12 +26005,62 @@ page-expenses-home ion-title {
   text-align: center;
 }
 
+@media (min-width: 300px) and (min-height: 500px) {
+  page-help ion-backdrop {
+    visibility: visible;
+  }
+}
+
+page-help .modal {
+  position: absolute;
+  overflow: hidden;
+  max-width: 450px;
+  border-radius: 2px;
+  border: solid 1px black;
+  width: 90%;
+  height: 75%;
+  top: 0;
+  bottom: 0%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border: 0;
+  -webkit-box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
+  background-color: #fafafa;
+}
+
 page-income-transaction ion-col ion-input {
   border: solid 1px black;
 }
 
 page-income-transaction ion-row ion-textarea {
   border: solid 1px black;
+}
+
+page-income-transaction .last-rec-card {
+  border: solid 1px gray;
+}
+
+page-dashboard ion-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+}
+
+page-login .alert-radio-group button:nth-child(1) .alert-radio-label:before {
+  content: url(/assets/imgs/flags/gb.png);
+}
+
+page-login .alert-radio-group button:nth-child(2) .alert-radio-label:before {
+  content: url(../assets/imgs/flags/pt_BR.png);
+}
+
+page-login .alert-radio-group button:nth-child(3) .alert-radio-label:before {
+  content: url(../assets/imgs/flags/es.png);
 }
 
 page-login ion-header {
@@ -25946,6 +26070,16 @@ page-login ion-header {
 
 page-login .input-cover {
   position: static;
+}
+
+page-login #PhoneLogin {
+  color: black;
+}
+
+page-login ion-footer {
+  background-color: black;
+  color: silver;
+  text-align: center;
 }
 
 page-login ion-content .scroll-content {
@@ -26005,7 +26139,6 @@ page-login .row-style {
   background-color: #FFF;
   padding-left: 15px;
   border-radius: 30px;
-  margin-bottom: 10px;
 }
 
 page-sign-up ion-content .scroll-content {
@@ -26065,6 +26198,11 @@ page-sign-up h6 {
   margin-bottom: 10px;
 }
 
+page-single-product ion-input {
+  border: solid 1px black;
+  margin: 5px;
+}
+
 page-summary-home ion-title {
   position: absolute;
   top: 0;
@@ -26081,6 +26219,47 @@ page-transaction-home ion-title {
   width: 100%;
   height: 100%;
   text-align: center;
+}
+
+page-transaction-product ion-card ion-input {
+  border: solid 1px black;
+  margin: 5px;
+}
+
+page-transaction-product ion-card ion-avatar img {
+  border-radius: 10%;
+  height: 12rem;
+  width: 12rem;
+}
+
+@media (min-width: 300px) and (min-height: 500px) {
+  page-update-stock ion-backdrop {
+    visibility: visible;
+  }
+}
+
+page-update-stock .modal {
+  position: absolute;
+  overflow: hidden;
+  max-width: 450px;
+  border-radius: 2px;
+  border: solid 1px black;
+  width: 90%;
+  height: 75%;
+  top: 0;
+  bottom: 0%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border: 0;
+  -webkit-box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
+  background-color: #fafafa;
+}
+
+page-update-stock ion-input {
+  border: solid 1px black;
+  margin: 5px;
 }
 
 page-user-profile ion-title {

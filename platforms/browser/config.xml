@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.openfintech.pos" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Open</name>
-    <description>Simple Barcode Based POS App.</description>
-    <author email="sdhnt@connect.hku.hk" href="sdhntgupta.com">Sidhant Gupta</author>
+<widget id="com.openfintech.openpos" version="0.0.5" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Open POS</name>
+    <description>Free POS Application</description>
+    <author email="openfintechapp@gmail.com" href="openfinance.app">Open Financial Technology</author>
     <content src="index.html" />
     <allow-navigation href="*" />
     <access origin="*" />

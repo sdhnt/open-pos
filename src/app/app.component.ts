@@ -47,7 +47,7 @@ export class MyApp {
     this.initializeApp();
     this.pages = [
       { title: "Create New Sales", component: TransactionHomePage },
-    //  { title: "View/Edit Products", component: DashboardPage },
+      //  { title: "View/Edit Products", component: DashboardPage },
       // { title: "Update Stock/Expenses", component: ExpenseTransactionPage },
       { title: "Business Performance", component: SummarySummaryPage },
       { title: "Coach", component: CoachHomePage },
