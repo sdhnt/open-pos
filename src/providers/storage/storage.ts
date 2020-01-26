@@ -34,6 +34,7 @@ export class StorageProvider {
   tempprod: any;
   tempcat: any;
   temptransac: any;
+  tempcontacts: any;
   tempuser: any;
   tempsummary: any;
   tempcoach: any;
@@ -45,34 +46,35 @@ export class StorageProvider {
       this.storage.get("categories").then(valNullcat => {
         this.storage.get("products").then(valNullprod => {
           this.storage.get("transactions").then(valNulltransac => {
-            this.storage.get("user").then(valNulluser => {
-              this.storage.get("summary").then(valNullSummary => {
-                this.storage.get("coach").then(valNullCoach => {
-                  // console.log("b4set");
-                  // console.log(JSON.stringify(this.tempcat));
-                  // console.log(JSON.stringify(this.tempprod));
-                  // console.log(JSON.stringify(this.temptransac))  ;
-                  this.storage.set("categories", "[]").then(() => {
-                    this.storage.set("categories", JSON.stringify(this.tempcat));
+            this.storage.get("contacts").then(_ => {
+              this.storage.get("user").then(valNulluser => {
+                this.storage.get("summary").then(valNullSummary => {
+                  this.storage.get("coach").then(valNullCoach => {
+                    this.storage.set("categories", "[]").then(() => {
+                      this.storage.set("categories", JSON.stringify(this.tempcat));
+                    });
+                    this.storage.set("products", "[]").then(() => {
+                      this.storage.set("products", JSON.stringify(this.tempprod));
+                    });
+                    this.storage.set("transactions", "[]").then(() => {
+                      this.storage.set("transactions", JSON.stringify(this.temptransac));
+                    });
+                    this.storage.set("contacts", "[]").then(() => {
+                      this.storage.set("contacts", JSON.stringify(this.tempcontacts));
+                    });
+                    this.storage.set("user", "[]").then(() => {
+                      this.storage.set("user", JSON.stringify(this.tempuser));
+                    });
+                    this.storage.set("summary", "[]").then(() => {
+                      this.storage.set("summary", JSON.stringify(this.tempsummary));
+                      // console.log(JSON.stringify(this.tempsummary));
+                    });
+                    this.storage.set("coach", "[]").then(() => {
+                      this.storage.set("coach", JSON.stringify(this.tempcoach));
+                      console.log(JSON.stringify(this.tempcoach));
+                    });
+                    resolve();
                   });
-                  this.storage.set("products", "[]").then(() => {
-                    this.storage.set("products", JSON.stringify(this.tempprod));
-                  });
-                  this.storage.set("transactions", "[]").then(() => {
-                    this.storage.set("transactions", JSON.stringify(this.temptransac));
-                  });
-                  this.storage.set("user", "[]").then(() => {
-                    this.storage.set("user", JSON.stringify(this.tempuser));
-                  });
-                  this.storage.set("summary", "[]").then(() => {
-                    this.storage.set("summary", JSON.stringify(this.tempsummary));
-                    //console.log(JSON.stringify(this.tempsummary));
-                  });
-                  this.storage.set("coach", "[]").then(() => {
-                    this.storage.set("coach", JSON.stringify(this.tempcoach));
-                    console.log(JSON.stringify(this.tempcoach));
-                  });
-                  resolve();
                 });
               });
             });
@@ -418,7 +420,6 @@ export class StorageProvider {
                 business_name: data.business_name,
                 businesstype: data.businesstype,
                 created: data.created,
-                logo_url: data.logo_url,
                 currency: data.currency,
                 discount: data.discount,
                 language: data.language,
