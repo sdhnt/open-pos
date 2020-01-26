@@ -65,6 +65,7 @@ export class SummaryHomePage {
     owner_name: "",
     ph_no: "",
     businesstype: "",
+    logo_url:"",
     taxrate: 0.0,
     discount: 0.0,
   };

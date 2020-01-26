@@ -41,6 +41,7 @@ export class ExpenseTransactionPage {
     currency: "",
     created: "",
     language: "en",
+    logo_url:"",
     owner: "",
     owner_name: "",
     ph_no: "",

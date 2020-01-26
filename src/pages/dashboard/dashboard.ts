@@ -59,6 +59,7 @@ export class DashboardPage {
     currency: "",
     created: "",
     language: "",
+    logo_url:"",
     owner: "",
     owner_name: "",
     ph_no: "",

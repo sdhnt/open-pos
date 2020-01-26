@@ -24,6 +24,7 @@ import EscPosEncoder from "esc-pos-encoder-ionic";
 import { GeolocationService } from "../../providers/geolocation/geolocation.service";
 import { SummaryHomePage } from "../summary-home/summary-home";
 import { SummarySummaryPage } from "../summary-summary/summary-summary";
+import { Camera, CameraOptions } from "@ionic-native/camera";
 /**
  * Generated class for the IncomeTransactionPage page.
  *
@@ -41,6 +42,7 @@ export class IncomeTransactionPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public events: Events,
+    public camera: Camera,
     public sp: StorageProvider,
     public toastCtrl: ToastController,
     private translateConfigService: TranslateConfigService,
@@ -89,6 +91,7 @@ export class IncomeTransactionPage {
     cash_balance: "",
     currency: "",
     created: "",
+    logo_url:"",
     language: "en",
     owner: "",
     owner_name: "",
@@ -254,7 +257,6 @@ export class IncomeTransactionPage {
     const message3 = this.translateConfigService.getTranslatedMessage("Scan Barcode");
     const message4 = this.translateConfigService.getTranslatedMessage("Add from Product List");
     const message5 = this.translateConfigService.getTranslatedMessage("Add Additional Charges");
-
     const alert = this.alertCtrl
       .create({
         // @ts-ignore
@@ -323,6 +325,62 @@ export class IncomeTransactionPage {
     this.lastsumtax = Math.round(this.lastsumdisc * (1.0 + this.taxrate / 100) * 100) / 100;
   }
 
+
+  file: any;
+
+
+  
+  upload_new() {
+      //LET REF be tied to a particular product- we save the url in the products db
+      const ref = firebase.storage().ref().child( "prodImages/" + this.userdata.id + "logo").putString(this.file.split(",")[1], "base64")
+      .then(snap => {
+        snap.ref.getDownloadURL().then(url => {
+          console.log("Uploaded!")
+          // do something with url here
+           this.userdata.logo_url = url;
+           this.toastCtrl.create({message: "Please wait- saving...", duration:2000}).present()
+           this.sp.setUserDat(this.userdata).then(()=>{
+            this.toastCtrl.create({message: "Saved!", duration:2000}).present()
+           });
+          // this.temp = url;
+          
+        });
+      }).catch((error)=>{
+        console.log(error)
+      });
+  }
+
+  
+  launchCamera() {
+
+    return new Promise((resolve, reject) => {
+
+      const options: CameraOptions = {
+        quality: 100,
+        sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+        destinationType: this.camera.DestinationType.DATA_URL,
+        encodingType: this.camera.EncodingType.PNG,
+        mediaType: this.camera.MediaType.PICTURE,
+        correctOrientation: true,
+        targetHeight: 256,
+        targetWidth: 256,
+        allowEdit: true,
+      };
+      this.camera
+        .getPicture(options)
+        .then(pic => {
+          this.file = "data:image/png;base64," + pic;
+          // console.log(base64Image)
+          resolve()
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+    });
+    
+  }
+
   editRecTop() {
     const message = this.translateConfigService.getTranslatedMessage("Cancel");
     const message1 = this.translateConfigService.getTranslatedMessage("Save");
@@ -357,7 +415,29 @@ export class IncomeTransactionPage {
               this.sp.setUserDat(this.userdata);
             },
           },
+          {
+            //@ts-ignore
+            text: "Add Logo",
+            handler: data => {
+              this.launchCamera().then(()=>{
+                this.upload_new();
+              })
+            },
+          },
+          {
+            //@ts-ignore
+            text: "Remove Logo",
+            handler: data => {
+              this.toastCtrl.create({message: "Please wait- removing...", duration:2000}).present()
+              this.userdata.logo_url="";
+              this.sp.setUserDat(this.userdata).then(()=>{
+                this.toastCtrl.create({message: "Removed!", duration:2000}).present()
+              });
+             
+            },
+          },
         ],
+
       })
       .present();
   }
@@ -919,17 +999,109 @@ export class IncomeTransactionPage {
     const result = encoder.initialize();
     const img = new Image();
     img.crossOrigin = "Anonymous";
-    img.src =
-      "https://firebasestorage.googleapis.com/v0/b/open-fintech.appspot.com/o/prodImages%2F65435757_2393255207562866_2949577797074419712_n.jpg?alt=media&token=1a481415-2e75-4473-b56f-ec18099545ad";
+    img.src = this.userdata.logo_url;
+    console.log("URL "+ this.userdata.logo_url)
+    //  "https://firebasestorage.googleapis.com/v0/b/open-fintech.appspot.com/o/prodImages%2F65435757_2393255207562866_2949577797074419712_n.jpg?alt=media&token=1a481415-2e75-4473-b56f-ec18099545ad";
     img.onload = () => {
       result
         .align("center")
         .image(img, 256, 256, "atkinson", 128)
         .newline()
+        .codepage("cp936")
+        .align("center")
+        .raw(commands.TEXT_FORMAT.TXT_4SQUARE)
+        .line(this.userdata.business_name)
+        .raw(commands.TEXT_FORMAT.TXT_NORMAL)
+        .line(this.userdata.business_address)
+        .line(this.userdata.businesstype)
+        .line(this.userdata.ph_no)
+        .align("left")
+        .newline()
+        .line(this.getDateTime(this.datetime))
+        .align("center")
+        .text(commands.HORIZONTAL_LINE.HR_58MM)
         .newline();
+      if (this.datastore != null) {
+        result
+          .align("left")
+          //.raw(commands.FEED_CONTROL_SEQUENCES.RST_HT)
+          //.raw(commands.FEED_CONTROL_SEQUENCES.SET_HT)
+          .text("Item Name           ") //10 char + 10 char
+          .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+          .text("Qty ") //4 char
+          .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+          .text("  Price") //8 char
+          .newline()
+          .newline();
+  
+        this.datastore.itemslist.forEach((element, index) => {
+          element.qty = element.qty.toString();
+          element.price = element.price.toString();
+          //autotab system
+          if (element.name.length < 20) {
+            for (let i = element.name.length; i < 20; i++) {
+              element.name += " ";
+            }
+          } else {
+            element.name = element.name.substring(0, 20);
+          }
+  
+          if (element.qty < 10000) {
+            for (let i = element.qty.length; i < 4; i++) {
+              element.qty += " ";
+            }
+          } else {
+            element.qty.substring(0, 4);
+          }
+  
+          if (element.price < 10000000) {
+            for (let i = element.price.length; i < 8; i++) {
+              element.price += " ";
+            }
+          } else {
+            element.price.substring(0, 8);
+          }
+          result
+  
+            .text(element.name) //19 + space
+            //.raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+            .text(element.qty) //4+ space
+            //.raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+            .text(element.price) //7+space
+  
+            .newline();
+          if (parseFloat(element.discount) != 0) {
+            result
+              .text("Discount (" + Math.round(parseFloat(element.discount) * 100) / 100 + "%) : ", 30)
+              .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+              .text("")
+              .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+              .text("-" + Math.round((element.price * element.discount * element.qty) / 100))
+              .newline();
+          }
+        });
+        result.newline();
+        result.align("right").line("Total: " + this.lastsumAfterIndividualDiscount);
+        if (this.lastsumAfterIndividualDiscount != this.lastsumdisc) {
+          result.line(" After Discount (" + Math.round(this.discount * 100) / 100 + "%): " + this.lastsumdisc);
+        }
+        if (this.lastsumAfterIndividualDiscount != this.lastsumtax) {
+          result.line("After Tax (" + Math.round(this.taxrate * 100) / 100 + "%): " + this.lastsumtax);
+        }
+      }
+  
+      result
+        .raw(commands.TEXT_FORMAT.TXT_4SQUARE)
+        .newline()
+        .line("")
+        .newline()
+        .line("")
+        .newline()
+        .cut("full");
       this.mountAlertBt(result.encode());
     };
-  }
+
+  };
 
   prepareToPrint() {
     this.showrec = false;
@@ -954,6 +1126,10 @@ export class IncomeTransactionPage {
     //this.receipt = receipt;
     const encoder = new EscPosEncoder();
     const result = encoder.initialize();
+    if(this.userdata.logo_url!=""&&this.userdata.logo_url!=null&&this.userdata.logo_url!=undefined){
+      this.printLogo()
+    }
+    else{
 
     result
       .codepage("cp936")
@@ -1049,6 +1225,7 @@ export class IncomeTransactionPage {
       .cut("full");
 
     this.mountAlertBt(result.encode());
+  }
   }
 
   mountAlertBt(data) {

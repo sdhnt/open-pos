@@ -55,6 +55,7 @@ export class LoanHomePage {
     created: "",
     language: "",
     owner: "",
+    logo_url:"",
     owner_name: "",
     ph_no: "",
     businesstype: "",

@@ -413,6 +413,7 @@ export class TransactionProductPage {
         console.log("pushed" + element);
       }
     });
+    
 
     if (this.calcitems.length > 0) {
       console.log(this.calcitems);
@@ -421,6 +422,11 @@ export class TransactionProductPage {
         tempJSON.itemslist.push(element);
       });
     }
+
+    if(tempJSON.itemslist.length==0){
+      this.toastCtrl.create({message:"Please choose atleast 1 item to add to receipt",duration:2000}).present();
+      
+    }else{
 
     tempJSON.itemslist.forEach(element => {
       if (element.discount) {
@@ -450,6 +456,7 @@ export class TransactionProductPage {
     });
 
     this.getProducts();
+  }
   }
 
   async delay(ms: number) {

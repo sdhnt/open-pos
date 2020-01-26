@@ -308,6 +308,7 @@ export class LoginPage {
         cash_balance: 0,
         discount: 0,
         taxrate: 0,
+        logo_url:"",
         categories: [{ name: "Example" }],
         products: [
           {
