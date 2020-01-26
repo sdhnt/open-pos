@@ -121,7 +121,8 @@ export class MyApp {
       this.translateService.addLangs(["en", "pt"]);
       this.translateService.setDefaultLang("en");
       this.translateService.use("en");
-      this.setupNotifications();
+      // do not remove the next line of code, will fix FCM in due time
+      // this.setupNotifications();
     });
   }
 
