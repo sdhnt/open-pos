@@ -413,7 +413,6 @@ export class TransactionProductPage {
         console.log("pushed" + element);
       }
     });
-    
 
     if (this.calcitems.length > 0) {
       console.log(this.calcitems);
@@ -423,40 +422,38 @@ export class TransactionProductPage {
       });
     }
 
-    if(tempJSON.itemslist.length==0){
-      this.toastCtrl.create({message:"Please choose atleast 1 item to add to receipt",duration:2000}).present();
-      
-    }else{
+    if (tempJSON.itemslist.length == 0) {
+      this.toastCtrl.create({ message: "Please choose atleast 1 item to add to receipt", duration: 2000 }).present();
+    } else {
+      tempJSON.itemslist.forEach(element => {
+        if (element.discount) {
+        } else {
+          element.discount = 0;
+        }
+      });
 
-    tempJSON.itemslist.forEach(element => {
-      if (element.discount) {
-      } else {
-        element.discount = 0;
-      }
-    });
+      this.listProducts = [];
+      this.calcitems = [];
+      this.listArray = [];
+      this.recitemslist = [];
 
-    this.listProducts = [];
-    this.calcitems = [];
-    this.listArray = [];
-    this.recitemslist = [];
+      console.log(this.datlist);
+      const myObjStr = JSON.stringify(tempJSON);
 
-    console.log(this.datlist);
-    const myObjStr = JSON.stringify(tempJSON);
+      (this.navCtrl.parent as Tabs).select(1);
+      this.delay(300).then(any => {
+        this.events.publish("genRec:created", myObjStr);
 
-    (this.navCtrl.parent as Tabs).select(1);
-    this.delay(300).then(any => {
-      this.events.publish("genRec:created", myObjStr);
+        console.log("Sent: " + myObjStr);
+        this.getProducts();
+        this.event = false;
+        this.event1 = false;
+        //this.listProducts=
+        //your task after delay.
+      });
 
-      console.log("Sent: " + myObjStr);
       this.getProducts();
-      this.event = false;
-      this.event1 = false;
-      //this.listProducts=
-      //your task after delay.
-    });
-
-    this.getProducts();
-  }
+    }
   }
 
   async delay(ms: number) {

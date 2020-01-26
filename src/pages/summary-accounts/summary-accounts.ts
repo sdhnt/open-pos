@@ -37,7 +37,7 @@ export class SummaryAccountsPage {
     language: "",
     owner: "",
     owner_name: "",
-    logo_url:"",
+    logo_url: "",
     ph_no: "",
     businesstype: "",
     taxrate: 0.0,

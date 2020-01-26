@@ -49,7 +49,7 @@ export class CoachCoachPage {
     currency: "",
     created: "",
     language: this.translateConfigService.getCurrentLanguage(),
-    logo_url:"",
+    logo_url: "",
     owner: "",
     owner_name: "",
     ph_no: "",

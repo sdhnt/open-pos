@@ -93,7 +93,7 @@ export class TransactionHomePage {
     currency: "",
     created: "",
     language: "en",
-    logo_url:"",
+    logo_url: "",
     owner: "",
     owner_name: "",
     ph_no: "",
@@ -148,9 +148,9 @@ export class TransactionHomePage {
 
     this.alertCtrl
       .create({
-        
         title: "Cash Balance",
-        subTitle:"This number helps you view how much cash your business has currently. When you make a sale, this increases by the sale amount, when you pay an expense it decreases by the payament amount.",
+        subTitle:
+          "This number helps you view how much cash your business has currently. When you make a sale, this increases by the sale amount, when you pay an expense it decreases by the payament amount.",
         //@ts-ignore
         message: message.value + ": " + this.userdata.cash_balance,
 

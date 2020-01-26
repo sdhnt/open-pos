@@ -110,7 +110,7 @@ export class AllTransactionPage {
     currency: "",
     created: "",
     language: "en",
-    logo_url:"",
+    logo_url: "",
     owner: "",
     owner_name: "",
     ph_no: "",
