@@ -17,7 +17,6 @@ import { StorageProvider } from "../providers/storage/storage";
 import { IonicStorageModule } from "@ionic/storage";
 import { GettersetterProvider } from "../providers/gettersetter/gettersetter";
 import { Camera } from "@ionic-native/camera";
-import { Facebook } from "@ionic-native/facebook";
 import { HttpClientModule, HttpClient } from "@angular/common/http";
 import { TranslateModule, TranslateLoader, TranslateService } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
@@ -101,7 +100,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AlertController,
     GettersetterProvider,
     Camera,
-    Facebook,
+    
     TranslateConfigService,
     BluetoothSerial,
     PrinterProvider,

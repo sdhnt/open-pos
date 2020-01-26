@@ -9,6 +9,7 @@ import {
   DateTime,
   App,
   ModalController,
+  Img,
 } from "ionic-angular";
 import { AllTransactionPage } from "../all-transaction/all-transaction";
 import firebase from "firebase";
@@ -911,6 +912,19 @@ export class IncomeTransactionPage {
     this.app.getRootNav().setRoot(SummarySummaryPage, { item: "ViewRecs" });
     //this.events.publish("ViewRecs", 0);
     console.log("View Recs Called");
+  }
+
+  printLogo(){
+    const encoder = new EscPosEncoder();
+    const result = encoder.initialize();
+
+    let img=new Image();
+    img.src="https://upload.wikimedia.org/wikipedia/commons/e/e5/CPTM_icon.svg"
+    img.crossOrigin="Anonymous"
+    img.onload=()=>{
+      result.align("center").image(img, 256,256, 'atkinson',128).newline().newline()
+      this.mountAlertBt(result.encode());
+    }
   }
 
   prepareToPrint() {

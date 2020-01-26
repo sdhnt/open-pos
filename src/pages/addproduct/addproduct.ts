@@ -68,7 +68,7 @@ export class AddProductPage {
         .getUserDat()
         .then(val => {
           this.userdata = JSON.parse(val);
-          this.uid = this.userdata.uid;
+          this.uid = this.userdata.id;
           console.log(this.userdata);
         })
         .catch(err => {

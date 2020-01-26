@@ -12,7 +12,7 @@ import firebase, { auth } from "firebase";
 import { SignUpPage } from "../sign-up/sign-up";
 import { TransactionHomePage } from "../transaction-home/transaction-home";
 import { StorageProvider } from "../../providers/storage/storage";
-import { Facebook, FacebookLoginResponse } from "@ionic-native/facebook";
+
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import { UserProfilePage } from "../user-profile/user-profile";
 import { Message, Placeholder } from "@angular/compiler/src/i18n/i18n_ast";
@@ -43,7 +43,7 @@ export class LoginPage {
     public zone: NgZone,
     public navParams: NavParams,
     public toastCtrl: ToastController,
-    public facebook: Facebook,
+    
     public sp: StorageProvider,
     public alertCtrl: AlertController,
     private translateConfigService: TranslateConfigService,
@@ -153,43 +153,43 @@ export class LoginPage {
       });
   }
 
-  loginWithFB() {
-    this.facebook
-      .login(["email"])
-      .then((res: FacebookLoginResponse) => {
-        console.log("Logged into Facebook!", res);
+  // loginWithFB() {
+  //   this.facebook
+  //     .login(["email"])
+  //     .then((res: FacebookLoginResponse) => {
+  //       console.log("Logged into Facebook!", res);
 
-        firebase
-          .auth()
-          .signInWithCredential(firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken))
-          .then(async success => {
-            this.checkifexist();
+  //       firebase
+  //         .auth()
+  //         .signInWithCredential(firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken))
+  //         .then(async success => {
+  //           this.checkifexist();
 
-            console.log("Firebase success", success);
-            // const temp = success;
-            // await firebase
-            //   .firestore()
-            //   .collection("users")
-            //   .where("owner", "==", firebase.auth().currentUser.uid)
-            //   .get()
-            //   .then(function (querySnapshot) {
-            //     if (querySnapshot.size == 0) {
-            //       console.log("Not permitted - no sign up");
-            //       this.navCtrl.setRoot(UserProfilePage, {
-            //         uid: firebase.auth().currentUser.uid,
-            //         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            //       });
-            //     } else {
-            //       this.loginProcedure();
-            //     }
-            //   });
-          })
-          .catch(err => {
-            console.log("Firebase error", err);
-          });
-      })
-      .catch(e => console.log("Error logging into Facebook", e));
-  }
+  //           console.log("Firebase success", success);
+  //           // const temp = success;
+  //           // await firebase
+  //           //   .firestore()
+  //           //   .collection("users")
+  //           //   .where("owner", "==", firebase.auth().currentUser.uid)
+  //           //   .get()
+  //           //   .then(function (querySnapshot) {
+  //           //     if (querySnapshot.size == 0) {
+  //           //       console.log("Not permitted - no sign up");
+  //           //       this.navCtrl.setRoot(UserProfilePage, {
+  //           //         uid: firebase.auth().currentUser.uid,
+  //           //         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+  //           //       });
+  //           //     } else {
+  //           //       this.loginProcedure();
+  //           //     }
+  //           //   });
+  //         })
+  //         .catch(err => {
+  //           console.log("Firebase error", err);
+  //         });
+  //     })
+  //     .catch(e => console.log("Error logging into Facebook", e));
+  // }
   ionViewDidLoad() {
     console.log("ionViewDidLoad LoginPage");
   }
