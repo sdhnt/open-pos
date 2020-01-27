@@ -328,7 +328,7 @@ export class AddProductPage {
             toast.present();
             toast.onDidDismiss(() => {
               const msg = this.translateConfigService.getTranslatedMessage("Refresh page to see changes");
-              this.events.publish("productUpdate:created",0);
+              this.events.publish("productUpdate:created", 0);
               this.toastCtrl
                 .create({
                   //@ts-ignore

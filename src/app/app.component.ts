@@ -51,7 +51,7 @@ export class MyApp {
       // { title: "Update Stock/Expenses", component: ExpenseTransactionPage },
       // { title: "Business Performance", component: SummarySummaryPage },
       // { title: "Coach", component: CoachHomePage },
-      { title: "Apply for Loan", component: LoanHomePage },
+    //  { title: "Apply for Loan", component: LoanHomePage },
       //{ title: "Contact Us", component: ContactUsPage },
     ];
     this.backButtonEvent();

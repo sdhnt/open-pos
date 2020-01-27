@@ -53,7 +53,7 @@ export class SingleProductPage {
     public camera: Camera,
     private formBuilder: FormBuilder,
     private modal: ModalController,
-    public events: Events
+    public events: Events,
   ) {
     this.product = this.navParams.get("data");
     this.prodCodeOld = this.product.code;
@@ -366,7 +366,7 @@ export class SingleProductPage {
           toast.present();
           this.sp.backupStorage();
           this.events.publish("productUpdate:created");
-          this.navCtrl.pop()
+          this.navCtrl.pop();
         }, 1000);
       })
       .catch(err => {
@@ -392,20 +392,19 @@ export class SingleProductPage {
         duration: 2500,
       })
       .present();
-      this.navCtrl.pop()
-  }
-
-  goBack(){
     this.navCtrl.pop();
   }
 
-  goToUpdateStock(){
-    const m = this.modal.create("UpdateStockPage", { data: this.product});
+  goBack() {
+    this.navCtrl.pop();
+  }
+
+  goToUpdateStock() {
+    const m = this.modal.create("UpdateStockPage", { data: this.product });
     m.present();
-    m.onDidDismiss((data)=>{
-      if(data=="cancel"){
-      }
-      else{
+    m.onDidDismiss(data => {
+      if (data == "cancel") {
+      } else {
         const message = this.translateConfigService.getTranslatedMessage("Finish");
         const toast = this.toastCtrl.create({
           // @ts-ignore
@@ -413,7 +412,7 @@ export class SingleProductPage {
           duration: 2000,
         });
         toast.present();
-        toast.onDidDismiss(()=>{
+        toast.onDidDismiss(() => {
           this.events.publish("productUpdate:created");
           this.navCtrl.pop();
         });

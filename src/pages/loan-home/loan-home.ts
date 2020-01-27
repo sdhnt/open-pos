@@ -7,6 +7,7 @@ import {
   ToastController,
   Events,
   ModalController,
+  ViewController,
 } from "ionic-angular";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import { BarcodeScanner } from "@ionic-native/barcode-scanner";
@@ -39,12 +40,17 @@ export class LoanHomePage {
     private toastCtrl: ToastController,
     public events: Events,
     private modal: ModalController,
+    private view: ViewController,
   ) {
     this.getUserData();
 
     this.events.subscribe("cbUpdate:created", data => {
       this.getUserData();
     });
+  }
+
+  dismiss(){
+    this.view.dismiss();
   }
 
   userdata: any = {

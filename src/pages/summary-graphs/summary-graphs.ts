@@ -8,6 +8,7 @@ import {
   AlertController,
   LoadingController,
   Tabs,
+  ModalController,
 } from "ionic-angular";
 import { Chart } from "chart.js";
 import { StorageProvider } from "../../providers/storage/storage";
@@ -38,6 +39,7 @@ export class SummaryGraphsPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    public modal: ModalController,
     public sp: StorageProvider,
     public events: Events,
     private translateConfigService: TranslateConfigService,
@@ -110,6 +112,10 @@ export class SummaryGraphsPage {
     }
 
     console.log("changed: " + this.expandedvar);
+  }
+
+  applyLoan(){
+    this.modal.create("LoanHomePage").present();
   }
 
   ionViewDidLoad() {
