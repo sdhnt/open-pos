@@ -699,7 +699,7 @@ export class IncomeTransactionPage {
         await this.updateCb(this.lastsum).then(() => {
           this.events.publish("cbUpdate:created", 0);
           this.events.publish("productUpdate:created", 0);
-          this.sp.backupStorage();
+          //this.sp.backupStorage();
           console.log("backup here");
         });
         //}
@@ -721,7 +721,7 @@ export class IncomeTransactionPage {
         this.taxrate = 0;
         this.taxbtn = 0;
         this.discbtn = 0;
-        this.sp.backupStorage();
+        //this.sp.backupStorage();
         toast.present();
 
         this.showrec = false;
@@ -823,10 +823,10 @@ export class IncomeTransactionPage {
         await this.updateCb(this.lastsum).then(() => {
           this.events.publish("cbUpdate:created", 0);
           this.events.publish("productUpdate:created", 0);
-          this.sp.backupStorage();
+          //this.sp.backupStorage();
           console.log("backup here");
         });
-        this.sp.backupStorage();
+        //this.sp.backupStorage();
         this.lastTransaction = data;
         console.log(this.lastTransaction);
         this.prepareToPrint();

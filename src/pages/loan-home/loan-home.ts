@@ -49,7 +49,7 @@ export class LoanHomePage {
     });
   }
 
-  dismiss(){
+  dismiss() {
     this.view.dismiss();
   }
 

@@ -55,7 +55,12 @@ export class SummaryGraphsPage {
       console.log("ViewRecs Event");
     });
     this.getUserData();
-    //this.setvalues();
+    this.events.subscribe("cbUpdate:created", async data => {
+      this.ionViewDidLoad();
+    });
+    this.events.subscribe("productUpdate:created", async data => {
+      this.ionViewDidLoad();
+    });
   }
 
   expanded = true;
@@ -114,7 +119,7 @@ export class SummaryGraphsPage {
     console.log("changed: " + this.expandedvar);
   }
 
-  applyLoan(){
+  applyLoan() {
     this.modal.create("LoanHomePage").present();
   }
 

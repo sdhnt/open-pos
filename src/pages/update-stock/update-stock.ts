@@ -126,8 +126,8 @@ export class UpdateStockPage {
         wholesale_price: this.product.wholesale_price,
         cost:
           Math.round(
-            ((parseInt(this.product.cost) * parseInt(this.product.stock_qty) + parseInt(this.prodcost)) /
-              (parseInt(this.prodqty) + parseInt(this.product.stock_qty))) *
+            ((parseFloat(this.product.cost) * parseFloat(this.product.stock_qty) + parseFloat(this.prodcost)) /
+              (parseFloat(this.prodqty) + parseFloat(this.product.stock_qty))) *
               100,
           ) / 100,
         cat: this.product.cat,
