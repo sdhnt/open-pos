@@ -24,7 +24,7 @@
 
   <button ion-button block clear color="light" class="nametop"><b>Open</b></button>
 
-  <button ion-button block clear color="light" style="margin-top: 10px;" >{{"Enter your Phone Number"|translate}}</button>
+  
 
 <!-- 
   <ion-grid style="width: 75%;">
@@ -53,6 +53,8 @@
   <div id="PhoneLogin">
   <div id="recaptcha-container"></div>
 
+  <div *ngIf="signup!=1&&otpmode!=1">
+  <button ion-button block clear color="light" style="margin-top: 10px;" >{{"Enter your Phone Number"|translate}}</button>
   <ion-grid  style="width: 75%;">
     <ion-row class="row-style">
 
@@ -69,14 +71,27 @@
       <ion-row padding></ion-row>
       <!-- <div class="btn_container">
         <button ion-button full (click)="loginWithFB();">{{"Login with Facebook"|translate}}</button>
-      </div> -->
-    
-      
-     
+      </div> -->     
   </ion-grid>
-  
+</div>
+</div>
+<div *ngIf="otpmode==1">
+  <button ion-button block clear color="light" style="margin-top: 10px;" >Enter OTP</button>
+  <ion-row class="row-style" style="margin-top: 20px;"><ion-input placeholder="Enter OTP here" [(ngModel)]="otpnum"></ion-input></ion-row>
+  <button ion-button ion-button block round outline color="light" style="margin-top: 20px;" (click)="otpFn()">Submit OTP</button>
+  <button ion-button ion-button block round outline color="light" style="margin-top: 20px;" (click)="backToLogin()">Cancel</button>
 </div>
 
+<div *ngIf="signup==1">
+<ion-grid style="width: 75%;">
+  <button ion-button block clear color="light" style="margin-top: 10px;" >Create an Account</button>
+  <ion-row class="row-style" style="margin-top: 20px;"><ion-input placeholder="Owner/User Name" [(ngModel)]="newaccOwnName"></ion-input></ion-row>
+  <ion-row class="row-style" style="margin-top: 20px;"><ion-input placeholder="Business Name"  [(ngModel)]="newaccBName"></ion-input></ion-row>
+  <ion-row class="row-style" style="margin-top: 20px;"><ion-input placeholder="Business Type"  [(ngModel)]="newaccBType"></ion-input></ion-row>
+  <ion-row class="row-style" style="margin-top: 20px;"><ion-input placeholder="Business Area & City"  [(ngModel)]="newaccBArea"></ion-input></ion-row>
+  <button ion-button ion-button block round outline color="light" style="margin-top: 20px;" (click)="createAccount()">Create Account</button>
+</ion-grid>
+</div>
 </ion-content>
 
 <ion-footer padding *ngIf="contactphone!=null">

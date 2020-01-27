@@ -37,7 +37,7 @@
   </ion-row>
 </ion-item>
 <ion-item style="text-align: center;">
-  <div *ngIf="!((rev+exp)>0)" style="color: red;"> You have negative cash!</div> 
+  <div *ngIf="!((rev+exp)>=0)" style="color: red;"> You have negative cash!</div> 
   <h6>Interested in borrowing money?</h6>
   
 <button ion-button full style="background-color: green;" (click)="applyLoan()" round>Apply for loan</button>

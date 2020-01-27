@@ -60,11 +60,20 @@ export class TransactionHomePage {
     //this.getUserData();
     //this.tutorial();
     if (this.navParams.get("data") == "newUser") {
-      this.tutorial();
+      
+      this.delay(500).then(()=>{
+        this.tutorial();
+        this.getUserData();
+      })
+
+      
     }
     this.events.subscribe("newUser", data => {
       //this.events.unsubscribe("newUser");
-      this.tutorial();
+      this.delay(500).then(()=>{
+        this.tutorial();
+        this.getUserData();
+      })
     });
 
     this.events.subscribe("cbUpdate:created", async data => {
@@ -74,13 +83,10 @@ export class TransactionHomePage {
 
   async ionViewDidEnter() {
     console.log("ionViewDidLoad TransactionHomePage");
-    // document.addEventListener("backbutton",function(e) {
-    //   console.log("disable back button")
-    // }, false);
     if (this.navParams.get("lang") != this.userdata.language) {
       this.userdata.language = this.navParams.get("lang");
     }
-    this.delay(3000).then(() => {
+    this.delay(500).then(() => {
       this.getUserData();
     });
   }
@@ -90,12 +96,11 @@ export class TransactionHomePage {
   }
   userdata: any = {
     business_address: "",
-
     business_name: "",
     cash_balance: "",
     currency: "",
     created: "",
-    language: "en",
+    language: this.translateConfigService.getCurrentLanguage(),
     logo_url: "",
     owner: "",
     owner_name: "",
@@ -232,9 +237,7 @@ export class TransactionHomePage {
     const msg4 = this.translateConfigService.getTranslatedMessage("Contact Us");
     const msg5 = this.translateConfigService.getTranslatedMessage("Okay");
 
-    const tutorialModal: Modal = this.modal.create("HelpPage", { data: passedData });
-    tutorialModal.present();
-    tutorialModal.onDidDismiss(() => {
+    
       const helpAlert = this.alertCtrl.create({
         //@ts-ignore
         title: msg1.value,
@@ -258,7 +261,6 @@ export class TransactionHomePage {
         ],
       });
       helpAlert.present();
-    });
   }
 
   help() {

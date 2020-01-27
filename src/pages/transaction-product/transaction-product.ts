@@ -48,6 +48,13 @@ export class TransactionProductPage {
     this.showmanual = 0;
     this.itname = "";
 
+    this.events.subscribe("newUser", data => {
+      this.delay(500).then(() => {
+        this.ionViewDidLoad();
+        console.log("update this page");
+      });
+    });
+
     this.events.subscribe("productUpdate:created", async data => {
       this.delay(500).then(() => {
         this.ionViewDidLoad();

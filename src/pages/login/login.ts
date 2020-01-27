@@ -61,7 +61,7 @@ export class LoginPage {
         </div>`,
     });
 
-    firebase.auth().onAuthStateChanged(async function(user) {
+    firebase.auth().onAuthStateChanged(async (user)=> {
       if (user) {
         //console.log(user);
         loading.present();
@@ -71,7 +71,7 @@ export class LoginPage {
           .collection("users")
           .where("owner", "==", firebase.auth().currentUser.uid)
           .get()
-          .then(function(querySnapshot) {
+          .then((querySnapshot) =>{
             if (querySnapshot.size == 0) {
               // console.log("Not permitted - this account has not filled their data (Fb Login) or no internet");
               // navCtrl.setRoot(UserProfilePage, {
@@ -192,13 +192,14 @@ export class LoginPage {
   // }
   ionViewDidLoad() {
     console.log("ionViewDidLoad LoginPage");
+    this.signup=0;
   }
 
   ionViewDidEnter() {
     firebase.auth().useDeviceLanguage();
     this.applicationVerifier = new firebase.auth.RecaptchaVerifier("recaptcha-container", {
       size: "invisible",
-      callback: function(response) {
+      callback: (response)=> {
         // reCAPTCHA solved, allow signInWithPhoneNumber.
         this.signInPhone();
       },
@@ -263,34 +264,46 @@ export class LoginPage {
   }
 
   phone;
-  signIn() {
-    // add a local variable to store navCtrl object
-    const thatNavCtrl = this.navCtrl;
-    //Step 1 — Pass the mobile number for verification
-    const tell = "+" + this.country_code + this.phone;
+  // signIn() {
+  //   // add a local variable to store navCtrl object
+  //   const thatNavCtrl = this.navCtrl;
+  //   //Step 1 — Pass the mobile number for verification
+  //   const tell = "+" + this.country_code + this.phone;
 
-    firebase
-      .auth()
-      .signInWithPhoneNumber(tell, this.applicationVerifier)
-      .then(function(confirmationResult) {
-        const verificationCode = window.prompt(
-          "Please enter the verification code that was sent to your mobile device.",
-        );
-        return confirmationResult.confirm(verificationCode);
-      })
-      .catch(function(error) {
-        // Handle Errors here.
-      });
-  }
+  //   firebase
+  //     .auth()
+  //     .signInWithPhoneNumber(tell, this.applicationVerifier)
+  //     .then((confirmationResult)=> {
+  //       const verificationCode = window.prompt(
+  //         "Please enter the verification code that was sent to your mobile device.",
+  //       );
+  //       return confirmationResult.confirm(verificationCode);
+  //     })
+  //     .catch((error)=> {
+  //       // Handle Errors here.
+  //       this.toastCtrl.create({
+  //         message: error,
+  //         duration: 2000,
+  //       }).present();
+  //     });
+  // }
 
   datet = new Date();
 
   newaccOwnName;
   newaccBName;
-  newaccemail;
+  newaccBArea;
+  newaccemail;//
   newaccBType;
 
   async createAccount() {
+    if((this.newaccBArea!=null && this.newaccBArea!=undefined) &&(this.newaccBName!=null && this.newaccBName!=undefined)
+    && (this.newaccOwnName!=null && this.newaccOwnName!=undefined) &&(this.newaccBType!=null && this.newaccBType!=undefined))
+    {
+    this.toastCtrl.create({
+      message: "Please wait while account is created. This may take a few minutes",
+      duration: 3000,
+    })
     await firebase
       .firestore()
       .collection("users")
@@ -300,8 +313,8 @@ export class LoginPage {
         owner_name: this.newaccOwnName,
         business_name: this.newaccBName,
         businesstype: this.newaccBType,
-        business_address: "Sample Address",
-        email: this.newaccemail,
+        business_address: this.newaccBArea,
+        email: "sample@sample.com",
         ph_no: "+" + this.country_code + this.phone,
         language: this.translateConfigService.getCurrentLanguage(),
         currency: "USD",
@@ -314,10 +327,10 @@ export class LoginPage {
           {
             cat: "Example",
             code: "0000",
-            cost: " 0",
+            cost: "100",
             name: "Example Product",
             price: "0",
-            stock_qty: "0",
+            stock_qty: "10",
             url: "https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y",
             wholesale_price: "0",
           },
@@ -336,6 +349,8 @@ export class LoginPage {
                 name: "Example Product",
                 price: "0",
                 stock_qty: "0",
+                qty: 1,
+                discount:0,
               },
             ],
             pnllist: [],
@@ -364,7 +379,7 @@ export class LoginPage {
                 handler: () => {
                   //this.sp.clearMem();
                   this.sp.setMem();
-                  this.navCtrl.setRoot(TransactionHomePage, { data: "newUser" }); //navigate to feeds page
+                  this.navCtrl.setRoot(TransactionHomePage, { data: "newUser", lang: this.translateConfigService.getCurrentLanguage() }); //navigate to feeds page
                   this.events.publish("newUser");
                 }, //end handler
               },
@@ -378,6 +393,16 @@ export class LoginPage {
 
     console.log("Done");
   }
+  else{
+    this.toastCtrl.create({
+      message: "Incomplete",
+      duration: 3000,
+    }).present()
+  }
+  }
+
+  signup=0;
+  otpmode=0;
 
   async checkifexist() {
     let flag = 0;
@@ -387,101 +412,149 @@ export class LoginPage {
       .collection("users")
       .where("owner", "==", firebase.auth().currentUser.uid)
       .get()
-      .then(async function(querySnapshot) {
+      .then(async (querySnapshot)=> {
         if (querySnapshot.size == 0) {
           console.log("Bun");
           flag = 1;
+            this.otpmode=0;
+            this.signup=1;
+            // this.alertCtrl.create({
+            //   message:"Looks like you need to create an account!"
+            // }).present();
+          // const msg = this.translateConfigService.getTranslatedMessage("Sign Up");
+          // const msg1 = this.translateConfigService.getTranslatedMessage("Please enter your details to create an account");
+          // const msg2 = this.translateConfigService.getTranslatedMessage("Your Name");
+          // const msg3 = this.translateConfigService.getTranslatedMessage("Phone Number");
+          // const msg4 = this.translateConfigService.getTranslatedMessage("Business Name");
+          // const msg5 = this.translateConfigService.getTranslatedMessage("Business Type");
+          // const msg6 = this.translateConfigService.getTranslatedMessage("CANCEL");
+          // const msg7 = this.translateConfigService.getTranslatedMessage("SUBMIT");
+          // const msg8 = this.translateConfigService.getTranslatedMessage("Email: example@abc.com");
+          // const msg9 = this.translateConfigService.getTranslatedMessage("Incomplete. Try Again.");
         } else {
           console.log("loggin you in");
           flag = 0;
+          this.loginProcedure();
         }
       })
       .catch(error => {
         console.log(error);
       });
 
-    if (flag == 1) {
-      const msg = this.translateConfigService.getTranslatedMessage("Sign Up");
-      const msg1 = this.translateConfigService.getTranslatedMessage("Please enter your details to create an account");
-      const msg2 = this.translateConfigService.getTranslatedMessage("Your Name");
-      const msg3 = this.translateConfigService.getTranslatedMessage("Phone Number");
-      const msg4 = this.translateConfigService.getTranslatedMessage("Business Name");
-      const msg5 = this.translateConfigService.getTranslatedMessage("Business Type");
-      const msg6 = this.translateConfigService.getTranslatedMessage("CANCEL");
-      const msg7 = this.translateConfigService.getTranslatedMessage("SUBMIT");
-      const msg8 = this.translateConfigService.getTranslatedMessage("Email: example@abc.com");
-      const msg9 = this.translateConfigService.getTranslatedMessage("Incomplete. Try Again.");
-
-      this.alertCtrl
-        .create({
-          //@ts-ignore
-          title: msg.value,
-          //enableBackdropDismiss: false, // <- Here! :)
-          //@ts-ignore
-          message: msg1.value,
-          inputs: [
-            //@ts-ignore
-            { name: "UserName", placeholder: msg2.value },
-            //@ts-ignore
-            { name: "PhoneNumber", placeholder: msg3.value, value: "+" + this.country_code + this.phone },
-            //@ts-ignore
-            { name: "BusinessName", placeholder: msg4.value },
-            //@ts-ignore
-            { name: "BusinessType", placeholder: msg5.value },
-            //@ts-ignore
-            { name: "Email", placeholder: msg8.value },
-          ],
-          buttons: [
-            {
-              // @ts-ignore
-              text: msg6.value,
-              handler: data => {
-                console.log("Cancel clicked");
-              },
-            },
-            {
-              //@ts-ignore
-              text: msg7.value,
-              handler: data => {
-                if (
-                  data.UserName == null ||
-                  data.UserName == "" ||
-                  data.UserName == undefined ||
-                  data.BusinessName == null ||
-                  data.BusinessName == "" ||
-                  data.BusinessName == undefined ||
-                  data.BusinessType == null ||
-                  data.BusinessType == "" ||
-                  data.BusinessType == undefined ||
-                  data.Email == null ||
-                  data.Email == "" ||
-                  data.Email == undefined
-                ) {
-                  this.toastCtrl
-                    .create({
-                      //@ts-ignore
-                      message: msg9.value,
-                      duration: 5000,
-                    })
-                    .present();
-                } else {
-                  this.newaccOwnName = data.UserName;
-                  this.newaccBName = data.BusinessName;
-                  this.newaccBType = data.BusinessType;
-                  this.newaccemail = data.Email;
-                  this.createAccount();
-                }
-              },
-            },
-          ],
-        })
-        .present();
-    } else {
-      console.log("flag!=1");
-      this.loginProcedure();
-    }
+   // if (flag == 1) {
+    
+      
+      // this.alertCtrl
+      //   .create({
+      //     //@ts-ignore
+      //     title: msg.value,
+      //     //enableBackdropDismiss: false, // <- Here! :)
+      //     //@ts-ignore
+      //     message: msg1.value,
+      //     inputs: [
+      //       //@ts-ignore
+      //       { name: "UserName", placeholder: msg2.value },
+      //       //@ts-ignore
+      //       { name: "PhoneNumber", placeholder: msg3.value, value: "+" + this.country_code + this.phone },
+      //       //@ts-ignore
+      //       { name: "BusinessName", placeholder: msg4.value },
+      //       //@ts-ignore
+      //       { name: "BusinessType", placeholder: msg5.value },
+      //       //@ts-ignore
+      //       { name: "Email", placeholder: msg8.value },
+      //     ],
+      //     buttons: [
+      //       {
+      //         // @ts-ignore
+      //         text: msg6.value,
+      //         handler: data => {
+      //           console.log("Cancel clicked");
+      //         },
+      //       },
+      //       {
+      //         //@ts-ignore
+      //         text: msg7.value,
+      //         handler: data => {
+      //           if (
+      //             data.UserName == null ||
+      //             data.UserName == "" ||
+      //             data.UserName == undefined ||
+      //             data.BusinessName == null ||
+      //             data.BusinessName == "" ||
+      //             data.BusinessName == undefined ||
+      //             data.BusinessType == null ||
+      //             data.BusinessType == "" ||
+      //             data.BusinessType == undefined ||
+      //             data.Email == null ||
+      //             data.Email == "" ||
+      //             data.Email == undefined
+      //           ) {
+      //             this.toastCtrl
+      //               .create({
+      //                 //@ts-ignore
+      //                 message: msg9.value,
+      //                 duration: 5000,
+      //               })
+      //               .present();
+      //           } else {
+      //             this.newaccOwnName = data.UserName;
+      //             this.newaccBName = data.BusinessName;
+      //             this.newaccBType = data.BusinessType;
+      //             this.newaccemail = data.Email;
+      //             this.createAccount();
+      //           }
+      //         },
+      //       },
+      //     ],
+      //   })
+      //   .present();
+    // } else {
+    //   console.log("flag!=1");
+      
+    // }
   }
 
+  submitSignUp(){
+    //if all are filled
+    //this.newaccetcetc then this.createAccount();
+  }
+  otpnum: any;
+
+  backToLogin(){
+    this.otpmode=0;
+    this.signup=0;
+  }
+
+  async otpFn(){
+    let confirmationResult=this.confirmres;
+    let flag=0;
+    await confirmationResult
+    .confirm(this.otpnum)
+    .then(async (result) =>{
+      // User signed in successfully.
+      console.log(result.user);
+      flag = 1;
+      // ...
+    })
+    .catch((error) =>{
+      // User couldn't sign in (bad verification code?)
+      // ...
+      console.log(error);
+      this.toastCtrl
+        .create({
+          message: error,
+          duration: 2000,
+        })
+        .present();
+    })
+    .finally(() => {
+      if (flag == 1) {
+        this.checkifexist();
+      }
+    });
+  }
+
+  confirmres:any;
   async signInPhone() {
     if (this.phone == null || this.country_code == null) {
       console.log("hi");
@@ -510,6 +583,9 @@ export class LoginPage {
         .auth()
         .signInWithPhoneNumber(phoneNumber, appVerifier)
         .then(confirmationResult => {
+          this.otpmode=1;
+
+          this.confirmres=confirmationResult;
           // SMS sent. Prompt user to type the code from the message, then sign the
           // user in with confirmationResult.confirm(code).
 
@@ -539,13 +615,13 @@ export class LoginPage {
                 handler: async data => {
                   await confirmationResult
                     .confirm(data.confirmationCode)
-                    .then(async function(result) {
+                    .then(async (result) =>{
                       // User signed in successfully.
                       console.log(result.user);
                       flag = 1;
                       // ...
                     })
-                    .catch(function(error) {
+                    .catch((error) =>{
                       // User couldn't sign in (bad verification code?)
                       // ...
                       console.log(error);
@@ -565,7 +641,7 @@ export class LoginPage {
               },
             ],
           });
-          prompt.present();
+          //prompt.present();
           console.log(confirmationResult);
         })
         .catch(error => {
