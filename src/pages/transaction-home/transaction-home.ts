@@ -42,7 +42,7 @@ export class TransactionHomePage {
   IncomeTransactions = IncomeTransactionPage;
   //ExpenseTransactions = ExpenseTransactionPage;
   ExpenseTransactions = TransactionProductPage;
-  
+
   Accounts = SummaryGraphsPage;
 
   //Calculator = CalculatorPage;

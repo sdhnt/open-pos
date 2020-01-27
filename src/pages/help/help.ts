@@ -34,7 +34,6 @@ export class HelpPage {
     this.getCoach();
   }
 
-  
   getCoach() {
     //console.log(this.listCat + " and "+this.newprodCat);
     this.sp.storageReady().then(() => {
@@ -44,7 +43,7 @@ export class HelpPage {
           this.data = JSON.parse(val);
           //console.log("Addprodpg: "+this.listCat)
           //this.getCategories();
-          console.log(this.data)
+          console.log(this.data);
         })
         .catch(err => {
           alert("Error: " + err);
@@ -52,13 +51,12 @@ export class HelpPage {
     });
   }
 
-
   openVidVal = -1;
 
-  openVid(i:number){
-    if(i==this.openVidVal){
+  openVid(i: number) {
+    if (i == this.openVidVal) {
       this.openVidVal = -1;
-    } else{
+    } else {
       this.openVidVal = i;
     }
   }

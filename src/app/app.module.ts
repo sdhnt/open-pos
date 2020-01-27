@@ -37,6 +37,8 @@ import { SingleProductPage } from "../pages/singleproduct/singleproduct";
 import { SingleProductPageModule } from "../pages/singleproduct/singleproduct.module";
 import { AllTransactionPage } from "../pages/all-transaction/all-transaction";
 import { AllTransactionPageModule } from "../pages/all-transaction/all-transaction.module";
+import { TransactionProductPageModule } from "../pages/transaction-product/transaction-product.module";
+import { TransactionProductPage } from "../pages/transaction-product/transaction-product";
 
 const config = {
   apiKey: "AIzaSyBlxUkCX8OPsb9QL2p_jN8vaHdb5LhsS7A",
@@ -64,8 +66,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoginPageModule,
     SignUpPageModule,
     TransactionHomePageModule,
-    AllTransactionPageModule,
-    DashboardPageModule,
+    TransactionProductPageModule,
     AddProductPageModule,
     SingleProductPageModule,
     ReactiveFormsModule,
@@ -84,10 +85,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoginPage,
     SignUpPage,
     TransactionHomePage,
-    AllTransactionPage,
-    DashboardPage,
-    AddProductPage,
+    TransactionProductPage,
     SingleProductPage,
+    AddProductPage,
   ],
   providers: [
     StatusBar,

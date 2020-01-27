@@ -98,12 +98,12 @@ export class AddProductPage {
 
   image: any = "";
 
-  askCamera(){
+  askCamera() {
     const options: CameraOptions = {
       quality: 20,
-      //sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      sourceType: this.camera.PictureSourceType.CAMERA,
       destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
+      encodingType: this.camera.EncodingType.PNG,
       mediaType: this.camera.MediaType.PICTURE,
       correctOrientation: true,
       targetHeight: 300,
@@ -114,32 +114,32 @@ export class AddProductPage {
       quality: 20,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
+      encodingType: this.camera.EncodingType.PNG,
       mediaType: this.camera.MediaType.PICTURE,
       correctOrientation: true,
       targetHeight: 300,
       targetWidth: 300,
       allowEdit: false,
     };
-    this.alertCtrl.create({
-      message: "Gallery or Camera?",
-      buttons: [
-        {
-
-          text: "Camera",
-          handler: ()=>{
-            this.launchCamera(options)
-          }
-        },
-        {
-
-          text: "Gallery",
-          handler: ()=>{
-            this.launchCamera(options1)
-          }
-        },
-      ]
-    }).present();
+    this.alertCtrl
+      .create({
+        message: "Gallery or Camera?",
+        buttons: [
+          {
+            text: "Camera",
+            handler: () => {
+              this.launchCamera(options);
+            },
+          },
+          {
+            text: "Gallery",
+            handler: () => {
+              this.launchCamera(options1);
+            },
+          },
+        ],
+      })
+      .present();
   }
   launchCamera(options) {
     // const options: CameraOptions = {
@@ -269,7 +269,7 @@ export class AddProductPage {
     } else {
       //old
       if (this.prodCode == "" || this.prodCode == null || this.prodCode == undefined) {
-        this.prodCode = Math.round(Math.random() * 10000000000).toString();
+        this.prodCode = Math.round(Math.random() * 10000000).toString();
         console.log("No Code ::" + this.prodCode);
       }
 
@@ -328,6 +328,7 @@ export class AddProductPage {
             toast.present();
             toast.onDidDismiss(() => {
               const msg = this.translateConfigService.getTranslatedMessage("Refresh page to see changes");
+              this.events.publish("productUpdate:created",0);
               this.toastCtrl
                 .create({
                   //@ts-ignore

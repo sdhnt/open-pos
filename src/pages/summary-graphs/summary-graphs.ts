@@ -1,5 +1,14 @@
 import { Component, ViewChild, ElementRef, NgZone } from "@angular/core";
-import { IonicPage, NavController, NavParams, Events, ToastController, AlertController, LoadingController, Tabs } from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  Events,
+  ToastController,
+  AlertController,
+  LoadingController,
+  Tabs,
+} from "ionic-angular";
 import { Chart } from "chart.js";
 import { StorageProvider } from "../../providers/storage/storage";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
@@ -26,15 +35,18 @@ export class SummaryGraphsPage {
   private barChart: Chart;
   private lineChart: Chart;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public sp: StorageProvider, 
-    public events:Events,
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public sp: StorageProvider,
+    public events: Events,
     private translateConfigService: TranslateConfigService,
     public toastCtrl: ToastController,
     public zone: NgZone,
     private alertCtrl: AlertController,
     private printer: PrinterProvider,
     private loadCtrl: LoadingController,
-    ) {
+  ) {
     //this.getSummary();
     this.events.subscribe("ViewRecs", data => {
       (this.navCtrl.parent as Tabs).select(2);
@@ -44,7 +56,6 @@ export class SummaryGraphsPage {
     //this.setvalues();
   }
 
-  
   expanded = true;
   tstoday = 0;
   tsmonth = 0;
@@ -112,8 +123,8 @@ export class SummaryGraphsPage {
     this.netcashmonth = 0;
     this.netcashlast30 = 0;
     this.group = "today";
-    this.isgraph=0;
-    this.islist=1;
+    this.isgraph = 0;
+    this.islist = 1;
     //this.getSummary();
     //this.setvalues()
     this.tstoday = 0;
@@ -127,7 +138,6 @@ export class SummaryGraphsPage {
     //this.getUserData();
   }
 
-  
   currentdatetime = Date.now();
   netcashtoday = 0;
   netcashweek = 0;
@@ -152,7 +162,6 @@ export class SummaryGraphsPage {
   listtransacrev: any;
   totalsaletoday = 0;
   getTransac() {
-
     this.rev = 0;
     this.exp = 0;
     this.pro = 0;
@@ -164,7 +173,6 @@ export class SummaryGraphsPage {
       this.sp
         .getTransactions()
         .then(val => {
-
           this.listtransac = JSON.parse(val);
           this.setvalues();
           this.listtransac.forEach(element => {
@@ -489,24 +497,22 @@ export class SummaryGraphsPage {
     );
   }
 
-  toggleGL(){
-    if(this.isgraph==1){
-    this.isgraph=0;
-    this.islist=1;}
-    else{
-    this.isgraph=1;
-    this.islist=1;
+  toggleGL() {
+    if (this.isgraph == 1) {
+      this.isgraph = 0;
+      this.islist = 1;
+    } else {
+      this.isgraph = 1;
+      this.islist = 1;
     }
   }
-  toggleList(){
-    if(this.islist==1){
-      this.isgraph=1;
-      this.islist=0;
-    }
-   
-    else{
-    this.islist=1
-    this.isgraph=0;
+  toggleList() {
+    if (this.islist == 1) {
+      this.isgraph = 1;
+      this.islist = 0;
+    } else {
+      this.islist = 1;
+      this.isgraph = 0;
     }
   }
 
@@ -552,7 +558,6 @@ export class SummaryGraphsPage {
     });
   }
 
-  
   setvalues() {
     this.rev = 0;
     this.exp = 0;
@@ -613,7 +618,7 @@ export class SummaryGraphsPage {
     //console.log(temp);
     const temp1 = temp;
 
-    const t = temp.getDate().toString() + "/" + (temp.getMonth() + 1).toString() + " "+ (this.getTime(temp).toString());
+    const t = temp.getDate().toString() + "/" + (temp.getMonth() + 1).toString() + " " + this.getTime(temp).toString();
     return t;
     //if any hours or mins <0 then need to add 0 4 use cases
   }
@@ -657,8 +662,8 @@ export class SummaryGraphsPage {
     }
   }
 
-  isgraph=0;
-  islist=0;
+  isgraph = 0;
+  islist = 0;
 
   getMinutes(datetime) {
     const temp = new Date(datetime);
@@ -670,10 +675,8 @@ export class SummaryGraphsPage {
     }
   }
 
-  ngOnInit() {
-
-  }
-  netcash=0;
+  ngOnInit() {}
+  netcash = 0;
 
   generateGraphs() {
     this.barChart = new Chart(this.barCanvas.nativeElement, {

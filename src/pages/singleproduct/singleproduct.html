@@ -30,7 +30,7 @@
         </ion-item> -->
         
       <ion-item>
-        <button ion-button (click)="launchCamera()">{{'Take Picture' | translate}}</button>
+        <button ion-button (click)="askCamera()">{{'Take Picture' | translate}}</button>
         <img *ngIf="image!=null" [src]="image" style="width: 100px;">
       </ion-item>
       <button ion-button block color="primary" (click)="scanQR()">{{'Scan Barcode'| translate}}</button>

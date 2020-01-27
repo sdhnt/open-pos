@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { NavController, NavParams, Tabs, ModalController, Events } from "ionic-angular";
+import { NavController, NavParams, Tabs, ModalController, Events, AlertController } from "ionic-angular";
 import { BarcodeScanner } from "@ionic-native/barcode-scanner";
 import { StorageProvider } from "../../providers/storage/storage";
 import { ToastController } from "ionic-angular";
@@ -46,6 +46,7 @@ export class SingleProductPage {
     public navCtrl: NavController,
     private translateConfigService: TranslateConfigService,
     public barcodeScanner: BarcodeScanner,
+    public alertCtrl: AlertController,
     public navParams: NavParams,
     public sp: StorageProvider,
     private toastCtrl: ToastController,
@@ -121,18 +122,61 @@ export class SingleProductPage {
     });
   }
   image: any = "";
-  launchCamera() {
+  askCamera() {
     const options: CameraOptions = {
       quality: 20,
-      //sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      sourceType: this.camera.PictureSourceType.CAMERA,
       destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
+      encodingType: this.camera.EncodingType.PNG,
       mediaType: this.camera.MediaType.PICTURE,
       correctOrientation: true,
       targetHeight: 300,
       targetWidth: 300,
       allowEdit: false,
     };
+    const options1: CameraOptions = {
+      quality: 20,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.PNG,
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
+      targetHeight: 300,
+      targetWidth: 300,
+      allowEdit: false,
+    };
+    this.alertCtrl
+      .create({
+        message: "Gallery or Camera?",
+        buttons: [
+          {
+            text: "Camera",
+            handler: () => {
+              this.launchCamera(options);
+            },
+          },
+          {
+            text: "Gallery",
+            handler: () => {
+              this.launchCamera(options1);
+            },
+          },
+        ],
+      })
+      .present();
+  }
+  launchCamera(options) {
+    // const options: CameraOptions = {
+    //   quality: 20,
+    //   //sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+    //   destinationType: this.camera.DestinationType.DATA_URL,
+    //   encodingType: this.camera.EncodingType.JPEG,
+    //   mediaType: this.camera.MediaType.PICTURE,
+    //   correctOrientation: true,
+    //   targetHeight: 300,
+    //   targetWidth: 300,
+    //   allowEdit: false,
+    // };
     this.camera
       .getPicture(options)
       .then(base64Image => {

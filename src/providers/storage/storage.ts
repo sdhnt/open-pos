@@ -44,32 +44,32 @@ export class StorageProvider {
           this.storage.get("transactions").then(valNulltransac => {
             this.storage.get("user").then(valNulluser => {
               this.storage.get("summary").then(valNullSummary => {
-                this.storage.get("coach").then((valNullCoach) =>{
-                // console.log("b4set");
-                // console.log(JSON.stringify(this.tempcat));
-                // console.log(JSON.stringify(this.tempprod));
-                // console.log(JSON.stringify(this.temptransac))  ;
-                this.storage.set("categories", "[]").then(() => {
-                  this.storage.set("categories", JSON.stringify(this.tempcat));
-                });
-                this.storage.set("products", "[]").then(() => {
-                  this.storage.set("products", JSON.stringify(this.tempprod));
-                });
-                this.storage.set("transactions", "[]").then(() => {
-                  this.storage.set("transactions", JSON.stringify(this.temptransac));
-                });
-                this.storage.set("user", "[]").then(() => {
-                  this.storage.set("user", JSON.stringify(this.tempuser));
-                });
-                this.storage.set("summary", "[]").then(() => {
-                  this.storage.set("summary", JSON.stringify(this.tempsummary));
-                  //console.log(JSON.stringify(this.tempsummary));
-                });
-                this.storage.set("coach","[]").then(()=>{
-                  this.storage.set("coach",JSON.stringify(this.tempcoach));
-                  console.log(JSON.stringify(this.tempcoach));
-                });
-                resolve();
+                this.storage.get("coach").then(valNullCoach => {
+                  // console.log("b4set");
+                  // console.log(JSON.stringify(this.tempcat));
+                  // console.log(JSON.stringify(this.tempprod));
+                  // console.log(JSON.stringify(this.temptransac))  ;
+                  this.storage.set("categories", "[]").then(() => {
+                    this.storage.set("categories", JSON.stringify(this.tempcat));
+                  });
+                  this.storage.set("products", "[]").then(() => {
+                    this.storage.set("products", JSON.stringify(this.tempprod));
+                  });
+                  this.storage.set("transactions", "[]").then(() => {
+                    this.storage.set("transactions", JSON.stringify(this.temptransac));
+                  });
+                  this.storage.set("user", "[]").then(() => {
+                    this.storage.set("user", JSON.stringify(this.tempuser));
+                  });
+                  this.storage.set("summary", "[]").then(() => {
+                    this.storage.set("summary", JSON.stringify(this.tempsummary));
+                    //console.log(JSON.stringify(this.tempsummary));
+                  });
+                  this.storage.set("coach", "[]").then(() => {
+                    this.storage.set("coach", JSON.stringify(this.tempcoach));
+                    console.log(JSON.stringify(this.tempcoach));
+                  });
+                  resolve();
                 });
               });
             });
@@ -148,38 +148,35 @@ export class StorageProvider {
     });
   }
 
-  setcoach(){
-
+  setcoach() {
     return new Promise((resolve, reject) => {
       this.storage.ready().then(async () => {
-        let tempvid=[]
-       await  firebase
-       .firestore()
-        .collection("tutorial")
-       .get()
-       .then(doc => {
-        //console.log(doc)
-        doc.docs.forEach(element => {
-          console.log(element);
-        
-          element.data().video.forEach(element2 => {
-            element2.language=element.id;
+        const tempvid = [];
+        await firebase
+          .firestore()
+          .collection("tutorial")
+          .get()
+          .then(doc => {
+            //console.log(doc)
+            doc.docs.forEach(element => {
+              console.log(element);
+
+              element.data().video.forEach(element2 => {
+                element2.language = element.id;
                 tempvid.push(element2);
+              });
+              //tempvid = element.data().video;
             });
-          //tempvid = element.data().video;
-          
-        });
-      });
-      this.tempcoach = {
-        video: tempvid,
-      };
-      resolve();
+          });
+        this.tempcoach = {
+          video: tempvid,
+        };
+        resolve();
       });
     });
-
   }
 
-  async getCoach(){
+  async getCoach() {
     return await this.storage.get("coach");
   }
 

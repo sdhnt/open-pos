@@ -64,7 +64,7 @@
     <name>Open POS</name>
     <description>Free POS Application</description>
     <author email="openfintechapp@gmail.com" href="openfinance.app">Open Financial Technology</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://localhost:8100" />
     <allow-navigation href="*" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -74,6 +74,7 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <allow-navigation href="http://localhost:8101" sessionid="1b7a093e" />
+    <allow-navigation href="http://localhost:8100" sessionid="831fc1dd" />
     <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application" xmlns:android="http://schemas.android.com/apk/res/android">
         <application android:networkSecurityConfig="@xml/network_security_config" />
         <application android:usesCleartextTraffic="true" />
