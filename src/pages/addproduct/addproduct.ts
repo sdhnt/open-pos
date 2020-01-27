@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { NavController, NavParams, Tabs, Events } from "ionic-angular";
+import { NavController, NavParams, Tabs, Events, AlertController } from "ionic-angular";
 import { BarcodeScanner } from "@ionic-native/barcode-scanner";
 import { StorageProvider } from "../../providers/storage/storage";
 import { ToastController } from "ionic-angular";
@@ -36,6 +36,7 @@ export class AddProductPage {
     public toastCtrl: ToastController,
     public events: Events,
     public camera: Camera,
+    public alertCtrl: AlertController,
     private formBuilder: FormBuilder,
   ) {
     this.isProdCode000000 = false;
@@ -97,7 +98,7 @@ export class AddProductPage {
 
   image: any = "";
 
-  launchCamera() {
+  askCamera(){
     const options: CameraOptions = {
       quality: 20,
       //sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
@@ -109,6 +110,49 @@ export class AddProductPage {
       targetWidth: 300,
       allowEdit: false,
     };
+    const options1: CameraOptions = {
+      quality: 20,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
+      targetHeight: 300,
+      targetWidth: 300,
+      allowEdit: false,
+    };
+    this.alertCtrl.create({
+      message: "Gallery or Camera?",
+      buttons: [
+        {
+
+          text: "Camera",
+          handler: ()=>{
+            this.launchCamera(options)
+          }
+        },
+        {
+
+          text: "Gallery",
+          handler: ()=>{
+            this.launchCamera(options1)
+          }
+        },
+      ]
+    }).present();
+  }
+  launchCamera(options) {
+    // const options: CameraOptions = {
+    //   quality: 20,
+    //   //sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+    //   destinationType: this.camera.DestinationType.DATA_URL,
+    //   encodingType: this.camera.EncodingType.JPEG,
+    //   mediaType: this.camera.MediaType.PICTURE,
+    //   correctOrientation: true,
+    //   targetHeight: 300,
+    //   targetWidth: 300,
+    //   allowEdit: false,
+    // };
     this.camera
       .getPicture(options)
       .then(base64Image => {

@@ -6,7 +6,7 @@
 -->
 <div class="modal">
   <ion-header>
-    <ion-navbar>
+    <ion-navbar color="dark">
       <h4 style="padding-left: 10px;">{{"Info"|translate}}</h4>
       <ion-buttons end>
         <button ion-button style="background-color: red; color: white" (click)="close()">{{"Close"|translate}}</button>
@@ -15,31 +15,36 @@
   </ion-header>
 
   <ion-content padding>
-    <h2>{{ data.page }}</h2>
+    <!-- <h2>{{ data.page }}</h2>
     <br>
     <div *ngFor="let item of data.text">
       <h4>{{item.heading}}</h4>
       <p>{{item.content}}</p>
-    </div>
-
+    </div> -->
+    <div *ngIf="data!=null && data!=undefined">
     <div *ngFor="let item of data.video; let i = index">
+      <div *ngIf="item.language==translateConfigService.getCurrentLanguage();">
       <ion-row (click) = "openVid(i)">
         <ion-col col-8><h4>{{item.heading}}</h4></ion-col>
         <ion-col col-2><ion-icon name="videocam"></ion-icon></ion-col>
         <ion-col col-2 *ngIf="i!=openVidVal"><ion-icon name="arrow-dropdown"></ion-icon></ion-col>
         <ion-col col-2 *ngIf="i==openVidVal"><ion-icon name="arrow-dropup"></ion-icon></ion-col>
       </ion-row>
-      <iframe width="300" height="315" [src]="secureLink(item.url)" frameborder="0" allowfullscreen [hidden]="i!=openVidVal"></iframe>
+      <div *ngIf="i==openVidVal">
+      <iframe width="300" height="300" [src]="secureLink(item.url)" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+       </div>
       <br>
       <br>
     </div>
+    </div>
+  </div>
 
 
 
     <!-- <iframe width="100%" height="315" src="https://www.youtube.com/embed/AwtlNWeE8wY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
   </ion-content> <!--for [src] use the secureLink() function with link as param-->
 
-  <ion-footer style="padding-left: 3px; padding-right: 3px;">
+  <!-- <ion-footer style="padding-left: 3px; padding-right: 3px;">
     <button ion-button block color="dark" (click)="navigate()">{{"More Coach"|translate}}</button>
-  </ion-footer>
+  </ion-footer> -->
 </div>

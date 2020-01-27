@@ -2,6 +2,8 @@ import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams, ViewController, App } from "ionic-angular";
 import { CoachHomePage } from "../coach-home/coach-home";
 import { DomSanitizer } from "@angular/platform-browser";
+import { StorageProvider } from "../../providers/storage/storage";
+import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 
 /**
  * Generated class for the HelpPage page.
@@ -25,9 +27,31 @@ export class HelpPage {
     private view: ViewController,
     private dom: DomSanitizer,
     private app: App,
+    private sp: StorageProvider,
+    private translateConfigService: TranslateConfigService,
   ) {
-    this.data = this.navParams.get("data");
+    //this.data = this.navParams.get("data");
+    this.getCoach();
   }
+
+  
+  getCoach() {
+    //console.log(this.listCat + " and "+this.newprodCat);
+    this.sp.storageReady().then(() => {
+      this.sp
+        .getCoach()
+        .then(val => {
+          this.data = JSON.parse(val);
+          //console.log("Addprodpg: "+this.listCat)
+          //this.getCategories();
+          console.log(this.data)
+        })
+        .catch(err => {
+          alert("Error: " + err);
+        });
+    });
+  }
+
 
   openVidVal = -1;
 

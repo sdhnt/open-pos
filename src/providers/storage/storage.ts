@@ -44,6 +44,7 @@ export class StorageProvider {
           this.storage.get("transactions").then(valNulltransac => {
             this.storage.get("user").then(valNulluser => {
               this.storage.get("summary").then(valNullSummary => {
+                this.storage.get("coach").then((valNullCoach) =>{
                 // console.log("b4set");
                 // console.log(JSON.stringify(this.tempcat));
                 // console.log(JSON.stringify(this.tempprod));
@@ -62,9 +63,14 @@ export class StorageProvider {
                 });
                 this.storage.set("summary", "[]").then(() => {
                   this.storage.set("summary", JSON.stringify(this.tempsummary));
-                  console.log(JSON.stringify(this.tempsummary));
+                  //console.log(JSON.stringify(this.tempsummary));
+                });
+                this.storage.set("coach","[]").then(()=>{
+                  this.storage.set("coach",JSON.stringify(this.tempcoach));
+                  console.log(JSON.stringify(this.tempcoach));
                 });
                 resolve();
+                });
               });
             });
           });
@@ -97,7 +103,7 @@ export class StorageProvider {
             if (usdat.businessPerformance == null) {
               tempsummary = [];
               for (let i = 0; i <= 30; i++) {
-                tempsummary.push({ expenses: 0, revenue: 0, profit: 0, },);
+                tempsummary.push({ expenses: 0, revenue: 0, profit: 0 });
               }
             } else {
               tempsummary = usdat.businessPerformance;
@@ -135,9 +141,46 @@ export class StorageProvider {
       // console.log(JSON.stringify(tempprod));
       // console.log(JSON.stringify(temptransac))  ;
 
+      await this.setcoach();
+
       await this.saveinMem();
       return await (this.uid != null);
     });
+  }
+
+  setcoach(){
+
+    return new Promise((resolve, reject) => {
+      this.storage.ready().then(async () => {
+        let tempvid=[]
+       await  firebase
+       .firestore()
+        .collection("tutorial")
+       .get()
+       .then(doc => {
+        //console.log(doc)
+        doc.docs.forEach(element => {
+          console.log(element);
+        
+          element.data().video.forEach(element2 => {
+            element2.language=element.id;
+                tempvid.push(element2);
+            });
+          //tempvid = element.data().video;
+          
+        });
+      });
+      this.tempcoach = {
+        video: tempvid,
+      };
+      resolve();
+      });
+    });
+
+  }
+
+  async getCoach(){
+    return await this.storage.get("coach");
   }
 
   backupStorage() {

@@ -21,6 +21,7 @@ import { TranslateConfigService } from "../../providers/translation/translate-co
 import { LoginPage } from "../login/login";
 import { ContactUsPage } from "../contact-us/contact-us";
 import { text } from "@angular/core/src/render3/instructions";
+import { SummaryGraphsPage } from "../summary-graphs/summary-graphs";
 
 /**
  * Generated class for the TransactionHomePage page.
@@ -41,6 +42,8 @@ export class TransactionHomePage {
   IncomeTransactions = IncomeTransactionPage;
   //ExpenseTransactions = ExpenseTransactionPage;
   ExpenseTransactions = TransactionProductPage;
+  
+  Accounts = SummaryGraphsPage;
 
   //Calculator = CalculatorPage;
 
@@ -120,10 +123,10 @@ export class TransactionHomePage {
     });
   }
 
-  openCalc() {
-    //this.navCtrl.push(CalculatorPage);
-    this.tabRef.select(3);
-  }
+  // openCalc() {
+  //   //this.navCtrl.push(CalculatorPage);
+  //   this.tabRef.select(3);
+  // }
 
   uploadbtn() {
     this.sp.backupStorage();
@@ -133,7 +136,6 @@ export class TransactionHomePage {
         title: "Backup",
         subTitle:
           "This feature allows you to backup your data to the cloud so that you can restore in-case your app crashes or phone is damaged.",
-        message: "backing up online...",
         buttons: [{ text: "OK", role: "cancel" }],
       })
       .present();
@@ -260,44 +262,44 @@ export class TransactionHomePage {
   }
 
   help() {
-    const msg = this.translateConfigService.getTranslatedMessage("Create New Sales");
+    // const msg = this.translateConfigService.getTranslatedMessage("Create New Sales");
 
-    const temptxt = [];
-    let tempvid = [];
+    // const temptxt = [];
+    // let tempvid = [];
 
-    firebase
-      .firestore()
-      .collection("tutorial")
-      .get()
-      .then(doc => {
-        //console.log(doc)
-        doc.docs.forEach(element => {
-          console.log(element);
-          if (element.id == this.userdata.language) {
-            element.data().text.forEach(element1 => {
-              if (element1.page == "Sale") {
-                temptxt.push(element1);
-              }
-            });
+    // firebase
+    //   .firestore()
+    //   .collection("tutorial")
+    //   .get()
+    //   .then(doc => {
+    //     //console.log(doc)
+    //     doc.docs.forEach(element => {
+    //       console.log(element);
+    //       if (element.id == this.userdata.language) {
+    //         element.data().text.forEach(element1 => {
+    //           if (element1.page == "Sale") {
+    //             temptxt.push(element1);
+    //           }
+    //         });
 
-            element.data().video.forEach(element2 => {
-              if (element2.page == "Sale") {
-                tempvid.push(element2);
-              }
-            });
-            tempvid = element.data().video;
-          }
-        });
-      });
+    //         element.data().video.forEach(element2 => {
+    //           if (element2.page == "Sale") {
+    //             tempvid.push(element2);
+    //           }
+    //         });
+    //         tempvid = element.data().video;
+    //       }
+    //     });
+    //   });
 
-    const passedData = {
-      //youtube link, required text
-      //@ts-ignore
-      page: msg.value,
-      text: temptxt,
-      video: tempvid,
-    };
-    const helpModal = this.modal.create("HelpPage", { data: passedData });
+    // const passedData = {
+    //   //youtube link, required text
+    //   //@ts-ignore
+    //   page: msg.value,
+    //   text: temptxt,
+    //   video: tempvid,
+    // };
+    const helpModal = this.modal.create("HelpPage");
     helpModal.present();
   }
 

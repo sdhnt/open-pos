@@ -49,8 +49,8 @@ export class MyApp {
       { title: "Home", component: TransactionHomePage },
       //  { title: "View/Edit Products", component: DashboardPage },
       // { title: "Update Stock/Expenses", component: ExpenseTransactionPage },
-      { title: "Business Performance", component: SummarySummaryPage },
-      { title: "Coach", component: CoachHomePage },
+      // { title: "Business Performance", component: SummarySummaryPage },
+      // { title: "Coach", component: CoachHomePage },
       { title: "Apply for Loan", component: LoanHomePage },
       //{ title: "Contact Us", component: ContactUsPage },
     ];
@@ -138,9 +138,9 @@ export class MyApp {
   onLangChange() {
     this.translateConfigService.setLanguage(this.userLang);
     this.getUserData();
+
     this.nav.setRoot(TransactionHomePage, { lang: this.userLang });
   }
-
   async getUserData() {
     this.sp.storageReady().then(() => {
       this.sp
@@ -152,6 +152,7 @@ export class MyApp {
           this.sp.storageReady().then(() => {
             this.sp.setUserDat(this.userdata).then(() => {
               console.log(this.userdata);
+              //this.sp.setMem();
             });
           });
         })
