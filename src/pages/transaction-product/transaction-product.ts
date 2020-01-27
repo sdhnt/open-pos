@@ -49,12 +49,10 @@ export class TransactionProductPage {
     this.itname = "";
 
     this.events.subscribe("productUpdate:created", async data => {
-
-      this.delay(500).then(()=>{
+      this.delay(500).then(() => {
         this.ionViewDidLoad();
-      console.log("update this page")
-      })
-      
+        console.log("update this page");
+      });
     });
 
     this.events.subscribe("addRecProd:created", data => {
@@ -90,9 +88,7 @@ export class TransactionProductPage {
 
     // this.events.subscribe("cbUpdate:created", async ()=>{
     //   await this.getProducts();
-    // })  
-
-
+    // })
 
     this.events.subscribe("addSingleProd:created", async (data, index, fulldat) => {
       console.log("ENTERED!");
