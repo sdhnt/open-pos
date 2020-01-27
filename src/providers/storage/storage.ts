@@ -94,16 +94,15 @@ export class StorageProvider {
             temptransac = usdat.transactions;
             //.slice(Math.max(usdat.transactions.length - 10, 0))
             tempcat = usdat.categories;
-            if(usdat.businessPerformance==null){
-              tempsummary=[];
-              for(let i=1;i<=29;i++){
-                tempsummary.push({expenses:0,revenue:0,profit:0})
+            if (usdat.businessPerformance == null) {
+              tempsummary = [];
+              for (let i = 0; i <= 30; i++) {
+                tempsummary.push({ expenses: 0, revenue: 0, profit: 0, },);
               }
-
-            }else{
+            } else {
               tempsummary = usdat.businessPerformance;
             }
-            
+
             tempuser = {
               business_address: usdat.business_address,
               business_name: usdat.business_name,

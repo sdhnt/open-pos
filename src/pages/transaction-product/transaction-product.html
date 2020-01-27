@@ -27,13 +27,23 @@
  <div *ngIf="showmanual==0">
   <ion-searchbar showCancelButton="always" [(ngModel)]="searchterm" (ionChange)="filteredProduct()"></ion-searchbar>
 
-  <ion-item>
-    <ion-label>{{"Select category"|translate}}</ion-label>
-    <ion-select multiple="true" [(ngModel)]='selectedCat' (ionChange)="filteredProduct()">
-      <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>
-    </ion-select>
-  </ion-item>
-
+  <ion-grid>
+    <ion-row>
+      <ion-col col-8>
+        <ion-item>
+          <ion-label>{{"Select category"|translate}}</ion-label>
+          <ion-select multiple="true" [(ngModel)]='selectedCat' (ionChange)="filteredProduct()">
+            <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-4>
+        <button ion-button small round style="background-color: red;" (click)="buttonReset()">Clear</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+ 
 </div>
 
 
@@ -74,6 +84,7 @@
       </ion-row>
       </ion-grid>
     </ion-card>  -->
+
 
     <ion-card *ngIf="showmanual==1" padding>
      <h2> {{"There is no item with "|translate}} {{price}} {{" price in database. Please type the item name:"|translate}} </h2>

@@ -181,6 +181,10 @@ export class TransactionProductPage {
     this.sp.backupStorage();
   }
 
+  buttonReset() {
+    this.selectedCat = [];
+  }
+
   getCategories() {
     //console.log(this.listCat + " and "+this.newprodCat);
     this.sp.storageReady().then(() => {
