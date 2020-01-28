@@ -57,6 +57,8 @@ export class TransactionHomePage {
     public alertCtrl: AlertController,
     private modal: ModalController,
   ) {
+
+    this.userdata.language= this.translateConfigService.getCurrentLanguage();
     //this.getUserData();
     //this.tutorial();
     if (this.navParams.get("data") == "newUser") {
@@ -80,7 +82,7 @@ export class TransactionHomePage {
 
   async ionViewDidEnter() {
     console.log("ionViewDidLoad TransactionHomePage");
-    if (this.navParams.get("lang") != this.userdata.language) {
+    if (this.navParams.get("lang") != this.userdata.language && this.navParams.get("lang")!=null && this.navParams.get("lang")!=undefined) {
       this.userdata.language = this.navParams.get("lang");
     }
     this.delay(500).then(() => {
@@ -112,11 +114,18 @@ export class TransactionHomePage {
       this.sp.storageReady().then(() => {
         this.sp
           .getUserDat()
-          .then(val => {
+          .then(async val => {
+            if(val){
+
+            
             this.userdata = JSON.parse(val);
             console.log(this.userdata);
             this.setUsrLang();
             resolve();
+          }
+          else{
+            await this.getUserData()
+          }
           })
           .catch(err => {
             alert("Error: " + err);
@@ -133,10 +142,10 @@ export class TransactionHomePage {
   uploadbtn() {
     this.sp.backupStorage();
     const message = this.translateConfigService.getTranslatedMessage("Online backup ready");
-    
+
     const message1 = this.translateConfigService.getTranslatedMessage("Backup Online");
     const message2 = this.translateConfigService.getTranslatedMessage("backupdescrip");
-    
+
     this.alertCtrl
       .create({
         //@ts-ignore
@@ -163,15 +172,15 @@ export class TransactionHomePage {
     const message3 = this.translateConfigService.getTranslatedMessage("Update");
     const message4 = this.translateConfigService.getTranslatedMessage("Cancel");
     const message5 = this.translateConfigService.getTranslatedMessage("OK");
-    const ms=this.translateConfigService.getTranslatedMessage("Cash Balance");
-    const ms1=this.translateConfigService.getTranslatedMessage("cashbalancedescrip");
+    const ms = this.translateConfigService.getTranslatedMessage("Cash Balance");
+    const ms1 = this.translateConfigService.getTranslatedMessage("cashbalancedescrip");
 
     this.alertCtrl
       .create({
         //@ts-ignore
         title: ms.value,
         //@ts-ignore
-        subTitle:ms1.value,
+        subTitle: ms1.value,
         //@ts-ignore
         message: message.value + ": " + this.userdata.cash_balance,
 

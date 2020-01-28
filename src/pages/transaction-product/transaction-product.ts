@@ -226,6 +226,9 @@ export class TransactionProductPage {
       this.sp
         .getProducts()
         .then(val => {
+          if(val){
+
+          
           if (this.event != true) {
             this.listProducts = JSON.parse(val);
             console.log(this.listProducts);
@@ -241,6 +244,9 @@ export class TransactionProductPage {
               this.filteredProduct();
             }
           }
+        }else{
+          this.getProducts();
+        }
         })
         .catch(err => {
           alert("Error: " + err);

@@ -387,12 +387,14 @@ export class LoginPage {
                   text: "OK",
                   handler: () => {
                     //this.sp.clearMem();
-                    this.sp.setMem();
-                    this.navCtrl.setRoot(TransactionHomePage, {
-                      data: "newUser",
-                      lang: this.translateConfigService.getCurrentLanguage(),
-                    }); //navigate to feeds page
-                    this.events.publish("newUser");
+                    this.sp.setMem().then(()=>{
+                      this.navCtrl.setRoot(TransactionHomePage, {
+                        data: "newUser",
+                        lang: this.translateConfigService.getCurrentLanguage(),
+                      }); //navigate to feeds page
+                      this.events.publish("newUser");
+                    });
+                
                   }, //end handler
                 },
               ], //end button
@@ -447,8 +449,8 @@ export class LoginPage {
         } else {
           console.log("loggin you in");
           flag = 0;
-          this.otpmode=0;
-          this.signup=0;
+          this.otpmode = 0;
+          this.signup = 0;
           this.loginProcedure();
         }
       })
@@ -592,7 +594,7 @@ export class LoginPage {
       const phoneNumber = "+" + this.country_code + this.phone;
       const appVerifier = this.applicationVerifier;
 
-      let flag = 0;
+      const flag = 0;
       await firebase
         .auth()
         .signInWithPhoneNumber(phoneNumber, appVerifier)
@@ -654,7 +656,7 @@ export class LoginPage {
           //     },
           //   ],
           // });
-         // prompt.present();
+          // prompt.present();
           console.log(confirmationResult);
         })
         .catch(error => {
@@ -662,7 +664,7 @@ export class LoginPage {
           // ...
           this.toastCtrl
             .create({
-              message: "SMS not sent - please check your internet connection!",
+              message: "SMS not sent" + error,
               duration: 2000,
             })
             .present();
