@@ -8,6 +8,11 @@ admin.initializeApp({
 const db = admin.firestore();
 const { syncArchive } = require("./methods/sync-archive");
 
+const largeRuntimeConfig = {
+  timeoutSeconds: 540,
+  memory: "1GB",
+};
+
 exports.createUserArchive = functions.firestore.document("users/{id}").onCreate(async (snap, context) => {
   const newUser = snap.data();
   console.log(`create new user of id: ${context.params.id} in archive`);
@@ -16,21 +21,23 @@ exports.createUserArchive = functions.firestore.document("users/{id}").onCreate(
     .set(newUser);
 });
 
-exports.syncTransactionsAndCalculateBusinessPerforamnce = functions.pubsub
-  .schedule("every day 03:00")
+exports.syncTransactionsAndCalculateBusinessPerforamnce = functions
+  .runWith(largeRuntimeConfig)
+  .pubsub.schedule("every day 03:00")
   .timeZone("Asia/Hong_Kong")
   .onRun(async context => {
     await syncArchive(db, { syncTransactions: true, calculateBusinessPerformance: true });
   });
 
-exports.syncUserCount = functions.pubsub
-  .schedule("every day 03:30")
+exports.syncUserCount = functions
+  .runWith(largeRuntimeConfig)
+  .pubsub.schedule("every day 03:30")
   .timeZone("Asia/Hong_Kong")
   .onRun(async context => {
     await syncArchive(db, { syncUserCount: true });
   });
 
-exports.syncArchiveCallable = functions.https.onRequest(async (req, res) => {
-  await syncArchive(db, { calculateBusinessPerformance: false });
-  res.status(200).send(`request received with limit: 100`);
-});
+// exports.syncArchiveCallable = functions.runWith(largeRuntimeConfig).https.onRequest(async (req, res) => {
+//   await syncArchive(db, { calculateBusinessPerformance: false });
+//   res.status(200).send(`request received with limit: 100`);
+// });
