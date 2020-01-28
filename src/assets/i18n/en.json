@@ -250,7 +250,21 @@
  "For further queries, you can reach us through the Contact Us page":"For further queries, you can reach us through the Contact Us page",
  "Okay":"Okay",
  "Info":"Info/Help",
- "More Coach":"See more video tutorials"
+ "More Coach":"See more video tutorials",
+ "Submit OTP":"Submit OTP",
+"Create Account":"Create Account",
+"Business Area & City":"Business Area & City",
+"Sell":"Sell",
+"Add New Sale":"Add New Sale",
+"Add New Expense":"Add New Expense",
+"View List":"View List",
+"View Graph":"View Graph",
+"Net Cashflow":"Net Cashflow",
+"Interested in borrowing money":"Interested in borrowing money",
+"Home":"Home",
+"You have negative cash":"You have negative cash",
+"cashbalancedescrip":"This number helps you view how much cash your business has currently. When you make a sale, this increases by the sale amount, when you pay an expense it decreases by the payament amount.",
+"backupdescrip": "This feature allows you to backup your data to the cloud so that you can restore in-case your app crashes or phone is damaged."
 
 
 }

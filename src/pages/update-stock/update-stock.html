@@ -7,7 +7,7 @@
 <div class="modal">
   <ion-header>
     <ion-navbar>
-      <ion-title>Update Stock</ion-title>
+      <ion-title>{{"Update Stock"|translate}}</ion-title>
       <ion-buttons end>
         <button ion-button style="background-color: red; color: white;" (click)="dismiss()">Close</button>
       </ion-buttons>
@@ -17,24 +17,24 @@
   <ion-content padding>
     <ion-list>
       <ion-item>
-        Product Name: {{ product.name }}
+        {{"Product Name:"|translate}} {{ product.name }}
       </ion-item>
       <ion-item>
-        <ion-input placeholder="Product Quantity" type="number" [(ngModel)]='prodqty' (ionChange)="updatebalance('prodqty')"></ion-input>
+        <ion-input placeholder="{{'Product Qty'|translate}" type="number" [(ngModel)]='prodqty' (ionChange)="updatebalance('prodqty')"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input placeholder="Purchase Price per Item" type="number" [(ngModel)]='prodcostitem' (ionChange)="updatebalance('prodcostitem')"></ion-input>
+        <ion-input placeholder="{{'Purchase Price per Item'|translate}}" type="number" [(ngModel)]='prodcostitem' (ionChange)="updatebalance('prodcostitem')"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input type="number" placeholder="Total Expenditure" [(ngModel)]='prodcost' (ionChange)="updatebalance('prodcost')"></ion-input>
+        <ion-input type="number" placeholder="{{'Total Expenditure'|translate}" [(ngModel)]='prodcost' (ionChange)="updatebalance('prodcost')"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label>Batch Expiry Date:</ion-label>
+        <ion-label>{{"Batch Expiry Date:"|translate}}</ion-label>
         <ion-datetime displayFormat="DD/MMM/YYYY" [(ngModel)]='expiryDate' [min]="minDate" [max]="maxDate"></ion-datetime>
       </ion-item>
     </ion-list>
   </ion-content>
   <ion-footer padding>
-    <button ion-button block color="primary" (click)="addinventoryexpense()" color="dark">Add Stock</button>
+    <button ion-button block color="primary" (click)="addinventoryexpense()" color="dark">{{"Add Stock"|translate}</button>
   </ion-footer>
 </div>

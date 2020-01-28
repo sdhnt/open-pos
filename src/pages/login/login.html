@@ -76,20 +76,29 @@
 </div>
 </div>
 <div *ngIf="otpmode==1">
-  <button ion-button block clear color="light" style="margin-top: 10px;" >Enter OTP</button>
+  <button ion-button block clear color="light" style="margin-top: 10px;" >{{"Enter the Confirmation code"|translate}}</button>
   <ion-row class="row-style" style="margin-top: 20px;"><ion-input placeholder="Enter OTP here" [(ngModel)]="otpnum"></ion-input></ion-row>
-  <button ion-button ion-button block round outline color="light" style="margin-top: 20px;" (click)="otpFn()">Submit OTP</button>
-  <button ion-button ion-button block round outline color="light" style="margin-top: 20px;" (click)="backToLogin()">Cancel</button>
+  <button ion-button ion-button block round outline color="light" style="margin-top: 20px;" (click)="otpFn()">{{"Submit OTP"|translate}}</button>
+  <button ion-button ion-button block round outline color="light" style="margin-top: 20px;" (click)="backToLogin()">{{"Cancel"|translate}}</button>
 </div>
 
 <div *ngIf="signup==1">
 <ion-grid style="width: 75%;">
-  <button ion-button block clear color="light" style="margin-top: 10px;" >Create an Account</button>
-  <ion-row class="row-style" style="margin-top: 20px;"><ion-input placeholder="Owner/User Name" [(ngModel)]="newaccOwnName"></ion-input></ion-row>
-  <ion-row class="row-style" style="margin-top: 20px;"><ion-input placeholder="Business Name"  [(ngModel)]="newaccBName"></ion-input></ion-row>
-  <ion-row class="row-style" style="margin-top: 20px;"><ion-input placeholder="Business Type"  [(ngModel)]="newaccBType"></ion-input></ion-row>
-  <ion-row class="row-style" style="margin-top: 20px;"><ion-input placeholder="Business Area & City"  [(ngModel)]="newaccBArea"></ion-input></ion-row>
-  <button ion-button ion-button block round outline color="light" style="margin-top: 20px;" (click)="createAccount()">Create Account</button>
+  <button ion-button block clear color="light" style="margin-top: 10px;" >{{"Create Account"|translate}}</button>
+  <ion-row class="row-style" style="margin-top: 20px;"><ion-input placeholder="{{'Owner Name'|translate}}" [(ngModel)]="newaccOwnName"></ion-input></ion-row>
+  <ion-row class="row-style" style="margin-top: 20px;"><ion-input placeholder="{{'Business Name'|translate}}"  [(ngModel)]="newaccBName"></ion-input></ion-row>
+  <ion-row class="row-style" style="margin-top: 20px;"><ion-input placeholder="{{'Business Type'|translate}}"  [(ngModel)]="newaccBType"></ion-input></ion-row>
+  <ion-row class="row-style" style="margin-top: 20px;"><ion-input placeholder="{{'Business Area & City'|translate}}"  [(ngModel)]="newaccBArea"></ion-input></ion-row>
+  <button ion-button ion-button block round outline color="light" style="margin-top: 20px;" (click)="createAccount()">{{"Create Account"|translate}}</button>
+  <ion-row padding>
+
+  </ion-row>
+  <ion-row padding>
+    
+  </ion-row>
+  <ion-row padding>
+    
+  </ion-row>
 </ion-grid>
 </div>
 </ion-content>

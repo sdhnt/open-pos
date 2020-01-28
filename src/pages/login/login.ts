@@ -50,7 +50,7 @@ export class LoginPage {
     private loadingCtrl: LoadingController,
     public events: Events,
   ) {
-    this.loadDropDowns();
+    //this.loadDropDowns();
     this.getInfo();
     this.country_code = "95";
 
@@ -61,7 +61,7 @@ export class LoginPage {
         </div>`,
     });
 
-    firebase.auth().onAuthStateChanged(async (user)=> {
+    firebase.auth().onAuthStateChanged(async user => {
       if (user) {
         //console.log(user);
         loading.present();
@@ -71,7 +71,7 @@ export class LoginPage {
           .collection("users")
           .where("owner", "==", firebase.auth().currentUser.uid)
           .get()
-          .then((querySnapshot) =>{
+          .then(querySnapshot => {
             if (querySnapshot.size == 0) {
               // console.log("Not permitted - this account has not filled their data (Fb Login) or no internet");
               // navCtrl.setRoot(UserProfilePage, {
@@ -134,24 +134,24 @@ export class LoginPage {
 
   language;
 
-  loadDropDowns() {
-    firebase
-      .firestore()
-      .collection("sign-up")
-      .get()
-      .then(doc => {
-        doc.docs[0].data().language.forEach(l => {
-          this.listOfLang.push(l);
-          //console.log(this.listOfLang);
-        });
-      })
-      .catch(error => {
-        this.toastCtrl.create({
-          message: error,
-          duration: 2000,
-        });
-      });
-  }
+  // loadDropDowns() {
+  //   firebase
+  //     .firestore()
+  //     .collection("sign-up")
+  //     .get()
+  //     .then(doc => {
+  //       doc.docs[0].data().language.forEach(l => {
+  //         this.listOfLang.push(l);
+  //         //console.log(this.listOfLang);
+  //       });
+  //     })
+  //     .catch(error => {
+  //       this.toastCtrl.create({
+  //         message: error,
+  //         duration: 2000,
+  //       });
+  //     });
+  // }
 
   // loginWithFB() {
   //   this.facebook
@@ -192,45 +192,45 @@ export class LoginPage {
   // }
   ionViewDidLoad() {
     console.log("ionViewDidLoad LoginPage");
-    this.signup=0;
+    this.signup = 0;
   }
 
   ionViewDidEnter() {
     firebase.auth().useDeviceLanguage();
     this.applicationVerifier = new firebase.auth.RecaptchaVerifier("recaptcha-container", {
       size: "invisible",
-      callback: (response)=> {
+      callback: function(response) {
         // reCAPTCHA solved, allow signInWithPhoneNumber.
-        this.signInPhone();
+        //this.signInPhone();
       },
     });
   }
 
   applicationVerifier;
 
-  login() {
-    firebase
-      .auth()
-      .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-      .then(() => {
-        firebase
-          .auth()
-          .signInWithEmailAndPassword(this.email, this.password)
-          .then(user => {
-            this.loginProcedure();
-          })
-          .catch(err => {
-            console.log(err);
-            this.toastCtrl
-              .create({
-                message: err.message,
-                duration: 3000,
-              })
-              .present();
-          });
-      });
-    //console.log(user)
-  }
+  // login() {
+  //   firebase
+  //     .auth()
+  //     .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+  //     .then(() => {
+  //       firebase
+  //         .auth()
+  //         .signInWithEmailAndPassword(this.email, this.password)
+  //         .then(user => {
+  //           this.loginProcedure();
+  //         })
+  //         .catch(err => {
+  //           console.log(err);
+  //           this.toastCtrl
+  //             .create({
+  //               message: err.message,
+  //               duration: 3000,
+  //             })
+  //             .present();
+  //         });
+  //     });
+  //   //console.log(user)
+  // }
 
   loginAction() {
     const message = this.translateConfigService.getTranslatedMessage("This feature will open shortly");
@@ -293,116 +293,129 @@ export class LoginPage {
   newaccOwnName;
   newaccBName;
   newaccBArea;
-  newaccemail;//
+  newaccemail; //
   newaccBType;
 
   async createAccount() {
-    if((this.newaccBArea!=null && this.newaccBArea!=undefined) &&(this.newaccBName!=null && this.newaccBName!=undefined)
-    && (this.newaccOwnName!=null && this.newaccOwnName!=undefined) &&(this.newaccBType!=null && this.newaccBType!=undefined))
-    {
-    this.toastCtrl.create({
-      message: "Please wait while account is created. This may take a few minutes",
-      duration: 3000,
-    })
-    await firebase
-      .firestore()
-      .collection("users")
-      .add({
-        created: firebase.firestore.FieldValue.serverTimestamp(),
-        owner: firebase.auth().currentUser.uid,
-        owner_name: this.newaccOwnName,
-        business_name: this.newaccBName,
-        businesstype: this.newaccBType,
-        business_address: this.newaccBArea,
-        email: "sample@sample.com",
-        ph_no: "+" + this.country_code + this.phone,
-        language: this.translateConfigService.getCurrentLanguage(),
-        currency: "USD",
-        cash_balance: 0,
-        discount: 0,
-        taxrate: 0,
-        logo_url: "",
-        categories: [{ name: "Example" }],
-        products: [
-          {
-            cat: "Example",
-            code: "0000",
-            cost: "100",
-            name: "Example Product",
-            price: "0",
-            stock_qty: "10",
-            url: "https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y",
-            wholesale_price: "0",
-          },
-        ],
-
-        transactions: [
-          {
-            datetime: new Date(this.datet).getTime(),
-            discount: 0,
-            discountlist: [],
-            itemslist: [
-              {
-                cat: "Example",
-                code: "0000",
-                cost: "0",
-                name: "Example Product",
-                price: "0",
-                stock_qty: "0",
-                qty: 1,
-                discount:0,
-              },
-            ],
-            pnllist: [],
-            prodidlist: [],
-            taxrate: 0,
-            totalatax: 0,
-            totaldisc: 0,
-            totalsum: 0,
-          },
-        ],
-      })
-      .then(async doc => {
-        console.log(doc);
-
-        const title = this.translateConfigService.getTranslatedMessage("Account Created");
-        const message = this.translateConfigService.getTranslatedMessage("Your account has been created successfully");
-        this.alertCtrl
-          .create({
-            // @ts-ignore
-            title: title.value,
-            // @ts-ignore
-            message: message.value,
-            buttons: [
-              {
-                text: "OK",
-                handler: () => {
-                  //this.sp.clearMem();
-                  this.sp.setMem();
-                  this.navCtrl.setRoot(TransactionHomePage, { data: "newUser", lang: this.translateConfigService.getCurrentLanguage() }); //navigate to feeds page
-                  this.events.publish("newUser");
-                }, //end handler
-              },
-            ], //end button
-          })
-          .present();
-      })
-      .catch(err => {
-        console.log(err);
+    if (
+      this.newaccBArea != null &&
+      this.newaccBArea != undefined &&
+      this.newaccBName != null &&
+      this.newaccBName != undefined &&
+      this.newaccOwnName != null &&
+      this.newaccOwnName != undefined &&
+      this.newaccBType != null &&
+      this.newaccBType != undefined
+    ) {
+      this.toastCtrl.create({
+        message: "Please wait while account is created. This may take a few minutes",
+        duration: 3000,
       });
+      await firebase
+        .firestore()
+        .collection("users")
+        .add({
+          created: firebase.firestore.FieldValue.serverTimestamp(),
+          owner: firebase.auth().currentUser.uid,
+          owner_name: this.newaccOwnName,
+          business_name: this.newaccBName,
+          businesstype: this.newaccBType,
+          business_address: this.newaccBArea,
+          email: "sample@sample.com",
+          ph_no: "+" + this.country_code + this.phone,
+          language: this.translateConfigService.getCurrentLanguage(),
+          currency: "USD",
+          cash_balance: 0,
+          discount: 0,
+          taxrate: 0,
+          logo_url: "",
+          categories: [{ name: "Example" }],
+          products: [
+            {
+              cat: "Example",
+              code: "0000",
+              cost: "100",
+              name: "Example Product",
+              price: "0",
+              stock_qty: "10",
+              url: "https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y",
+              wholesale_price: "0",
+            },
+          ],
 
-    console.log("Done");
-  }
-  else{
-    this.toastCtrl.create({
-      message: "Incomplete",
-      duration: 3000,
-    }).present()
-  }
+          transactions: [
+            {
+              datetime: new Date(this.datet).getTime(),
+              discount: 0,
+              discountlist: [],
+              itemslist: [
+                {
+                  cat: "Example",
+                  code: "0000",
+                  cost: "0",
+                  name: "Example Product",
+                  price: "0",
+                  stock_qty: "0",
+                  qty: 1,
+                  discount: 0,
+                },
+              ],
+              pnllist: [],
+              prodidlist: [],
+              taxrate: 0,
+              totalatax: 0,
+              totaldisc: 0,
+              totalsum: 0,
+            },
+          ],
+        })
+        .then(async doc => {
+          console.log(doc);
+
+          const title = this.translateConfigService.getTranslatedMessage("Account Created");
+          const message = this.translateConfigService.getTranslatedMessage(
+            "Your account has been created successfully",
+          );
+          this.alertCtrl
+            .create({
+              // @ts-ignore
+              title: title.value,
+              // @ts-ignore
+              message: message.value,
+              buttons: [
+                {
+                  text: "OK",
+                  handler: () => {
+                    //this.sp.clearMem();
+                    this.sp.setMem();
+                    this.navCtrl.setRoot(TransactionHomePage, {
+                      data: "newUser",
+                      lang: this.translateConfigService.getCurrentLanguage(),
+                    }); //navigate to feeds page
+                    this.events.publish("newUser");
+                  }, //end handler
+                },
+              ], //end button
+            })
+            .present();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+      console.log("Done");
+    } else {
+      this.toastCtrl
+        .create({
+          message: "Incomplete",
+          duration: 3000,
+        })
+        .present();
+    }
   }
 
-  signup=0;
-  otpmode=0;
+  signup = 0;
+  otpmode = 0;
 
   async checkifexist() {
     let flag = 0;
@@ -412,15 +425,15 @@ export class LoginPage {
       .collection("users")
       .where("owner", "==", firebase.auth().currentUser.uid)
       .get()
-      .then(async (querySnapshot)=> {
+      .then(async querySnapshot => {
         if (querySnapshot.size == 0) {
           console.log("Bun");
           flag = 1;
-            this.otpmode=0;
-            this.signup=1;
-            // this.alertCtrl.create({
-            //   message:"Looks like you need to create an account!"
-            // }).present();
+          this.otpmode = 0;
+          this.signup = 1;
+          // this.alertCtrl.create({
+          //   message:"Looks like you need to create an account!"
+          // }).present();
           // const msg = this.translateConfigService.getTranslatedMessage("Sign Up");
           // const msg1 = this.translateConfigService.getTranslatedMessage("Please enter your details to create an account");
           // const msg2 = this.translateConfigService.getTranslatedMessage("Your Name");
@@ -434,6 +447,8 @@ export class LoginPage {
         } else {
           console.log("loggin you in");
           flag = 0;
+          this.otpmode=0;
+          this.signup=0;
           this.loginProcedure();
         }
       })
@@ -441,120 +456,119 @@ export class LoginPage {
         console.log(error);
       });
 
-   // if (flag == 1) {
-    
-      
-      // this.alertCtrl
-      //   .create({
-      //     //@ts-ignore
-      //     title: msg.value,
-      //     //enableBackdropDismiss: false, // <- Here! :)
-      //     //@ts-ignore
-      //     message: msg1.value,
-      //     inputs: [
-      //       //@ts-ignore
-      //       { name: "UserName", placeholder: msg2.value },
-      //       //@ts-ignore
-      //       { name: "PhoneNumber", placeholder: msg3.value, value: "+" + this.country_code + this.phone },
-      //       //@ts-ignore
-      //       { name: "BusinessName", placeholder: msg4.value },
-      //       //@ts-ignore
-      //       { name: "BusinessType", placeholder: msg5.value },
-      //       //@ts-ignore
-      //       { name: "Email", placeholder: msg8.value },
-      //     ],
-      //     buttons: [
-      //       {
-      //         // @ts-ignore
-      //         text: msg6.value,
-      //         handler: data => {
-      //           console.log("Cancel clicked");
-      //         },
-      //       },
-      //       {
-      //         //@ts-ignore
-      //         text: msg7.value,
-      //         handler: data => {
-      //           if (
-      //             data.UserName == null ||
-      //             data.UserName == "" ||
-      //             data.UserName == undefined ||
-      //             data.BusinessName == null ||
-      //             data.BusinessName == "" ||
-      //             data.BusinessName == undefined ||
-      //             data.BusinessType == null ||
-      //             data.BusinessType == "" ||
-      //             data.BusinessType == undefined ||
-      //             data.Email == null ||
-      //             data.Email == "" ||
-      //             data.Email == undefined
-      //           ) {
-      //             this.toastCtrl
-      //               .create({
-      //                 //@ts-ignore
-      //                 message: msg9.value,
-      //                 duration: 5000,
-      //               })
-      //               .present();
-      //           } else {
-      //             this.newaccOwnName = data.UserName;
-      //             this.newaccBName = data.BusinessName;
-      //             this.newaccBType = data.BusinessType;
-      //             this.newaccemail = data.Email;
-      //             this.createAccount();
-      //           }
-      //         },
-      //       },
-      //     ],
-      //   })
-      //   .present();
+    // if (flag == 1) {
+
+    // this.alertCtrl
+    //   .create({
+    //     //@ts-ignore
+    //     title: msg.value,
+    //     //enableBackdropDismiss: false, // <- Here! :)
+    //     //@ts-ignore
+    //     message: msg1.value,
+    //     inputs: [
+    //       //@ts-ignore
+    //       { name: "UserName", placeholder: msg2.value },
+    //       //@ts-ignore
+    //       { name: "PhoneNumber", placeholder: msg3.value, value: "+" + this.country_code + this.phone },
+    //       //@ts-ignore
+    //       { name: "BusinessName", placeholder: msg4.value },
+    //       //@ts-ignore
+    //       { name: "BusinessType", placeholder: msg5.value },
+    //       //@ts-ignore
+    //       { name: "Email", placeholder: msg8.value },
+    //     ],
+    //     buttons: [
+    //       {
+    //         // @ts-ignore
+    //         text: msg6.value,
+    //         handler: data => {
+    //           console.log("Cancel clicked");
+    //         },
+    //       },
+    //       {
+    //         //@ts-ignore
+    //         text: msg7.value,
+    //         handler: data => {
+    //           if (
+    //             data.UserName == null ||
+    //             data.UserName == "" ||
+    //             data.UserName == undefined ||
+    //             data.BusinessName == null ||
+    //             data.BusinessName == "" ||
+    //             data.BusinessName == undefined ||
+    //             data.BusinessType == null ||
+    //             data.BusinessType == "" ||
+    //             data.BusinessType == undefined ||
+    //             data.Email == null ||
+    //             data.Email == "" ||
+    //             data.Email == undefined
+    //           ) {
+    //             this.toastCtrl
+    //               .create({
+    //                 //@ts-ignore
+    //                 message: msg9.value,
+    //                 duration: 5000,
+    //               })
+    //               .present();
+    //           } else {
+    //             this.newaccOwnName = data.UserName;
+    //             this.newaccBName = data.BusinessName;
+    //             this.newaccBType = data.BusinessType;
+    //             this.newaccemail = data.Email;
+    //             this.createAccount();
+    //           }
+    //         },
+    //       },
+    //     ],
+    //   })
+    //   .present();
     // } else {
     //   console.log("flag!=1");
-      
+
     // }
   }
 
-  submitSignUp(){
+  submitSignUp() {
     //if all are filled
     //this.newaccetcetc then this.createAccount();
   }
   otpnum: any;
 
-  backToLogin(){
-    this.otpmode=0;
-    this.signup=0;
+  backToLogin() {
+    this.otpmode = 0;
+    this.signup = 0;
   }
 
-  async otpFn(){
-    let confirmationResult=this.confirmres;
-    let flag=0;
+  async otpFn() {
+    const confirmationResult = this.confirmres;
+    let flag = 0;
     await confirmationResult
-    .confirm(this.otpnum)
-    .then(async (result) =>{
-      // User signed in successfully.
-      console.log(result.user);
-      flag = 1;
-      // ...
-    })
-    .catch((error) =>{
-      // User couldn't sign in (bad verification code?)
-      // ...
-      console.log(error);
-      this.toastCtrl
-        .create({
-          message: error,
-          duration: 2000,
-        })
-        .present();
-    })
-    .finally(() => {
-      if (flag == 1) {
-        this.checkifexist();
-      }
-    });
+      .confirm(this.otpnum)
+      .then(async result => {
+        // User signed in successfully.
+        console.log(result.user);
+        flag = 1;
+        // ...
+      })
+      .catch(error => {
+        // User couldn't sign in (bad verification code?)
+        // ...
+        console.log(error);
+        this.toastCtrl
+          .create({
+            message: error,
+            duration: 2000,
+          })
+          .present();
+      })
+      .finally(() => {
+        if (flag == 1) {
+          this.checkifexist();
+        }
+      });
   }
 
-  confirmres:any;
+  confirmres: any;
   async signInPhone() {
     if (this.phone == null || this.country_code == null) {
       console.log("hi");
@@ -583,9 +597,8 @@ export class LoginPage {
         .auth()
         .signInWithPhoneNumber(phoneNumber, appVerifier)
         .then(confirmationResult => {
-          this.otpmode=1;
-
-          this.confirmres=confirmationResult;
+          this.otpmode = 1;
+          this.confirmres = confirmationResult;
           // SMS sent. Prompt user to type the code from the message, then sign the
           // user in with confirmationResult.confirm(code).
 
@@ -594,54 +607,54 @@ export class LoginPage {
           const msg2 = this.translateConfigService.getTranslatedMessage("SEND");
           const msg3 = this.translateConfigService.getTranslatedMessage("CANCEL");
 
-          const prompt = this.alertCtrl.create({
-            //@ts-ignore
-            title: msg.value,
-            message:
-              //@ts-ignore
-              msg1.value,
-            inputs: [{ name: "confirmationCode", placeholder: "Confirmation Code" }],
-            buttons: [
-              {
-                //@ts-ignore
-                text: msg3.value,
-                handler: data => {
-                  console.log("Cancel clicked");
-                },
-              },
-              {
-                //@ts-ignore
-                text: msg2.value,
-                handler: async data => {
-                  await confirmationResult
-                    .confirm(data.confirmationCode)
-                    .then(async (result) =>{
-                      // User signed in successfully.
-                      console.log(result.user);
-                      flag = 1;
-                      // ...
-                    })
-                    .catch((error) =>{
-                      // User couldn't sign in (bad verification code?)
-                      // ...
-                      console.log(error);
-                      this.toastCtrl
-                        .create({
-                          message: error,
-                          duration: 2000,
-                        })
-                        .present();
-                    })
-                    .finally(() => {
-                      if (flag == 1) {
-                        this.checkifexist();
-                      }
-                    });
-                },
-              },
-            ],
-          });
-          //prompt.present();
+          // const prompt = this.alertCtrl.create({
+          //   //@ts-ignore
+          //   title: msg.value,
+          //   message:
+          //     //@ts-ignore
+          //     msg1.value,
+          //   inputs: [{ name: "confirmationCode", placeholder: "Confirmation Code" }],
+          //   buttons: [
+          //     {
+          //       //@ts-ignore
+          //       text: msg3.value,
+          //       handler: data => {
+          //         console.log("Cancel clicked");
+          //       },
+          //     },
+          //     {
+          //       //@ts-ignore
+          //       text: msg2.value,
+          //       handler: async data => {
+          //         await confirmationResult
+          //           .confirm(data.confirmationCode)
+          //           .then(async result => {
+          //             // User signed in successfully.
+          //             console.log(result.user);
+          //             flag = 1;
+          //             // ...
+          //           })
+          //           .catch(error => {
+          //             // User couldn't sign in (bad verification code?)
+          //             // ...
+          //             console.log(error);
+          //             this.toastCtrl
+          //               .create({
+          //                 message: error,
+          //                 duration: 2000,
+          //               })
+          //               .present();
+          //           })
+          //           .finally(() => {
+          //             if (flag == 1) {
+          //               this.checkifexist();
+          //             }
+          //           });
+          //       },
+          //     },
+          //   ],
+          // });
+         // prompt.present();
           console.log(confirmationResult);
         })
         .catch(error => {
@@ -649,7 +662,7 @@ export class LoginPage {
           // ...
           this.toastCtrl
             .create({
-              message: error,
+              message: "SMS not sent - please check your internet connection!",
               duration: 2000,
             })
             .present();

@@ -60,20 +60,17 @@ export class TransactionHomePage {
     //this.getUserData();
     //this.tutorial();
     if (this.navParams.get("data") == "newUser") {
-      
-      this.delay(500).then(()=>{
+      this.delay(500).then(() => {
         this.tutorial();
         this.getUserData();
-      })
-
-      
+      });
     }
     this.events.subscribe("newUser", data => {
       //this.events.unsubscribe("newUser");
-      this.delay(500).then(()=>{
+      this.delay(500).then(() => {
         this.tutorial();
         this.getUserData();
-      })
+      });
     });
 
     this.events.subscribe("cbUpdate:created", async data => {
@@ -136,11 +133,16 @@ export class TransactionHomePage {
   uploadbtn() {
     this.sp.backupStorage();
     const message = this.translateConfigService.getTranslatedMessage("Online backup ready");
+    
+    const message1 = this.translateConfigService.getTranslatedMessage("Backup Online");
+    const message2 = this.translateConfigService.getTranslatedMessage("backupdescrip");
+    
     this.alertCtrl
       .create({
-        title: "Backup",
-        subTitle:
-          "This feature allows you to backup your data to the cloud so that you can restore in-case your app crashes or phone is damaged.",
+        //@ts-ignore
+        title: message1.value,
+        //@ts-ignore
+        subTitle: message2.value,
         buttons: [{ text: "OK", role: "cancel" }],
       })
       .present();
@@ -161,12 +163,15 @@ export class TransactionHomePage {
     const message3 = this.translateConfigService.getTranslatedMessage("Update");
     const message4 = this.translateConfigService.getTranslatedMessage("Cancel");
     const message5 = this.translateConfigService.getTranslatedMessage("OK");
+    const ms=this.translateConfigService.getTranslatedMessage("Cash Balance");
+    const ms1=this.translateConfigService.getTranslatedMessage("cashbalancedescrip");
 
     this.alertCtrl
       .create({
-        title: "Cash Balance",
-        subTitle:
-          "This number helps you view how much cash your business has currently. When you make a sale, this increases by the sale amount, when you pay an expense it decreases by the payament amount.",
+        //@ts-ignore
+        title: ms.value,
+        //@ts-ignore
+        subTitle:ms1.value,
         //@ts-ignore
         message: message.value + ": " + this.userdata.cash_balance,
 
@@ -237,30 +242,29 @@ export class TransactionHomePage {
     const msg4 = this.translateConfigService.getTranslatedMessage("Contact Us");
     const msg5 = this.translateConfigService.getTranslatedMessage("Okay");
 
-    
-      const helpAlert = this.alertCtrl.create({
-        //@ts-ignore
-        title: msg1.value,
-        //@ts-ignore
-        subTitle: msg2.value,
-        //@ts-ignore
-        message: msg3.value,
-        buttons: [
-          {
-            //@ts-ignore
-            text: msg4.value,
-            handler: () => {
-              this.navCtrl.push(ContactUsPage);
-            },
+    const helpAlert = this.alertCtrl.create({
+      //@ts-ignore
+      title: msg1.value,
+      //@ts-ignore
+      subTitle: msg2.value,
+      //@ts-ignore
+      message: msg3.value,
+      buttons: [
+        {
+          //@ts-ignore
+          text: msg4.value,
+          handler: () => {
+            this.navCtrl.push(ContactUsPage);
           },
-          {
-            //@ts-ignore
-            text: msg5.value,
-            role: "cancel",
-          },
-        ],
-      });
-      helpAlert.present();
+        },
+        {
+          //@ts-ignore
+          text: msg5.value,
+          role: "cancel",
+        },
+      ],
+    });
+    helpAlert.present();
   }
 
   help() {

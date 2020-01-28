@@ -39,6 +39,8 @@ import { AllTransactionPage } from "../pages/all-transaction/all-transaction";
 import { AllTransactionPageModule } from "../pages/all-transaction/all-transaction.module";
 import { TransactionProductPageModule } from "../pages/transaction-product/transaction-product.module";
 import { TransactionProductPage } from "../pages/transaction-product/transaction-product";
+import { AddProductCategoryPageModule } from "../pages/add-product-category/add-product-category.module";
+import { AddProductCategoryPage } from "../pages/add-product-category/add-product-category";
 
 const config = {
   apiKey: "AIzaSyBlxUkCX8OPsb9QL2p_jN8vaHdb5LhsS7A",
@@ -69,6 +71,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TransactionProductPageModule,
     AddProductPageModule,
     SingleProductPageModule,
+    AddProductCategoryPageModule,
     ReactiveFormsModule,
     HttpClientModule,
     TranslateModule.forRoot({
@@ -88,6 +91,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TransactionProductPage,
     SingleProductPage,
     AddProductPage,
+    AddProductCategoryPage,
   ],
   providers: [
     StatusBar,

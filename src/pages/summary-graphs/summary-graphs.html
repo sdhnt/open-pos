@@ -37,14 +37,14 @@
   </ion-row>
 </ion-item>
 <ion-item style="text-align: center;">
-  <div *ngIf="!((rev+exp)>=0)" style="color: red;"> You have negative cash!</div> 
-  <h6>Interested in borrowing money?</h6>
+  <div *ngIf="!((rev+exp)>=0)" style="color: red;"> {{"You have negative cash"|translate}} !</div> 
+  <h6>{{"Interested in borrowing money"|translate}}?</h6>
   
-<button ion-button full style="background-color: green;" (click)="applyLoan()" round>Apply for loan</button>
+<button ion-button full style="background-color: green;" (click)="applyLoan()" round>{{"Apply for Loan"|translate}}</button>
 </ion-item>
   <ion-row>
-      <button full ion-button (click)="toggleGL()" *ngIf="islist==0" style="background-color: orange;">View Graph</button>
-      <button full ion-button (click)="toggleList()" *ngIf="isgraph==0" style="background-color: black;">View List</button>
+      <button full ion-button (click)="toggleGL()" *ngIf="islist==0" style="background-color: orange;">{{"View Graph"|translate}}</button>
+      <button full ion-button (click)="toggleList()" *ngIf="isgraph==0" style="background-color: black;">{{"View List"|translate}}</button>
   </ion-row>
 <!-- <button ion-button full round style="background-color: black; color: white;" (click)="toggleGL()" *ngIf="isgraph==1">View as List</button>
 <button ion-button full round style="background-color: black; color: white;" (click)="toggleGL()" *ngIf="isgraph==0">View as Graph</button> -->

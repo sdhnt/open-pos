@@ -1,12 +1,12 @@
 <ion-content padding>
   <ion-buttons end>
-    <button ion-button (click)="goBack()">Done</button>
+    <button ion-button (click)="goBack()">{{"SAVE "|translate}}</button>
   </ion-buttons>
   <ion-grid>
     <ion-row>
       <ion-col col-8>
         <ion-item>
-          <ion-input type="text" placeholder="Enter Category Here" [(ngModel)]='newprodCat'></ion-input>
+          <ion-input type="text" placeholder="{{'Enter Category Here'|translate}}" [(ngModel)]='newprodCat'></ion-input>
         </ion-item>
       </ion-col>
       <ion-col col-4>
