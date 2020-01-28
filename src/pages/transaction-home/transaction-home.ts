@@ -57,8 +57,7 @@ export class TransactionHomePage {
     public alertCtrl: AlertController,
     private modal: ModalController,
   ) {
-
-    this.userdata.language= this.translateConfigService.getCurrentLanguage();
+    this.userdata.language = this.translateConfigService.getCurrentLanguage();
     //this.getUserData();
     //this.tutorial();
     if (this.navParams.get("data") == "newUser") {
@@ -82,7 +81,11 @@ export class TransactionHomePage {
 
   async ionViewDidEnter() {
     console.log("ionViewDidLoad TransactionHomePage");
-    if (this.navParams.get("lang") != this.userdata.language && this.navParams.get("lang")!=null && this.navParams.get("lang")!=undefined) {
+    if (
+      this.navParams.get("lang") != this.userdata.language &&
+      this.navParams.get("lang") != null &&
+      this.navParams.get("lang") != undefined
+    ) {
       this.userdata.language = this.navParams.get("lang");
     }
     this.delay(500).then(() => {
@@ -115,17 +118,14 @@ export class TransactionHomePage {
         this.sp
           .getUserDat()
           .then(async val => {
-            if(val){
-
-            
-            this.userdata = JSON.parse(val);
-            console.log(this.userdata);
-            this.setUsrLang();
-            resolve();
-          }
-          else{
-            await this.getUserData()
-          }
+            if (val) {
+              this.userdata = JSON.parse(val);
+              console.log(this.userdata);
+              this.setUsrLang();
+              resolve();
+            } else {
+              await this.getUserData();
+            }
           })
           .catch(err => {
             alert("Error: " + err);

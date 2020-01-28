@@ -20,6 +20,7 @@ import { LoanHomePage } from "../pages/loan-home/loan-home";
 import { FcmService } from "../providers/firebase-cloud-messaging/fcm.service";
 import { SummarySummaryPage } from "../pages/summary-summary/summary-summary";
 import { ExpenseTransactionPage } from "../pages/expense-transaction/expense-transaction";
+import { AddProdSignupPage } from "../pages/add-prod-signup/add-prod-signup";
 
 @Component({
   templateUrl: "app.html",
@@ -27,7 +28,8 @@ import { ExpenseTransactionPage } from "../pages/expense-transaction/expense-tra
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = LoginPage;
+rootPage: any = LoginPage;
+ //rootPage: any = AddProdSignupPage;
 
   language: "en";
   pages: Array<{ title: string; component: any }>;

@@ -264,7 +264,8 @@
 "Home":"Home",
 "You have negative cash":"You have negative cash",
 "cashbalancedescrip":"This number helps you view how much cash your business has currently. When you make a sale, this increases by the sale amount, when you pay an expense it decreases by the payament amount.",
-"backupdescrip": "This feature allows you to backup your data to the cloud so that you can restore in-case your app crashes or phone is damaged."
+"backupdescrip": "This feature allows you to backup your data to the cloud so that you can restore in-case your app crashes or phone is damaged.",
+"Please Wait...":"Please Wait..."
 
 
 }

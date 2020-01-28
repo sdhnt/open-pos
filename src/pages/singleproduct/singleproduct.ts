@@ -114,7 +114,7 @@ export class SingleProductPage {
         .then(val => {
           this.userdata = JSON.parse(val);
           console.log(this.userdata);
-          this.uid = this.userdata.uid;
+          this.uid = this.userdata.id;
         })
         .catch(err => {
           alert("Error: " + err);

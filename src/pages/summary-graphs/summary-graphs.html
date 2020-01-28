@@ -12,6 +12,15 @@
 
 <ion-content padding>
 
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
 <ion-select style="background-color: silver; max-width: 100%;" [(ngModel)]="group"  (ionChange)="setvalues()">
   <ion-option value="today">{{"Today"|translate}}</ion-option>
   <!-- <ion-option value="week">This Week</ion-option> -->

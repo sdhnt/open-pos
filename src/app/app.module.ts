@@ -41,6 +41,8 @@ import { TransactionProductPageModule } from "../pages/transaction-product/trans
 import { TransactionProductPage } from "../pages/transaction-product/transaction-product";
 import { AddProductCategoryPageModule } from "../pages/add-product-category/add-product-category.module";
 import { AddProductCategoryPage } from "../pages/add-product-category/add-product-category";
+import { AddProdSignupPageModule } from "../pages/add-prod-signup/add-prod-signup.module";
+import { AddProdSignupPage } from "../pages/add-prod-signup/add-prod-signup";
 
 const config = {
   apiKey: "AIzaSyBlxUkCX8OPsb9QL2p_jN8vaHdb5LhsS7A",
@@ -72,6 +74,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AddProductPageModule,
     SingleProductPageModule,
     AddProductCategoryPageModule,
+    AddProdSignupPageModule,
     ReactiveFormsModule,
     HttpClientModule,
     TranslateModule.forRoot({
@@ -89,6 +92,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     SignUpPage,
     TransactionHomePage,
     TransactionProductPage,
+    AddProdSignupPage,
     SingleProductPage,
     AddProductPage,
     AddProductCategoryPage,

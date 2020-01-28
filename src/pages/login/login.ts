@@ -17,6 +17,7 @@ import { TranslateConfigService } from "../../providers/translation/translate-co
 import { UserProfilePage } from "../user-profile/user-profile";
 import { Message, Placeholder } from "@angular/compiler/src/i18n/i18n_ast";
 import { duration } from "moment";
+import { AddProdSignupPage } from "../add-prod-signup/add-prod-signup";
 
 /**
  * Generated class for the LoginPage page.
@@ -387,14 +388,14 @@ export class LoginPage {
                   text: "OK",
                   handler: () => {
                     //this.sp.clearMem();
-                    this.sp.setMem().then(()=>{
-                      this.navCtrl.setRoot(TransactionHomePage, {
-                        data: "newUser",
-                        lang: this.translateConfigService.getCurrentLanguage(),
-                      }); //navigate to feeds page
-                      this.events.publish("newUser");
+                    this.sp.setMem().then(() => {
+                      // this.navCtrl.setRoot(TransactionHomePage, {
+                      //   data: "newUser",
+                      //   lang: this.translateConfigService.getCurrentLanguage(),
+                      // }); //navigate to feeds page
+                     // this.events.publish("newUser");
+                     this.navCtrl.push(AddProdSignupPage);
                     });
-                
                   }, //end handler
                 },
               ], //end button
@@ -591,6 +592,13 @@ export class LoginPage {
         })
         .present();
     } else {
+      
+      this.toastCtrl.create({
+        //@ts-ignore
+        message: this.translateConfigService.getTranslatedMessage("Please Wait...").value,
+        duration:2000,
+      }).present();
+
       const phoneNumber = "+" + this.country_code + this.phone;
       const appVerifier = this.applicationVerifier;
 

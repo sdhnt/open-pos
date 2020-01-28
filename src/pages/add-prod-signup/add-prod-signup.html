@@ -1,0 +1,140 @@
+<!-- <ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Add Product</ion-title>
+  </ion-navbar>
+</ion-header> -->
+
+<ion-content padding>
+
+
+
+<div *ngIf="mode==1" padding> 
+<div style="text-align: center; align-content: center;">
+  <h1>Hello</h1> 
+
+ <h5>Welcome to OPEN!</h5>
+ <br><br>
+
+  
+  <img src="../../assets/imgs/congo1.png" height="50%" width="50%">
+
+  <br><br>
+</div>
+<div style="font-size: 1.4rem; color: black;">
+  Still using pen and paper to track your sales and inventory? Time to change and save some time!  We can even help you improve your financial performance!
+<br><br>
+  Let’s start by adding your first product! <br><br>Press the button below to launch the camera
+  <br><br>      
+</div>
+    <button ion-button full large round style="background-color:black" (click)="askCamera()">{{'Take Picture' | translate}}</button>
+    <br>
+    <img *ngIf="image!=null" [src]="image" style="width: 100px;">
+<br>
+  <button ion-button full large round style="background-color:black" (click)="addMode()" 
+  *ngIf="image!=''"
+  >Next</button>
+</div>
+
+<div *ngIf="mode==2" style="align-content: center; text-align: center;">
+  <img height="50%" width="50%" src="../../assets/imgs/congo2.png">
+  <h4>Great Picture! <br><br> Let's scan a barcode!</h4>
+  <br>
+  Put the red line across the barcode and tap to scan
+  <br>
+  <br>
+    <button ion-button round full large (click)="scanQR()" style="background-color: green;">{{'Scan Barcode'| translate}}</button>
+    <br>
+    <div *ngIf="prodCode!=''&&prodCode!=undefined">
+      Code: {{prodCode}}
+    </div>
+    <br>
+    <button ion-button round full default (click)="addMode()" color="dark" *ngIf="(prodCode==''||prodCode==undefined)">SKIP</button>
+    <br>
+  <button ion-button round full large (click)="addMode()" color="dark" *ngIf="prodCode!=''&&prodCode!=undefined">Next</button>
+</div>
+   
+    <div *ngIf="mode==3" style="align-content: center; text-align: center;">
+      <img src="../../assets/imgs/congo3.png">
+      <br><br>
+      Now we enter the selling price and buying price!
+      <br><br>
+     
+        <ion-label>{{'Product Name:'| translate}}</ion-label>
+        <ion-input type="text" [(ngModel)]='prodName'></ion-input>
+      
+  
+        <ion-label>{{'Product Retail Price:'| translate}}</ion-label>
+        <ion-input type="number" [(ngModel)]='prodPrice'></ion-input>
+     
+        <ion-label>{{'Product Wholesale Price:'| translate}}</ion-label>
+        <ion-input type="number" [(ngModel)]='prodWholesalePrice'></ion-input>
+    
+        <ion-label>{{'Product Buying Cost:'| translate}}</ion-label>
+        <ion-input type="number" [(ngModel)]='prodCost'></ion-input>
+
+        <br><br>
+        <div *ngIf="(prodName!=''&&prodName!=null&& prodPrice!=null&& prodPrice!=''&& prodPrice!=undefined&&prodWholesalePrice!=null&&prodWholesalePrice!=''&&prodWholesalePrice!=undefined&&prodCost!=null&&prodCost!=''&&prodCost!=undefined)">
+      <button ion-button  round full large (click)="addMode()" color="dark">Next</button>
+        </div>
+    </div>
+
+    <div *ngIf="mode==4">
+      <div style="text-align: center; align-content:center ;">
+      <h4> Last Step! </h4>
+      <img src="../../assets/imgs/congo4.png" height="70%" width="70%">
+        <ion-label>How many of this item do you have right now in stock?</ion-label>
+        <ion-input type="number" [(ngModel)]='currstock'></ion-input>
+    <br>
+  </div>
+    
+    In the OPEN app , we divide all the products into categories so that we can easily search later. For example, for a restaurant lets say the products are chicken noodles, egg-fried rice and orange juice and then the categories can be assigned as noodles, rice and beverages. Later, we can search the item quickly using the category. 
+    <br><br>
+    Please create a new category for this product or use the example category already provided by us. 
+    <br><br>
+      <!-- OPTIONAL EXPIRY/Shelf Life in time -->
+      <ion-item>
+
+        <ion-label>{{'Product Category' | translate}}</ion-label>
+        <ion-select multiple="false" [(ngModel)]='prodCat'>
+
+          <!-- <ion-option>New</ion-option> -->
+          <ion-option value="New"> {{'Add New Category'| translate}}</ion-option>
+          <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>
+
+        </ion-select>
+
+        <!-- <ion-label>Select Category</ion-label>
+        <ion-select multiple="false" [(ngModel)]='prodCat'>
+              <ion-option>New</ion-option>
+              <ion-option>Snacks</ion-option>
+              <ion-option>Drinks</ion-option>
+              <ion-option>Noodles</ion-option>
+        </ion-select> -->
+      </ion-item>
+      <ion-item *ngIf="prodCat=='New'">
+        <ion-label>{{'Enter New Category Name' | translate}}</ion-label>
+        <ion-input type="text" placeholder="{{'Enter Category Here' | translate}}"
+          [(ngModel)]='newprodCat'></ion-input>
+      </ion-item>
+      <br><br>
+      <button ion-button  round full large  (click)="addProdMode()" color="dark">Next</button>
+      
+      <!-- <button ion-button  round full large  (click)="addMode()" color="dark">Next</button> -->
+    </div>
+
+    <div *ngIf="mode==5">
+      <div style="text-align: center; align-content:center ;">
+      <img src="../../assets/imgs/congo5.png">
+      <br><br>
+      <h2>Congratulations!</h2>
+      <h3>
+      Added your first product!</h3>
+      <br>
+      <br>
+      <button ion-button large round (click)="startApp()" style="background-color: red;">START using OPEN!</button>
+    </div>
+    </div>
+</ion-content>

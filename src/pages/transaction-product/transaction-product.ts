@@ -226,27 +226,25 @@ export class TransactionProductPage {
       this.sp
         .getProducts()
         .then(val => {
-          if(val){
-
-          
-          if (this.event != true) {
-            this.listProducts = JSON.parse(val);
-            console.log(this.listProducts);
-            if (this.listProducts != null) {
-              this.listProducts.forEach(element => {
-                element.qty = 0;
-              });
+          if (val) {
+            if (this.event != true) {
+              this.listProducts = JSON.parse(val);
+              console.log(this.listProducts);
+              if (this.listProducts != null) {
+                this.listProducts.forEach(element => {
+                  element.qty = 0;
+                });
+              }
             }
-          }
 
-          if (this.event1 != true) {
-            if (this.listProducts != null) {
-              this.filteredProduct();
+            if (this.event1 != true) {
+              if (this.listProducts != null) {
+                this.filteredProduct();
+              }
             }
+          } else {
+            this.getProducts();
           }
-        }else{
-          this.getProducts();
-        }
         })
         .catch(err => {
           alert("Error: " + err);
