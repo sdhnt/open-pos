@@ -85,7 +85,7 @@
 <div *ngIf="signup==1">
 <ion-grid style="width: 75%;">
   <button ion-button block clear color="light" style="margin-top: 10px;" >{{"Create Account"|translate}}</button>
-  <ion-row class="row-style" style="margin-top: 20px;"><ion-input placeholder="{{'Owner Name'|translate}}" [(ngModel)]="newaccOwnName"></ion-input></ion-row>
+  <ion-row class="row-style" style="margin-top: 20px;"><ion-input placeholder="{{'Owner'|translate}}" [(ngModel)]="newaccOwnName"></ion-input></ion-row>
   <ion-row class="row-style" style="margin-top: 20px;"><ion-input placeholder="{{'Business Name'|translate}}"  [(ngModel)]="newaccBName"></ion-input></ion-row>
   <ion-row class="row-style" style="margin-top: 20px;"><ion-input placeholder="{{'Business Type'|translate}}"  [(ngModel)]="newaccBType"></ion-input></ion-row>
   <ion-row class="row-style" style="margin-top: 20px;"><ion-input placeholder="{{'Business Area & City'|translate}}"  [(ngModel)]="newaccBArea"></ion-input></ion-row>
@@ -103,8 +103,8 @@
 </div>
 </ion-content>
 
-<ion-footer padding *ngIf="contactphone!=null">
-  {{"Helpline"|translate}}: {{contactphone}}
+<ion-footer>
+  <button ion-button full block (click)="getInfo()" style="background-color: black;">{{"Contact Us"|translate}}</button>
 </ion-footer>
 
 

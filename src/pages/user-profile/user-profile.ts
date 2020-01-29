@@ -100,7 +100,7 @@ export class UserProfilePage {
     };
 
     this.submitButton = false;
-    this.loadDropDowns();
+    //this.loadDropDowns();
     this.formUser = this.formBuilder.group({
       business_name: new FormControl("", Validators.required),
       business_address: new FormControl("", Validators.required),
@@ -121,23 +121,23 @@ export class UserProfilePage {
     this.oldUser = cloneDeep(this.user);
   }
 
-  loadDropDowns() {
-    firebase
-      .firestore()
-      .collection("sign-up")
-      .get()
-      .then(doc => {
-        doc.docs[0].data().businessType.forEach(b => {
-          this.listOfBType.push(b);
-        });
-        doc.docs[0].data().currency.forEach(c => {
-          this.listOfCurrency.push(c);
-        });
-        doc.docs[0].data().language.forEach(l => {
-          this.listOfLang.push(l);
-        });
-      });
-  }
+  // loadDropDowns() {
+  //   firebase
+  //     .firestore()
+  //     .collection("sign-up")
+  //     .get()
+  //     .then(doc => {
+  //       doc.docs[0].data().businessType.forEach(b => {
+  //         this.listOfBType.push(b);
+  //       });
+  //       doc.docs[0].data().currency.forEach(c => {
+  //         this.listOfCurrency.push(c);
+  //       });
+  //       doc.docs[0].data().language.forEach(l => {
+  //         this.listOfLang.push(l);
+  //       });
+  //     });
+  // }
 
   getUser() {
     this.sp.storageReady().then(() => {

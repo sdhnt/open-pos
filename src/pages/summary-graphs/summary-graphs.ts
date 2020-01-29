@@ -56,7 +56,7 @@ export class SummaryGraphsPage {
     });
     this.getUserData();
     this.events.subscribe("cbUpdate:created", async data => {
-      console.log('should update')
+      console.log("should update");
       this.ionViewDidLoad();
     });
     this.events.subscribe("productUpdate:created", async data => {

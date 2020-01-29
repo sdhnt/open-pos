@@ -25,8 +25,6 @@ export class AddProdSignupPage {
   listProduct: any;
   isProdCode000000: boolean;
 
-
-
   constructor(
     public navCtrl: NavController,
     public barcodeScanner: BarcodeScanner,
@@ -37,27 +35,25 @@ export class AddProdSignupPage {
     public events: Events,
     public camera: Camera,
     public alertCtrl: AlertController,
-   
   ) {
     this.isProdCode000000 = false;
     this.prodCode = this.navParams.get("code");
     this.getUserData();
-
   }
-  mode=0;
+  mode = 0;
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad AddProductCategoryPage");
     this.getCategories();
     this.disabled = false;
-    this.mode=1;
+    this.mode = 1;
   }
 
-  addMode(){
+  addMode() {
     this.mode++;
   }
 
-  remMode(){
+  remMode() {
     this.mode--;
   }
 
@@ -86,7 +82,6 @@ export class AddProdSignupPage {
       });
     });
   }
-
 
   newprodCat: any = "";
   listCat: any;
@@ -223,18 +218,17 @@ export class AddProdSignupPage {
     }
   }
 
-  addProdMode(){
+  addProdMode() {
     this.addproduct();
   }
 
-  startApp(){
 
-     this.navCtrl.setRoot(TransactionHomePage, {
-                        data: "newUser",
-                        lang: this.translateConfigService.getCurrentLanguage(),
-                      }); //navigate to feeds page
-                     this.events.publish("newUser");
-
+  startApp() {
+    this.navCtrl.setRoot(TransactionHomePage, {
+      data: "newUser",
+      lang: this.translateConfigService.getCurrentLanguage(),
+    }); //navigate to feeds page
+    this.events.publish("newUser");
   }
 
   clearFields() {
@@ -280,7 +274,7 @@ export class AddProdSignupPage {
 
     this.disabled = true;
 
-    if ((this.prodCat == "New" && this.newprodCat == "")) {
+    if (this.prodCat == "New" && this.newprodCat == "") {
       const message = this.translateConfigService.getTranslatedMessage("Incomplete");
       this.toastCtrl
         .create({
@@ -323,6 +317,19 @@ export class AddProdSignupPage {
           //"sub-group": (productcode, itemslist)
         };
 
+        let exprod=  {
+          cat: "Example",
+          code: "0000",
+          cost: "100",
+          name: "Example Product",
+          price: "0",
+          stock_qty: "10",
+          url: "https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y",
+          wholesale_price: "0",
+        };
+
+        
+
         console.log(data);
         this.temp = JSON.stringify(data);
         this.sp.storageReady().then(() => {
@@ -334,6 +341,7 @@ export class AddProdSignupPage {
               message: message.value,
               duration: 2000,
             });
+            this.sp.deleteProduct(exprod);
             this.prodCode = "";
             this.prodName = "";
             this.prodPrice = null;
@@ -361,10 +369,9 @@ export class AddProdSignupPage {
               //     duration: 1500,
               //   })
               //   .present();
-            });
+            }); 
           }, 1000);
         });
-        
       } else {
         this.temp = this.prodName;
         const message = this.translateConfigService.getTranslatedMessage("Creating item, please wait a moment");

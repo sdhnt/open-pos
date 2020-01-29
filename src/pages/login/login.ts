@@ -52,7 +52,7 @@ export class LoginPage {
     public events: Events,
   ) {
     //this.loadDropDowns();
-    this.getInfo();
+    //this.getInfo();
     this.country_code = "95";
 
     const loading = this.loadingCtrl.create({
@@ -79,7 +79,7 @@ export class LoginPage {
               //   uid: firebase.auth().currentUser.uid,
               //   timestamp: firebase.firestore.FieldValue.serverTimestamp(),
               //});
-              console.log("No Internet");
+              console.log("No Internet or New Account Required");
               // console.log(firebase.auth().currentUser.uid);
               //MOVE SIGN UP OPTIONS RIGHT HERE AND CREATE A DOCUMENT
               //zone.run(() => {
@@ -122,15 +122,22 @@ export class LoginPage {
     this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
   }
 
-  contactphone;
+  contactphone="loading...";
   getInfo() {
+    const msg=this.translateConfigService.getTranslatedMessage("Helpline")
+    let abc=this.alertCtrl.create({
+      //@ts-ignore
+      title: msg.value, 
+      subTitle: this.contactphone,     
+    })
     firebase
-      .firestore()
-      .collection("contact-us")
-      .get()
-      .then(doc => {
-        this.contactphone = doc.docs[0].data().phone;
-      });
+    .firestore()
+    .collection("contact-us")
+    .get()
+    .then(doc => {
+      this.contactphone = doc.docs[0].data().phone;
+      abc.present();
+    }); 
   }
 
   language;
@@ -393,8 +400,8 @@ export class LoginPage {
                       //   data: "newUser",
                       //   lang: this.translateConfigService.getCurrentLanguage(),
                       // }); //navigate to feeds page
-                     // this.events.publish("newUser");
-                     this.navCtrl.push(AddProdSignupPage);
+                      // this.events.publish("newUser");
+                      this.navCtrl.push(AddProdSignupPage);
                     });
                   }, //end handler
                 },
@@ -592,12 +599,13 @@ export class LoginPage {
         })
         .present();
     } else {
-      
-      this.toastCtrl.create({
-        //@ts-ignore
-        message: this.translateConfigService.getTranslatedMessage("Please Wait...").value,
-        duration:2000,
-      }).present();
+      this.toastCtrl
+        .create({
+          //@ts-ignore
+          message: this.translateConfigService.getTranslatedMessage("Please Wait...").value,
+          duration: 2000,
+        })
+        .present();
 
       const phoneNumber = "+" + this.country_code + this.phone;
       const appVerifier = this.applicationVerifier;

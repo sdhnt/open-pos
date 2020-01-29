@@ -265,7 +265,29 @@
 "You have negative cash":"You have negative cash",
 "cashbalancedescrip":"This number helps you view how much cash your business has currently. When you make a sale, this increases by the sale amount, when you pay an expense it decreases by the payament amount.",
 "backupdescrip": "This feature allows you to backup your data to the cloud so that you can restore in-case your app crashes or phone is damaged.",
-"Please Wait...":"Please Wait..."
+"Please Wait...":"Please Wait...",
+
+"Hello":"Hello",
+"Welcome to OPEN!":"Welcome to OPEN!",
+"OpenIntro": "Still using pen and paper to track your sales and inventory? Time to change and save some time!  We can even help you improve your financial performance!",
+"Let’s start by adding your first product!":"Let’s start by adding your first product!",
+"Take a picture of the product using your camera:":"Take a picture of the product using your camera:",
+"Great!":"Great!",
+"Let’s scan the barcode":"Let’s scan the barcode",
+"Next":"Next",
+"Skip":"Skip",
+"Let’s add in the details of this product":"Let’s add in the details of this product",
+"How many of these items are currently in stock?":"How many of these items are currently in stock?",
+"CatExp":"In the OPEN app , we divide all the products into categories so that we can easily search later. For example, for a restaurant lets say the products are chicken noodles, egg-fried rice and orange juice and then the categories are noodles, rice and beverages. Later, we can search the item quickly using the category.",
+"Please create a new category for this product or use the example category already provided by us.":"Please create a new category for this product or use the example category already provided by us.",
+"Congratulations!":"Congratulations!",
+"Added your first product!": "Added your first product!",
+"START USING OPEN!":"START USING OPEN!",
+"Put the red line across the barcode and tap to scan":"Put the red line across the barcode and tap to scan",
+"Code":"Code",
+"Last Step!":"Last Step!",
+"Now we enter the selling price and buying price!":"Now we enter the selling price and buying price!",
+"Account Created":"Account Created"
 
 
 }

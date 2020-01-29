@@ -10,7 +10,7 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>{{ 'User Profile' | translate }}</ion-title>
-    <ion-buttons end><button ion-button (click)="help()"><ion-icon name="help-circle" style="font-size: 30px;"></ion-icon></button></ion-buttons>
+    <!-- <ion-buttons end><button ion-button (click)="help()"><ion-icon name="help-circle" style="font-size: 30px;"></ion-icon></button></ion-buttons> -->
   </ion-navbar>
 </ion-header>
 
@@ -32,9 +32,7 @@
       <ion-item>
         <ion-icon name="globe" color="semi-light" class="icon"></ion-icon>
         <ion-label>{{"Business Type"|translate}}</ion-label>
-        <ion-select formControlName="businesstype" [(ngModel)]="user.businesstype" (ionChange)="onChange()">
-          <ion-option *ngFor="let b of listOfBType" value="{{ b }}">{{ b }}</ion-option>
-        </ion-select>
+        <ion-input type="text" formControlName="businesstype" [(ngModel)]="user.businesstype" (ionChange)="onChange()"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label>{{ 'Phone Number' | translate }}</ion-label>

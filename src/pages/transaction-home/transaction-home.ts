@@ -278,7 +278,6 @@ export class TransactionHomePage {
 
   help() {
     // const msg = this.translateConfigService.getTranslatedMessage("Create New Sales");
-
     // const temptxt = [];
     // let tempvid = [];
 

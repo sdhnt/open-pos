@@ -28,8 +28,8 @@ import { AddProdSignupPage } from "../pages/add-prod-signup/add-prod-signup";
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-rootPage: any = LoginPage;
- //rootPage: any = AddProdSignupPage;
+  rootPage: any = LoginPage;
+  //2rootPage: any = AddProdSignupPage;
 
   language: "en";
   pages: Array<{ title: string; component: any }>;
