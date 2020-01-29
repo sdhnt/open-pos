@@ -122,22 +122,22 @@ export class LoginPage {
     this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
   }
 
-  contactphone="loading...";
+  contactphone = "loading...";
   getInfo() {
-    const msg=this.translateConfigService.getTranslatedMessage("Helpline")
-    let abc=this.alertCtrl.create({
-      //@ts-ignore
-      title: msg.value, 
-      subTitle: this.contactphone,     
-    })
+    const msg = this.translateConfigService.getTranslatedMessage("Helpline");
+   
     firebase
-    .firestore()
-    .collection("contact-us")
-    .get()
-    .then(doc => {
-      this.contactphone = doc.docs[0].data().phone;
-      abc.present();
-    }); 
+      .firestore()
+      .collection("contact-us")
+      .get()
+      .then(doc => {
+        this.contactphone = doc.docs[0].data().phone;
+        const abc = this.alertCtrl.create({
+          //@ts-ignore
+          title: msg.value,
+          subTitle: this.contactphone,
+        }).present();
+      });
   }
 
   language;
@@ -678,10 +678,10 @@ export class LoginPage {
         .catch(error => {
           // Error; SMS not sent
           // ...
-          this.toastCtrl
+          this.alertCtrl
             .create({
-              message: "SMS not sent" + error,
-              duration: 2000,
+              message: "SMS not sent: " + error,
+             
             })
             .present();
           console.log("SMS Not Sent: " + error);

@@ -222,7 +222,6 @@ export class AddProdSignupPage {
     this.addproduct();
   }
 
-
   startApp() {
     this.navCtrl.setRoot(TransactionHomePage, {
       data: "newUser",
@@ -317,7 +316,7 @@ export class AddProdSignupPage {
           //"sub-group": (productcode, itemslist)
         };
 
-        let exprod=  {
+        const exprod = {
           cat: "Example",
           code: "0000",
           cost: "100",
@@ -327,8 +326,6 @@ export class AddProdSignupPage {
           url: "https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y",
           wholesale_price: "0",
         };
-
-        
 
         console.log(data);
         this.temp = JSON.stringify(data);
@@ -369,7 +366,7 @@ export class AddProdSignupPage {
               //     duration: 1500,
               //   })
               //   .present();
-            }); 
+            });
           }, 1000);
         });
       } else {

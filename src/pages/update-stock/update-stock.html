@@ -9,7 +9,7 @@
     <ion-navbar>
       <ion-title>{{"Update Stock"|translate}}</ion-title>
       <ion-buttons end>
-        <button ion-button style="background-color: red; color: white;" (click)="dismiss()">Close</button>
+        <button ion-button style="background-color: red; color: white;" (click)="dismiss()">{{"Close"|translate}}</button>
       </ion-buttons>
     </ion-navbar>
   </ion-header>
@@ -20,13 +20,13 @@
         {{"Product Name:"|translate}} {{ product.name }}
       </ion-item>
       <ion-item>
-        <ion-input placeholder="{{'Product Qty'|translate}" type="number" [(ngModel)]='prodqty' (ionChange)="updatebalance('prodqty')"></ion-input>
+        <ion-input placeholder="{{'Product Qty'|translate}}" type="number" [(ngModel)]='prodqty' (ionChange)="updatebalance('prodqty')"></ion-input>
       </ion-item>
       <ion-item>
         <ion-input placeholder="{{'Purchase Price per Item'|translate}}" type="number" [(ngModel)]='prodcostitem' (ionChange)="updatebalance('prodcostitem')"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input type="number" placeholder="{{'Total Expenditure'|translate}" [(ngModel)]='prodcost' (ionChange)="updatebalance('prodcost')"></ion-input>
+        <ion-input type="number" placeholder="{{'Total Expenditure'|translate}}" [(ngModel)]='prodcost' (ionChange)="updatebalance('prodcost')"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label>{{"Batch Expiry Date:"|translate}}</ion-label>
@@ -35,6 +35,6 @@
     </ion-list>
   </ion-content>
   <ion-footer padding>
-    <button ion-button block color="primary" (click)="addinventoryexpense()" color="dark">{{"Add Stock"|translate}</button>
+    <button ion-button block color="primary" (click)="addinventoryexpense()" color="dark">{{"Add Stock"|translate}}</button>
   </ion-footer>
 </div>

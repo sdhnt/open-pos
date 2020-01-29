@@ -382,6 +382,10 @@ export class IncomeTransactionPage {
     const message2 = this.translateConfigService.getTranslatedMessage("Edit Receipt Details");
     const message3 = this.translateConfigService.getTranslatedMessage("Enter Information");
 
+    
+    const message4 = this.translateConfigService.getTranslatedMessage("Add Logo");
+    const message5 = this.translateConfigService.getTranslatedMessage("Remove Logo");
+
     this.alertCtrl
       .create({
         //@ts-ignore
@@ -412,7 +416,7 @@ export class IncomeTransactionPage {
           },
           {
             //@ts-ignore
-            text: "Add Logo",
+            text: message4.value,
             handler: data => {
               this.launchCamera().then(() => {
                 this.upload_new();
@@ -421,7 +425,7 @@ export class IncomeTransactionPage {
           },
           {
             //@ts-ignore
-            text: "Remove Logo",
+            text: message5.value,
             handler: data => {
               this.toastCtrl.create({ message: "Please wait- removing...", duration: 2000 }).present();
               this.userdata.logo_url = "";
