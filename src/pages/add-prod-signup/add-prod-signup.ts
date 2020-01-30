@@ -59,7 +59,7 @@ export class AddProdSignupPage {
   currstock: number;
 
   async getUserData() {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       this.sp.storageReady().then(() => {
         this.sp
           .getUserDat()
@@ -167,7 +167,7 @@ export class AddProdSignupPage {
   }
   temp = "na";
   upload_new(name: string) {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       this.temp = "prodImages/" + this.uid + this.prodCode + name;
       //LET REF be tied to a particular product- we save the url in the products db
       const ref = firebase.storage().ref("prodImages/" + this.uid + this.prodCode + name);

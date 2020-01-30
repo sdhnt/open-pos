@@ -98,7 +98,6 @@ export class MyApp {
 
   resetBackButton: any;
 
-
   ionViewDidEnter() {}
 
   initializeApp() {
