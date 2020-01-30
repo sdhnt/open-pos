@@ -14,7 +14,6 @@ import { BarcodeScanner } from "@ionic-native/barcode-scanner";
 import { StorageProvider } from "../../providers/storage/storage";
 import firebase from "firebase";
 import { GettersetterProvider } from "../../providers/gettersetter/gettersetter";
-import { CoachHomePage } from "../coach-home/coach-home";
 
 /**
  * Generated class for the LoanHomePage page.

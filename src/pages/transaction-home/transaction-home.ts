@@ -14,7 +14,6 @@ import firebase from "firebase";
 import { AddProductPage } from "../addproduct/addproduct";
 import { AllTransactionPage } from "../all-transaction/all-transaction";
 import { IncomeTransactionPage } from "../income-transaction/income-transaction";
-import { ExpenseTransactionPage } from "../expense-transaction/expense-transaction";
 import { TransactionProductPage } from "../transaction-product/transaction-product";
 import { StorageProvider } from "../../providers/storage/storage";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";

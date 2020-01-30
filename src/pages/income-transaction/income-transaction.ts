@@ -22,8 +22,6 @@ import { PrinterProvider } from "./../../providers/printer/printer";
 import { commands } from "./../../providers/printer/printer-commands";
 import EscPosEncoder from "esc-pos-encoder-ionic";
 import { GeolocationService } from "../../providers/geolocation/geolocation.service";
-import { SummaryHomePage } from "../summary-home/summary-home";
-import { SummarySummaryPage } from "../summary-summary/summary-summary";
 import { Camera, CameraOptions } from "@ionic-native/camera";
 /**
  * Generated class for the IncomeTransactionPage page.
@@ -991,7 +989,7 @@ export class IncomeTransactionPage {
   }
 
   showOldRec() {
-    this.app.getRootNav().setRoot(SummarySummaryPage, { item: "ViewRecs" });
+    //this.app.getRootNav().setRoot(SummarySummaryPage, { item: "ViewRecs" });
     //this.events.publish("ViewRecs", 0);
     console.log("View Recs Called");
   }

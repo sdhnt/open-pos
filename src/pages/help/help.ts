@@ -1,6 +1,5 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams, ViewController, App } from "ionic-angular";
-import { CoachHomePage } from "../coach-home/coach-home";
 import { DomSanitizer } from "@angular/platform-browser";
 import { StorageProvider } from "../../providers/storage/storage";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
@@ -69,11 +68,11 @@ export class HelpPage {
     this.view.dismiss();
   }
 
-  navigate() {
-    //this.navCtrl.push(CoachHomePage);
-    this.view.dismiss();
-    this.app.getRootNav().setRoot(CoachHomePage);
-  }
+  // navigate() {
+  //   //this.navCtrl.push(CoachHomePage);
+  //   this.view.dismiss();
+  //   this.app.getRootNav().setRoot(CoachHomePage);
+  // }
 
   secureLink(val: string) {
     return this.dom.bypassSecurityTrustResourceUrl(val);

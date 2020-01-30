@@ -14,7 +14,6 @@ import { IncomeTransactionPage } from "../income-transaction/income-transaction"
 import firebase from "firebase";
 import { StorageProvider } from "../../providers/storage/storage";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
-import { ExpenseTransactionPage } from "../expense-transaction/expense-transaction";
 //import { threadId } from 'worker_threads';
 
 /**
@@ -347,36 +346,36 @@ export class AllTransactionPage {
     return s;
   }
 
-  addSalesExp() {
-    const msg = this.translateConfigService.getTranslatedMessage("Add");
-    const msg1 = this.translateConfigService.getTranslatedMessage("Sales");
-    const msg2 = this.translateConfigService.getTranslatedMessage("Expense");
-    const msg3 = this.translateConfigService.getTranslatedMessage("CANCEL");
-    const alert = this.alertCtrl.create({
-      //@ts-ignore
-      title: msg.value,
-      buttons: [
-        {
-          //@ts-ignore
-          text: msg1.value,
-          handler: () => {
-            (this.navCtrl.parent as Tabs).select(1);
-          },
-        },
-        {
-          //@ts-ignore
-          text: msg2.value,
-          handler: () => {
-            this.app.getRootNav().setRoot(ExpenseTransactionPage, { data: "ViewExp" });
-          },
-        },
-        {
-          //@ts-ignore
-          text: msg3.value,
-          role: "cancel",
-        },
-      ],
-    });
-    alert.present();
-  }
+  // addSalesExp() {
+  //   const msg = this.translateConfigService.getTranslatedMessage("Add");
+  //   const msg1 = this.translateConfigService.getTranslatedMessage("Sales");
+  //   const msg2 = this.translateConfigService.getTranslatedMessage("Expense");
+  //   const msg3 = this.translateConfigService.getTranslatedMessage("CANCEL");
+  //   const alert = this.alertCtrl.create({
+  //     //@ts-ignore
+  //     title: msg.value,
+  //     buttons: [
+  //       {
+  //         //@ts-ignore
+  //         text: msg1.value,
+  //         handler: () => {
+  //           (this.navCtrl.parent as Tabs).select(1);
+  //         },
+  //       },
+  //       {
+  //         //@ts-ignore
+  //         text: msg2.value,
+  //         handler: () => {
+  //           this.app.getRootNav().setRoot(ExpenseTransactionPage, { data: "ViewExp" });
+  //         },
+  //       },
+  //       {
+  //         //@ts-ignore
+  //         text: msg3.value,
+  //         role: "cancel",
+  //       },
+  //     ],
+  //   });
+  //   alert.present();
+  // }
 }

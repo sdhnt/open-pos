@@ -1,14 +1,11 @@
 import { Component } from "@angular/core";
-import { NavController, NavParams, Tabs, Events, AlertController } from "ionic-angular";
+import { NavController, NavParams, Events, AlertController } from "ionic-angular";
 import { BarcodeScanner } from "@ionic-native/barcode-scanner";
 import { StorageProvider } from "../../providers/storage/storage";
 import { ToastController } from "ionic-angular";
-import { ProductListPage } from "../product-list/product-list";
 import { Camera, CameraOptions } from "@ionic-native/camera";
 import firebase from "firebase";
-import { TranslateModule } from "@ngx-translate/core";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
-import { DashboardPage } from "../dashboard/dashboard";
 import { TransactionHomePage } from "../transaction-home/transaction-home";
 
 @Component({
@@ -62,7 +59,7 @@ export class AddProdSignupPage {
   currstock: number;
 
   async getUserData() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.sp.storageReady().then(() => {
         this.sp
           .getUserDat()
@@ -170,7 +167,7 @@ export class AddProdSignupPage {
   }
   temp = "na";
   upload_new(name: string) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.temp = "prodImages/" + this.uid + this.prodCode + name;
       //LET REF be tied to a particular product- we save the url in the products db
       const ref = firebase.storage().ref("prodImages/" + this.uid + this.prodCode + name);
@@ -258,13 +255,6 @@ export class AddProdSignupPage {
   addproduct() {
     if (this.prodCode == "000000") {
       const msg = this.translateConfigService.getTranslatedMessage("Code not permitted. Please use a different code");
-      const toast = this.toastCtrl
-        .create({
-          //@ts-ignore
-          message: msg.value,
-          duration: 3000,
-        })
-        .present();
       this.isProdCode000000 = true;
       return;
     } else {

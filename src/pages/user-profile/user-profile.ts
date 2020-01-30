@@ -6,7 +6,6 @@ import { TransactionHomePage } from "../transaction-home/transaction-home";
 import { cloneDeep, isEqual } from "lodash";
 import firebase from "firebase";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
-import { CoachHomePage } from "../coach-home/coach-home";
 
 /**
  * Generated class for the UserProfilePage page.

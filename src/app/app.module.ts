@@ -5,9 +5,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 
 import { MyApp } from "./app.component";
 import { LoginPage } from "../pages/login/login";
-import { SignUpPage } from "../pages/sign-up/sign-up";
 import { TransactionHomePage } from "../pages/transaction-home/transaction-home";
-import { DashboardPage } from "../pages/dashboard/dashboard";
 import { AddProductPage } from "../pages/addproduct/addproduct";
 
 import { StatusBar } from "@ionic-native/status-bar";
@@ -18,7 +16,7 @@ import { IonicStorageModule } from "@ionic/storage";
 import { GettersetterProvider } from "../providers/gettersetter/gettersetter";
 import { Camera } from "@ionic-native/camera";
 import { HttpClientModule, HttpClient } from "@angular/common/http";
-import { TranslateModule, TranslateLoader, TranslateService } from "@ngx-translate/core";
+import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { TranslateConfigService } from "../providers/translation/translate-config.service";
 import { BluetoothSerial } from "@ionic-native/bluetooth-serial";
@@ -29,14 +27,10 @@ import { FcmService } from "../providers/firebase-cloud-messaging/fcm.service";
 
 import * as firebase from "firebase/app";
 import { LoginPageModule } from "../pages/login/login.module";
-import { SignUpPageModule } from "../pages/sign-up/sign-up.module";
 import { TransactionHomePageModule } from "../pages/transaction-home/transaction-home.module";
-import { DashboardPageModule } from "../pages/dashboard/dashboard.module";
 import { AddProductPageModule } from "../pages/addproduct/addproduct.module";
 import { SingleProductPage } from "../pages/singleproduct/singleproduct";
 import { SingleProductPageModule } from "../pages/singleproduct/singleproduct.module";
-import { AllTransactionPage } from "../pages/all-transaction/all-transaction";
-import { AllTransactionPageModule } from "../pages/all-transaction/all-transaction.module";
 import { TransactionProductPageModule } from "../pages/transaction-product/transaction-product.module";
 import { TransactionProductPage } from "../pages/transaction-product/transaction-product";
 import { AddProductCategoryPageModule } from "../pages/add-product-category/add-product-category.module";
@@ -68,7 +62,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     IonicModule.forRoot(MyApp, { preloadModules: true }),
     IonicStorageModule.forRoot(),
     LoginPageModule,
-    SignUpPageModule,
     TransactionHomePageModule,
     TransactionProductPageModule,
     AddProductPageModule,
@@ -89,7 +82,6 @@ export function HttpLoaderFactory(http: HttpClient) {
   entryComponents: [
     MyApp,
     LoginPage,
-    SignUpPage,
     TransactionHomePage,
     TransactionProductPage,
     AddProdSignupPage,

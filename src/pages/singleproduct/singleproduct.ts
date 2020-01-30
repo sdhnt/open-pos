@@ -3,13 +3,11 @@ import { NavController, NavParams, Tabs, ModalController, Events, AlertControlle
 import { BarcodeScanner } from "@ionic-native/barcode-scanner";
 import { StorageProvider } from "../../providers/storage/storage";
 import { ToastController } from "ionic-angular";
-import { ProductListPage } from "../product-list/product-list";
 import { Camera, CameraOptions } from "@ionic-native/camera";
 import firebase from "firebase";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { TranslateModule } from "@ngx-translate/core";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
-import { DashboardPage } from "../dashboard/dashboard";
 import { UpdateStockPage } from "../update-stock/update-stock";
 
 @Component({

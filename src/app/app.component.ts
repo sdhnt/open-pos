@@ -3,24 +3,15 @@ import { Nav, Platform, ToastController, App } from "ionic-angular";
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 
-import { DashboardPage } from "../pages/dashboard/dashboard";
 import { LoginPage } from "../pages/login/login";
 
 import * as firebase from "firebase";
 import { TransactionHomePage } from "../pages/transaction-home/transaction-home";
-import { SummaryHomePage } from "../pages/summary-home/summary-home";
-import { CoachHomePage } from "../pages/coach-home/coach-home";
-import { ContactUsPage } from "../pages/contact-us/contact-us";
 import { StorageProvider } from "../providers/storage/storage";
-import { ExpensesHomePage } from "../pages/expenses-home/expenses-home";
 import { UserProfilePage } from "../pages/user-profile/user-profile";
 import { TranslateConfigService } from "../providers/translation/translate-config.service";
 import { TranslateService } from "@ngx-translate/core";
-import { LoanHomePage } from "../pages/loan-home/loan-home";
 import { FcmService } from "../providers/firebase-cloud-messaging/fcm.service";
-import { SummarySummaryPage } from "../pages/summary-summary/summary-summary";
-import { ExpenseTransactionPage } from "../pages/expense-transaction/expense-transaction";
-import { AddProdSignupPage } from "../pages/add-prod-signup/add-prod-signup";
 
 @Component({
   templateUrl: "app.html",
@@ -107,11 +98,6 @@ export class MyApp {
 
   resetBackButton: any;
 
-  private setupNotifications() {
-    console.log("setting up notifications");
-    this.fcm.getToken();
-    this.fcm.onNotifications();
-  }
 
   ionViewDidEnter() {}
 

@@ -3,8 +3,6 @@ import { IonicPage, NavController, NavParams, Events, ToastController, ViewContr
 import { StorageProvider } from "../../providers/storage/storage";
 import firebase from "firebase";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
-import { ProductListPage } from "../product-list/product-list";
-import { DashboardPage } from "../dashboard/dashboard";
 import { GeolocationService } from "../../providers/geolocation/geolocation.service";
 
 /**

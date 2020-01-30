@@ -9,7 +9,6 @@ import {
   Events,
 } from "ionic-angular";
 import firebase, { auth } from "firebase";
-import { SignUpPage } from "../sign-up/sign-up";
 import { TransactionHomePage } from "../transaction-home/transaction-home";
 import { StorageProvider } from "../../providers/storage/storage";
 
@@ -253,9 +252,9 @@ export class LoginPage {
       .present();
   }
 
-  gotoSignUp() {
-    this.navCtrl.push(SignUpPage);
-  }
+  // gotoSignUp() {
+  //   this.navCtrl.push(SignUpPage);
+  // }
 
   loginProcedure() {
     this.zone.run(() => {

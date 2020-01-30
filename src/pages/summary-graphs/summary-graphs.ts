@@ -251,7 +251,6 @@ export class SummaryGraphsPage {
   //   return t;
   // }
 
-  
   async updateCb(transacsum) {
     this.getUserData();
     this.userdata.cash_balance = (parseFloat(this.userdata.cash_balance) - parseFloat(transacsum)).toString();
@@ -259,11 +258,9 @@ export class SummaryGraphsPage {
   }
 
   delTransac(transac) {
-    
     this.sp.storageReady().then(async () => {
       // transac.itemslist.forEach(async product => {
       //   if (product.code != "000000") {
-
 
       //     const data1 = {
       //       code: product.code,
