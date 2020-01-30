@@ -251,10 +251,36 @@ export class SummaryGraphsPage {
   //   return t;
   // }
 
+  
+  async updateCb(transacsum) {
+    this.getUserData();
+    this.userdata.cash_balance = (parseFloat(this.userdata.cash_balance) - parseFloat(transacsum)).toString();
+    this.sp.setUserDat(this.userdata);
+  }
+
   delTransac(transac) {
+    
     this.sp.storageReady().then(async () => {
+      // transac.itemslist.forEach(async product => {
+      //   if (product.code != "000000") {
+
+
+      //     const data1 = {
+      //       code: product.code,
+      //       name: product.name,
+      //       price: product.price,
+      //       wholesale_price: product.wholesale_price,
+      //       cost: product.cost,
+      //       cat: product.cat,
+      //       url: product.url,
+      //       stock_qty: product.stock_qty + (product.qty-1),//need to be current stock qty
+      //     };
+      //   await this.sp.updateProduct(data1, product.code);
+      //   }
+      // });
       await this.sp.deleteTransactions(transac);
-      this.sp.backupStorage();
+      await this.updateCb(transac.totalatax);
+
       setTimeout(() => {
         const message = this.translateConfigService.getTranslatedMessage("Finish");
         const toast = this.toastCtrl.create({
@@ -262,6 +288,7 @@ export class SummaryGraphsPage {
           message: message.value,
           duration: 3000,
         });
+        this.sp.backupStorage();
         this.getTransac();
         toast.present();
       }, 1000);

@@ -118,7 +118,7 @@
                 {{product.name}}
               </ion-col>
               <ion-col col-6 *ngIf="product.qty==0">
-                <ion-buttons end>
+                <ion-buttons end *ngIf="event1!=true">
                   <button ion-button full small  style="background-color:green;" (click)="sellProd(product)">{{"Sell"|translate}}</button>
                 </ion-buttons>
               </ion-col>
@@ -210,7 +210,7 @@
                       </ion-row>
                 </div> -->
             
-        <ion-row>
+        <ion-row *ngIf="event1!=true">
           <ion-col col-12> 
             <button ion-button full end color="dark" (click)="viewEditProduct(product)">{{"View / Edit"|translate}}</button> 
           </ion-col>

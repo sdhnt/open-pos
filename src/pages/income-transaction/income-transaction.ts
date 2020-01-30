@@ -382,7 +382,6 @@ export class IncomeTransactionPage {
     const message2 = this.translateConfigService.getTranslatedMessage("Edit Receipt Details");
     const message3 = this.translateConfigService.getTranslatedMessage("Enter Information");
 
-    
     const message4 = this.translateConfigService.getTranslatedMessage("Add Logo");
     const message5 = this.translateConfigService.getTranslatedMessage("Remove Logo");
 

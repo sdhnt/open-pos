@@ -53,7 +53,7 @@
 </ion-item>
   <ion-row>
       <button full ion-button (click)="toggleGL()" *ngIf="islist==0" style="background-color: orange;">{{"View Graph"|translate}}</button>
-      <button full ion-button (click)="toggleList()" *ngIf="isgraph==0" style="background-color: black;">{{"View List"|translate}}</button>
+      <button full ion-button (click)="toggleList()" *ngIf="isgraph==0" style="background-color: black;">{{"Hide Graph"|translate}}</button>
   </ion-row>
 <!-- <button ion-button full round style="background-color: black; color: white;" (click)="toggleGL()" *ngIf="isgraph==1">View as List</button>
 <button ion-button full round style="background-color: black; color: white;" (click)="toggleGL()" *ngIf="isgraph==0">View as Graph</button> -->
@@ -79,7 +79,7 @@
 </div>
 
 
-<ion-grid [hidden]="islist">
+<ion-grid>
   <!-- <ion-row style="border: solid 1px black;">
     <ion-col style="border: solid 1px black; background-color: black;color: white; text-align: left;" col-8><b>{{"Current Cash Balance"|translate}}</b></ion-col>
     <ion-col style="border: solid 1px black ;color: white; text-align: end;" col-4><b>

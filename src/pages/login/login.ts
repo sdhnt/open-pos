@@ -125,18 +125,20 @@ export class LoginPage {
   contactphone = "loading...";
   getInfo() {
     const msg = this.translateConfigService.getTranslatedMessage("Helpline");
-   
+
     firebase
       .firestore()
       .collection("contact-us")
       .get()
       .then(doc => {
         this.contactphone = doc.docs[0].data().phone;
-        const abc = this.alertCtrl.create({
-          //@ts-ignore
-          title: msg.value,
-          subTitle: this.contactphone,
-        }).present();
+        const abc = this.alertCtrl
+          .create({
+            //@ts-ignore
+            title: msg.value,
+            subTitle: this.contactphone,
+          })
+          .present();
       });
   }
 
@@ -681,7 +683,6 @@ export class LoginPage {
           this.alertCtrl
             .create({
               message: "SMS not sent: " + error,
-             
             })
             .present();
           console.log("SMS Not Sent: " + error);
