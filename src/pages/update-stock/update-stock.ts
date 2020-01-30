@@ -47,6 +47,7 @@ export class UpdateStockPage {
   currtime = new Date();
   geolocation: {};
   userdata: any;
+  damage: number=0;
 
   ionViewWillLoad() {
     this.product = this.navParams.get("data");
@@ -100,6 +101,14 @@ export class UpdateStockPage {
         .present();
     } else {
       console.log(this.prodqty + " " + this.prodcost);
+      if(this.damage){
+
+      }
+      else{
+        this.damage=0;
+      }
+
+      this.prodqty=this.prodqty-this.damage;
       const itemslist = [];
       const prodidlist = [];
       const pnllist = [];

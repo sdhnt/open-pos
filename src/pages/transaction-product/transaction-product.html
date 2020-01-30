@@ -210,7 +210,7 @@
                       </ion-row>
                 </div> -->
             
-        <ion-row *ngIf="event1!=true">
+        <ion-row *ngIf="event1!=true&&product.qty==0">
           <ion-col col-12> 
             <button ion-button full end color="dark" (click)="viewEditProduct(product)">{{"View / Edit"|translate}}</button> 
           </ion-col>
