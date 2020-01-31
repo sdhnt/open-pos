@@ -78,33 +78,7 @@ export class TransactionHomePage {
       await this.getUserData();
     });
 
-    firebase
-    .firestore()
-    .collection("version")
-    .get()
-    .then(doc=>{
-      let newestVersion = doc.docs[0].data().version;
-      if(this.THIS_VERSION != newestVersion){
-        let alert = this.alertCtrl.create({
-          title: "Update avaiable",
-          subTitle: "There is a new update availabe for this app",
-          buttons: [
-            {
-              text: "Not Now",
-              role: "cancel"
-            },
-            {
-              text: "Update now",
-              handler: () => {
-                //add navigation to Google Play Store
-                console.log("Clicked update");
-              }
-            }
-          ]
-        });
-        alert.present();
-      }
-    });
+    
   }
 
    THIS_VERSION: String = "0.0.6";
