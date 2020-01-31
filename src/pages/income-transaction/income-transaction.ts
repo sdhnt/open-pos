@@ -116,13 +116,24 @@ export class IncomeTransactionPage {
       .line(this.userdata.business_address)
       .line(this.userdata.businesstype)
       .line(this.userdata.ph_no)
-      .align("left")
       .newline()
       .line(this.getDateTime(transac.datetime))
       .align("center")
       .text(commands.HORIZONTAL_LINE.HR_58MM)
       .newline();
+    
+        result
+          //.raw(commands.FEED_CONTROL_SEQUENCES.RST_HT)
+          //.raw(commands.FEED_CONTROL_SEQUENCES.SET_HT)
+          .text("Item Name           ") //10 char + 10 char
+          .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+          .text("Qty ") //4 char
+          .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+          .text("Price   ") //8 char
+          .newline()
+          .newline();
 
+    
     transac.itemslist.forEach(element => {
       element.qty = element.qty.toString();
       element.price = element.price.toString();
@@ -150,6 +161,11 @@ export class IncomeTransactionPage {
       } else {
         element.price.substring(0, 8);
       }
+
+      
+
+
+      
       result
 
         .text(element.name) //19 + space
@@ -159,34 +175,36 @@ export class IncomeTransactionPage {
         .text(element.price) //7+space
 
         .newline();
-      if (parseFloat(element.discount) != 0) {
-        result
-          .text("Discount (" + Math.round(parseFloat(element.discount) * 100) / 100 + "%) : ", 30)
-          .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
-          .text("")
-          .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
-          .text("-" + Math.round((element.price * element.discount * element.qty) / 100))
-          .newline();
+
+        if (parseFloat(element.discount) != 0) {
+          result
+            .text("Discount (" + Math.round(parseFloat(element.discount) * 100) / 100 + "%) : ")
+            
+            .text("-" + Math.round((element.price * element.discount * element.qty) / 100))
+            .newline();
+        }
+      });
+      let spacer1="                  ";
+      let spacer2="    ";
+      let spacer3="          ";
+      result.newline();
+      result.align("center").line(spacer1+"Total:" + transac.totalsum);
+      if (this.lastsumAfterIndividualDiscount != this.lastsumdisc) {
+        result.line(spacer2+"After Discount (" + Math.round(this.discount * 100) / 100 + "%): " + transac.totaldisc);
       }
-    });
-    result.newline();
-    result.align("right").line("Total: " + transac.totalsum);
-    if (transac.totalsum != transac.totaldisc) {
-      result.line(" After Discount (" + Math.round(transac.discount * 100) / 100 + "%): " + transac.totaldisc);
-    }
-    if (transac.totalsum != transac.totalatax) {
-      result.line("After Tax (" + Math.round(transac.taxrate * 100) / 100 + "%): " + transac.totalatax);
-    }
+      if (this.lastsumAfterIndividualDiscount != this.lastsumtax) {
+        result.line(spacer3+"After Tax (" + Math.round(this.taxrate * 100) / 100 + "%): " +  transac.totalatax);
+      }
+    
+
     result
       .raw(commands.TEXT_FORMAT.TXT_4SQUARE)
       .newline()
       .line("")
       .newline()
-      .line("")
-      .newline()
       .cut("full");
-
     this.mountAlertBt(result.encode());
+
   }
 
   async getUserData() {
@@ -1006,7 +1024,8 @@ export class IncomeTransactionPage {
       result
         .align("center")
         .image(img, 256, 256, "atkinson", 128)
-        .newline()
+        .newline();
+        result
         .codepage("cp936")
         .align("center")
         .raw(commands.TEXT_FORMAT.TXT_4SQUARE)
@@ -1015,7 +1034,6 @@ export class IncomeTransactionPage {
         .line(this.userdata.business_address)
         .line(this.userdata.businesstype)
         .line(this.userdata.ph_no)
-        .align("left")
         .newline()
         .line(this.getDateTime(this.datetime))
         .align("center")
@@ -1023,14 +1041,13 @@ export class IncomeTransactionPage {
         .newline();
       if (this.datastore != null) {
         result
-          .align("left")
           //.raw(commands.FEED_CONTROL_SEQUENCES.RST_HT)
           //.raw(commands.FEED_CONTROL_SEQUENCES.SET_HT)
           .text("Item Name           ") //10 char + 10 char
           .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
           .text("Qty ") //4 char
           .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
-          .text("  Price") //8 char
+          .text("Price   ") //8 char
           .newline()
           .newline();
 
@@ -1072,28 +1089,27 @@ export class IncomeTransactionPage {
             .newline();
           if (parseFloat(element.discount) != 0) {
             result
-              .text("Discount (" + Math.round(parseFloat(element.discount) * 100) / 100 + "%) : ", 30)
-              .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
-              .text("")
-              .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+              .text("Discount (" + Math.round(parseFloat(element.discount) * 100) / 100 + "%) : ")
+              
               .text("-" + Math.round((element.price * element.discount * element.qty) / 100))
               .newline();
           }
         });
+        let spacer1="                  ";
+        let spacer2="    ";
+        let spacer3="         ";
         result.newline();
-        result.align("right").line("Total: " + this.lastsumAfterIndividualDiscount);
+        result.align("center").line(spacer1+"Total: " + this.lastsumAfterIndividualDiscount);
         if (this.lastsumAfterIndividualDiscount != this.lastsumdisc) {
-          result.line(" After Discount (" + Math.round(this.discount * 100) / 100 + "%): " + this.lastsumdisc);
+          result.line(spacer2+"After Discount (" + Math.round(this.discount * 100) / 100 + "%): " + this.lastsumdisc);
         }
         if (this.lastsumAfterIndividualDiscount != this.lastsumtax) {
-          result.line("After Tax (" + Math.round(this.taxrate * 100) / 100 + "%): " + this.lastsumtax);
+          result.line(spacer3+"After Tax (" + Math.round(this.taxrate * 100) / 100 + "%): " + this.lastsumtax);
         }
       }
 
       result
         .raw(commands.TEXT_FORMAT.TXT_4SQUARE)
-        .newline()
-        .line("")
         .newline()
         .line("")
         .newline()
@@ -1137,7 +1153,6 @@ export class IncomeTransactionPage {
         .line(this.userdata.business_address)
         .line(this.userdata.businesstype)
         .line(this.userdata.ph_no)
-        .align("left")
         .newline()
         .line(this.getDateTime(this.datetime))
         .align("center")
@@ -1145,14 +1160,13 @@ export class IncomeTransactionPage {
         .newline();
       if (this.datastore != null) {
         result
-          .align("left")
           //.raw(commands.FEED_CONTROL_SEQUENCES.RST_HT)
           //.raw(commands.FEED_CONTROL_SEQUENCES.SET_HT)
           .text("Item Name           ") //10 char + 10 char
           .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
           .text("Qty ") //4 char
           .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
-          .text("  Price") //8 char
+          .text("Price   ") //8 char
           .newline()
           .newline();
 
@@ -1194,21 +1208,22 @@ export class IncomeTransactionPage {
             .newline();
           if (parseFloat(element.discount) != 0) {
             result
-              .text("Discount (" + Math.round(parseFloat(element.discount) * 100) / 100 + "%) : ", 30)
-              .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
-              .text("")
-              .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+              .text("Discount (" + Math.round(parseFloat(element.discount) * 100) / 100 + "%) : ")
+              
               .text("-" + Math.round((element.price * element.discount * element.qty) / 100))
               .newline();
           }
         });
+        let spacer1="                  ";
+        let spacer2="    ";
+        let spacer3="         ";
         result.newline();
-        result.align("right").line("Total: " + this.lastsumAfterIndividualDiscount);
+        result.align("center").line(spacer1+"Total: " + this.lastsumAfterIndividualDiscount);
         if (this.lastsumAfterIndividualDiscount != this.lastsumdisc) {
-          result.line(" After Discount (" + Math.round(this.discount * 100) / 100 + "%): " + this.lastsumdisc);
+          result.line(spacer2+"After Discount (" + Math.round(this.discount * 100) / 100 + "%): " + this.lastsumdisc);
         }
         if (this.lastsumAfterIndividualDiscount != this.lastsumtax) {
-          result.line("After Tax (" + Math.round(this.taxrate * 100) / 100 + "%): " + this.lastsumtax);
+          result.line(spacer3+"After Tax (" + Math.round(this.taxrate * 100) / 100 + "%): " + this.lastsumtax);
         }
       }
 
@@ -1217,10 +1232,7 @@ export class IncomeTransactionPage {
         .newline()
         .line("")
         .newline()
-        .line("")
-        .newline()
         .cut("full");
-
       this.mountAlertBt(result.encode());
     }
   }
