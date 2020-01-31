@@ -41,3 +41,8 @@ exports.syncUserCount = functions
 //   await syncArchive(db, { calculateBusinessPerformance: false });
 //   res.status(200).send(`request received with limit: 100`);
 // });
+
+exports.getVersionNumber = functions.https.onRequest((req, res) => {
+  const versionNumber = "0.0.6";
+  res.status(200).json({ versionNumber });
+});
