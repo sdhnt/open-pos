@@ -118,9 +118,9 @@ export class AddProductPage {
       targetWidth: 300,
       allowEdit: false,
     };
-    const msg1=this.translateConfigService.getTranslatedMessage("Gallery or Camera?");
-    const msg2=this.translateConfigService.getTranslatedMessage("Gallery");
-    const msg3=this.translateConfigService.getTranslatedMessage("Camera");
+    const msg1 = this.translateConfigService.getTranslatedMessage("Gallery or Camera?");
+    const msg2 = this.translateConfigService.getTranslatedMessage("Gallery");
+    const msg3 = this.translateConfigService.getTranslatedMessage("Camera");
     this.alertCtrl
       .create({
         //@ts-ignore
