@@ -143,18 +143,25 @@ export class SingleProductPage {
       targetWidth: 300,
       allowEdit: false,
     };
+
+    const msg1=this.translateConfigService.getTranslatedMessage("Gallery or Camera?");
+    const msg2=this.translateConfigService.getTranslatedMessage("Gallery");
+    const msg3=this.translateConfigService.getTranslatedMessage("Camera");
     this.alertCtrl
       .create({
-        message: "Gallery or Camera?",
+        //@ts-ignore
+        message: msg1.value,
         buttons: [
           {
-            text: "Camera",
+            //@ts-ignore
+            text: msg3.value,
             handler: () => {
               this.launchCamera(options);
             },
           },
           {
-            text: "Gallery",
+            //@ts-ignore
+            text: msg2.value,
             handler: () => {
               this.launchCamera(options1);
             },
