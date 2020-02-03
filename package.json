@@ -25,6 +25,7 @@
     "@angular/http": "5.2.11",
     "@angular/platform-browser": "5.2.11",
     "@angular/platform-browser-dynamic": "5.2.11",
+    "@ionic-native/app-version": "^4.20.0",
     "@ionic-native/barcode-scanner": "^4.20.0",
     "@ionic-native/bluetooth-serial": "^4.20.0",
     "@ionic-native/camera": "^4.20.0",
@@ -42,6 +43,7 @@
     "@ionic/storage": "^2.2.0",
     "@ngx-translate/core": "^9.1.1",
     "@ngx-translate/http-loader": "^2.0.1",
+    "axios": "^0.19.2",
     "chart.js": "^2.9.3",
     "cordova": "^9.0.0",
     "cordova-android": "^8.1.0",
@@ -49,6 +51,7 @@
     "cordova-browser": "^6.0.0",
     "cordova-plugin-androidx": "^1.0.2",
     "cordova-plugin-androidx-adapter": "^1.1.0",
+    "cordova-plugin-app-version": "^0.1.9",
     "cordova-plugin-backbutton": "0.3.0",
     "cordova-plugin-bluetooth-serial": "^0.4.7",
     "cordova-plugin-camera": "4.1.0",
@@ -125,7 +128,8 @@
       "cordova-android-support-gradle-release": {},
       "cordova-plugin-bluetooth-serial": {},
       "cordova-plugin-backbutton": {},
-      "cordova-plugin-geolocation": {}
+      "cordova-plugin-geolocation": {},
+      "cordova-plugin-app-version": {}
     },
     "platforms": [
       "browser",
