@@ -6,6 +6,10 @@ admin.initializeApp({
   databaseURL: "https://open-fintech.firebaseio.com",
 });
 const db = admin.firestore();
+const express = require("express");
+const cors = require("cors");
+const app = express();
+app.use(cors({ origin: true }));
 const { syncArchive } = require("./methods/sync-archive");
 
 const largeRuntimeConfig = {
@@ -41,3 +45,9 @@ exports.syncUserCount = functions
 //   await syncArchive(db, { calculateBusinessPerformance: false });
 //   res.status(200).send(`request received with limit: 100`);
 // });
+
+app.get("/", (req, res) => {
+  const versionNumber = "0.0.8";
+  res.status(200).json({ versionNumber });
+});
+exports.getVersionNumber = functions.https.onRequest(app);
