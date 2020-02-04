@@ -18,7 +18,6 @@ import { StorageProvider } from "../../providers/storage/storage";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import { LoginPage } from "../login/login";
 import { ContactUsPage } from "../contact-us/contact-us";
-import { text } from "@angular/core/src/render3/instructions";
 import { SummaryGraphsPage } from "../summary-graphs/summary-graphs";
 import { AppVersion } from "@ionic-native/app-version";
 import axios from "axios";
@@ -80,6 +79,10 @@ export class TransactionHomePage {
     this.events.subscribe("cbUpdate:created", async data => {
       await this.getUserData();
     });
+    const mg1=this.translateConfigService.getTranslatedMessage("Update available");
+    const mg2=this.translateConfigService.getTranslatedMessage("Update the app");
+    const mg3=this.translateConfigService.getTranslatedMessage("Not Now");
+    const mg4=this.translateConfigService.getTranslatedMessage("Update now");
     axios.get("https://us-central1-open-fintech.cloudfunctions.net/getVersionNumber")
     .then(response => {
       let newestVersion = response.data.versionNumber;
@@ -87,15 +90,19 @@ export class TransactionHomePage {
         console.log(version);
         if(newestVersion>version){
           this.alertCtrl.create({
-            title: "Update available",
-            subTitle: "Update the app",
+            //@ts-ignore
+            title: mg1.value,
+            //@ts-ignore
+            subTitle: mg2.value,
             buttons: [
               {
-                text: "Not Now",
+                //@ts-ignore
+                text: mg3.value,
                 role: "cancel"
               },
               {
-                text: "Update now",
+                //@ts-ignore
+                text: mg4.value,
                 handler: () => {
                   //window.open("https://play.google.com/store/apps/details?id=com.openfintech.openpos", "_system", "location=yes");
                   market.open("com.openfintech.openpos").then(()=>{
