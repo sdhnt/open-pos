@@ -21,9 +21,8 @@ import { ContactUsPage } from "../contact-us/contact-us";
 import { text } from "@angular/core/src/render3/instructions";
 import { SummaryGraphsPage } from "../summary-graphs/summary-graphs";
 import { AppVersion } from "@ionic-native/app-version";
-import { Observable } from "rxjs/Observable";
-import { HttpClient } from "@angular/common/http";
 import axios from "axios";
+import { Market } from "@ionic-native/market";
 
 /**
  * Generated class for the TransactionHomePage page.
@@ -59,7 +58,7 @@ export class TransactionHomePage {
     public alertCtrl: AlertController,
     private modal: ModalController,
     private appVersion: AppVersion,
-    private httpClient: HttpClient
+    private market: Market,
   ) {
     this.userdata.language = this.translateConfigService.getCurrentLanguage();
     //this.getUserData();
@@ -98,7 +97,12 @@ export class TransactionHomePage {
               {
                 text: "Update now",
                 handler: () => {
-                  window.open("https://play.google.com/store/apps/details?id=com.openfintech.openpos", "_system", "location=yes");
+                  //window.open("https://play.google.com/store/apps/details?id=com.openfintech.openpos", "_system", "location=yes");
+                  market.open("com.openfintech.openpos").then(()=>{
+                    console.log("Opened Google play");
+                  }).catch((error)=>{
+                    console.log(error);
+                  });
                 },
               }
             ]
@@ -106,6 +110,8 @@ export class TransactionHomePage {
         } else {
           console.log("Version same");
         }
+      }).catch(error=>{
+        console.log(error);
       });
     })
     .catch(error=>{
