@@ -62,6 +62,12 @@
     },
     "cordova-plugin-geolocation": {
       "PACKAGE_NAME": "com.openfintech.pos"
+    },
+    "cordova-plugin-app-version": {
+      "PACKAGE_NAME": "com.openfintech.openpos"
+    },
+    "cordova-plugin-market": {
+      "PACKAGE_NAME": "com.openfintech.openpos"
     }
   },
   "dependent_plugins": {

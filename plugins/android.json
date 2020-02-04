@@ -76,6 +76,12 @@
     "phonegap-plugin-barcodescanner": {
       "ANDROID_SUPPORT_V4_VERSION": "27.+",
       "PACKAGE_NAME": "com.openfintech.openpos"
+    },
+    "cordova-plugin-app-version": {
+      "PACKAGE_NAME": "com.openfintech.openpos"
+    },
+    "cordova-plugin-market": {
+      "PACKAGE_NAME": "com.openfintech.openpos"
     }
   },
   "dependent_plugins": {

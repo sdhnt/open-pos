@@ -9,11 +9,11 @@
   </ion-refresher>
 
 
- <ion-fab right bottom>
+ <ion-fab right bottom #fab>
    <button ion-fab style="background-color: green;"><ion-icon name="add"></ion-icon></button>
    <ion-fab-list side="left">
-     <button ion-button style="background-color:green;" (click)="navAdd(1)">{{ "Add Product" | translate }}</button>
-     <button ion-button style="background-color: green;" (click)="navAdd(2)">{{ "Add Category" | translate }}</button>
+     <button ion-button style="background-color:green;" (click)="navAdd(1, fab)">{{ "Add Product" | translate }}</button>
+     <button ion-button style="background-color: green;" (click)="navAdd(2, fab)">{{ "Add Category" | translate }}</button>
    </ion-fab-list>
  </ion-fab>
 

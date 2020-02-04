@@ -141,6 +141,22 @@ module.exports = [
         "clobbers": [
             "navigator.Backbutton"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-app-version/www/AppVersionPlugin.js",
+        "id": "cordova-plugin-app-version.AppVersionPlugin",
+        "pluginId": "cordova-plugin-app-version",
+        "clobbers": [
+            "cordova.getAppVersion"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-market/www/market.js",
+        "id": "cordova-plugin-market.Market",
+        "pluginId": "cordova-plugin-market",
+        "clobbers": [
+            "cordova.plugins.market"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -164,7 +180,9 @@ module.exports.metadata =
     "cordova-android-support-gradle-release": "3.0.1",
     "cordova-plugin-bluetooth-serial": "0.4.7",
     "cordova-plugin-backbutton": "0.3.0",
-    "cordova-plugin-geolocation": "4.0.2"
+    "cordova-plugin-geolocation": "4.0.2",
+    "cordova-plugin-app-version": "0.1.9",
+    "cordova-plugin-market": "1.2.0"
 }
 // BOTTOM OF METADATA
 });

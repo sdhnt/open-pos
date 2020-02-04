@@ -8,7 +8,6 @@ import {
   Events,
   AlertController,
   ModalController,
-  Modal,
 } from "ionic-angular";
 import firebase from "firebase";
 import { AddProductPage } from "../addproduct/addproduct";
@@ -21,7 +20,9 @@ import { LoginPage } from "../login/login";
 import { ContactUsPage } from "../contact-us/contact-us";
 import { text } from "@angular/core/src/render3/instructions";
 import { SummaryGraphsPage } from "../summary-graphs/summary-graphs";
-import { STATE_NEW } from "ionic-angular/umd/navigation/nav-util";
+import { AppVersion } from "@ionic-native/app-version";
+import axios from "axios";
+import { Market } from "@ionic-native/market";
 
 /**
  * Generated class for the TransactionHomePage page.
@@ -56,6 +57,8 @@ export class TransactionHomePage {
     public events: Events,
     public alertCtrl: AlertController,
     private modal: ModalController,
+    private appVersion: AppVersion,
+    private market: Market,
   ) {
     this.userdata.language = this.translateConfigService.getCurrentLanguage();
     //this.getUserData();
@@ -77,11 +80,44 @@ export class TransactionHomePage {
     this.events.subscribe("cbUpdate:created", async data => {
       await this.getUserData();
     });
-
-    
+    axios.get("https://us-central1-open-fintech.cloudfunctions.net/getVersionNumber")
+    .then(response => {
+      let newestVersion = response.data.versionNumber;
+      this.appVersion.getVersionNumber().then(version => {
+        console.log(version);
+        if(newestVersion>version){
+          this.alertCtrl.create({
+            title: "Update available",
+            subTitle: "Update the app",
+            buttons: [
+              {
+                text: "Not Now",
+                role: "cancel"
+              },
+              {
+                text: "Update now",
+                handler: () => {
+                  //window.open("https://play.google.com/store/apps/details?id=com.openfintech.openpos", "_system", "location=yes");
+                  market.open("com.openfintech.openpos").then(()=>{
+                    console.log("Opened Google play");
+                  }).catch((error)=>{
+                    console.log(error);
+                  });
+                },
+              }
+            ]
+          }).present();
+        } else {
+          console.log("Version same");
+        }
+      }).catch(error=>{
+        console.log(error);
+      });
+    })
+    .catch(error=>{
+      console.log(error);
+    });
   }
-
-   THIS_VERSION: String = "0.0.6";
 
   async ionViewDidEnter() {
     console.log("ionViewDidLoad TransactionHomePage");
