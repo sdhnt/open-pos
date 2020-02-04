@@ -138,6 +138,10 @@ export class UserProfilePage {
   //     });
   // }
 
+  goBack(){
+    this.navCtrl.pop();
+  }
+
   getUser() {
     this.sp.storageReady().then(() => {
       this.sp.getUserDat().then(user => {
