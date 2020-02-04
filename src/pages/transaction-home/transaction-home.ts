@@ -79,51 +79,60 @@ export class TransactionHomePage {
     this.events.subscribe("cbUpdate:created", async data => {
       await this.getUserData();
     });
-    const mg1=this.translateConfigService.getTranslatedMessage("Update available");
-    const mg2=this.translateConfigService.getTranslatedMessage("Update the app");
-    const mg3=this.translateConfigService.getTranslatedMessage("Not Now");
-    const mg4=this.translateConfigService.getTranslatedMessage("Update now");
-    axios.get("https://us-central1-open-fintech.cloudfunctions.net/getVersionNumber")
-    .then(response => {
-      let newestVersion = response.data.versionNumber;
-      this.appVersion.getVersionNumber().then(version => {
-        console.log(version);
-        if(newestVersion>version){
-          this.alertCtrl.create({
-            //@ts-ignore
-            title: mg1.value,
-            //@ts-ignore
-            subTitle: mg2.value,
-            buttons: [
-              {
-                //@ts-ignore
-                text: mg3.value,
-                role: "cancel"
-              },
-              {
-                //@ts-ignore
-                text: mg4.value,
-                handler: () => {
-                  //window.open("https://play.google.com/store/apps/details?id=com.openfintech.openpos", "_system", "location=yes");
-                  market.open("com.openfintech.openpos").then(()=>{
-                    console.log("Opened Google play");
-                  }).catch((error)=>{
-                    console.log(error);
-                  });
-                },
-              }
-            ]
-          }).present();
-        } else {
-          console.log("Version same");
-        }
-      }).catch(error=>{
+    const mg1 = this.translateConfigService.getTranslatedMessage("Update available");
+    const mg2 = this.translateConfigService.getTranslatedMessage("Update the app");
+    const mg3 = this.translateConfigService.getTranslatedMessage("Not Now");
+    const mg4 = this.translateConfigService.getTranslatedMessage("Update now");
+    axios
+      .get("https://us-central1-open-fintech.cloudfunctions.net/getVersionNumber")
+      .then(response => {
+        const newestVersion = response.data.versionNumber;
+        this.appVersion
+          .getVersionNumber()
+          .then(version => {
+            console.log(version);
+            if (newestVersion > version) {
+              this.alertCtrl
+                .create({
+                  //@ts-ignore
+                  title: mg1.value,
+                  //@ts-ignore
+                  subTitle: mg2.value,
+                  buttons: [
+                    {
+                      //@ts-ignore
+                      text: mg3.value,
+                      role: "cancel",
+                    },
+                    {
+                      //@ts-ignore
+                      text: mg4.value,
+                      handler: () => {
+                        //window.open("https://play.google.com/store/apps/details?id=com.openfintech.openpos", "_system", "location=yes");
+                        market
+                          .open("com.openfintech.openpos")
+                          .then(() => {
+                            console.log("Opened Google play");
+                          })
+                          .catch(error => {
+                            console.log(error);
+                          });
+                      },
+                    },
+                  ],
+                })
+                .present();
+            } else {
+              console.log("Version same");
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      })
+      .catch(error => {
         console.log(error);
       });
-    })
-    .catch(error=>{
-      console.log(error);
-    });
   }
 
   async ionViewDidEnter() {
