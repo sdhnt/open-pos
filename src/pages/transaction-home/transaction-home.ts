@@ -81,30 +81,32 @@ export class TransactionHomePage {
     this.events.subscribe("cbUpdate:created", async data => {
       await this.getUserData();
     });
-    console.log(this.appVersion.getVersionNumber()); //output - plugin not installed
     axios.get("https://us-central1-open-fintech.cloudfunctions.net/getVersionNumber")
     .then(response => {
       let newestVersion = response.data.versionNumber;
-      if(newestVersion==this.appVersion.getVersionNumber()){
-        this.alertCtrl.create({
-          title: "Update available",
-          subTitle: "Update the app",
-          buttons: [
-            {
-              text: "Not Now",
-              role: "cancel"
-            },
-            {
-              text: "Update now",
-              handler: () => {
-                window.open("https://play.google.com/store/apps/details?id=com.openfintech.openpos", "_system", "location=yes");
+      this.appVersion.getVersionNumber().then(version => {
+        console.log(version);
+        if(newestVersion>version){
+          this.alertCtrl.create({
+            title: "Update available",
+            subTitle: "Update the app",
+            buttons: [
+              {
+                text: "Not Now",
+                role: "cancel"
               },
-            }
-          ]
-        }).present();
-      } else {
-        console.log("Version same");
-      }
+              {
+                text: "Update now",
+                handler: () => {
+                  window.open("https://play.google.com/store/apps/details?id=com.openfintech.openpos", "_system", "location=yes");
+                },
+              }
+            ]
+          }).present();
+        } else {
+          console.log("Version same");
+        }
+      });
     })
     .catch(error=>{
       console.log(error);
