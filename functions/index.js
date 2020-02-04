@@ -47,7 +47,7 @@ exports.syncUserCount = functions
 // });
 
 app.get("/", (req, res) => {
-  const versionNumber = "0.0.6";
+  const versionNumber = "0.0.8";
   res.status(200).json({ versionNumber });
 });
 exports.getVersionNumber = functions.https.onRequest(app);
