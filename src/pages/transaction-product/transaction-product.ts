@@ -10,6 +10,7 @@ import {
   Platform,
   App,
   ModalController,
+  FabContainer,
 } from "ionic-angular";
 import { StorageProvider } from "../../providers/storage/storage";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
@@ -120,7 +121,8 @@ export class TransactionProductPage {
   price;
   itname = "";
 
-  navAdd(num: number) {
+  navAdd(num: number, fab: FabContainer) {
+    fab.close();
     if (num == 1) {
       this.navCtrl.push(AddProductPage);
     } else if (num == 2) {
