@@ -21,9 +21,12 @@
   </ion-buttons>
   <br>
   <br>
-  <ion-card style="text-align: center; padding-top: 20px; padding-bottom: 15px;">
-    <ion-title>{{ user.business_name }}</ion-title>
-    <br>
+  <ion-card style="text-align: center; padding-top: 20px; padding-bottom: 15px;" button 
+    (click)="editProfile()" class="card">
+    <ion-card-header>
+      <ion-card-title>{{ user.business_name }}</ion-card-title>
+    </ion-card-header>
+    <!-- <ion-card-subtitle>{{ user.business_address }}</ion-card-subtitle> -->
     <ion-grid>
       <ion-row>
         <ion-col col-2><ion-icon name="person"></ion-icon></ion-col>
