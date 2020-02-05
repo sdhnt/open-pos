@@ -101,7 +101,7 @@ export class LoanHomePage {
   showloan = 0;
   loanvar: any = [];
   showloanform() {
-    this.showloan = 1;
+    this.showloan = this.showloan==1?0:1;
   }
 
   loan1;

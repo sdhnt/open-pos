@@ -30,10 +30,10 @@
         </ion-item> -->
         
       <ion-item>
-        <button ion-button (click)="askCamera()">{{'Take Picture' | translate}}</button>
+        <button ion-button (click)="askCamera()" color="dark">{{'Take Picture' | translate}}</button>
         <img *ngIf="image!=null" [src]="image" style="width: 100px;">
       </ion-item>
-      <button ion-button block color="primary" (click)="scanQR()">{{'Scan Barcode'| translate}}</button>
+      <button ion-button block color="primary" (click)="scanQR()" color="dark">{{'Scan Barcode'| translate}}</button>
 
       <ion-item>
         <ion-label>{{'Product Code:'| translate}}</ion-label>
@@ -72,7 +72,7 @@
 
     </ion-list>
   </form>
-  <button ion-button block color="primary" [disabled]="disabled" (click)="updateProduct()">{{'Update Product'| translate}}</button>
+  <button ion-button block color="dark" [disabled]="disabled" (click)="updateProduct()">{{'Update Product'| translate}}</button>
   <button ion-button block style="color: whitesmoke; background-color: gray;" (click)="discardChange()">{{"Discard Changes"|translate}}</button>
-  <button ion-button block color="danger" [disabled]="disabled" (click)="deleteproduct(product)">{{'Delete Product'| translate}}</button>
+  <button ion-button block color="danger" [disabled]="disabled" (click)="confirmDelete(product)">{{'Delete Product'| translate}}</button>
 </ion-content>

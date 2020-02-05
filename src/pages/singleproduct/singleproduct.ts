@@ -232,6 +232,27 @@ export class SingleProductPage {
     });
   }
 
+  confirmDelete(product){
+    let a = this.alertCtrl.create({
+      title: "Are you sure?",
+      buttons: [
+        {
+          //@ts-ignore
+          text: this.translateConfigService.getTranslatedMessage("Cancel").value,
+          role: "cancel"
+        },
+        {
+          //@ts-ignore
+          text: this.translateConfigService.getTranslatedMessage("Ok").value,
+          handler: ()=>{
+            this.deleteproduct(product);
+          }
+        }
+      ]
+    });
+    a.present();
+  }
+
   addCategory() {
     //console.log(this.listCat + " and "+this.newprodCat);
     if (this.newprodCat != "") {

@@ -6,8 +6,8 @@
 -->
 <div class="modal">
   <ion-header>
-    <ion-navbar>
-      <ion-title>{{"Update Stock"|translate}}</ion-title>
+    <ion-navbar color="dark">
+      <ion-title style="color: white;">{{"Update Stock"|translate}}</ion-title>
       <ion-buttons end>
         <button ion-button style="background-color: red; color: white;" (click)="dismiss()">{{"Close"|translate}}</button>
       </ion-buttons>
@@ -43,6 +43,6 @@
     </ion-list>
   </ion-content>
   <ion-footer padding>
-    <button ion-button block color="primary" (click)="addinventoryexpense()" color="dark">{{"Add Stock"|translate}}</button>
+    <button ion-button block (click)="addinventoryexpense()" style="background-color: #FFA500;">{{"Add Stock"|translate}}</button>
   </ion-footer>
 </div>
