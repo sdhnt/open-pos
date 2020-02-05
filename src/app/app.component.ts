@@ -8,7 +8,7 @@ import { LoginPage } from "../pages/login/login";
 import * as firebase from "firebase";
 import { TransactionHomePage } from "../pages/transaction-home/transaction-home";
 import { StorageProvider } from "../providers/storage/storage";
-import { UserProfilePage } from "../pages/user-profile/user-profile";
+import { UserDataPage } from "../pages/user-data/user-data";
 import { TranslateConfigService } from "../providers/translation/translate-config.service";
 import { TranslateService } from "@ngx-translate/core";
 import { FcmService } from "../providers/firebase-cloud-messaging/fcm.service";
@@ -118,7 +118,7 @@ export class MyApp {
   }
 
   openUserProfilePage() {
-    this.openPage({ component: UserProfilePage });
+    this.openPage({ component: UserDataPage });
   }
 
   userdata: any;

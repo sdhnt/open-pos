@@ -39,6 +39,7 @@ import { AddProductCategoryPageModule } from "../pages/add-product-category/add-
 import { AddProductCategoryPage } from "../pages/add-product-category/add-product-category";
 import { AddProdSignupPageModule } from "../pages/add-prod-signup/add-prod-signup.module";
 import { AddProdSignupPage } from "../pages/add-prod-signup/add-prod-signup";
+import { UserDataPageModule } from '../pages/user-data/user-data.module';
 
 const config = {
   apiKey: "AIzaSyBlxUkCX8OPsb9QL2p_jN8vaHdb5LhsS7A",
@@ -72,6 +73,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AddProdSignupPageModule,
     ReactiveFormsModule,
     HttpClientModule,
+    UserDataPageModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
