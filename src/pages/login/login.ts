@@ -53,7 +53,7 @@ export class LoginPage {
     //this.loadDropDowns();
     //this.getInfo();
     this.country_code = "95";
-    this.dis=0;
+    this.dis = 0;
     const loading = this.loadingCtrl.create({
       content: `
         <div class="custom-spinner-container">
@@ -120,7 +120,7 @@ export class LoginPage {
 
     this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
   }
-  dis=0;
+  dis = 0;
 
   contactphone = "loading...";
   getInfo() {
@@ -141,13 +141,13 @@ export class LoginPage {
           .present();
       });
   }
-  
-  timer=30;
-  startTimer(){
-    this.zone.run(()=>{
-      let interval = setInterval(()=>{
+
+  timer = 30;
+  startTimer() {
+    this.zone.run(() => {
+      const interval = setInterval(() => {
         this.timer--;
-        if(this.timer==0) clearInterval(interval);
+        if (this.timer == 0) clearInterval(interval);
       }, 1000);
     });
   }
@@ -331,7 +331,7 @@ export class LoginPage {
         message: "Please wait while account is created. This may take a few minutes",
         duration: 3000,
       });
-      this.dis=1;
+      this.dis = 1;
       await firebase
         .firestore()
         .collection("users")
@@ -583,23 +583,23 @@ export class LoginPage {
             duration: 2000,
           })
           .present();
-        let a = this.alertCtrl.create({
+        const a = this.alertCtrl.create({
           title: "Incorrect OTP",
           subTitle: "OTP entered is incorrect. Request new OTP or retry",
           buttons: [
             {
               text: "Retry",
               role: "cancel",
-              handler: ()=>{
-                this.otpnum="";
-              }
+              handler: () => {
+                this.otpnum = "";
+              },
             },
             {
               text: "New OTP",
-              handler: () => { 
+              handler: () => {
                 this.otpmode = 0;
                 this.otpnum = "";
-              }
+              },
             },
           ],
         });
