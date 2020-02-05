@@ -79,6 +79,14 @@
   <ion-row class="row-style" style="margin-top: 20px;"><ion-input placeholder="Enter OTP here" [(ngModel)]="otpnum"></ion-input></ion-row>
   <button ion-button ion-button block round outline color="light" style="margin-top: 20px;" (click)="otpFn()">{{"Submit OTP"|translate}}</button>
   <button ion-button ion-button block round outline color="light" style="margin-top: 20px;" (click)="backToLogin()">{{"Cancel"|translate}}</button>
+  <ion-row style="margin-top: 20px;">
+    <ion-col col-9>
+      <button ion-button [disabled]="timer!=0" (click)="signInPhone()" round outline color="light">Resend OTP</button>
+    </ion-col>
+    <ion-col col-3 style="color: white; margin-top: 10px; text-align: center;" *ngIf="timer!=0">
+      <span>Retry in {{ timer }}s</span>
+    </ion-col>
+  </ion-row>
 </div>
 
 <div *ngIf="signup==1">
