@@ -53,6 +53,7 @@ export class LoginPage {
     //this.loadDropDowns();
     //this.getInfo();
     this.country_code = "95";
+    this.dis=0;
     const loading = this.loadingCtrl.create({
       content: `
         <div class="custom-spinner-container">
@@ -119,6 +120,7 @@ export class LoginPage {
 
     this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
   }
+  dis=0;
 
   contactphone = "loading...";
   getInfo() {
@@ -329,6 +331,7 @@ export class LoginPage {
         message: "Please wait while account is created. This may take a few minutes",
         duration: 3000,
       });
+      this.dis=1;
       await firebase
         .firestore()
         .collection("users")
