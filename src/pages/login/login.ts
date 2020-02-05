@@ -53,7 +53,6 @@ export class LoginPage {
     //this.loadDropDowns();
     //this.getInfo();
     this.country_code = "95";
-
     const loading = this.loadingCtrl.create({
       content: `
         <div class="custom-spinner-container">
@@ -139,6 +138,16 @@ export class LoginPage {
           })
           .present();
       });
+  }
+  
+  timer=30;
+  startTimer(){
+    this.zone.run(()=>{
+      let interval = setInterval(()=>{
+        this.timer--;
+        if(this.timer==0) clearInterval(interval);
+      }, 1000);
+    });
   }
 
   language;
@@ -571,6 +580,27 @@ export class LoginPage {
             duration: 2000,
           })
           .present();
+        let a = this.alertCtrl.create({
+          title: "Incorrect OTP",
+          subTitle: "OTP entered is incorrect. Request new OTP or retry",
+          buttons: [
+            {
+              text: "Retry",
+              role: "cancel",
+              handler: ()=>{
+                this.otpnum="";
+              }
+            },
+            {
+              text: "New OTP",
+              handler: () => { 
+                this.otpmode = 0;
+                this.otpnum = "";
+              }
+            },
+          ],
+        });
+        a.present();
       })
       .finally(() => {
         if (flag == 1) {
@@ -618,6 +648,8 @@ export class LoginPage {
         .then(confirmationResult => {
           this.otpmode = 1;
           this.confirmres = confirmationResult;
+          this.timer = 30;
+          this.startTimer();
           // SMS sent. Prompt user to type the code from the message, then sign the
           // user in with confirmationResult.confirm(code).
 
