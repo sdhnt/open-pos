@@ -83,8 +83,9 @@ export class TransactionHomePage {
     const mg2 = this.translateConfigService.getTranslatedMessage("Update the app");
     const mg3 = this.translateConfigService.getTranslatedMessage("Not Now");
     const mg4 = this.translateConfigService.getTranslatedMessage("Update now");
+    const url = "https://us-central1-open-fintech.cloudfunctions.net/data/versionNumber";
     axios
-      .get("https://us-central1-open-fintech.cloudfunctions.net/getVersionNumber")
+      .get(url)
       .then(response => {
         const newestVersion = response.data.versionNumber;
         this.appVersion
