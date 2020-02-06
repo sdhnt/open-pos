@@ -30,25 +30,25 @@ export class HelpPage {
     private translateConfigService: TranslateConfigService,
   ) {
     //this.data = this.navParams.get("data");
-    this.getCoach();
+    //this.getCoach();
   }
 
-  getCoach() {
-    //console.log(this.listCat + " and "+this.newprodCat);
-    this.sp.storageReady().then(() => {
-      this.sp
-        .getCoach()
-        .then(val => {
-          this.data = JSON.parse(val);
-          //console.log("Addprodpg: "+this.listCat)
-          //this.getCategories();
-          console.log(this.data);
-        })
-        .catch(err => {
-          alert("Error: " + err);
-        });
-    });
-  }
+  // getCoach() {
+  //   //console.log(this.listCat + " and "+this.newprodCat);
+  //   this.sp.storageReady().then(() => {
+  //     this.sp
+  //       .getCoach()
+  //       .then(val => {
+  //         this.data = JSON.parse(val);
+  //         //console.log("Addprodpg: "+this.listCat)
+  //         //this.getCategories();
+  //         console.log(this.data);
+  //       })
+  //       .catch(err => {
+  //         alert("Error: " + err);
+  //       });
+  //   });
+  // }
 
   openVidVal = -1;
 

@@ -189,8 +189,18 @@ export class SummaryGraphsPage {
     this.sp.storageReady().then(() => {
       this.sp
         .getTransactions()
-        .then(val => {
+        .then(async val => {
           this.listtransac = JSON.parse(val);
+
+          // await this.listtransac.forEach(element => {
+          //   if(element.isDisabled){
+              
+          //   }
+          // });
+
+          this.listtransac=this.listtransac.filter( transac =>{
+            return (!transac.isDisabled)
+          })
           this.setvalues();
           this.listtransac.forEach(element => {
             element.datetime1 = this.getDateTime(element.datetime);
