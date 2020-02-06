@@ -93,8 +93,8 @@ export class StorageProvider {
         .collection("users")
         .where("owner", "==", firebase.auth().currentUser.uid)
         .get()
-        .then((querySnapshot)=> {
-          querySnapshot.forEach((doc)=> {
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
             uid = doc.id;
             const usdat = doc.data();
             tempprod = usdat.products;
@@ -128,7 +128,7 @@ export class StorageProvider {
             };
           });
         })
-        .catch((error) =>{
+        .catch(error => {
           console.log("Error getting documents: ", error);
         });
       this.tempcat = tempcat;
@@ -201,30 +201,49 @@ export class StorageProvider {
                 .then(val => {
                   parsecat = JSON.parse(val);
                   if (parseprod != null && parsetransac != null && parsecat != null) {
+                    //1 READ
                     const snapshot = firebase
                       .firestore()
                       .collection("users")
                       .where("owner", "==", firebase.auth().currentUser.uid)
                       .get()
-                      .then((querySnapshot)=> {
-                        querySnapshot.forEach(async (doc) =>{
+                      .then(querySnapshot => {
+                        querySnapshot.forEach(async doc => {
                           uid = doc.id;
                           console.log(uid);
-                            let existingTransactions = await doc.data().transactions
-                            console.log(existingTransactions);
-                            existingTransactions.forEach(element => {
-                             let flag=0
-                             parsetransac.forEach(element1 => {
-                               if(element==element1){
-                                  flag=1;
-                               }
-                             });
-                             if(flag==0){
+                          const existingTransactions = await doc.data().transactions;
+                          const existingProducts = await doc.data().products;
+                          const existingCat=await doc.data().categories;
+
+
+                          //SYNC Transactions
+
+
+                          existingTransactions.forEach(async element => {
+                            let flag = 0;
+                            await parsetransac.forEach(element1 => {
+                              if (element == element1) {
+                                flag = 1;
+                              }
+                            })
+                            //.then(()=>{
+                              if (flag == 0) {
+                                this.addTransactions(element)
                                 parsetransac.push(element);
-                                console.log(element)
-                             }
-                           });
-                         //If this works we do the same for products and categories - will remove multiple user issue
+                                console.log(parsetransac);
+                              }
+                          //  });
+                          });
+
+                          //SYNC Products
+
+
+
+
+                          //SYNC Categories
+
+
+                          //1 Write
                           firebase
                             .firestore()
                             .collection("users")
@@ -240,7 +259,7 @@ export class StorageProvider {
                             });
                         });
                       })
-                      .catch((error)=> {
+                      .catch(error => {
                         console.log("Error getting documents: ", error);
                       });
                   }
@@ -274,8 +293,8 @@ export class StorageProvider {
         .collection("users")
         .where("owner", "==", firebase.auth().currentUser.uid)
         .get()
-        .then((querySnapshot)=> {
-          querySnapshot.forEach((doc)=> {
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
             firebase
               .firestore()
               .collection("users")
@@ -298,7 +317,7 @@ export class StorageProvider {
               });
           });
         })
-        .catch((error) =>{
+        .catch(error => {
           console.log("Error getting documents: ", error);
         });
     });

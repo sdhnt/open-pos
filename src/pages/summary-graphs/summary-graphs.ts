@@ -97,7 +97,7 @@ export class SummaryGraphsPage {
         .getUserDat()
         .then(val => {
           this.userdata = JSON.parse(val);
-          console.log(this.userdata);
+          //console.log(this.userdata);
         })
         .catch(err => {
           alert("Error: " + err);
@@ -106,7 +106,7 @@ export class SummaryGraphsPage {
   }
 
   toggleExpanded() {
-    console.log("changing: " + this.expanded);
+    //console.log("changing: " + this.expanded);
     if (this.expanded == true) {
       this.expanded = false;
 
@@ -122,7 +122,7 @@ export class SummaryGraphsPage {
       // });
     }
 
-    console.log("changed: " + this.expandedvar);
+    //console.log("changed: " + this.expandedvar);
   }
 
   applyLoan() {
@@ -212,7 +212,7 @@ export class SummaryGraphsPage {
           // });
           this.getSummary();
           this.listtransacrev = this.listtransac.reverse();
-          console.log(this.listtransac);
+          //console.log(this.listtransac);
 
           this.listtransacrev.forEach(element => {
             if (this.getDate(element.datetime) == this.getDate(this.currentdatetime)) {
@@ -294,7 +294,7 @@ export class SummaryGraphsPage {
   }
 
   printRec(transac) {
-    console.log(transac);
+    //console.log(transac);
     const encoder = new EscPosEncoder();
     const result = encoder.initialize();
 
@@ -393,7 +393,7 @@ export class SummaryGraphsPage {
 
   mountAlertBt(data) {
     this.receipt = data;
-    console.log(this.receipt);
+    //console.log(this.receipt);
     const msg1 = this.translateConfigService.getTranslatedMessage("Select your printer");
     const msg2 = this.translateConfigService.getTranslatedMessage("Cancel");
     const msg3 = this.translateConfigService.getTranslatedMessage("Select printer");
@@ -422,7 +422,7 @@ export class SummaryGraphsPage {
               this.showToast(msg4.value);
               return false;
             }
-            console.log(device);
+            //console.log(device);
             this.print(device, this.receipt);
           },
         },
@@ -462,8 +462,8 @@ export class SummaryGraphsPage {
   }
 
   print(device, data) {
-    console.log("Device mac: ", device);
-    console.log("Data: ", JSON.stringify(data));
+    //console.log("Device mac: ", device);
+    //console.log("Data: ", JSON.stringify(data));
 
     const msg1 = this.translateConfigService.getTranslatedMessage("Printing...");
     const msg2 = this.translateConfigService.getTranslatedMessage("Successful print!");
@@ -477,11 +477,11 @@ export class SummaryGraphsPage {
     load.present();
     this.printer.connectBluetooth(device).subscribe(
       status => {
-        console.log(status);
+        //console.log(status);
         this.printer
           .printData(data)
           .then(printStatus => {
-            console.log(printStatus);
+            //console.log(printStatus);
             const alert = this.alertCtrl.create({
               //@ts-ignore
               title: msg2.value,
@@ -570,7 +570,7 @@ export class SummaryGraphsPage {
     this.sp.storageReady().then(() => {
       this.sp.getSummary().then(val => {
         this.summary = JSON.parse(val);
-        console.log(this.summary);
+        //console.log(this.summary);
 
         this.listtransac.forEach(element => {
           if (this.getDate(element.datetime) == this.getDate(this.currentdatetime)) {
@@ -589,7 +589,7 @@ export class SummaryGraphsPage {
         }
 
         const currday = this.getDate(this.currentdatetime);
-        console.log(currday);
+        //console.log(currday);
         for (let i = 29; i > 29 - currday && i > -1; i--) {
           this.netcashmonth += this.summary[i].revenue - this.summary[i].expenses;
         }
@@ -615,20 +615,20 @@ export class SummaryGraphsPage {
                 this.pro +
                 ((parseFloat(product.price) * (100 - parseFloat(product.discount))) / 100 - parseFloat(product.cost)) *
                   parseFloat(product.qty);
-              console.log(product);
+              //console.log(product);
             }
           });
           //console.log(element.totalatax)
           //CALCULATE PROFIT BASED ON EACH ITEM
         } else {
-          console.log(element.totalatax);
+          //console.log(element.totalatax);
           this.exp += parseInt(element.totalatax);
         }
       }
     });
     //}
     if (this.group == "last7") {
-      console.log("1");
+      //console.log("1");
       for (let i = 29; i > 22; i--) {
         this.rev += this.summary[i].revenue;
         this.exp += this.summary[i].expenses;
@@ -644,7 +644,7 @@ export class SummaryGraphsPage {
     }
     if (this.group == "month") {
       const currday = this.getDate(this.currentdatetime);
-      console.log(currday);
+      //console.log(currday);
       for (let i = 29; i > 29 - currday && i > -1; i--) {
         this.rev += this.summary[i].revenue;
         this.exp += this.summary[i].expenses;
