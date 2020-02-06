@@ -7,6 +7,8 @@ import { ToastController, NavController, Nav } from "ionic-angular";
 import { notImplemented } from "@angular/core/src/render3/util";
 import { templateVisitAll } from "@angular/compiler";
 import { PARAMETERS } from "@angular/core/src/util/decorators";
+import { parse } from "@typescript-eslint/parser";
+import * as isEqual from "lodash.isequal";
 
 @Injectable()
 export class StorageProvider {
@@ -201,8 +203,7 @@ export class StorageProvider {
                 .then(val => {
                   parsecat = JSON.parse(val);
                   if (parseprod != null && parsetransac != null && parsecat != null) {
-                    //1 READ
-                    const snapshot = firebase
+                    firebase
                       .firestore()
                       .collection("users")
                       .where("owner", "==", firebase.auth().currentUser.uid)
@@ -211,33 +212,21 @@ export class StorageProvider {
                         querySnapshot.forEach(async doc => {
                           uid = doc.id;
                           console.log(uid);
-                          const existingTransactions = await doc.data().transactions;
-                          const existingProducts = await doc.data().products;
-                          const existingCat = await doc.data().categories;
-
-                          //SYNC Transactions
-
-                          existingTransactions.forEach(async element => {
-                            let flag = 0;
-                            await parsetransac.forEach(element1 => {
-                              if (element == element1) {
-                                flag = 1;
-                              }
+                          const existingArrays = [
+                            { id: "products", currentArray: parseprod },
+                            { id: "categories", currentArray: parsecat },
+                            { id: "transactions", currentArray: parsetransac },
+                          ].map(array => ({ existingArray: doc.data()[array.id], ...array }));
+                          existingArrays.forEach(array => {
+                            array.existingArray.forEach(existingData => {
+                              const index = array.currentArray.findIndex(currentData =>
+                                isEqual(currentData, existingData),
+                              );
+                              if (index === -1) array.currentArray.push(existingData);
                             });
-                            //.then(()=>{
-                            if (flag == 0) {
-                              this.addTransactions(element);
-                              parsetransac.push(element);
-                              console.log(parsetransac);
-                            }
-                            //  });
                           });
+                          console.log(existingArrays);
 
-                          //SYNC Products
-
-                          //SYNC Categories
-
-                          //1 Write
                           firebase
                             .firestore()
                             .collection("users")
