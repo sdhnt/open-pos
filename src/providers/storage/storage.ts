@@ -213,11 +213,9 @@ export class StorageProvider {
                           console.log(uid);
                           const existingTransactions = await doc.data().transactions;
                           const existingProducts = await doc.data().products;
-                          const existingCat=await doc.data().categories;
-
+                          const existingCat = await doc.data().categories;
 
                           //SYNC Transactions
-
 
                           existingTransactions.forEach(async element => {
                             let flag = 0;
@@ -225,23 +223,19 @@ export class StorageProvider {
                               if (element == element1) {
                                 flag = 1;
                               }
-                            })
+                            });
                             //.then(()=>{
-                              if (flag == 0) {
-                                this.addTransactions(element)
-                                parsetransac.push(element);
-                                console.log(parsetransac);
-                              }
-                          //  });
+                            if (flag == 0) {
+                              this.addTransactions(element);
+                              parsetransac.push(element);
+                              console.log(parsetransac);
+                            }
+                            //  });
                           });
 
                           //SYNC Products
 
-
-
-
                           //SYNC Categories
-
 
                           //1 Write
                           firebase
