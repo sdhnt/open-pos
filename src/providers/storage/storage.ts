@@ -8,6 +8,7 @@ import { notImplemented } from "@angular/core/src/render3/util";
 import { templateVisitAll } from "@angular/compiler";
 import { PARAMETERS } from "@angular/core/src/util/decorators";
 import { parse } from "@typescript-eslint/parser";
+import * as isEqual from "lodash.isequal";
 
 @Injectable()
 export class StorageProvider {
@@ -211,17 +212,21 @@ export class StorageProvider {
                         querySnapshot.forEach(async doc => {
                           uid = doc.id;
                           console.log(uid);
-                          const existingTransactions = await doc.data().transactions;
-                          console.log(existingTransactions);
-                          existingTransactions.forEach(existingTransaction => {
-                            const index = parsetransac.findIndex(
-                              currentTransaction =>
-                                new Date(currentTransaction.datetime) === new Date(existingTransaction.datetime),
-                            );
-                            if (index === -1) parsetransac.push(existingTransaction);
+                          const existingArrays = [
+                            { id: "products", currentArray: parseprod },
+                            { id: "categories", currentArray: parsecat },
+                            { id: "transactions", currentArray: parsetransac },
+                          ].map(array => ({ existingArray: doc.data()[array.id], ...array }));
+                          existingArrays.forEach(array => {
+                            array.existingArray.forEach(existingData => {
+                              const index = array.currentArray.findIndex(currentData =>
+                                isEqual(currentData, existingData),
+                              );
+                              if (index === -1) array.currentArray.push(existingData);
+                            });
                           });
-                          console.log(parsetransac);
-                          //If this works we do the same for products and categories - will remove multiple user issue
+                          console.log(existingArrays);
+
                           firebase
                             .firestore()
                             .collection("users")
