@@ -457,11 +457,11 @@ export class StorageProvider {
           arr2 = arr.filter(val => {
             return val.datetime != data.datetime;
           });
-          let item = arr.filter(val=>{
-            return val.datetime==data.datetime;
-          })
+          const item = arr.filter(val => {
+            return val.datetime == data.datetime;
+          });
           //console.log(arr2);
-          item[0].isDisabled=1;
+          item[0].isDisabled = 1;
           arr2.push(item[0]);
           this.storage.set("transactions", JSON.stringify(arr2));
         })

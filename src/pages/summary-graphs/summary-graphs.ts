@@ -194,13 +194,13 @@ export class SummaryGraphsPage {
 
           // await this.listtransac.forEach(element => {
           //   if(element.isDisabled){
-              
+
           //   }
           // });
 
-          this.listtransac=this.listtransac.filter( transac =>{
-            return (!transac.isDisabled)
-          })
+          this.listtransac = this.listtransac.filter(transac => {
+            return !transac.isDisabled;
+          });
           this.setvalues();
           this.listtransac.forEach(element => {
             element.datetime1 = this.getDateTime(element.datetime);
