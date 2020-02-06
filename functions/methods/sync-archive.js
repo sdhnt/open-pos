@@ -4,14 +4,18 @@ const syncArchive = async (db, { syncTransactions, calculateBusinessPerformance,
   // limit on number of transactions saved in user documents
   const limit = 100; // important note: do not change this limit as it would completely mess up the syncing algorithm
 
-  if (syncTransactions)
+  if (syncTransactions) {
+    let batch = db.batch();
+    let numberOfOperations = 0;
     await db
       .collection("users")
       .get()
       .then(snapshot => {
+        const numberOfUsers = snapshot.size;
+        console.log(`number of users: ${numberOfUsers}`);
         snapshot.forEach(async doc => {
           const user = doc.data();
-          const userInArchiveRef = await db.collection("users-archive").doc(doc.id);
+          const userInArchiveRef = db.collection("users-archive").doc(doc.id);
           let snapshotInArchive = await userInArchiveRef.get();
           if (!snapshotInArchive.exists) {
             console.log(`create missing user of id: ${doc.id} in archive`);
@@ -63,17 +67,21 @@ const syncArchive = async (db, { syncTransactions, calculateBusinessPerformance,
           }
 
           // update user and userInArchive
-          await db
-            .collection("users")
-            .doc(doc.id)
-            .update(user);
+          const userUpdateRef = db.collection("users").doc(doc.id);
+          batch.update(userUpdateRef, user);
           user.transactions = userInArchive.transactions;
-          await db
-            .collection("users-archive")
-            .doc(doc.id)
-            .update(user);
+          const userInArchiveUpdateRef = db.collection("users-archive").doc(doc.id);
+          batch.update(userInArchiveUpdateRef, user);
+          numberOfOperations += 2;
+          if (numberOfOperations > 480 || numberOfOperations === 2 * numberOfUsers) {
+            console.log(`number of operations in this batch: ${numberOfOperations}`);
+            await batch.commit();
+            batch = db.batch();
+            numberOfOperations = 0;
+          }
         });
       });
+  }
 
   // remove deleted users in archive
   if (syncUserCount)
