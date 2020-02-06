@@ -7,6 +7,7 @@ import { ToastController, NavController, Nav } from "ionic-angular";
 import { notImplemented } from "@angular/core/src/render3/util";
 import { templateVisitAll } from "@angular/compiler";
 import { PARAMETERS } from "@angular/core/src/util/decorators";
+import { parse } from "@typescript-eslint/parser";
 
 @Injectable()
 export class StorageProvider {
@@ -201,8 +202,7 @@ export class StorageProvider {
                 .then(val => {
                   parsecat = JSON.parse(val);
                   if (parseprod != null && parsetransac != null && parsecat != null) {
-                    //1 READ
-                    const snapshot = firebase
+                    firebase
                       .firestore()
                       .collection("users")
                       .where("owner", "==", firebase.auth().currentUser.uid)
@@ -212,32 +212,16 @@ export class StorageProvider {
                           uid = doc.id;
                           console.log(uid);
                           const existingTransactions = await doc.data().transactions;
-                          const existingProducts = await doc.data().products;
-                          const existingCat = await doc.data().categories;
-
-                          //SYNC Transactions
-
-                          existingTransactions.forEach(async element => {
-                            let flag = 0;
-                            await parsetransac.forEach(element1 => {
-                              if (element == element1) {
-                                flag = 1;
-                              }
-                            });
-                            //.then(()=>{
-                            if (flag == 0) {
-                              this.addTransactions(element);
-                              parsetransac.push(element);
-                              console.log(parsetransac);
-                            }
-                            //  });
+                          console.log(existingTransactions);
+                          existingTransactions.forEach(existingTransaction => {
+                            const index = parsetransac.findIndex(
+                              currentTransaction =>
+                                new Date(currentTransaction.datetime) === new Date(existingTransaction.datetime),
+                            );
+                            if (index === -1) parsetransac.push(existingTransaction);
                           });
-
-                          //SYNC Products
-
-                          //SYNC Categories
-
-                          //1 Write
+                          console.log(parsetransac);
+                          //If this works we do the same for products and categories - will remove multiple user issue
                           firebase
                             .firestore()
                             .collection("users")
