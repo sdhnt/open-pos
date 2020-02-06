@@ -11,6 +11,7 @@ const cors = require("cors");
 const app = express();
 app.use(cors({ origin: true }));
 const { syncArchive } = require("./methods/sync-archive");
+const { getTransactions } = require("./methods/get-transactions");
 
 const largeRuntimeConfig = {
   timeoutSeconds: 540,
@@ -46,8 +47,29 @@ exports.syncUserCount = functions
 //   res.status(200).send(`request received with limit: 100`);
 // });
 
+// https functions
+app.get("/versionNumber", (req, res) => {
+  const versionNumber = "0.0.8";
+  res.status(200).json({ versionNumber });
+});
+
+app.get("/transactions", async (req, res) => {
+  const { id, start, end } = req.query;
+  try {
+    const transactions = await getTransactions(db, id, start, end);
+    res.status(200).json({ transactions });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("internal server error");
+  }
+});
+
+exports.data = functions.https.onRequest(app);
+
+// to be removed - start
 app.get("/", (req, res) => {
   const versionNumber = "0.0.8";
   res.status(200).json({ versionNumber });
 });
 exports.getVersionNumber = functions.https.onRequest(app);
+// to be removed - end
