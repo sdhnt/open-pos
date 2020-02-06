@@ -6,6 +6,7 @@ import { LoginPage } from "../../pages/login/login";
 import { ToastController, NavController, Nav } from "ionic-angular";
 import { notImplemented } from "@angular/core/src/render3/util";
 import { templateVisitAll } from "@angular/compiler";
+import { PARAMETERS } from "@angular/core/src/util/decorators";
 
 @Injectable()
 export class StorageProvider {
@@ -92,8 +93,8 @@ export class StorageProvider {
         .collection("users")
         .where("owner", "==", firebase.auth().currentUser.uid)
         .get()
-        .then(function(querySnapshot) {
-          querySnapshot.forEach(function(doc) {
+        .then((querySnapshot)=> {
+          querySnapshot.forEach((doc)=> {
             uid = doc.id;
             const usdat = doc.data();
             tempprod = usdat.products;
@@ -127,7 +128,7 @@ export class StorageProvider {
             };
           });
         })
-        .catch(function(error) {
+        .catch((error) =>{
           console.log("Error getting documents: ", error);
         });
       this.tempcat = tempcat;
@@ -205,13 +206,25 @@ export class StorageProvider {
                       .collection("users")
                       .where("owner", "==", firebase.auth().currentUser.uid)
                       .get()
-                      .then(function(querySnapshot) {
-                        querySnapshot.forEach(function(doc) {
+                      .then((querySnapshot)=> {
+                        querySnapshot.forEach(async (doc) =>{
                           uid = doc.id;
                           console.log(uid);
-                          // let existingTransactions = doc.data().transactions;
-                          // existingTransactions = existingTransactions.slice(Math.max(existingTransactions - 10, 0));
-                          // const updatedTransactions = existingTransactions.concat(parsetransac);
+                            let existingTransactions = await doc.data().transactions
+                            console.log(existingTransactions);
+                            existingTransactions.forEach(element => {
+                             let flag=0
+                             parsetransac.forEach(element1 => {
+                               if(element==element1){
+                                  flag=1;
+                               }
+                             });
+                             if(flag==0){
+                                parsetransac.push(element);
+                                console.log(element)
+                             }
+                           });
+                         //If this works we do the same for products and categories - will remove multiple user issue
                           firebase
                             .firestore()
                             .collection("users")
@@ -227,7 +240,7 @@ export class StorageProvider {
                             });
                         });
                       })
-                      .catch(function(error) {
+                      .catch((error)=> {
                         console.log("Error getting documents: ", error);
                       });
                   }
@@ -261,8 +274,8 @@ export class StorageProvider {
         .collection("users")
         .where("owner", "==", firebase.auth().currentUser.uid)
         .get()
-        .then(function(querySnapshot) {
-          querySnapshot.forEach(function(doc) {
+        .then((querySnapshot)=> {
+          querySnapshot.forEach((doc)=> {
             firebase
               .firestore()
               .collection("users")
@@ -285,7 +298,7 @@ export class StorageProvider {
               });
           });
         })
-        .catch(function(error) {
+        .catch((error) =>{
           console.log("Error getting documents: ", error);
         });
     });
