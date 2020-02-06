@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import { IonicPage, NavController, NavParams, ViewController, App, Slides } from "ionic-angular";
+import { IonicPage, NavController, NavParams, ViewController, Slides } from "ionic-angular";
 import { DomSanitizer } from "@angular/platform-browser";
 import { StorageProvider } from "../../providers/storage/storage";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
@@ -22,12 +22,12 @@ export class HelpPage {
   text: any;
   video_set: any;
   @ViewChild(Slides) slides: Slides;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private view: ViewController,
     private dom: DomSanitizer,
-    private app: App,
     private sp: StorageProvider,
     private translateConfigService: TranslateConfigService,
   ) {
@@ -37,8 +37,8 @@ export class HelpPage {
     this.storageLocation+=this.translateConfigService.getCurrentLanguage()+"/Slide";
   }
 
-  storageLocation;
-  hasSlideBeenVisited;
+  storageLocation: string;
+  hasSlideBeenVisited: boolean[];
 
   slideChanged(){
     const currentIndex = this.slides.getActiveIndex(); 
