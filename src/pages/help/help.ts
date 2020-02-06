@@ -1,8 +1,9 @@
-import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, ViewController, App } from "ionic-angular";
+import { Component, ViewChild } from "@angular/core";
+import { IonicPage, NavController, NavParams, ViewController, App, Slides } from "ionic-angular";
 import { DomSanitizer } from "@angular/platform-browser";
 import { StorageProvider } from "../../providers/storage/storage";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
+import firebase from 'firebase';
 
 /**
  * Generated class for the HelpPage page.
@@ -20,6 +21,7 @@ export class HelpPage {
   data: any;
   text: any;
   video_set: any;
+  @ViewChild(Slides) slides: Slides;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -30,7 +32,34 @@ export class HelpPage {
     private translateConfigService: TranslateConfigService,
   ) {
     //this.data = this.navParams.get("data");
-    this.getCoach();
+    // this.getCoach();
+    this.storageLocation = "gs://open-fintech.appspot.com/tutorial/";
+    this.storageLocation+=this.translateConfigService.getCurrentLanguage()+"/Slide";
+  }
+
+  storageLocation;
+  hasSlideBeenVisited;
+
+  slideChanged(){
+    const currentIndex = this.slides.getActiveIndex(); 
+    //add logic to make sure only on stop of scroll, this is evaluated, will make firebase usage more efficient
+    //can pre-load image of next slide for faster loading and better UX
+    if(this.hasSlideBeenVisited[currentIndex]){
+      return;
+    }
+    this.hasSlideBeenVisited[currentIndex] = true;
+    let imageString = currentIndex.toString()+".JPG";
+    if(currentIndex<=9){
+      imageString = "0"+imageString;
+    }
+    firebase.storage().refFromURL(this.storageLocation+imageString).getDownloadURL()
+      .then(response=>{
+        let imageToLoad = document.getElementById((currentIndex).toString()) as HTMLImageElement;
+        imageToLoad.src = response;
+      }).catch(error=>{
+        console.log(error);
+        this.slides.slidePrev(10);
+      });
   }
 
   getCoach() {
@@ -58,6 +87,21 @@ export class HelpPage {
     } else {
       this.openVidVal = i;
     }
+  }
+
+  ionViewWillLoad(){
+    let lengthBasedOnLang = 0;
+    if(this.translateConfigService.getCurrentLanguage()=="en"){
+      lengthBasedOnLang = 48;
+    } else if(this.translateConfigService.getCurrentLanguage()=="my"){
+      lengthBasedOnLang = 46;
+    } else{
+      console.log(this.translateConfigService.getCurrentLanguage());
+      lengthBasedOnLang = 50;
+    }
+    this.hasSlideBeenVisited = new Array(lengthBasedOnLang).fill(false);
+    this.hasSlideBeenVisited[0] = true;
+    console.log(lengthBasedOnLang)
   }
 
   ionViewDidLoad() {
