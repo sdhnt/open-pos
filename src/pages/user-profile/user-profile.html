@@ -37,7 +37,10 @@
         <ion-icon name="logo-usd" color="semi-light" class="icon"></ion-icon>
         <ion-label>{{"Currency"|translate}}</ion-label>
         <ion-select formControlName="currency" [(ngModel)]="user.currency" (ionChange)="onChange()">
-          <ion-option *ngFor="let c of listOfCurrency" value = "{{ c }}">{{ c }}</ion-option>
+          <ion-option value = "USD">USD</ion-option>
+          <ion-option value = "MMK">MMK</ion-option>
+          <ion-option value = "PHP">PHP</ion-option>
+          <ion-option value = "HKD">HKD</ion-option>
         </ion-select>
       </ion-item>
       <ion-item>
