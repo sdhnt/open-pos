@@ -1,4 +1,4 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component, ViewChild, NgZone } from "@angular/core";
 import { IonicPage, NavController, NavParams, ViewController, Slides } from "ionic-angular";
 import { DomSanitizer } from "@angular/platform-browser";
 import { StorageProvider } from "../../providers/storage/storage";
@@ -30,6 +30,7 @@ export class HelpPage {
     private dom: DomSanitizer,
     private sp: StorageProvider,
     private translateConfigService: TranslateConfigService,
+    public zone: NgZone
   ) {
     //this.data = this.navParams.get("data");
     // this.getCoach();
@@ -99,9 +100,11 @@ export class HelpPage {
       console.log(this.translateConfigService.getCurrentLanguage());
       lengthBasedOnLang = 50;
     }
-    this.hasSlideBeenVisited = new Array(lengthBasedOnLang).fill(false);
-    this.hasSlideBeenVisited[0] = true;
-    console.log(lengthBasedOnLang)
+    this.zone.run(()=>{
+      this.hasSlideBeenVisited = new Array(lengthBasedOnLang).fill(false);
+      this.hasSlideBeenVisited[0] = true;
+      console.log(lengthBasedOnLang)
+    })
   }
 
   ionViewDidLoad() {
