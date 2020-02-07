@@ -8,7 +8,7 @@ import { notImplemented } from "@angular/core/src/render3/util";
 import { templateVisitAll } from "@angular/compiler";
 import { PARAMETERS } from "@angular/core/src/util/decorators";
 import { parse } from "@typescript-eslint/parser";
-import * as isEqual from "lodash.isequal";
+import moment from "moment";
 
 @Injectable()
 export class StorageProvider {
@@ -211,21 +211,21 @@ export class StorageProvider {
                       .then(querySnapshot => {
                         querySnapshot.forEach(async doc => {
                           uid = doc.id;
-                          //console.log(uid);
                           const existingArrays = [
-                            { id: "products", currentArray: parseprod },
-                            { id: "categories", currentArray: parsecat },
-                            { id: "transactions", currentArray: parsetransac },
+                            { id: "products", currentArray: parseprod, field: "code" },
+                            { id: "categories", currentArray: parsecat, field: "name" },
+                            { id: "transactions", currentArray: parsetransac, field: "datetime" },
                           ].map(array => ({ existingArray: doc.data()[array.id], ...array }));
                           existingArrays.forEach(array => {
                             array.existingArray.forEach(existingData => {
-                              const index = array.currentArray.findIndex(currentData =>
-                                isEqual(currentData, existingData),
-                              );
+                              const index = array.currentArray.findIndex(currentData => {
+                                if (array.field === "datetime")
+                                  return moment(currentData.datetime).isSame(moment(existingData.datetime));
+                                return currentData[array.field] === existingData[array.field];
+                              });
                               if (index === -1) array.currentArray.push(existingData);
                             });
                           });
-                          //console.log(existingArrays);
 
                           firebase
                             .firestore()
