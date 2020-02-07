@@ -153,7 +153,7 @@ export class HelpPage {
           this.lengthBasedOnLang = map.en;
         }
       });
-    this.lengthBasedOnLang++;
+    this.lengthBasedOnLang++; //++ accounting for slide #0 that is not in image folder
     this.zone.run(()=>{
       this.hasSlideBeenVisited = new Array(this.lengthBasedOnLang).fill(false);
       this.hasSlideBeenVisited[0] = true;
