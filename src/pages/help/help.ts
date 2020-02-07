@@ -137,8 +137,8 @@ export class HelpPage {
 
   lengthBasedOnLang: number;
 
-  ionViewWillLoad(){
-    firebase
+  async ionViewDidLoad(){
+    await firebase
       .firestore()
       .collection("tutorial")
       .get()
@@ -152,16 +152,13 @@ export class HelpPage {
         } else {
           this.lengthBasedOnLang = map.en;
         }
-      })
+      });
+    this.lengthBasedOnLang++;
     this.zone.run(()=>{
       this.hasSlideBeenVisited = new Array(this.lengthBasedOnLang).fill(false);
       this.hasSlideBeenVisited[0] = true;
       console.log(this.lengthBasedOnLang);
     })
-  }
-
-  ionViewDidLoad() {
-    console.log("ionViewDidLoad HelpPage");
   }
 
   close() {
