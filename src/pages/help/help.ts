@@ -35,7 +35,10 @@ export class HelpPage {
     //this.data = this.navParams.get("data");
     // this.getCoach();
     this.storageLocation = "gs://open-fintech.appspot.com/tutorial/";
-    this.storageLocation+=this.translateConfigService.getCurrentLanguage()+"/Slide";
+    let langComponent = this.translateConfigService.getCurrentLanguage();
+    if(langComponent!="en" && langComponent!="my") 
+      langComponent = "en";
+    this.storageLocation+=langComponent+"/Slide";
   }
 
   storageLocation: string;
@@ -43,9 +46,8 @@ export class HelpPage {
 
   slideChanged(){
     const currentIndex = this.slides.getActiveIndex(); 
-    //add logic to make sure only on stop of scroll, this is evaluated, will make firebase usage more efficient
-    //can pre-load image of next slide for faster loading and better UX
     if(this.hasSlideBeenVisited[currentIndex]){
+      this.loadNext(currentIndex);
       return;
     }
     this.hasSlideBeenVisited[currentIndex] = true;
@@ -61,6 +63,26 @@ export class HelpPage {
         console.log(error);
         this.slides.slidePrev(10);
       });
+    this.loadNext(currentIndex);
+  }
+
+  loadNext(index:number){
+    let indexToLoad = index+1;
+    if(this.hasSlideBeenVisited[indexToLoad] || indexToLoad>=this.lengthBasedOnLang){
+      return;
+    }
+    this.hasSlideBeenVisited[indexToLoad] = true;
+    let imageString = indexToLoad.toString()+".JPG";
+    if(indexToLoad<=9){
+      imageString = "0"+imageString;
+    }
+    firebase.storage().refFromURL(this.storageLocation+imageString).getDownloadURL()
+      .then(response=>{
+        let imageToLoad = document.getElementById(indexToLoad.toString()) as HTMLImageElement;
+        imageToLoad.src = response;
+      }).catch(error=>{
+        console.log(error);
+      })
   }
 
   getCoach() {
@@ -90,20 +112,21 @@ export class HelpPage {
     }
   }
 
+  lengthBasedOnLang: number;
+
   ionViewWillLoad(){
-    let lengthBasedOnLang = 0;
     if(this.translateConfigService.getCurrentLanguage()=="en"){
-      lengthBasedOnLang = 48;
+      this.lengthBasedOnLang = 48;
     } else if(this.translateConfigService.getCurrentLanguage()=="my"){
-      lengthBasedOnLang = 46;
+      this.lengthBasedOnLang = 46;
     } else{
       console.log(this.translateConfigService.getCurrentLanguage());
-      lengthBasedOnLang = 48;
+      this.lengthBasedOnLang = 48;
     }
     this.zone.run(()=>{
-      this.hasSlideBeenVisited = new Array(lengthBasedOnLang).fill(false);
+      this.hasSlideBeenVisited = new Array(this.lengthBasedOnLang).fill(false);
       this.hasSlideBeenVisited[0] = true;
-      console.log(lengthBasedOnLang)
+      console.log(this.lengthBasedOnLang);
     })
   }
 
