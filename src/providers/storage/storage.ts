@@ -236,7 +236,11 @@ export class StorageProvider {
                               transactions: parsetransac,
                               categories: parsecat,
                             })
-                            .then(async doc => {})
+                            .then(async () => {
+                              await this.storage.set("products", JSON.stringify(parseprod));
+                              await this.storage.set("categories", JSON.stringify(parsecat));
+                              await this.storage.set("transactions", JSON.stringify(parsetransac));
+                            })
                             .catch(err => {
                               console.log(err);
                             });
