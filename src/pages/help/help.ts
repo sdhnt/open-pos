@@ -137,14 +137,21 @@ export class HelpPage {
   lengthBasedOnLang: number;
 
   ionViewWillLoad(){
-    if(this.translateConfigService.getCurrentLanguage()=="en"){
-      this.lengthBasedOnLang = 48;
-    } else if(this.translateConfigService.getCurrentLanguage()=="my"){
-      this.lengthBasedOnLang = 46;
-    } else{
-      console.log(this.translateConfigService.getCurrentLanguage());
-      this.lengthBasedOnLang = 48;
-    }
+    firebase
+      .firestore()
+      .collection("tutorial")
+      .get()
+      .then(doc=>{
+        let map = doc.docs[2].data().langLength;
+        let lang = this.translateConfigService.getCurrentLanguage();
+        if(lang=="en"){
+          this.lengthBasedOnLang = map.en;
+        } else if(lang=="my"){
+          this.lengthBasedOnLang = map.my;
+        } else {
+          this.lengthBasedOnLang = map.en;
+        }
+      })
     this.zone.run(()=>{
       this.hasSlideBeenVisited = new Array(this.lengthBasedOnLang).fill(false);
       this.hasSlideBeenVisited[0] = true;
