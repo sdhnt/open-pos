@@ -224,6 +224,16 @@ export class StorageProvider {
                                 return currentData[array.field] === existingData[array.field];
                               });
                               if (index === -1) array.currentArray.push(existingData);
+                              // sync co-existing data
+                              else {
+                                const currentData = array.currentArray[index];
+                                if (existingData.updatedAt) {
+                                  if (!currentData.updatedAt) array.currentArray[index] = existingData;
+                                  else if (moment(existingData.updatedAt).isSameOrAfter(currentData.updatedAt))
+                                    array.currentArray[index] = existingData;
+                                }
+                                // all other cases would take currentData as source of truth
+                              }
                             });
                           });
 
