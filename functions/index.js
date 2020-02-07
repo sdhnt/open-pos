@@ -26,12 +26,12 @@ exports.createUserArchive = functions.firestore.document("users/{id}").onCreate(
     .set(newUser);
 });
 
-exports.syncTransactionsAndCalculateBusinessPerforamnce = functions
+exports.syncArchive = functions
   .runWith(largeRuntimeConfig)
   .pubsub.schedule("every day 03:00")
   .timeZone("Asia/Hong_Kong")
   .onRun(async context => {
-    await syncArchive(db, { syncTransactions: true, calculateBusinessPerformance: true });
+    await syncArchive(db, { syncTransactions: true });
   });
 
 exports.syncUserCount = functions

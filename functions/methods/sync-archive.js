@@ -4,7 +4,7 @@ const syncArchive = async (db, { syncTransactions, calculateBusinessPerformance,
   // limit on number of transactions saved in user documents
   const limit = 100; // important note: do not change this limit as it would completely mess up the syncing algorithm
 
-  if (syncTransactions) {
+  if (syncTransactions || calculateBusinessPerformance) {
     let batch = db.batch();
     let numberOfOperations = 0;
     await db
