@@ -39,7 +39,7 @@
     </div>
   </div> -->
 
-  <ion-slides (ionSlideDidChange)="slideChanged()">
+  <ion-slides (ionSlideDidChange)="slideChanged()" style="height: 600px;">
     <ion-slide *ngFor="let i of hasSlideBeenVisited; let ind = index">
       <div *ngIf = "ind==0">
         <ion-card style="border: 2px solid black; border-radius: 30px;">
