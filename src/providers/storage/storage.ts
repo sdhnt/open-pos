@@ -144,44 +144,44 @@ export class StorageProvider {
       // console.log(JSON.stringify(tempprod));
       // console.log(JSON.stringify(temptransac))  ;
 
-      await this.setcoach();
+      //await this.setcoach();
 
       await this.saveinMem();
       return await (this.uid != null);
     });
   }
 
-  setcoach() {
-    return new Promise((resolve, reject) => {
-      this.storage.ready().then(async () => {
-        const tempvid = [];
-        await firebase
-          .firestore()
-          .collection("tutorial")
-          .get()
-          .then(doc => {
-            //console.log(doc)
-            doc.docs.forEach(element => {
-              console.log(element);
+  // setcoach() {
+  //   return new Promise((resolve, reject) => {
+  //     this.storage.ready().then(async () => {
+  //       const tempvid = [];
+  //       await firebase
+  //         .firestore()
+  //         .collection("tutorial")
+  //         .get()
+  //         .then(doc => {
+  //           //console.log(doc)
+  //           doc.docs.forEach(element => {
+  //             console.log(element);
 
-              element.data().video.forEach(element2 => {
-                element2.language = element.id;
-                tempvid.push(element2);
-              });
-              //tempvid = element.data().video;
-            });
-          });
-        this.tempcoach = {
-          video: tempvid,
-        };
-        resolve();
-      });
-    });
-  }
+  //             element.data().video.forEach(element2 => {
+  //               element2.language = element.id;
+  //               tempvid.push(element2);
+  //             });
+  //             //tempvid = element.data().video;
+  //           });
+  //         });
+  //       this.tempcoach = {
+  //         video: tempvid,
+  //       };
+  //       resolve();
+  //     });
+  //   });
+  // }
 
-  async getCoach() {
-    return await this.storage.get("coach");
-  }
+  // async getCoach() {
+  //   return await this.storage.get("coach");
+  // }
 
   backupStorage() {
     let uid;
@@ -211,7 +211,7 @@ export class StorageProvider {
                       .then(querySnapshot => {
                         querySnapshot.forEach(async doc => {
                           uid = doc.id;
-                          console.log(uid);
+                          //console.log(uid);
                           const existingArrays = [
                             { id: "products", currentArray: parseprod },
                             { id: "categories", currentArray: parsecat },
@@ -225,7 +225,7 @@ export class StorageProvider {
                               if (index === -1) array.currentArray.push(existingData);
                             });
                           });
-                          console.log(existingArrays);
+                          //console.log(existingArrays);
 
                           firebase
                             .firestore()
@@ -457,7 +457,12 @@ export class StorageProvider {
           arr2 = arr.filter(val => {
             return val.datetime != data.datetime;
           });
-          console.log(arr2);
+          const item = arr.filter(val => {
+            return val.datetime == data.datetime;
+          });
+          //console.log(arr2);
+          item[0].isDisabled = 1;
+          arr2.push(item[0]);
           this.storage.set("transactions", JSON.stringify(arr2));
         })
         .catch(err => {

@@ -126,9 +126,9 @@ export class IncomeTransactionPage {
       //.raw(commands.FEED_CONTROL_SEQUENCES.RST_HT)
       //.raw(commands.FEED_CONTROL_SEQUENCES.SET_HT)
       .text("Item Name           ") //10 char + 10 char
-      .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+      //.raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
       .text("Qty ") //4 char
-      .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+      //.raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
       .text("Price   ") //8 char
       .newline()
       .newline();
@@ -1037,9 +1037,9 @@ export class IncomeTransactionPage {
           //.raw(commands.FEED_CONTROL_SEQUENCES.RST_HT)
           //.raw(commands.FEED_CONTROL_SEQUENCES.SET_HT)
           .text("Item Name           ") //10 char + 10 char
-          .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+          //.raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
           .text("Qty ") //4 char
-          .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+          //.raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
           .text("Price   ") //8 char
           .newline()
           .newline();
@@ -1156,9 +1156,9 @@ export class IncomeTransactionPage {
           //.raw(commands.FEED_CONTROL_SEQUENCES.RST_HT)
           //.raw(commands.FEED_CONTROL_SEQUENCES.SET_HT)
           .text("Item Name           ") //10 char + 10 char
-          .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+          //.raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
           .text("Qty ") //4 char
-          .raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
+          //.raw(commands.FEED_CONTROL_SEQUENCES.CTL_HT)
           .text("Price   ") //8 char
           .newline()
           .newline();

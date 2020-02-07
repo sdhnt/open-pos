@@ -33,6 +33,7 @@ export class HelpPage {
     public zone: NgZone
   ) {
     //this.data = this.navParams.get("data");
+
     // this.getCoach();
     this.currentIndex = 0;
     this.storageLocation = "gs://open-fintech.appspot.com/tutorial/";
@@ -107,22 +108,22 @@ export class HelpPage {
       })
   }
 
-  getCoach() {
-    //console.log(this.listCat + " and "+this.newprodCat);
-    this.sp.storageReady().then(() => {
-      this.sp
-        .getCoach()
-        .then(val => {
-          this.data = JSON.parse(val);
-          //console.log("Addprodpg: "+this.listCat)
-          //this.getCategories();
-          console.log(this.data);
-        })
-        .catch(err => {
-          alert("Error: " + err);
-        });
-    });
-  }
+  // getCoach() {
+  //   //console.log(this.listCat + " and "+this.newprodCat);
+  //   this.sp.storageReady().then(() => {
+  //     this.sp
+  //       .getCoach()
+  //       .then(val => {
+  //         this.data = JSON.parse(val);
+  //         //console.log("Addprodpg: "+this.listCat)
+  //         //this.getCategories();
+  //         console.log(this.data);
+  //       })
+  //       .catch(err => {
+  //         alert("Error: " + err);
+  //       });
+  //   });
+  // }
 
   openVidVal = -1;
 
