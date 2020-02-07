@@ -334,6 +334,7 @@ export class StorageProvider {
 
   addCategory(data) {
     this.storage.ready().then(() => {
+      data.updatedAt = new Date();
       this.storage
         .get("categories")
         .then(val => {
@@ -388,6 +389,7 @@ export class StorageProvider {
 
   addProduct(data) {
     this.storage.ready().then(() => {
+      data.updatedAt = new Date();
       this.storage
         .get("products")
         .then(val => {
@@ -418,6 +420,7 @@ export class StorageProvider {
 
   addTransactions(data) {
     this.storage.ready().then(() => {
+      data.updatedAt = new Date();
       this.storage
         .get("transactions")
         .then(val => {
@@ -466,6 +469,7 @@ export class StorageProvider {
           });
           //console.log(arr2);
           item[0].isDisabled = 1;
+          item[0].updatedAt = new Date();
           arr2.push(item[0]);
           this.storage.set("transactions", JSON.stringify(arr2));
         })
@@ -501,14 +505,11 @@ export class StorageProvider {
   updateProduct(data, old_code) {
     return new Promise((resolve, reject) => {
       this.storage.get("products").then(async val => {
+        data.updatedAt = new Date();
         if (val != null) {
-          this.products = JSON.parse(val);
-          const newProdudcts = [];
-          this.products.forEach(product => {
-            const newProduct = product.code == old_code ? data : product;
-            newProdudcts.push(newProduct);
-          });
-          await this.storage.set("products", JSON.stringify(newProdudcts));
+          const products = JSON.parse(val);
+          const newProducts = products.map(product => (product.code === old_code ? data : product));
+          await this.storage.set("products", JSON.stringify(newProducts));
           resolve();
         }
       });
@@ -564,14 +565,11 @@ export class StorageProvider {
       this.storage
         .get("products")
         .then(val => {
-          this.products = JSON.parse(val);
-          let arr = [];
-          let arr2 = [];
-          arr = this.products;
-          arr2 = arr.filter(val => {
-            return val.code != data.code && val.name != data.name;
-          });
-          this.storage.set("products", JSON.stringify(arr2));
+          const products = JSON.parse(val);
+          const newProducts = products.map(product =>
+            product.code === data.code ? { ...product, updatedAt: new Date(), isDisabled: true } : product,
+          );
+          this.storage.set("products", JSON.stringify(newProducts));
         })
         .catch(err => {
           alert(err + 1);
