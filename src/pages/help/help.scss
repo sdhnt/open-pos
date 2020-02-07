@@ -21,4 +21,14 @@ page-help {
         box-shadow: 0 16px 20px rgba(0,0,0,.4);
         background-color: #fafafa;
     }
+    ion-input{
+        border: 1.5px solid black;
+        text-align: center;
+    }
+
+    .directionButton{
+        background-color: transparent;
+        color: black;
+        font-size: 30px;
+    }
 }
