@@ -98,7 +98,7 @@ export class HelpPage {
       lengthBasedOnLang = 46;
     } else{
       console.log(this.translateConfigService.getCurrentLanguage());
-      lengthBasedOnLang = 50;
+      lengthBasedOnLang = 48;
     }
     this.zone.run(()=>{
       this.hasSlideBeenVisited = new Array(lengthBasedOnLang).fill(false);
