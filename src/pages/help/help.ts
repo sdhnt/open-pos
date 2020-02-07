@@ -34,6 +34,7 @@ export class HelpPage {
   ) {
     //this.data = this.navParams.get("data");
     // this.getCoach();
+    this.currentIndex = 0;
     this.storageLocation = "gs://open-fintech.appspot.com/tutorial/";
     let langComponent = this.translateConfigService.getCurrentLanguage();
     if(langComponent!="en" && langComponent!="my") 
@@ -43,27 +44,48 @@ export class HelpPage {
 
   storageLocation: string;
   hasSlideBeenVisited;
+  currentIndex: number;
+
+  selectSlide(char){
+    if(char=='o'){
+      if(this.currentIndex<=0) this.currentIndex = 0;
+      else if(this.currentIndex>=this.lengthBasedOnLang) this.currentIndex = this.lengthBasedOnLang - 1;
+      this.slides.slideTo(this.currentIndex, 500);
+    } else if(char=='p'){
+      if(this.currentIndex!=0)
+        this.slides.slidePrev(150);
+    } else{
+      if(this.currentIndex<this.lengthBasedOnLang-1)
+        this.slides.slideNext(150);
+    }
+    
+  }
 
   slideChanged(){
-    const currentIndex = this.slides.getActiveIndex(); 
-    if(this.hasSlideBeenVisited[currentIndex]){
-      this.loadNext(currentIndex);
+    this.currentIndex = this.slides.getActiveIndex(); 
+    if(this.currentIndex == this.lengthBasedOnLang-1) this.slides.lockSwipeToNext(true);
+    else this.slides.lockSwipeToNext(false);
+    let img = document.getElementById(this.currentIndex.toString()) as HTMLImageElement
+    if(this.currentIndex==0 || img.src){
+      this.loadNext(this.currentIndex);
       return;
     }
-    this.hasSlideBeenVisited[currentIndex] = true;
-    let imageString = currentIndex.toString()+".JPG";
-    if(currentIndex<=9){
-      imageString = "0"+imageString;
-    }
+    this.hasSlideBeenVisited[this.currentIndex] = true;
+    let imageString = this.currentIndex.toString()+".JPG";
+    if(this.currentIndex<=9){ //this
+      imageString = "0"+imageString; //get rid of this
+    }//and this too
     firebase.storage().refFromURL(this.storageLocation+imageString).getDownloadURL()
       .then(response=>{
-        let imageToLoad = document.getElementById((currentIndex).toString()) as HTMLImageElement;
-        imageToLoad.src = response;
+        this.zone.run(()=>{
+          let imageToLoad = document.getElementById(this.currentIndex.toString()) as HTMLImageElement;
+          imageToLoad.src = response;
+        });
       }).catch(error=>{
         console.log(error);
         this.slides.slidePrev(10);
       });
-    this.loadNext(currentIndex);
+    this.loadNext(this.currentIndex);
   }
 
   loadNext(index:number){
@@ -73,9 +95,9 @@ export class HelpPage {
     }
     this.hasSlideBeenVisited[indexToLoad] = true;
     let imageString = indexToLoad.toString()+".JPG";
-    if(indexToLoad<=9){
-      imageString = "0"+imageString;
-    }
+    if(indexToLoad<=9){//this too
+      imageString = "0"+imageString; //get rid of this
+    }//and this
     firebase.storage().refFromURL(this.storageLocation+imageString).getDownloadURL()
       .then(response=>{
         let imageToLoad = document.getElementById(indexToLoad.toString()) as HTMLImageElement;

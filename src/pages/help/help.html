@@ -47,11 +47,34 @@
             <h1>Swipe for tutorial</h1>
             <ion-icon name="arrow-round-forward" style="font-size: 40px;"></ion-icon>
           </ion-card-header>
+          <hr style="height: 1px; background-color: black;">
+          <ion-card-content>
+            <h2>Select bottom buttons for advanced navigation</h2>
+            <ion-icon name="arrow-down" style="font-size: 30px;"></ion-icon>
+          </ion-card-content>
         </ion-card>
       </div>
       <img [id]="ind" *ngIf="ind!=0">
     </ion-slide>
   </ion-slides>
+  <br>
+  <ion-row>
+    <ion-col col-5 style="text-align: end;">
+      <button ion-button class="directionButton" (click)="selectSlide('p')" clear>
+        <ion-icon name="arrow-dropleft-circle"></ion-icon>
+      </button>
+    </ion-col>
+    <ion-col col-2 style="text-align: center;">
+      <ion-input [value]="currentIndex" type="number" clearOnEdit="true" [(ngModel)]="currentIndex"
+       text-center></ion-input>
+      <button ion-button (click)="selectSlide('o')" style="background-color: #FFA500; color: black;">{{ "OK" | translate }}</button>
+    </ion-col>
+    <ion-col col-5 style="text-align: start;">
+      <button ion-button class="directionButton" (click)="selectSlide('n')" clear>
+        <ion-icon name="arrow-dropright-circle"></ion-icon>
+      </button>
+    </ion-col>
+  </ion-row>
 
 
     <!-- <iframe width="100%" height="315" src="https://www.youtube.com/embed/AwtlNWeE8wY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
