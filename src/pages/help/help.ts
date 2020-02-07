@@ -38,7 +38,7 @@ export class HelpPage {
   }
 
   storageLocation: string;
-  hasSlideBeenVisited: boolean[];
+  hasSlideBeenVisited;
 
   slideChanged(){
     const currentIndex = this.slides.getActiveIndex(); 
