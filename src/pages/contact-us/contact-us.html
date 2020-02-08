@@ -21,21 +21,24 @@
     <ion-row  style="background-color: #f0f0f0">
         <ion-col col-12>
 
-            <button ion-button full style="text-align: center ; background-color: indigo; color: palevioletred;">
+            <button ion-button full style="text-align: center ; background-color: indigo; color: palevioletred;" 
+              (click)="call()">
               {{ phone }}
             </button>
         </ion-col>
     </ion-row>
     <ion-row>
         <ion-col col-12>
-            <button ion-button full style="text-align: center ; background-color: indigo; color: palevioletred; text-transform:lowercase">
+            <button ion-button full style="text-align: center ; background-color: indigo; color: palevioletred; text-transform:lowercase" 
+              (click)="sendMail()">
               {{ email }}
             </button>
         </ion-col>
     </ion-row>
     <ion-row>
       <ion-col col-12>
-          <button ion-button full style="text-align: center ; background-color: indigo; color: palevioletred; text-transform: unset;" (click)="navFB()">
+          <button ion-button full style="text-align: center ; background-color: indigo; color: palevioletred; text-transform: unset;"
+             (click)="navFB()">
             {{"Reach us on Facebook"|translate}}!
           </button>
       </ion-col>
