@@ -40,7 +40,7 @@ export class HelpPage {
     let langComponent = this.translateConfigService.getCurrentLanguage();
     if(langComponent!="en" && langComponent!="my") 
       langComponent = "en";
-    this.storageLocation+=langComponent+"/Slide";
+    this.storageLocation+=langComponent+"/Slide"; 
   }
 
   storageLocation: string;
