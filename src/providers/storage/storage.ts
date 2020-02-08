@@ -8,7 +8,7 @@ import { notImplemented } from "@angular/core/src/render3/util";
 import { templateVisitAll } from "@angular/compiler";
 import { PARAMETERS } from "@angular/core/src/util/decorators";
 import { parse } from "@typescript-eslint/parser";
-import * as isEqual from "lodash.isequal";
+import moment from "moment";
 
 @Injectable()
 export class StorageProvider {
@@ -211,21 +211,31 @@ export class StorageProvider {
                       .then(querySnapshot => {
                         querySnapshot.forEach(async doc => {
                           uid = doc.id;
-                          //console.log(uid);
                           const existingArrays = [
-                            { id: "products", currentArray: parseprod },
-                            { id: "categories", currentArray: parsecat },
-                            { id: "transactions", currentArray: parsetransac },
+                            { id: "products", currentArray: parseprod, field: "code" },
+                            { id: "categories", currentArray: parsecat, field: "name" },
+                            { id: "transactions", currentArray: parsetransac, field: "datetime" },
                           ].map(array => ({ existingArray: doc.data()[array.id], ...array }));
                           existingArrays.forEach(array => {
                             array.existingArray.forEach(existingData => {
-                              const index = array.currentArray.findIndex(currentData =>
-                                isEqual(currentData, existingData),
-                              );
+                              const index = array.currentArray.findIndex(currentData => {
+                                if (array.field === "datetime")
+                                  return moment(currentData.datetime).isSame(moment(existingData.datetime));
+                                return currentData[array.field] === existingData[array.field];
+                              });
                               if (index === -1) array.currentArray.push(existingData);
+                              // sync co-existing data
+                              else {
+                                const currentData = array.currentArray[index];
+                                if (existingData.updatedAt) {
+                                  if (!currentData.updatedAt) array.currentArray[index] = existingData;
+                                  else if (moment(existingData.updatedAt).isSameOrAfter(currentData.updatedAt))
+                                    array.currentArray[index] = existingData;
+                                }
+                                // all other cases would take currentData as source of truth
+                              }
                             });
                           });
-                          //console.log(existingArrays);
 
                           firebase
                             .firestore()
@@ -236,7 +246,11 @@ export class StorageProvider {
                               transactions: parsetransac,
                               categories: parsecat,
                             })
-                            .then(async doc => {})
+                            .then(async () => {
+                              await this.storage.set("products", JSON.stringify(parseprod));
+                              await this.storage.set("categories", JSON.stringify(parsecat));
+                              await this.storage.set("transactions", JSON.stringify(parsetransac));
+                            })
                             .catch(err => {
                               console.log(err);
                             });
@@ -330,6 +344,7 @@ export class StorageProvider {
 
   addCategory(data) {
     this.storage.ready().then(() => {
+      data.updatedAt = new Date();
       this.storage
         .get("categories")
         .then(val => {
@@ -384,6 +399,7 @@ export class StorageProvider {
 
   addProduct(data) {
     this.storage.ready().then(() => {
+      data.updatedAt = new Date();
       this.storage
         .get("products")
         .then(val => {
@@ -414,6 +430,7 @@ export class StorageProvider {
 
   addTransactions(data) {
     this.storage.ready().then(() => {
+      data.updatedAt = new Date();
       this.storage
         .get("transactions")
         .then(val => {
@@ -462,6 +479,7 @@ export class StorageProvider {
           });
           //console.log(arr2);
           item[0].isDisabled = 1;
+          item[0].updatedAt = new Date();
           arr2.push(item[0]);
           this.storage.set("transactions", JSON.stringify(arr2));
         })
@@ -497,14 +515,11 @@ export class StorageProvider {
   updateProduct(data, old_code) {
     return new Promise((resolve, reject) => {
       this.storage.get("products").then(async val => {
+        data.updatedAt = new Date();
         if (val != null) {
-          this.products = JSON.parse(val);
-          const newProdudcts = [];
-          this.products.forEach(product => {
-            const newProduct = product.code == old_code ? data : product;
-            newProdudcts.push(newProduct);
-          });
-          await this.storage.set("products", JSON.stringify(newProdudcts));
+          const products = JSON.parse(val);
+          const newProducts = products.map(product => (product.code === old_code ? data : product));
+          await this.storage.set("products", JSON.stringify(newProducts));
           resolve();
         }
       });
@@ -560,14 +575,11 @@ export class StorageProvider {
       this.storage
         .get("products")
         .then(val => {
-          this.products = JSON.parse(val);
-          let arr = [];
-          let arr2 = [];
-          arr = this.products;
-          arr2 = arr.filter(val => {
-            return val.code != data.code && val.name != data.name;
-          });
-          this.storage.set("products", JSON.stringify(arr2));
+          const products = JSON.parse(val);
+          const newProducts = products.map(product =>
+            product.code === data.code ? { ...product, updatedAt: new Date(), isDisabled: true } : product,
+          );
+          this.storage.set("products", JSON.stringify(newProducts));
         })
         .catch(err => {
           alert(err + 1);

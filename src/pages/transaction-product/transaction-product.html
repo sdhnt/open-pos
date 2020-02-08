@@ -107,7 +107,7 @@
 
   <ion-list inset *ngFor="let product of filteredList; let i=index">
 
-    <ion-card style="border: solid 1px gray;">
+    <ion-card *ngIf="product.isDisabled !== true" style="border: solid 1px gray;">
       <ion-grid>
         <ion-row>
           <ion-col col-12>
