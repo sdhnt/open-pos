@@ -157,6 +157,36 @@ module.exports = [
         "clobbers": [
             "cordova.plugins.market"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-call-number/www/CallNumber.js",
+        "id": "cordova-plugin-call-number.CallNumber",
+        "pluginId": "cordova-plugin-call-number",
+        "clobbers": [
+            "call"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-email-composer/www/email_composer.js",
+        "id": "cordova-plugin-email-composer.EmailComposer",
+        "pluginId": "cordova-plugin-email-composer",
+        "clobbers": [
+            "cordova.plugins.email"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-email-composer/src/browser/EmailComposerProxy.js",
+        "id": "cordova-plugin-email-composer.EmailComposerProxy",
+        "pluginId": "cordova-plugin-email-composer",
+        "runs": true
+    },
+    {
+        "file": "plugins/call-number/www/CallNumber.js",
+        "id": "call-number.CallNumber",
+        "pluginId": "call-number",
+        "clobbers": [
+            "call"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -182,7 +212,10 @@ module.exports.metadata =
     "cordova-plugin-backbutton": "0.3.0",
     "cordova-plugin-geolocation": "4.0.2",
     "cordova-plugin-app-version": "0.1.9",
-    "cordova-plugin-market": "1.2.0"
+    "cordova-plugin-market": "1.2.0",
+    "cordova-plugin-call-number": "1.0.1",
+    "cordova-plugin-email-composer": "0.9.2",
+    "call-number": "0.0.2"
 }
 // BOTTOM OF METADATA
 });

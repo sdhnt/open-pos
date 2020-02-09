@@ -26,6 +26,8 @@ import { GeolocationService } from "../providers/geolocation/geolocation.service
 import { FcmService } from "../providers/firebase-cloud-messaging/fcm.service";
 import { AppVersion } from "@ionic-native/app-version";
 import { Market } from '@ionic-native/market';
+import { CallNumber } from '@ionic-native/call-number';
+import { EmailComposer } from '@ionic-native/email-composer';
 
 import * as firebase from "firebase/app";
 import { LoginPageModule } from "../pages/login/login.module";
@@ -112,6 +114,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     FcmService,
     AppVersion,
     Market,
+    CallNumber,
+    EmailComposer
   ],
 })
 export class AppModule {}
