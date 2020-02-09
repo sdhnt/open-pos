@@ -7,6 +7,7 @@ const syncArchive = async (db, { syncTransactions, calculateBusinessPerformance,
   if (syncTransactions) {
     let batch = db.batch();
     let numberOfOperations = 0;
+    const batchSize = 10;
     await db
       .collection("users")
       .get()
@@ -73,7 +74,7 @@ const syncArchive = async (db, { syncTransactions, calculateBusinessPerformance,
           const userInArchiveUpdateRef = db.collection("users-archive").doc(doc.id);
           batch.update(userInArchiveUpdateRef, user);
           numberOfOperations += 2;
-          if (numberOfOperations > 480 || numberOfOperations === 2 * numberOfUsers) {
+          if (numberOfOperations >= batchSize || numberOfOperations === 2 * numberOfUsers) {
             console.log(`number of operations in this batch: ${numberOfOperations}`);
             await batch.commit();
             batch = db.batch();
