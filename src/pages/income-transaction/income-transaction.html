@@ -6,7 +6,6 @@
 -->
 
 <ion-content padding>
-
 <!--   
   <button full ion-button style="font-size: 1.2rem;" (click)="printLogo()" style="background-color: green; color: white;" round> Print Logo</button> -->
 
@@ -34,7 +33,7 @@
 
   </div>
 
-  <ion-card *ngIf="showrec==true" style="border: solid 1px gray;">
+  <ion-card *ngIf="showrec==true" style="border: solid 1px gray;" id="imageConvert">
 
     <ion-grid>
       <div *ngIf="showrec==true">
@@ -42,7 +41,7 @@
         <ion-row>
           <ion-col col-3>
             <ion-row>
-              <img [src]="userdata?userdata.logo_url:''">
+              <img [src]="userdata?userdata.logo_url:''" *ngIf="userdata.logo_url">
             </ion-row>
       
           </ion-col>
@@ -129,7 +128,12 @@
           </ion-row> -->
           </div>
         </ion-list>
+        <ion-row>
+          <ion-col col-4 style="text-align: center; font-size: 1.5rem; "><b>{{"Grand total:"|translate}}</b> </ion-col>
+          <ion-col col-4></ion-col>
+          <ion-col col-4 style="text-align: center; ">{{lastsumAfterIndividualDiscount}} </ion-col>
 
+        </ion-row>
       </div>
 
       <ion-card padding *ngIf="displayManual==1;">
@@ -162,15 +166,7 @@
 
 
 
-      <div *ngIf="showrec==true">
-        <ion-row>
-          <ion-col col-4 style="text-align: center; font-size: 1.5rem; "><b>{{"Grand total:"|translate}}</b> </ion-col>
-          <ion-col col-4></ion-col>
-          <ion-col col-4 style="text-align: center; ">{{lastsumAfterIndividualDiscount}} </ion-col>
-
-        </ion-row>
-
-        
+      <div *ngIf="showrec==true">        
       <ion-row>
 
         <ion-col col-12 style="text-align: center;"> <button full ion-button style="font-size: 1.2rem;"
@@ -243,67 +239,106 @@
   </ion-card>
   <!-- Dynamically Generate All expense from backend - see feed from prev -->
   <ion-card *ngIf="showrec==false && isReady==true" padding class="last-rec-card">
+    <ion-buttons end>
+      <button ion-button clear (click)="recAction()">
+        <ion-icon name="download" style="color: black;"></ion-icon>
+      </button>
+      <button ion-button clear>
+        <ion-icon name="share" style="color: black;"></ion-icon>
+      </button>
+    </ion-buttons>
     <h2 style="text-align: center;">
-      <b>{{"Last Receipt"|translate}}</b>
+      <b><u>{{"Last Receipt"|translate}}</u></b>
     </h2>
-    <ion-row style="padding-top: 5px;">
-      <ion-col col-4 style="color: black; font-size: 1.0rem; text-align: center"><b>{{"Name" | translate}}</b>
-      </ion-col>
-      <ion-col col-2 style="color: black; font-size: 1.0rem; text-align: center"><b>{{"Price"| translate}}</b>
-      </ion-col>
-      <ion-col col-2 style="color: black; font-size: 1.0rem; text-align: center"><b>{{"Qty"| translate}}</b>
-      </ion-col>
-      <ion-col col-3 style="color: black; font-size: 1.0rem; text-align: center"><b>{{"Subtotal"| translate}}</b>
-      </ion-col>
-    </ion-row>
-    <ion-list *ngFor="let item of lastTransaction.itemslist">
+    <br>
+    <div id="recImg">
       <ion-row>
-        <ion-col col-4 style="color: black; text-align: center;">
-        {{item.name}}
+        <ion-col col-3>
+          <ion-row>
+            <img [src]="userdata?userdata.logo_url:''" *ngIf="userdata.logo_url">
+          </ion-row>
+    
         </ion-col>
-        <ion-col col-2 style="color: black;   text-align: center;">{{item.price}}</ion-col>
-        <ion-col col-2 style="color: black;   text-align: center;">{{item.qty}}</ion-col>
-        <ion-col col-3 style="color: black; text-align: center">{{(item.price*item.qty)| number:0}}
+
+
+        <ion-col col-7>
+          <ion-row>
+            <ion-col style="text-align: center; padding-top: 5px;"> {{userdata?userdata.business_name:null}} </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col col-12 style="color: grey;  text-align: center"> {{userdata?userdata.business_address:null}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-12 style="color: grey;  text-align: center"> {{userdata?userdata.businesstype:null}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-12 style="color: grey; text-align: center"> {{userdata?userdata.ph_no:null}}</ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col col-2></ion-col>
+      </ion-row>
+      <ion-row style="padding-top: 5px;">
+        <ion-col col-4 style="color: black; font-size: 1.0rem; text-align: center"><b>{{"Name" | translate}}</b>
+        </ion-col>
+        <ion-col col-2 style="color: black; font-size: 1.0rem; text-align: center"><b>{{"Price"| translate}}</b>
+        </ion-col>
+        <ion-col col-2 style="color: black; font-size: 1.0rem; text-align: center"><b>{{"Qty"| translate}}</b>
+        </ion-col>
+        <ion-col col-3 style="color: black; font-size: 1.0rem; text-align: center"><b>{{"Subtotal"| translate}}</b>
         </ion-col>
       </ion-row>
-    </ion-list>
-    <ion-row>
-      <ion-col col-4 style="color: black; text-align: center;">
-        <b>{{"Total"|translate}}</b>
-      </ion-col>
-      <ion-col col-2 style="color: black;   text-align: center;"></ion-col>
-      <ion-col col-2 style="color: black;   text-align: center;"></ion-col>
-      <ion-col col-3 style="color: black; text-align: center">{{ lastTransaction.totalsum }}
-      </ion-col>
-    </ion-row>
-    <!-- <ion-row>
-      <ion-col col-8>
-        <b>{{"Total"|translate}}</b>
-      </ion-col>
-      <ion-col col-4 style="text-align: end;">
-        {{ lastTransaction.totalsum }}
-      </ion-col>
-    </ion-row> -->
-    <ion-row *ngIf="lastTransaction.totaldisc!=lastTransaction.totalsum" style="padding: 0px;text-align: left; ">
-      <ion-col col-4 style="color: black; text-align: center;">
-        {{"Discounted Total:"|translate}} ({{lastTransaction.discount}}%)
-      </ion-col>
-      <ion-col col-2 style="color: black;   text-align: center;"></ion-col>
-      <ion-col col-2 style="color: black;   text-align: center;"></ion-col>
-      <ion-col col-3 style="color: black; text-align: center">
-        {{lastTransaction.totaldisc}}
-      </ion-col>
-    </ion-row>
-    <ion-row *ngIf="lastTransaction.totalsum!=lastTransaction.totalatax" style="padding: 0px; text-align: left;">
-      <ion-col col-4 style="color: black; text-align: center;">
-        {{"Total after tax:"|translate}} ({{lastTransaction.taxrate}}%)
-      </ion-col>
-      <ion-col col-2 style="color: black;   text-align: center;"></ion-col>
-      <ion-col col-2 style="color: black;   text-align: center;"></ion-col>
-      <ion-col col-3 style="color: black; text-align: center">
-        {{lastTransaction.totalatax}}
-      </ion-col>
-    </ion-row>
+      <ion-list *ngFor="let item of lastTransaction.itemslist">
+        <ion-row>
+          <ion-col col-4 style="color: black; text-align: center;">
+          {{item.name}}
+          </ion-col>
+          <ion-col col-2 style="color: black;   text-align: center;">{{item.price}}</ion-col>
+          <ion-col col-2 style="color: black;   text-align: center;">{{item.qty}}</ion-col>
+          <ion-col col-3 style="color: black; text-align: center">{{(item.price*item.qty)| number:0}}
+          </ion-col>
+        </ion-row>
+      </ion-list>
+      <ion-row>
+        <ion-col col-4 style="color: black; text-align: center;">
+          <b>{{"Total"|translate}}</b>
+        </ion-col>
+        <ion-col col-2 style="color: black;   text-align: center;"></ion-col>
+        <ion-col col-2 style="color: black;   text-align: center;"></ion-col>
+        <ion-col col-3 style="color: black; text-align: center">{{ lastTransaction.totalsum }}
+        </ion-col>
+      </ion-row>
+      <!-- <ion-row>
+        <ion-col col-8>
+          <b>{{"Total"|translate}}</b>
+        </ion-col>
+        <ion-col col-4 style="text-align: end;">
+          {{ lastTransaction.totalsum }}
+        </ion-col>
+      </ion-row> -->
+      <ion-row *ngIf="lastTransaction.totaldisc!=lastTransaction.totalsum" style="padding: 0px;text-align: left; ">
+        <ion-col col-4 style="color: black; text-align: center;">
+          {{"Discounted Total:"|translate}} ({{lastTransaction.discount}}%)
+        </ion-col>
+        <ion-col col-2 style="color: black;   text-align: center;"></ion-col>
+        <ion-col col-2 style="color: black;   text-align: center;"></ion-col>
+        <ion-col col-3 style="color: black; text-align: center">
+          {{lastTransaction.totaldisc}}
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="lastTransaction.totalsum!=lastTransaction.totalatax" style="padding: 0px; text-align: left;">
+        <ion-col col-4 style="color: black; text-align: center;">
+          {{"Total after tax:"|translate}} ({{lastTransaction.taxrate}}%)
+        </ion-col>
+        <ion-col col-2 style="color: black;   text-align: center;"></ion-col>
+        <ion-col col-2 style="color: black;   text-align: center;"></ion-col>
+        <ion-col col-3 style="color: black; text-align: center">
+          {{lastTransaction.totalatax}}
+        </ion-col>
+      </ion-row>
+    </div>
     <br>
     <ion-row style="padding: 7px;">
       <button ion-button full style="background-color:green" (click)="printOldRec(lastTransaction)" round>
@@ -311,11 +346,9 @@
       </button>
     </ion-row>
   </ion-card>
-
   <ion-row padding></ion-row>
   <ion-row padding></ion-row>
   <ion-row padding></ion-row>
-
 
 </ion-content>
 

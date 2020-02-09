@@ -23,6 +23,9 @@ import { commands } from "./../../providers/printer/printer-commands";
 import EscPosEncoder from "esc-pos-encoder-ionic";
 import { GeolocationService } from "../../providers/geolocation/geolocation.service";
 import { Camera, CameraOptions } from "@ionic-native/camera";
+import htmlToImage from 'html-to-image';
+import download from 'downloadjs';
+import html2canvas from 'html2canvas';
 /**
  * Generated class for the IncomeTransactionPage page.
  *
@@ -664,6 +667,40 @@ export class IncomeTransactionPage {
     await this.sp.setUserDat(this.userdata);
   }
 
+  recAction(){
+    let a = this.alertCtrl.create({
+      subTitle: "Would you like to download the receipt as an image?",
+      buttons: [
+        {
+          text: "No",
+          role: 'cancel'
+        },
+        {
+          text: "Yes",
+          handler: ()=>{
+          //   var receipt = document.getElementById("recImg");
+          //   console.log(receipt);
+          //   htmlToImage.toPng(receipt)
+          //     .then(dataUrl=>{
+          //       console.log(dataUrl)
+          //       download(dataUrl, this.datetime+"receipt.png");
+          //     })
+          //     .catch(err=>console.log(err));
+
+          //NEVER USE HTML-TO-IMAGE. USELESS AND IMPRACTICAL. HTML2CANVAS!!!
+
+            html2canvas(document.querySelector("#recImg")).then(canvas=>{
+              var dataUrl = canvas.toDataURL();
+              console.log(dataUrl);
+              download(dataUrl, "Receipt_"+this.datetime+".png");
+            })
+          }
+        }
+      ]
+    });
+    a.present();
+  }
+
   saveRec() {
     this.datetime = Date.now();
     if (this.datastore.itemslist.length == 0) {
@@ -740,7 +777,8 @@ export class IncomeTransactionPage {
       });
     }
     //this.getLastTransaction();
-    (this.navCtrl.parent as Tabs).select(0);
+  //(this.navCtrl.parent as Tabs).select(0);
+  this.recAction();
   }
   discountlist = [];
   addCalc() {
@@ -911,7 +949,8 @@ export class IncomeTransactionPage {
             this.taxbtn = 0;
             this.discbtn = 0;
             alert.present();
-            (this.navCtrl.parent as Tabs).select(0);
+            this.recAction();
+            //(this.navCtrl.parent as Tabs).select(0);
           })
           .catch(error => {
             console.log(error);
@@ -938,7 +977,8 @@ export class IncomeTransactionPage {
             this.taxbtn = 0;
             this.discbtn = 0;
             alert.present();
-            (this.navCtrl.parent as Tabs).select(0);
+            this.recAction();
+            //(this.navCtrl.parent as Tabs).select(0);
           });
       },
       error => {
