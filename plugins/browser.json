@@ -68,6 +68,15 @@
     },
     "cordova-plugin-market": {
       "PACKAGE_NAME": "com.openfintech.openpos"
+    },
+    "cordova-plugin-call-number": {
+      "PACKAGE_NAME": "com.openfintech.openpos"
+    },
+    "cordova-plugin-email-composer": {
+      "PACKAGE_NAME": "com.openfintech.openpos"
+    },
+    "call-number": {
+      "PACKAGE_NAME": "com.openfintech.openpos"
     }
   },
   "dependent_plugins": {

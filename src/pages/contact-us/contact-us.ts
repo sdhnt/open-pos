@@ -63,8 +63,8 @@ export class ContactUsPage {
   sendMail(){
     let emailSettings = {
       to: this.email,
-      subject: "Help on Issue", //edit as and when needed
-      body: "Test Test 123",
+      subject: "OPEN Help", //edit as and when needed
+      body: "Hello! I need your help!",
       isHTML: true,
     };
     // this.emailComposer.requestPermission()

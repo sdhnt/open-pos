@@ -55,6 +55,12 @@
     <feature name="Market">
         <param name="android-package" value="com.xmartlabs.cordova.market.Market" />
     </feature>
+    <feature name="CallNumber">
+        <param name="android-package" value="mx.ferreyra.callnumber.CFCallNumber" />
+    </feature>
+    <feature name="CallNumber">
+        <param name="android-package" value="com.rohithvaranasi.callnumber.CFCallNumber" />
+    </feature>
     <feature name="BluetoothSerial">
         <param name="android-package" value="com.megster.cordova.BluetoothSerial" />
     </feature>
@@ -66,6 +72,9 @@
     <allow-navigation href="ionic://*" />
     <feature name="IonicWebView">
         <param name="android-package" value="com.ionicframework.cordova.webview.IonicWebView" />
+    </feature>
+    <feature name="EmailComposer">
+        <param name="android-package" value="de.appplant.cordova.emailcomposer.EmailComposer" />
     </feature>
     <name>OPEN POS</name>
     <description>Free POS Application</description>
