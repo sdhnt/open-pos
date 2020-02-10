@@ -23,9 +23,9 @@ import { commands } from "./../../providers/printer/printer-commands";
 import EscPosEncoder from "esc-pos-encoder-ionic";
 import { GeolocationService } from "../../providers/geolocation/geolocation.service";
 import { Camera, CameraOptions } from "@ionic-native/camera";
-import { SocialSharing } from '@ionic-native/social-sharing';
-import html2canvas from 'html2canvas';
-import download from 'downloadjs';
+import { SocialSharing } from "@ionic-native/social-sharing";
+import html2canvas from "html2canvas";
+import download from "downloadjs";
 import { Base64ToGallery, Base64ToGalleryOptions } from "@ionic-native/base64-to-gallery";
 /**
  * Generated class for the IncomeTransactionPage page.
@@ -56,7 +56,7 @@ export class IncomeTransactionPage {
     public app: App,
     private modal: ModalController,
     private social: SocialSharing,
-    private base64toGallery: Base64ToGallery
+    private base64toGallery: Base64ToGallery,
   ) {
     this.isReady = false;
     const nav = app._appRoot._getActivePortal() || app.getActiveNav();
@@ -670,30 +670,33 @@ export class IncomeTransactionPage {
     await this.sp.setUserDat(this.userdata);
   }
 
-  shareRec(){
-    html2canvas(document.querySelector("#recImg"), {useCORS: true}).then(canvas=>{
+  shareRec() {
+    html2canvas(document.querySelector("#recImg"), { useCORS: true }).then(canvas => {
       // var ctx = canvas.getContext("2d");
       // var img = new Image();
       // img.src = this.userdata.logo_url
       // ctx.drawImage(img, 10, 10);
-      let dataUrl = canvas.toDataURL();
-      this.social.share('Receipt made using Open POS app\n','',dataUrl,'facebook.com/openfinanceapp')
-        .then(response=>console.log(response))
-        .catch(err=>console.log(err));  
+      const dataUrl = canvas.toDataURL();
+      this.social
+        .share("Receipt made using Open POS app\n", "", dataUrl, "facebook.com/openfinanceapp")
+        .then(response => console.log(response))
+        .catch(err => console.log(err));
     });
   }
 
-  recAction(){ //line 778, 949, 977
-    html2canvas(document.querySelector("#recImg"), {useCORS: true}).then(canvas=>{
-      var dataUrl = canvas.toDataURL();
+  recAction() {
+    //line 778, 949, 977
+    html2canvas(document.querySelector("#recImg"), { useCORS: true }).then(canvas => {
+      const dataUrl = canvas.toDataURL();
       //console.log(dataUrl);
-        const options: Base64ToGalleryOptions = {
-          prefix: "_img",
-          mediaScanner: true,
-        }
-      this.base64toGallery.base64ToGallery(dataUrl, options)
-        .then(res=>console.log(res))
-        .catch(err=>console.log(err));
+      const options: Base64ToGalleryOptions = {
+        prefix: "_img",
+        mediaScanner: true,
+      };
+      this.base64toGallery
+        .base64ToGallery(dataUrl, options)
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
       // download(dataUrl, 'r.png');
     });
   }
@@ -774,8 +777,8 @@ export class IncomeTransactionPage {
       });
     }
     //this.getLastTransaction();
-  //(this.navCtrl.parent as Tabs).select(0);
-  // this.recAction();
+    //(this.navCtrl.parent as Tabs).select(0);
+    // this.recAction();
   }
   discountlist = [];
   addCalc() {
