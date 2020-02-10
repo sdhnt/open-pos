@@ -683,45 +683,19 @@ export class IncomeTransactionPage {
     });
   }
 
-  async recAction(){
-    let a = this.alertCtrl.create({
-      subTitle: "Would you like to download the receipt as an image?", 
-      buttons: [
-        {
-          text: "No",
-          role: 'cancel'
-        },
-        {
-          text: "Yes",
-          handler: ()=>{
-          //   var receipt = document.getElementById("recImg");
-          //   console.log(receipt);
-          //   htmlToImage.toPng(receipt)
-          //     .then(dataUrl=>{
-          //       console.log(dataUrl)
-          //       download(dataUrl, this.datetime+"receipt.png");
-          //     })
-          //     .catch(err=>console.log(err));
-
-          //NEVER USE HTML-TO-IMAGE. USELESS AND IMPRACTICAL. HTML2CANVAS!!!
-
-            html2canvas(document.querySelector("#recImg"), {useCORS: true}).then(canvas=>{
-              var dataUrl = canvas.toDataURL();
-              //console.log(dataUrl);
-                const options: Base64ToGalleryOptions = {
-                  prefix: "_img",
-                  mediaScanner: true,
-                }
-              this.base64toGallery.base64ToGallery(dataUrl, options)
-                .then(res=>console.log(res))
-                .catch(err=>console.log(err));
-              // download(dataUrl, 'r.png');
-            });
-          }
+  recAction(){ //line 778, 949, 977
+    html2canvas(document.querySelector("#recImg"), {useCORS: true}).then(canvas=>{
+      var dataUrl = canvas.toDataURL();
+      //console.log(dataUrl);
+        const options: Base64ToGalleryOptions = {
+          prefix: "_img",
+          mediaScanner: true,
         }
-      ]
+      this.base64toGallery.base64ToGallery(dataUrl, options)
+        .then(res=>console.log(res))
+        .catch(err=>console.log(err));
+      // download(dataUrl, 'r.png');
     });
-    a.present();
   }
 
   saveRec() {
@@ -801,7 +775,7 @@ export class IncomeTransactionPage {
     }
     //this.getLastTransaction();
   //(this.navCtrl.parent as Tabs).select(0);
-  this.recAction();
+  // this.recAction();
   }
   discountlist = [];
   addCalc() {
@@ -972,7 +946,7 @@ export class IncomeTransactionPage {
             this.taxbtn = 0;
             this.discbtn = 0;
             alert.present();
-            this.recAction();
+            // this.recAction();
             //(this.navCtrl.parent as Tabs).select(0);
           })
           .catch(error => {
@@ -1000,7 +974,7 @@ export class IncomeTransactionPage {
             this.taxbtn = 0;
             this.discbtn = 0;
             alert.present();
-            this.recAction();
+            // this.recAction();
             //(this.navCtrl.parent as Tabs).select(0);
           });
       },
