@@ -677,7 +677,7 @@ export class IncomeTransactionPage {
       // img.src = this.userdata.logo_url
       // ctx.drawImage(img, 10, 10);
       let dataUrl = canvas.toDataURL();
-      this.social.share('Receipt made using Open POS app\n',dataUrl,'facebook.com/openfinanceapp')
+      this.social.share('Receipt made using Open POS app\n','',dataUrl,'facebook.com/openfinanceapp')
         .then(response=>console.log(response))
         .catch(err=>console.log(err));  
     });
@@ -685,7 +685,7 @@ export class IncomeTransactionPage {
 
   async recAction(){
     let a = this.alertCtrl.create({
-      subTitle: "Would you like to download the receipt as an image?",
+      subTitle: "Would you like to download the receipt as an image?", 
       buttons: [
         {
           text: "No",
