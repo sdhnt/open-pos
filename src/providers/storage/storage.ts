@@ -256,7 +256,6 @@ export class StorageProvider {
                             .collection("users")
                             .doc(uid)
                             .update({
-                              products: parseprod,
                               transactions: parsetransac,
                               categories: parsecat,
                             })
@@ -279,10 +278,11 @@ export class StorageProvider {
                         currentArray: parseprod,
                         existingArray: [],
                         field: "code",
+                        collectionPath: `/users/${uid}/products`,
                       };
                       await firebase
                         .firestore()
-                        .collection(`/users/${uid}/${productCollection.id}`)
+                        .collection(productCollection.collectionPath)
                         .get()
                         .then(snapshot => {
                           const bigArray = [];
@@ -309,13 +309,28 @@ export class StorageProvider {
                         }
                       });
                       // delete all documents in subcollection
-                      // await this.deleteFirestoreCollection(
-                      //   firebase.firestore(),
-                      //   `/users/${uid}/${productCollection.id}`,
-                      //   500,
-                      // );
-                      // update subcollection
-                      console.log(productCollection);
+                      await this.deleteFirestoreCollection(firebase.firestore(), productCollection.collectionPath, 500);
+                      // re-create all documents in subcollection
+                      const db = firebase.firestore();
+                      const batch = db.batch();
+                      const bigArray = [[]];
+                      let numberOfElements = 0;
+                      const documentLimit = 250;
+                      productCollection.currentArray.forEach(currentData => {
+                        const index = bigArray.length - 1;
+                        bigArray[index].push(currentData);
+                        numberOfElements++;
+                        if (numberOfElements >= documentLimit) {
+                          bigArray[index + 1] = [];
+                          numberOfElements = 0;
+                        }
+                      });
+                      bigArray.forEach((array, index) => {
+                        const documentReference = db.collection(productCollection.collectionPath).doc();
+                        batch.set(documentReference, { index, [productCollection.id]: array });
+                      });
+                      await batch.commit();
+                      await this.storage.set("products", JSON.stringify(parseprod));
                     }
                   }
                 })
