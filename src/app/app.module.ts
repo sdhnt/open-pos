@@ -28,6 +28,8 @@ import { AppVersion } from "@ionic-native/app-version";
 import { Market } from '@ionic-native/market';
 import { CallNumber } from '@ionic-native/call-number';
 import { EmailComposer } from '@ionic-native/email-composer';
+import { SocialSharing } from '@ionic-native/social-sharing';
+import { Base64ToGallery } from '@ionic-native/base64-to-gallery'
 
 import * as firebase from "firebase/app";
 import { LoginPageModule } from "../pages/login/login.module";
@@ -115,7 +117,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppVersion,
     Market,
     CallNumber,
-    EmailComposer
+    EmailComposer,
+    SocialSharing,
+    Base64ToGallery,
   ],
 })
 export class AppModule {}
