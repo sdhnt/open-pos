@@ -83,7 +83,7 @@ export class StorageProvider {
   }
 
   async setMem() {
-    let tempprod;
+    const tempprod = [];
     let tempcat;
     let temptransac;
     let uid;
@@ -99,7 +99,6 @@ export class StorageProvider {
           querySnapshot.forEach(doc => {
             uid = doc.id;
             const usdat = doc.data();
-            tempprod = usdat.products;
             temptransac = usdat.transactions;
             //.slice(Math.max(usdat.transactions.length - 10, 0))
             tempcat = usdat.categories;
@@ -133,6 +132,21 @@ export class StorageProvider {
         .catch(error => {
           console.log("Error getting documents: ", error);
         });
+      if (uid)
+        await firebase
+          .firestore()
+          .collection("users")
+          .doc(uid)
+          .collection("products")
+          .get()
+          .then(snapshot => {
+            const bigArray = [];
+            snapshot.forEach(doc => {
+              const data = doc.data();
+              bigArray.splice(data.index, 0, data.products);
+            });
+            bigArray.forEach(array => tempprod.push(...array));
+          });
       this.tempcat = tempcat;
       this.tempprod = tempprod;
       this.temptransac = temptransac;
