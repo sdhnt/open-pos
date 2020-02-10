@@ -25,6 +25,7 @@ import { GeolocationService } from "../../providers/geolocation/geolocation.serv
 import { Camera, CameraOptions } from "@ionic-native/camera";
 import { SocialSharing } from '@ionic-native/social-sharing';
 import html2canvas from 'html2canvas';
+import download from 'downloadjs';
 import { Base64ToGallery } from "@ionic-native/base64-to-gallery";
 /**
  * Generated class for the IncomeTransactionPage page.
@@ -670,18 +671,17 @@ export class IncomeTransactionPage {
   }
 
   shareRec(){
-    var logo = document.getElementById("userLogo") as HTMLImageElement;
-    logo.onload = () => {
+    setTimeout(() => {
       html2canvas(document.querySelector("#recImg")).then(canvas=>{
         let dataUrl = canvas.toDataURL();
         this.social.share('Receipt made using OpenFinance app\n','',dataUrl,'facebook.com/openfinanceapp')
           .then(response=>console.log(response))
           .catch(err=>console.log(err));
       });
-    }
+    }, 2000);
   }
 
-  recAction(){
+  async recAction(){
     let a = this.alertCtrl.create({
       subTitle: "Would you like to download the receipt as an image?",
       buttons: [
@@ -702,16 +702,17 @@ export class IncomeTransactionPage {
           //     .catch(err=>console.log(err));
 
           //NEVER USE HTML-TO-IMAGE. USELESS AND IMPRACTICAL. HTML2CANVAS!!!
-            var logo = document.getElementById("userLogo") as HTMLImageElement;
-            logo.onload = () => {
-              html2canvas(document.querySelector("#recImg")).then(canvas=>{
-                var dataUrl = canvas.toDataURL();
-                //console.log(dataUrl);
-                this.base64toGallery.base64ToGallery(dataUrl)
-                  .then(res=>console.log(res))
-                  .catch(err=>console.log(err));
-              });
-            }
+
+          setTimeout(()=>{
+            html2canvas(document.querySelector("#recImg")).then(canvas=>{
+              var dataUrl = canvas.toDataURL();
+              console.log(dataUrl);
+              this.base64toGallery.base64ToGallery(dataUrl)
+                .then(res=>console.log(res))
+                .catch(err=>console.log(err));
+              // download(dataUrl, 'r.png');
+            });
+          }, 2000);
           }
         }
       ]
