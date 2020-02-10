@@ -670,12 +670,15 @@ export class IncomeTransactionPage {
   }
 
   shareRec(){
-    html2canvas(document.querySelector("#recImg")).then(canvas=>{
-      let dataUrl = canvas.toDataURL();
-      this.social.share('Receipt made using OpenFinance app\n','',dataUrl,'facebook.com/openfinanceapp')
-        .then(response=>console.log(response))
-        .catch(err=>console.log(err));
-    });
+    var logo = document.getElementById("userLogo") as HTMLImageElement;
+    logo.onload = () => {
+      html2canvas(document.querySelector("#recImg")).then(canvas=>{
+        let dataUrl = canvas.toDataURL();
+        this.social.share('Receipt made using OpenFinance app\n','',dataUrl,'facebook.com/openfinanceapp')
+          .then(response=>console.log(response))
+          .catch(err=>console.log(err));
+      });
+    }
   }
 
   recAction(){
@@ -699,14 +702,16 @@ export class IncomeTransactionPage {
           //     .catch(err=>console.log(err));
 
           //NEVER USE HTML-TO-IMAGE. USELESS AND IMPRACTICAL. HTML2CANVAS!!!
-
-            html2canvas(document.querySelector("#recImg")).then(canvas=>{
-              var dataUrl = canvas.toDataURL();
-              //console.log(dataUrl);
-              this.base64toGallery.base64ToGallery(dataUrl)
-                .then(res=>console.log(res))
-                .catch(err=>console.log(err));
-            });
+            var logo = document.getElementById("userLogo") as HTMLImageElement;
+            logo.onload = () => {
+              html2canvas(document.querySelector("#recImg")).then(canvas=>{
+                var dataUrl = canvas.toDataURL();
+                //console.log(dataUrl);
+                this.base64toGallery.base64ToGallery(dataUrl)
+                  .then(res=>console.log(res))
+                  .catch(err=>console.log(err));
+              });
+            }
           }
         }
       ]
