@@ -5,7 +5,7 @@ const syncArchive = async (db, { syncTransactions, calculateBusinessPerformance,
   const limit = 100; // important note: do not change this limit as it would completely mess up the syncing algorithm
 
   if (syncTransactions) {
-    let batch = db.batch();
+    const batch = db.batch();
     let numberOfOperations = 0;
     const batchSize = 10;
     await db
@@ -79,7 +79,6 @@ const syncArchive = async (db, { syncTransactions, calculateBusinessPerformance,
           if (numberOfOperations >= batchSize || numberOfOperations === 2 * numberOfUsersLeft) {
             console.log(`number of operations in this batch: ${numberOfOperations}`);
             await batch.commit();
-            batch = db.batch();
             numberOfOperations = 0;
           }
         });
