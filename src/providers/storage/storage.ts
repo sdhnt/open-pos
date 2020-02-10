@@ -153,6 +153,7 @@ export class StorageProvider {
       this.uid = uid;
       this.tempuser = tempuser;
       this.tempsummary = tempsummary;
+      console.log(`tempprod: `, tempprod);
       // console.log("setglobal");
       // console.log(JSON.stringify(tempcat));
       // console.log(JSON.stringify(tempprod));
@@ -214,10 +215,10 @@ export class StorageProvider {
               parsetransac = JSON.parse(val);
               this.storage
                 .get("categories")
-                .then(val => {
+                .then(async val => {
                   parsecat = JSON.parse(val);
                   if (parseprod != null && parsetransac != null && parsecat != null) {
-                    firebase
+                    await firebase
                       .firestore()
                       .collection("users")
                       .where("owner", "==", firebase.auth().currentUser.uid)
@@ -226,7 +227,6 @@ export class StorageProvider {
                         querySnapshot.forEach(async doc => {
                           uid = doc.id;
                           const existingArrays = [
-                            { id: "products", currentArray: parseprod, field: "code" },
                             { id: "categories", currentArray: parsecat, field: "name" },
                             { id: "transactions", currentArray: parsetransac, field: "datetime" },
                           ].map(array => ({ existingArray: doc.data()[array.id], ...array }));
@@ -261,7 +261,6 @@ export class StorageProvider {
                               categories: parsecat,
                             })
                             .then(async () => {
-                              await this.storage.set("products", JSON.stringify(parseprod));
                               await this.storage.set("categories", JSON.stringify(parsecat));
                               await this.storage.set("transactions", JSON.stringify(parsetransac));
                             })
@@ -273,6 +272,51 @@ export class StorageProvider {
                       .catch(error => {
                         console.log("Error getting documents: ", error);
                       });
+
+                    if (uid) {
+                      const productCollection = {
+                        id: "products",
+                        currentArray: parseprod,
+                        existingArray: [],
+                        field: "code",
+                      };
+                      await firebase
+                        .firestore()
+                        .collection(`/users/${uid}/${productCollection.id}`)
+                        .get()
+                        .then(snapshot => {
+                          const bigArray = [];
+                          snapshot.forEach(doc => {
+                            const data = doc.data();
+                            bigArray.splice(data.index, 0, data.products);
+                          });
+                          bigArray.forEach(array => productCollection.existingArray.push(...array));
+                        });
+                      productCollection.existingArray.forEach(existingData => {
+                        const index = productCollection.currentArray.findIndex(currentData => {
+                          return currentData[productCollection.field] === existingData[productCollection.field];
+                        });
+                        if (index === -1) productCollection.currentArray.push(existingData);
+                        // sync co-existing data
+                        else {
+                          const currentData = productCollection.currentArray[index];
+                          if (existingData.updatedAt) {
+                            if (!currentData.updatedAt) productCollection.currentArray[index] = existingData;
+                            else if (moment(existingData.updatedAt).isSameOrAfter(currentData.updatedAt))
+                              productCollection.currentArray[index] = existingData;
+                          }
+                          // all other cases would take currentData as source of truth
+                        }
+                      });
+                      // delete all documents in subcollection
+                      // await this.deleteFirestoreCollection(
+                      //   firebase.firestore(),
+                      //   `/users/${uid}/${productCollection.id}`,
+                      //   500,
+                      // );
+                      // update subcollection
+                      console.log(productCollection);
+                    }
                   }
                 })
                 .catch(err => {
@@ -288,6 +332,49 @@ export class StorageProvider {
         });
     });
   }
+
+  deleteFirestoreCollection = (db, collectionPath, batchSize) => {
+    const deleteQueryBatch = (db, query, batchSize, resolve, reject) => {
+      query
+        .get()
+        .then(snapshot => {
+          // When there are no documents left, we are done
+          if (snapshot.size == 0) {
+            return 0;
+          }
+
+          // Delete documents in a batch
+          const batch = db.batch();
+          snapshot.docs.forEach(doc => {
+            batch.delete(doc.ref);
+          });
+
+          return batch.commit().then(() => {
+            return snapshot.size;
+          });
+        })
+        .then(numDeleted => {
+          if (numDeleted === 0) {
+            resolve();
+            return;
+          }
+
+          // Recurse on the next process tick, to avoid
+          // exploding the stack.
+          process.nextTick(() => {
+            deleteQueryBatch(db, query, batchSize, resolve, reject);
+          });
+        })
+        .catch(reject);
+    };
+
+    const collectionRef = db.collection(collectionPath);
+    const query = collectionRef.limit(batchSize);
+
+    return new Promise((resolve, reject) => {
+      deleteQueryBatch(db, query, batchSize, resolve, reject);
+    });
+  };
 
   async setUserDat(data) {
     this.tempuser = data;
