@@ -24,7 +24,6 @@ import EscPosEncoder from "esc-pos-encoder-ionic";
 import { GeolocationService } from "../../providers/geolocation/geolocation.service";
 import { Camera, CameraOptions } from "@ionic-native/camera";
 import { SocialSharing } from '@ionic-native/social-sharing';
-import download from 'downloadjs';
 import html2canvas from 'html2canvas';
 import { Base64ToGallery } from "@ionic-native/base64-to-gallery";
 /**

@@ -189,6 +189,20 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "clobbers": [
         "call"
       ]
+    },
+    {
+      "id": "es6-promise-plugin.Promise",
+      "file": "plugins/es6-promise-plugin/www/promise.js",
+      "pluginId": "es6-promise-plugin",
+      "runs": true
+    },
+    {
+      "id": "cordova-plugin-x-socialsharing.SocialSharing",
+      "file": "plugins/cordova-plugin-x-socialsharing/www/SocialSharing.js",
+      "pluginId": "cordova-plugin-x-socialsharing",
+      "clobbers": [
+        "window.plugins.socialsharing"
+      ]
     }
   ];
   module.exports.metadata = {
@@ -215,6 +229,8 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-market": "1.2.0",
     "cordova-plugin-call-number": "1.0.1",
     "cordova-plugin-email-composer": "0.9.2",
-    "call-number": "0.0.2"
+    "call-number": "0.0.2",
+    "es6-promise-plugin": "4.2.2",
+    "cordova-plugin-x-socialsharing": "5.6.3"
   };
 });

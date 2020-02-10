@@ -61,6 +61,9 @@
     <feature name="CallNumber">
         <param name="android-package" value="com.rohithvaranasi.callnumber.CFCallNumber" />
     </feature>
+    <feature name="SocialSharing">
+        <param name="android-package" value="nl.xservices.plugins.SocialSharing" />
+    </feature>
     <feature name="BluetoothSerial">
         <param name="android-package" value="com.megster.cordova.BluetoothSerial" />
     </feature>

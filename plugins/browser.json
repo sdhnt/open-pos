@@ -77,6 +77,9 @@
     },
     "call-number": {
       "PACKAGE_NAME": "com.openfintech.openpos"
+    },
+    "cordova-plugin-x-socialsharing": {
+      "PACKAGE_NAME": "com.openfintech.openpos"
     }
   },
   "dependent_plugins": {
@@ -85,6 +88,9 @@
     },
     "cordova-plugin-androidx-adapter": {
       "PACKAGE_NAME": "com.openfintech.pos"
+    },
+    "es6-promise-plugin": {
+      "PACKAGE_NAME": "com.openfintech.openpos"
     }
   }
 }
