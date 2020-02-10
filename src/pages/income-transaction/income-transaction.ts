@@ -26,7 +26,7 @@ import { Camera, CameraOptions } from "@ionic-native/camera";
 import { SocialSharing } from '@ionic-native/social-sharing';
 import html2canvas from 'html2canvas';
 import download from 'downloadjs';
-import { Base64ToGallery } from "@ionic-native/base64-to-gallery";
+import { Base64ToGallery, Base64ToGalleryOptions } from "@ionic-native/base64-to-gallery";
 /**
  * Generated class for the IncomeTransactionPage page.
  *
@@ -671,14 +671,16 @@ export class IncomeTransactionPage {
   }
 
   shareRec(){
-    setTimeout(() => {
-      html2canvas(document.querySelector("#recImg")).then(canvas=>{
-        let dataUrl = canvas.toDataURL();
-        this.social.share('Receipt made using OpenFinance app\n','',dataUrl,'facebook.com/openfinanceapp')
-          .then(response=>console.log(response))
-          .catch(err=>console.log(err));
-      });
-    }, 2000);
+    html2canvas(document.querySelector("#recImg"), {useCORS: true}).then(canvas=>{
+      // var ctx = canvas.getContext("2d");
+      // var img = new Image();
+      // img.src = this.userdata.logo_url
+      // ctx.drawImage(img, 10, 10);
+      let dataUrl = canvas.toDataURL();
+      this.social.share('Receipt made using OpenFinance app\n','',dataUrl,'facebook.com/openfinanceapp')
+        .then(response=>console.log(response))
+        .catch(err=>console.log(err));
+    });
   }
 
   async recAction(){
@@ -703,16 +705,18 @@ export class IncomeTransactionPage {
 
           //NEVER USE HTML-TO-IMAGE. USELESS AND IMPRACTICAL. HTML2CANVAS!!!
 
-          setTimeout(()=>{
             html2canvas(document.querySelector("#recImg")).then(canvas=>{
               var dataUrl = canvas.toDataURL();
-              console.log(dataUrl);
-              this.base64toGallery.base64ToGallery(dataUrl)
+              //console.log(dataUrl);
+                const options: Base64ToGalleryOptions = {
+                  prefix: "_img",
+                  mediaScanner: true,
+                }
+              this.base64toGallery.base64ToGallery(dataUrl, options)
                 .then(res=>console.log(res))
                 .catch(err=>console.log(err));
               // download(dataUrl, 'r.png');
             });
-          }, 2000);
           }
         }
       ]
