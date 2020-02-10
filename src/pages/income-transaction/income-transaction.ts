@@ -705,7 +705,7 @@ export class IncomeTransactionPage {
 
           //NEVER USE HTML-TO-IMAGE. USELESS AND IMPRACTICAL. HTML2CANVAS!!!
 
-            html2canvas(document.querySelector("#recImg")).then(canvas=>{
+            html2canvas(document.querySelector("#recImg"), {useCORS: true}).then(canvas=>{
               var dataUrl = canvas.toDataURL();
               //console.log(dataUrl);
                 const options: Base64ToGalleryOptions = {
