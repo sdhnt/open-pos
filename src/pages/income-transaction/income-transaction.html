@@ -239,16 +239,6 @@
   </ion-card>
   <!-- Dynamically Generate All expense from backend - see feed from prev -->
   <ion-card *ngIf="showrec==false && isReady==true" padding class="last-rec-card">
-    <ion-buttons style="text-align: center; padding-bottom: 10px;">
-      <button ion-button color="dark" (click)="recAction()">
-        <ion-icon name="download" style="padding-right: 5px;"></ion-icon>
-        Download
-      </button>
-      <button ion-button color="dark" (click)="shareRec()">
-        <ion-icon name="share" style="padding-right: 5px;"></ion-icon>
-        Share
-      </button>
-    </ion-buttons>
     <h2 style="text-align: center;">
       <b><u>{{"Last Receipt"|translate}}</u></b>
     </h2>
@@ -339,6 +329,11 @@
           <b>{{lastTransaction.totalatax}}</b>
         </ion-col>
       </ion-row>
+      
+      <ion-row>
+        <ion-col col-12 style="font-size: x-small; text-align: center; align-items: center; padding: 0%;"><p style="color: gray;"><br><br>Created using OPEN POS app!</p></ion-col>
+        <ion-col col-12 style="font-size: x-small; text-align: center; align-items: center; padding: 0%; "><p style="color: gray;"> facebook.com/openfinanceapp</p></ion-col>
+      </ion-row>
     </div>
     <br>
     <ion-row style="padding: 7px;">
@@ -346,6 +341,16 @@
         {{'PRINT '|translate}} &nbsp;<ion-icon name="print"></ion-icon>
       </button>
     </ion-row>
+    <ion-buttons style="text-align: center; padding-bottom: 10px;">
+      <button ion-button round style="background-color: green;" (click)="recAction()">
+        <ion-icon name="download" style="padding-right: 5px;"></ion-icon>
+        Download
+      </button>
+      <button ion-button round style="background-color: green;" (click)="shareRec()">
+        <ion-icon name="share" style="padding-right: 5px;"></ion-icon>
+        Share
+      </button>
+    </ion-buttons>
   </ion-card>
   <ion-row padding></ion-row>
   <ion-row padding></ion-row>

@@ -677,9 +677,9 @@ export class IncomeTransactionPage {
       // img.src = this.userdata.logo_url
       // ctx.drawImage(img, 10, 10);
       let dataUrl = canvas.toDataURL();
-      this.social.share('Receipt made using OpenFinance app\n','',dataUrl,'facebook.com/openfinanceapp')
+      this.social.share('Receipt made using Open POS app\n',dataUrl,'facebook.com/openfinanceapp')
         .then(response=>console.log(response))
-        .catch(err=>console.log(err));
+        .catch(err=>console.log(err));  
     });
   }
 
