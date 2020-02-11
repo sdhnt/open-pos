@@ -26,7 +26,8 @@ import { Camera, CameraOptions } from "@ionic-native/camera";
 import { SocialSharing } from "@ionic-native/social-sharing";
 import html2canvas from "html2canvas";
 import download from "downloadjs";
-import { Base64ToGallery, Base64ToGalleryOptions } from "@ionic-native/base64-to-gallery";
+// import { Base64ToGallery, Base64ToGalleryOptions } from "@ionic-native/base64-to-gallery";
+import { File } from "@ionic-native/file";
 /**
  * Generated class for the IncomeTransactionPage page.
  *
@@ -56,7 +57,7 @@ export class IncomeTransactionPage {
     public app: App,
     private modal: ModalController,
     private social: SocialSharing,
-    private base64toGallery: Base64ToGallery,
+    private fileOperations: File,
   ) {
     this.isReady = false;
     const nav = app._appRoot._getActivePortal() || app.getActiveNav();
@@ -688,16 +689,35 @@ export class IncomeTransactionPage {
     //line 778, 949, 977
     html2canvas(document.querySelector("#recImg"), { useCORS: true }).then(canvas => {
       const dataUrl = canvas.toDataURL();
-      //console.log(dataUrl);
-      const options: Base64ToGalleryOptions = {
-        prefix: "_img",
-        mediaScanner: true,
-      };
-      this.base64toGallery
-        .base64ToGallery(dataUrl, options)
-        .then(res => console.log(res))
-        .catch(err => console.log(err));
-      // download(dataUrl, 'r.png');
+    //   const options: Base64ToGalleryOptions = {
+    //     prefix: "_img",
+    //     mediaScanner: true,
+    //   };
+    //   this.base64toGallery
+    //     .base64ToGallery(dataUrl, options)
+    //     .then(res => console.log(res))
+    //     .catch(err => console.log(err));
+    //   // download(dataUrl, 'r.png');
+
+    var filePath = this.fileOperations.externalDataDirectory;
+    this.fileOperations.checkDir(filePath, 'OpenFinance')
+      .then(()=>{
+        //directory exists
+        this.fileOperations.writeFile(filePath+"/OpenFinance", "Receipt"+this.datetime+".png", dataUrl)
+          .then(()=>{
+            console.log("File write success");
+          }).catch(err=>console.log("File write error"+err));
+      }).catch((err)=>{
+        //directory doesn't exist
+        console.log("No directory "+err);
+        this.fileOperations.createDir(filePath, 'OpenFinance', false)
+          .then(()=>{
+            console.log("Directory created");
+            this.fileOperations.writeFile(filePath+"/OpenFinance", "Receipt"+this.datetime+".png", dataUrl)
+              .then(()=>console.log("File write success"))
+              .catch(err=>console.log("File write error"+err));
+          }).catch(err=>console.log("Directory error "+err));
+      })
     });
   }
 

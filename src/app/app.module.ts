@@ -30,6 +30,7 @@ import { CallNumber } from '@ionic-native/call-number';
 import { EmailComposer } from '@ionic-native/email-composer';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Base64ToGallery } from '@ionic-native/base64-to-gallery'
+import { File } from '@ionic-native/file';
 
 import * as firebase from "firebase/app";
 import { LoginPageModule } from "../pages/login/login.module";
@@ -120,6 +121,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     EmailComposer,
     SocialSharing,
     Base64ToGallery,
+    File,
   ],
 })
 export class AppModule {}
