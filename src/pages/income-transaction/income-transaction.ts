@@ -58,7 +58,7 @@ export class IncomeTransactionPage {
     public app: App,
     private modal: ModalController,
     private social: SocialSharing,
-    private photoLibrary: PhotoLibrary
+    private photoLibrary: PhotoLibrary,
   ) {
     this.isReady = false;
     const nav = app._appRoot._getActivePortal() || app.getActiveNav();
@@ -699,13 +699,17 @@ export class IncomeTransactionPage {
       //     .then(res => console.log(res))
       //     .catch(err => console.log(err));
       //   // download(dataUrl, 'r.png');
-      this.photoLibrary.requestAuthorization({read:true, write:true})
-      .then(()=>{
-        this.photoLibrary.saveImage(dataUrl, 'OpenFinance')
-        .then(libItem=>{
-          console.log("Success!", libItem);
-        }).catch(err=>console.log("Error"+err));
-      }).catch(err=>console.log("Permission not granted"));
+      this.photoLibrary
+        .requestAuthorization({ read: true, write: true })
+        .then(() => {
+          this.photoLibrary
+            .saveImage(dataUrl, "OpenFinance")
+            .then(libItem => {
+              console.log("Success!", libItem);
+            })
+            .catch(err => console.log("Error" + err));
+        })
+        .catch(err => console.log("Permission not granted"));
     });
   }
 
