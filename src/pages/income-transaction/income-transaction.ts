@@ -27,7 +27,8 @@ import { SocialSharing } from "@ionic-native/social-sharing";
 import html2canvas from "html2canvas";
 import download from "downloadjs";
 // import { Base64ToGallery, Base64ToGalleryOptions } from "@ionic-native/base64-to-gallery";
-import { File } from "@ionic-native/file";
+// import { File } from "@ionic-native/file";
+import { PhotoLibrary } from "@ionic-native/photo-library";
 /**
  * Generated class for the IncomeTransactionPage page.
  *
@@ -57,7 +58,7 @@ export class IncomeTransactionPage {
     public app: App,
     private modal: ModalController,
     private social: SocialSharing,
-    private fileOperations: File,
+    private photoLibrary: PhotoLibrary
   ) {
     this.isReady = false;
     const nav = app._appRoot._getActivePortal() || app.getActiveNav();
@@ -698,33 +699,13 @@ export class IncomeTransactionPage {
       //     .then(res => console.log(res))
       //     .catch(err => console.log(err));
       //   // download(dataUrl, 'r.png');
-
-      const filePath = this.fileOperations.externalDataDirectory;
-      this.fileOperations
-        .checkDir(filePath, "OpenFinance")
-        .then(() => {
-          //directory exists
-          this.fileOperations
-            .writeFile(filePath + "/OpenFinance", "Receipt" + this.datetime + ".png", dataUrl)
-            .then(() => {
-              console.log("File write success");
-            })
-            .catch(err => console.log("File write error" + err));
-        })
-        .catch(err => {
-          //directory doesn't exist
-          console.log("No directory " + err);
-          this.fileOperations
-            .createDir(filePath, "OpenFinance", false)
-            .then(() => {
-              console.log("Directory created");
-              this.fileOperations
-                .writeFile(filePath + "/OpenFinance", "Receipt" + this.datetime + ".png", dataUrl)
-                .then(() => console.log("File write success"))
-                .catch(err => console.log("File write error" + err));
-            })
-            .catch(err => console.log("Directory error " + err));
-        });
+      this.photoLibrary.requestAuthorization({read:true, write:true})
+      .then(()=>{
+        this.photoLibrary.saveImage(dataUrl, 'OpenFinance')
+        .then(libItem=>{
+          console.log("Success!", libItem);
+        }).catch(err=>console.log("Error"+err));
+      }).catch(err=>console.log("Permission not granted"));
     });
   }
 
