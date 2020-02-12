@@ -687,40 +687,42 @@ export class IncomeTransactionPage {
     });
   }
 
-  autodownloadRec(){
+  autodownloadRec() {
     console.log("Preference:", this.userdata.autosave);
-    if(this.userdata.autosave != 1 && this.userdata.autosave != -1){
-      let alert = this.alertCtrl.create({
+    if (this.userdata.autosave != 1 && this.userdata.autosave != -1) {
+      const alert = this.alertCtrl.create({
         subTitle: "Would you like to auto-download reciepts as images?",
         message: "You can change this preference later in settings",
         buttons: [
           {
             text: "No",
-            handler: ()=>{
+            handler: () => {
               this.userdata.autosave = -1;
-              this.sp.setUserDat(this.userdata).then(()=>{
-                this.toastCtrl.create({
-                  message: "OK",
-                  duration: 1500
-                }).present();
+              this.sp.setUserDat(this.userdata).then(() => {
+                this.toastCtrl
+                  .create({
+                    message: "OK",
+                    duration: 1500,
+                  })
+                  .present();
               });
-            }
+            },
           },
           {
             text: "Yes",
-            handler: ()=>{
+            handler: () => {
               this.userdata.autosave = 1;
-              this.sp.setUserDat(this.userdata).then(()=>{
+              this.sp.setUserDat(this.userdata).then(() => {
                 this.recAction();
-              })
-            }
-          }
-        ]
+              });
+            },
+          },
+        ],
       });
       alert.present();
-    } else if(this.userdata.autosave==1){
+    } else if (this.userdata.autosave == 1) {
       this.recAction();
-    } else{
+    } else {
       console.log("autosave attribute is -1");
     }
   }

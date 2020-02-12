@@ -139,7 +139,7 @@ export class UserProfilePage {
   //     });
   // }
 
-  goBack(){
+  goBack() {
     this.navCtrl.pop();
   }
 

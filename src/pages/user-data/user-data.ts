@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { TransactionHomePage } from '../transaction-home/transaction-home';
-import { UserProfilePage } from '../user-profile/user-profile';
-import { StorageProvider } from '../../providers/storage/storage';
+import { Component } from "@angular/core";
+import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { TransactionHomePage } from "../transaction-home/transaction-home";
+import { UserProfilePage } from "../user-profile/user-profile";
+import { StorageProvider } from "../../providers/storage/storage";
 
 /**
  * Generated class for the UserDataPage page.
@@ -13,11 +13,10 @@ import { StorageProvider } from '../../providers/storage/storage';
 
 @IonicPage()
 @Component({
-  selector: 'page-user-data',
-  templateUrl: 'user-data.html',
+  selector: "page-user-data",
+  templateUrl: "user-data.html",
 })
 export class UserDataPage {
-
   user: any = {
     autosave: 0,
     business_address: "",
@@ -35,35 +34,34 @@ export class UserDataPage {
     discount: 0.0,
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private sp: StorageProvider) {
-  }
+  constructor(public navCtrl: NavController, public navParams: NavParams, private sp: StorageProvider) {}
 
-  language: String;
+  language: string;
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad UserDataPage');
+    console.log("ionViewDidLoad UserDataPage");
     this.getUser();
   }
 
-  goBack(){
+  goBack() {
     this.navCtrl.setRoot(TransactionHomePage);
   }
 
-  editProfile(){
+  editProfile() {
     this.navCtrl.push(UserProfilePage);
   }
 
-  getUser(){
-    this.sp.storageReady().then(()=>{
-      this.sp.getUserDat().then(user=>{
-        if(user==null){
+  getUser() {
+    this.sp.storageReady().then(() => {
+      this.sp.getUserDat().then(user => {
+        if (user == null) {
           this.editProfile();
         } else {
           this.user = JSON.parse(user);
           console.log(this.user.language);
-          if(this.user.language=="en"){
+          if (this.user.language == "en") {
             this.language = "🇬🇧 English";
-          } else if(this.user.language=="my"){
+          } else if (this.user.language == "my") {
             this.language = "🇲🇲 ဗမာ";
           } else {
             this.language = "No language selected";
