@@ -23,6 +23,7 @@ export class UserProfilePage {
   temptimes: any;
   tempuser: any;
   user: any = {
+    autosave: 0,
     business_address: "",
     business_name: "",
     cash_balance: "",

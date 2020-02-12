@@ -92,6 +92,7 @@ export class IncomeTransactionPage {
   isReady: boolean;
 
   userdata: any = {
+    autosave: 0,
     business_address: "",
     business_name: "",
     cash_balance: "",
@@ -686,6 +687,44 @@ export class IncomeTransactionPage {
     });
   }
 
+  autodownloadRec(){
+    console.log("Preference:", this.userdata.autosave);
+    if(this.userdata.autosave != 1 && this.userdata.autosave != -1){
+      let alert = this.alertCtrl.create({
+        subTitle: "Would you like to auto-download reciepts as images?",
+        message: "You can change this preference later in settings",
+        buttons: [
+          {
+            text: "No",
+            handler: ()=>{
+              this.userdata.autosave = -1;
+              this.sp.setUserDat(this.userdata).then(()=>{
+                this.toastCtrl.create({
+                  message: "OK",
+                  duration: 1500
+                }).present();
+              });
+            }
+          },
+          {
+            text: "Yes",
+            handler: ()=>{
+              this.userdata.autosave = 1;
+              this.sp.setUserDat(this.userdata).then(()=>{
+                this.recAction();
+              })
+            }
+          }
+        ]
+      });
+      alert.present();
+    } else if(this.userdata.autosave==1){
+      this.recAction();
+    } else{
+      console.log("autosave attribute is -1");
+    }
+  }
+
   recAction() {
     //line 778, 949, 977
     html2canvas(document.querySelector("#recImg"), { useCORS: true }).then(canvas => {
@@ -790,7 +829,7 @@ export class IncomeTransactionPage {
     }
     //this.getLastTransaction();
     //(this.navCtrl.parent as Tabs).select(0);
-    // this.recAction();
+    setTimeout(() => this.autodownloadRec(), 2000);
   }
   discountlist = [];
   addCalc() {
@@ -961,7 +1000,6 @@ export class IncomeTransactionPage {
             this.taxbtn = 0;
             this.discbtn = 0;
             alert.present();
-            // this.recAction();
             //(this.navCtrl.parent as Tabs).select(0);
           })
           .catch(error => {
@@ -989,7 +1027,6 @@ export class IncomeTransactionPage {
             this.taxbtn = 0;
             this.discbtn = 0;
             alert.present();
-            // this.recAction();
             //(this.navCtrl.parent as Tabs).select(0);
           });
       },
@@ -1165,6 +1202,7 @@ export class IncomeTransactionPage {
 
   prepareToPrint() {
     this.showrec = false;
+    setTimeout(() => this.autodownloadRec(), 2000);
     /*
         let receipt = '';
         receipt += commands.HARDWARE.HW_INIT;

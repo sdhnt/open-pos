@@ -19,6 +19,7 @@ import { StorageProvider } from '../../providers/storage/storage';
 export class UserDataPage {
 
   user: any = {
+    autosave: 0,
     business_address: "",
     business_name: "",
     cash_balance: "",

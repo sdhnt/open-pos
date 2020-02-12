@@ -53,6 +53,7 @@ export class LoanHomePage {
   }
 
   userdata: any = {
+    autosave: 0,
     business_address: "",
     business_name: "",
     cash_balance: "",
