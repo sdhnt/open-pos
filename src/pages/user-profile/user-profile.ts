@@ -250,9 +250,9 @@ export class UserProfilePage {
     this.submitButton = !isEqual(this.user, this.oldUser);
   }
 
-  toggleButton(){
-    if(this.user.autosave==1){
-      this.user.autosave=-1;
+  toggleButton() {
+    if (this.user.autosave == 1) {
+      this.user.autosave = -1;
     } else this.user.autosave = 1;
     console.log(this.user.autosave);
     this.onChange();
