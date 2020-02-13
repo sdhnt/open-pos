@@ -24,6 +24,7 @@ const migrateDatabase = async (admin, db, id, { removeOldData, forceMigrate }) =
       const productCollection = subcollections[0];
       productCollection.documents.forEach(currentData => {
         const index = bigArray.length - 1;
+        currentData.updatedAt = new Date();
         bigArray[index].push(currentData);
         numberOfElements++;
         if (numberOfElements >= documentLimit) {
