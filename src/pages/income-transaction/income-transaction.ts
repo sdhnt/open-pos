@@ -159,7 +159,7 @@ export class IncomeTransactionPage {
           element.qty += " ";
         }
       } else {
-        element.qty.substring(0, 4);
+        element.qty.substring(0, 4); 
       }
 
       if (element.price < 10000000) {
