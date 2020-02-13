@@ -69,15 +69,17 @@ app.get("/transactions", async (req, res) => {
 exports.data = functions.https.onRequest(app);
 
 exports.migrateDatabase = functions.https.onRequest(async (req, res) => {
+  const { id } = req.query;
+  const successText = "migration completed";
+  const errorText = "internal server error";
   try {
     const payload = jwt.verify(req.headers.authorization, "secret");
-    if (payload !== "open-fintech") throw new Error();
-    await migrateDatabase(admin, db, { removeOldData: false });
-    const successText = "migration completed";
+    if (payload !== "open-fintech" || !id) throw new Error();
+    await migrateDatabase(admin, db, id, { removeOldData: false });
     res.status(200).send(successText);
   } catch (error) {
     console.log(error);
-    return res.status(500).send("internal server error");
+    return res.status(500).send(errorText);
   }
 });
 
