@@ -269,6 +269,9 @@
           <ion-row>
             <ion-col col-12 style="color: grey; text-align: center"> {{userdata?userdata.ph_no:null}}</ion-col>
           </ion-row>
+          <ion-row style="padding-top: 5px;">
+            <ion-col col-12 style="color: grey; text-align: center;"> <b>Date: {{ getDateTime(datetime) }}</b></ion-col>
+          </ion-row>
         </ion-col>
         <ion-col col-2></ion-col>
       </ion-row>
