@@ -25,9 +25,12 @@ import { Geolocation } from "@ionic-native/geolocation";
 import { GeolocationService } from "../providers/geolocation/geolocation.service";
 import { FcmService } from "../providers/firebase-cloud-messaging/fcm.service";
 import { AppVersion } from "@ionic-native/app-version";
-import { Market } from '@ionic-native/market';
-import { CallNumber } from '@ionic-native/call-number';
-import { EmailComposer } from '@ionic-native/email-composer';
+import { Market } from "@ionic-native/market";
+import { CallNumber } from "@ionic-native/call-number";
+import { EmailComposer } from "@ionic-native/email-composer";
+import { SocialSharing } from "@ionic-native/social-sharing";
+import { Base64ToGallery } from "@ionic-native/base64-to-gallery";
+import { PhotoLibrary } from "@ionic-native/photo-library";
 
 import * as firebase from "firebase/app";
 import { LoginPageModule } from "../pages/login/login.module";
@@ -41,7 +44,7 @@ import { AddProductCategoryPageModule } from "../pages/add-product-category/add-
 import { AddProductCategoryPage } from "../pages/add-product-category/add-product-category";
 import { AddProdSignupPageModule } from "../pages/add-prod-signup/add-prod-signup.module";
 import { AddProdSignupPage } from "../pages/add-prod-signup/add-prod-signup";
-import { UserDataPageModule } from '../pages/user-data/user-data.module';
+import { UserDataPageModule } from "../pages/user-data/user-data.module";
 
 const config = {
   apiKey: "AIzaSyBlxUkCX8OPsb9QL2p_jN8vaHdb5LhsS7A",
@@ -115,7 +118,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppVersion,
     Market,
     CallNumber,
-    EmailComposer
+    EmailComposer,
+    SocialSharing,
+    Base64ToGallery,
+    //File,
+    PhotoLibrary,
   ],
 })
 export class AppModule {}

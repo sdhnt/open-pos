@@ -15,7 +15,6 @@ import { StorageProvider } from "../../providers/storage/storage";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import { UserProfilePage } from "../user-profile/user-profile";
 import { Message, Placeholder } from "@angular/compiler/src/i18n/i18n_ast";
-import { duration } from "moment";
 import { AddProdSignupPage } from "../add-prod-signup/add-prod-signup";
 
 /**
@@ -339,6 +338,7 @@ export class LoginPage {
           created: firebase.firestore.FieldValue.serverTimestamp(),
           owner: firebase.auth().currentUser.uid,
           owner_name: this.newaccOwnName,
+          autosave: 0,
           business_name: this.newaccBName,
           businesstype: this.newaccBType,
           business_address: this.newaccBArea,

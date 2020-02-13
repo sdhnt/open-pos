@@ -23,6 +23,7 @@ export class UserProfilePage {
   temptimes: any;
   tempuser: any;
   user: any = {
+    autosave: 0,
     business_address: "",
     business_name: "",
     cash_balance: "",
@@ -101,6 +102,7 @@ export class UserProfilePage {
     this.submitButton = false;
     //this.loadDropDowns();
     this.formUser = this.formBuilder.group({
+      autosave: new FormControl(0, Validators.required),
       business_name: new FormControl("", Validators.required),
       business_address: new FormControl("", Validators.required),
       owner_name: new FormControl("", Validators.required),
@@ -138,7 +140,7 @@ export class UserProfilePage {
   //     });
   // }
 
-  goBack(){
+  goBack() {
     this.navCtrl.pop();
   }
 
@@ -246,6 +248,14 @@ export class UserProfilePage {
 
   onChange() {
     this.submitButton = !isEqual(this.user, this.oldUser);
+  }
+
+  toggleButton() {
+    if (this.user.autosave == 1) {
+      this.user.autosave = -1;
+    } else this.user.autosave = 1;
+    console.log(this.user.autosave);
+    this.onChange();
   }
 
   help() {

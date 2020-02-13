@@ -154,6 +154,7 @@ export class TransactionHomePage {
     await new Promise(resolve => setTimeout(() => resolve(), ms)).then(() => console.log("fired"));
   }
   userdata: any = {
+    autosave: 0,
     business_address: "",
     business_name: "",
     cash_balance: "",

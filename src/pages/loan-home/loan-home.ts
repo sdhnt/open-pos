@@ -53,6 +53,7 @@ export class LoanHomePage {
   }
 
   userdata: any = {
+    autosave: 0,
     business_address: "",
     business_name: "",
     cash_balance: "",
@@ -101,7 +102,7 @@ export class LoanHomePage {
   showloan = 0;
   loanvar: any = [];
   showloanform() {
-    this.showloan = this.showloan==1?0:1;
+    this.showloan = this.showloan == 1 ? 0 : 1;
   }
 
   loan1;

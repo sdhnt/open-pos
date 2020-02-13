@@ -23,6 +23,12 @@ import { commands } from "./../../providers/printer/printer-commands";
 import EscPosEncoder from "esc-pos-encoder-ionic";
 import { GeolocationService } from "../../providers/geolocation/geolocation.service";
 import { Camera, CameraOptions } from "@ionic-native/camera";
+import { SocialSharing } from "@ionic-native/social-sharing";
+import html2canvas from "html2canvas";
+import download from "downloadjs";
+// import { Base64ToGallery, Base64ToGalleryOptions } from "@ionic-native/base64-to-gallery";
+ //import { File } from "@ionic-native/file";
+ import { PhotoLibrary } from "@ionic-native/photo-library";
 /**
  * Generated class for the IncomeTransactionPage page.
  *
@@ -51,6 +57,8 @@ export class IncomeTransactionPage {
     private gps: GeolocationService,
     public app: App,
     private modal: ModalController,
+    private social: SocialSharing,
+    private photoLibrary: PhotoLibrary,
   ) {
     this.isReady = false;
     const nav = app._appRoot._getActivePortal() || app.getActiveNav();
@@ -84,6 +92,7 @@ export class IncomeTransactionPage {
   isReady: boolean;
 
   userdata: any = {
+    autosave: 0,
     business_address: "",
     business_name: "",
     cash_balance: "",
@@ -664,6 +673,89 @@ export class IncomeTransactionPage {
     await this.sp.setUserDat(this.userdata);
   }
 
+  shareRec() {
+    html2canvas(document.querySelector("#recImg"), { useCORS: true }).then(canvas => {
+      // var ctx = canvas.getContext("2d");
+      // var img = new Image();
+      // img.src = this.userdata.logo_url
+      // ctx.drawImage(img, 10, 10);
+      const dataUrl = canvas.toDataURL();
+      this.social
+        .share("Receipt made using Open POS app\n", "", dataUrl, "facebook.com/openfinanceapp")
+        .then(response => console.log(response))
+        .catch(err => console.log(err));
+    });
+  }
+
+  autodownloadRec() {
+    console.log("Preference:", this.userdata.autosave);
+    if (this.userdata.autosave != 1 && this.userdata.autosave != -1) {
+      const alert = this.alertCtrl.create({
+        subTitle: "Would you like to auto-download reciepts as images?",
+        message: "You can change this preference later in settings",
+        buttons: [
+          {
+            text: "No",
+            handler: () => {
+              this.userdata.autosave = -1;
+              this.sp.setUserDat(this.userdata).then(() => {
+                this.toastCtrl
+                  .create({
+                    message: "OK",
+                    duration: 1500,
+                  })
+                  .present();
+              });
+            },
+          },
+          {
+            text: "Yes",
+            handler: () => {
+              this.userdata.autosave = 1;
+              this.sp.setUserDat(this.userdata).then(() => {
+                this.recAction();
+              });
+            },
+          },
+        ],
+      });
+      alert.present();
+    } else if (this.userdata.autosave == 1) {
+      this.recAction();
+    } else {
+      console.log("autosave attribute is -1");
+    }
+  }
+
+  recAction() {
+    //line 778, 949, 977
+    this.toastCtrl.create({message:"Please Wait...",duration:3000}).present();
+    html2canvas(document.querySelector("#recImg"), { useCORS: true }).then(canvas => {
+      const dataUrl = canvas.toDataURL();
+      //   const options: Base64ToGalleryOptions = {
+      //     prefix: "_img",
+      //     mediaScanner: true,
+      //   };
+      //   this.base64toGallery
+      //     .base64ToGallery(dataUrl, options)
+      //     .then(res => console.log(res))
+      //     .catch(err => console.log(err));
+      //   // download(dataUrl, 'r.png');
+      this.photoLibrary
+        .requestAuthorization({ read: true, write: true })
+        .then(() => {
+          this.photoLibrary
+            .saveImage(dataUrl, "OpenFinance")
+            .then(libItem => {
+              console.log("Success!", libItem);
+              this.toastCtrl.create({message:"Saved to Gallery!", duration: 2000}).present()
+            })
+            .catch(err => console.log("Error" + err));
+        })
+        .catch(err => console.log("Permission not granted"));
+    });
+  }
+
   saveRec() {
     this.datetime = Date.now();
     if (this.datastore.itemslist.length == 0) {
@@ -740,7 +832,8 @@ export class IncomeTransactionPage {
       });
     }
     //this.getLastTransaction();
-    (this.navCtrl.parent as Tabs).select(0);
+    //(this.navCtrl.parent as Tabs).select(0);
+    setTimeout(() => this.autodownloadRec(), 2000);
   }
   discountlist = [];
   addCalc() {
@@ -911,7 +1004,7 @@ export class IncomeTransactionPage {
             this.taxbtn = 0;
             this.discbtn = 0;
             alert.present();
-            (this.navCtrl.parent as Tabs).select(0);
+            //(this.navCtrl.parent as Tabs).select(0);
           })
           .catch(error => {
             console.log(error);
@@ -938,7 +1031,7 @@ export class IncomeTransactionPage {
             this.taxbtn = 0;
             this.discbtn = 0;
             alert.present();
-            (this.navCtrl.parent as Tabs).select(0);
+            //(this.navCtrl.parent as Tabs).select(0);
           });
       },
       error => {
@@ -1113,6 +1206,7 @@ export class IncomeTransactionPage {
 
   prepareToPrint() {
     this.showrec = false;
+    setTimeout(() => this.autodownloadRec(), 2000);
     /*
         let receipt = '';
         receipt += commands.HARDWARE.HW_INIT;
