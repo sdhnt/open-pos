@@ -64,7 +64,7 @@
       </ion-item>
       <ion-item>
         <ion-label>Autosave Receipt</ion-label>
-        <ion-toggle formControlName="autosave" (ionChange)="toggleButton()" color="dark" (checked)="user.autosave==1"></ion-toggle>
+        <ion-toggle formControlName="autosave" (ionChange)="toggleButton()" color="dark" [checked]="user.autosave==1"></ion-toggle>
       </ion-item>
     </ion-list>
 
