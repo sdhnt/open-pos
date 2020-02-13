@@ -27,8 +27,8 @@ import { SocialSharing } from "@ionic-native/social-sharing";
 import html2canvas from "html2canvas";
 import download from "downloadjs";
 // import { Base64ToGallery, Base64ToGalleryOptions } from "@ionic-native/base64-to-gallery";
-// import { File } from "@ionic-native/file";
-import { PhotoLibrary } from "@ionic-native/photo-library";
+ //import { File } from "@ionic-native/file";
+ import { PhotoLibrary } from "@ionic-native/photo-library";
 /**
  * Generated class for the IncomeTransactionPage page.
  *
@@ -729,6 +729,7 @@ export class IncomeTransactionPage {
 
   recAction() {
     //line 778, 949, 977
+    this.toastCtrl.create({message:"Please Wait...",duration:3000}).present();
     html2canvas(document.querySelector("#recImg"), { useCORS: true }).then(canvas => {
       const dataUrl = canvas.toDataURL();
       //   const options: Base64ToGalleryOptions = {
@@ -747,6 +748,7 @@ export class IncomeTransactionPage {
             .saveImage(dataUrl, "OpenFinance")
             .then(libItem => {
               console.log("Success!", libItem);
+              this.toastCtrl.create({message:"Saved to Gallery!", duration: 2000}).present()
             })
             .catch(err => console.log("Error" + err));
         })

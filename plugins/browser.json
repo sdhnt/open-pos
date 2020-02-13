@@ -80,6 +80,9 @@
     },
     "cordova-plugin-x-socialsharing": {
       "PACKAGE_NAME": "com.openfintech.openpos"
+    },
+    "cordova-plugin-photo-library": {
+      "PACKAGE_NAME": "com.openfintech.openpos"
     }
   },
   "dependent_plugins": {
@@ -90,6 +93,9 @@
       "PACKAGE_NAME": "com.openfintech.pos"
     },
     "es6-promise-plugin": {
+      "PACKAGE_NAME": "com.openfintech.openpos"
+    },
+    "cordova-plugin-file": {
       "PACKAGE_NAME": "com.openfintech.openpos"
     }
   }

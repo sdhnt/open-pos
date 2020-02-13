@@ -96,6 +96,9 @@
     "cordova-plugin-x-socialsharing": {
       "ANDROID_SUPPORT_V4_VERSION": "24.1.1+",
       "PACKAGE_NAME": "com.openfintech.openpos"
+    },
+    "cordova-plugin-photo-library": {
+      "PACKAGE_NAME": "com.openfintech.openpos"
     }
   },
   "dependent_plugins": {
@@ -106,6 +109,9 @@
       "PACKAGE_NAME": "com.openfintech.openpos"
     },
     "es6-promise-plugin": {
+      "PACKAGE_NAME": "com.openfintech.openpos"
+    },
+    "cordova-plugin-file": {
       "PACKAGE_NAME": "com.openfintech.openpos"
     }
   }
