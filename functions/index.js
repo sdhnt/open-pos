@@ -10,8 +10,10 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 app.use(cors({ origin: true }));
+const jwt = require("jsonwebtoken");
 const { syncArchive } = require("./methods/sync-archive");
 const { getTransactions } = require("./methods/get-transactions");
+const { migrateDatabase } = require("./methods/migrate-database");
 
 const largeRuntimeConfig = {
   timeoutSeconds: 540,
@@ -65,6 +67,21 @@ app.get("/transactions", async (req, res) => {
 });
 
 exports.data = functions.https.onRequest(app);
+
+exports.migrateDatabase = functions.https.onRequest(async (req, res) => {
+  const { id, forceMigrate } = req.query;
+  const successText = "migration completed";
+  const errorText = "internal server error";
+  try {
+    const payload = jwt.verify(req.headers.authorization, "secret");
+    if (payload !== "open-fintech" || !id) throw new Error();
+    await migrateDatabase(admin, db, id, { removeOldData: false, forceMigrate: Boolean(forceMigrate) });
+    res.status(200).send(successText);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send(errorText);
+  }
+});
 
 // to be removed - start
 app.get("/", (req, res) => {

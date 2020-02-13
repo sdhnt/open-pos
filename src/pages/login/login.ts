@@ -331,6 +331,31 @@ export class LoginPage {
         duration: 3000,
       });
       this.dis = 1;
+
+      const subCollections = [
+        {
+          name: "products",
+          documents: [
+            {
+              index: 0,
+              products: [
+                {
+                  cat: "Example",
+                  code: "0000",
+                  cost: "100",
+                  name: "Example Product",
+                  price: "0",
+                  stock_qty: "10",
+                  url: "https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y",
+                  wholesale_price: "0",
+                  updatedAt: new Date(),
+                },
+              ],
+            },
+          ],
+        },
+      ];
+
       await firebase
         .firestore()
         .collection("users")
@@ -391,6 +416,27 @@ export class LoginPage {
           ],
         })
         .then(async doc => {
+          await firebase
+            .firestore()
+            .collection("users")
+            .where("owner", "==", firebase.auth().currentUser.uid)
+            .get()
+            .then(function(querySnapshot) {
+              querySnapshot.forEach(async doc => {
+                const uid = doc.id;
+                console.log(uid);
+                subCollections.forEach(collection => {
+                  collection.documents.forEach(async document => {
+                    await firebase
+                      .firestore()
+                      .collection("users")
+                      .doc(uid)
+                      .collection(collection.name)
+                      .add(document);
+                  });
+                });
+              });
+            });
           console.log(doc);
 
           const title = this.translateConfigService.getTranslatedMessage("Account Created");
