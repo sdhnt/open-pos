@@ -27,8 +27,8 @@ import { SocialSharing } from "@ionic-native/social-sharing";
 import html2canvas from "html2canvas";
 import download from "downloadjs";
 // import { Base64ToGallery, Base64ToGalleryOptions } from "@ionic-native/base64-to-gallery";
- //import { File } from "@ionic-native/file";
- import { PhotoLibrary } from "@ionic-native/photo-library";
+//import { File } from "@ionic-native/file";
+import { PhotoLibrary } from "@ionic-native/photo-library";
 /**
  * Generated class for the IncomeTransactionPage page.
  *
@@ -159,7 +159,7 @@ export class IncomeTransactionPage {
           element.qty += " ";
         }
       } else {
-        element.qty.substring(0, 4); 
+        element.qty.substring(0, 4);
       }
 
       if (element.price < 10000000) {
@@ -686,11 +686,11 @@ export class IncomeTransactionPage {
         .then(response => console.log(response))
         .catch(err => console.log(err));
     });
-    setTimeout(()=>this.disableShare = false, 1000);
+    setTimeout(() => (this.disableShare = false), 1000);
   }
 
-  disableDownload: boolean = false;
-  disableShare: boolean = false;
+  disableDownload = false;
+  disableShare = false;
 
   autodownloadRec() {
     console.log("Preference:", this.userdata.autosave);
@@ -734,7 +734,7 @@ export class IncomeTransactionPage {
 
   recAction() {
     this.disableDownload = true;
-    this.toastCtrl.create({message:"Please Wait...",duration:3000}).present();
+    this.toastCtrl.create({ message: "Please Wait...", duration: 3000 }).present();
     html2canvas(document.querySelector("#recImg"), { useCORS: true }).then(canvas => {
       const dataUrl = canvas.toDataURL();
       //   const options: Base64ToGalleryOptions = {
@@ -753,13 +753,13 @@ export class IncomeTransactionPage {
             .saveImage(dataUrl, "OpenFinance")
             .then(libItem => {
               console.log("Success!", libItem);
-              this.toastCtrl.create({message:"Saved to Gallery!", duration: 2000}).present()
+              this.toastCtrl.create({ message: "Saved to Gallery!", duration: 2000 }).present();
             })
             .catch(err => console.log("Error" + err));
         })
         .catch(err => console.log("Permission not granted"));
     });
-    setTimeout(()=>this.disableDownload = false, 1000);
+    setTimeout(() => (this.disableDownload = false), 1000);
   }
 
   saveRec() {
