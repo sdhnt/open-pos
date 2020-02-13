@@ -85,7 +85,7 @@ export class StorageProvider {
   async setMem() {
     const tempprod = [];
     let tempcat;
-    let temptransac;
+    let temptransac = [];
     let uid;
     let tempuser;
     let tempsummary;
@@ -99,7 +99,6 @@ export class StorageProvider {
           querySnapshot.forEach(doc => {
             uid = doc.id;
             const usdat = doc.data();
-            temptransac = usdat.transactions;
             //.slice(Math.max(usdat.transactions.length - 10, 0))
             tempcat = usdat.categories;
             if (usdat.businessPerformance == null) {
@@ -132,12 +131,10 @@ export class StorageProvider {
         .catch(error => {
           console.log("Error getting documents: ", error);
         });
-      if (uid)
-        await firebase
-          .firestore()
-          .collection("users")
-          .doc(uid)
-          .collection("products")
+      if (uid) {
+        const db = firebase.firestore();
+        await db
+          .collection(`/users/${uid}/products`)
           .get()
           .then(snapshot => {
             const bigArray = [];
@@ -147,6 +144,20 @@ export class StorageProvider {
             });
             bigArray.forEach(array => tempprod.push(...array));
           });
+        await db
+          .collection(`/users/${uid}/transactions`)
+          .orderBy("timestamp", "desc")
+          .limit(2)
+          .get()
+          .then(snapshot => {
+            const bigArray = [];
+            snapshot.forEach(doc => {
+              const data = doc.data();
+              bigArray.unshift(...data.transactions);
+            });
+            temptransac = bigArray.slice(bigArray.length - 50);
+          });
+      }
       this.tempcat = tempcat;
       this.tempprod = tempprod;
       this.temptransac = temptransac;
@@ -154,6 +165,7 @@ export class StorageProvider {
       this.tempuser = tempuser;
       this.tempsummary = tempsummary;
       console.log(`tempprod: `, tempprod);
+      console.log(`temptransac: `, temptransac);
       // console.log("setglobal");
       // console.log(JSON.stringify(tempcat));
       // console.log(JSON.stringify(tempprod));
@@ -228,7 +240,6 @@ export class StorageProvider {
                           uid = doc.id;
                           const existingArrays = [
                             { id: "categories", currentArray: parsecat, field: "name" },
-                            { id: "transactions", currentArray: parsetransac, field: "datetime" },
                           ].map(array => ({ existingArray: doc.data()[array.id], ...array }));
                           existingArrays.forEach(array => {
                             array.existingArray.forEach(existingData => {
@@ -256,12 +267,10 @@ export class StorageProvider {
                             .collection("users")
                             .doc(uid)
                             .update({
-                              transactions: parsetransac,
                               categories: parsecat,
                             })
                             .then(async () => {
                               await this.storage.set("categories", JSON.stringify(parsecat));
-                              await this.storage.set("transactions", JSON.stringify(parsetransac));
                             })
                             .catch(err => {
                               console.log(err);
@@ -280,8 +289,8 @@ export class StorageProvider {
                         field: "code",
                         collectionPath: `/users/${uid}/products`,
                       };
-                      await firebase
-                        .firestore()
+                      const db = firebase.firestore();
+                      await db
                         .collection(productCollection.collectionPath)
                         .get()
                         .then(snapshot => {
@@ -309,27 +318,25 @@ export class StorageProvider {
                         }
                       });
                       // delete all documents in subcollection
-                      await this.deleteFirestoreCollection(firebase.firestore(), productCollection.collectionPath, 500);
+                      await this.deleteFirestoreCollection(db, productCollection.collectionPath, 500);
                       // re-create all documents in subcollection
-                      const db = firebase.firestore();
-                      const batch = db.batch();
-                      const bigArray = [[]];
                       let numberOfElements = 0;
                       const documentLimit = 250;
+                      let index = 0;
+                      const bigArray = [{ index, [productCollection.id]: [] }];
                       productCollection.currentArray.forEach(currentData => {
-                        const index = bigArray.length - 1;
-                        bigArray[index].push(currentData);
+                        const array = bigArray[index][productCollection.id];
+                        if (typeof array !== "number") {
+                          array.push(currentData);
+                        }
                         numberOfElements++;
                         if (numberOfElements >= documentLimit) {
-                          bigArray[index + 1] = [];
+                          index++;
+                          bigArray[index] = { index, [productCollection.id]: [] };
                           numberOfElements = 0;
                         }
                       });
-                      bigArray.forEach((array, index) => {
-                        const documentReference = db.collection(productCollection.collectionPath).doc();
-                        batch.set(documentReference, { index, [productCollection.id]: array });
-                      });
-                      await batch.commit();
+                      await this.createFirestoreCollection(db, productCollection.collectionPath, bigArray);
                       await this.storage.set("products", JSON.stringify(parseprod));
                     }
                   }
@@ -347,6 +354,15 @@ export class StorageProvider {
         });
     });
   }
+
+  createFirestoreCollection = async (db, collectionPath, documents) => {
+    const batch = db.batch();
+    documents.forEach(document => {
+      const documentReference = db.collection(collectionPath).doc();
+      batch.set(documentReference, document);
+    });
+    await batch.commit();
+  };
 
   deleteFirestoreCollection = (db, collectionPath, batchSize) => {
     const deleteQueryBatch = (db, query, batchSize, resolve, reject) => {
