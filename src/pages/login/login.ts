@@ -339,7 +339,7 @@ export class LoginPage {
 
       const subCollections = [
         {
-          name: "products",
+          id: "products",
           documents: [
             {
               index: 0,
@@ -353,6 +353,40 @@ export class LoginPage {
                   stock_qty: "10",
                   url: "https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y",
                   wholesale_price: "0",
+                  updatedAt: new Date(),
+                },
+              ],
+            },
+          ],
+        },
+        {
+          id: "transactions",
+          documents: [
+            {
+              timestamp: firebase.firestore.Timestamp.now(), // firestore timestamp type
+              transactions: [
+                {
+                  datetime: new Date(this.datet).getTime(),
+                  discount: 0,
+                  discountlist: [],
+                  itemslist: [
+                    {
+                      cat: "Example",
+                      code: "0000",
+                      cost: "0",
+                      name: "Example Product",
+                      price: "0",
+                      stock_qty: "0",
+                      qty: 1,
+                      discount: 0,
+                    },
+                  ],
+                  pnllist: [],
+                  prodidlist: [],
+                  taxrate: 0,
+                  totalatax: 0,
+                  totaldisc: 0,
+                  totalsum: 0,
                   updatedAt: new Date(),
                 },
               ],
@@ -430,16 +464,15 @@ export class LoginPage {
               querySnapshot.forEach(async doc => {
                 const uid = doc.id;
                 console.log(uid);
+                const db = firebase.firestore();
+                const batch = db.batch();
                 subCollections.forEach(collection => {
                   collection.documents.forEach(async document => {
-                    await firebase
-                      .firestore()
-                      .collection("users")
-                      .doc(uid)
-                      .collection(collection.name)
-                      .add(document);
+                    const documentReference = db.collection(`/users/${uid}/${collection.id}`).doc();
+                    batch.set(documentReference, document);
                   });
                 });
+                await batch.commit();
               });
             });
           console.log(doc);
