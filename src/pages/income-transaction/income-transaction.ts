@@ -674,6 +674,7 @@ export class IncomeTransactionPage {
   }
 
   shareRec() {
+    this.disableShare = true;
     html2canvas(document.querySelector("#recImg"), { useCORS: true }).then(canvas => {
       // var ctx = canvas.getContext("2d");
       // var img = new Image();
@@ -685,7 +686,11 @@ export class IncomeTransactionPage {
         .then(response => console.log(response))
         .catch(err => console.log(err));
     });
+    setTimeout(()=>this.disableShare = false, 1000);
   }
+
+  disableDownload: boolean = false;
+  disableShare: boolean = false;
 
   autodownloadRec() {
     console.log("Preference:", this.userdata.autosave);
@@ -728,7 +733,7 @@ export class IncomeTransactionPage {
   }
 
   recAction() {
-    //line 778, 949, 977
+    this.disableDownload = true;
     this.toastCtrl.create({message:"Please Wait...",duration:3000}).present();
     html2canvas(document.querySelector("#recImg"), { useCORS: true }).then(canvas => {
       const dataUrl = canvas.toDataURL();
@@ -754,6 +759,7 @@ export class IncomeTransactionPage {
         })
         .catch(err => console.log("Permission not granted"));
     });
+    setTimeout(()=>this.disableDownload = false, 1000);
   }
 
   saveRec() {

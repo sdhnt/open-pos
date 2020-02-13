@@ -342,11 +342,11 @@
       </button>
     </ion-row>
     <ion-buttons style="text-align: center; padding-bottom: 10px;">
-      <button ion-button round style="background-color: green;" (click)="recAction()">
+      <button ion-button round style="background-color: green;" (click)="recAction()" [disabled]="disableDownload">
         <ion-icon name="download" style="padding-right: 5px;"></ion-icon>
         Download
       </button>
-      <button ion-button round style="background-color: green;" (click)="shareRec()">
+      <button ion-button round style="background-color: green;" (click)="shareRec()" [disabled]="disableShare">
         <ion-icon name="share" style="padding-right: 5px;"></ion-icon>
         Share
       </button>
