@@ -1,12 +1,13 @@
 const FieldValue = require("firebase-admin").firestore.FieldValue;
 
-const migrateDatabase = async (admin, db, id, { removeOldData }) => {
+const migrateDatabase = async (admin, db, id, { removeOldData, forceMigrate }) => {
   await db
     .collection("users")
     .doc(id)
     .get()
     .then(async doc => {
       const user = doc.data();
+      if (!(forceMigrate || !user.productMigrated)) throw new Error("should not migrate");
       console.log(`migrating user with id: ${doc.id}`);
       const subcollections = [
         {
@@ -34,16 +35,28 @@ const migrateDatabase = async (admin, db, id, { removeOldData }) => {
         const documentReference = db.collection(productCollection.collectionPath).doc();
         batch.set(documentReference, { index, [productCollection.id]: array });
       });
+      // remove all existing documents in sub collection
+      await db
+        .collection(productCollection.collectionPath)
+        .get()
+        .then(async snapshot => {
+          const deleteBatch = db.batch();
+          snapshot.docs.forEach(doc => {
+            deleteBatch.delete(doc.ref);
+          });
+          await deleteBatch.commit();
+        });
+      // create new documents
       await batch.commit();
 
+      const objectToBeDeleted = { productMigrated: true };
       if (removeOldData) {
-        const objectToBeDeleted = {};
         subcollections.forEach(collection => (objectToBeDeleted[collection.id] = FieldValue.delete()));
-        await db
-          .collection("users")
-          .doc(doc.id)
-          .update(objectToBeDeleted);
       }
+      await db
+        .collection("users")
+        .doc(doc.id)
+        .update(objectToBeDeleted);
     });
 };
 
