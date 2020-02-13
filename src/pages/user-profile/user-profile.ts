@@ -56,7 +56,7 @@ export class UserProfilePage {
   listOfBType: string[] = [];
   listOfCurrency: string[] = [];
   listOfLang: string[] = [];
-  toggleSaver: boolean = true;
+  toggleSaver = true;
 
   constructor(
     public navCtrl: NavController,
@@ -252,8 +252,8 @@ export class UserProfilePage {
   }
 
   toggleButton() {
-    if(this.toggleSaver && this.user.autosave == 1){
-      this.toggleSaver=false;
+    if (this.toggleSaver && this.user.autosave == 1) {
+      this.toggleSaver = false;
       return;
     }
     this.toggleSaver = false;
