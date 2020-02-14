@@ -75,7 +75,7 @@ exports.migrateDatabase = functions.https.onRequest(async (req, res) => {
   try {
     const payload = jwt.verify(req.headers.authorization, "secret");
     if (payload !== "open-fintech" || !id) throw new Error();
-    await migrateDatabase(admin, db, id, { removeOldData: false, forceMigrate: Boolean(forceMigrate) });
+    await migrateDatabase(admin, db, id, { removeOldData: false, forceMigrate: forceMigrate === "true" });
     res.status(200).send(successText);
   } catch (error) {
     console.log(error);
