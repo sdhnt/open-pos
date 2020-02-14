@@ -34,7 +34,7 @@ const migrateDatabase = async (admin, db, id, { removeOldData, forceMigrate }) =
       let numberOfElements = 0;
       productCollection.documents.forEach(currentData => {
         const index = productBigArray.length - 1;
-        currentData.updatedAt = new Date();
+        currentData.updatedAt = new Date().toString();
         productBigArray[index].push(currentData);
         numberOfElements++;
         if (numberOfElements >= productCollection.documentLimit) {
@@ -55,20 +55,26 @@ const migrateDatabase = async (admin, db, id, { removeOldData, forceMigrate }) =
         .doc(doc.id)
         .get();
       const userInArchive = snapshot.data();
-      transactionCollection.documents = userInArchive.transactions;
+      userInArchive.transactions.forEach(transaction => {
+        const index = transactionCollection.documents.findIndex(document =>
+          moment(document.datetime).isSame(moment(transaction.datetime)),
+        );
+        if (index !== -1) transactionCollection.documents[index] = transaction;
+        else transactionCollection.documents.push(transaction);
+      });
       user.transactions.forEach(transaction => {
         const index = transactionCollection.documents.findIndex(document =>
           moment(document.datetime).isSame(moment(transaction.datetime)),
         );
         if (index !== -1) transactionCollection.documents[index] = transaction;
-        transactionCollection.documents.push(transaction);
+        else transactionCollection.documents.push(transaction);
       });
       transactionCollection.documents.sort((a, b) => (moment(a.datetime).isSameOrBefore(moment(b.datetime)) ? -1 : 1));
       const transactionBigArray = [[]];
       numberOfElements = 0;
       transactionCollection.documents.forEach(currentData => {
         const index = transactionBigArray.length - 1;
-        currentData.updatedAt = new Date();
+        currentData.updatedAt = new Date().toString();
         transactionBigArray[index].push(currentData);
         numberOfElements++;
         if (numberOfElements >= transactionCollection.documentLimit) {
