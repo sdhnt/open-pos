@@ -5,7 +5,8 @@ const syncArchive = async (db, { syncTransactions, calculateBusinessPerformance,
   const limit = 100; // important note: do not change this limit as it would completely mess up the syncing algorithm
 
   if (syncTransactions) {
-    const batch = db.batch();
+    const batchArray = [db.batch()];
+    let batchIndex = 0;
     let numberOfOperations = 0;
     const batchSize = 10;
     await db
@@ -13,7 +14,6 @@ const syncArchive = async (db, { syncTransactions, calculateBusinessPerformance,
       .get()
       .then(snapshot => {
         const numberOfUsers = snapshot.size;
-        let numberOfUsersLeft = numberOfUsers;
         console.log(`number of users: ${numberOfUsers}`);
         snapshot.forEach(async doc => {
           const user = doc.data();
@@ -70,18 +70,19 @@ const syncArchive = async (db, { syncTransactions, calculateBusinessPerformance,
 
           // update user and userInArchive
           const userUpdateRef = db.collection("users").doc(doc.id);
-          batch.update(userUpdateRef, user);
+          batchArray[batchIndex].update(userUpdateRef, user);
           user.transactions = userInArchive.transactions;
           const userInArchiveUpdateRef = db.collection("users-archive").doc(doc.id);
-          batch.update(userInArchiveUpdateRef, user);
+          batchArray[batchIndex].update(userInArchiveUpdateRef, user);
           numberOfOperations += 2;
-          numberOfUsersLeft--;
-          if (numberOfOperations >= batchSize || numberOfOperations === 2 * numberOfUsersLeft) {
+          if (numberOfOperations >= batchSize) {
             console.log(`number of operations in this batch: ${numberOfOperations}`);
-            await batch.commit();
+            batchArray.push(db.batch());
+            batchIndex++;
             numberOfOperations = 0;
           }
         });
+        batchArray.forEach(async batch => await batch.commit());
       });
   }
 
