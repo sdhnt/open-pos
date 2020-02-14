@@ -59,7 +59,7 @@ app.get("/transactions", async (req, res) => {
   const { id, start, end } = req.query;
   try {
     const transactions = await getTransactions(db, id, start, end);
-    res.status(200).json({ transactions });
+    res.status(200).json({ size: transactions.length, transactions });
   } catch (error) {
     console.log(error);
     res.status(500).send("internal server error");
