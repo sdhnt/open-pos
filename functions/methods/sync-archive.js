@@ -11,13 +11,13 @@ const syncArchive = async (db, { syncTransactions, calculateBusinessPerformance,
     const batchSize = 10;
     await db
       .collection("users")
-      .where("transactionMigrated", "==", false)
       .get()
       .then(snapshot => {
         const numberOfUsers = snapshot.size;
         console.log(`number of users: ${numberOfUsers}`);
         snapshot.forEach(async doc => {
           const user = doc.data();
+          if (user.transactionMigrated) return;
           const userInArchiveRef = db.collection("users-archive").doc(doc.id);
           let snapshotInArchive = await userInArchiveRef.get();
           if (!snapshotInArchive.exists) {
