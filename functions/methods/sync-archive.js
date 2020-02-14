@@ -87,23 +87,34 @@ const syncArchive = async (db, { syncTransactions, calculateBusinessPerformance,
   }
 
   // remove deleted users in archive
-  if (syncUserCount)
+  if (syncUserCount) {
+    const batchArray = [db.batch()];
+    let batchIndex = 0;
+    let operations = 0;
     await db
       .collection("users-archive")
       .get()
       .then(snapshot => {
         snapshot.forEach(async doc => {
-          const userRef = await db.collection("users").doc(doc.id);
-          const snapshotInArchive = await userRef.get();
-          if (!snapshotInArchive.exists) {
+          const userSnapshot = await db
+            .collection("users")
+            .doc(doc.id)
+            .get();
+          if (!userSnapshot.exists) {
             console.log(`remove user of id: ${doc.id} in archive`);
-            await db
-              .collection("users-archive")
-              .doc(doc.id)
-              .delete();
+            const ref = db.collection("users-archive").doc(doc.id);
+            operations++;
+            batchArray[batchIndex].delete(ref);
+            if (operations === 499) {
+              batchArray.push(db.batch());
+              batchIndex++;
+              operations = 0;
+            }
           }
         });
+        batchArray.forEach(async batch => await batch.commit());
       });
+  }
 };
 
 module.exports = { syncArchive };
