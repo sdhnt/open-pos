@@ -11,6 +11,7 @@ const syncArchive = async (db, { syncTransactions, calculateBusinessPerformance,
     const batchSize = 10;
     await db
       .collection("users")
+      .where("transactionMigrated", "==", false)
       .get()
       .then(snapshot => {
         const numberOfUsers = snapshot.size;
