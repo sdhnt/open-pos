@@ -49,7 +49,7 @@ export class LoginPage {
     private translateConfigService: TranslateConfigService,
     private loadingCtrl: LoadingController,
     public events: Events,
-    private facebook: Facebook
+    private facebook: Facebook,
   ) {
     //this.loadDropDowns();
     //this.getInfo();
@@ -369,7 +369,7 @@ export class LoginPage {
           business_name: this.newaccBName,
           businesstype: this.newaccBType,
           business_address: this.newaccBArea,
-          email: (this.newaccemail!=null)?this.newaccemail:"sample@sample.com",
+          email: this.newaccemail != null ? this.newaccemail : "sample@sample.com",
           ph_no: "+" + this.country_code + this.phone,
           language: this.translateConfigService.getCurrentLanguage(),
           currency: "USD",
@@ -657,7 +657,7 @@ export class LoginPage {
       })
       .finally(() => {
         if (flag == 1) {
-          let temp = this.checkifexist();
+          const temp = this.checkifexist();
         }
       });
   }
@@ -779,19 +779,26 @@ export class LoginPage {
     }
   }
 
-  async fbLogin(){
-    this.facebook.login(["email", "public_profile"]).then((loginResponse)=>{
-      let credential = firebase.auth.FacebookAuthProvider.credential(loginResponse.authResponse.accessToken);
+  async fbLogin() {
+    this.facebook
+      .login(["email", "public_profile"])
+      .then(loginResponse => {
+        const credential = firebase.auth.FacebookAuthProvider.credential(loginResponse.authResponse.accessToken);
 
-      firebase.auth().signInWithCredential(credential).then((info)=>{
-        alert(JSON.stringify(info));
-        if(!this.checkifexist()){
-          this.facebook.api("me?fields=id,name,email", []).then(profile=>{
-            this.newaccOwnName = profile["name"];
-            this.newaccemail = profile['email'];
+        firebase
+          .auth()
+          .signInWithCredential(credential)
+          .then(info => {
+            alert(JSON.stringify(info));
+            if (!this.checkifexist()) {
+              this.facebook.api("me?fields=id,name,email", []).then(profile => {
+                this.newaccOwnName = profile["name"];
+                this.newaccemail = profile["email"];
+              });
+            }
           })
-        }
-      }).catch(err=>console.log(err));
-    }).catch(err=>console.log(err));
+          .catch(err => console.log(err));
+      })
+      .catch(err => console.log(err));
   }
 }
