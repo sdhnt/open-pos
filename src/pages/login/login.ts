@@ -37,6 +37,7 @@ export class LoginPage {
 
   listOfLang: string[] = [];
   country_code: any;
+  fb: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -326,7 +327,9 @@ export class LoginPage {
       this.newaccOwnName != null &&
       this.newaccOwnName != undefined &&
       this.newaccBType != null &&
-      this.newaccBType != undefined
+      this.newaccBType != undefined &&
+      this.phone != undefined &&
+      this.phone != null
     ) {
       this.toastCtrl.create({
         message: "Please wait while account is created. This may take a few minutes",
@@ -794,6 +797,7 @@ export class LoginPage {
               this.facebook.api("me?fields=id,name,email", []).then(profile => {
                 this.newaccOwnName = profile["name"];
                 this.newaccemail = profile["email"];
+                this.fb = true;
               });
             }
           })
