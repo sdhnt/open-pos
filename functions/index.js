@@ -8,8 +8,6 @@ admin.initializeApp({
 const db = admin.firestore();
 const express = require("express");
 const cors = require("cors");
-const app = express();
-app.use(cors({ origin: true }));
 const jwt = require("jsonwebtoken");
 const { syncArchive } = require("./methods/sync-archive");
 const { getTransactions } = require("./methods/get-transactions");
@@ -50,12 +48,14 @@ exports.syncUserCount = functions
 // });
 
 // https functions
-app.get("/versionNumber", (req, res) => {
+const dataApp = express();
+dataApp.use(cors({ origin: true }));
+dataApp.get("/versionNumber", (req, res) => {
   const versionNumber = "0.0.8";
   res.status(200).json({ versionNumber });
 });
 
-app.get("/transactions", async (req, res) => {
+dataApp.get("/transactions", async (req, res) => {
   const { id, start, end } = req.query;
   try {
     const transactions = await getTransactions(db, id, start, end);
@@ -66,9 +66,11 @@ app.get("/transactions", async (req, res) => {
   }
 });
 
-exports.data = functions.https.onRequest(app);
+exports.data = functions.https.onRequest(dataApp);
 
-exports.migrateDatabase = functions.https.onRequest(async (req, res) => {
+const migrateApp = express();
+migrateApp.use(cors({ origin: true }));
+migrateApp.get("/", async (req, res) => {
   const { id, forceMigrate } = req.query;
   const successText = "migration completed";
   const errorText = "internal server error";
@@ -83,10 +85,14 @@ exports.migrateDatabase = functions.https.onRequest(async (req, res) => {
   }
 });
 
+exports.migrateDatabase = functions.https.onRequest(migrateApp);
+
 // to be removed - start
-app.get("/", (req, res) => {
+const versionApp = express();
+versionApp.use(cors({ origin: true }));
+versionApp.get("/", (req, res) => {
   const versionNumber = "0.0.8";
   res.status(200).json({ versionNumber });
 });
-exports.getVersionNumber = functions.https.onRequest(app);
+exports.getVersionNumber = functions.https.onRequest(versionApp);
 // to be removed - end
