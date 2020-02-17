@@ -49,7 +49,6 @@ import { UserDataPageModule } from "../pages/user-data/user-data.module";
 import { ContactsPageModule } from "../pages/contacts/contacts.module";
 import { ContactsPage } from "../pages/contacts/contacts";
 
-
 const config = {
   apiKey: "AIzaSyBlxUkCX8OPsb9QL2p_jN8vaHdb5LhsS7A",
   authDomain: "open-fintech.firebaseapp.com",
