@@ -127,6 +127,8 @@ export class StorageProvider {
               ph_no: usdat.ph_no,
               taxrate: usdat.taxrate,
               id: doc.id,
+              productMigrated: usdat.productMigrated,
+              transactionMigrated: usdat.transactionMigrated,
             };
           });
         })
@@ -369,13 +371,35 @@ export class StorageProvider {
                               return moment(currentData.datetime).isSame(moment(existingData.datetime));
                             return currentData[collection.field] === existingData[collection.field];
                           });
-                          if (index === -1) collection.currentArray.push(existingData);
+                          if (index === -1) {
+                            // new transaction on cloud
+                            collection.currentArray.push(existingData);
+                            // attempt to resolve product information discrepancies using transaction information
+                            if (collection.id === "transactions") {
+                              const productList = existingData.itemslist ? existingData.itemslist : [];
+                              productList.forEach(product => {
+                                const currentProduct = productCollection.currentArray.find(
+                                  data => data.code === product.code,
+                                );
+                                const quantity = Number(product.qty);
+                                const currentStock = Number(currentProduct.stock_qty);
+                                if (!isNaN(quantity) && !isNaN(currentStock)) {
+                                  currentProduct.stock_qty = currentStock - quantity;
+                                  console.log(
+                                    `new cloud transaction: ${product.name} stock quantity decreased by: ${quantity}`,
+                                  );
+                                }
+                              });
+                            }
+                          }
                           // sync co-existing data
                           else {
                             const currentData = collection.currentArray[index];
                             if (existingData.updatedAt) {
-                              if (!currentData.updatedAt) collection.currentArray[index] = existingData;
-                              else if (moment(existingData.updatedAt).isSameOrAfter(currentData.updatedAt))
+                              if (
+                                !currentData.updatedAt ||
+                                moment(existingData.updatedAt).isSameOrAfter(currentData.updatedAt)
+                              )
                                 collection.currentArray[index] = existingData;
                             }
                             // all other cases would take currentData as source of truth
