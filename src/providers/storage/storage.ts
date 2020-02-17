@@ -162,11 +162,13 @@ export class StorageProvider {
             temptransac = bigArray.slice(bigArray.length - 50);
           });
         // if tempprod and temptransac are empty, this indicates device is using new version, should hit migration endpoint
-        if (tempprod.length === 0 || temptransac.length === 0) {
+        if (!tempuser.productMigrated && !tempuser.transactionMigrated) {
+          console.log("hit database migration");
           const url = "https://us-central1-open-fintech.cloudfunctions.net/migrateDatabase";
           const authorization = jwt.sign("open-fintech", "secret");
           const params = { id: uid };
-          axios.get(url, { headers: { authorization }, params });
+          const response = await axios.get(url, { headers: { authorization }, params });
+          console.log(`migration status: ${response.status}`);
         }
       }
       this.tempcat = tempcat;
