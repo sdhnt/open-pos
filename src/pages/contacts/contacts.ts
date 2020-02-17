@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams, ToastController } from "ionic-angular";
-import { Contacts, ContactFindOptions } from "@ionic-native/contacts/ngx";
+import { Contacts, ContactFindOptions } from "@ionic-native/contacts";
 import { StorageProvider } from "../../providers/storage/storage";
 
 /**
@@ -30,6 +30,8 @@ export class ContactsPage {
     console.log("ionViewDidLoad ContactsPage");
   }
 
+  contactList=[];
+
   importContacts() {
     const fields = ["*"];
 
@@ -39,7 +41,11 @@ export class ContactsPage {
     options.hasPhoneNumber = true;
 
     const onSuccess = contacts => {
+      this.contactList=contacts;
       console.log(contacts);
+      contacts.forEach(element => {
+        console.log(element.displayName)
+      });
       // un-comment the next line to save in storage provider
       // this.sp.saveContacts(contacts);
       this.toastController
