@@ -16,6 +16,7 @@ import { TranslateConfigService } from "../../providers/translation/translate-co
 import { UserProfilePage } from "../user-profile/user-profile";
 import { Message, Placeholder } from "@angular/compiler/src/i18n/i18n_ast";
 import { AddProdSignupPage } from "../add-prod-signup/add-prod-signup";
+import { Facebook } from "@ionic-native/facebook";
 
 /**
  * Generated class for the LoginPage page.
@@ -36,6 +37,7 @@ export class LoginPage {
 
   listOfLang: string[] = [];
   country_code: any;
+  fb: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -48,6 +50,7 @@ export class LoginPage {
     private translateConfigService: TranslateConfigService,
     private loadingCtrl: LoadingController,
     public events: Events,
+    private facebook: Facebook,
   ) {
     //this.loadDropDowns();
     //this.getInfo();
@@ -324,7 +327,9 @@ export class LoginPage {
       this.newaccOwnName != null &&
       this.newaccOwnName != undefined &&
       this.newaccBType != null &&
-      this.newaccBType != undefined
+      this.newaccBType != undefined &&
+      this.phone != undefined &&
+      this.phone != null
     ) {
       this.toastCtrl.create({
         message: "Please wait while account is created. This may take a few minutes",
@@ -367,7 +372,7 @@ export class LoginPage {
           business_name: this.newaccBName,
           businesstype: this.newaccBType,
           business_address: this.newaccBArea,
-          email: "sample@sample.com",
+          email: this.newaccemail != null ? this.newaccemail : "sample@sample.com",
           ph_no: "+" + this.country_code + this.phone,
           language: this.translateConfigService.getCurrentLanguage(),
           currency: "USD",
@@ -500,6 +505,7 @@ export class LoginPage {
           flag = 1;
           this.otpmode = 0;
           this.signup = 1;
+          return false;
           // this.alertCtrl.create({
           //   message:"Looks like you need to create an account!"
           // }).present();
@@ -519,6 +525,7 @@ export class LoginPage {
           this.otpmode = 0;
           this.signup = 0;
           this.loginProcedure();
+          return true;
         }
       })
       .catch(error => {
@@ -653,7 +660,7 @@ export class LoginPage {
       })
       .finally(() => {
         if (flag == 1) {
-          this.checkifexist();
+          const temp = this.checkifexist();
         }
       });
   }
@@ -773,5 +780,29 @@ export class LoginPage {
       //   this.createAccount();
       // }
     }
+  }
+
+  async fbLogin() {
+    this.facebook
+      .login(["email", "public_profile"])
+      .then(loginResponse => {
+        const credential = firebase.auth.FacebookAuthProvider.credential(loginResponse.authResponse.accessToken);
+
+        firebase
+          .auth()
+          .signInWithCredential(credential)
+          .then(info => {
+            // alert(JSON.stringify(info));
+            if (!this.checkifexist()) {
+              this.facebook.api("me?fields=id,name,email", []).then(profile => {
+                this.newaccOwnName = profile["name"];
+                this.newaccemail = profile["email"];
+                this.fb = true;
+              });
+            }
+          })
+          .catch(err => console.log(err));
+      })
+      .catch(err => console.log(err));
   }
 }

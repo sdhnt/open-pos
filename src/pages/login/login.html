@@ -67,6 +67,7 @@
       <ion-input type=”text” placeholder="9964758505" [(ngModel)]="phone"></ion-input>
       </ion-row>
       <button ion-button ion-button block round outline color="light" style="margin-top: 20px;" (click)="signInPhone()">{{"Login with Phone Number"|translate}}</button>
+      <button ion-button block round style="margin-top: 10px; background-color: #3b5998;" (click)="fbLogin()">Facebook Login</button>
       <ion-row padding></ion-row>
       <!-- <div class="btn_container">
         <button ion-button full (click)="loginWithFB();">{{"Login with Facebook"|translate}}</button>
@@ -97,6 +98,16 @@
   <ion-row class="row-style" style="margin-top: 20px;"><ion-input placeholder="{{'Business Name'|translate}}"  [(ngModel)]="newaccBName"></ion-input></ion-row>
   <ion-row class="row-style" style="margin-top: 20px;"><ion-input placeholder="{{'Business Type'|translate}}"  [(ngModel)]="newaccBType"></ion-input></ion-row>
   <ion-row class="row-style" style="margin-top: 20px;"><ion-input placeholder="{{'Business Area & City'|translate}}"  [(ngModel)]="newaccBArea"></ion-input></ion-row>
+  <ion-row class="row-style" style="margin-top: 20px;">
+    <ion-select [(ngModel)]="country_code" [disabled]="fb==false">
+      <ion-option value="95" selected>🇲🇲 +95 </ion-option>
+      <ion-option value="63">🇵🇭 +63 </ion-option>
+      <ion-option value="852">🇭🇰 +852 </ion-option>
+      <ion-option value="91">🇮🇳 +91 </ion-option>
+      
+    </ion-select>
+    <ion-input type=”text” placeholder="{{'Phone Number'|translate}}" [(ngModel)]="phone" [disabled]="fb==false"></ion-input>
+  </ion-row>
   <button ion-button ion-button block round outline [disabled]="dis" color="light" style="margin-top: 20px;" (click)="createAccount()">{{"Create Account"|translate}}</button>
   <ion-row padding>
 
