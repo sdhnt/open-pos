@@ -83,8 +83,8 @@ const syncArchive = async (db, { syncTransactions, calculateBusinessPerformance,
             numberOfOperations = 0;
           }
         });
-        batchArray.forEach(async batch => await batch.commit());
       });
+    batchArray.forEach(batch => batch.commit().then(() => {}));
   }
 
   // remove deleted users in archive
@@ -113,8 +113,8 @@ const syncArchive = async (db, { syncTransactions, calculateBusinessPerformance,
             }
           }
         });
-        batchArray.forEach(async batch => await batch.commit());
       });
+    batchArray.forEach(batch => batch.commit().then(() => {}));
   }
 };
 
