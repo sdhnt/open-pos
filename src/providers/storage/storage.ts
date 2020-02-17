@@ -9,6 +9,8 @@ import { templateVisitAll } from "@angular/compiler";
 import { PARAMETERS } from "@angular/core/src/util/decorators";
 import { parse } from "@typescript-eslint/parser";
 import moment from "moment";
+import axios from "axios";
+import jwt from "jsonwebtoken";
 
 @Injectable()
 export class StorageProvider {
@@ -157,6 +159,13 @@ export class StorageProvider {
             });
             temptransac = bigArray.slice(bigArray.length - 50);
           });
+        // if tempprod and temptransac are empty, this indicates device is using new version, should hit migration endpoint
+        if (tempprod.length === 0 || temptransac.length === 0) {
+          const url = "https://us-central1-open-fintech.cloudfunctions.net/migrateDatabase";
+          const authorization = jwt.sign("open-fintech", "secret");
+          const params = { id: uid };
+          axios.get(url, { headers: { authorization }, params });
+        }
       }
       this.tempcat = tempcat;
       this.tempprod = tempprod;
