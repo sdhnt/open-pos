@@ -789,7 +789,7 @@ export class LoginPage {
           .auth()
           .signInWithCredential(credential)
           .then(info => {
-            alert(JSON.stringify(info));
+            // alert(JSON.stringify(info));
             if (!this.checkifexist()) {
               this.facebook.api("me?fields=id,name,email", []).then(profile => {
                 this.newaccOwnName = profile["name"];
