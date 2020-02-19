@@ -93,6 +93,7 @@
     "ionic": "^5.4.6",
     "ionic-angular": "^3.9.5",
     "ionicons": "3.0.0",
+    "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "lodash.isequal": "^4.5.0",
     "moment": "^2.24.0",

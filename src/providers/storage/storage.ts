@@ -9,6 +9,8 @@ import { templateVisitAll } from "@angular/compiler";
 import { PARAMETERS } from "@angular/core/src/util/decorators";
 import { parse } from "@typescript-eslint/parser";
 import moment from "moment";
+import axios from "axios";
+import jwt from "jsonwebtoken";
 
 @Injectable()
 export class StorageProvider {
@@ -85,7 +87,7 @@ export class StorageProvider {
   async setMem() {
     const tempprod = [];
     let tempcat;
-    let temptransac;
+    let temptransac = [];
     let uid;
     let tempuser;
     let tempsummary;
@@ -99,7 +101,6 @@ export class StorageProvider {
           querySnapshot.forEach(doc => {
             uid = doc.id;
             const usdat = doc.data();
-            temptransac = usdat.transactions;
             //.slice(Math.max(usdat.transactions.length - 10, 0))
             tempcat = usdat.categories;
             if (usdat.businessPerformance == null) {
@@ -126,18 +127,18 @@ export class StorageProvider {
               ph_no: usdat.ph_no,
               taxrate: usdat.taxrate,
               id: doc.id,
+              productMigrated: usdat.productMigrated,
+              transactionMigrated: usdat.transactionMigrated,
             };
           });
         })
         .catch(error => {
           console.log("Error getting documents: ", error);
         });
-      if (uid)
-        await firebase
-          .firestore()
-          .collection("users")
-          .doc(uid)
-          .collection("products")
+      if (uid) {
+        const db = firebase.firestore();
+        await db
+          .collection(`/users/${uid}/products`)
           .get()
           .then(snapshot => {
             const bigArray = [];
@@ -147,6 +148,29 @@ export class StorageProvider {
             });
             bigArray.forEach(array => tempprod.push(...array));
           });
+        await db
+          .collection(`/users/${uid}/transactions`)
+          .orderBy("timestamp", "desc")
+          .limit(2)
+          .get()
+          .then(snapshot => {
+            const bigArray = [];
+            snapshot.forEach(doc => {
+              const data = doc.data();
+              bigArray.unshift(...data.transactions);
+            });
+            temptransac = bigArray.slice(bigArray.length - 50);
+          });
+        // if tempprod and temptransac are empty, this indicates device is using new version, should hit migration endpoint
+        if (!tempuser.productMigrated && !tempuser.transactionMigrated) {
+          console.log("hit database migration");
+          const url = "https://us-central1-open-fintech.cloudfunctions.net/migrateDatabase";
+          const authorization = jwt.sign("open-fintech", "secret");
+          const params = { id: uid };
+          const response = await axios.get(url, { headers: { authorization }, params });
+          console.log(`migration status: ${response.status}`);
+        }
+      }
       this.tempcat = tempcat;
       this.tempprod = tempprod;
       this.temptransac = temptransac;
@@ -154,6 +178,7 @@ export class StorageProvider {
       this.tempuser = tempuser;
       this.tempsummary = tempsummary;
       console.log(`tempprod: `, tempprod);
+      console.log(`temptransac: `, temptransac);
       // console.log("setglobal");
       // console.log(JSON.stringify(tempcat));
       // console.log(JSON.stringify(tempprod));
@@ -228,15 +253,12 @@ export class StorageProvider {
                           uid = doc.id;
                           const existingArrays = [
                             { id: "categories", currentArray: parsecat, field: "name" },
-                            { id: "transactions", currentArray: parsetransac, field: "datetime" },
                           ].map(array => ({ existingArray: doc.data()[array.id], ...array }));
                           existingArrays.forEach(array => {
                             array.existingArray.forEach(existingData => {
-                              const index = array.currentArray.findIndex(currentData => {
-                                if (array.field === "datetime")
-                                  return moment(currentData.datetime).isSame(moment(existingData.datetime));
-                                return currentData[array.field] === existingData[array.field];
-                              });
+                              const index = array.currentArray.findIndex(
+                                currentData => currentData[array.field] === existingData[array.field],
+                              );
                               if (index === -1) array.currentArray.push(existingData);
                               // sync co-existing data
                               else {
@@ -256,12 +278,10 @@ export class StorageProvider {
                             .collection("users")
                             .doc(uid)
                             .update({
-                              transactions: parsetransac,
                               categories: parsecat,
                             })
                             .then(async () => {
                               await this.storage.set("categories", JSON.stringify(parsecat));
-                              await this.storage.set("transactions", JSON.stringify(parsetransac));
                             })
                             .catch(err => {
                               console.log(err);
@@ -278,10 +298,36 @@ export class StorageProvider {
                         currentArray: parseprod,
                         existingArray: [],
                         field: "code",
+                        separator: "default",
                         collectionPath: `/users/${uid}/products`,
+                        documentLimit: 250,
+                        bigArray: [],
+                        createDocument: index => {
+                          return { index, products: [] };
+                        },
                       };
-                      await firebase
-                        .firestore()
+                      const transactionCollection = {
+                        id: "transactions",
+                        currentArray: parsetransac.sort((a, b) =>
+                          moment(a.datetime).isSameOrBefore(moment(b.datetime)) ? -1 : 1,
+                        ),
+                        existingArray: [],
+                        field: "datetime",
+                        separator: "datetime",
+                        collectionPath: `/users/${uid}/transactions`,
+                        documentLimit: 200,
+                        bigArray: [],
+                        createDocument: dateTime => {
+                          return {
+                            timestamp: firebase.firestore.Timestamp.fromDate(new Date(dateTime)),
+                            transactions: [],
+                          };
+                        },
+                        docsToBeDeleted: [],
+                      };
+                      const collections = [productCollection, transactionCollection];
+                      const db = firebase.firestore();
+                      await db
                         .collection(productCollection.collectionPath)
                         .get()
                         .then(snapshot => {
@@ -292,45 +338,128 @@ export class StorageProvider {
                           });
                           bigArray.forEach(array => productCollection.existingArray.push(...array));
                         });
-                      productCollection.existingArray.forEach(existingData => {
-                        const index = productCollection.currentArray.findIndex(currentData => {
-                          return currentData[productCollection.field] === existingData[productCollection.field];
+                      const timestampValue = firebase.firestore.Timestamp.fromDate(
+                        new Date(transactionCollection.currentArray[0].datetime),
+                      );
+                      await db
+                        .collection(transactionCollection.collectionPath)
+                        .where("timestamp", "<=", timestampValue)
+                        .orderBy("timestamp", "desc")
+                        .limit(1)
+                        .get()
+                        .then(snapshot => {
+                          snapshot.forEach(doc => {
+                            const data = doc.data();
+                            transactionCollection.existingArray.push(...data.transactions);
+                            transactionCollection.docsToBeDeleted.push(doc.ref);
+                          });
                         });
-                        if (index === -1) productCollection.currentArray.push(existingData);
-                        // sync co-existing data
-                        else {
-                          const currentData = productCollection.currentArray[index];
-                          if (existingData.updatedAt) {
-                            if (!currentData.updatedAt) productCollection.currentArray[index] = existingData;
-                            else if (moment(existingData.updatedAt).isSameOrAfter(currentData.updatedAt))
-                              productCollection.currentArray[index] = existingData;
+                      await db
+                        .collection(transactionCollection.collectionPath)
+                        .where("timestamp", ">", timestampValue)
+                        .orderBy("timestamp")
+                        .get()
+                        .then(snapshot => {
+                          snapshot.forEach(doc => {
+                            const data = doc.data();
+                            transactionCollection.existingArray.push(...data.transactions);
+                            transactionCollection.docsToBeDeleted.push(doc.ref);
+                          });
+                        });
+                      collections.forEach(collection => {
+                        collection.existingArray.forEach(existingData => {
+                          const index = collection.currentArray.findIndex(currentData => {
+                            if (collection.field === "datetime")
+                              return moment(currentData.datetime).isSame(moment(existingData.datetime));
+                            return currentData[collection.field] === existingData[collection.field];
+                          });
+                          if (index === -1) {
+                            // new transaction on cloud
+                            collection.currentArray.push(existingData);
+                            // attempt to resolve product information discrepancies using transaction information
+                            if (collection.id === "transactions") {
+                              const productList = existingData.itemslist ? existingData.itemslist : [];
+                              productList.forEach(product => {
+                                const currentProduct = productCollection.currentArray.find(
+                                  data => data.code === product.code,
+                                );
+                                const quantity = Number(product.qty);
+                                const currentStock = Number(currentProduct.stock_qty);
+                                if (!isNaN(quantity) && !isNaN(currentStock)) {
+                                  currentProduct.stock_qty = currentStock - quantity;
+                                  console.log(
+                                    `new cloud transaction: ${product.name} stock quantity decreased by: ${quantity}`,
+                                  );
+                                }
+                              });
+                            }
                           }
-                          // all other cases would take currentData as source of truth
-                        }
+                          // sync co-existing data
+                          else {
+                            const currentData = collection.currentArray[index];
+                            if (existingData.updatedAt) {
+                              if (
+                                !currentData.updatedAt ||
+                                moment(existingData.updatedAt).isSameOrAfter(currentData.updatedAt)
+                              )
+                                collection.currentArray[index] = existingData;
+                            }
+                            // all other cases would take currentData as source of truth
+                          }
+                        });
                       });
-                      // delete all documents in subcollection
-                      await this.deleteFirestoreCollection(firebase.firestore(), productCollection.collectionPath, 500);
-                      // re-create all documents in subcollection
-                      const db = firebase.firestore();
-                      const batch = db.batch();
-                      const bigArray = [[]];
-                      let numberOfElements = 0;
-                      const documentLimit = 250;
-                      productCollection.currentArray.forEach(currentData => {
-                        const index = bigArray.length - 1;
-                        bigArray[index].push(currentData);
-                        numberOfElements++;
-                        if (numberOfElements >= documentLimit) {
-                          bigArray[index + 1] = [];
-                          numberOfElements = 0;
-                        }
+                      transactionCollection.currentArray = transactionCollection.currentArray.sort((a, b) =>
+                        moment(a.datetime).isSameOrBefore(moment(b.datetime)) ? -1 : 1,
+                      );
+                      // parse into big array
+                      collections.forEach(collection => {
+                        let numberOfElements = 0;
+                        let index = 0;
+                        const key =
+                          collection.separator === "default" ? index : collection.currentArray[0][collection.separator];
+                        collection.bigArray[index] = collection.createDocument(key);
+                        collection.currentArray.forEach((currentData, currentIndex) => {
+                          const array = collection.bigArray[index][collection.id];
+                          array.push(currentData);
+                          numberOfElements++;
+                          if (numberOfElements >= collection.documentLimit) {
+                            index++;
+                            const key =
+                              collection.separator === "default"
+                                ? index
+                                : collection.currentArray[currentIndex + 1][collection.separator];
+                            collection.bigArray[index] = collection.createDocument(key);
+                            numberOfElements = 0;
+                          }
+                        });
                       });
-                      bigArray.forEach((array, index) => {
-                        const documentReference = db.collection(productCollection.collectionPath).doc();
-                        batch.set(documentReference, { index, [productCollection.id]: array });
-                      });
-                      await batch.commit();
+
+                      // delete all documents in products sub collection
+                      await this.deleteFirestoreCollection(db, productCollection.collectionPath, 500);
+                      // re-create all documents in products sub collection
+                      await this.createFirestoreCollection(
+                        db,
+                        productCollection.collectionPath,
+                        productCollection.bigArray,
+                      );
+                      // delete relevant documents in transactions sub collection
+                      const deleteBatch = db.batch();
+                      transactionCollection.docsToBeDeleted.forEach(documentReference =>
+                        deleteBatch.delete(documentReference),
+                      );
+                      await deleteBatch.commit();
+                      // re-create latest transactions in transactions sub collection
+                      await this.createFirestoreCollection(
+                        db,
+                        transactionCollection.collectionPath,
+                        transactionCollection.bigArray,
+                      );
+                      // save latest data in device memory
                       await this.storage.set("products", JSON.stringify(parseprod));
+                      await this.storage.set(
+                        "transactions",
+                        JSON.stringify(parsetransac.slice(parsetransac.length - 50)),
+                      );
                     }
                   }
                 })
@@ -347,6 +476,15 @@ export class StorageProvider {
         });
     });
   }
+
+  createFirestoreCollection = async (db, collectionPath, documents) => {
+    const batch = db.batch();
+    documents.forEach(document => {
+      const documentReference = db.collection(collectionPath).doc();
+      batch.set(documentReference, document);
+    });
+    await batch.commit();
+  };
 
   deleteFirestoreCollection = (db, collectionPath, batchSize) => {
     const deleteQueryBatch = (db, query, batchSize, resolve, reject) => {
