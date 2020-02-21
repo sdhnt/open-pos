@@ -1,16 +1,8 @@
 import { Injectable, ViewChild } from "@angular/core";
 import { Storage } from "@ionic/storage";
 import firebase from "firebase";
-import { convertDataToISO } from "ionic-angular/umd/util/datetime-util";
-import { LoginPage } from "../../pages/login/login";
 import { ToastController, NavController, Nav } from "ionic-angular";
-import { notImplemented } from "@angular/core/src/render3/util";
-import { PARAMETERS } from "@angular/core/src/util/decorators";
-import { parse } from "@typescript-eslint/parser";
 import moment from "moment";
-import { resolveDefinition } from "@angular/core/src/view/util";
-import axios from "axios";
-import jwt from "jsonwebtoken";
 import { queryUser } from "./utilities";
 
 @Injectable()
@@ -21,8 +13,10 @@ export class StorageProvider {
   products: any = [];
   categories: any = [];
   transactions: any = [];
-  user: any = [];
+  user: any = {};
+  contacts: any = [];
   summary: any = [];
+  coach: any = {};
 
   static get parameters() {
     return [[Storage]];
@@ -34,36 +28,27 @@ export class StorageProvider {
     await this.storage.clear();
   }
 
-  tempprod: any;
-  tempcat: any;
-  temptransac: any;
-  tempcontacts: any;
-  tempuser: any;
-  tempsummary: any;
-  tempcoach: any;
-  uid;
-
   async saveInMemory() {
     this.storage.set("categories", "[]").then(() => {
-      this.storage.set("categories", JSON.stringify(this.tempcat));
+      this.storage.set("categories", JSON.stringify(this.categories));
     });
     this.storage.set("products", "[]").then(() => {
-      this.storage.set("products", JSON.stringify(this.tempprod));
+      this.storage.set("products", JSON.stringify(this.products));
     });
     this.storage.set("transactions", "[]").then(() => {
-      this.storage.set("transactions", JSON.stringify(this.temptransac));
+      this.storage.set("transactions", JSON.stringify(this.transactions));
     });
     this.storage.set("user", "{}").then(() => {
-      this.storage.set("user", JSON.stringify(this.tempuser));
+      this.storage.set("user", JSON.stringify(this.user));
     });
     this.storage.set("summary", "[]").then(() => {
-      this.storage.set("summary", JSON.stringify(this.tempsummary));
+      this.storage.set("summary", JSON.stringify(this.summary));
     });
     this.storage.set("contacts", "[]").then(() => {
-      this.storage.set("contacts", JSON.stringify(this.tempcontacts));
+      this.storage.set("contacts", JSON.stringify(this.contacts));
     });
-    this.storage.set("coach", "[]").then(() => {
-      this.storage.set("coach", JSON.stringify(this.tempcoach));
+    this.storage.set("coach", "{}").then(() => {
+      this.storage.set("coach", JSON.stringify(this.coach));
     });
   }
 
@@ -72,7 +57,12 @@ export class StorageProvider {
 
     // check if user data is already in memory
     const userInMemory = JSON.parse(await this.storage.get("user"));
-    if (userInMemory && userInMemory.id) return true;
+    const productsInMemory = JSON.parse(await this.getProducts());
+    const transactionsInMemory = JSON.parse(await this.getProducts());
+    const userCondition = userInMemory && userInMemory.id;
+    const productCondition = productsInMemory && productsInMemory.length > 0;
+    const transactionCondition = transactionsInMemory && transactionsInMemory.length > 0;
+    if (userCondition && productCondition && transactionCondition) return true;
 
     console.log("setMem(): query user data from firestore");
     // query user from firestore
@@ -87,15 +77,19 @@ export class StorageProvider {
     if (!id || !user) return false;
 
     // extract categories and business performance (as summary)
-    this.tempcat = user.categories;
+    this.categories = user.categories;
     if (!user.businessPerformance) {
-      this.tempsummary = [];
-      for (let i = 0; i <= 30; i++) this.tempsummary.push({ expenses: 0, revenue: 0, profit: 0 });
-    } else this.tempsummary = user.businessPerformance;
+      this.summary = [];
+      for (let i = 0; i <= 30; i++) this.summary.push({ expenses: 0, revenue: 0, profit: 0 });
+    } else this.summary = user.businessPerformance;
+
+    // TODO: query subcollections
+    this.products = user.products;
+    this.transactions = user.transactions;
 
     // prune user object to reduce data overhead
     for (const key of ["businessPerformance", "categories", "products", "transactions"]) delete user[key];
-    this.tempuser = { ...user, id };
+    this.user = { ...user, id };
 
     // save user data in memory
     await this.saveInMemory();
@@ -122,7 +116,7 @@ export class StorageProvider {
   //             //tempvid = element.data().video;
   //           });
   //         });
-  //       this.tempcoach = {
+  //       this.coach = {
   //         video: tempvid,
   //       };
   //       resolve();
@@ -152,273 +146,104 @@ export class StorageProvider {
   }
 
   async getUserDat() {
+    await this.storage.ready();
     return await this.storage.get("user");
   }
 
-  //   updateUserDat(data) {
-  //     return new Promise((resolve, reject) => {
-  //       this.storage.get('').then(async (val) => {
-  //         if (val != null) {
-  //           this.user = data;//update temp variable
-  //           this.storage.set('user', JSON.stringify(this.user));
-  // /////////////////////////
-  // //update firebase userdat here
-  // ////////////////////////////
-  //           resolve();
-  //         }
+  async addCategory(data) {
+    let categories = JSON.parse(await this.getCategories());
+    if (!categories || categories.length === 0) categories = [];
 
-  //       })
-
-  //     })
-  //   }
-
-  addCategory(data) {
-    this.storage.ready().then(() => {
-      data.updatedAt = new Date();
-      this.storage
-        .get("categories")
-        .then(val => {
-          if (val === null || val == "null") {
-            this.storage.set("categories", "[]").then(() => {
-              this.storage.get("categories").then(valNull => {
-                this.categories = JSON.parse(valNull);
-                this.categories.push(data);
-                this.storage.set("categories", JSON.stringify(this.categories));
-              });
-            });
-          } else {
-            this.categories = JSON.parse(val);
-            this.categories.push(data);
-            this.storage.set("categories", JSON.stringify(this.categories));
-          }
-          //this.products = JSON.stringify(this.products)
-        })
-        .catch(err => {
-          alert(err);
-        });
-    });
+    data.updatedAt = new Date();
+    categories.push(data);
+    await this.storage.set("categories", JSON.stringify(categories));
   }
 
-  getCategories() {
-    return this.storage.get("categories");
+  async getCategories() {
+    await this.storage.ready();
+    return await this.storage.get("categories");
   }
 
-  deleteCategory(data) {
-    this.storage.ready().then(() => {
-      this.storage
-        .get("categories")
-        .then(val => {
-          this.categories = JSON.parse(val);
-          let arr = [];
-          let arr2 = [];
-          arr = this.categories;
-          arr2 = arr.filter(val => {
-            return val.name != data.name;
-          });
-          this.storage.set("categories", JSON.stringify(arr2));
-        })
-        .catch(err => {
-          alert(err + 1);
-        });
-    });
+  async deleteCategory(data) {
+    let categories = JSON.parse(await this.getCategories());
+    if (!categories) categories = [];
+
+    const newCategories = categories.filter(category => category.name !== data.name);
+    await this.storage.set("categories", JSON.stringify(newCategories));
   }
 
-  getSummary() {
-    return this.storage.get("summary");
+  async getSummary() {
+    await this.storage.ready();
+    return await this.storage.get("summary");
   }
 
-  addProduct(data) {
-    this.storage.ready().then(() => {
-      data.updatedAt = new Date();
-      this.storage
-        .get("products")
-        .then(val => {
-          if (val === null) {
-            this.storage.set("products", "[]").then(() => {
-              this.storage.get("products").then(valNull => {
-                this.products = JSON.parse(valNull);
-                this.products.push(data);
-                this.storage.set("products", JSON.stringify(this.products));
-              });
-            });
-          } else {
-            this.products = JSON.parse(val);
-            this.products.push(data);
-            this.storage.set("products", JSON.stringify(this.products));
-          }
-          //this.products = JSON.stringify(this.products)
-        })
-        .catch(err => {
-          alert(err);
-        });
-    });
+  async addProduct(data) {
+    let products = JSON.parse(await this.getProducts());
+    if (!products) products = [];
+
+    data.updatedAt = new Date();
+    products.push(data);
+    await this.storage.set("products", JSON.stringify(products));
   }
 
-  getProducts() {
-    return this.storage.get("products");
+  async getProducts() {
+    await this.storage.ready();
+    return await this.storage.get("products");
   }
 
-  addTransactions(data) {
-    this.storage.ready().then(() => {
-      data.updatedAt = new Date();
-      this.storage
-        .get("transactions")
-        .then(val => {
-          //console.log(val);
-          if (val === null) {
-            this.storage.set("transactions", "[]").then(() => {
-              this.storage.get("transactions").then(valNull => {
-                this.transactions = JSON.parse(valNull);
-                console.log("val " + valNull);
-                this.transactions.push(data);
-                this.storage.set("transactions", JSON.stringify(this.transactions));
-              });
-            });
-          } else {
-            this.transactions = JSON.parse(val);
-            console.log("val yada");
-            this.transactions.push(data);
-            this.storage.set("transactions", JSON.stringify(this.transactions));
-          }
-          //this.products = JSON.stringify(this.products)
-        })
-        .catch(err => {
-          alert(err);
-        });
-    });
+  async addTransactions(data) {
+    let transactions = JSON.parse(await this.getTransactions());
+    if (!transactions) transactions = [];
+
+    data.updatedAt = new Date();
+    transactions.push(data);
+    await this.storage.set("transactions", JSON.stringify(transactions));
   }
 
-  getTransactions() {
-    return this.storage.get("transactions");
+  async getTransactions() {
+    await this.storage.ready();
+    return await this.storage.get("transactions");
   }
 
-  deleteTransactions(data) {
-    this.storage.ready().then(() => {
-      this.storage
-        .get("transactions")
-        .then(val => {
-          this.transactions = JSON.parse(val);
-          let arr = [];
-          let arr2 = [];
-          arr = this.transactions;
-          arr2 = arr.filter(val => {
-            return val.datetime != data.datetime;
-          });
-          const item = arr.filter(val => {
-            return val.datetime == data.datetime;
-          });
-          //console.log(arr2);
-          item[0].isDisabled = 1;
-          item[0].updatedAt = new Date();
-          arr2.push(item[0]);
-          this.storage.set("transactions", JSON.stringify(arr2));
-        })
-        .catch(err => {
-          alert(err);
-        });
-    });
+  async deleteTransactions(data) {
+    let transactions = JSON.parse(await this.getTransactions());
+    if (!transactions) transactions = [];
+
+    data.updatedAt = new Date();
+    data.isDisabled = true;
+    const newTransactions = transactions.map(transaction =>
+      moment(transaction.datetime).isSame(moment(data.datetime)) ? data : transaction,
+    );
+    await this.storage.set("transactions", newTransactions);
   }
 
-  searchProduct(barcode) {
-    let needle = null;
-    return new Promise((resolve, reject) => {
-      this.storage.ready().then(() => {
-        this.storage
-          .get("products")
-          .then(val => {
-            if (val != null) {
-              this.products = JSON.parse(val);
-              needle = this.products.filter(product => {
-                return product.code === barcode;
-              });
-            }
-
-            resolve(needle);
-          })
-          .catch(err => {
-            alert(err + 1);
-          });
-      });
-    });
+  async searchProduct(barcode) {
+    let products = JSON.parse(await this.getProducts());
+    if (!products) products = [];
+    return products.find(product => product.code === barcode);
   }
 
-  updateProduct(data, old_code) {
-    return new Promise((resolve, reject) => {
-      this.storage.get("products").then(async val => {
-        data.updatedAt = new Date();
-        if (val != null) {
-          const products = JSON.parse(val);
-          const newProducts = products.map(product => (product.code === old_code ? data : product));
-          await this.storage.set("products", JSON.stringify(newProducts));
-          resolve();
-        }
-      });
-    });
+  async updateProduct(data, old_code) {
+    let products = JSON.parse(await this.getProducts());
+    if (!products) products = [];
+
+    data.updatedAt = new Date();
+    const newProducts = products.map(product => (product.code === old_code ? data : product));
+    await this.storage.set("products", JSON.stringify(newProducts));
   }
 
-  swapProductUp(old_code) {
-    const except = null;
-    return new Promise((resolve, reject) => {
-      this.storage.get("products").then(val => {
-        if (val != null) {
-          this.products = JSON.parse(val);
+  async deleteProduct(data) {
+    let products = JSON.parse(await this.getProducts());
+    if (!products) products = [];
 
-          for (let i = 0; i < this.products.length; i++) {
-            if (this.products[i].code == old_code && i != 0) {
-              const temp = this.products[i];
-              this.products[i] = this.products[i - 1];
-              this.products[i - 1] = temp;
-            }
-          }
-          //except.push(data);
-          this.storage.set("products", JSON.stringify(this.products));
-          resolve();
-        }
-      });
-    });
-  }
-
-  swapProductDown(old_code) {
-    const except = null;
-    return new Promise((resolve, reject) => {
-      this.storage.get("products").then(val => {
-        if (val != null) {
-          this.products = JSON.parse(val);
-
-          for (let i = 0; i < this.products.length; i++) {
-            if (this.products[i].code == old_code && i < this.products.length - 1) {
-              const temp = this.products[i];
-              this.products[i] = this.products[i + 1];
-              this.products[i + 1] = temp;
-            }
-          }
-          //except.push(data);
-          this.storage.set("products", JSON.stringify(this.products));
-          resolve();
-        }
-      });
-    });
-  }
-
-  deleteProduct(data) {
-    this.storage.ready().then(() => {
-      this.storage
-        .get("products")
-        .then(val => {
-          const products = JSON.parse(val);
-          const newProducts = products.map(product =>
-            product.code === data.code ? { ...product, updatedAt: new Date(), isDisabled: true } : product,
-          );
-          this.storage.set("products", JSON.stringify(newProducts));
-        })
-        .catch(err => {
-          alert(err + 1);
-        });
-    });
+    data.updatedAt = new Date();
+    data.isDisabled = true;
+    const newProducts = products.map(product => (product.code === data.code ? data : product));
+    await this.storage.set("products", JSON.stringify(newProducts));
   }
 
   async saveContacts(newContacts, manualAdd: boolean): Promise<void> {
-    if(newContacts.length==0) return;
+    if (!newContacts || newContacts.length === 0) return;
     await this.storage.ready();
     let contacts = JSON.parse(await this.storage.get("contacts"));
     if (!contacts) contacts = [];
@@ -459,18 +284,18 @@ export class StorageProvider {
     await this.storage.set("contacts", JSON.stringify(contacts));
   }
 
-  async setLastBackup(time) {
+  async setLastBackup(time?: Date): Promise<void> {
     if (!time) time = new Date();
     await this.storage.ready();
     await this.storage.set("lastBackup", time);
   }
 
-  async getLastBackup() {
+  async getLastBackup(): Promise<Date | null> {
     await this.storage.ready();
     return await this.storage.get("lastBackup");
   }
 
-  storageReady() {
-    return this.storage.ready();
+  async storageReady() {
+    return await this.storage.ready();
   }
 }
