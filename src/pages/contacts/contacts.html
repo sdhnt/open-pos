@@ -6,27 +6,40 @@
 -->
 
 <ion-content padding>
-  Do you give us consent to access your phone's contact information?
+  <ion-fab right bottom #fab style="margin-bottom: 10px;">
+    <button ion-fab><ion-icon name="person-add"></ion-icon></button>
+    <ion-fab-list side="left">
+      <button ion-button (click)="navAdd(1, fab)">From Contacts</button>
+      <button ion-button (click)="navAdd(2, fab)">Manually</button>
+    </ion-fab-list>
+  </ion-fab>
+  
+  <!-- Do you give us consent to access your phone's contact information? -->
   <ion-list>
-    <ion-item>
+    <!-- <ion-item>
       <button ion-button (click)="setPermission(true)">
         Yes
       </button>
       <button ion-button (click)="setPermission(false)">
         No
       </button>
-    </ion-item>
-    <ion-item *ngIf="hasPermission">
+    </ion-item> -->
+    <ion-item>
       <button ion-button (click)="importContacts()">
         Import contacts now
       </button>
     </ion-item>
   </ion-list>
 
-  <ion-list *ngFor="let contact of contactList; let i = index">
-    <ion-item>
-      {{contact.displayName}}
-    </ion-item>
+  <ion-searchbar showCancelButton="always"></ion-searchbar>
+
+  <ion-list>
+    <ion-card *ngFor="let contact of contactList; let i = index">
+      <ion-row (click)="navToIndividual()" padding>
+        <ion-col col-7 style="font-size: 16px;">{{ contact.displayName }}</ion-col>
+        <ion-col col-5>Balance: <span style="color: red;">300</span></ion-col>
+      </ion-row>
+    </ion-card>
   </ion-list>
 
 </ion-content>

@@ -49,6 +49,8 @@ import { AddProdSignupPage } from "../pages/add-prod-signup/add-prod-signup";
 import { UserDataPageModule } from "../pages/user-data/user-data.module";
 import { ContactsPageModule } from "../pages/contacts/contacts.module";
 import { ContactsPage } from "../pages/contacts/contacts";
+import { IndividualContactPage } from "../pages/individual-contact/individual-contact";
+import { IndividualContactPageModule } from "../pages/individual-contact/individual-contact.module";
 
 const config = {
   apiKey: "AIzaSyBlxUkCX8OPsb9QL2p_jN8vaHdb5LhsS7A",
@@ -84,6 +86,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     UserDataPageModule,
     ContactsPageModule,
+    IndividualContactPageModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -103,6 +106,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AddProductPage,
     AddProductCategoryPage,
     ContactsPage,
+    IndividualContactPage
   ],
   providers: [
     StatusBar,

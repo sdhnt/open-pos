@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams, ToastController } from "ionic-angular";
 import { Contacts, ContactFindOptions } from "@ionic-native/contacts";
 import { StorageProvider } from "../../providers/storage/storage";
+import { IndividualContactPage } from "../individual-contact/individual-contact";
 
 /**
  * Generated class for the ContactsPage page.
@@ -22,9 +23,14 @@ export class ContactsPage {
     private contacts: Contacts,
     private toastController: ToastController,
     private sp: StorageProvider,
-  ) {}
+  ) {
+    let contact1 = {
+      displayName: "Pranay"
+    };
+    this.contactList.push(contact1);
+  }
 
-  hasPermission = false;
+  hasPermission = true;
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad ContactsPage");
@@ -69,5 +75,9 @@ export class ContactsPage {
   setPermission(permission: boolean) {
     console.log(`phone contacts permission: ${permission}`);
     this.hasPermission = permission;
+  }
+
+  navToIndividual(){
+    this.navCtrl.push(IndividualContactPage);
   }
 }
