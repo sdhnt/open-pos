@@ -558,7 +558,7 @@ export class StorageProvider {
                 business_name: data.business_name,
                 businesstype: data.businesstype,
                 created: data.created,
-                logo: data.logo,
+                logo_url: data.logo_url,
                 currency: data.currency,
                 discount: data.discount,
                 language: data.language,
@@ -883,6 +883,17 @@ export class StorageProvider {
     });
     contact.balance = newBalance;
     await this.storage.set("contacts", JSON.stringify(contacts));
+  }
+
+  async setLastBackup(time) {
+    if (!time) time = new Date();
+    await this.storage.ready();
+    await this.storage.set("lastBackup", time);
+  }
+
+  async getLastBackup() {
+    await this.storage.ready();
+    return await this.storage.get("lastBackup");
   }
 
   storageReady() {
