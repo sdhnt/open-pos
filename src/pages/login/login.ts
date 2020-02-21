@@ -17,6 +17,7 @@ import { UserProfilePage } from "../user-profile/user-profile";
 import { Message, Placeholder } from "@angular/compiler/src/i18n/i18n_ast";
 import { AddProdSignupPage } from "../add-prod-signup/add-prod-signup";
 import { Facebook } from "@ionic-native/facebook";
+import { createAccountDocument } from "../../utilities/createAccountDocument";
 
 /**
  * Generated class for the LoginPage page.
@@ -99,7 +100,7 @@ export class LoginPage {
                 })
                 .present();
             } else {
-              sp.setMem().then(() => {
+              this.sp.setMem().then(() => {
                 zone.run(() => {
                   console.log("firing from constructor");
                   loading.dismiss();
@@ -310,8 +311,6 @@ export class LoginPage {
   //     });
   // }
 
-  datet = new Date();
-
   newaccOwnName;
   newaccBName;
   newaccBArea;
@@ -319,198 +318,50 @@ export class LoginPage {
   newaccBType;
 
   async createAccount() {
-    if (
-      this.newaccBArea != null &&
-      this.newaccBArea != undefined &&
-      this.newaccBName != null &&
-      this.newaccBName != undefined &&
-      this.newaccOwnName != null &&
-      this.newaccOwnName != undefined &&
-      this.newaccBType != null &&
-      this.newaccBType != undefined &&
-      this.phone != undefined &&
-      this.phone != null
-    ) {
+    if (this.newaccBArea && this.newaccBName && this.newaccOwnName && this.newaccBType && this.phone) {
       this.toastCtrl.create({
         message: "Please wait while account is created. This may take a few minutes",
         duration: 3000,
       });
       this.dis = 1;
 
-      const subCollections = [
-        {
-          id: "products",
-          documents: [
-            {
-              index: 0,
-              products: [
-                {
-                  cat: "Example",
-                  code: "0000",
-                  cost: "100",
-                  name: "Example Product",
-                  price: "0",
-                  stock_qty: "10",
-                  url: "https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y",
-                  wholesale_price: "0",
-                  updatedAt: new Date(),
-                },
-              ],
-            },
-          ],
-        },
-        {
-          id: "transactions",
-          documents: [
-            {
-              timestamp: firebase.firestore.Timestamp.now(), // firestore timestamp type
-              transactions: [
-                {
-                  datetime: new Date(this.datet).getTime(),
-                  discount: 0,
-                  discountlist: [],
-                  itemslist: [
-                    {
-                      cat: "Example",
-                      code: "0000",
-                      cost: "0",
-                      name: "Example Product",
-                      price: "0",
-                      stock_qty: "0",
-                      qty: 1,
-                      discount: 0,
-                    },
-                  ],
-                  pnllist: [],
-                  prodidlist: [],
-                  taxrate: 0,
-                  totalatax: 0,
-                  totaldisc: 0,
-                  totalsum: 0,
-                  updatedAt: new Date(),
-                },
-              ],
-            },
-          ],
-        },
-      ];
-
-      await firebase
-        .firestore()
-        .collection("users")
-        .add({
-          created: firebase.firestore.FieldValue.serverTimestamp(),
+      try {
+        const user = {
           owner: firebase.auth().currentUser.uid,
           owner_name: this.newaccOwnName,
-          autosave: 0,
           business_name: this.newaccBName,
           businesstype: this.newaccBType,
           business_address: this.newaccBArea,
-          email: this.newaccemail != null ? this.newaccemail : "sample@sample.com",
+          email: this.newaccemail ? this.newaccemail : "sample@sample.com",
           ph_no: "+" + this.country_code + this.phone,
           language: this.translateConfigService.getCurrentLanguage(),
-          currency: "USD",
-          cash_balance: 0,
-          discount: 0,
-          taxrate: 0,
-          logo_url: "",
-          categories: [{ name: "Example" }],
-          products: [
-            {
-              cat: "Example",
-              code: "0000",
-              cost: "100",
-              name: "Example Product",
-              price: "0",
-              stock_qty: "10",
-              url: "https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y",
-              wholesale_price: "0",
-            },
-          ],
+        };
+        if (!user.owner) throw new Error("firebase authentication uid missing");
+        await createAccountDocument(user);
 
-          transactions: [
-            {
-              datetime: new Date(this.datet).getTime(),
-              discount: 0,
-              discountlist: [],
-              itemslist: [
-                {
-                  cat: "Example",
-                  code: "0000",
-                  cost: "0",
-                  name: "Example Product",
-                  price: "0",
-                  stock_qty: "0",
-                  qty: 1,
-                  discount: 0,
-                },
-              ],
-              pnllist: [],
-              prodidlist: [],
-              taxrate: 0,
-              totalatax: 0,
-              totaldisc: 0,
-              totalsum: 0,
-            },
-          ],
-        })
-        .then(async doc => {
-          await firebase
-            .firestore()
-            .collection("users")
-            .where("owner", "==", firebase.auth().currentUser.uid)
-            .get()
-            .then(function(querySnapshot) {
-              querySnapshot.forEach(async doc => {
-                const uid = doc.id;
-                console.log(uid);
-                const db = firebase.firestore();
-                const batch = db.batch();
-                subCollections.forEach(collection => {
-                  collection.documents.forEach(async document => {
-                    const documentReference = db.collection(`/users/${uid}/${collection.id}`).doc();
-                    batch.set(documentReference, document);
+        const title = this.translateConfigService.getTranslatedMessage("Account Created");
+        const message = this.translateConfigService.getTranslatedMessage("Your account has been created successfully");
+        this.alertCtrl
+          .create({
+            // @ts-ignore
+            title: title.value,
+            // @ts-ignore
+            message: message.value,
+            buttons: [
+              {
+                text: "OK",
+                handler: () => {
+                  this.sp.setMem({ force: true }).then(() => {
+                    this.navCtrl.push(AddProdSignupPage);
                   });
-                });
-                await batch.commit();
-              });
-            });
-          console.log(doc);
-
-          const title = this.translateConfigService.getTranslatedMessage("Account Created");
-          const message = this.translateConfigService.getTranslatedMessage(
-            "Your account has been created successfully",
-          );
-          this.alertCtrl
-            .create({
-              // @ts-ignore
-              title: title.value,
-              // @ts-ignore
-              message: message.value,
-              buttons: [
-                {
-                  text: "OK",
-                  handler: () => {
-                    //this.sp.clearMem();
-                    this.sp.setMem().then(() => {
-                      // this.navCtrl.setRoot(TransactionHomePage, {
-                      //   data: "newUser",
-                      //   lang: this.translateConfigService.getCurrentLanguage(),
-                      // }); //navigate to feeds page
-                      // this.events.publish("newUser");
-                      this.navCtrl.push(AddProdSignupPage);
-                    });
-                  }, //end handler
                 },
-              ], //end button
-            })
-            .present();
-        })
-        .catch(err => {
-          console.log(err);
-        });
-
-      console.log("Done");
+              },
+            ],
+          })
+          .present();
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       this.toastCtrl
         .create({
