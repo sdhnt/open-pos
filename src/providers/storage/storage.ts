@@ -11,6 +11,7 @@ import moment from "moment";
 import { resolveDefinition } from "@angular/core/src/view/util";
 import axios from "axios";
 import jwt from "jsonwebtoken";
+import { queryUser } from "./utilities";
 
 @Injectable()
 export class StorageProvider {
@@ -75,16 +76,7 @@ export class StorageProvider {
 
     console.log("setMem(): query user data from firestore");
     // query user from firestore
-    const db = firebase.firestore();
-    const userSnapshot = await db
-      .collection("users")
-      .where("owner", "==", firebase.auth().currentUser.uid)
-      .get();
-    const dataSet = [];
-    userSnapshot.forEach(doc => {
-      dataSet.push({ id: doc.id, user: doc.data() });
-    });
-    const { id, user } = dataSet[0];
+    const { id, user } = await queryUser();
     if (!id) return false;
 
     // extract categories and business performance (as summary)
@@ -189,54 +181,20 @@ export class StorageProvider {
     });
   }
 
-  async setUserDat(data) {
-    this.tempuser = data;
+  async setUserDat(user) {
+    await this.storage.ready();
+    await this.storage.set("user", JSON.stringify(user));
 
-    this.storage.get("user").then(async valNulluser => {
-      this.storage.set("user", "[]").then(() => {
-        this.storage.set("user", JSON.stringify(this.tempuser));
-      });
-
-      console.log(firebase.auth().currentUser.uid);
-      let ud;
-      const snapshot = await firebase
-        .firestore()
-        .collection("users")
-        .where("owner", "==", firebase.auth().currentUser.uid)
-        .get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(doc => {
-            firebase
-              .firestore()
-              .collection("users")
-              .doc(doc.id)
-              .update({
-                cash_balance: data.cash_balance,
-                business_address: data.business_address,
-                business_name: data.business_name,
-                businesstype: data.businesstype,
-                created: data.created,
-                logo_url: data.logo_url,
-                currency: data.currency,
-                discount: data.discount,
-                language: data.language,
-                owner: data.owner,
-                owner_name: data.owner_name,
-                ph_no: data.ph_no,
-                taxrate: data.taxrate,
-                id: doc.id,
-              });
-          });
-        })
-        .catch(error => {
-          console.log("Error getting documents: ", error);
-        });
-    });
+    const { id } = await queryUser();
+    const db = firebase.firestore();
+    await db
+      .collection("users")
+      .doc(id)
+      .update({ ...user });
   }
 
   async getUserDat() {
     return await this.storage.get("user");
-    //return this.tempuser;
   }
 
   //   updateUserDat(data) {
