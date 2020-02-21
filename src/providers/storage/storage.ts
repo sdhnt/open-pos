@@ -29,8 +29,8 @@ export class StorageProvider {
 
   constructor(public storage: Storage, public toastCtrl: ToastController, public navCtrl: NavController) {}
 
-  clearMem() {
-    this.storage.clear();
+  async clearMem() {
+    await this.storage.clear();
   }
 
   tempprod: any;
@@ -42,47 +42,27 @@ export class StorageProvider {
   tempcoach: any;
   uid;
 
-  async saveinMem() {
-    return new Promise((resolve, reject) => {
-      //console.log("Hey"+this.tempcat)
-      this.storage.get("categories").then(valNullcat => {
-        this.storage.get("products").then(valNullprod => {
-          this.storage.get("transactions").then(valNulltransac => {
-            this.storage.get("contacts").then(_ => {
-              this.storage.get("user").then(valNulluser => {
-                this.storage.get("summary").then(valNullSummary => {
-                  this.storage.get("coach").then(valNullCoach => {
-                    this.storage.set("categories", "[]").then(() => {
-                      this.storage.set("categories", JSON.stringify(this.tempcat));
-                    });
-                    this.storage.set("products", "[]").then(() => {
-                      this.storage.set("products", JSON.stringify(this.tempprod));
-                    });
-                    this.storage.set("transactions", "[]").then(() => {
-                      this.storage.set("transactions", JSON.stringify(this.temptransac));
-                    });
-                    this.storage.set("contacts", "[]").then(() => {
-                      this.storage.set("contacts", JSON.stringify(this.tempcontacts));
-                    });
-                    this.storage.set("user", "[]").then(() => {
-                      this.storage.set("user", JSON.stringify(this.tempuser));
-                    });
-                    this.storage.set("summary", "[]").then(() => {
-                      this.storage.set("summary", JSON.stringify(this.tempsummary));
-                      // console.log(JSON.stringify(this.tempsummary));
-                    });
-                    this.storage.set("coach", "[]").then(() => {
-                      this.storage.set("coach", JSON.stringify(this.tempcoach));
-                      console.log(JSON.stringify(this.tempcoach));
-                    });
-                    resolve();
-                  });
-                });
-              });
-            });
-          });
-        });
-      });
+  async saveInMemory() {
+    this.storage.set("categories", "[]").then(() => {
+      this.storage.set("categories", JSON.stringify(this.tempcat));
+    });
+    this.storage.set("products", "[]").then(() => {
+      this.storage.set("products", JSON.stringify(this.tempprod));
+    });
+    this.storage.set("transactions", "[]").then(() => {
+      this.storage.set("transactions", JSON.stringify(this.temptransac));
+    });
+    this.storage.set("user", "{}").then(() => {
+      this.storage.set("user", JSON.stringify(this.tempuser));
+    });
+    this.storage.set("summary", "[]").then(() => {
+      this.storage.set("summary", JSON.stringify(this.tempsummary));
+    });
+    this.storage.set("contacts", "[]").then(() => {
+      this.storage.set("contacts", JSON.stringify(this.tempcontacts));
+    });
+    this.storage.set("coach", "[]").then(() => {
+      this.storage.set("coach", JSON.stringify(this.tempcoach));
     });
   }
 
@@ -181,14 +161,8 @@ export class StorageProvider {
       this.tempsummary = tempsummary;
       console.log(`tempprod: `, tempprod);
       console.log(`temptransac: `, temptransac);
-      // console.log("setglobal");
-      // console.log(JSON.stringify(tempcat));
-      // console.log(JSON.stringify(tempprod));
-      // console.log(JSON.stringify(temptransac))  ;
 
-      //await this.setcoach();
-
-      await this.saveinMem();
+      await this.saveInMemory();
       return await (this.uid != null);
     });
   }
