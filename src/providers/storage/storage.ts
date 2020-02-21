@@ -76,8 +76,15 @@ export class StorageProvider {
 
     console.log("setMem(): query user data from firestore");
     // query user from firestore
-    const { id, user } = await queryUser();
-    if (!id) return false;
+    let id, user;
+    try {
+      const result = await queryUser();
+      id = result.id;
+      user = result.user;
+    } catch (error) {
+      console.log(error);
+    }
+    if (!id || !user) return false;
 
     // extract categories and business performance (as summary)
     this.tempcat = user.categories;
@@ -132,13 +139,16 @@ export class StorageProvider {
   async setUserDat(user) {
     await this.storage.ready();
     await this.storage.set("user", JSON.stringify(user));
-
-    const { id } = await queryUser();
-    const db = firebase.firestore();
-    await db
-      .collection("users")
-      .doc(id)
-      .update({ ...user });
+    try {
+      const { id } = await queryUser();
+      const db = firebase.firestore();
+      await db
+        .collection("users")
+        .doc(id)
+        .update({ ...user });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async getUserDat() {
