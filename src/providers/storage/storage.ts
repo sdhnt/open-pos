@@ -52,7 +52,9 @@ export class StorageProvider {
     });
   }
 
-  async setMem() {
+  async setMem(options?: { force?: boolean }): Promise<boolean> {
+    const defaultOptions = { force: false };
+    const { force } = options ? options : defaultOptions;
     await this.storage.ready();
 
     // check if user data is already in memory
@@ -62,7 +64,7 @@ export class StorageProvider {
     const userCondition = userInMemory && userInMemory.id;
     const productCondition = productsInMemory && productsInMemory.length > 0;
     const transactionCondition = transactionsInMemory && transactionsInMemory.length > 0;
-    if (userCondition && productCondition && transactionCondition) return true;
+    if (!force && userCondition && productCondition && transactionCondition) return false;
 
     console.log("setMem(): query user data from firestore");
     // query user from firestore
