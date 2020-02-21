@@ -21,7 +21,13 @@ export class IndividualContactPage {
   ionViewDidLoad() {
     console.log("ionViewDidLoad IndividualContactPage");
   }
+
   goBack() {
     this.navCtrl.pop();
+  }
+
+  transaction(one:number){
+    //pop up alert
+    //multiply value by *one* to get appropriate -ve,+ve
   }
 }

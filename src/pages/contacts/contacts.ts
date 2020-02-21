@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, ToastController } from "ionic-angular";
+import { IonicPage, NavController, NavParams, ToastController, FabContainer } from "ionic-angular";
 import { Contacts, ContactFindOptions } from "@ionic-native/contacts";
 import { StorageProvider } from "../../providers/storage/storage";
 import { IndividualContactPage } from "../individual-contact/individual-contact";
@@ -79,5 +79,14 @@ export class ContactsPage {
 
   navToIndividual() {
     this.navCtrl.push(IndividualContactPage);
+  }
+
+  navAdd(num: number, fab: FabContainer) {
+    fab.close();
+    if (num == 1) {
+      //Adding from Contacts
+    } else if (num == 2) {
+      //Adding Manually
+    }
   }
 }
