@@ -68,6 +68,13 @@ export class StorageProvider {
 
   async setMem() {
     await this.storage.ready();
+
+    // check if user data is already in memory
+    const userInMemory = JSON.parse(await this.storage.get("user"));
+    if (userInMemory && userInMemory.id) return true;
+
+    console.log("setMem(): query user data from firestore");
+    // query user from firestore
     const db = firebase.firestore();
     const userSnapshot = await db
       .collection("users")
@@ -80,15 +87,18 @@ export class StorageProvider {
     const { id, user } = dataSet[0];
     if (!id) return false;
 
+    // extract categories and business performance (as summary)
     this.tempcat = user.categories;
     if (!user.businessPerformance) {
       this.tempsummary = [];
       for (let i = 0; i <= 30; i++) this.tempsummary.push({ expenses: 0, revenue: 0, profit: 0 });
     } else this.tempsummary = user.businessPerformance;
 
+    // prune user object to reduce data overhead
     for (const key of ["businessPerformance", "categories", "products", "transactions"]) delete user[key];
     this.tempuser = { ...user, id };
 
+    // save user data in memory
     await this.saveInMemory();
     return true;
   }
