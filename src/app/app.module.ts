@@ -106,7 +106,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AddProductPage,
     AddProductCategoryPage,
     ContactsPage,
-    IndividualContactPage
+    IndividualContactPage,
   ],
   providers: [
     StatusBar,

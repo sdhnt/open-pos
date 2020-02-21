@@ -24,8 +24,8 @@ export class ContactsPage {
     private toastController: ToastController,
     private sp: StorageProvider,
   ) {
-    let contact1 = {
-      displayName: "Pranay"
+    const contact1 = {
+      displayName: "Pranay",
     };
     this.contactList.push(contact1);
   }
@@ -77,7 +77,7 @@ export class ContactsPage {
     this.hasPermission = permission;
   }
 
-  navToIndividual(){
+  navToIndividual() {
     this.navCtrl.push(IndividualContactPage);
   }
 }

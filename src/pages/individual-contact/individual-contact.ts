@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component } from "@angular/core";
+import { IonicPage, NavController, NavParams } from "ionic-angular";
 
 /**
  * Generated class for the IndividualContactPage page.
@@ -10,20 +10,18 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-individual-contact',
-  templateUrl: 'individual-contact.html',
+  selector: "page-individual-contact",
+  templateUrl: "individual-contact.html",
 })
 export class IndividualContactPage {
-
   listVal = [300, 250, -110, -100, -500];
-  
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+
+  constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad IndividualContactPage');
+    console.log("ionViewDidLoad IndividualContactPage");
   }
-  goBack(){
+  goBack() {
     this.navCtrl.pop();
   }
 }
