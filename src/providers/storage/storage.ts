@@ -211,10 +211,12 @@ export class StorageProvider {
     let transactions = JSON.parse(await this.getTransactions());
     if (!transactions) transactions = [];
 
-    data.updatedAt = new Date();
-    data.isDisabled = true;
+    const changes = {
+      updatedAt: new Date(),
+      isDisabled: true,
+    };
     const newTransactions = transactions.map(transaction =>
-      moment(transaction.datetime).isSame(moment(data.datetime)) ? data : transaction,
+      moment(transaction.datetime).isSame(moment(data.datetime)) ? { ...transaction, ...changes } : transaction,
     );
     await this.storage.set("transactions", newTransactions);
   }
@@ -238,9 +240,11 @@ export class StorageProvider {
     let products = JSON.parse(await this.getProducts());
     if (!products) products = [];
 
-    data.updatedAt = new Date();
-    data.isDisabled = true;
-    const newProducts = products.map(product => (product.code === data.code ? data : product));
+    const changes = {
+      updatedAt: new Date(),
+      isDisabled: true,
+    };
+    const newProducts = products.map(product => (product.code === data.code ? { ...product, ...changes } : product));
     await this.storage.set("products", JSON.stringify(newProducts));
   }
 
