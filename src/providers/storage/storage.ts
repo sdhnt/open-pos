@@ -128,7 +128,9 @@ export class StorageProvider {
   //   return await this.storage.get("coach");
   // }
 
-  backupStorage() {}
+  async backupStorage() {
+    // TODO: rewrite
+  }
 
   async setUserDat(user) {
     await this.storage.ready();
@@ -145,7 +147,7 @@ export class StorageProvider {
     }
   }
 
-  async getUserDat() {
+  async getUserDat(): Promise<string | null> {
     await this.storage.ready();
     return await this.storage.get("user");
   }
@@ -159,7 +161,7 @@ export class StorageProvider {
     await this.storage.set("categories", JSON.stringify(categories));
   }
 
-  async getCategories() {
+  async getCategories(): Promise<string | null> {
     await this.storage.ready();
     return await this.storage.get("categories");
   }
@@ -172,7 +174,7 @@ export class StorageProvider {
     await this.storage.set("categories", JSON.stringify(newCategories));
   }
 
-  async getSummary() {
+  async getSummary(): Promise<string | null> {
     await this.storage.ready();
     return await this.storage.get("summary");
   }
@@ -186,7 +188,7 @@ export class StorageProvider {
     await this.storage.set("products", JSON.stringify(products));
   }
 
-  async getProducts() {
+  async getProducts(): Promise<string | null> {
     await this.storage.ready();
     return await this.storage.get("products");
   }
@@ -200,7 +202,7 @@ export class StorageProvider {
     await this.storage.set("transactions", JSON.stringify(transactions));
   }
 
-  async getTransactions() {
+  async getTransactions(): Promise<string | null> {
     await this.storage.ready();
     return await this.storage.get("transactions");
   }
