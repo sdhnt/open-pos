@@ -20,11 +20,11 @@ export class IndividualContactPage {
     displayName: "",
     balance: "",
     phno: "",
-    transacHistory: []
+    transacHistory: [],
   };
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
-    let temp = navParams.get('data');
+    const temp = navParams.get("data");
     this.contact = JSON.parse(temp);
   }
 
