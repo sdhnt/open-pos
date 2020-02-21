@@ -16,12 +16,16 @@ import { IonicPage, NavController, NavParams, AlertController } from "ionic-angu
 export class IndividualContactPage {
   listVal = [300, 250, -110, -100, -500];
   balance: number;
+  contact = {
+    displayName: "",
+    balance: "",
+    phno: "",
+    transacHistory: []
+  };
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
-    this.balance = 0;
-    this.listVal.forEach(element => {
-      this.balance += element;
-    });
+    let temp = navParams.get('data');
+    this.contact = JSON.parse(temp);
   }
 
   ionViewDidLoad() {
@@ -62,8 +66,8 @@ export class IndividualContactPage {
       if (amountToAdd == 0) {
         return;
       }
-      this.listVal.unshift(amountToAdd);
-      this.balance += amountToAdd;
+      this.contact.transacHistory.unshift(amountToAdd);
+      this.contact.balance += amountToAdd;
     });
   }
 }

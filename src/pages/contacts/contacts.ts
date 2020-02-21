@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, ToastController, FabContainer } from "ionic-angular";
+import { IonicPage, NavController, NavParams, ToastController, FabContainer, AlertController } from "ionic-angular";
 import { Contacts, ContactFindOptions } from "@ionic-native/contacts";
 import { StorageProvider } from "../../providers/storage/storage";
 import { IndividualContactPage } from "../individual-contact/individual-contact";
@@ -23,9 +23,13 @@ export class ContactsPage {
     private contacts: Contacts,
     private toastController: ToastController,
     private sp: StorageProvider,
+    private alertCtrl: AlertController,
   ) {
     const contact1 = {
       displayName: "Pranay",
+      balance: -300,
+      phno: "",
+      transacHistory: []
     };
     this.contactList.push(contact1);
   }
@@ -77,8 +81,8 @@ export class ContactsPage {
     this.hasPermission = permission;
   }
 
-  navToIndividual() {
-    this.navCtrl.push(IndividualContactPage);
+  navToIndividual(contact) {
+    this.navCtrl.push(IndividualContactPage, {data: JSON.stringify(contact)});
   }
 
   navAdd(num: number, fab: FabContainer) {
@@ -86,7 +90,46 @@ export class ContactsPage {
     if (num == 1) {
       //Adding from Contacts
     } else if (num == 2) {
-      //Adding Manually
+      let a = this.alertCtrl.create({
+        subTitle: "Add Contact",
+        inputs: [
+          {
+            name: "name",
+            placeholder: "Contact Name"
+          },
+          {
+            name: "phno",
+            placeholder: "Contact Number"
+          }
+        ],
+        buttons: [
+          {
+            text: "Cancel",
+            role: "cancel"
+          },
+          {
+            text: "Add",
+            handler: data=>{
+              if(data.phno!=""&&data.name!=""){
+                let temp = {
+                  displayName: data.name,
+                  phno: data.phno,
+                  transacHistory: [],
+                  balance: 0,
+                };
+                this.contactList.push(temp);
+              } else{
+                this.toastController.create({
+                  message: "Please fill in Name and Phone Number",
+                  duration: 2500,
+                }).present();
+                a.present();
+              }
+            }
+          }
+        ]
+      });
+      a.present();
     }
   }
 }
