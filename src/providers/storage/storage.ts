@@ -137,13 +137,16 @@ export class StorageProvider {
   async setUserDat(user) {
     await this.storage.ready();
     await this.storage.set("user", JSON.stringify(user));
+    // TODO: move user document update to backup
     try {
       const { id } = await queryUser();
+      user.id = id;
       const db = firebase.firestore();
       await db
         .collection("users")
         .doc(id)
         .update({ ...user });
+      await this.storage.set("user", JSON.stringify(user));
     } catch (error) {
       console.log(error);
     }
