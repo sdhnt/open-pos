@@ -87,6 +87,10 @@ export class StorageProvider {
 
     // save user data in memory
     await this.saveInMemory();
+
+    // set last backup to current time
+    await this.setLastBackup();
+
     return true;
   }
 
@@ -122,26 +126,14 @@ export class StorageProvider {
   //   return await this.storage.get("coach");
   // }
 
-  async backupStorage() {
+  async backupStorage(): Promise<void> {
     // TODO: rewrite
   }
 
   async setUserDat(user) {
     await this.storage.ready();
+    user.updatedAt = new Date();
     await this.storage.set("user", JSON.stringify(user));
-    // TODO: move user document update to backup
-    try {
-      const { id } = await queryUser();
-      user.id = id;
-      const db = firebase.firestore();
-      await db
-        .collection("users")
-        .doc(id)
-        .update({ ...user });
-      await this.storage.set("user", JSON.stringify(user));
-    } catch (error) {
-      console.log(error);
-    }
   }
 
   async getUserDat(): Promise<string | null> {
