@@ -1,4 +1,5 @@
 import firebase from "firebase";
+const Timestamp = firebase.firestore.Timestamp;
 
 export const queryUser = async (): Promise<{ id?: string; user?: any }> => {
   const db = firebase.firestore();
@@ -11,6 +12,21 @@ export const queryUser = async (): Promise<{ id?: string; user?: any }> => {
     dataSet.push({ id: doc.id, user: doc.data() });
   });
   return dataSet[0];
+};
+
+export const queryCollection = async (path: string): Promise<any[]> => {
+  const db = firebase.firestore();
+  const snapshot = await db.collection(path).get();
+  const dataSet = [];
+  snapshot.forEach(doc => {
+    const document = doc.data();
+    for (const [key, value] of Object.entries(document)) {
+      if (typeof value === "object" && value.seconds && value.nanoseconds)
+        document[key] = new Timestamp(value.seconds, value.nanoseconds).toDate();
+    }
+    dataSet.push({ id: doc.id, ...document });
+  });
+  return dataSet;
 };
 
 export const createFirestoreCollection = async (collectionPath, documents) => {

@@ -3,7 +3,7 @@ import { Storage } from "@ionic/storage";
 import firebase from "firebase";
 import { ToastController, NavController, Nav } from "ionic-angular";
 import moment from "moment";
-import { queryUser } from "./utilities";
+import { queryCollection, queryUser } from "./utilities";
 
 @Injectable()
 export class StorageProvider {
@@ -28,28 +28,15 @@ export class StorageProvider {
     await this.storage.clear();
   }
 
-  async saveInMemory() {
-    this.storage.set("categories", "[]").then(() => {
-      this.storage.set("categories", JSON.stringify(this.categories));
-    });
-    this.storage.set("products", "[]").then(() => {
-      this.storage.set("products", JSON.stringify(this.products));
-    });
-    this.storage.set("transactions", "[]").then(() => {
-      this.storage.set("transactions", JSON.stringify(this.transactions));
-    });
-    this.storage.set("user", "{}").then(() => {
-      this.storage.set("user", JSON.stringify(this.user));
-    });
-    this.storage.set("summary", "[]").then(() => {
-      this.storage.set("summary", JSON.stringify(this.summary));
-    });
-    this.storage.set("contacts", "[]").then(() => {
-      this.storage.set("contacts", JSON.stringify(this.contacts));
-    });
-    this.storage.set("coach", "{}").then(() => {
-      this.storage.set("coach", JSON.stringify(this.coach));
-    });
+  async saveInMemory(): Promise<void> {
+    await this.storage.ready();
+    await this.storage.set("categories", JSON.stringify(this.categories));
+    await this.storage.set("products", JSON.stringify(this.products));
+    await this.storage.set("transactions", JSON.stringify(this.transactions));
+    await this.storage.set("user", JSON.stringify(this.user));
+    await this.storage.set("contacts", JSON.stringify(this.contacts));
+    await this.storage.set("summary", JSON.stringify(this.summary));
+    await this.storage.set("coach", JSON.stringify(this.coach));
   }
 
   async setMem(options?: { force?: boolean }): Promise<boolean> {
@@ -60,11 +47,10 @@ export class StorageProvider {
     // check if user data is already in memory
     const userInMemory = JSON.parse(await this.storage.get("user"));
     const productsInMemory = JSON.parse(await this.getProducts());
-    const transactionsInMemory = JSON.parse(await this.getProducts());
+    const transactionsInMemory = JSON.parse(await this.getTransactions());
     const userCondition = userInMemory && userInMemory.id;
     const productCondition = productsInMemory && productsInMemory.length > 0;
     const transactionCondition = transactionsInMemory && transactionsInMemory.length > 0;
-    console.log(force, userCondition, productCondition, transactionCondition);
     if (!force && userCondition && productCondition && transactionCondition) return false;
 
     console.log("setMem(): query user data from firestore");
@@ -86,9 +72,14 @@ export class StorageProvider {
       for (let i = 0; i <= 30; i++) this.summary.push({ expenses: 0, revenue: 0, profit: 0 });
     } else this.summary = user.businessPerformance;
 
-    // TODO: query subcollections
-    this.products = user.products;
-    this.transactions = user.transactions;
+    // query sub collections
+    try {
+      for (const path of ["products", "transactions"]) {
+        this[path] = await queryCollection(`/users/${id}/${path}`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
 
     // prune user object to reduce data overhead
     for (const key of ["businessPerformance", "categories", "products", "transactions"]) delete user[key];
