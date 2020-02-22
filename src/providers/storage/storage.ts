@@ -127,7 +127,45 @@ export class StorageProvider {
   // }
 
   async backupStorage(): Promise<void> {
-    // TODO: rewrite
+    const user = JSON.parse(await this.getUserDat());
+    let lastBackup = await this.getLastBackup();
+    lastBackup = lastBackup ? lastBackup : new Date("2000-01-01T00:00:00.000Z");
+    const db = firebase.firestore();
+
+    // query sub collection documents with updated at later than last backup
+    try {
+      // TODO: get all sub collection documents
+      const documents = await queryCollection(`/users/${user.id}/products`, { lastBackup });
+      console.log(documents);
+    } catch (error) {
+      console.log(error);
+      return;
+    }
+
+    try {
+      // run with firestore transactions
+      await db.runTransaction(async t => {
+        // update sub collection documents
+        // TODO: update sub collections
+
+        // update user
+        const { id, user: userInCloud } = await queryUser();
+        // if user is later than the one in cloud, update document
+        // TODO: select object fields from user and user in cloud
+        const newUser = user;
+        await db
+          .collection("users")
+          .doc(id)
+          .update({ ...newUser });
+
+        // update memory
+        // await this.saveInMemory();
+        // update last backup
+        // await this.setLastBackup();
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async setUserDat(user) {
