@@ -14,8 +14,6 @@ import { IonicPage, NavController, NavParams, AlertController } from "ionic-angu
   templateUrl: "individual-contact.html",
 })
 export class IndividualContactPage {
-  listVal = [300, 250, -110, -100, -500];
-  balance: number;
   contact = {
     displayName: "",
     balance: "",

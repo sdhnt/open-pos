@@ -1,8 +1,9 @@
-import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, ToastController, FabContainer, AlertController } from "ionic-angular";
+import { Component, NgZone } from "@angular/core";
+import { IonicPage, NavController, NavParams, ToastController, FabContainer, AlertController, ModalController } from "ionic-angular";
 import { Contacts, ContactFindOptions } from "@ionic-native/contacts";
 import { StorageProvider } from "../../providers/storage/storage";
 import { IndividualContactPage } from "../individual-contact/individual-contact";
+import { AddFromContactsPage } from "../add-from-contacts/add-from-contacts";
 
 /**
  * Generated class for the ContactsPage page.
@@ -24,14 +25,17 @@ export class ContactsPage {
     private toastController: ToastController,
     private sp: StorageProvider,
     private alertCtrl: AlertController,
+    private modalCtrl: ModalController,
+    private zone: NgZone
   ) {
     const contact1 = {
       displayName: "Pranay",
       balance: -300,
-      phno: "",
+      phno: [],
       transacHistory: [],
     };
     this.contactList.push(contact1);
+    this.filteredList = this.contactList;
   }
 
   hasPermission = true;
@@ -41,6 +45,8 @@ export class ContactsPage {
   }
 
   contactList = [];
+  searchterm = "";
+  filteredList;
 
   importContacts() {
     const fields = ["*"];
@@ -88,7 +94,19 @@ export class ContactsPage {
   navAdd(num: number, fab: FabContainer) {
     fab.close();
     if (num == 1) {
-      //Adding from Contacts
+      let modal = this.modalCtrl.create(AddFromContactsPage);
+      modal.present();
+      modal.onWillDismiss(listToAdd=>{
+        listToAdd.forEach(element=>{
+          let temp = {
+            displayName: element.displayName,
+            phno: element.phoneNumbers,
+            balance: 0,
+            transacHistory: []
+          };
+          this.contactList.push(temp);
+        })
+      })
     } else if (num == 2) {
       const a = this.alertCtrl.create({
         subTitle: "Add Contact",
@@ -113,7 +131,7 @@ export class ContactsPage {
               if (data.phno != "" && data.name != "") {
                 const temp = {
                   displayName: data.name,
-                  phno: data.phno,
+                  phno: [data.phno],
                   transacHistory: [],
                   balance: 0,
                 };
@@ -133,5 +151,17 @@ export class ContactsPage {
       });
       a.present();
     }
+    this.zone.run(() => {
+      this.contactList.sort((a, b) => a.displayName.localeCompare(b.displayName));
+      this.filteredList = this.contactList;
+    });
+  }
+
+  filter(){
+    this.filteredList = this.contactList.filter(contact => {
+      if(contact.displayName.toLowerCase().includes(this.searchterm.toLowerCase()))
+        return true;
+      // else return false;
+    });
   }
 }

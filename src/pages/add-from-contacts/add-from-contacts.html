@@ -1,0 +1,31 @@
+<!--
+  Generated template for the AddFromContactsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<div class="modal">
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-title>Add From Contacts</ion-title>
+    <ion-buttons end>
+      <button ion-button style="color: white; background-color: red;" (click)="goBack()">Cancel</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <button ion-button (click)="getContact()">Import(get rid and put in constructor)</button>
+  <ion-searchbar showCancelButton = "always" [(ngModel)]="searchterm" (ionChange)="filter()"></ion-searchbar>
+  <ion-list>
+    <ion-item *ngFor="let contact of filteredList">
+      <ion-label>{{ contact.displayName }}</ion-label>
+      <ion-checkbox slot="end" [(ngModel)]="contact.isSelected"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <button block ion-button style="background-color: #FFA500;" (click)="done()">OK</button>
+</ion-footer>
+</div>

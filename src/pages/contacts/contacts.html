@@ -13,28 +13,28 @@
       <button ion-button (click)="navAdd(2, fab)">Manually</button>
     </ion-fab-list>
   </ion-fab>
-  
-  <!-- Do you give us consent to access your phone's contact information? -->
-  <ion-list>
-    <!-- <ion-item>
+<!--   
+  Do you give us consent to access your phone's contact information? -->
+  <!-- <ion-list>
+     <ion-item>
       <button ion-button (click)="setPermission(true)">
         Yes
       </button>
       <button ion-button (click)="setPermission(false)">
         No
       </button>
-    </ion-item> -->
+    </ion-item>
     <ion-item>
       <button ion-button (click)="importContacts()">
         Import contacts now
       </button>
     </ion-item>
-  </ion-list>
+  </ion-list> -->
 
-  <ion-searchbar showCancelButton="always"></ion-searchbar>
+  <ion-searchbar showCancelButton="always" [(ngModel)]="searchterm" (ionChange)="filter()"></ion-searchbar>
 
   <ion-list>
-    <ion-card *ngFor="let contact of contactList; let i = index">
+    <ion-card *ngFor="let contact of filteredList">
       <ion-row (click)="navToIndividual(contact)" padding>
         <ion-col col-7 style="font-size: 16px;">{{ contact.displayName }}</ion-col>
         <ion-col col-5>Balance: 

@@ -131,16 +131,6 @@ export class HelpPage {
   //   });
   // }
 
-  openVidVal = -1;
-
-  openVid(i: number) {
-    if (i == this.openVidVal) {
-      this.openVidVal = -1;
-    } else {
-      this.openVidVal = i;
-    }
-  }
-
   lengthBasedOnLang: number;
 
   async ionViewDidLoad() {
@@ -176,8 +166,4 @@ export class HelpPage {
   //   this.view.dismiss();
   //   this.app.getRootNav().setRoot(CoachHomePage);
   // }
-
-  secureLink(val: string) {
-    return this.dom.bypassSecurityTrustResourceUrl(val);
-  }
 }
