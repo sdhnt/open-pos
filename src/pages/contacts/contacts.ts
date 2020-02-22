@@ -1,5 +1,13 @@
 import { Component, NgZone } from "@angular/core";
-import { IonicPage, NavController, NavParams, ToastController, FabContainer, AlertController, ModalController } from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  ToastController,
+  FabContainer,
+  AlertController,
+  ModalController,
+} from "ionic-angular";
 import { Contacts, ContactFindOptions } from "@ionic-native/contacts";
 import { StorageProvider } from "../../providers/storage/storage";
 import { IndividualContactPage } from "../individual-contact/individual-contact";
@@ -26,7 +34,7 @@ export class ContactsPage {
     private sp: StorageProvider,
     private alertCtrl: AlertController,
     private modalCtrl: ModalController,
-    private zone: NgZone
+    private zone: NgZone,
   ) {
     const contact1 = {
       displayName: "Pranay",
@@ -94,19 +102,19 @@ export class ContactsPage {
   navAdd(num: number, fab: FabContainer) {
     fab.close();
     if (num == 1) {
-      let modal = this.modalCtrl.create(AddFromContactsPage);
+      const modal = this.modalCtrl.create(AddFromContactsPage);
       modal.present();
-      modal.onWillDismiss(listToAdd=>{
-        listToAdd.forEach(element=>{
-          let temp = {
+      modal.onWillDismiss(listToAdd => {
+        listToAdd.forEach(element => {
+          const temp = {
             displayName: element.displayName,
             phno: element.phoneNumbers,
             balance: 0,
-            transacHistory: []
+            transacHistory: [],
           };
           this.contactList.push(temp);
-        })
-      })
+        });
+      });
     } else if (num == 2) {
       const a = this.alertCtrl.create({
         subTitle: "Add Contact",
@@ -157,10 +165,9 @@ export class ContactsPage {
     });
   }
 
-  filter(){
+  filter() {
     this.filteredList = this.contactList.filter(contact => {
-      if(contact.displayName.toLowerCase().includes(this.searchterm.toLowerCase()))
-        return true;
+      if (contact.displayName.toLowerCase().includes(this.searchterm.toLowerCase())) return true;
       // else return false;
     });
   }

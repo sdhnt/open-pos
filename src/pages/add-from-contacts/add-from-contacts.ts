@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, ToastController } from 'ionic-angular';
-import { Contacts, ContactFindOptions } from '@ionic-native/contacts';
+import { Component } from "@angular/core";
+import { IonicPage, NavController, NavParams, ViewController, ToastController } from "ionic-angular";
+import { Contacts, ContactFindOptions } from "@ionic-native/contacts";
 
 /**
  * Generated class for the AddFromContactsPage page.
@@ -11,15 +11,18 @@ import { Contacts, ContactFindOptions } from '@ionic-native/contacts';
 
 @IonicPage()
 @Component({
-  selector: 'page-add-from-contacts',
-  templateUrl: 'add-from-contacts.html',
+  selector: "page-add-from-contacts",
+  templateUrl: "add-from-contacts.html",
 })
 export class AddFromContactsPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, 
-    private view: ViewController, private contacts: Contacts,
-    private toastController: ToastController) {
-      this.contactList = [];
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private view: ViewController,
+    private contacts: Contacts,
+    private toastController: ToastController,
+  ) {
+    this.contactList = [];
   }
 
   contactList;
@@ -27,22 +30,22 @@ export class AddFromContactsPage {
   filteredList;
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AddFromContactsPage');
+    console.log("ionViewDidLoad AddFromContactsPage");
   }
 
-  done(){
-    let contactsToAdd = [];
-    this.contactList.forEach(element=>{
-      if(element.isSelected) contactsToAdd.push(element)
-    })
+  done() {
+    const contactsToAdd = [];
+    this.contactList.forEach(element => {
+      if (element.isSelected) contactsToAdd.push(element);
+    });
     this.view.dismiss(contactsToAdd);
   }
 
-  goBack(){
+  goBack() {
     this.view.dismiss([]);
   }
 
-  getContact(){
+  getContact() {
     const fields = ["name"];
 
     const options = new ContactFindOptions();
@@ -76,12 +79,10 @@ export class AddFromContactsPage {
       .catch(error => console.log(error));
   }
 
-  filter(){
+  filter() {
     this.filteredList = this.contactList.filter(contact => {
-      if(contact.displayName.toLowerCase().includes(this.searchterm.toLowerCase()))
-        return true;
+      if (contact.displayName.toLowerCase().includes(this.searchterm.toLowerCase())) return true;
       // else return false;
     });
   }
-
 }
