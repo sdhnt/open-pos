@@ -4,6 +4,7 @@ import firebase from "firebase";
 import { ToastController, NavController, Nav } from "ionic-angular";
 import moment from "moment";
 import { queryCollection, queryUser } from "./utilities";
+import Timestamp = firebase.firestore.Timestamp;
 
 @Injectable()
 export class StorageProvider {
@@ -128,15 +129,20 @@ export class StorageProvider {
 
   async backupStorage(): Promise<void> {
     const user = JSON.parse(await this.getUserDat());
-    let lastBackup = await this.getLastBackup();
-    lastBackup = lastBackup ? lastBackup : new Date("2000-01-01T00:00:00.000Z");
+    const lastBackup = await this.getLastBackup();
     const db = firebase.firestore();
 
     // query sub collection documents with updated at later than last backup
+    const subCollections = [];
     try {
-      // TODO: get all sub collection documents
-      const documents = await queryCollection(`/users/${user.id}/products`, { lastBackup });
-      console.log(documents);
+      for (const path of ["products", "transactions"]) {
+        const documents = await queryCollection(`/users/${user.id}/${path}`, { lastBackup });
+        subCollections.push({ id: path, documents });
+      }
+      // update sub collection documents
+      // TODO: update sub collections
+      const changeInCash = 0;
+      user.cash_balance = Number(user.cash_balance) + changeInCash;
     } catch (error) {
       console.log(error);
       return;
@@ -145,27 +151,24 @@ export class StorageProvider {
     try {
       // run with firestore transactions
       await db.runTransaction(async t => {
-        // update sub collection documents
-        // TODO: update sub collections
-
         // update user
         const { id, user: userInCloud } = await queryUser();
+        if (!id || !userInCloud) throw new Error("backup error: no user document found");
         // if user is later than the one in cloud, update document
         // TODO: select object fields from user and user in cloud
         const newUser = user;
-        await db
-          .collection("users")
-          .doc(id)
-          .update({ ...newUser });
-
-        // update memory
-        // await this.saveInMemory();
-        // update last backup
-        // await this.setLastBackup();
+        const userReference = db.collection("users").doc(id);
+        // t.update(userReference, { ...newUser, updatedAt: Timestamp.now() });
       });
     } catch (error) {
       console.log(error);
+      return;
     }
+
+    // update memory
+    // await this.saveInMemory();
+    // update last backup
+    // await this.setLastBackup();
   }
 
   async setUserDat(user) {
