@@ -1,5 +1,5 @@
 import firebase from "firebase";
-const Timestamp = firebase.firestore.Timestamp;
+import Timestamp = firebase.firestore.Timestamp;
 
 export const queryUser = async (): Promise<{ id?: string; user?: any }> => {
   const db = firebase.firestore();
@@ -14,9 +14,14 @@ export const queryUser = async (): Promise<{ id?: string; user?: any }> => {
   return dataSet[0];
 };
 
-export const queryCollection = async (path: string): Promise<any[]> => {
+export const queryCollection = async (path: string, options?: { lastBackup?: Date }): Promise<any[]> => {
   const db = firebase.firestore();
-  const snapshot = await db.collection(path).get();
+  const { lastBackup } = options;
+
+  let reference: firebase.firestore.Query = db.collection(path);
+  if (lastBackup) reference = reference.where("updatedAt", ">=", Timestamp.fromDate(lastBackup));
+  const snapshot = await reference.get();
+
   const dataSet = [];
   snapshot.forEach(doc => {
     const document = doc.data();
