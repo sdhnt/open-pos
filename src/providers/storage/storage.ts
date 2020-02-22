@@ -3,7 +3,8 @@ import { Storage } from "@ionic/storage";
 import firebase from "firebase";
 import { Nav, NavController, ToastController } from "ionic-angular";
 import moment from "moment";
-import { queryCollection, queryUser } from "./utilities";
+import { queryCollection, queryUser } from "./utilities/firestore";
+import { syncDocuments, transactionCallback } from "./utilities/backupStorage";
 
 @Injectable()
 export class StorageProvider {
@@ -147,23 +148,7 @@ export class StorageProvider {
         id: "transactions",
         deviceDocs: transactionDeviceDocs,
         cloudDocs: [],
-        callback: (transaction, output): void => {
-          // re-calculate user cash balance
-          const total = Number(transaction.totalatax);
-          output.changeInCash += !isNaN(total) ? total : 0;
-
-          // re-calculate product stock quantity
-          const productList = transaction.itemslist ? transaction.itemslist : [];
-          productList.forEach(product => {
-            const currentProduct = output.products.find(data => data.code === product.code);
-            const quantity = Number(product.qty);
-            const currentStock = Number(currentProduct.stock_qty);
-            if (!isNaN(quantity) && !isNaN(currentStock)) {
-              currentProduct.stock_qty = currentStock - quantity;
-              console.log(`new cloud transaction: ${product.name} stock quantity decreased by: ${quantity}`);
-            }
-          });
-        },
+        callback: transactionCallback,
         output: {
           changeInCash: 0,
           products: productDeviceDocs,
@@ -176,20 +161,7 @@ export class StorageProvider {
       }
       // modify sub collection documents
       for (const collection of subCollections) {
-        const { deviceDocs, cloudDocs, callback, output } = collection;
-        cloudDocs.forEach(cloudDoc => {
-          const index = deviceDocs.findIndex(deviceDoc => deviceDoc.id === cloudDoc.id);
-          if (index === -1) {
-            deviceDocs.push(cloudDoc);
-            if (callback) callback(cloudDoc, output);
-          } else {
-            const deviceDoc = deviceDocs[index];
-            if (cloudDoc.updatedAt) {
-              if (!deviceDoc.updatedAt || moment(cloudDoc.updatedAt).isSameOrAfter(deviceDoc.updatedAt))
-                deviceDocs[index] = cloudDoc;
-            }
-          }
-        });
+        syncDocuments(collection);
       }
 
       let changeInCash = 0;
