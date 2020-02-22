@@ -9,29 +9,40 @@ export const queryUser = async (): Promise<{ id?: string; user?: any }> => {
     .get();
   const dataSet = [];
   userSnapshot.forEach(doc => {
-    dataSet.push({ id: doc.id, user: doc.data() });
+    const user = doc.data();
+    convertTimestampToDate(user);
+    dataSet.push({ id: doc.id, user });
   });
   return dataSet[0];
 };
 
 export const queryCollection = async (path: string, options?: { lastBackup?: Date }): Promise<any[]> => {
   const db = firebase.firestore();
-  const { lastBackup } = options;
+  let { lastBackup } = options;
+  if (!lastBackup) lastBackup = new Date("2000-01-01T00:00:00.000Z");
 
   let reference: firebase.firestore.Query = db.collection(path);
-  if (lastBackup) reference = reference.where("updatedAt", ">=", Timestamp.fromDate(lastBackup));
+  if (lastBackup) reference = reference.where("updatedAt", ">=", Timestamp.fromDate(new Date(lastBackup)));
   const snapshot = await reference.get();
 
   const dataSet = [];
   snapshot.forEach(doc => {
     const document = doc.data();
-    for (const [key, value] of Object.entries(document)) {
-      if (typeof value === "object" && value.seconds && value.nanoseconds)
-        document[key] = new Timestamp(value.seconds, value.nanoseconds).toDate();
-    }
+    convertTimestampToDate(document);
     dataSet.push({ id: doc.id, ...document });
   });
   return dataSet;
+};
+
+const convertTimestampToDate = document => {
+  if (typeof document === "object") {
+    for (const [key, value] of Object.entries(document)) {
+      // @ts-ignore
+      if (value.seconds)
+        // @ts-ignore
+        document[key] = new Timestamp(value.seconds, value.nanoseconds).toDate();
+    }
+  }
 };
 
 export const createFirestoreCollection = async (collectionPath, documents) => {
