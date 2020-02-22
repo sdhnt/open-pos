@@ -1,10 +1,9 @@
 import { Injectable, ViewChild } from "@angular/core";
 import { Storage } from "@ionic/storage";
 import firebase from "firebase";
-import { ToastController, NavController, Nav } from "ionic-angular";
+import { Nav, NavController, ToastController } from "ionic-angular";
 import moment from "moment";
 import { queryCollection, queryUser } from "./utilities";
-import Timestamp = firebase.firestore.Timestamp;
 
 @Injectable()
 export class StorageProvider {
@@ -129,20 +128,77 @@ export class StorageProvider {
 
   async backupStorage(): Promise<void> {
     const user = JSON.parse(await this.getUserDat());
-    const lastBackup = await this.getLastBackup();
+    let lastBackup = await this.getLastBackup();
+    lastBackup = lastBackup ? lastBackup : new Date("2000-01-01T00:00:00.000Z");
+    const [productDeviceDocs, transactionDeviceDocs] = [
+      JSON.parse(await this.getProducts()),
+      JSON.parse(await this.getTransactions()),
+    ].map(documents => documents.filter(document => moment(document.updatedAt).isSameOrAfter(moment(lastBackup))));
     const db = firebase.firestore();
 
     // query sub collection documents with updated at later than last backup
-    const subCollections = [];
+    const subCollections = [
+      {
+        id: "products",
+        deviceDocs: productDeviceDocs,
+        cloudDocs: [],
+      },
+      {
+        id: "transactions",
+        deviceDocs: transactionDeviceDocs,
+        cloudDocs: [],
+        callback: (transaction, output): void => {
+          // re-calculate user cash balance
+          const total = Number(transaction.totalatax);
+          output.changeInCash += !isNaN(total) ? total : 0;
+
+          // re-calculate product stock quantity
+          const productList = transaction.itemslist ? transaction.itemslist : [];
+          productList.forEach(product => {
+            const currentProduct = output.products.find(data => data.code === product.code);
+            const quantity = Number(product.qty);
+            const currentStock = Number(currentProduct.stock_qty);
+            if (!isNaN(quantity) && !isNaN(currentStock)) {
+              currentProduct.stock_qty = currentStock - quantity;
+              console.log(`new cloud transaction: ${product.name} stock quantity decreased by: ${quantity}`);
+            }
+          });
+        },
+        output: {
+          changeInCash: 0,
+          products: productDeviceDocs,
+        },
+      },
+    ];
     try {
-      for (const path of ["products", "transactions"]) {
-        const documents = await queryCollection(`/users/${user.id}/${path}`, { lastBackup });
-        subCollections.push({ id: path, documents });
+      for (const collection of subCollections) {
+        collection.cloudDocs = await queryCollection(`/users/${user.id}/${collection.id}`, { lastBackup });
       }
-      // update sub collection documents
-      // TODO: update sub collections
-      const changeInCash = 0;
-      user.cash_balance = Number(user.cash_balance) + changeInCash;
+      // modify sub collection documents
+      for (const collection of subCollections) {
+        const { deviceDocs, cloudDocs, callback, output } = collection;
+        cloudDocs.forEach(cloudDoc => {
+          const index = deviceDocs.findIndex(deviceDoc => deviceDoc.id === cloudDoc.id);
+          if (index === -1) {
+            deviceDocs.push(cloudDoc);
+            if (callback) callback(cloudDoc, output);
+          } else {
+            const deviceDoc = deviceDocs[index];
+            if (cloudDoc.updatedAt) {
+              if (!deviceDoc.updatedAt || moment(cloudDoc.updatedAt).isSameOrAfter(deviceDoc.updatedAt))
+                deviceDocs[index] = cloudDoc;
+            }
+          }
+        });
+      }
+
+      let changeInCash = 0;
+      for (const collection of subCollections) {
+        if (collection.id === "transactions") changeInCash = collection.output.changeInCash;
+      }
+      const oldCashBalance = Number(user.cash_balance);
+      user.cash_balance = changeInCash + (!isNaN(oldCashBalance) ? oldCashBalance : 0);
+      console.log(`change in cash balance: ${changeInCash}, new cash balance: ${user.cash_balance}`);
     } catch (error) {
       console.log(error);
       return;
@@ -159,6 +215,8 @@ export class StorageProvider {
         const newUser = user;
         const userReference = db.collection("users").doc(id);
         // t.update(userReference, { ...newUser, updatedAt: Timestamp.now() });
+
+        // update sub collection documents
       });
     } catch (error) {
       console.log(error);
