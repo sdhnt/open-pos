@@ -4,7 +4,12 @@ import firebase from "firebase";
 import { Nav, NavController, ToastController } from "ionic-angular";
 import moment from "moment";
 import uniqid from "uniqid";
-import { convertTimestampToDate, queryCollection, queryUser } from "./utilities/firestore";
+import {
+  convertTimestampToDate,
+  queryCollection,
+  queryUser,
+  updateCollectionWithTransaction,
+} from "./utilities/firestore";
 import { syncDocuments, transactionCallback } from "./utilities/backupStorage";
 
 @Injectable()
@@ -138,7 +143,7 @@ export class StorageProvider {
       JSON.parse(await this.getProducts()),
       JSON.parse(await this.getTransactions()),
       JSON.parse(await this.getCategories()),
-    ].map(documents => documents.filter(document => moment(document.updatedAt).isSameOrAfter(moment(lastBackup))));
+    ];
     const db = firebase.firestore();
 
     // handle sub collection documents
@@ -159,6 +164,7 @@ export class StorageProvider {
         },
       },
     ];
+
     try {
       for (const collection of subCollections) {
         // query sub collection documents with updated at later than last backup
@@ -189,7 +195,6 @@ export class StorageProvider {
         // update user
         const { id, user: userInCloud } = await queryUser();
         if (!id || !userInCloud) throw new Error("backup error: no user document found");
-
         // if user is later than the one in cloud, update document
         const categories = {
           deviceDocs: categoryDeviceDocs,
@@ -204,12 +209,22 @@ export class StorageProvider {
         newUser.updatedAt = new Date();
         this.user = newUser;
         const userReference = db.collection("users").doc(id);
-        // t.update(userReference, { ...newUser });
+        t.update(userReference, { ...newUser });
 
         // update sub collection documents
-        // TODO: update sub collection documents
+        for (const collection of subCollections) {
+          const documents = collection.deviceDocs.filter(document =>
+            moment(document.updatedAt).isSameOrAfter(moment(lastBackup)),
+          );
+          await updateCollectionWithTransaction(t, `/users/${id}/${collection.id}`, documents);
+        }
 
-        // TODO: set new documents to be saved in memory
+        // set new device documents to be saved in memory
+        this.user = newUser;
+        this.products = productDeviceDocs;
+        this.transactions = transactionDeviceDocs;
+        this.categories = categoryDeviceDocs;
+        console.log(this.summary); // todo: remove this line
       });
     } catch (error) {
       console.log(error);
@@ -309,7 +324,9 @@ export class StorageProvider {
       isDisabled: true,
     };
     const newTransactions = transactions.map(transaction =>
-      moment(transaction.datetime).isSame(moment(data.datetime)) ? { ...transaction, ...changes } : transaction,
+      moment(transaction.datetime).isSame(moment(data.datetime)) && transaction.id === data.id
+        ? { ...transaction, ...changes }
+        : transaction,
     );
     await this.storage.set("transactions", newTransactions);
   }
@@ -325,7 +342,7 @@ export class StorageProvider {
     if (!products) products = [];
 
     data.updatedAt = new Date();
-    const newProducts = products.map(product => (product.code === old_code ? data : product));
+    const newProducts = products.map(product => (product.code === old_code && product.id === data.id ? data : product));
     await this.storage.set("products", JSON.stringify(newProducts));
   }
 

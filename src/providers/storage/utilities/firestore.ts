@@ -1,6 +1,14 @@
 import firebase from "firebase";
 import axios from "axios";
+import moment from "moment";
+import { cloneDeep } from "lodash";
 import Timestamp = firebase.firestore.Timestamp;
+import Transaction = firebase.firestore.Transaction;
+
+interface Document {
+  id: string;
+  updatedAt: Date;
+}
 
 export const queryUser = async (): Promise<{ id?: string; user?: any }> => {
   if (!(await hasInternet())) throw new Error("No internet connection");
@@ -49,64 +57,42 @@ export const convertTimestampToDate = (document): any => {
   return document;
 };
 
+export const convertDateToTimestamp = (document): any => {
+  if (typeof document === "object")
+    for (const [key, value] of Object.entries(document)) {
+      // @ts-ignore
+      if ((value instanceof Date || value instanceof String) && moment(new Date(value), moment.ISO_8601).isValid())
+        // @ts-ignore
+        document[key] = Timestamp.fromDate(moment(value).toDate());
+    }
+};
+
+export const updateCollectionWithTransaction = async (
+  t: Transaction,
+  path: string,
+  documents: Document[],
+): Promise<void> => {
+  const db = firebase.firestore();
+  for (const document of documents) {
+    const cloudDoc = cloneDeep(document);
+    convertDateToTimestamp(cloudDoc);
+
+    let id = cloudDoc.id;
+    let reference;
+    if (id) reference = db.collection(path).doc(id);
+    else {
+      reference = db.collection(path).doc();
+      id = reference.id;
+    }
+
+    await t.set(reference, { ...cloudDoc, id }, { merge: true });
+  }
+};
+
 const hasInternet = async (url?: string): Promise<boolean> => {
   try {
     if (!url) url = "https://us-central1-open-fintech.cloudfunctions.net/data/versionNumber";
     await axios.get(url);
     return true;
   } catch (error) {}
-};
-
-export const createFirestoreCollection = async (collectionPath, documents) => {
-  const db = firebase.firestore();
-  const batch = db.batch();
-  documents.forEach(document => {
-    const documentReference = db.collection(collectionPath).doc();
-    batch.set(documentReference, document);
-  });
-  await batch.commit();
-};
-
-export const deleteFirestoreCollection = (collectionPath, batchSize) => {
-  const db = firebase.firestore();
-  const deleteQueryBatch = (db, query, batchSize, resolve, reject) => {
-    query
-      .get()
-      .then(snapshot => {
-        // When there are no documents left, we are done
-        if (snapshot.size == 0) {
-          return 0;
-        }
-
-        // Delete documents in a batch
-        const batch = db.batch();
-        snapshot.docs.forEach(doc => {
-          batch.delete(doc.ref);
-        });
-
-        return batch.commit().then(() => {
-          return snapshot.size;
-        });
-      })
-      .then(numDeleted => {
-        if (numDeleted === 0) {
-          resolve();
-          return;
-        }
-
-        // Recurse on the next process tick, to avoid
-        // exploding the stack.
-        process.nextTick(() => {
-          deleteQueryBatch(db, query, batchSize, resolve, reject);
-        });
-      })
-      .catch(reject);
-  };
-
-  const collectionRef = db.collection(collectionPath);
-  const query = collectionRef.limit(batchSize);
-
-  return new Promise((resolve, reject) => {
-    deleteQueryBatch(db, query, batchSize, resolve, reject);
-  });
 };
