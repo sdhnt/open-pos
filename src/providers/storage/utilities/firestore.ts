@@ -1,7 +1,9 @@
 import firebase from "firebase";
+import axios from "axios";
 import Timestamp = firebase.firestore.Timestamp;
 
 export const queryUser = async (): Promise<{ id?: string; user?: any }> => {
+  if (!(await hasInternet())) throw new Error("No internet connection");
   const db = firebase.firestore();
   const userSnapshot = await db
     .collection("users")
@@ -17,6 +19,7 @@ export const queryUser = async (): Promise<{ id?: string; user?: any }> => {
 };
 
 export const queryCollection = async (path: string, options?: { lastBackup?: Date }): Promise<any[]> => {
+  if (!(await hasInternet())) throw new Error("No internet connection");
   const db = firebase.firestore();
   const defaultOptions = { lastBackup: new Date("2000-01-01T00:00:00.000Z") };
   const { lastBackup } = options ? options : defaultOptions;
@@ -44,6 +47,14 @@ export const convertTimestampToDate = (document): any => {
     }
   }
   return document;
+};
+
+const hasInternet = async (url?: string): Promise<boolean> => {
+  try {
+    if (!url) url = "https://us-central1-open-fintech.cloudfunctions.net/data/versionNumber";
+    await axios.get(url);
+    return true;
+  } catch (error) {}
 };
 
 export const createFirestoreCollection = async (collectionPath, documents) => {

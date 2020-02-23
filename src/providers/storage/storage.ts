@@ -183,6 +183,7 @@ export class StorageProvider {
     try {
       // run with firestore transactions
       await db.runTransaction(async t => {
+        console.log("backup: run transaction");
         // update user
         const { id, user: userInCloud } = await queryUser();
         if (!id || !userInCloud) throw new Error("backup error: no user document found");
