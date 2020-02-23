@@ -206,7 +206,7 @@ export class StorageProvider {
     // await this.setLastBackup();
   }
 
-  async setUserDat(user) {
+  async setUserDat(user): Promise<void> {
     await this.storage.ready();
     user.updatedAt = new Date();
     await this.storage.set("user", JSON.stringify(user));
@@ -217,7 +217,7 @@ export class StorageProvider {
     return await this.storage.get("user");
   }
 
-  async addCategory(data) {
+  async addCategory(data): Promise<void> {
     let categories = JSON.parse(await this.getCategories());
     if (!categories || categories.length === 0) categories = [];
 
@@ -236,7 +236,7 @@ export class StorageProvider {
     return JSON.stringify(filteredCategories);
   }
 
-  async deleteCategory(data) {
+  async deleteCategory(data): Promise<void> {
     let categories = JSON.parse(await this.getCategories());
     if (!categories) categories = [];
 
@@ -255,7 +255,7 @@ export class StorageProvider {
     return await this.storage.get("summary");
   }
 
-  async addProduct(data) {
+  async addProduct(data): Promise<void> {
     let products = JSON.parse(await this.getProducts());
     if (!products) products = [];
 
@@ -269,7 +269,7 @@ export class StorageProvider {
     return await this.storage.get("products");
   }
 
-  async addTransactions(data) {
+  async addTransactions(data): Promise<void> {
     let transactions = JSON.parse(await this.getTransactions());
     if (!transactions) transactions = [];
 
@@ -283,7 +283,7 @@ export class StorageProvider {
     return await this.storage.get("transactions");
   }
 
-  async deleteTransactions(data) {
+  async deleteTransactions(data): Promise<void> {
     let transactions = JSON.parse(await this.getTransactions());
     if (!transactions) transactions = [];
 
@@ -297,13 +297,13 @@ export class StorageProvider {
     await this.storage.set("transactions", newTransactions);
   }
 
-  async searchProduct(barcode) {
+  async searchProduct(barcode): Promise<any[]> {
     let products = JSON.parse(await this.getProducts());
     if (!products) products = [];
     return products.find(product => product.code === barcode);
   }
 
-  async updateProduct(data, old_code) {
+  async updateProduct(data, old_code): Promise<void> {
     let products = JSON.parse(await this.getProducts());
     if (!products) products = [];
 
@@ -312,7 +312,7 @@ export class StorageProvider {
     await this.storage.set("products", JSON.stringify(newProducts));
   }
 
-  async deleteProduct(data) {
+  async deleteProduct(data): Promise<void> {
     let products = JSON.parse(await this.getProducts());
     if (!products) products = [];
 
@@ -377,7 +377,7 @@ export class StorageProvider {
     return await this.storage.get("lastBackup");
   }
 
-  async storageReady() {
+  async storageReady(): Promise<LocalForage> {
     return await this.storage.ready();
   }
 }
