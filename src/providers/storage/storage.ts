@@ -68,7 +68,7 @@ export class StorageProvider {
     if (!id || !user) return false;
 
     // extract categories and business performance (as summary)
-    this.categories = user.categories.map(category => convertTimestampToDate(category));
+    this.categories = user.categories ? user.categories.map(category => convertTimestampToDate(category)) : [];
     if (!user.businessPerformance) {
       this.summary = [];
       for (let i = 0; i <= 30; i++) this.summary.push({ expenses: 0, revenue: 0, profit: 0 });
@@ -137,6 +137,7 @@ export class StorageProvider {
     const [productDeviceDocs, transactionDeviceDocs, categoryDeviceDocs] = [
       JSON.parse(await this.getProducts()),
       JSON.parse(await this.getTransactions()),
+      JSON.parse(await this.getCategories()),
     ].map(documents => documents.filter(document => moment(document.updatedAt).isSameOrAfter(moment(lastBackup))));
     const db = firebase.firestore();
 
@@ -184,17 +185,31 @@ export class StorageProvider {
       // run with firestore transactions
       await db.runTransaction(async t => {
         console.log("backup: run transaction");
+
         // update user
         const { id, user: userInCloud } = await queryUser();
         if (!id || !userInCloud) throw new Error("backup error: no user document found");
+
         // if user is later than the one in cloud, update document
-        // TODO: combine categories arrays using syncDocuments
-        // TODO: select object fields from user and user in cloud
-        const newUser = user;
+        const categories = {
+          deviceDocs: categoryDeviceDocs,
+          cloudDocs: userInCloud.categories
+            ? userInCloud.categories.map(category => convertTimestampToDate(category))
+            : [],
+        };
+        syncDocuments(categories);
+
+        const newUser = moment(user.updatedAt).isSameOrAfter(moment(userInCloud.updatedAt)) ? user : userInCloud;
+        newUser.cash_balance = user.cash_balance;
+        newUser.updatedAt = new Date();
+        this.user = newUser;
         const userReference = db.collection("users").doc(id);
-        // t.update(userReference, { ...newUser, updatedAt: Timestamp.now() });
+        // t.update(userReference, { ...newUser });
 
         // update sub collection documents
+        // TODO: update sub collection documents
+
+        // TODO: set new documents to be saved in memory
       });
     } catch (error) {
       console.log(error);
@@ -202,9 +217,10 @@ export class StorageProvider {
     }
 
     // update memory
-    // await this.saveInMemory();
+    await this.saveInMemory();
     // update last backup
-    // await this.setLastBackup();
+    await this.setLastBackup();
+    console.log("backup: completed");
   }
 
   async setUserDat(user): Promise<void> {
