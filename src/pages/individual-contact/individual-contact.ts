@@ -21,7 +21,8 @@ export class IndividualContactPage {
     transacHistory: [],
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+    public alertCtrl: AlertController) {
     const temp = navParams.get("data");
     this.contact = JSON.parse(temp);
   }
@@ -64,8 +65,50 @@ export class IndividualContactPage {
       if (amountToAdd == 0) {
         return;
       }
-      this.contact.transacHistory.unshift(amountToAdd);
+      let transaction = {
+        amount: amountToAdd,
+        date: Date.now(),
+      }
+      this.contact.transacHistory.unshift(transaction);
       this.contact.balance += amountToAdd;
     });
+  }
+
+  getDateTime(datetime) {
+    //return (datetime.getDate() + "/" + (datetime.getMonth() + 1) + "/" + datetime. getFullYear())
+    const temp = new Date(datetime);
+
+    const t =
+      temp.getDate().toString() +
+      "/" +
+      (temp.getMonth() + 1).toString() +
+      "/" +
+      temp.getFullYear().toString() +
+      " " +
+      this.getHours(temp) +
+      ":" +
+      this.getMinutes(temp);
+    return t;
+    //if any hours or mins <0 then need to add 0 4 use cases
+  }
+
+  getHours(datetime) {
+    const temp = new Date(datetime);
+    const t = temp.getHours();
+    if (t > 9) {
+      return t.toString();
+    } else {
+      return "0" + t.toString();
+    }
+  }
+
+  getMinutes(datetime) {
+    const temp = new Date(datetime);
+    const t = temp.getMinutes();
+    if (t > 9) {
+      return t.toString();
+    } else {
+      return "0" + t.toString();
+    }
   }
 }
