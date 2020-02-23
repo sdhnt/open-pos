@@ -1,11 +1,18 @@
 import moment from "moment";
 
-export const syncDocuments = (collection: {
-  deviceDocs: any[];
-  cloudDocs: any[];
-  callback?: any;
+interface Document {
+  id: string;
+  updatedAt: Date;
+}
+
+interface Collection {
+  deviceDocs: Document[];
+  cloudDocs: Document[];
+  callback?: (document, output) => void;
   output?: any;
-}): void => {
+}
+
+export const syncDocuments = (collection: Collection): void => {
   const { deviceDocs, cloudDocs, callback, output } = collection;
   cloudDocs.forEach(cloudDoc => {
     const index = deviceDocs.findIndex(deviceDoc => deviceDoc.id === cloudDoc.id);
