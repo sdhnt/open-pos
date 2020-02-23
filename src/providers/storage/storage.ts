@@ -52,13 +52,13 @@ export class StorageProvider {
     await this.storage.ready();
 
     // check if user data is already in memory
-    const userInMemory = JSON.parse(await this.storage.get("user"));
+    const userInMemory = JSON.parse(await this.getUserDat());
     const productsInMemory = JSON.parse(await this.getProducts());
     const transactionsInMemory = JSON.parse(await this.getTransactions());
     const userCondition = userInMemory && userInMemory.id;
     const productCondition = productsInMemory && productsInMemory.length > 0;
     const transactionCondition = transactionsInMemory && transactionsInMemory.length > 0;
-    if (!force && userCondition && productCondition && transactionCondition) return false;
+    // if (!force && userCondition && productCondition && transactionCondition) return false;
 
     console.log("setMem(): query user data from firestore");
     // query user from firestore
@@ -224,7 +224,7 @@ export class StorageProvider {
         this.products = productDeviceDocs;
         this.transactions = transactionDeviceDocs;
         this.categories = categoryDeviceDocs;
-        console.log(this.summary); // todo: remove this line
+        this.summary = JSON.parse(await this.getSummary());
       });
     } catch (error) {
       console.log(error);
@@ -328,7 +328,7 @@ export class StorageProvider {
         ? { ...transaction, ...changes }
         : transaction,
     );
-    await this.storage.set("transactions", newTransactions);
+    await this.storage.set("transactions", JSON.stringify(newTransactions));
   }
 
   async searchProduct(barcode): Promise<any[]> {
@@ -354,7 +354,9 @@ export class StorageProvider {
       updatedAt: new Date(),
       isDisabled: true,
     };
-    const newProducts = products.map(product => (product.code === data.code ? { ...product, ...changes } : product));
+    const newProducts = products.map(product =>
+      product.code === data.code && product.id === data.id ? { ...product, ...changes } : product,
+    );
     await this.storage.set("products", JSON.stringify(newProducts));
   }
 

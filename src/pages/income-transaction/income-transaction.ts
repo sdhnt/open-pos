@@ -773,6 +773,7 @@ export class IncomeTransactionPage {
       this.datastore.itemslist.forEach(async product => {
         if (product.code != "000000") {
           const data1 = {
+            ...product,
             code: product.code,
             name: product.name,
             price: product.price,
@@ -905,6 +906,7 @@ export class IncomeTransactionPage {
       this.datastore.itemslist.forEach(product => {
         if (product.code != "000000") {
           const data1 = {
+            ...product,
             code: product.code,
             name: product.name,
             price: product.price,

@@ -76,6 +76,7 @@ export const updateCollectionWithTransaction = async (
   for (const document of documents) {
     const cloudDoc = cloneDeep(document);
     convertDateToTimestamp(cloudDoc);
+    console.log(cloudDoc);
 
     let id = cloudDoc.id;
     let reference;

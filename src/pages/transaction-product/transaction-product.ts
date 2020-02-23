@@ -475,6 +475,7 @@ export class TransactionProductPage {
   }
 
   viewEditProduct(data) {
+    console.log(data);
     this.navCtrl.push(SingleProductPage, { data: data });
   }
 }

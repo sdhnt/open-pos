@@ -223,7 +223,7 @@ export class SingleProductPage {
   }
 
   confirmDelete(product) {
-    let a = this.alertCtrl.create({
+    const a = this.alertCtrl.create({
       title: "Are you sure?",
       buttons: [
         {
@@ -324,6 +324,7 @@ export class SingleProductPage {
       toast.present();
 
       const data = {
+        ...this.product,
         code: this.product.code,
         name: this.product.name,
         price: this.product.price,
