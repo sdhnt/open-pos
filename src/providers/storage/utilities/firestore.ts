@@ -18,8 +18,8 @@ export const queryUser = async (): Promise<{ id?: string; user?: any }> => {
 
 export const queryCollection = async (path: string, options?: { lastBackup?: Date }): Promise<any[]> => {
   const db = firebase.firestore();
-  let { lastBackup } = options;
-  if (!lastBackup) lastBackup = new Date("2000-01-01T00:00:00.000Z");
+  const defaultOptions = { lastBackup: new Date("2000-01-01T00:00:00.000Z") };
+  const { lastBackup } = options ? options : defaultOptions;
 
   let reference: firebase.firestore.Query = db.collection(path);
   if (lastBackup) reference = reference.where("updatedAt", ">=", Timestamp.fromDate(new Date(lastBackup)));
@@ -34,7 +34,7 @@ export const queryCollection = async (path: string, options?: { lastBackup?: Dat
   return dataSet;
 };
 
-const convertTimestampToDate = document => {
+export const convertTimestampToDate = (document): any => {
   if (typeof document === "object") {
     for (const [key, value] of Object.entries(document)) {
       // @ts-ignore
@@ -43,6 +43,7 @@ const convertTimestampToDate = document => {
         document[key] = new Timestamp(value.seconds, value.nanoseconds).toDate();
     }
   }
+  return document;
 };
 
 export const createFirestoreCollection = async (collectionPath, documents) => {

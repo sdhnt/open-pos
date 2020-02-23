@@ -4,7 +4,7 @@ import firebase from "firebase";
 import { Nav, NavController, ToastController } from "ionic-angular";
 import moment from "moment";
 import uniqid from "uniqid";
-import { queryCollection, queryUser } from "./utilities/firestore";
+import { convertTimestampToDate, queryCollection, queryUser } from "./utilities/firestore";
 import { syncDocuments, transactionCallback } from "./utilities/backupStorage";
 
 @Injectable()
@@ -68,7 +68,7 @@ export class StorageProvider {
     if (!id || !user) return false;
 
     // extract categories and business performance (as summary)
-    this.categories = user.categories;
+    this.categories = user.categories.map(category => convertTimestampToDate(category));
     if (!user.businessPerformance) {
       this.summary = [];
       for (let i = 0; i <= 30; i++) this.summary.push({ expenses: 0, revenue: 0, profit: 0 });
@@ -132,13 +132,15 @@ export class StorageProvider {
     const user = JSON.parse(await this.getUserDat());
     let lastBackup = await this.getLastBackup();
     lastBackup = lastBackup ? lastBackup : new Date("2000-01-01T00:00:00.000Z");
-    const [productDeviceDocs, transactionDeviceDocs] = [
+    console.log(`backup: lastBackup is ${moment(lastBackup).format()}`);
+
+    const [productDeviceDocs, transactionDeviceDocs, categoryDeviceDocs] = [
       JSON.parse(await this.getProducts()),
       JSON.parse(await this.getTransactions()),
     ].map(documents => documents.filter(document => moment(document.updatedAt).isSameOrAfter(moment(lastBackup))));
     const db = firebase.firestore();
 
-    // query sub collection documents with updated at later than last backup
+    // handle sub collection documents
     const subCollections = [
       {
         id: "products",
@@ -158,6 +160,7 @@ export class StorageProvider {
     ];
     try {
       for (const collection of subCollections) {
+        // query sub collection documents with updated at later than last backup
         collection.cloudDocs = await queryCollection(`/users/${user.id}/${collection.id}`, { lastBackup });
       }
       // modify sub collection documents
@@ -171,7 +174,7 @@ export class StorageProvider {
       }
       const oldCashBalance = Number(user.cash_balance);
       user.cash_balance = changeInCash + (!isNaN(oldCashBalance) ? oldCashBalance : 0);
-      console.log(`change in cash balance: ${changeInCash}, new cash balance: ${user.cash_balance}`);
+      console.log(`backup: change in cash balance: ${changeInCash}, new cash balance: ${user.cash_balance}`);
     } catch (error) {
       console.log(error);
       return;
@@ -184,6 +187,7 @@ export class StorageProvider {
         const { id, user: userInCloud } = await queryUser();
         if (!id || !userInCloud) throw new Error("backup error: no user document found");
         // if user is later than the one in cloud, update document
+        // TODO: combine categories arrays using syncDocuments
         // TODO: select object fields from user and user in cloud
         const newUser = user;
         const userReference = db.collection("users").doc(id);
@@ -225,14 +229,24 @@ export class StorageProvider {
 
   async getCategories(): Promise<string | null> {
     await this.storage.ready();
-    return await this.storage.get("categories");
+    const categories = JSON.parse(await this.storage.get("categories"));
+
+    let filteredCategories = [];
+    if (categories && categories.length) filteredCategories = categories.filter(category => !category.isDisabled);
+    return JSON.stringify(filteredCategories);
   }
 
   async deleteCategory(data) {
     let categories = JSON.parse(await this.getCategories());
     if (!categories) categories = [];
 
-    const newCategories = categories.filter(category => category.name !== data.name);
+    const changes = {
+      updatedAt: new Date(),
+      isDisabled: true,
+    };
+    const newCategories = categories.map(category =>
+      category.id === data.id ? { ...category, ...changes } : category,
+    );
     await this.storage.set("categories", JSON.stringify(newCategories));
   }
 
