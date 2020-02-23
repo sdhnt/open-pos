@@ -136,7 +136,7 @@ export class ContactsPage {
           {
             text: "Add",
             handler: data => {
-              if (data.phno != "" && data.name != "") {
+              if (data.name != "") {
                 const temp = {
                   displayName: data.name,
                   phno: [data.phno],
@@ -147,7 +147,7 @@ export class ContactsPage {
               } else {
                 this.toastController
                   .create({
-                    message: "Please fill in Name and Phone Number",
+                    message: "Please fill in name",
                     duration: 2500,
                   })
                   .present();

@@ -21,8 +21,7 @@ export class IndividualContactPage {
     transacHistory: [],
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, 
-    public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
     const temp = navParams.get("data");
     this.contact = JSON.parse(temp);
   }
@@ -65,10 +64,10 @@ export class IndividualContactPage {
       if (amountToAdd == 0) {
         return;
       }
-      let transaction = {
+      const transaction = {
         amount: amountToAdd,
         date: Date.now(),
-      }
+      };
       this.contact.transacHistory.unshift(transaction);
       this.contact.balance += amountToAdd;
     });
