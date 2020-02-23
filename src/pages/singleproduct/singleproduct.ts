@@ -335,7 +335,6 @@ export class SingleProductPage {
       };
 
       this.sp.updateProduct(data, this.prodCodeOld).then(() => {
-        this.sp.backupStorage();
         setTimeout(() => {
           const message = this.translateConfigService.getTranslatedMessage("Finish");
           const toast = this.toastCtrl.create({
@@ -380,7 +379,6 @@ export class SingleProductPage {
             duration: 2000,
           });
           toast.present();
-          this.sp.backupStorage();
           this.events.publish("productUpdate:created");
           this.navCtrl.pop();
         }, 1000);

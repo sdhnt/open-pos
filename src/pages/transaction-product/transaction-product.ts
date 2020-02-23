@@ -187,7 +187,6 @@ export class TransactionProductPage {
     console.log("ionViewDidLoad TransactionProductPage");
     this.getProducts();
     this.getCategories();
-    this.sp.backupStorage();
   }
 
   buttonReset() {

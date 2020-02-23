@@ -54,7 +54,6 @@ export class AddProductCategoryPage {
             duration: 3000,
           });
           this.newprodCat = "";
-          this.sp.backupStorage();
 
           //this.navCtrl.push(ProductListPage);
           //this.events.publish('prodAdd:created',0);
@@ -70,7 +69,7 @@ export class AddProductCategoryPage {
       this.sp
         .deleteCategory(element)
         .then(() => this.sp.getCategories().then(value => (this.listCat = JSON.parse(value))));
-      this.sp.backupStorage();
+
       setTimeout(() => {
         const message = this.translateConfigService.getTranslatedMessage("Finish");
         const toast = this.toastCtrl.create({

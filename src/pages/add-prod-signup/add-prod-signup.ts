@@ -337,8 +337,6 @@ export class AddProdSignupPage {
             this.image = "";
             this.disabled = false;
 
-            this.sp.backupStorage();
-
             //this.navCtrl.push(ProductListPage);
             this.events.publish("prodAdd:created", 0);
             toast.present();
@@ -401,7 +399,6 @@ export class AddProdSignupPage {
               this.image = "";
               this.disabled = false;
 
-              this.sp.backupStorage();
               //this.navCtrl.push(ProductListPage);
               this.events.publish("prodAdd:created", 0);
               toast.present();

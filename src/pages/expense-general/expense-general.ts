@@ -121,7 +121,6 @@ export class ExpenseGeneralPage {
       this.currtime = new Date();
       this.listOfExpenses = [];
       this.listOfExpenses.push(new Expense());
-      this.sp.backupStorage();
       this.view.dismiss();
     });
   }

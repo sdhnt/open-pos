@@ -88,7 +88,10 @@ export class LoanHomePage {
   }
 
   uploadbtn() {
-    this.sp.backupStorage();
+    this.sp
+      .backupStorage()
+      .then()
+      .catch();
     const message = this.translateConfigService.getTranslatedMessage("Online backup ready");
     this.toastCtrl
       .create({

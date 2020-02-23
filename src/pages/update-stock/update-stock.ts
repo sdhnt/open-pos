@@ -142,7 +142,6 @@ export class UpdateStockPage {
         stock_qty: parseInt(this.product.stock_qty) + parseInt(this.prodqty),
       };
       await this.sp.updateProduct(data1, this.product.code).then(() => {
-        this.sp.backupStorage();
         this.events.publish("productUpdate:created", 0);
       });
 
@@ -150,7 +149,6 @@ export class UpdateStockPage {
         console.log(dataexp);
         this.sp.addTransactions(dataexp);
         this.updateCb(this.prodcost).then(() => {
-          this.sp.backupStorage();
           this.events.publish("cbUpdate:created", 0);
           console.log("update");
         });

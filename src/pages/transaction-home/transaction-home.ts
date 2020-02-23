@@ -200,7 +200,10 @@ export class TransactionHomePage {
   // }
 
   uploadbtn() {
-    this.sp.backupStorage();
+    this.sp
+      .backupStorage()
+      .then()
+      .catch();
     const message = this.translateConfigService.getTranslatedMessage("Online backup ready");
 
     const message1 = this.translateConfigService.getTranslatedMessage("Backup Online");
