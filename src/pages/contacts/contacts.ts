@@ -36,20 +36,24 @@ export class ContactsPage {
     private modalCtrl: ModalController,
     private zone: NgZone,
   ) {
-    const contact1 = {
-      displayName: "Pranay",
-      balance: -300,
-      phno: [],
-      transacHistory: [],
-    };
-    this.contactList.push(contact1);
-    this.filteredList = this.contactList;
   }
 
   hasPermission = true;
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad ContactsPage");
+  }
+
+  ionViewWillLoad(){
+    this.sp.getContacts().then(val=>{
+      if(val==null){
+        this.contactList = [];
+      }
+      this.zone.run(()=>{
+        this.contactList = JSON.parse(val);
+        this.filteredList = this.contactList;
+      });
+    });
   }
 
   contactList = [];
@@ -105,6 +109,7 @@ export class ContactsPage {
       const modal = this.modalCtrl.create(AddFromContactsPage);
       modal.present();
       modal.onWillDismiss(listToAdd => {
+        let newContactList = [];
         listToAdd.forEach(element => {
           const temp = {
             displayName: element.displayName,
@@ -112,7 +117,11 @@ export class ContactsPage {
             balance: 0,
             transacHistory: [],
           };
-          this.contactList.push(temp);
+          // this.contactList.push(temp);
+          newContactList.push(temp);
+        });
+        this.sp.saveContacts(newContactList, false).then(()=>{
+          this.ionViewWillLoad();
         });
       });
     } else if (num == 2) {
@@ -135,15 +144,18 @@ export class ContactsPage {
           },
           {
             text: "Add",
-            handler: data => {
+            handler:  data => {
               if (data.name != "") {
                 const temp = {
                   displayName: data.name,
-                  phno: [data.phno],
+                  phno: data.phno != "" ? [data.phno] : ["0000"],
                   transacHistory: [],
                   balance: 0,
                 };
-                this.contactList.push(temp);
+                // this.contactList.push(temp);
+                this.sp.saveContacts([temp], true).then(()=>{
+                  this.ionViewWillLoad();
+                });
               } else {
                 this.toastController
                   .create({
@@ -159,10 +171,10 @@ export class ContactsPage {
       });
       a.present();
     }
-    this.zone.run(() => {
-      this.contactList.sort((a, b) => a.displayName.localeCompare(b.displayName));
-      this.filteredList = this.contactList;
-    });
+    // this.zone.run(() => {
+    //   this.contactList.sort((a, b) => a.displayName.localeCompare(b.displayName));
+    //   this.filteredList = this.contactList;
+    // });
   }
 
   filter() {

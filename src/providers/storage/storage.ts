@@ -704,19 +704,58 @@ export class StorageProvider {
     });
   }
 
-  saveContacts(importedContacts) {
-    this.storage.ready().then(() => {
-      this.storage.get("contacts").then(value => {
-        const currentContacts = JSON.parse(value);
-        const newContacts = [];
-        importedContacts.forEach(importedContact => {
-          const index = currentContacts.findIndex(currentContact => currentContact.id === importedContact.id);
-          if (index !== -1) newContacts.push({ totalSales: currentContacts[index].totalSales, ...importedContact });
-          else newContacts.push({ totalSales: 0, ...importedContact });
-        });
-        console.log(newContacts);
-        this.storage.set("contacts", "[]").then(() => {
-          this.storage.set("contacts", JSON.stringify(newContacts));
+  saveContacts(newContacts, manualAdd: boolean) {
+    // this.storage.ready().then(() => {
+    //   this.storage.get("contacts").then(value => {
+    //     const currentContacts = JSON.parse(value);
+    //     const newContacts = [];
+    //     importedContacts.forEach(importedContact => {
+    //       const index = currentContacts.findIndex(currentContact => currentContact.id === importedContact.id);
+    //       if (index !== -1) newContacts.push({ totalSales: currentContacts[index].totalSales, ...importedContact });
+    //       else newContacts.push({ totalSales: 0, ...importedContact });
+    //     });
+    //     console.log(newContacts);
+    //     this.storage.set("contacts", "[]").then(() => {
+    //       this.storage.set("contacts", JSON.stringify(newContacts));
+    //     });
+    //   });
+    // });
+    return new Promise((resolve,reject) =>{
+      this.storage.ready().then(()=>{
+        this.storage.get("contacts").then(val =>{
+          if(val==null){
+            this.storage.set("contacts", "[]").then(()=>{
+              this.storage.get("contacts").then(valNull=>{
+                let currentContacts = JSON.parse(valNull);
+                newContacts.forEach(element => {
+                  currentContacts.push(element);
+                });
+                this.storage.set("contacts", JSON.stringify(currentContacts)).then(()=>resolve());
+              });
+            });
+          }
+          else {
+            this.storage.get("contacts").then(val=>{
+              let currentContacts = JSON.parse(val);
+              newContacts.forEach(element=>{
+                if(manualAdd){
+                  currentContacts.push(element);
+                } else { //doesn't seem to work
+                  let contactExistIndex = currentContacts.findIndex(currentElement => { 
+                    return ( currentElement.phno[0] == element.phno[0] );
+                  });
+                  if(contactExistIndex == -1) {
+                    currentContacts.push(element);
+                  }
+                }
+              });
+              currentContacts.sort((a,b) => a.displayName.localeCompare(b.displayName));
+              this.storage.set("contacts", JSON.stringify(currentContacts)).then(()=>resolve());
+            });
+          }
+        }).catch(err=>{
+          console.log("Storage provider setContact", err);
+          reject();
         });
       });
     });
