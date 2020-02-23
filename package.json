@@ -106,6 +106,7 @@
     "rxjs": "^5.5.11",
     "rxjs-compat": "^6.5.3",
     "sw-toolbox": "3.6.0",
+    "uniqid": "^5.2.0",
     "zone.js": "0.8.29"
   },
   "devDependencies": {

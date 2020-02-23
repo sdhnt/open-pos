@@ -1,4 +1,5 @@
 import firebase from "firebase";
+import uniqid from "uniqid";
 const TimeStamp = firebase.firestore.Timestamp;
 
 const defaultUser = {
@@ -17,7 +18,7 @@ const defaultUser = {
   discount: 0,
   taxrate: 0,
   logo_url: "",
-  categories: [{ name: "Example" }],
+  categories: [{ id: uniqid(), name: "Example" }],
 };
 
 const subCollections = [

@@ -3,6 +3,7 @@ import { Storage } from "@ionic/storage";
 import firebase from "firebase";
 import { Nav, NavController, ToastController } from "ionic-angular";
 import moment from "moment";
+import uniqid from "uniqid";
 import { queryCollection, queryUser } from "./utilities/firestore";
 import { syncDocuments, transactionCallback } from "./utilities/backupStorage";
 
@@ -216,6 +217,7 @@ export class StorageProvider {
     let categories = JSON.parse(await this.getCategories());
     if (!categories || categories.length === 0) categories = [];
 
+    data.id = uniqid(); // generates a unique id to track categories
     data.updatedAt = new Date();
     categories.push(data);
     await this.storage.set("categories", JSON.stringify(categories));
