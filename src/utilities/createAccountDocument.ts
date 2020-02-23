@@ -18,7 +18,7 @@ const defaultUser = {
   discount: 0,
   taxrate: 0,
   logo_url: "",
-  categories: [{ id: uniqid(), name: "Example" }],
+  categories: [{ id: uniqid(), name: "Example", updatedAt: new Date() }],
 };
 
 const subCollections = [
