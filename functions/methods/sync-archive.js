@@ -5,7 +5,8 @@ const syncArchive = async (db, { syncTransactions, calculateBusinessPerformance,
   const limit = 100; // important note: do not change this limit as it would completely mess up the syncing algorithm
 
   if (syncTransactions) {
-    const batch = db.batch();
+    const batchArray = [db.batch()];
+    let batchIndex = 0;
     let numberOfOperations = 0;
     const batchSize = 10;
     await db
@@ -13,10 +14,10 @@ const syncArchive = async (db, { syncTransactions, calculateBusinessPerformance,
       .get()
       .then(snapshot => {
         const numberOfUsers = snapshot.size;
-        let numberOfUsersLeft = numberOfUsers;
         console.log(`number of users: ${numberOfUsers}`);
         snapshot.forEach(async doc => {
           const user = doc.data();
+          if (user.transactionMigrated) return;
           const userInArchiveRef = db.collection("users-archive").doc(doc.id);
           let snapshotInArchive = await userInArchiveRef.get();
           if (!snapshotInArchive.exists) {
@@ -70,39 +71,51 @@ const syncArchive = async (db, { syncTransactions, calculateBusinessPerformance,
 
           // update user and userInArchive
           const userUpdateRef = db.collection("users").doc(doc.id);
-          batch.update(userUpdateRef, user);
+          batchArray[batchIndex].update(userUpdateRef, user);
           user.transactions = userInArchive.transactions;
           const userInArchiveUpdateRef = db.collection("users-archive").doc(doc.id);
-          batch.update(userInArchiveUpdateRef, user);
+          batchArray[batchIndex].update(userInArchiveUpdateRef, user);
           numberOfOperations += 2;
-          numberOfUsersLeft--;
-          if (numberOfOperations >= batchSize || numberOfOperations === 2 * numberOfUsersLeft) {
+          if (numberOfOperations >= batchSize) {
             console.log(`number of operations in this batch: ${numberOfOperations}`);
-            await batch.commit();
+            batchArray.push(db.batch());
+            batchIndex++;
             numberOfOperations = 0;
           }
         });
       });
+    batchArray.forEach(batch => batch.commit().then(() => {}));
   }
 
   // remove deleted users in archive
-  if (syncUserCount)
+  if (syncUserCount) {
+    const batchArray = [db.batch()];
+    let batchIndex = 0;
+    let operations = 0;
     await db
       .collection("users-archive")
       .get()
       .then(snapshot => {
         snapshot.forEach(async doc => {
-          const userRef = await db.collection("users").doc(doc.id);
-          const snapshotInArchive = await userRef.get();
-          if (!snapshotInArchive.exists) {
+          const userSnapshot = await db
+            .collection("users")
+            .doc(doc.id)
+            .get();
+          if (!userSnapshot.exists) {
             console.log(`remove user of id: ${doc.id} in archive`);
-            await db
-              .collection("users-archive")
-              .doc(doc.id)
-              .delete();
+            const ref = db.collection("users-archive").doc(doc.id);
+            operations++;
+            batchArray[batchIndex].delete(ref);
+            if (operations === 499) {
+              batchArray.push(db.batch());
+              batchIndex++;
+              operations = 0;
+            }
           }
         });
       });
+    batchArray.forEach(batch => batch.commit().then(() => {}));
+  }
 };
 
 module.exports = { syncArchive };
