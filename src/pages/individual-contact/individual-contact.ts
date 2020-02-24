@@ -39,6 +39,9 @@ export class IndividualContactPage {
   }
 
   async goBack() {
+    if(this.listOfNewTransactions.length==0){
+      this.navCtrl.pop();
+    } else{
     this.toastCtrl
       .create({
         message: "Updating contact",
@@ -48,6 +51,7 @@ export class IndividualContactPage {
       .present();
     await this.sp.updateContactTransaction(this.contact.displayName, this.listOfNewTransactions);
     this.navCtrl.pop();
+    }
   }
 
   transaction(signedOne: number) {

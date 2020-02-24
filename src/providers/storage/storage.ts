@@ -8,6 +8,7 @@ import { notImplemented } from "@angular/core/src/render3/util";
 import { PARAMETERS } from "@angular/core/src/util/decorators";
 import { parse } from "@typescript-eslint/parser";
 import moment from "moment";
+import { resolveDefinition } from "@angular/core/src/view/util";
 
 @Injectable()
 export class StorageProvider {
@@ -705,26 +706,24 @@ export class StorageProvider {
   }
 
   async saveContacts(newContacts, manualAdd: boolean): Promise<void> {
+    if(newContacts.length==0) return;
     await this.storage.ready();
-    let contacts = await this.storage.get("contacts");
+    let contacts = JSON.parse(await this.storage.get("contacts"));
     if (!contacts) contacts = [];
 
-    if (manualAdd) contacts = newContacts;
-    else {
-      newContacts.forEach(newContact => {
-        const index = contacts.findIndex(contact => contact.displayName == newContact.displayName);
-        if (index) {
-          const { balance, transacHistory } = contacts[index];
-          contacts[index] = {
-            ...newContact,
-            balance,
-            transacHistory,
-          };
-        } else {
-          contacts.push(newContact);
-        }
-      });
-    }
+    newContacts.forEach(newContact => {
+      const index = contacts.findIndex(contact => contact.displayName == newContact.displayName);
+      if (index != -1) {
+        const { balance, transacHistory } = contacts[index];
+        contacts[index] = {
+          ...newContact,
+          balance,
+          transacHistory,
+        };
+      } else {
+        contacts.push(newContact);
+      }
+    });
 
     contacts.sort((a, b) => a.displayName.localeCompare(b.displayName));
     await this.storage.set("contacts", JSON.stringify(contacts));

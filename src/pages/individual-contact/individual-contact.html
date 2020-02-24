@@ -6,14 +6,16 @@
 -->
 <ion-content padding>
   <ion-buttons end>
-    <button ion-button style="background-color: red; color: white;" (click)="goBack()">Cancel</button>
+    <button ion-button style="background-color: black; color: white;" (click)="goBack()">Done</button>
   </ion-buttons>
   <ion-row>
     <ion-col col-6 class="top-text">
       {{ contact.displayName }}
     </ion-col>
     <ion-col col-6 style="text-align: end;" class="top-text">
-      <span style="color: red;">{{ contact.balance }}</span>
+      <span style="color: red;" *ngIf="contact.balance<0; else nonNeg">{{ contact.balance }}</span>
+      <span style="color: green;" *ngIf="contact.balance>0; else zero" id="nonNeg">{{ contact.balance }}</span>
+      <span style="color: blue;" *ngIf="contact.balance==0" id="zero">0</span>
     </ion-col>
   </ion-row>
   <ion-grid style="padding: 0px;">
