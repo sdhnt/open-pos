@@ -35,8 +35,7 @@ export class ContactsPage {
     private alertCtrl: AlertController,
     private modalCtrl: ModalController,
     private zone: NgZone,
-  ) {
-  }
+  ) {}
 
   hasPermission = true;
 
@@ -44,12 +43,13 @@ export class ContactsPage {
     console.log("ionViewDidLoad ContactsPage");
   }
 
-  ionViewWillLoad(){
-    this.sp.getContacts().then(val=>{
-      if(val==null){
+  ionViewDidEnter() {
+    console.log("ionViewDidEnter ContactPage");
+    this.sp.getContacts().then(val => {
+      if (val == null) {
         this.contactList = [];
       }
-      this.zone.run(()=>{
+      this.zone.run(() => {
         this.contactList = JSON.parse(val);
         this.filteredList = this.contactList;
       });
@@ -109,7 +109,7 @@ export class ContactsPage {
       const modal = this.modalCtrl.create(AddFromContactsPage);
       modal.present();
       modal.onWillDismiss(listToAdd => {
-        let newContactList = [];
+        const newContactList = [];
         listToAdd.forEach(element => {
           const temp = {
             displayName: element.displayName,
@@ -120,8 +120,8 @@ export class ContactsPage {
           // this.contactList.push(temp);
           newContactList.push(temp);
         });
-        this.sp.saveContacts(newContactList, false).then(()=>{
-          this.ionViewWillLoad();
+        this.sp.saveContacts(newContactList, false).then(() => {
+          this.ionViewDidEnter();
         });
       });
     } else if (num == 2) {
@@ -144,7 +144,7 @@ export class ContactsPage {
           },
           {
             text: "Add",
-            handler:  data => {
+            handler: data => {
               if (data.name != "") {
                 const temp = {
                   displayName: data.name,
@@ -153,8 +153,8 @@ export class ContactsPage {
                   balance: 0,
                 };
                 // this.contactList.push(temp);
-                this.sp.saveContacts([temp], true).then(()=>{
-                  this.ionViewWillLoad();
+                this.sp.saveContacts([temp], true).then(() => {
+                  this.ionViewDidEnter();
                 });
               } else {
                 this.toastController

@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, AlertController } from "ionic-angular";
+import { IonicPage, NavController, NavParams, AlertController, ToastController } from "ionic-angular";
+import { StorageProvider } from "../../providers/storage/storage";
 
 /**
  * Generated class for the IndividualContactPage page.
@@ -21,16 +22,25 @@ export class IndividualContactPage {
     transacHistory: [],
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
+    public sp: StorageProvider, private toastCtrl: ToastController) {
     const temp = navParams.get("data");
     this.contact = JSON.parse(temp);
   }
+
+  listOfNewTransactions = [];
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad IndividualContactPage");
   }
 
-  goBack() {
+  async goBack() {
+    this.toastCtrl.create({
+      message: "Updating contact",
+      dismissOnPageChange: true,
+      duration: 1500
+    }).present();
+    await this.sp.updateContactTransaction(this.contact.displayName, this.listOfNewTransactions)
     this.navCtrl.pop();
   }
 
@@ -70,6 +80,7 @@ export class IndividualContactPage {
       };
       this.contact.transacHistory.unshift(transaction);
       this.contact.balance += amountToAdd;
+      this.listOfNewTransactions.unshift(transaction);
     });
   }
 

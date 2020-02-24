@@ -5,7 +5,6 @@ import { convertDataToISO } from "ionic-angular/umd/util/datetime-util";
 import { LoginPage } from "../../pages/login/login";
 import { ToastController, NavController, Nav } from "ionic-angular";
 import { notImplemented } from "@angular/core/src/render3/util";
-import { templateVisitAll } from "@angular/compiler";
 import { PARAMETERS } from "@angular/core/src/util/decorators";
 import { parse } from "@typescript-eslint/parser";
 import moment from "moment";
@@ -704,7 +703,7 @@ export class StorageProvider {
     });
   }
 
-  saveContacts(newContacts, manualAdd: boolean) {
+  async saveContacts(newContacts, manualAdd: boolean) {
     // this.storage.ready().then(() => {
     //   this.storage.get("contacts").then(value => {
     //     const currentContacts = JSON.parse(value);
@@ -720,49 +719,71 @@ export class StorageProvider {
     //     });
     //   });
     // });
-    return new Promise((resolve,reject) =>{
-      this.storage.ready().then(()=>{
-        this.storage.get("contacts").then(val =>{
-          if(val==null){
-            this.storage.set("contacts", "[]").then(()=>{
-              this.storage.get("contacts").then(valNull=>{
-                let currentContacts = JSON.parse(valNull);
-                newContacts.forEach(element => {
-                  currentContacts.push(element);
-                });
-                this.storage.set("contacts", JSON.stringify(currentContacts)).then(()=>resolve());
-              });
-            });
-          }
-          else {
-            this.storage.get("contacts").then(val=>{
-              let currentContacts = JSON.parse(val);
-              newContacts.forEach(element=>{
-                if(manualAdd){
-                  currentContacts.push(element);
-                } else { //doesn't seem to work
-                  let contactExistIndex = currentContacts.findIndex(currentElement => { 
-                    return ( currentElement.phno[0] == element.phno[0] );
+    return new Promise((resolve, reject) => {
+      this.storage.ready().then(() => {
+        this.storage
+          .get("contacts")
+          .then(val => {
+            if (val == null) {
+              this.storage.set("contacts", "[]").then(() => {
+                this.storage.get("contacts").then(valNull => {
+                  const currentContacts = JSON.parse(valNull);
+                  newContacts.forEach(element => {
+                    currentContacts.push(element);
                   });
-                  if(contactExistIndex == -1) {
+                  this.storage.set("contacts", JSON.stringify(currentContacts)).then(() => resolve());
+                });
+              });
+            } 
+            else {
+              const currentContacts = JSON.parse(val);
+              newContacts.forEach(element => {
+                if (manualAdd) {
+                  currentContacts.push(element);
+                } else {
+                  //doesn't seem to work
+                  const contactExistIndex = currentContacts.findIndex(currentElement => {
+                    return currentElement.displayName == element.displayName;
+                  });
+                  if (contactExistIndex == -1) {
                     currentContacts.push(element);
                   }
                 }
               });
-              currentContacts.sort((a,b) => a.displayName.localeCompare(b.displayName));
-              this.storage.set("contacts", JSON.stringify(currentContacts)).then(()=>resolve());
-            });
-          }
-        }).catch(err=>{
-          console.log("Storage provider setContact", err);
-          reject();
-        });
+              currentContacts.sort((a, b) => a.displayName.localeCompare(b.displayName));
+              this.storage.set("contacts", JSON.stringify(currentContacts)).then(() => resolve());
+            }
+          })
+          .catch(err => {
+            console.log("Storage provider setContact", err);
+            reject();
+          });
       });
     });
   }
 
   getContacts() {
     return this.storage.get("contacts");
+  }
+
+  updateContactTransaction(contactName, newTransactions){
+    return new Promise((resolve, reject)=>{
+      this.storage.ready().then(()=>{
+        this.storage.get("contacts").then(val=>{
+          let currentContact = JSON.parse(val);
+          let indexOfName = currentContact.findIndex((element)=>{
+            return element.displayName == contactName;
+          });
+          let newBalance = currentContact[indexOfName].balance
+          newTransactions.forEach((transac)=>{
+            currentContact[indexOfName].transacHistory.unshift(transac);
+            newBalance = newBalance + transac.amount;
+          });
+          currentContact[indexOfName].balance = newBalance;
+          this.storage.set("contacts", JSON.stringify(currentContact)).then(()=>resolve());
+        });
+      });
+    });
   }
 
   storageReady() {
