@@ -61,9 +61,13 @@ export const convertDateToTimestamp = (document): any => {
   if (typeof document === "object")
     for (const [key, value] of Object.entries(document)) {
       // @ts-ignore
-      if ((value instanceof Date || value instanceof String) && moment(new Date(value), moment.ISO_8601).isValid())
+      if (
+        (value instanceof Date || (typeof value === "string" && value.length > 10)) &&
+        moment(new Date(value), moment.ISO_8601).isValid()
+      ) {
         // @ts-ignore
-        document[key] = Timestamp.fromDate(moment(value).toDate());
+        document[key] = new Date(value);
+      }
     }
 };
 
@@ -74,9 +78,9 @@ export const updateCollectionWithTransaction = async (
 ): Promise<void> => {
   const db = firebase.firestore();
   for (const document of documents) {
+    // make sure that date objects are saved as Timestamps in firestore
     const cloudDoc = cloneDeep(document);
-    convertDateToTimestamp(cloudDoc);
-    console.log(cloudDoc);
+    convertDateToTimestamp(cloudDoc); // still have to resolve edge cases where value is a string, but should be a number, and the string length is more than 10
 
     let id = cloudDoc.id;
     let reference;

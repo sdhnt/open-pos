@@ -58,7 +58,7 @@ export class StorageProvider {
     const userCondition = userInMemory && userInMemory.id;
     const productCondition = productsInMemory && productsInMemory.length > 0;
     const transactionCondition = transactionsInMemory && transactionsInMemory.length > 0;
-    // if (!force && userCondition && productCondition && transactionCondition) return false;
+    if (!force && userCondition && productCondition && transactionCondition) return false;
 
     console.log("setMem(): query user data from firestore");
     // query user from firestore
