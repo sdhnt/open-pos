@@ -80,9 +80,8 @@ export class AddFromContactsPage {
   }
 
   filter() {
-    this.filteredList = this.contactList.filter(contact => {
-      if (contact.displayName.toLowerCase().includes(this.searchterm.toLowerCase())) return true;
-      // else return false;
-    });
+    this.filteredList = this.contactList.filter(contact =>
+      contact.displayName.toLowerCase().includes(this.searchterm.toLowerCase()),
+    );
   }
 }

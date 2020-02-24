@@ -419,6 +419,7 @@ export class StorageProvider {
                 business_name: data.business_name,
                 businesstype: data.businesstype,
                 created: data.created,
+                logo: data.logo,
                 currency: data.currency,
                 discount: data.discount,
                 language: data.language,
@@ -703,86 +704,48 @@ export class StorageProvider {
     });
   }
 
-  async saveContacts(newContacts, manualAdd: boolean) {
-    // this.storage.ready().then(() => {
-    //   this.storage.get("contacts").then(value => {
-    //     const currentContacts = JSON.parse(value);
-    //     const newContacts = [];
-    //     importedContacts.forEach(importedContact => {
-    //       const index = currentContacts.findIndex(currentContact => currentContact.id === importedContact.id);
-    //       if (index !== -1) newContacts.push({ totalSales: currentContacts[index].totalSales, ...importedContact });
-    //       else newContacts.push({ totalSales: 0, ...importedContact });
-    //     });
-    //     console.log(newContacts);
-    //     this.storage.set("contacts", "[]").then(() => {
-    //       this.storage.set("contacts", JSON.stringify(newContacts));
-    //     });
-    //   });
-    // });
-    return new Promise((resolve, reject) => {
-      this.storage.ready().then(() => {
-        this.storage
-          .get("contacts")
-          .then(val => {
-            if (val == null) {
-              this.storage.set("contacts", "[]").then(() => {
-                this.storage.get("contacts").then(valNull => {
-                  const currentContacts = JSON.parse(valNull);
-                  newContacts.forEach(element => {
-                    currentContacts.push(element);
-                  });
-                  this.storage.set("contacts", JSON.stringify(currentContacts)).then(() => resolve());
-                });
-              });
-            } else {
-              const currentContacts = JSON.parse(val);
-              newContacts.forEach(element => {
-                if (manualAdd) {
-                  currentContacts.push(element);
-                } else {
-                  //doesn't seem to work
-                  const contactExistIndex = currentContacts.findIndex(currentElement => {
-                    return currentElement.displayName == element.displayName;
-                  });
-                  if (contactExistIndex == -1) {
-                    currentContacts.push(element);
-                  }
-                }
-              });
-              currentContacts.sort((a, b) => a.displayName.localeCompare(b.displayName));
-              this.storage.set("contacts", JSON.stringify(currentContacts)).then(() => resolve());
-            }
-          })
-          .catch(err => {
-            console.log("Storage provider setContact", err);
-            reject();
-          });
+  async saveContacts(newContacts, manualAdd: boolean): Promise<void> {
+    await this.storage.ready();
+    let contacts = await this.storage.get("contacts");
+    if (!contacts) contacts = [];
+
+    if (manualAdd) contacts = newContacts;
+    else {
+      newContacts.forEach(newContact => {
+        const index = contacts.findIndex(contact => contact.displayName == newContact.displayName);
+        if (index) {
+          const { balance, transacHistory } = contacts[index];
+          contacts[index] = {
+            ...newContact,
+            balance,
+            transacHistory,
+          };
+        } else {
+          contacts.push(newContact);
+        }
       });
-    });
+    }
+
+    contacts.sort((a, b) => a.displayName.localeCompare(b.displayName));
+    await this.storage.set("contacts", JSON.stringify(contacts));
   }
 
-  getContacts() {
-    return this.storage.get("contacts");
+  async getContacts(): Promise<string | null> {
+    await this.storage.ready();
+    return await this.storage.get("contacts");
   }
 
-  updateContactTransaction(contactName, newTransactions) {
-    return new Promise((resolve, reject) => {
-      this.storage.ready().then(() => {
-        this.storage.get("contacts").then(val => {
-          const currentContact = JSON.parse(val);
-          const indexOfName = currentContact.findIndex(element => {
-            return element.displayName == contactName;
-          });
-          let newBalance = currentContact[indexOfName].balance;
-          newTransactions.forEach(transac => {
-            currentContact[indexOfName].transacHistory.unshift(transac);
-            newBalance = newBalance + transac.amount;
-          });
-          currentContact[indexOfName].balance = newBalance;
-          this.storage.set("contacts", JSON.stringify(currentContact)).then(() => resolve());
-        });
-      });
+  async updateContactTransaction(contactName, newTransactions): Promise<void> {
+    await this.storage.ready();
+    const contacts = JSON.parse(await this.getContacts());
+    const contact = contacts.find(contact => contact.displayName === contactName);
+    let newBalance = contact.balance ? contact.balance : 0;
+    newTransactions.forEach(transaction => {
+      contact.transacHistory.unshift(transaction);
+      newBalance += transaction.amount;
     });
+    contact.balance = newBalance;
+    await this.storage.set("contacts", JSON.stringify(contacts));
   }
 
   storageReady() {

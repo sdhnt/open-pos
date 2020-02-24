@@ -17,7 +17,7 @@ import { StorageProvider } from "../../providers/storage/storage";
 export class IndividualContactPage {
   contact = {
     displayName: "",
-    balance: "",
+    balance: 0,
     phno: "",
     transacHistory: [],
   };
@@ -29,8 +29,7 @@ export class IndividualContactPage {
     public sp: StorageProvider,
     private toastCtrl: ToastController,
   ) {
-    const temp = navParams.get("data");
-    this.contact = JSON.parse(temp);
+    this.contact = this.navParams.get("data");
   }
 
   listOfNewTransactions = [];
@@ -78,12 +77,12 @@ export class IndividualContactPage {
     });
     a.present();
     a.onDidDismiss(() => {
-      if (amountToAdd == 0) {
+      if (amountToAdd === 0) {
         return;
       }
       const transaction = {
         amount: amountToAdd,
-        date: Date.now(),
+        date: new Date(),
       };
       this.contact.transacHistory.unshift(transaction);
       this.contact.balance += amountToAdd;

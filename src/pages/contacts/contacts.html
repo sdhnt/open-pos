@@ -38,9 +38,7 @@
       <ion-row (click)="navToIndividual(contact)" padding>
         <ion-col col-7 style="font-size: 16px;">{{ contact.displayName }}</ion-col>
         <ion-col col-5>Balance: 
-          <span style="color: red;" *ngIf="contact.balance<0">{{ contact.balance }}</span>
-          <span style="color: green;" *ngIf="contact.balance>0">{{ contact.balance }}</span>
-          <span style="color: blue;" *ngIf="contact.balance==0;">0</span>
+          <span style="color: red;">{{ contact.balance ? contact.balance : 0 }}</span>
         </ion-col>
       </ion-row>
     </ion-card>

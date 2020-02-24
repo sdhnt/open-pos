@@ -100,7 +100,7 @@ export class ContactsPage {
   }
 
   navToIndividual(contact) {
-    this.navCtrl.push(IndividualContactPage, { data: JSON.stringify(contact) });
+    this.navCtrl.push(IndividualContactPage, { data: contact });
   }
 
   navAdd(num: number, fab: FabContainer) {
@@ -178,9 +178,8 @@ export class ContactsPage {
   }
 
   filter() {
-    this.filteredList = this.contactList.filter(contact => {
-      if (contact.displayName.toLowerCase().includes(this.searchterm.toLowerCase())) return true;
-      // else return false;
-    });
+    this.filteredList = this.contactList.filter(contact =>
+      contact.displayName.toLowerCase().includes(this.searchterm.toLowerCase()),
+    );
   }
 }
