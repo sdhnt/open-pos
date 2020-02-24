@@ -734,8 +734,7 @@ export class StorageProvider {
                   this.storage.set("contacts", JSON.stringify(currentContacts)).then(() => resolve());
                 });
               });
-            } 
-            else {
+            } else {
               const currentContacts = JSON.parse(val);
               newContacts.forEach(element => {
                 if (manualAdd) {
@@ -766,21 +765,21 @@ export class StorageProvider {
     return this.storage.get("contacts");
   }
 
-  updateContactTransaction(contactName, newTransactions){
-    return new Promise((resolve, reject)=>{
-      this.storage.ready().then(()=>{
-        this.storage.get("contacts").then(val=>{
-          let currentContact = JSON.parse(val);
-          let indexOfName = currentContact.findIndex((element)=>{
+  updateContactTransaction(contactName, newTransactions) {
+    return new Promise((resolve, reject) => {
+      this.storage.ready().then(() => {
+        this.storage.get("contacts").then(val => {
+          const currentContact = JSON.parse(val);
+          const indexOfName = currentContact.findIndex(element => {
             return element.displayName == contactName;
           });
-          let newBalance = currentContact[indexOfName].balance
-          newTransactions.forEach((transac)=>{
+          let newBalance = currentContact[indexOfName].balance;
+          newTransactions.forEach(transac => {
             currentContact[indexOfName].transacHistory.unshift(transac);
             newBalance = newBalance + transac.amount;
           });
           currentContact[indexOfName].balance = newBalance;
-          this.storage.set("contacts", JSON.stringify(currentContact)).then(()=>resolve());
+          this.storage.set("contacts", JSON.stringify(currentContact)).then(() => resolve());
         });
       });
     });

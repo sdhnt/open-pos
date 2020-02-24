@@ -22,8 +22,13 @@ export class IndividualContactPage {
     transacHistory: [],
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
-    public sp: StorageProvider, private toastCtrl: ToastController) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public alertCtrl: AlertController,
+    public sp: StorageProvider,
+    private toastCtrl: ToastController,
+  ) {
     const temp = navParams.get("data");
     this.contact = JSON.parse(temp);
   }
@@ -35,12 +40,14 @@ export class IndividualContactPage {
   }
 
   async goBack() {
-    this.toastCtrl.create({
-      message: "Updating contact",
-      dismissOnPageChange: true,
-      duration: 1500
-    }).present();
-    await this.sp.updateContactTransaction(this.contact.displayName, this.listOfNewTransactions)
+    this.toastCtrl
+      .create({
+        message: "Updating contact",
+        dismissOnPageChange: true,
+        duration: 1500,
+      })
+      .present();
+    await this.sp.updateContactTransaction(this.contact.displayName, this.listOfNewTransactions);
     this.navCtrl.pop();
   }
 
