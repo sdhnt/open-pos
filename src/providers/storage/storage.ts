@@ -81,7 +81,7 @@ export class StorageProvider {
 
     // query sub collections
     try {
-      for (const path of ["products", "transactions"]) {
+      for (const path of ["products", "transactions", "contacts"]) {
         this[path] = await queryCollection(`/users/${id}/${path}`);
       }
     } catch (error) {
@@ -139,10 +139,11 @@ export class StorageProvider {
     lastBackup = lastBackup ? lastBackup : new Date("2000-01-01T00:00:00.000Z");
     console.log(`backup: lastBackup is ${moment(lastBackup).format()}`);
 
-    const [productDeviceDocs, transactionDeviceDocs, categoryDeviceDocs] = [
+    const [productDeviceDocs, transactionDeviceDocs, categoryDeviceDocs, contactDeviceDocs] = [
       JSON.parse(await this.getProducts()),
       JSON.parse(await this.getTransactions()),
       JSON.parse(await this.getCategories()),
+      JSON.parse(await this.getContacts()),
     ];
     const db = firebase.firestore();
 
@@ -162,6 +163,11 @@ export class StorageProvider {
           changeInCash: 0,
           products: productDeviceDocs,
         },
+      },
+      {
+        id: "contacts",
+        deviceDocs: contactDeviceDocs,
+        cloudDocs: [],
       },
     ];
 
@@ -224,6 +230,7 @@ export class StorageProvider {
         this.products = productDeviceDocs;
         this.transactions = transactionDeviceDocs;
         this.categories = categoryDeviceDocs;
+        this.contacts = contactDeviceDocs;
         this.summary = JSON.parse(await this.getSummary());
       });
     } catch (error) {
@@ -374,6 +381,7 @@ export class StorageProvider {
           ...newContact,
           balance,
           transacHistory,
+          updatedAt: new Date(),
         };
       } else {
         contacts.push(newContact);
@@ -399,6 +407,7 @@ export class StorageProvider {
       newBalance += transaction.amount;
     });
     contact.balance = newBalance;
+    contact.updatedAt = new Date();
     await this.storage.set("contacts", JSON.stringify(contacts));
   }
 
