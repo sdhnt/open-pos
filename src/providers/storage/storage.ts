@@ -384,7 +384,12 @@ export class StorageProvider {
           updatedAt: new Date(),
         };
       } else {
-        contacts.push(newContact);
+        const defaultKeys = {
+          balance: 0,
+          transacHistory: [],
+          updatedAt: new Date(),
+        };
+        contacts.push({ ...newContact, ...defaultKeys });
       }
     });
 
