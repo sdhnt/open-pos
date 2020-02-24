@@ -5,10 +5,10 @@ import { convertDataToISO } from "ionic-angular/umd/util/datetime-util";
 import { LoginPage } from "../../pages/login/login";
 import { ToastController, NavController, Nav } from "ionic-angular";
 import { notImplemented } from "@angular/core/src/render3/util";
-import { templateVisitAll } from "@angular/compiler";
 import { PARAMETERS } from "@angular/core/src/util/decorators";
 import { parse } from "@typescript-eslint/parser";
 import moment from "moment";
+import { resolveDefinition } from "@angular/core/src/view/util";
 import axios from "axios";
 import jwt from "jsonwebtoken";
 
@@ -36,6 +36,7 @@ export class StorageProvider {
   tempprod: any;
   tempcat: any;
   temptransac: any;
+  tempcontacts: any;
   tempuser: any;
   tempsummary: any;
   tempcoach: any;
@@ -47,34 +48,35 @@ export class StorageProvider {
       this.storage.get("categories").then(valNullcat => {
         this.storage.get("products").then(valNullprod => {
           this.storage.get("transactions").then(valNulltransac => {
-            this.storage.get("user").then(valNulluser => {
-              this.storage.get("summary").then(valNullSummary => {
-                this.storage.get("coach").then(valNullCoach => {
-                  // console.log("b4set");
-                  // console.log(JSON.stringify(this.tempcat));
-                  // console.log(JSON.stringify(this.tempprod));
-                  // console.log(JSON.stringify(this.temptransac))  ;
-                  this.storage.set("categories", "[]").then(() => {
-                    this.storage.set("categories", JSON.stringify(this.tempcat));
+            this.storage.get("contacts").then(_ => {
+              this.storage.get("user").then(valNulluser => {
+                this.storage.get("summary").then(valNullSummary => {
+                  this.storage.get("coach").then(valNullCoach => {
+                    this.storage.set("categories", "[]").then(() => {
+                      this.storage.set("categories", JSON.stringify(this.tempcat));
+                    });
+                    this.storage.set("products", "[]").then(() => {
+                      this.storage.set("products", JSON.stringify(this.tempprod));
+                    });
+                    this.storage.set("transactions", "[]").then(() => {
+                      this.storage.set("transactions", JSON.stringify(this.temptransac));
+                    });
+                    this.storage.set("contacts", "[]").then(() => {
+                      this.storage.set("contacts", JSON.stringify(this.tempcontacts));
+                    });
+                    this.storage.set("user", "[]").then(() => {
+                      this.storage.set("user", JSON.stringify(this.tempuser));
+                    });
+                    this.storage.set("summary", "[]").then(() => {
+                      this.storage.set("summary", JSON.stringify(this.tempsummary));
+                      // console.log(JSON.stringify(this.tempsummary));
+                    });
+                    this.storage.set("coach", "[]").then(() => {
+                      this.storage.set("coach", JSON.stringify(this.tempcoach));
+                      console.log(JSON.stringify(this.tempcoach));
+                    });
+                    resolve();
                   });
-                  this.storage.set("products", "[]").then(() => {
-                    this.storage.set("products", JSON.stringify(this.tempprod));
-                  });
-                  this.storage.set("transactions", "[]").then(() => {
-                    this.storage.set("transactions", JSON.stringify(this.temptransac));
-                  });
-                  this.storage.set("user", "[]").then(() => {
-                    this.storage.set("user", JSON.stringify(this.tempuser));
-                  });
-                  this.storage.set("summary", "[]").then(() => {
-                    this.storage.set("summary", JSON.stringify(this.tempsummary));
-                    //console.log(JSON.stringify(this.tempsummary));
-                  });
-                  this.storage.set("coach", "[]").then(() => {
-                    this.storage.set("coach", JSON.stringify(this.tempcoach));
-                    console.log(JSON.stringify(this.tempcoach));
-                  });
-                  resolve();
                 });
               });
             });
@@ -556,7 +558,7 @@ export class StorageProvider {
                 business_name: data.business_name,
                 businesstype: data.businesstype,
                 created: data.created,
-                logo_url: data.logo_url,
+                logo: data.logo,
                 currency: data.currency,
                 discount: data.discount,
                 language: data.language,
@@ -839,6 +841,48 @@ export class StorageProvider {
           alert(err + 1);
         });
     });
+  }
+
+  async saveContacts(newContacts, manualAdd: boolean): Promise<void> {
+    if(newContacts.length==0) return;
+    await this.storage.ready();
+    let contacts = JSON.parse(await this.storage.get("contacts"));
+    if (!contacts) contacts = [];
+
+    newContacts.forEach(newContact => {
+      const index = contacts.findIndex(contact => contact.displayName == newContact.displayName);
+      if (index != -1) {
+        const { balance, transacHistory } = contacts[index];
+        contacts[index] = {
+          ...newContact,
+          balance,
+          transacHistory,
+        };
+      } else {
+        contacts.push(newContact);
+      }
+    });
+
+    contacts.sort((a, b) => a.displayName.localeCompare(b.displayName));
+    await this.storage.set("contacts", JSON.stringify(contacts));
+  }
+
+  async getContacts(): Promise<string | null> {
+    await this.storage.ready();
+    return await this.storage.get("contacts");
+  }
+
+  async updateContactTransaction(contactName, newTransactions): Promise<void> {
+    await this.storage.ready();
+    const contacts = JSON.parse(await this.getContacts());
+    const contact = contacts.find(contact => contact.displayName === contactName);
+    let newBalance = contact.balance ? contact.balance : 0;
+    newTransactions.forEach(transaction => {
+      contact.transacHistory.unshift(transaction);
+      newBalance += transaction.amount;
+    });
+    contact.balance = newBalance;
+    await this.storage.set("contacts", JSON.stringify(contacts));
   }
 
   storageReady() {

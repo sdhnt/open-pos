@@ -22,6 +22,7 @@ import { SummaryGraphsPage } from "../summary-graphs/summary-graphs";
 import { AppVersion } from "@ionic-native/app-version";
 import axios from "axios";
 import { Market } from "@ionic-native/market";
+import { ContactsPage } from "../contacts/contacts";
 
 /**
  * Generated class for the TransactionHomePage page.
@@ -42,6 +43,7 @@ export class TransactionHomePage {
   IncomeTransactions = IncomeTransactionPage;
   //ExpenseTransactions = ExpenseTransactionPage;
   ExpenseTransactions = TransactionProductPage;
+  Contacts = ContactsPage;
 
   Accounts = SummaryGraphsPage;
 

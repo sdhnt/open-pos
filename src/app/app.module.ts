@@ -32,6 +32,7 @@ import { SocialSharing } from "@ionic-native/social-sharing";
 import { Base64ToGallery } from "@ionic-native/base64-to-gallery";
 import { PhotoLibrary } from "@ionic-native/photo-library";
 import { Facebook } from "@ionic-native/facebook";
+import { Contacts } from "@ionic-native/contacts";
 
 import * as firebase from "firebase/app";
 import { LoginPageModule } from "../pages/login/login.module";
@@ -46,6 +47,10 @@ import { AddProductCategoryPage } from "../pages/add-product-category/add-produc
 import { AddProdSignupPageModule } from "../pages/add-prod-signup/add-prod-signup.module";
 import { AddProdSignupPage } from "../pages/add-prod-signup/add-prod-signup";
 import { UserDataPageModule } from "../pages/user-data/user-data.module";
+import { ContactsPageModule } from "../pages/contacts/contacts.module";
+import { ContactsPage } from "../pages/contacts/contacts";
+import { IndividualContactPage } from "../pages/individual-contact/individual-contact";
+import { IndividualContactPageModule } from "../pages/individual-contact/individual-contact.module";
 
 const config = {
   apiKey: "AIzaSyBlxUkCX8OPsb9QL2p_jN8vaHdb5LhsS7A",
@@ -80,6 +85,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReactiveFormsModule,
     HttpClientModule,
     UserDataPageModule,
+    ContactsPageModule,
+    IndividualContactPageModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -98,6 +105,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     SingleProductPage,
     AddProductPage,
     AddProductCategoryPage,
+    ContactsPage,
+    IndividualContactPage,
   ],
   providers: [
     StatusBar,
@@ -125,6 +134,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     //File,
     PhotoLibrary,
     Facebook,
+    Contacts,
   ],
 })
 export class AppModule {}

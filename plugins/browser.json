@@ -83,6 +83,9 @@
     },
     "cordova-plugin-photo-library": {
       "PACKAGE_NAME": "com.openfintech.openpos"
+    },
+    "cordova-plugin-contacts": {
+      "PACKAGE_NAME": "com.openfintech.openpos"
     }
   },
   "dependent_plugins": {

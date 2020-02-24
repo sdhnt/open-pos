@@ -1,0 +1,47 @@
+<!--
+  Generated template for the IndividualContactPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-content padding>
+  <ion-buttons end>
+    <button ion-button style="background-color: black; color: white;" (click)="goBack()">Done</button>
+  </ion-buttons>
+  <ion-row>
+    <ion-col col-6 class="top-text">
+      {{ contact.displayName }}
+    </ion-col>
+    <ion-col col-6 style="text-align: end;" class="top-text">
+      <span style="color: red;" *ngIf="contact.balance<0; else nonNeg">{{ contact.balance }}</span>
+      <span style="color: green;" *ngIf="contact.balance>0; else zero" id="nonNeg">{{ contact.balance }}</span>
+      <span style="color: blue;" *ngIf="contact.balance==0" id="zero">0</span>
+    </ion-col>
+  </ion-row>
+  <ion-grid style="padding: 0px;">
+    <ion-row style="text-align: center; font-weight: bold; font-size: 16px;">
+      <ion-col col-6 class="table-col">Date</ion-col>
+      <ion-col col-3 class="table-col">Borrowed</ion-col>
+      <ion-col col-3 class="table-col">Paid</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let val of contact.transacHistory">
+      <ion-col col-6 class="table-col">{{ getDateTime(val.date) }}</ion-col>
+      <ion-col col-3 style="text-align: center;" class="table-col">
+        <span *ngIf="val.amount<0" style="color: red;">{{ val.amount }}</span>
+      </ion-col>
+      <ion-col col-3 style="text-align: center;" class="table-col">
+        <span *ngIf="val.amount>0" style="color: green;">{{ val.amount }}</span>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<ion-footer>
+  <ion-row>
+    <ion-col col-6>
+      <button block ion-button style="background-color: red; color: white;" (click)="transaction(-1)">Borrowed</button>
+    </ion-col>
+    <ion-col col-6>
+      <button block ion-button style="background-color: green; color: white;" (click)="transaction(1)">Paid</button>
+    </ion-col>
+  </ion-row>
+</ion-footer>
