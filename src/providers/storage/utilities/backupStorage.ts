@@ -39,12 +39,13 @@ export const transactionCallback = (transaction, output): void => {
   productList.forEach(product => {
     const currentProduct = output.products.find(data => data.code === product.code);
     if (!currentProduct) return;
-    const quantity = Number(product.qty);
+    let quantity = Number(product.qty);
     const currentStock = Number(currentProduct.stock_qty);
     if (!isNaN(quantity) && !isNaN(currentStock)) {
-      currentProduct.stock_qty = currentStock - quantity;
+      quantity = total >= 0 ? -1 * quantity : quantity;
+      currentProduct.stock_qty = currentStock + quantity;
       currentProduct.updatedAt = new Date();
-      console.log(`new cloud transaction: ${product.name} stock quantity decreased by: ${quantity}`);
+      console.log(`new cloud transaction: ${currentProduct.name} stock quantity change by: ${quantity}`);
     }
   });
 };

@@ -111,7 +111,7 @@ export class UpdateStockPage {
       const prodidlist = [];
       const pnllist = [];
       const discountlist = [];
-      itemslist.push(this.product);
+      itemslist.push({ ...this.product, qty: this.prodqty });
       prodidlist.push(this.expiryDate);
       const dataexp = {
         itemslist: itemslist,
