@@ -96,7 +96,7 @@ export class StorageProvider {
     }
 
     // prune user object to reduce data overhead
-    for (const key of ["businessPerformance", "categories", "products", "transactions"]) delete user[key];
+    for (const key of ["businessPerformance", "categories"]) delete user[key];
     this.user = { ...user, id };
 
     // save user data in memory
@@ -264,6 +264,7 @@ export class StorageProvider {
   }
 
   async addCategory(data): Promise<void> {
+    await this.storage.ready();
     let categories = JSON.parse(await this.getCategories());
     if (!categories || categories.length === 0) categories = [];
 
@@ -283,6 +284,7 @@ export class StorageProvider {
   }
 
   async deleteCategory(data): Promise<void> {
+    await this.storage.ready();
     let categories = JSON.parse(await this.getCategories());
     if (!categories) categories = [];
 
@@ -302,6 +304,7 @@ export class StorageProvider {
   }
 
   async addProduct(data): Promise<void> {
+    await this.storage.ready();
     let products = JSON.parse(await this.getProducts());
     if (!products) products = [];
 
@@ -316,6 +319,7 @@ export class StorageProvider {
   }
 
   async addTransactions(data): Promise<void> {
+    await this.storage.ready();
     let transactions = JSON.parse(await this.getTransactions());
     if (!transactions) transactions = [];
 
@@ -324,12 +328,20 @@ export class StorageProvider {
     await this.storage.set("transactions", JSON.stringify(transactions));
   }
 
-  async getTransactions(): Promise<string | null> {
+  async getTransactions(options?: { start?: Date; end?: Date }): Promise<string | null> {
     await this.storage.ready();
-    return await this.storage.get("transactions");
+    const defaultOptions = { start: new Date("2000-01-01T00:00:00.000Z"), end: new Date() };
+    const { start, end } = { ...defaultOptions, ...options };
+
+    const transactions = JSON.parse(await this.storage.get("transactions"));
+    const filteredTransactions = transactions.filter(transaction =>
+      moment(transaction.datetime).isBetween(moment(start), moment(end)),
+    );
+    return JSON.stringify(filteredTransactions);
   }
 
   async deleteTransactions(data): Promise<void> {
+    await this.storage.ready();
     let transactions = JSON.parse(await this.getTransactions());
     if (!transactions) transactions = [];
 
@@ -346,12 +358,14 @@ export class StorageProvider {
   }
 
   async searchProduct(barcode): Promise<any[]> {
+    await this.storage.ready();
     let products = JSON.parse(await this.getProducts());
     if (!products) products = [];
     return products.find(product => product.code === barcode);
   }
 
   async updateProduct(data, old_code): Promise<void> {
+    await this.storage.ready();
     let products = JSON.parse(await this.getProducts());
     if (!products) products = [];
 
@@ -361,6 +375,7 @@ export class StorageProvider {
   }
 
   async deleteProduct(data): Promise<void> {
+    await this.storage.ready();
     let products = JSON.parse(await this.getProducts());
     if (!products) products = [];
 
@@ -424,8 +439,8 @@ export class StorageProvider {
   }
 
   async setLastBackup(time?: Date): Promise<void> {
-    if (!time) time = new Date();
     await this.storage.ready();
+    if (!time) time = new Date();
     await this.storage.set("lastBackup", time);
   }
 
