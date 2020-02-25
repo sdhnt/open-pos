@@ -16,7 +16,7 @@ import { syncDocuments, transactionCallback } from "./utilities/backupStorage";
 export class StorageProvider {
   @ViewChild(Nav) nav: Nav;
 
-  //
+  // main data objects
   products: any = [];
   categories: any = [];
   transactions: any = [];
@@ -30,6 +30,18 @@ export class StorageProvider {
   }
 
   constructor(public storage: Storage, public toastCtrl: ToastController, public navCtrl: NavController) {}
+
+  async hasData(): Promise<boolean> {
+    await this.storage.ready();
+    const userInMemory = JSON.parse(await this.getUserDat());
+    const productsInMemory = JSON.parse(await this.getProducts());
+    const transactionsInMemory = JSON.parse(await this.getTransactions());
+    const userCondition = userInMemory && userInMemory.id;
+    const productCondition = productsInMemory && productsInMemory.length > 0;
+    const transactionCondition = transactionsInMemory && transactionsInMemory.length > 0;
+
+    return userCondition && productCondition && transactionCondition;
+  }
 
   async clearMem() {
     await this.storage.clear();
@@ -52,13 +64,8 @@ export class StorageProvider {
     await this.storage.ready();
 
     // check if user data is already in memory
-    const userInMemory = JSON.parse(await this.getUserDat());
-    const productsInMemory = JSON.parse(await this.getProducts());
-    const transactionsInMemory = JSON.parse(await this.getTransactions());
-    const userCondition = userInMemory && userInMemory.id;
-    const productCondition = productsInMemory && productsInMemory.length > 0;
-    const transactionCondition = transactionsInMemory && transactionsInMemory.length > 0;
-    if (!force && userCondition && productCondition && transactionCondition) return false;
+    const dataExist = await this.hasData();
+    if (!force && dataExist) return false;
 
     console.log("setMem(): query user data from firestore");
     // query user from firestore
