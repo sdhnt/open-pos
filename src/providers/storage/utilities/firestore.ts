@@ -1,9 +1,9 @@
 import firebase from "firebase";
-import axios from "axios";
 import moment from "moment";
 import { cloneDeep } from "lodash";
 import Timestamp = firebase.firestore.Timestamp;
 import Transaction = firebase.firestore.Transaction;
+import { hasInternet } from "../../../utilities/hasInternet";
 
 interface Document {
   id: string;
@@ -92,12 +92,4 @@ export const updateCollectionWithTransaction = async (
 
     await t.set(reference, { ...cloudDoc, id }, { merge: true });
   }
-};
-
-const hasInternet = async (url?: string): Promise<boolean> => {
-  try {
-    if (!url) url = "https://us-central1-open-fintech.cloudfunctions.net/data/versionNumber";
-    await axios.get(url);
-    return true;
-  } catch (error) {}
 };

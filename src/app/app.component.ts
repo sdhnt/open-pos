@@ -12,6 +12,8 @@ import { UserDataPage } from "../pages/user-data/user-data";
 import { TranslateConfigService } from "../providers/translation/translate-config.service";
 import { TranslateService } from "@ngx-translate/core";
 import { FcmService } from "../providers/firebase-cloud-messaging/fcm.service";
+import { hasInternet } from "../utilities/hasInternet";
+import { initializeFirebase } from "../utilities/initializeFirebase";
 
 @Component({
   templateUrl: "app.html",
@@ -19,11 +21,11 @@ import { FcmService } from "../providers/firebase-cloud-messaging/fcm.service";
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = LoginPage;
+  rootPage: any;
   //2rootPage: any = AddProdSignupPage;
 
   language: "en";
-  pages: Array<{ title: string; component: any }>;
+  pages: Array<{ title: string; component: any }> = [{ title: "Home", component: TransactionHomePage }];
   userLang: string;
 
   constructor(
@@ -38,15 +40,6 @@ export class MyApp {
     private fcm: FcmService,
   ) {
     this.initializeApp();
-    this.pages = [
-      { title: "Home", component: TransactionHomePage },
-      //  { title: "View/Edit Products", component: DashboardPage },
-      // { title: "Update Stock/Expenses", component: ExpenseTransactionPage },
-      // { title: "Business Performance", component: SummarySummaryPage },
-      // { title: "Coach", component: CoachHomePage },
-      //  { title: "Apply for Loan", component: LoanHomePage },
-      //{ title: "Contact Us", component: ContactUsPage },
-    ];
     this.backButtonEvent();
 
     this.sp.getUserDat().then(user => {
@@ -80,20 +73,24 @@ export class MyApp {
     }
   }
 
-  logout() {
+  async logout() {
     //this.sp.backupStorageLogout().then();
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        this.toastCtrl
-          .create({
-            message: "Logged out!",
-            duration: 3000,
-          })
-          .present();
-        this.nav.setRoot(LoginPage);
-      });
+    if (await hasInternet())
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          this.toastCtrl
+            .create({
+              message: "Logged out!",
+              duration: 3000,
+            })
+            .present();
+          this.nav.setRoot(LoginPage);
+        });
+    else {
+      console.log("no internet, logout is not allowed");
+    }
   }
 
   resetBackButton: any;
@@ -101,7 +98,11 @@ export class MyApp {
   ionViewDidEnter() {}
 
   initializeApp() {
-    this.platform.ready().then(() => {
+    this.platform.ready().then(async () => {
+      // initialise firebase app
+      const isThereFirebase = await initializeFirebase();
+      if (!isThereFirebase) console.log("no firebase");
+
       this.statusBar.styleDefault();
       this.splashScreen.hide();
 
@@ -110,6 +111,10 @@ export class MyApp {
       this.translateService.use("en");
       // do not remove the next line of code, will fix FCM in due time
       // this.setupNotifications();
+
+      // if device memory has user data, open transaction home page, else open login page
+      const dataExist = await this.sp.hasData();
+      this.rootPage = dataExist ? TransactionHomePage : LoginPage;
     });
   }
 

@@ -34,7 +34,6 @@ import { PhotoLibrary } from "@ionic-native/photo-library";
 import { Facebook } from "@ionic-native/facebook";
 import { Contacts } from "@ionic-native/contacts";
 
-import * as firebase from "firebase/app";
 import { LoginPageModule } from "../pages/login/login.module";
 import { TransactionHomePageModule } from "../pages/transaction-home/transaction-home.module";
 import { AddProductPageModule } from "../pages/addproduct/addproduct.module";
@@ -51,18 +50,6 @@ import { ContactsPageModule } from "../pages/contacts/contacts.module";
 import { ContactsPage } from "../pages/contacts/contacts";
 import { IndividualContactPage } from "../pages/individual-contact/individual-contact";
 import { IndividualContactPageModule } from "../pages/individual-contact/individual-contact.module";
-
-const config = {
-  apiKey: "AIzaSyBlxUkCX8OPsb9QL2p_jN8vaHdb5LhsS7A",
-  authDomain: "open-fintech.firebaseapp.com",
-  databaseURL: "https://open-fintech.firebaseio.com",
-  projectId: "open-fintech",
-  storageBucket: "open-fintech.appspot.com",
-  messagingSenderId: "1001643033524",
-  measurementId: "G-CECMRG504L",
-};
-
-firebase.initializeApp(config);
 
 // language translation service
 export function HttpLoaderFactory(http: HttpClient) {

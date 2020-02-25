@@ -23,6 +23,7 @@ import { AppVersion } from "@ionic-native/app-version";
 import axios from "axios";
 import { Market } from "@ionic-native/market";
 import { ContactsPage } from "../contacts/contacts";
+import { hasInternet } from "../../utilities/hasInternet";
 
 /**
  * Generated class for the TransactionHomePage page.
@@ -86,56 +87,60 @@ export class TransactionHomePage {
     const mg3 = this.translateConfigService.getTranslatedMessage("Not Now");
     const mg4 = this.translateConfigService.getTranslatedMessage("Update now");
     const url = "https://us-central1-open-fintech.cloudfunctions.net/data/versionNumber";
-    axios
-      .get(url)
-      .then(response => {
-        const newestVersion = response.data.versionNumber;
-        this.appVersion
-          .getVersionNumber()
-          .then(version => {
-            console.log(version);
-            if (newestVersion > version) {
-              this.alertCtrl
-                .create({
-                  //@ts-ignore
-                  title: mg1.value,
-                  //@ts-ignore
-                  subTitle: mg2.value,
-                  buttons: [
-                    {
+
+    hasInternet().then(isThereInternet => {
+      if (isThereInternet)
+        axios
+          .get(url)
+          .then(response => {
+            const newestVersion = response.data.versionNumber;
+            this.appVersion
+              .getVersionNumber()
+              .then(version => {
+                console.log(version);
+                if (newestVersion > version) {
+                  this.alertCtrl
+                    .create({
                       //@ts-ignore
-                      text: mg3.value,
-                      role: "cancel",
-                    },
-                    {
+                      title: mg1.value,
                       //@ts-ignore
-                      text: mg4.value,
-                      handler: () => {
-                        //window.open("https://play.google.com/store/apps/details?id=com.openfintech.openpos", "_system", "location=yes");
-                        market
-                          .open("com.openfintech.openpos")
-                          .then(() => {
-                            console.log("Opened Google play");
-                          })
-                          .catch(error => {
-                            console.log(error);
-                          });
-                      },
-                    },
-                  ],
-                })
-                .present();
-            } else {
-              console.log("Version same");
-            }
+                      subTitle: mg2.value,
+                      buttons: [
+                        {
+                          //@ts-ignore
+                          text: mg3.value,
+                          role: "cancel",
+                        },
+                        {
+                          //@ts-ignore
+                          text: mg4.value,
+                          handler: () => {
+                            //window.open("https://play.google.com/store/apps/details?id=com.openfintech.openpos", "_system", "location=yes");
+                            market
+                              .open("com.openfintech.openpos")
+                              .then(() => {
+                                console.log("Opened Google play");
+                              })
+                              .catch(error => {
+                                console.log(error);
+                              });
+                          },
+                        },
+                      ],
+                    })
+                    .present();
+                } else {
+                  console.log("Version same");
+                }
+              })
+              .catch(error => {
+                console.log(error);
+              });
           })
           .catch(error => {
             console.log(error);
           });
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    });
   }
 
   async ionViewDidEnter() {

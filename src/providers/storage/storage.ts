@@ -11,6 +11,7 @@ import {
   updateCollectionWithTransaction,
 } from "./utilities/firestore";
 import { syncDocuments, transactionCallback } from "./utilities/backupStorage";
+import { initializeFirebase } from "../../utilities/initializeFirebase";
 
 @Injectable()
 export class StorageProvider {
@@ -30,6 +31,12 @@ export class StorageProvider {
   }
 
   constructor(public storage: Storage, public toastCtrl: ToastController, public navCtrl: NavController) {}
+
+  async isThereFirebase(): Promise<boolean> {
+    const isThereFirebase = await initializeFirebase();
+    if (!isThereFirebase) console.log("no firebase");
+    return isThereFirebase;
+  }
 
   async hasData(): Promise<boolean> {
     await this.storage.ready();
@@ -59,6 +66,10 @@ export class StorageProvider {
   }
 
   async setMem(options?: { force?: boolean }): Promise<boolean> {
+    // check if there is internet and firebase
+    const isThereFirebase = await this.isThereFirebase();
+    if (!isThereFirebase) return false;
+
     const defaultOptions = { force: false };
     const { force } = { ...defaultOptions, ...options };
     await this.storage.ready();
@@ -141,6 +152,9 @@ export class StorageProvider {
   // }
 
   async backupStorage(): Promise<void> {
+    const isThereFirebase = await this.isThereFirebase();
+    if (!isThereFirebase) return;
+
     const user = JSON.parse(await this.getUserDat());
     let lastBackup = await this.getLastBackup();
     lastBackup = lastBackup ? lastBackup : new Date("2000-01-01T00:00:00.000Z");
