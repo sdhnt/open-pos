@@ -60,7 +60,7 @@ export class StorageProvider {
 
   async setMem(options?: { force?: boolean }): Promise<boolean> {
     const defaultOptions = { force: false };
-    const { force } = options ? options : defaultOptions;
+    const { force } = { ...defaultOptions, ...options };
     await this.storage.ready();
 
     // check if user data is already in memory

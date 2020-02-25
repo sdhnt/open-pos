@@ -30,7 +30,7 @@ export const queryCollection = async (path: string, options?: { lastBackup?: Dat
   if (!(await hasInternet())) throw new Error("No internet connection");
   const db = firebase.firestore();
   const defaultOptions = { lastBackup: new Date("2000-01-01T00:00:00.000Z") };
-  const { lastBackup } = options ? options : defaultOptions;
+  const { lastBackup } = { ...defaultOptions, ...options };
 
   let reference: firebase.firestore.Query = db.collection(path);
   if (lastBackup) reference = reference.where("updatedAt", ">=", Timestamp.fromDate(new Date(lastBackup)));
