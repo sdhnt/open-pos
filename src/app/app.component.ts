@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import { Nav, Platform, ToastController, App } from "ionic-angular";
+import { Nav, Platform, ToastController, App, AlertController } from "ionic-angular";
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 
@@ -36,6 +36,7 @@ export class MyApp {
     private translateConfigService: TranslateConfigService,
     public splashScreen: SplashScreen,
     public toastCtrl: ToastController,
+    public alertCtrl: AlertController,
     public sp: StorageProvider,
     private fcm: FcmService,
   ) {
@@ -113,7 +114,19 @@ export class MyApp {
       // this.setupNotifications();
 
       // if device memory has user data, open transaction home page, else open login page
+      // if no data exist, and no firebase app
       const dataExist = await this.sp.hasData();
+      if (!isThereFirebase && !dataExist) {
+        console.log("critical error: cannot work without internet nor data");
+
+        const alert = this.alertCtrl.create({
+          title: "No internet and not logged in.",
+          subTitle: "Please connect to the internet, and restart this app.",
+        });
+        await alert.present();
+
+        return;
+      }
       this.rootPage = dataExist ? TransactionHomePage : LoginPage;
     });
   }
