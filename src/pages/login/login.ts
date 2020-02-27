@@ -38,7 +38,7 @@ export class LoginPage {
 
   listOfLang: string[] = [];
   country_code: any;
-  fb: boolean = false;
+  fb = false;
 
   constructor(
     public navCtrl: NavController,
