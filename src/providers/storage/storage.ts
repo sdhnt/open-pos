@@ -279,8 +279,7 @@ export class StorageProvider {
 
   async addCategory(data): Promise<void> {
     await this.storage.ready();
-    let categories = JSON.parse(await this.getCategories());
-    if (!categories || categories.length === 0) categories = [];
+    const categories = JSON.parse(await this.getCategories());
 
     data.id = uniqid(); // generates a unique id to track categories
     data.updatedAt = new Date();
@@ -290,17 +289,16 @@ export class StorageProvider {
 
   async getCategories(): Promise<string | null> {
     await this.storage.ready();
-    const categories = JSON.parse(await this.storage.get("categories"));
+    let categories = JSON.parse(await this.storage.get("categories"));
+    if (!categories) categories = [];
 
-    let filteredCategories = [];
-    if (categories && categories.length) filteredCategories = categories.filter(category => !category.isDisabled);
+    const filteredCategories = categories.filter(category => !category.isDisabled);
     return JSON.stringify(filteredCategories);
   }
 
   async deleteCategory(data): Promise<void> {
     await this.storage.ready();
-    let categories = JSON.parse(await this.getCategories());
-    if (!categories) categories = [];
+    const categories = JSON.parse(await this.getCategories());
 
     const changes = {
       updatedAt: new Date(),
@@ -314,13 +312,14 @@ export class StorageProvider {
 
   async getSummary(): Promise<string | null> {
     await this.storage.ready();
-    return await this.storage.get("summary");
+    let summary = JSON.parse(await this.storage.get("summary"));
+    if (!summary) summary = [];
+    return JSON.stringify(summary);
   }
 
   async addProduct(data): Promise<void> {
     await this.storage.ready();
-    let products = JSON.parse(await this.getProducts());
-    if (!products) products = [];
+    const products = JSON.parse(await this.getProducts());
 
     data.updatedAt = new Date();
     products.push(data);
@@ -329,13 +328,14 @@ export class StorageProvider {
 
   async getProducts(): Promise<string | null> {
     await this.storage.ready();
-    return await this.storage.get("products");
+    let products = JSON.parse(await this.storage.get("products"));
+    if (!products) products = [];
+    return JSON.stringify(products);
   }
 
   async addTransactions(data): Promise<void> {
     await this.storage.ready();
-    let transactions = JSON.parse(await this.getTransactions());
-    if (!transactions) transactions = [];
+    const transactions = JSON.parse(await this.getTransactions());
 
     data.updatedAt = new Date();
     transactions.push(data);
@@ -357,8 +357,7 @@ export class StorageProvider {
 
   async deleteTransactions(data): Promise<void> {
     await this.storage.ready();
-    let transactions = JSON.parse(await this.getTransactions());
-    if (!transactions) transactions = [];
+    const transactions = JSON.parse(await this.getTransactions());
 
     const changes = {
       updatedAt: new Date(),
@@ -374,15 +373,13 @@ export class StorageProvider {
 
   async searchProduct(barcode): Promise<any[]> {
     await this.storage.ready();
-    let products = JSON.parse(await this.getProducts());
-    if (!products) products = [];
+    const products = JSON.parse(await this.getProducts());
     return products.find(product => product.code === barcode);
   }
 
   async updateProduct(data, old_code): Promise<void> {
     await this.storage.ready();
-    let products = JSON.parse(await this.getProducts());
-    if (!products) products = [];
+    const products = JSON.parse(await this.getProducts());
 
     data.updatedAt = new Date();
     const newProducts = products.map(product => (product.code === old_code && product.id === data.id ? data : product));
@@ -391,8 +388,7 @@ export class StorageProvider {
 
   async deleteProduct(data): Promise<void> {
     await this.storage.ready();
-    let products = JSON.parse(await this.getProducts());
-    if (!products) products = [];
+    const products = JSON.parse(await this.getProducts());
 
     const changes = {
       updatedAt: new Date(),
@@ -407,8 +403,7 @@ export class StorageProvider {
   async saveContacts(newContacts, manualAdd: boolean): Promise<void> {
     if (!newContacts || newContacts.length === 0) return;
     await this.storage.ready();
-    let contacts = JSON.parse(await this.storage.get("contacts"));
-    if (!contacts) contacts = [];
+    const contacts = JSON.parse(await this.storage.get("contacts"));
 
     newContacts.forEach(newContact => {
       const index = contacts.findIndex(contact => contact.displayName == newContact.displayName);
@@ -438,21 +433,37 @@ export class StorageProvider {
 
   async getContacts(): Promise<string | null> {
     await this.storage.ready();
-    return await this.storage.get("contacts");
+    let contacts = JSON.parse(await this.storage.get("contacts"));
+    if (!contacts) contacts = [];
+    return JSON.stringify(contacts);
+  }
+
+  async deleteContact(contactName): Promise<void> {
+    const contacts = JSON.parse(await this.getContacts());
+    for (let i = 0; i < contacts.length; i++) {
+      if (contacts[i].displayName === contactName) {
+        contacts.splice(i, 1);
+        break;
+      }
+    }
+    await this.storage.set("contacts", JSON.stringify(contacts));
   }
 
   async updateContactTransaction(contactName, newTransactions): Promise<void> {
     await this.storage.ready();
-    let contacts = JSON.parse(await this.getContacts());
-    if (!contacts) contacts = [];
+    const contacts = JSON.parse(await this.getContacts());
+
     const contact = contacts.find(contact => contact.displayName === contactName);
-    let newBalance = contact.balance ? contact.balance : 0;
-    newTransactions.forEach(transaction => {
-      contact.transacHistory.unshift(transaction);
-      newBalance += transaction.amount;
-    });
-    contact.balance = newBalance;
-    contact.updatedAt = new Date();
+    if (contact) {
+      let newBalance = contact.balance ? contact.balance : 0;
+      newTransactions.forEach(transaction => (newBalance += transaction.amount));
+      contact.transacHistory = newTransactions;
+      contact.balance = newBalance;
+      contact.updatedAt = new Date();
+    } else {
+      console.log("no contact found to add new transaction");
+    }
+
     await this.storage.set("contacts", JSON.stringify(contacts));
   }
 

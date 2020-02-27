@@ -136,4 +136,23 @@ export class IndividualContactPage {
       return "0" + t.toString();
     }
   }
+
+  delete() {
+    const a = this.alertCtrl.create({
+      subTitle: "Are you sure you want to delete this contact?",
+      buttons: [
+        {
+          text: "NO",
+          role: "cancel",
+        },
+        {
+          text: "YES",
+          handler: () => {
+            this.sp.deleteContact(this.contact.displayName).then(() => this.navCtrl.pop());
+          },
+        },
+      ],
+    });
+    a.present();
+  }
 }

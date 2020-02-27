@@ -5,9 +5,17 @@
   Ionic pages and navigation.
 -->
 <ion-content padding>
-  <ion-buttons end>
-    <button ion-button style="background-color: black; color: white;" (click)="goBack()">Done</button>
-  </ion-buttons>
+  <ion-row>
+    <ion-col col-4>
+      <button ion-button style="background-color: red; color: white;" (click)="delete()">Delete</button>
+    </ion-col>
+    <ion-col col-4></ion-col>
+    <ion-col col-4>
+      <ion-buttons end>
+        <button ion-button style="background-color: black; color: white; text-align: end;" (click)="goBack()">Done</button>
+      </ion-buttons>
+    </ion-col>
+  </ion-row>
   <ion-row>
     <ion-col col-6 class="top-text">
       {{ contact.displayName }}
