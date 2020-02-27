@@ -64,7 +64,7 @@
         <ion-option value="91">🇮🇳 +91 </ion-option>
         
       </ion-select>
-      <ion-input type=”text” placeholder="9964758505" [(ngModel)]="phone"></ion-input>
+      <ion-input type=”number” placeholder="9964758505" [(ngModel)]="phone"></ion-input>
       </ion-row>
       <button ion-button ion-button block round outline color="light" style="margin-top: 20px;" (click)="signInPhone()">{{"Login with Phone Number"|translate}}</button>
       <button ion-button block round style="margin-top: 10px; background-color: #3b5998;" (click)="fbLogin()">Facebook Login</button>
@@ -78,7 +78,7 @@
 <div *ngIf="otpmode==1">
   <button ion-button block clear color="light" style="margin-top: 10px;" >{{"Enter the Confirmation code"|translate}}</button>
   <button ion-button block clear color="light" style="margin-top: 10px;" >{{phone}}</button>
-  <ion-row class="row-style" style="margin-top: 20px;"><ion-input placeholder="Enter OTP here" [(ngModel)]="otpnum"></ion-input></ion-row>
+  <ion-row class="row-style" style="margin-top: 20px;"><ion-input placeholder="Enter OTP here" type=”number” [(ngModel)]="otpnum"></ion-input></ion-row>
   <button ion-button ion-button block round outline color="light" style="margin-top: 20px;" (click)="otpFn()">{{"Submit OTP"|translate}}</button>
   <button ion-button ion-button block round outline color="light" style="margin-top: 20px;" (click)="backToLogin()">{{"Cancel"|translate}}</button>
   <ion-row style="margin-top: 20px;">
