@@ -38,7 +38,7 @@ export class LoginPage {
 
   listOfLang: string[] = [];
   country_code: any;
-  fb: boolean = false;
+  fb = false;
 
   constructor(
     public navCtrl: NavController,
@@ -90,15 +90,15 @@ export class LoginPage {
               //navCtrl.setRoot(TransactionHomePage);
               //});
 
-              const msg = this.translateConfigService.getTranslatedMessage("Internet Unavailable");
+              // const msg = this.translateConfigService.getTranslatedMessage("Internet Unavailable");
 
-              this.toastCtrl
-                .create({
-                  // @ts-ignore
-                  message: msg.value,
-                  duration: 2000,
-                })
-                .present();
+              // this.toastCtrl
+              //   .create({
+              //     // @ts-ignore
+              //     message: msg.value,
+              //     duration: 2000,
+              //   })
+              //   .present();
             } else {
               this.sp.setMem().then(() => {
                 zone.run(() => {
