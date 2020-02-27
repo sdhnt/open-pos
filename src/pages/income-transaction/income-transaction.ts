@@ -98,7 +98,8 @@ export class IncomeTransactionPage {
     cash_balance: "",
     currency: "",
     created: "",
-    logo_url: "https://scontent.fhkg10-1.fna.fbcdn.net/v/t1.0-9/79674109_100715951430298_615106696234139648_n.png?_nc_cat=109&_nc_ohc=2pdu1s1LRmoAX-04NCO&_nc_ht=scontent.fhkg10-1.fna&oh=70fea5a886837de2b9cf4aaf4a4112a8&oe=5EF6F085",
+    logo_url:
+      "https://scontent.fhkg10-1.fna.fbcdn.net/v/t1.0-9/79674109_100715951430298_615106696234139648_n.png?_nc_cat=109&_nc_ohc=2pdu1s1LRmoAX-04NCO&_nc_ht=scontent.fhkg10-1.fna&oh=70fea5a886837de2b9cf4aaf4a4112a8&oe=5EF6F085",
     language: "en",
     owner: "",
     owner_name: "",
@@ -445,7 +446,8 @@ export class IncomeTransactionPage {
             text: message5.value,
             handler: data => {
               this.toastCtrl.create({ message: "Please wait- removing...", duration: 2000 }).present();
-              this.userdata.logo_url = "https://scontent.fhkg10-1.fna.fbcdn.net/v/t1.0-9/79674109_100715951430298_615106696234139648_n.png?_nc_cat=109&_nc_ohc=2pdu1s1LRmoAX-04NCO&_nc_ht=scontent.fhkg10-1.fna&oh=70fea5a886837de2b9cf4aaf4a4112a8&oe=5EF6F085";
+              this.userdata.logo_url =
+                "https://scontent.fhkg10-1.fna.fbcdn.net/v/t1.0-9/79674109_100715951430298_615106696234139648_n.png?_nc_cat=109&_nc_ohc=2pdu1s1LRmoAX-04NCO&_nc_ht=scontent.fhkg10-1.fna&oh=70fea5a886837de2b9cf4aaf4a4112a8&oe=5EF6F085";
               this.sp.setUserDat(this.userdata).then(() => {
                 this.toastCtrl.create({ message: "Removed!", duration: 2000 }).present();
               });
