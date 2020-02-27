@@ -279,7 +279,8 @@ export class StorageProvider {
 
   async addCategory(data): Promise<void> {
     await this.storage.ready();
-    const categories = JSON.parse(await this.getCategories());
+    let categories = JSON.parse(await this.getCategories());
+    if (!categories || categories.length === 0) categories = [];
 
     data.id = uniqid(); // generates a unique id to track categories
     data.updatedAt = new Date();
@@ -289,16 +290,17 @@ export class StorageProvider {
 
   async getCategories(): Promise<string | null> {
     await this.storage.ready();
-    let categories = JSON.parse(await this.storage.get("categories"));
-    if (!categories) categories = [];
+    const categories = JSON.parse(await this.storage.get("categories"));
 
-    const filteredCategories = categories.filter(category => !category.isDisabled);
+    let filteredCategories = [];
+    if (categories && categories.length) filteredCategories = categories.filter(category => !category.isDisabled);
     return JSON.stringify(filteredCategories);
   }
 
   async deleteCategory(data): Promise<void> {
     await this.storage.ready();
-    const categories = JSON.parse(await this.getCategories());
+    let categories = JSON.parse(await this.getCategories());
+    if (!categories) categories = [];
 
     const changes = {
       updatedAt: new Date(),
@@ -312,14 +314,13 @@ export class StorageProvider {
 
   async getSummary(): Promise<string | null> {
     await this.storage.ready();
-    let summary = JSON.parse(await this.storage.get("summary"));
-    if (!summary) summary = [];
-    return JSON.stringify(summary);
+    return await this.storage.get("summary");
   }
 
   async addProduct(data): Promise<void> {
     await this.storage.ready();
-    const products = JSON.parse(await this.getProducts());
+    let products = JSON.parse(await this.getProducts());
+    if (!products) products = [];
 
     data.updatedAt = new Date();
     products.push(data);
@@ -328,14 +329,13 @@ export class StorageProvider {
 
   async getProducts(): Promise<string | null> {
     await this.storage.ready();
-    let products = JSON.parse(await this.storage.get("products"));
-    if (!products) products = [];
-    return JSON.stringify(products);
+    return await this.storage.get("products");
   }
 
   async addTransactions(data): Promise<void> {
     await this.storage.ready();
-    const transactions = JSON.parse(await this.getTransactions());
+    let transactions = JSON.parse(await this.getTransactions());
+    if (!transactions) transactions = [];
 
     data.updatedAt = new Date();
     transactions.push(data);
@@ -357,7 +357,8 @@ export class StorageProvider {
 
   async deleteTransactions(data): Promise<void> {
     await this.storage.ready();
-    const transactions = JSON.parse(await this.getTransactions());
+    let transactions = JSON.parse(await this.getTransactions());
+    if (!transactions) transactions = [];
 
     const changes = {
       updatedAt: new Date(),
@@ -373,13 +374,15 @@ export class StorageProvider {
 
   async searchProduct(barcode): Promise<any[]> {
     await this.storage.ready();
-    const products = JSON.parse(await this.getProducts());
+    let products = JSON.parse(await this.getProducts());
+    if (!products) products = [];
     return products.find(product => product.code === barcode);
   }
 
   async updateProduct(data, old_code): Promise<void> {
     await this.storage.ready();
-    const products = JSON.parse(await this.getProducts());
+    let products = JSON.parse(await this.getProducts());
+    if (!products) products = [];
 
     data.updatedAt = new Date();
     const newProducts = products.map(product => (product.code === old_code && product.id === data.id ? data : product));
@@ -388,7 +391,8 @@ export class StorageProvider {
 
   async deleteProduct(data): Promise<void> {
     await this.storage.ready();
-    const products = JSON.parse(await this.getProducts());
+    let products = JSON.parse(await this.getProducts());
+    if (!products) products = [];
 
     const changes = {
       updatedAt: new Date(),
@@ -403,7 +407,8 @@ export class StorageProvider {
   async saveContacts(newContacts, manualAdd: boolean): Promise<void> {
     if (!newContacts || newContacts.length === 0) return;
     await this.storage.ready();
-    const contacts = JSON.parse(await this.storage.get("contacts"));
+    let contacts = JSON.parse(await this.storage.get("contacts"));
+    if (!contacts) contacts = [];
 
     newContacts.forEach(newContact => {
       const index = contacts.findIndex(contact => contact.displayName == newContact.displayName);
@@ -433,9 +438,7 @@ export class StorageProvider {
 
   async getContacts(): Promise<string | null> {
     await this.storage.ready();
-    let contacts = JSON.parse(await this.storage.get("contacts"));
-    if (!contacts) contacts = [];
-    return JSON.stringify(contacts);
+    return await this.storage.get("contacts");
   }
 
   async deleteContact(contactName): Promise<void> {
@@ -451,19 +454,16 @@ export class StorageProvider {
 
   async updateContactTransaction(contactName, newTransactions): Promise<void> {
     await this.storage.ready();
-    const contacts = JSON.parse(await this.getContacts());
-
+    let contacts = JSON.parse(await this.getContacts());
+    if (!contacts) contacts = [];
     const contact = contacts.find(contact => contact.displayName === contactName);
-    if (contact) {
-      let newBalance = contact.balance ? contact.balance : 0;
-      newTransactions.forEach(transaction => (newBalance += transaction.amount));
-      contact.transacHistory = newTransactions;
-      contact.balance = newBalance;
-      contact.updatedAt = new Date();
-    } else {
-      console.log("no contact found to add new transaction");
-    }
-
+    let newBalance = contact.balance ? contact.balance : 0;
+    newTransactions.forEach(transaction => {
+      contact.transacHistory.unshift(transaction);
+      newBalance += transaction.amount;
+    });
+    contact.balance = newBalance;
+    contact.updatedAt = new Date();
     await this.storage.set("contacts", JSON.stringify(contacts));
   }
 
