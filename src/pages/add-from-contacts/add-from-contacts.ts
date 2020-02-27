@@ -31,7 +31,7 @@ export class AddFromContactsPage {
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad AddFromContactsPage");
-    this.getContact()
+    this.getContact();
   }
 
   done() {
