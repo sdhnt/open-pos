@@ -34,7 +34,7 @@
   <ion-searchbar showCancelButton="always" [(ngModel)]="searchterm" (ionChange)="filter()"></ion-searchbar>
 
   <ion-list>
-    <div style="width: 100%; text-align: center;" *ngIf="!filteredList">
+    <div style="width: 100%; text-align: center;" *ngIf="!filteredList || filteredList.length==0">
       <p>No contacts!</p>
       <ion-card padding>
         Track which customers owe you money and how much they owe you using this page! <br><br>

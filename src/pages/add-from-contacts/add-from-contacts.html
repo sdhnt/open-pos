@@ -15,7 +15,7 @@
 </ion-header>
 
 <ion-content padding>
-  <button ion-button (click)="getContact()">Import</button>
+  <ion-card padding *ngIf="!filteredList || filteredList.length==0"> If you see the page empty, please press "Import" button and give us permission to access your contacts <br><button ion-button (click)="getContact()">Import</button> </ion-card>
   <ion-searchbar showCancelButton = "always" [(ngModel)]="searchterm" (ionChange)="filter()"></ion-searchbar>
   <ion-list>
     <ion-item *ngFor="let contact of filteredList">
