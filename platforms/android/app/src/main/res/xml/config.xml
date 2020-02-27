@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.openfintech.openpos" version="0.0.7" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.openfintech.openpos" version="0.0.8" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <feature name="BackbuttonPlugin">
         <param name="android-package" value="com.badrit.Backbutton.BackbuttonPlugin" />
     </feature>
@@ -92,8 +92,8 @@
     <feature name="EmailComposer">
         <param name="android-package" value="de.appplant.cordova.emailcomposer.EmailComposer" />
     </feature>
-    <name>OPEN POS</name>
-    <description>Free POS Application</description>
+    <name>OPEN Business App</name>
+    <description>Free Business Managment Application for Small Businesses</description>
     <author email="openfintechapp@gmail.com" href="openfinance.app">Open Financial Technology</author>
     <content src="index.html" />
     <allow-navigation href="*" />

@@ -238,10 +238,10 @@
     </ion-grid>
   </ion-card>
   <!-- Dynamically Generate All expense from backend - see feed from prev -->
+  <h4 style="text-align: center;"  *ngIf="showrec==false && isReady==true">
+    <b>{{"Last Receipt"|translate}}</b>
+  </h4>
   <ion-card *ngIf="showrec==false && isReady==true" padding class="last-rec-card">
-    <h2 style="text-align: center;">
-      <b><u>{{"Last Receipt"|translate}}</u></b>
-    </h2>
     <br>
     <div id="recImg">
       <ion-row>

@@ -21,7 +21,7 @@ import { initializeFirebase } from "../utilities/initializeFirebase";
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any;
+  rootPage: any = LoginPage;
   //2rootPage: any = AddProdSignupPage;
 
   language: "en";
@@ -42,6 +42,7 @@ export class MyApp {
   ) {
     this.initializeApp();
     this.backButtonEvent();
+    
 
     this.sp.getUserDat().then(user => {
       if (user == null) {
@@ -70,7 +71,7 @@ export class MyApp {
       //     console.log('success')
       // }, function() {
       //     console.log('fail')
-      // });
+      // });  
     }
   }
 
@@ -127,7 +128,7 @@ export class MyApp {
 
         return;
       }
-      this.rootPage = dataExist ? TransactionHomePage : LoginPage;
+     // this.rootPage = dataExist ? TransactionHomePage : LoginPage;
     });
   }
 
