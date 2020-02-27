@@ -377,8 +377,7 @@ export class LoginPage {
 
   async checkifexist() {
     let flag = 0;
-
-    await firebase
+    return await firebase
       .firestore()
       .collection("users")
       .where("owner", "==", firebase.auth().currentUser.uid)
@@ -390,19 +389,6 @@ export class LoginPage {
           this.otpmode = 0;
           this.signup = 1;
           return false;
-          // this.alertCtrl.create({
-          //   message:"Looks like you need to create an account!"
-          // }).present();
-          // const msg = this.translateConfigService.getTranslatedMessage("Sign Up");
-          // const msg1 = this.translateConfigService.getTranslatedMessage("Please enter your details to create an account");
-          // const msg2 = this.translateConfigService.getTranslatedMessage("Your Name");
-          // const msg3 = this.translateConfigService.getTranslatedMessage("Phone Number");
-          // const msg4 = this.translateConfigService.getTranslatedMessage("Business Name");
-          // const msg5 = this.translateConfigService.getTranslatedMessage("Business Type");
-          // const msg6 = this.translateConfigService.getTranslatedMessage("CANCEL");
-          // const msg7 = this.translateConfigService.getTranslatedMessage("SUBMIT");
-          // const msg8 = this.translateConfigService.getTranslatedMessage("Email: example@abc.com");
-          // const msg9 = this.translateConfigService.getTranslatedMessage("Incomplete. Try Again.");
         } else {
           console.log("loggin you in");
           flag = 0;
@@ -414,78 +400,8 @@ export class LoginPage {
       })
       .catch(error => {
         console.log(error);
+        return false;
       });
-
-    // if (flag == 1) {
-
-    // this.alertCtrl
-    //   .create({
-    //     //@ts-ignore
-    //     title: msg.value,
-    //     //enableBackdropDismiss: false, // <- Here! :)
-    //     //@ts-ignore
-    //     message: msg1.value,
-    //     inputs: [
-    //       //@ts-ignore
-    //       { name: "UserName", placeholder: msg2.value },
-    //       //@ts-ignore
-    //       { name: "PhoneNumber", placeholder: msg3.value, value: "+" + this.country_code + this.phone },
-    //       //@ts-ignore
-    //       { name: "BusinessName", placeholder: msg4.value },
-    //       //@ts-ignore
-    //       { name: "BusinessType", placeholder: msg5.value },
-    //       //@ts-ignore
-    //       { name: "Email", placeholder: msg8.value },
-    //     ],
-    //     buttons: [
-    //       {
-    //         // @ts-ignore
-    //         text: msg6.value,
-    //         handler: data => {
-    //           console.log("Cancel clicked");
-    //         },
-    //       },
-    //       {
-    //         //@ts-ignore
-    //         text: msg7.value,
-    //         handler: data => {
-    //           if (
-    //             data.UserName == null ||
-    //             data.UserName == "" ||
-    //             data.UserName == undefined ||
-    //             data.BusinessName == null ||
-    //             data.BusinessName == "" ||
-    //             data.BusinessName == undefined ||
-    //             data.BusinessType == null ||
-    //             data.BusinessType == "" ||
-    //             data.BusinessType == undefined ||
-    //             data.Email == null ||
-    //             data.Email == "" ||
-    //             data.Email == undefined
-    //           ) {
-    //             this.toastCtrl
-    //               .create({
-    //                 //@ts-ignore
-    //                 message: msg9.value,
-    //                 duration: 5000,
-    //               })
-    //               .present();
-    //           } else {
-    //             this.newaccOwnName = data.UserName;
-    //             this.newaccBName = data.BusinessName;
-    //             this.newaccBType = data.BusinessType;
-    //             this.newaccemail = data.Email;
-    //             this.createAccount();
-    //           }
-    //         },
-    //       },
-    //     ],
-    //   })
-    //   .present();
-    // } else {
-    //   console.log("flag!=1");
-
-    // }
   }
 
   submitSignUp() {
@@ -671,17 +587,23 @@ export class LoginPage {
       .login(["email", "public_profile"])
       .then(loginResponse => {
         const credential = firebase.auth.FacebookAuthProvider.credential(loginResponse.authResponse.accessToken);
-
         firebase
           .auth()
           .signInWithCredential(credential)
-          .then(info => {
-            // alert(JSON.stringify(info));
-            if (!this.checkifexist()) {
+          .then(async info => {
+            console.log(info);
+             //alert(JSON.stringify(info));
+             let accountExist =  await this.checkifexist();
+            if (!accountExist) {
+              console.log("inside new acc");
               this.facebook.api("me?fields=id,name,email", []).then(profile => {
+                console.log(profile);
                 this.newaccOwnName = profile["name"];
                 this.newaccemail = profile["email"];
-                this.fb = true;
+                this.zone.run(()=>{
+                  this.fb = true;
+                  console.log("FB IS TRUE")
+                });
               });
             }
           })
