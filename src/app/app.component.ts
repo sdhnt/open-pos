@@ -21,7 +21,8 @@ import { initializeFirebase } from "../utilities/initializeFirebase";
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = LoginPage;
+  rootPage: any; 
+  //= LoginPage;
   //2rootPage: any = AddProdSignupPage;
 
   language: "en";
