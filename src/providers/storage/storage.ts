@@ -406,11 +406,12 @@ export class StorageProvider {
     const contacts = JSON.parse(await this.storage.get("contacts"));
 
     newContacts.forEach(newContact => {
-      const index = contacts.findIndex(contact => contact.displayName == newContact.displayName);
+      const index = contacts.findIndex(contact => contact.displayName === newContact.displayName);
       if (index != -1) {
-        const { balance, transacHistory, transac_new } = contacts[index];
+        const { id, balance, transacHistory, transac_new } = contacts[index];
         contacts[index] = {
           ...newContact,
+          id,
           balance,
           transacHistory,
           transac_new,
@@ -457,7 +458,7 @@ export class StorageProvider {
     if (contact) {
       let newBalance = contact.balance ? contact.balance : 0;
       newTransactions.forEach(transaction => (newBalance += transaction.amount));
-      contact.transacHistory = newTransactions;
+      contact.transacHistory = newTransactions.concat(contact.transacHistory);
       contact.balance = newBalance;
       contact.updatedAt = new Date();
     } else {
