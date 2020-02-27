@@ -137,21 +137,21 @@ export class IndividualContactPage {
     }
   }
 
-  delete(){
+  delete() {
     const a = this.alertCtrl.create({
       subTitle: "Are you sure you want to delete this contact?",
       buttons: [
         {
           text: "NO",
-          role: "cancel"
+          role: "cancel",
         },
         {
           text: "YES",
           handler: () => {
-            this.sp.deleteContact(this.contact.displayName).then(()=> this.navCtrl.pop());
-          }
-        }
-      ]
+            this.sp.deleteContact(this.contact.displayName).then(() => this.navCtrl.pop());
+          },
+        },
+      ],
     });
     a.present();
   }
