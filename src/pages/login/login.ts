@@ -415,7 +415,19 @@ export class LoginPage {
     this.signup = 0;
   }
 
+  timer2 = 0;
+  startTimer2(){
+    this.zone.run(()=>{
+      this.timer2 = 5;
+      const interval = setInterval(()=>{
+        this.timer2--;
+        if(this.timer2==0) clearInterval(interval);
+      },1000);
+    });
+  }
+
   async otpFn() {
+    this.startTimer2();
     const confirmationResult = this.confirmres;
     let flag = 0;
     await confirmationResult
