@@ -441,6 +441,17 @@ export class StorageProvider {
     return await this.storage.get("contacts");
   }
 
+  async deleteContact(contactName): Promise<void>{
+    let contacts = JSON.parse(await this.getContacts());
+    for(let i = 0; i<contacts.length; i++){
+      if(contacts[i].displayName === contactName){
+        contacts.splice(i,1);
+        break;
+      }
+    }
+    await this.storage.set("contacts", JSON.stringify(contacts));
+  }
+
   async updateContactTransaction(contactName, newTransactions): Promise<void> {
     await this.storage.ready();
     let contacts = JSON.parse(await this.getContacts());

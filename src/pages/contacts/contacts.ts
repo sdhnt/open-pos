@@ -174,7 +174,7 @@ export class ContactsPage {
   }
 
   filter() {
-    if(this.contactList == null) return;
+    if (this.contactList == null) return;
     this.filteredList = this.contactList.filter(contact =>
       contact.displayName.toLowerCase().includes(this.searchterm.toLowerCase()),
     );
