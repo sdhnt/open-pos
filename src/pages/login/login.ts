@@ -592,17 +592,17 @@ export class LoginPage {
           .signInWithCredential(credential)
           .then(async info => {
             console.log(info);
-             //alert(JSON.stringify(info));
-             let accountExist =  await this.checkifexist();
+            //alert(JSON.stringify(info));
+            const accountExist = await this.checkifexist();
             if (!accountExist) {
               console.log("inside new acc");
               this.facebook.api("me?fields=id,name,email", []).then(profile => {
                 console.log(profile);
                 this.newaccOwnName = profile["name"];
                 this.newaccemail = profile["email"];
-                this.zone.run(()=>{
+                this.zone.run(() => {
                   this.fb = true;
-                  console.log("FB IS TRUE")
+                  console.log("FB IS TRUE");
                 });
               });
             }
