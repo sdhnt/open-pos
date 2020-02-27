@@ -443,13 +443,16 @@ export class StorageProvider {
     const contacts = JSON.parse(await this.getContacts());
 
     const contact = contacts.find(contact => contact.displayName === contactName);
-    let newBalance = contact.balance ? contact.balance : 0;
-    newTransactions.forEach(transaction => {
-      contact.transacHistory.unshift(transaction);
-      newBalance += transaction.amount;
-    });
-    contact.balance = newBalance;
-    contact.updatedAt = new Date();
+    if (contact) {
+      let newBalance = contact.balance ? contact.balance : 0;
+      newTransactions.forEach(transaction => (newBalance += transaction.amount));
+      contact.transacHistory = newTransactions;
+      contact.balance = newBalance;
+      contact.updatedAt = new Date();
+    } else {
+      console.log("no contact found to add new transaction");
+    }
+
     await this.storage.set("contacts", JSON.stringify(contacts));
   }
 
