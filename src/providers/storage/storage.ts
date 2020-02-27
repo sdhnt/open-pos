@@ -413,17 +413,19 @@ export class StorageProvider {
     newContacts.forEach(newContact => {
       const index = contacts.findIndex(contact => contact.displayName == newContact.displayName);
       if (index != -1) {
-        const { balance, transacHistory } = contacts[index];
+        const { balance, transacHistory, transac_new } = contacts[index];
         contacts[index] = {
           ...newContact,
           balance,
           transacHistory,
+          transac_new,
           updatedAt: new Date(),
         };
       } else {
         const defaultKeys = {
           balance: 0,
           transacHistory: [],
+          transac_new: [],
           updatedAt: new Date(),
         };
         contacts.push({ ...newContact, ...defaultKeys });

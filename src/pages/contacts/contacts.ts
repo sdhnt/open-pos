@@ -114,8 +114,6 @@ export class ContactsPage {
           const temp = {
             displayName: element.displayName,
             phno: element.phoneNumbers,
-            balance: 0,
-            transacHistory: [],
           };
           // this.contactList.push(temp);
           newContactList.push(temp);
@@ -149,8 +147,6 @@ export class ContactsPage {
                 const temp = {
                   displayName: data.name,
                   phno: data.phno != "" ? [data.phno] : ["0000"],
-                  transacHistory: [],
-                  balance: 0,
                 };
                 // this.contactList.push(temp);
                 this.sp.saveContacts([temp], true).then(() => {

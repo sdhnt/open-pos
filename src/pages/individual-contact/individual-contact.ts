@@ -87,6 +87,10 @@ export class IndividualContactPage {
       const transaction = {
         amount: amountToAdd,
         date: new Date(),
+        reminderDate: "",
+        discount: 0,
+        note: "",
+        img: "",
       };
       if (!this.contact.transacHistory) this.contact.transacHistory = [];
       this.contact.transacHistory.unshift(transaction);
