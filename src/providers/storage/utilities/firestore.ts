@@ -90,6 +90,9 @@ export const updateCollectionWithTransaction = async (
       id = reference.id;
     }
 
+    // add id to document to be saved in memory
+    document.id = id;
+
     await t.set(reference, { ...cloudDoc, id }, { merge: true });
   }
 };
