@@ -441,7 +441,8 @@ export class StorageProvider {
 
   async updateContactTransaction(contactName, newTransactions): Promise<void> {
     await this.storage.ready();
-    const contacts = JSON.parse(await this.getContacts());
+    let contacts = JSON.parse(await this.getContacts());
+    if (!contacts) contacts = [];
     const contact = contacts.find(contact => contact.displayName === contactName);
     let newBalance = contact.balance ? contact.balance : 0;
     newTransactions.forEach(transaction => {

@@ -35,7 +35,12 @@
 
   <ion-list>
     <div style="width: 100%; text-align: center;" *ngIf="!filteredList">
-      <p>No contacts</p>
+      <p>No contacts!</p>
+      <ion-card padding>
+        Track which customers owe you money and how much they owe you using this page! <br><br>
+        Add a customer name/number and then enter in how much they owe you to keep a track. <br><br>
+        We are soon releasing a send automatic SMS reminder feature and an option to see who owes you money on a particular date.
+      </ion-card>
     </div>
     <ion-card *ngFor="let contact of filteredList">
       <ion-row (click)="navToIndividual(contact)" padding>
@@ -48,5 +53,4 @@
       </ion-row>
     </ion-card>
   </ion-list>
-
 </ion-content>

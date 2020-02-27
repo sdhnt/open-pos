@@ -31,7 +31,7 @@ import { AddProductCategoryPage } from "../add-product-category/add-product-cate
   templateUrl: "transaction-product.html",
 })
 export class TransactionProductPage {
-  updateOrCreate = "Create Receipt";
+  updateOrCreate = "Complete Sale";
 
   constructor(
     public navCtrl: NavController,
@@ -154,7 +154,7 @@ export class TransactionProductPage {
   }
 
   ionViewDidLeave() {
-    this.updateOrCreate = "Create Receipt";
+    this.updateOrCreate = "Complete Sale";
   }
 
   calcitems: any = [];
