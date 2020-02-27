@@ -21,7 +21,7 @@ import { initializeFirebase } from "../utilities/initializeFirebase";
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any; 
+  rootPage: any;
   //= LoginPage;
   //2rootPage: any = AddProdSignupPage;
 
@@ -108,7 +108,7 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
 
-      this.translateService.addLangs(["en", "pt"]);
+      this.translateService.addLangs(["en", "my"]);
       this.translateService.setDefaultLang("en");
       this.translateService.use("en");
       // do not remove the next line of code, will fix FCM in due time
@@ -128,7 +128,8 @@ export class MyApp {
 
         return;
       }
-       this.rootPage = dataExist ? TransactionHomePage : LoginPage;
+      this.rootPage = dataExist ? TransactionHomePage : LoginPage;
+      //this.openPage(this.rootPage);
     });
   }
 

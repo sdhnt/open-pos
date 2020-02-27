@@ -347,7 +347,8 @@ export class StorageProvider {
     const defaultOptions = { start: new Date("2000-01-01T00:00:00.000Z"), end: new Date() };
     const { start, end } = { ...defaultOptions, ...options };
 
-    const transactions = JSON.parse(await this.storage.get("transactions"));
+    let transactions = JSON.parse(await this.storage.get("transactions"));
+    if (!transactions) transactions = [];
     const filteredTransactions = transactions.filter(transaction =>
       moment(transaction.datetime).isBetween(moment(start), moment(end)),
     );
