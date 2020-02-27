@@ -83,18 +83,8 @@ export class AddProdSignupPage {
   newprodCat: any = "";
   listCat: any;
   getCategories() {
-    //console.log(this.listCat + " and "+this.newprodCat);
-    this.sp.storageReady().then(() => {
-      this.sp
-        .getCategories()
-        .then(val => {
-          this.listCat = JSON.parse(val);
-          //console.log("Addprodpg: "+this.listCat)
-          this.getCategories();
-        })
-        .catch(err => {
-          alert("Error: " + err);
-        });
+    this.sp.getCategories().then(value => {
+      this.listCat = JSON.parse(value);
     });
   }
 
@@ -203,7 +193,7 @@ export class AddProdSignupPage {
         name: this.newprodCat,
       };
       this.sp.storageReady().then(() => {
-        this.sp.addCategory(data);
+        this.sp.addCategory(data).then();
         setTimeout(() => {
           const message = this.translateConfigService.getTranslatedMessage("Finish");
           const toast = this.toastCtrl.create({
@@ -347,8 +337,6 @@ export class AddProdSignupPage {
             this.image = "";
             this.disabled = false;
 
-            this.sp.backupStorage();
-
             //this.navCtrl.push(ProductListPage);
             this.events.publish("prodAdd:created", 0);
             toast.present();
@@ -411,7 +399,6 @@ export class AddProdSignupPage {
               this.image = "";
               this.disabled = false;
 
-              this.sp.backupStorage();
               //this.navCtrl.push(ProductListPage);
               this.events.publish("prodAdd:created", 0);
               toast.present();

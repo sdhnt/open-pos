@@ -187,7 +187,6 @@ export class TransactionProductPage {
     console.log("ionViewDidLoad TransactionProductPage");
     this.getProducts();
     this.getCategories();
-    this.sp.backupStorage();
   }
 
   buttonReset() {
@@ -195,18 +194,8 @@ export class TransactionProductPage {
   }
 
   getCategories() {
-    //console.log(this.listCat + " and "+this.newprodCat);
-    this.sp.storageReady().then(() => {
-      this.sp
-        .getCategories()
-        .then(val => {
-          this.listCat = JSON.parse(val);
-          //console.log("Addprodpg: "+this.listCat)
-          this.getCategories();
-        })
-        .catch(err => {
-          alert("Error: " + err);
-        });
+    this.sp.getCategories().then(value => {
+      this.listCat = JSON.parse(value);
     });
   }
 
@@ -486,6 +475,7 @@ export class TransactionProductPage {
   }
 
   viewEditProduct(data) {
+    console.log(data);
     this.navCtrl.push(SingleProductPage, { data: data });
   }
 }

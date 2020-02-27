@@ -622,18 +622,8 @@ export class IncomeTransactionPage {
   lastsumtax;
 
   getCategories() {
-    //console.log(this.listCat + " and "+this.newprodCat);
-    this.sp.storageReady().then(() => {
-      this.sp
-        .getCategories()
-        .then(val => {
-          this.listCat = JSON.parse(val);
-          //console.log("Addprodpg: "+this.listCat)
-          this.getCategories();
-        })
-        .catch(err => {
-          alert("Error: " + err);
-        });
+    this.sp.getCategories().then(value => {
+      this.listCat = JSON.parse(value);
     });
   }
 
@@ -661,7 +651,7 @@ export class IncomeTransactionPage {
 
   prodidlist: any = [];
   pnllist: any = [];
-  datetime = Date.now();
+  datetime = new Date();
   tax_vat: any = [];
   geolocation: {};
 
@@ -763,7 +753,7 @@ export class IncomeTransactionPage {
   }
 
   saveRec() {
-    this.datetime = Date.now();
+    this.datetime = new Date();
     if (this.datastore.itemslist.length == 0) {
     } else {
       const data = {
@@ -783,6 +773,7 @@ export class IncomeTransactionPage {
       this.datastore.itemslist.forEach(async product => {
         if (product.code != "000000") {
           const data1 = {
+            ...product,
             code: product.code,
             name: product.name,
             price: product.price,
@@ -896,7 +887,7 @@ export class IncomeTransactionPage {
   // }
 
   printRec() {
-    this.datetime = Date.now();
+    this.datetime = new Date();
     if (this.datastore.itemslist.length == 0) {
     } else {
       const data = {
@@ -915,6 +906,7 @@ export class IncomeTransactionPage {
       this.datastore.itemslist.forEach(product => {
         if (product.code != "000000") {
           const data1 = {
+            ...product,
             code: product.code,
             name: product.name,
             price: product.price,

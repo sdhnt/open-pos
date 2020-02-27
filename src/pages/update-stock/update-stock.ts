@@ -111,7 +111,7 @@ export class UpdateStockPage {
       const prodidlist = [];
       const pnllist = [];
       const discountlist = [];
-      itemslist.push(this.product);
+      itemslist.push({ ...this.product, qty: this.prodqty });
       prodidlist.push(this.expiryDate);
       const dataexp = {
         itemslist: itemslist,
@@ -127,22 +127,16 @@ export class UpdateStockPage {
         geolocation: this.geolocation,
       };
       const data1 = {
-        code: this.product.code,
-        name: this.product.name,
-        price: this.product.price,
-        wholesale_price: this.product.wholesale_price,
+        ...this.product,
         cost:
           Math.round(
             ((parseFloat(this.product.cost) * parseFloat(this.product.stock_qty) + parseFloat(this.prodcost)) /
               (parseFloat(this.prodqty) + parseFloat(this.product.stock_qty))) *
               100,
           ) / 100,
-        cat: this.product.cat,
-        url: this.product.url,
         stock_qty: parseInt(this.product.stock_qty) + parseInt(this.prodqty),
       };
       await this.sp.updateProduct(data1, this.product.code).then(() => {
-        this.sp.backupStorage();
         this.events.publish("productUpdate:created", 0);
       });
 
@@ -150,7 +144,6 @@ export class UpdateStockPage {
         console.log(dataexp);
         this.sp.addTransactions(dataexp);
         this.updateCb(this.prodcost).then(() => {
-          this.sp.backupStorage();
           this.events.publish("cbUpdate:created", 0);
           console.log("update");
         });

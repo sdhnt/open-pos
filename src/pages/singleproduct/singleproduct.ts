@@ -87,18 +87,8 @@ export class SingleProductPage {
   newprodCat: any = "";
   listCat: any;
   getCategories() {
-    //console.log(this.listCat + " and "+this.newprodCat);
-    this.sp.storageReady().then(() => {
-      this.sp
-        .getCategories()
-        .then(val => {
-          this.listCat = JSON.parse(val);
-          //console.log("Addprodpg: "+this.listCat)
-          this.getCategories();
-        })
-        .catch(err => {
-          alert("Error: " + err);
-        });
+    this.sp.getCategories().then(value => {
+      this.listCat = JSON.parse(value);
     });
   }
 
@@ -232,23 +222,23 @@ export class SingleProductPage {
     });
   }
 
-  confirmDelete(product){
-    let a = this.alertCtrl.create({
+  confirmDelete(product) {
+    const a = this.alertCtrl.create({
       title: "Are you sure?",
       buttons: [
         {
           //@ts-ignore
           text: this.translateConfigService.getTranslatedMessage("Cancel").value,
-          role: "cancel"
+          role: "cancel",
         },
         {
           //@ts-ignore
           text: this.translateConfigService.getTranslatedMessage("Ok").value,
-          handler: ()=>{
+          handler: () => {
             this.deleteproduct(product);
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
     a.present();
   }
@@ -260,7 +250,7 @@ export class SingleProductPage {
         name: this.newprodCat,
       };
       this.sp.storageReady().then(() => {
-        this.sp.addCategory(data);
+        this.sp.addCategory(data).then();
         setTimeout(() => {
           const message = this.translateConfigService.getTranslatedMessage("Finish");
           const toast = this.toastCtrl.create({
@@ -334,6 +324,7 @@ export class SingleProductPage {
       toast.present();
 
       const data = {
+        ...this.product,
         code: this.product.code,
         name: this.product.name,
         price: this.product.price,
@@ -345,7 +336,6 @@ export class SingleProductPage {
       };
 
       this.sp.updateProduct(data, this.prodCodeOld).then(() => {
-        this.sp.backupStorage();
         setTimeout(() => {
           const message = this.translateConfigService.getTranslatedMessage("Finish");
           const toast = this.toastCtrl.create({
@@ -390,7 +380,6 @@ export class SingleProductPage {
             duration: 2000,
           });
           toast.present();
-          this.sp.backupStorage();
           this.events.publish("productUpdate:created");
           this.navCtrl.pop();
         }, 1000);

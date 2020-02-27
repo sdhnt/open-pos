@@ -296,7 +296,6 @@ export class SummaryGraphsPage {
           message: message.value,
           duration: 3000,
         });
-        this.sp.backupStorage();
         this.getTransac();
         toast.present();
       }, 1000);

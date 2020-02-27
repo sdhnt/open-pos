@@ -33,20 +33,8 @@ export class AddProductCategoryPage {
   newprodCat: any = "";
   listCat: any;
   getCategories() {
-    //console.log(this.listCat + " and " + this.newprodCat);
-    this.sp.storageReady().then(() => {
-      this.sp
-        .getCategories()
-        .then(val => {
-          //console.log("val = " + val);
-          this.listCat = JSON.parse(val);
-
-          //console.log(this.listCat);
-          this.getCategories();
-        })
-        .catch(err => {
-          alert("Error: " + err);
-        });
+    this.sp.getCategories().then(value => {
+      this.listCat = JSON.parse(value);
     });
   }
 
@@ -57,7 +45,7 @@ export class AddProductCategoryPage {
         name: this.newprodCat,
       };
       this.sp.storageReady().then(() => {
-        this.sp.addCategory(data);
+        this.sp.addCategory(data).then(() => this.sp.getCategories().then(value => (this.listCat = JSON.parse(value))));
         setTimeout(() => {
           const message = this.translateConfigService.getTranslatedMessage("Finish");
           const toast = this.toastCtrl.create({
@@ -66,7 +54,6 @@ export class AddProductCategoryPage {
             duration: 3000,
           });
           this.newprodCat = "";
-          this.sp.backupStorage();
 
           //this.navCtrl.push(ProductListPage);
           //this.events.publish('prodAdd:created',0);
@@ -79,8 +66,10 @@ export class AddProductCategoryPage {
 
   delCat(element) {
     this.sp.storageReady().then(() => {
-      this.sp.deleteCategory(element);
-      this.sp.backupStorage();
+      this.sp
+        .deleteCategory(element)
+        .then(() => this.sp.getCategories().then(value => (this.listCat = JSON.parse(value))));
+
       setTimeout(() => {
         const message = this.translateConfigService.getTranslatedMessage("Finish");
         const toast = this.toastCtrl.create({

@@ -39,18 +39,18 @@ export class IndividualContactPage {
   }
 
   async goBack() {
-    if(this.listOfNewTransactions.length==0){
+    if (this.listOfNewTransactions.length == 0) {
       this.navCtrl.pop();
-    } else{
-    this.toastCtrl
-      .create({
-        message: "Updating contact",
-        dismissOnPageChange: true,
-        duration: 1500,
-      })
-      .present();
-    await this.sp.updateContactTransaction(this.contact.displayName, this.listOfNewTransactions);
-    this.navCtrl.pop();
+    } else {
+      this.toastCtrl
+        .create({
+          message: "Updating contact",
+          dismissOnPageChange: true,
+          duration: 1500,
+        })
+        .present();
+      await this.sp.updateContactTransaction(this.contact.displayName, this.listOfNewTransactions);
+      this.navCtrl.pop();
     }
   }
 
@@ -88,6 +88,7 @@ export class IndividualContactPage {
         amount: amountToAdd,
         date: new Date(),
       };
+      if (!this.contact.transacHistory) this.contact.transacHistory = [];
       this.contact.transacHistory.unshift(transaction);
       this.contact.balance += amountToAdd;
       this.listOfNewTransactions.unshift(transaction);

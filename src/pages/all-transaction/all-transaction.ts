@@ -42,7 +42,7 @@ export class AllTransactionPage {
     private alertCtrl: AlertController,
     private app: App,
   ) {
-    this.getUserData();
+    this.getUserData().then(() => console.log("get user data"));
     this.events.subscribe("addRecCalc:created", data => {
       this.updateOrCreate = "Update Receipt";
       //console.log("ENTERED!");
