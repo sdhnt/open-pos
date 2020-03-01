@@ -38,25 +38,24 @@ export class ContactsPage {
     private modalCtrl: ModalController,
     private zone: NgZone,
     private event: Events,
-    private view: ViewController
-  ) {
-  }
+    private view: ViewController,
+  ) {}
 
   hasPermission = true;
   choosingContact;
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad ContactsPage");
-    let temp = this.navParams.get("data");
+    const temp = this.navParams.get("data");
     console.log(temp);
-    if(temp==true){
+    if (temp == true) {
       this.choosingContact = true;
     } else {
       this.choosingContact = false;
     }
   }
 
-  dismiss(){
+  dismiss() {
     this.view.dismiss();
   }
 
@@ -117,7 +116,7 @@ export class ContactsPage {
   }
 
   navToIndividual(contact) {
-    if(this.choosingContact){
+    if (this.choosingContact) {
       this.view.dismiss(contact.displayName);
       this.choosingContact = false;
       return;

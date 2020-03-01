@@ -1,5 +1,13 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, Events, ToastController, ViewController, ModalController } from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  Events,
+  ToastController,
+  ViewController,
+  ModalController,
+} from "ionic-angular";
 import { StorageProvider } from "../../providers/storage/storage";
 import firebase from "firebase";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
@@ -34,7 +42,7 @@ export class ExpenseGeneralPage {
     public toastCtrl: ToastController,
     private gps: GeolocationService,
     private view: ViewController,
-    private modal: ModalController
+    private modal: ModalController,
   ) {
     this.getUserData();
     this.listOfExpenses = [];
@@ -88,7 +96,7 @@ export class ExpenseGeneralPage {
           qty: 1,
           stock_qty: 0,
         };
-        if(element.contact!=""){
+        if (element.contact != "") {
           const transaction = {
             amount: element.amount,
             date: new Date(),
@@ -142,18 +150,18 @@ export class ExpenseGeneralPage {
     this.view.dismiss();
   }
 
-  addContact(exp: Expense){
-    let m = this.modal.create(ContactsPage, {data:true});
+  addContact(exp: Expense) {
+    const m = this.modal.create(ContactsPage, { data: true });
     m.present();
-    m.onDidDismiss((contactName:string)=>{
-      if(contactName==null || contactName==undefined){
+    m.onDidDismiss((contactName: string) => {
+      if (contactName == null || contactName == undefined) {
         return;
       }
       exp.contact = contactName;
     });
   }
 
-  clearContact(exp: Expense){
+  clearContact(exp: Expense) {
     exp.contact = "";
   }
 
@@ -184,7 +192,7 @@ class Expense {
   public amount: number;
   //public notes: String;
   public flag: boolean;
-  public contact: String;
+  public contact: string;
 
   constructor() {
     this.flag = true;

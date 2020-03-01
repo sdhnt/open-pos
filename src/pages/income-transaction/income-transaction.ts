@@ -758,9 +758,9 @@ export class IncomeTransactionPage {
 
   saveRec() {
     this.datetime = new Date();
-    if(this.contact!=""){
+    if (this.contact != "") {
       const transaction = {
-        amount: -1*this.lastsumtax,
+        amount: -1 * this.lastsumtax,
         date: this.datetime,
         reminderDate: "",
         discount: 0,
@@ -903,9 +903,9 @@ export class IncomeTransactionPage {
 
   printRec() {
     this.datetime = new Date();
-    if(this.contact!=""){
+    if (this.contact != "") {
       const transaction = {
-        amount: -1*this.lastsumtax,
+        amount: -1 * this.lastsumtax,
         date: this.datetime,
         reminderDate: "",
         discount: 0,
@@ -1418,18 +1418,18 @@ export class IncomeTransactionPage {
       });
   }
 
-  addContact(){
+  addContact() {
     // this.events.publish("chooseContact");
-    let m = this.modal.create(ContactsPage, {data:true});
+    const m = this.modal.create(ContactsPage, { data: true });
     m.present();
-    m.onDidDismiss((contactName:string)=>{
-      if(contactName==null || contactName==undefined){
+    m.onDidDismiss((contactName: string) => {
+      if (contactName == null || contactName == undefined) {
         return;
       }
       this.contact = contactName;
     });
   }
-  clearContact(){
+  clearContact() {
     this.contact = "";
   }
 }
