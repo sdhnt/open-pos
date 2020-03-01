@@ -17,13 +17,20 @@
 
   
 
+    <ion-row style="background-color: #f0f0f0;" *ngIf = "phone.length==0">
+      <ion-col col-12>
+        <button ion-button full style="text-align: center; background-color: indigo; color: palevioletred;">
+          LOADING...
+        </button>
+      </ion-col>
+    </ion-row>
 
-    <ion-row  style="background-color: #f0f0f0">
+    <ion-row style="background-color: #f0f0f0" *ngFor = "let num of phone">
         <ion-col col-12>
 
             <button ion-button full style="text-align: center ; background-color: indigo; color: palevioletred;" 
-              (click)="call()">
-              {{ phone }}
+              (click)="call(num)">
+              {{ num }}
             </button>
         </ion-col>
     </ion-row>

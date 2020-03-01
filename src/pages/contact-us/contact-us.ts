@@ -19,7 +19,7 @@ import { EmailComposer } from "@ionic-native/email-composer";
 })
 export class ContactUsPage {
   email = "Loading...";
-  phone = "Loading...";
+  phone = [];
   chatbot = "";
 
   constructor(
@@ -52,8 +52,8 @@ export class ContactUsPage {
     console.log("ionViewDidLoad ContactUsPage");
   }
 
-  call(){
-    this.callNumber.callNumber(this.phone, false)
+  call(numberToCall){
+    this.callNumber.callNumber(numberToCall, false)
       .then(res => {
         console.log("Successful", res);
       })

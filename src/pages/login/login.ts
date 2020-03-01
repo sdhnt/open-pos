@@ -374,6 +374,18 @@ export class LoginPage {
 
   signup = 0;
   otpmode = 0;
+  lang = 1;
+
+  selectLang(lang: string){
+    this.lang = 0;
+    this.selectedLanguage = lang;
+    this.translateConfigService.setLanguage(lang);
+  }
+  
+  backToLang(){
+    this.lang=1;
+    this.selectedLanguage = "en";
+  }
 
   async checkifexist() {
     let flag = 0;
