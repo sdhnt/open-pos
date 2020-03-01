@@ -6,12 +6,17 @@
 -->
 
 <ion-content padding>
-  <ion-fab right bottom #fab style="margin-bottom: 10px;">
+  <ion-fab right bottom #fab style="margin-bottom: 10px;" *ngIf="!choosingContact">
     <button ion-fab><ion-icon name="person-add"></ion-icon></button>
     <ion-fab-list side="left">
       <button ion-button (click)="navAdd(1, fab)">From Contacts</button>
       <button ion-button (click)="navAdd(2, fab)">Manually</button>
     </ion-fab-list>
+  </ion-fab>
+  <ion-fab right bottom style="margin-bottom: 10px;" *ngIf="choosingContact">
+    <button ion-fab style="background-color: red; color: white;" (click)="dismiss()">
+      <ion-icon name="close"></ion-icon>
+    </button>
   </ion-fab>
 <!--   
   Do you give us consent to access your phone's contact information? -->

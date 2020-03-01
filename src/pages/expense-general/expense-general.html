@@ -72,6 +72,17 @@ a<!--
           </ion-col>
         </ion-row>
         <br>-->
+        <ion-row>
+          <button ion-button small (click)="addContact(item)" round style="background-color: green;" *ngIf="item.contact==''">
+            Assign to Contact
+          </button>
+          <ion-col col-8 *ngIf="item.contact!=''" style="padding-top: 15px; font-size: medium;">
+            Assigned to <b>{{ item.contact }}</b>
+          </ion-col>
+          <ion-col col-4 *ngIf="item.contact!=''">
+            <button ion-button (click)="clearContact(item)" style="background-color: red; color: white;">Remove</button>
+          </ion-col>
+        </ion-row>
         <ion-row justify-content-end>
           <button ion-button style="background-color: red; color: whitesmoke; float: right;" (click)="removeExpense(i)" *ngIf="listOfExpenses.length!=1">
             {{"Delete Expense"|translate}}

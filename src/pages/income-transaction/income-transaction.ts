@@ -29,6 +29,7 @@ import download from "downloadjs";
 // import { Base64ToGallery, Base64ToGalleryOptions } from "@ionic-native/base64-to-gallery";
 //import { File } from "@ionic-native/file";
 import { PhotoLibrary } from "@ionic-native/photo-library";
+import { ContactsPage } from "../contacts/contacts";
 /**
  * Generated class for the IncomeTransactionPage page.
  *
@@ -112,6 +113,7 @@ export class IncomeTransactionPage {
   discount = 0.0;
   lastsumdisc = 0.0;
   taxrate = 0.0;
+  contact = "";
 
   printOldRec(transac) {
     console.log(transac);
@@ -756,6 +758,17 @@ export class IncomeTransactionPage {
 
   saveRec() {
     this.datetime = new Date();
+    if(this.contact!=""){
+      const transaction = {
+        amount: -1*this.lastsumtax,
+        date: this.datetime,
+        reminderDate: "",
+        discount: 0,
+        note: "",
+        img: "",
+      };
+      this.sp.updateContactTransaction(this.contact, [transaction]);
+    }
     if (this.datastore.itemslist.length == 0) {
     } else {
       const data = {
@@ -890,6 +903,17 @@ export class IncomeTransactionPage {
 
   printRec() {
     this.datetime = new Date();
+    if(this.contact!=""){
+      const transaction = {
+        amount: -1*this.lastsumtax,
+        date: this.datetime,
+        reminderDate: "",
+        discount: 0,
+        note: "",
+        img: "",
+      };
+      this.sp.updateContactTransaction(this.contact, [transaction]);
+    }
     if (this.datastore.itemslist.length == 0) {
     } else {
       const data = {
@@ -1392,5 +1416,20 @@ export class IncomeTransactionPage {
         this.showToast(msg6.value);
         this.mountAlertBt(this.receipt);
       });
+  }
+
+  addContact(){
+    // this.events.publish("chooseContact");
+    let m = this.modal.create(ContactsPage, {data:true});
+    m.present();
+    m.onDidDismiss((contactName:string)=>{
+      if(contactName==null || contactName==undefined){
+        return;
+      }
+      this.contact = contactName;
+    });
+  }
+  clearContact(){
+    this.contact = "";
   }
 }

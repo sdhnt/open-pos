@@ -7,6 +7,8 @@ import {
   FabContainer,
   AlertController,
   ModalController,
+  Events,
+  ViewController,
 } from "ionic-angular";
 import { Contacts, ContactFindOptions } from "@ionic-native/contacts";
 import { StorageProvider } from "../../providers/storage/storage";
@@ -35,12 +37,27 @@ export class ContactsPage {
     private alertCtrl: AlertController,
     private modalCtrl: ModalController,
     private zone: NgZone,
-  ) {}
+    private event: Events,
+    private view: ViewController
+  ) {
+  }
 
   hasPermission = true;
+  choosingContact;
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad ContactsPage");
+    let temp = this.navParams.get("data");
+    console.log(temp);
+    if(temp==true){
+      this.choosingContact = true;
+    } else {
+      this.choosingContact = false;
+    }
+  }
+
+  dismiss(){
+    this.view.dismiss();
   }
 
   ionViewDidEnter() {
@@ -100,6 +117,11 @@ export class ContactsPage {
   }
 
   navToIndividual(contact) {
+    if(this.choosingContact){
+      this.view.dismiss(contact.displayName);
+      this.choosingContact = false;
+      return;
+    }
     this.navCtrl.push(IndividualContactPage, { data: contact });
   }
 

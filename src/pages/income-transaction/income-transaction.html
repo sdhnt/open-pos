@@ -237,6 +237,17 @@
         <ion-row *ngIf="taxbtn==1">
           <button ion-button small (click)="remTax()" style="background-color:red" round>{{"Remove Tax"|translate}}</button>
         </ion-row>
+        <ion-row>
+          <button ion-button small (click)="addContact()" round style="background-color: green;" *ngIf="contact==''">
+            Assign to Contact
+          </button>
+          <ion-col col-8 *ngIf="contact!=''" style="padding-top: 15px; font-size: medium;">
+            Assigned to <b>{{ contact }}</b>
+          </ion-col>
+          <ion-col col-4 *ngIf="contact!=''">
+            <button ion-button (click)="clearContact()" style="background-color: red; color: white;">Remove</button>
+          </ion-col>
+        </ion-row>
       </div>
 
     </ion-grid>
