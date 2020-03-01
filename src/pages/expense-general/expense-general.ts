@@ -98,7 +98,7 @@ export class ExpenseGeneralPage {
         };
         if (element.contact != "") {
           const transaction = {
-            amount: element.amount,
+            amount: 1*element.amount,
             date: new Date(),
             reminderDate: "",
             discount: 0,
