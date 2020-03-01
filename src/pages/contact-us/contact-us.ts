@@ -27,7 +27,7 @@ export class ContactUsPage {
     private translateConfigService: TranslateConfigService,
     public navParams: NavParams,
     private callNumber: CallNumber,
-    private emailComposer: EmailComposer
+    private emailComposer: EmailComposer,
   ) {
     this.getInfo();
   }
@@ -52,16 +52,17 @@ export class ContactUsPage {
     console.log("ionViewDidLoad ContactUsPage");
   }
 
-  call(numberToCall){
-    this.callNumber.callNumber(numberToCall, false)
+  call(numberToCall) {
+    this.callNumber
+      .callNumber(numberToCall, false)
       .then(res => {
         console.log("Successful", res);
       })
-      .catch(err => console.log("Error with dialing",err));
+      .catch(err => console.log("Error with dialing", err));
   }
 
-  sendMail(){
-    let emailSettings = {
+  sendMail() {
+    const emailSettings = {
       to: this.email,
       subject: "OPEN Help", //edit as and when needed
       body: "Hello! I need your help!",
@@ -73,8 +74,9 @@ export class ContactUsPage {
 
     //     }
     //   });
-    this.emailComposer.open(emailSettings)
-    .then(res=>console.log("Successful",res))
-    .catch(err=>console.log("Error on email", err));
+    this.emailComposer
+      .open(emailSettings)
+      .then(res => console.log("Successful", res))
+      .catch(err => console.log("Error on email", err));
   }
 }

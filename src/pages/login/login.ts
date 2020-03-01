@@ -376,14 +376,14 @@ export class LoginPage {
   otpmode = 0;
   lang = 1;
 
-  selectLang(lang: string){
+  selectLang(lang: string) {
     this.lang = 0;
     this.selectedLanguage = lang;
     this.translateConfigService.setLanguage(lang);
   }
-  
-  backToLang(){
-    this.lang=1;
+
+  backToLang() {
+    this.lang = 1;
     this.selectedLanguage = "en";
   }
 
@@ -428,13 +428,13 @@ export class LoginPage {
   }
 
   timer2 = 0;
-  startTimer2(){
-    this.zone.run(()=>{
+  startTimer2() {
+    this.zone.run(() => {
       this.timer2 = 5;
-      const interval = setInterval(()=>{
+      const interval = setInterval(() => {
         this.timer2--;
-        if(this.timer2==0) clearInterval(interval);
-      },1000);
+        if (this.timer2 == 0) clearInterval(interval);
+      }, 1000);
     });
   }
 
