@@ -756,19 +756,60 @@ export class IncomeTransactionPage {
     setTimeout(() => (this.disableDownload = false), 1000);
   }
 
+  contactAlert(){
+    if (this.contact != "") {
+      let amountToCredit = 0;
+      let tempVal = this.lastsumtax;
+      let contactTemp = this.contact;
+      let a = this.alertCtrl.create({
+        enableBackdropDismiss: false,
+        inputs: [{
+          placeholder: "Credit Amount",
+          type: "number",
+          name: "creditAmount"
+        }],
+        buttons: [
+          {
+            text: "Cancel",
+            role: "cancel"
+          },
+          {
+            text: "Full Receipt Amount",
+            handler: ()=>{
+              amountToCredit = tempVal;
+            }
+          },
+          {
+            text: "Okay",
+            handler: data =>{
+              if(data.creditAmount && data.creditAmount>0){
+                amountToCredit = data.creditAmount
+              } else {
+                a.present();
+              }
+            }
+          }
+        ]
+      });
+      a.present();
+      a.onDidDismiss(async ()=>{
+        if(amountToCredit==0) return;
+        const transaction = {
+          amount: -1 * amountToCredit,
+          date: this.datetime,
+          reminderDate: "",
+          discount: 0,
+          note: "",
+          img: "",
+        };
+        await this.sp.updateContactTransaction(contactTemp, [transaction]);
+      });
+    }
+  }
+
   saveRec() {
     this.datetime = new Date();
-    if (this.contact != "") {
-      const transaction = {
-        amount: -1 * this.lastsumtax,
-        date: this.datetime,
-        reminderDate: "",
-        discount: 0,
-        note: "",
-        img: "",
-      };
-      this.sp.updateContactTransaction(this.contact, [transaction]);
-    }
+    this.contactAlert();
     if (this.datastore.itemslist.length == 0) {
     } else {
       const data = {
@@ -837,6 +878,7 @@ export class IncomeTransactionPage {
         this.taxrate = 0;
         this.taxbtn = 0;
         this.discbtn = 0;
+        this.contact = "";
         //this.sp.backupStorage();
         toast.present();
 
@@ -903,17 +945,7 @@ export class IncomeTransactionPage {
 
   printRec() {
     this.datetime = new Date();
-    if (this.contact != "") {
-      const transaction = {
-        amount: -1 * this.lastsumtax,
-        date: this.datetime,
-        reminderDate: "",
-        discount: 0,
-        note: "",
-        img: "",
-      };
-      this.sp.updateContactTransaction(this.contact, [transaction]);
-    }
+    this.contactAlert();
     if (this.datastore.itemslist.length == 0) {
     } else {
       const data = {
