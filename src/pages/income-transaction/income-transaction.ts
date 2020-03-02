@@ -756,44 +756,46 @@ export class IncomeTransactionPage {
     setTimeout(() => (this.disableDownload = false), 1000);
   }
 
-  contactAlert(){
+  contactAlert() {
     if (this.contact != "") {
       let amountToCredit = 0;
-      let tempVal = this.lastsumtax;
-      let contactTemp = this.contact;
-      let a = this.alertCtrl.create({
+      const tempVal = this.lastsumtax;
+      const contactTemp = this.contact;
+      const a = this.alertCtrl.create({
         enableBackdropDismiss: false,
-        inputs: [{
-          placeholder: "Credit Amount",
-          type: "number",
-          name: "creditAmount"
-        }],
+        inputs: [
+          {
+            placeholder: "Credit Amount",
+            type: "number",
+            name: "creditAmount",
+          },
+        ],
         buttons: [
           {
             text: "Cancel",
-            role: "cancel"
+            role: "cancel",
           },
           {
             text: "Full Receipt Amount",
-            handler: ()=>{
+            handler: () => {
               amountToCredit = tempVal;
-            }
+            },
           },
           {
             text: "Okay",
-            handler: data =>{
-              if(data.creditAmount && data.creditAmount>0){
-                amountToCredit = data.creditAmount
+            handler: data => {
+              if (data.creditAmount && data.creditAmount > 0) {
+                amountToCredit = data.creditAmount;
               } else {
                 a.present();
               }
-            }
-          }
-        ]
+            },
+          },
+        ],
       });
       a.present();
-      a.onDidDismiss(async ()=>{
-        if(amountToCredit==0) return;
+      a.onDidDismiss(async () => {
+        if (amountToCredit == 0) return;
         const transaction = {
           amount: -1 * amountToCredit,
           date: this.datetime,
