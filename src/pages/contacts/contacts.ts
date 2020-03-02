@@ -15,6 +15,8 @@ import { StorageProvider } from "../../providers/storage/storage";
 import { IndividualContactPage } from "../individual-contact/individual-contact";
 import { AddFromContactsPage } from "../add-from-contacts/add-from-contacts";
 
+import { TranslateConfigService } from "../../providers/translation/translate-config.service";
+
 /**
  * Generated class for the ContactsPage page.
  *
@@ -36,6 +38,7 @@ export class ContactsPage {
     private sp: StorageProvider,
     private alertCtrl: AlertController,
     private modalCtrl: ModalController,
+    private translateConfigService: TranslateConfigService,
     private zone: NgZone,
     private event: Events,
     private view: ViewController,
@@ -94,7 +97,8 @@ export class ContactsPage {
       // this.sp.saveContacts(contacts);
       this.toastController
         .create({
-          message: "Phone contacts have been imported.",
+          //@ts-ignore
+          message: this.translateConfigService.getTranslatedMessage("Phone contacts have been imported.").value,
           duration: 2000,
         })
         .present()
@@ -145,24 +149,29 @@ export class ContactsPage {
       });
     } else if (num == 2) {
       const a = this.alertCtrl.create({
-        subTitle: "Add Contact",
+        //@ts-ignore
+        subTitle: this.translateConfigService.getTranslatedMessage("Add Contact").value,
         inputs: [
           {
             name: "name",
-            placeholder: "Contact Name",
+            //@ts-ignore
+            placeholder: this.translateConfigService.getTranslatedMessage("Contact Name").value,
           },
           {
             name: "phno",
-            placeholder: "Contact Number",
+            //@ts-ignore
+            placeholder: this.translateConfigService.getTranslatedMessage("Contact Number").value,
           },
         ],
         buttons: [
           {
-            text: "Cancel",
+            //@ts-ignore
+            text: this.translateConfigService.getTranslatedMessage("Cancel").value,
             role: "cancel",
           },
           {
-            text: "Add",
+            //@ts-ignore
+            text: this.translateConfigService.getTranslatedMessage("Add").value,
             handler: data => {
               if (data.name != "") {
                 const temp = {
@@ -176,7 +185,8 @@ export class ContactsPage {
               } else {
                 this.toastController
                   .create({
-                    message: "Please fill in name",
+                    //@ts-ignore
+                    message: this.translateConfigService.getTranslatedMessage("Please fill in name").value,
                     duration: 2500,
                   })
                   .present();

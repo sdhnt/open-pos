@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams, ViewController, ToastController } from "ionic-angular";
 import { Contacts, ContactFindOptions } from "@ionic-native/contacts";
-
+import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 /**
  * Generated class for the AddFromContactsPage page.
  *
@@ -20,6 +20,7 @@ export class AddFromContactsPage {
     public navParams: NavParams,
     private view: ViewController,
     private contacts: Contacts,
+    private translateConfigService: TranslateConfigService,
     private toastController: ToastController,
   ) {
     this.contactList = [];
@@ -65,7 +66,8 @@ export class AddFromContactsPage {
       // this.sp.saveContacts(contacts);
       this.toastController
         .create({
-          message: "Phone contacts have been imported.",
+          //@ts-ignore
+          message: this.translateConfigService.getTranslatedMessage("Phone contacts have been imported.").value,
           duration: 2000,
         })
         .present()

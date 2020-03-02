@@ -303,7 +303,7 @@
 "Update now":"Update now",
 "Edit Profile":"Edit Profile",
 "Contacts": "Contacts",
-"Resend OTP":"ထပ်မံ OTP ပို့ပါ",
+"Resend OTP":"Resend OTP",
 "Retry in":"Retry in",
 "Complete Sale":"Complete Sale",
 "Created using OPEN Business app!":"Created using OPEN Business app!",
@@ -321,5 +321,17 @@
 "Borrowed":"Borrowed",
 "Paid":"Paid",
 "Done":"Done",
-"Delete":"Delete"
+"Delete":"Delete",
+"Assign to Contact":"Assign to Contact",
+"Are you sure you want to delete this contact?":"Are you sure you want to delete this contact?",
+"Updating contact":"Updating contact",
+"Phone contacts have been imported.":"Phone contacts have been imported.",
+"Add Contact":"Add Contact",
+"Contact Name":"Contact Name",
+"Contact Number":"Contact Number",
+"Please fill in name":"Please fill in name",
+"Add From Contacts":"Add From Contacts",
+"If you see the page empty, please press 'Import' button and give us permission to access your contacts":"If you see the page empty, please press 'Import' button and give us permission to access your contacts",
+"Import":"Import",
+"Remove":"Remove"
 }

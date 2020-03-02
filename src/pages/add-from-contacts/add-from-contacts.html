@@ -7,15 +7,15 @@
 <div class="modal">
 <ion-header>
   <ion-navbar color="dark">
-    <ion-title>Add From Contacts</ion-title>
+    <ion-title>{{"Add From Contacts"|translate}}</ion-title>
     <ion-buttons end>
-      <button ion-button style="color: white; background-color: red;" (click)="goBack()">Cancel</button>
+      <button ion-button style="color: white; background-color: red;" (click)="goBack()">{{"Cancel"|translate}}</button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-card padding *ngIf="!filteredList || filteredList.length==0"> If you see the page empty, please press "Import" button and give us permission to access your contacts <br><button ion-button (click)="getContact()">Import</button> </ion-card>
+  <ion-card padding *ngIf="!filteredList || filteredList.length==0"> {{"If you see the page empty, please press 'Import' button and give us permission to access your contacts"|translate}} <br><button ion-button (click)="getContact()">{{"Import"|translate}}</button> </ion-card>
   <ion-searchbar showCancelButton = "always" [(ngModel)]="searchterm" (ionChange)="filter()"></ion-searchbar>
   <ion-list>
     <ion-item *ngFor="let contact of filteredList">
@@ -26,6 +26,6 @@
 </ion-content>
 
 <ion-footer>
-  <button block ion-button style="background-color: #FFA500;" (click)="done()">OK</button>
+  <button block ion-button style="background-color: #FFA500;" (click)="done()">{{"Okay"|translate}}</button>
 </ion-footer>
 </div>

@@ -32,6 +32,7 @@ import { AddProductCategoryPage } from "../add-product-category/add-product-cate
 })
 export class TransactionProductPage {
   //@ts-ignore
+
   updateOrCreate = this.translateConfigService.getTranslatedMessage("Complete Sale").value;
 
   constructor(
@@ -49,6 +50,8 @@ export class TransactionProductPage {
     this.event = false;
     this.showmanual = 0;
     this.itname = "";
+  //@ts-ignore
+  this. updateOrCreate = this.translateConfigService.getTranslatedMessage("Complete Sale").value;
 
     this.events.subscribe("newUser", data => {
       this.delay(500).then(() => {

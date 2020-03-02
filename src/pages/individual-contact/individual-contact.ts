@@ -2,6 +2,8 @@ import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams, AlertController, ToastController } from "ionic-angular";
 import { StorageProvider } from "../../providers/storage/storage";
 
+import { TranslateConfigService } from "../../providers/translation/translate-config.service";
+
 /**
  * Generated class for the IndividualContactPage page.
  *
@@ -28,6 +30,7 @@ export class IndividualContactPage {
     public alertCtrl: AlertController,
     public sp: StorageProvider,
     private toastCtrl: ToastController,
+    private translateConfigService: TranslateConfigService,
   ) {
     this.contact = this.navParams.get("data");
   }
@@ -44,7 +47,8 @@ export class IndividualContactPage {
     } else {
       this.toastCtrl
         .create({
-          message: "Updating contact",
+          //@ts-ignore
+          message: this.translateConfigService.getTranslatedMessage("Updating contact").value,
           dismissOnPageChange: true,
           duration: 1500,
         })
@@ -60,17 +64,20 @@ export class IndividualContactPage {
       inputs: [
         {
           name: "amount",
-          placeholder: "Amount",
+          //@ts-ignore
+          placeholder: this.translateConfigService.getTranslatedMessage("Amount").value,
           type: "number",
         },
       ],
       buttons: [
         {
-          text: "Cancel",
+          //@ts-ignore
+          text: this.translateConfigService.getTranslatedMessage("Cancel").value,
           role: "cancel",
         },
         {
-          text: "OK",
+          //@ts-ignore
+          text: this.translateConfigService.getTranslatedMessage("Okay").value,
           handler: data => {
             if (data.amount > 0) {
               amountToAdd = data.amount * signedOne;
@@ -139,14 +146,17 @@ export class IndividualContactPage {
 
   delete() {
     const a = this.alertCtrl.create({
-      subTitle: "Are you sure you want to delete this contact?",
+      //@ts-ignore
+      subTitle: this.translateConfigService.getTranslatedMessage("Are you sure you want to delete this contact?").value,
       buttons: [
         {
-          text: "NO",
+          //@ts-ignore
+          text: this.translateConfigService.getTranslatedMessage("Cancel").value,
           role: "cancel",
         },
         {
-          text: "YES",
+          //@ts-ignore
+          text: this.translateConfigService.getTranslatedMessage("Okay").value,
           handler: () => {
             this.sp.deleteContact(this.contact.displayName).then(() => this.navCtrl.pop());
           },
