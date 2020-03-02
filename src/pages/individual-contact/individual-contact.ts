@@ -22,7 +22,7 @@ export class IndividualContactPage {
     balance: 0,
     phno: "",
     transacHistory: [],
-    dueDate: ""
+    dueDate: "",
   };
 
   constructor(
@@ -47,26 +47,26 @@ export class IndividualContactPage {
     console.log("ionViewDidLoad IndividualContactPage");
   }
 
-  remDate(){
+  remDate() {
     this.newDate = "";
   }
 
   async goBack() {
-    if (this.listOfNewTransactions.length == 0 && this.newDate==this.contact.dueDate) {
+    if (this.listOfNewTransactions.length == 0 && this.newDate == this.contact.dueDate) {
       this.navCtrl.pop();
     } else {
-      if(this.listOfNewTransactions.length>0){
+      if (this.listOfNewTransactions.length > 0) {
         this.toastCtrl
-        .create({
-          //@ts-ignore
-          message: this.translateConfigService.getTranslatedMessage("Updating contact").value,
-          dismissOnPageChange: true,
-          duration: 1500,
-        })
-        .present();
-      await this.sp.updateContactTransaction(this.contact.displayName, this.listOfNewTransactions);
+          .create({
+            //@ts-ignore
+            message: this.translateConfigService.getTranslatedMessage("Updating contact").value,
+            dismissOnPageChange: true,
+            duration: 1500,
+          })
+          .present();
+        await this.sp.updateContactTransaction(this.contact.displayName, this.listOfNewTransactions);
       }
-      if(this.newDate!=this.contact.dueDate){
+      if (this.newDate != this.contact.dueDate) {
         await this.sp.updateContactDate(this.contact.displayName, this.contact.dueDate, this.newDate);
       }
       this.navCtrl.pop();
