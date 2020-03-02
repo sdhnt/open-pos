@@ -51,7 +51,7 @@ export class SummaryGraphsPage {
   ) {
     //this.getSummary();
     this.events.subscribe("ViewRecs", data => {
-      (this.navCtrl.parent as Tabs).select(2);
+      (this.navCtrl.parent as Tabs).select(0);
       console.log("ViewRecs Event");
     });
     this.getUserData();
@@ -565,7 +565,7 @@ export class SummaryGraphsPage {
 
   getTime(datetime) {
     const temp = new Date(datetime);
-    const t = this.getHours(temp) + ":" + this.getMinutes(temp) + ":"; // + this.getSeconds(temp);
+    const t = this.getHours(temp) + ":" + this.getMinutes(temp) ; //+ ":" + this.getSeconds(temp);
     return t;
   }
 

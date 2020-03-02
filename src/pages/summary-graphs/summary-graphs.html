@@ -159,10 +159,10 @@
     </ion-col> -->
     <ion-col style="border: solid 1px silver;  text-align: center;" col-3>
       <div *ngIf="transac.totalatax>=0">
-      Income
+      {{"Income"|translate}}
     </div>
     <div *ngIf="!(transac.totalatax>=0)">
-      Expense
+      {{"Expense"|translate}}
     </div>   
     </ion-col>
     <ion-col style="border: solid 1px silver; color:white; text-align: center;" col-3>

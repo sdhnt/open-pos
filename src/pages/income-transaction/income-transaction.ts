@@ -62,14 +62,14 @@ export class IncomeTransactionPage {
     private photoLibrary: PhotoLibrary,
   ) {
     this.isReady = false;
-    const nav = app._appRoot._getActivePortal() || app.getActiveNav();
-    const activeView = nav.getActive();
-    if (activeView != null) {
-      if (activeView.isOverlay) {
-        console.log("Alert Prev");
-        activeView.dismiss();
-      }
-    }
+    // const nav = app._appRoot._getActivePortal() || app.getActiveNav();
+    // const activeView = nav.getActive();
+    // if (activeView != null) {
+    //   if (activeView.isOverlay) {
+    //     console.log("Alert Prev");
+    //     activeView.dismiss();
+    //   }
+    // }
     //console.log("Recieved -1" + this.navParams.get('itemslist'));
     this.getUserData();
     this.gps
@@ -912,7 +912,7 @@ export class IncomeTransactionPage {
   }
 
   addSingleProd(item, index) {
-    (this.navCtrl.parent as Tabs).select(0);
+    (this.navCtrl.parent as Tabs).select(2);
     this.delay(300).then(any => {
       this.events.publish(
         "addSingleProd:created",
@@ -928,7 +928,7 @@ export class IncomeTransactionPage {
   }
 
   addProdList() {
-    (this.navCtrl.parent as Tabs).select(0);
+    (this.navCtrl.parent as Tabs).select(2);
     this.delay(300).then(any => {
       this.events.publish("addRecProd:created", JSON.stringify(this.datastore.itemslist));
 
