@@ -13,7 +13,7 @@
     <ion-row>
 
       <ion-col col-12 style="text-align: center;"> <button ion-button style="font-size: 1.2rem;"
-        (click)="addCalc()" style="background-color: black; color: white;" round> &nbsp; <ion-icon name="calculator" style="font-size: 30px;"></ion-icon></button></ion-col>
+        (click)="addCalc()" style="background-color: #301924; color: white;" round> &nbsp; <ion-icon name="calculator" style="font-size: 30px;"></ion-icon></button></ion-col>
     </ion-row>
     <ion-row>
 
@@ -355,20 +355,24 @@
     </div>
   </ion-card>
   <ion-row style="padding: 2px;">
-    <button ion-button full style="background-color:green" (click)="printOldRec(lastTransaction)" round>
+    <button ion-button full style="background-color:#301924" (click)="printOldRec(lastTransaction)" round>
       {{'PRINT '|translate}} &nbsp;<ion-icon name="print"></ion-icon>
     </button>
   </ion-row>
-  <ion-buttons style="text-align: center; padding-bottom: 10px;">
-    <button ion-button round style="background-color: green;" (click)="recAction()" [disabled]="disableDownload">
+  <ion-row style="padding: 2px;">
+    <ion-col col-6>
+    <button ion-button full round style="background-color: #301924;" (click)="recAction()" [disabled]="disableDownload">
       <ion-icon name="download" style="padding-right: 5px;"></ion-icon>
       {{"Download"|translate}}
     </button>
-    <button ion-button round style="background-color: green;" (click)="shareRec()" [disabled]="disableShare">
+  </ion-col>
+  <ion-col col-6>
+    <button ion-button full round style="background-color: #301924;" (click)="shareRec()" [disabled]="disableShare">
       <ion-icon name="share" style="padding-right: 5px;"></ion-icon>
       {{"Share"|translate}}
     </button>
-  </ion-buttons>
+    </ion-col>
+  </ion-row>
   <ion-row padding></ion-row>
   <ion-row padding></ion-row>
   <ion-row padding></ion-row>

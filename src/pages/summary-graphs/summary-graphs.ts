@@ -565,7 +565,7 @@ export class SummaryGraphsPage {
 
   getTime(datetime) {
     const temp = new Date(datetime);
-    const t = this.getHours(temp) + ":" + this.getMinutes(temp) ; //+ ":" + this.getSeconds(temp);
+    const t = this.getHours(temp) + ":" + this.getMinutes(temp); //+ ":" + this.getSeconds(temp);
     return t;
   }
 
