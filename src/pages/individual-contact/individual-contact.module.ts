@@ -6,6 +6,6 @@ import { TranslateModule } from "@ngx-translate/core";
 @NgModule({
   declarations: [IndividualContactPage],
   imports: [IonicPageModule.forChild(IndividualContactPage), TranslateModule.forChild()],
-  exports: [IndividualContactPage]
+  exports: [IndividualContactPage],
 })
 export class IndividualContactPageModule {}

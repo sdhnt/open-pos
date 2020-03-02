@@ -50,7 +50,7 @@
     <ion-card *ngFor="let contact of filteredList">
       <ion-row (click)="navToIndividual(contact)" padding>
         <ion-col col-7 style="font-size: 16px;">{{ contact.displayName }}</ion-col>
-        <ion-col col-5 style="font-size: medium;">Balance: 
+        <ion-col col-5 style="font-size: medium;">{{"Balance"|translate}}: 
           <span style="color: red;" *ngIf="contact.balance<0; else nonNeg">{{ contact.balance }}</span>
           <span style="color: green;" *ngIf="contact.balance>0; else zero" id="nonNeg">{{ contact.balance }}</span>
           <span style="color: blue;" *ngIf="contact.balance==0" id="zero">0</span>
