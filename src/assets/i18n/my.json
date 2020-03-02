@@ -333,6 +333,8 @@
 "Add From Contacts":"အဆက်အသွယ်ထဲကထည့်မည်",
 "If you see the page empty, please press 'Import' button and give us permission to access your contacts":"အကယ်၍ သင်၏စာမျက်နှာသည်ဗလာဖြစ်နေသည်ဆိုလျှင် 'ထည့်မည်' ခလုတ်ကို နှိပ်၍ သင်၏အဆက်အသွယ်များအားထည့်နိုင်ပါသည်",
 "Import":"ထည့်မည်",
-"Remove":"ဖျက်မည်"
+"Remove":"ဖျက်မည်",
+"Amount to be paid later":"နောက်မှပေးရမည့်ငွေပမာဏ",
+"On Full Credit":"အပြည့်အဝအကြွေးတွင်"
 
 }

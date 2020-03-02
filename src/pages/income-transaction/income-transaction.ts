@@ -765,24 +765,28 @@ export class IncomeTransactionPage {
         enableBackdropDismiss: false,
         inputs: [
           {
-            placeholder: "Credit Amount",
+            //@ts-ignore
+            placeholder: this.translateConfigService.getTranslatedMessage("Amount to be paid later").value,
             type: "number",
             name: "creditAmount",
           },
         ],
         buttons: [
           {
-            text: "Cancel",
-            role: "cancel",
-          },
-          {
-            text: "Full Receipt Amount",
+            //@ts-ignore
+            text: this.translateConfigService.getTranslatedMessage("On Full Credit").value,
             handler: () => {
               amountToCredit = tempVal;
             },
           },
           {
-            text: "Okay",
+            //@ts-ignore
+            text: this.translateConfigService.getTranslatedMessage("Cancel").value,
+            role: "cancel",
+          },
+          {
+            //@ts-ignore
+            text: this.translateConfigService.getTranslatedMessage("Okay").value,
             handler: data => {
               if (data.creditAmount && data.creditAmount > 0) {
                 amountToCredit = data.creditAmount;
@@ -811,7 +815,9 @@ export class IncomeTransactionPage {
 
   saveRec() {
     this.datetime = new Date();
-    this.contactAlert();
+    if(this.contact!=null && this.contact!=undefined && this.contact!=""){
+      this.contactAlert();
+    }
     if (this.datastore.itemslist.length == 0) {
     } else {
       const data = {
@@ -947,7 +953,9 @@ export class IncomeTransactionPage {
 
   printRec() {
     this.datetime = new Date();
+    if(this.contact!=null && this.contact!=undefined && this.contact!=""){
     this.contactAlert();
+    }
     if (this.datastore.itemslist.length == 0) {
     } else {
       const data = {
