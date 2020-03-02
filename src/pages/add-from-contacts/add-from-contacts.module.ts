@@ -7,6 +7,6 @@ import { TranslateModule } from "@ngx-translate/core";
 @NgModule({
   declarations: [AddFromContactsPage],
   imports: [IonicPageModule.forChild(AddFromContactsPage), TranslateModule.forChild()],
-  exports: [AddFromContactsPage]
+  exports: [AddFromContactsPage],
 })
 export class AddFromContactsPageModule {}

@@ -50,8 +50,8 @@ export class TransactionProductPage {
     this.event = false;
     this.showmanual = 0;
     this.itname = "";
-  //@ts-ignore
-  this. updateOrCreate = this.translateConfigService.getTranslatedMessage("Complete Sale").value;
+    //@ts-ignore
+    this.updateOrCreate = this.translateConfigService.getTranslatedMessage("Complete Sale").value;
 
     this.events.subscribe("newUser", data => {
       this.delay(500).then(() => {
