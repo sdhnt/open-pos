@@ -12,6 +12,7 @@ import {
 } from "./utilities/firestore";
 import { syncDocuments, transactionCallback } from "./utilities/backupStorage";
 import { initializeFirebase } from "../../utilities/initializeFirebase";
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 @Injectable()
 export class StorageProvider {
@@ -30,7 +31,8 @@ export class StorageProvider {
     return [[Storage]];
   }
 
-  constructor(public storage: Storage, public toastCtrl: ToastController, public navCtrl: NavController) {}
+  constructor(public storage: Storage, public toastCtrl: ToastController, public navCtrl: NavController,
+    private localNotif: LocalNotifications) {}
 
   async isThereFirebase(): Promise<boolean> {
     const isThereFirebase = await initializeFirebase();
@@ -434,11 +436,20 @@ export class StorageProvider {
     await this.storage.set("contacts", JSON.stringify(contacts));
   }
 
-  async updateContactDate(contactName, oldDate, newDate): Promise<void> {
-    //old and new date for local notification purposes
+  async updateContactDate(contactName, newDate): Promise<void> {
     const contacts = JSON.parse(await this.getContacts());
     const contact = contacts.find(contact => contact.displayName === contactName);
     if (contact) {
+      // this.localNotif.hasPermission().then(permission=>{
+      //   if(!permission){
+      //     this.localNotif.requestPermission().then(granted=>{
+      //       if(!granted){
+
+      //       }
+      //     });
+      //   }
+        
+      // }).catch(e=>console.log("Permission error", e));
       contact.dueDate = newDate;
       contact.updatedAt = new Date();
     } else {
