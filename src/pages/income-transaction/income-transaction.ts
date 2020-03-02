@@ -815,7 +815,7 @@ export class IncomeTransactionPage {
 
   saveRec() {
     this.datetime = new Date();
-    if(this.contact!=null && this.contact!=undefined && this.contact!=""){
+    if (this.contact != null && this.contact != undefined && this.contact != "") {
       this.contactAlert();
     }
     if (this.datastore.itemslist.length == 0) {
@@ -953,8 +953,8 @@ export class IncomeTransactionPage {
 
   printRec() {
     this.datetime = new Date();
-    if(this.contact!=null && this.contact!=undefined && this.contact!=""){
-    this.contactAlert();
+    if (this.contact != null && this.contact != undefined && this.contact != "") {
+      this.contactAlert();
     }
     if (this.datastore.itemslist.length == 0) {
     } else {

@@ -70,9 +70,6 @@ export class SummaryGraphsPage {
   }
 
   expanded = true;
-  tstoday = 0;
-  tsmonth = 0;
-  ts30 = 0;
   usrchoice = "today";
 
   userdata: any = {
@@ -134,7 +131,7 @@ export class SummaryGraphsPage {
     console.log("ionViewDidLoad SummaryHomePage");
     console.log("ionViewDidLoad SummaryGraphsPage");
     this.rev = 0;
-    this.exp = 0;
+    this.exp = 0; 
     this.pro = 0;
     this.netcashtoday = 0;
     this.netcashweek = 0;
@@ -143,17 +140,10 @@ export class SummaryGraphsPage {
     this.group = "today";
     this.isgraph = 0;
     this.islist = 1;
-    //this.getSummary();
-    //this.setvalues()
-    this.tstoday = 0;
-    this.tsmonth = 0;
-    this.ts30 = 0;
     this.usrchoice = "today";
     this.getUserData();
-    //@ts-ignore
-    //this.expandedvar = this.translateConfigService.getTranslatedMessage("Expand").value;
-    this.getTransac();
-    //this.getUserData();
+    this.setPgValues("today")
+ 
   }
 
   currentdatetime = Date.now();
@@ -161,7 +151,14 @@ export class SummaryGraphsPage {
   netcashweek = 0;
   netcashmonth = 0;
   netcashlast30 = 0;
-  summary: any = [];
+    //@ts-ignore
+    expandedvar = this.translateConfigService.getTranslatedMessage("More").value;
+
+    rev = 0;
+    exp = 0;
+    pro = 0;
+    group = "today";
+  
 
   expandTransac(transac) {
     if (transac.expanded == true) {
@@ -176,84 +173,86 @@ export class SummaryGraphsPage {
     }
   }
 
-  listtransac: any;
+  listtransac: any = [];
   listtransacrev: any;
   totalsaletoday = 0;
-  getTransac() {
+
+
+
+  getTransac(options?:{ start?: Date; end?: Date }) {
     this.rev = 0;
     this.exp = 0;
     this.pro = 0;
-
-    this.tstoday = 0;
-    this.tsmonth = 0;
-    this.ts30 = 0;
     this.sp.storageReady().then(() => {
       this.sp
-        .getTransactions()
+        .getTransactions(options)
         .then(async val => {
           this.listtransac = JSON.parse(val);
+          //console.log(this.listtransac)
           this.listtransac = this.listtransac.filter(transac => {
             return !transac.isDisabled;
           });
-          this.setvalues();
           this.listtransac.forEach(element => {
             element.datetime1 = this.getDateTime(element.datetime);
             element.expanded = true;
             //@ts-ignore
             element.expandedvar = this.translateConfigService.getTranslatedMessage("More").value;
           });
-          //this.setvalues();
-          // this.listtransac.forEach(element => {
-          //   if (this.getDate(element.datetime) == this.getDate(this.currentdatetime)) {
-          //     if (element.totalatax >= 0) {
-          //       //this.rev += parseInt(element.totalatax);
-          //       //console.log(element.totalatax)
-          //       //CALCULATE PROFIT BASED ON EACH ITEM
-          //     } else {
-          //       //this.exp = parseInt(element.totalatax);
-          //     }
-          //   }
-          // });
-          this.getSummary();
           this.listtransacrev = this.listtransac.reverse();
-          //console.log(this.listtransac);
-
-          this.listtransacrev.forEach(element => {
-            if (this.getDate(element.datetime) == this.getDate(this.currentdatetime)) {
-              this.tstoday += parseInt(element.totaldisc);
-            }
-            if (this.getDate(element.datetime) > this.getDate(this.currentdatetime) - 30) {
-              this.ts30 += parseInt(element.totaldisc);
-            }
-            if (this.getMonth(element.datetime) == this.getMonth(this.currentdatetime)) {
-              this.tsmonth += parseInt(element.totaldisc);
-            }
-          });
+        }).then(()=>{
+          this.setvalues();//set pro, rev & exp for whatever time period 
         })
         .catch(err => {
           alert("Error: " + err);
         });
     });
   }
-  //@ts-ignore
-  expandedvar = this.translateConfigService.getTranslatedMessage("More").value;
 
-  // getDateTime(datetime) {
-  //   //return (datetime.getDate() + "/" + (datetime.getMonth() + 1) + "/" + datetime. getFullYear())
-  //   const temp = new Date(datetime);
-  //   const temp1 = temp;
-  //   const t =
-  //     temp.getDate() +
-  //     "/" +
-  //     (temp.getMonth() + 1) +
-  //     "/" +
-  //     temp.getFullYear() +
-  //     " " +
-  //     temp.getHours() +
-  //     ":" +
-  //     temp.getMinutes();
-  //   return t;
-  // }
+  setPgValues(group){
+    this.rev = 0;
+    this.exp = 0;
+    this.pro = 0;
+    var datestart = new Date();
+    if(group=="today"){
+      datestart.setDate(datestart.getDate() - 1);
+      console.log(datestart)
+      this.getTransac({start: datestart})
+    }
+    else if(group=="last7"){
+      datestart.setDate(datestart.getDate() - 8);
+      this.getTransac({start: datestart})
+    }
+    else if( group=="month"){
+      datestart.setDate(datestart.getDate() - (datestart.getDay()+1));
+      this.getTransac({start: datestart})
+    }else if (group == "last30"){
+      datestart.setDate(datestart.getDate() - 31);
+      console.log(datestart)
+      this.getTransac({start: datestart})
+    }
+  }
+
+  setvalues(){
+     this.listtransac.forEach(element => {
+        if (element.totalatax >= 0) {
+          this.rev += parseInt(element.totalatax);
+
+          element.itemslist.forEach((product, index) => {
+            if (product.code != "000000") {
+              this.pro =
+                this.pro +
+                ((parseFloat(product.price) * (100 - parseFloat(product.discount))) / 100 - parseFloat(product.cost)) *
+                  parseFloat(product.qty);
+            }
+          });
+        } else {
+          this.exp += parseInt(element.totalatax);
+        }
+      
+  });
+  this.generateGraphs();
+  }
+
 
   async updateCb(transacsum) {
     this.getUserData();
@@ -560,102 +559,6 @@ export class SummaryGraphsPage {
     }
   }
 
-  rev = 0;
-  exp = 0;
-  pro = 0;
-  group = "today";
-
-  getSummary() {
-    this.netcashtoday = 0;
-    this.netcashweek = 0;
-    this.netcashmonth = 0;
-    this.netcashlast30 = 0;
-    this.sp.storageReady().then(() => {
-      this.sp.getSummary().then(val => {
-        this.summary = JSON.parse(val);
-        //console.log(this.summary);
-
-        this.listtransac.forEach(element => {
-          if (this.getDate(element.datetime) == this.getDate(this.currentdatetime)) {
-            this.netcashtoday += element.totalatax;
-          }
-        });
-
-        this.netcashweek = this.netcashtoday;
-        this.netcashmonth = this.netcashtoday;
-        this.netcashlast30 = this.netcashtoday;
-        for (let i = 29; i > 23; i--) {
-          this.netcashweek += this.summary[i].revenue - this.summary[i].expenses;
-        }
-        for (let i = 29; i >= 0; i--) {
-          this.netcashlast30 += this.summary[i].revenue - this.summary[i].expenses;
-        }
-
-        const currday = this.getDate(this.currentdatetime);
-        //console.log(currday);
-        for (let i = 29; i > 29 - currday && i > -1; i--) {
-          this.netcashmonth += this.summary[i].revenue - this.summary[i].expenses;
-        }
-        //this.getTransac();
-        this.generateGraphs();
-      });
-    });
-  }
-
-  setvalues() {
-    this.rev = 0;
-    this.exp = 0;
-    this.pro = 0;
-    //  if(this.group=="today"){
-    this.listtransac.forEach(element => {
-      if (this.getDate(element.datetime) == this.getDate(this.currentdatetime)) {
-        if (element.totalatax >= 0) {
-          this.rev += parseInt(element.totalatax);
-
-          element.itemslist.forEach((product, index) => {
-            if (product.code != "000000") {
-              this.pro =
-                this.pro +
-                ((parseFloat(product.price) * (100 - parseFloat(product.discount))) / 100 - parseFloat(product.cost)) *
-                  parseFloat(product.qty);
-              //console.log(product);
-            }
-          });
-          //console.log(element.totalatax)
-          //CALCULATE PROFIT BASED ON EACH ITEM
-        } else {
-          //console.log(element.totalatax);
-          this.exp += parseInt(element.totalatax);
-        }
-      }
-    });
-    //}
-    if (this.group == "last7") {
-      //console.log("1");
-      for (let i = 29; i > 22; i--) {
-        this.rev += this.summary[i].revenue;
-        this.exp += this.summary[i].expenses;
-        this.pro += this.summary[i].profit;
-      }
-    }
-    if (this.group == "last30") {
-      for (let i = 29; i >= 0; i--) {
-        this.rev += this.summary[i].revenue;
-        this.exp += this.summary[i].expenses;
-        this.pro += this.summary[i].profit;
-      }
-    }
-    if (this.group == "month") {
-      const currday = this.getDate(this.currentdatetime);
-      //console.log(currday);
-      for (let i = 29; i > 29 - currday && i > -1; i--) {
-        this.rev += this.summary[i].revenue;
-        this.exp += this.summary[i].expenses;
-        this.pro += this.summary[i].profit;
-      }
-    }
-    this.generateGraphs();
-  }
   getDateTime(datetime) {
     //return (datetime.getDate() + "/" + (datetime.getMonth() + 1) + "/" + datetime. getFullYear())
     const temp = new Date(datetime);
@@ -669,7 +572,7 @@ export class SummaryGraphsPage {
 
   getTime(datetime) {
     const temp = new Date(datetime);
-    const t = this.getHours(temp) + ":" + this.getMinutes(temp) + ":" + this.getSeconds(temp);
+    const t = this.getHours(temp) + ":" + this.getMinutes(temp) + ":";// + this.getSeconds(temp);
     return t;
   }
 
@@ -758,65 +661,74 @@ export class SummaryGraphsPage {
     const dataexp = [];
     const datapro = [];
     const k = 0;
-    this.listtransac.forEach(element => {
-      if (this.getDate(element.datetime) == this.getDate(this.currentdatetime)) {
-        if (element.totalatax >= 0) {
-          temprev += parseInt(element.totalatax);
-          if (this.group == "today") {
-            datarev.push(element.totalatax);
-            dataexp.push(0);
-            datapro.push(0);
-            labels.push(this.getTime(element.datetime));
-          }
-        } else {
-          tempexp = -parseInt(element.totalatax);
-          if (this.group == "today") {
-            datarev.push(0);
-            dataexp.push(-element.totalatax);
-            datapro.push(0);
-            labels.push(this.getTime(element.datetime));
-          }
-        }
-      }
-    });
-    if (this.group != "today" || this.listtransac.length == 0) {
+
+    
+    if (this.listtransac.length == 0) {
       datarev.push(temprev);
       dataexp.push(tempexp);
       datapro.push(temppro);
-      labels.push(this.getDateTime(this.currentdatetime));
+      labels.push((this.currentdatetime));
     }
 
-    if (this.group == "last7") {
-      const d = new Date();
-      for (let i = 29; i > 23; i--) {
-        d.setDate(d.getDate() - 1);
-        datarev.push(this.summary[i].revenue);
-        dataexp.push(-this.summary[i].expenses);
-        datapro.push(this.summary[i].profit);
-        labels.push(this.getDateTime(d));
-      }
-    }
-    if (this.group == "month") {
-      const currday = this.getDate(this.currentdatetime);
-      const d = new Date();
-      for (let i = 30; i > 30 - currday && i > -1; i--) {
-        d.setDate(d.getDate() - 1);
-        datarev.push(this.summary[i].revenue);
-        dataexp.push(-this.summary[i].expenses);
-        datapro.push(this.summary[i].profit);
-        labels.push(this.getDateTime(d));
-      }
-    }
-    if (this.group == "last30") {
-      const d = new Date();
-      for (let i = 30; i >= 0; i--) {
-        d.setDate(d.getDate() - 1);
-        datarev.push(this.summary[i].revenue);
-        dataexp.push(-this.summary[i].expenses);
-        datapro.push(this.summary[i].profit);
-        labels.push(this.getDateTime(d));
-      }
-    }
+
+    this.listtransac.forEach(element => {
+        if (element.totalatax >= 0) {
+          temprev += parseInt(element.totalatax);
+            datarev.push(element.totalatax);
+            dataexp.push(0);
+            var temppro=0;
+            element.itemslist.forEach((product, index) => {
+              if (product.code != "000000") {
+                temppro =
+                  temppro +
+                  ((parseFloat(product.price) * (100 - parseFloat(product.discount))) / 100 - parseFloat(product.cost)) *
+                    parseFloat(product.qty);
+              }
+            });
+            datapro.push(temppro);
+            labels.push((this.getDateTime(element.datetime)));
+        } else {
+          tempexp = -parseInt(element.totalatax);
+            datarev.push(0);
+            dataexp.push(-element.totalatax);
+            datapro.push(0);
+            labels.push(this.getDateTime(element.datetime));
+        
+        }
+    });
+    // if (this.group == "last7") {
+    //   const d = new Date();
+    //   for (let i = 29; i > 23; i--) {
+    //     d.setDate(d.getDate() - 1);
+    //     datarev.push(this.summary[i].revenue);
+    //     dataexp.push(-this.summary[i].expenses);
+    //     datapro.push(this.summary[i].profit);
+    //     labels.push(this.getDateTime(d));
+    //   }
+    // }
+
+
+    // if (this.group == "month") {
+    //   const currday = this.getDate(this.currentdatetime);
+    //   const d = new Date();
+    //   for (let i = 30; i > 30 - currday && i > -1; i--) {
+    //     d.setDate(d.getDate() - 1);
+    //     datarev.push(this.summary[i].revenue);
+    //     dataexp.push(-this.summary[i].expenses);
+    //     datapro.push(this.summary[i].profit);
+    //     labels.push(this.getDateTime(d));
+    //   }
+    // }
+    // if (this.group == "last30") {
+    //   const d = new Date();
+    //   for (let i = 30; i >= 0; i--) {
+    //     d.setDate(d.getDate() - 1);
+    //     datarev.push(this.summary[i].revenue);
+    //     dataexp.push(-this.summary[i].expenses);
+    //     datapro.push(this.summary[i].profit);
+    //     labels.push(this.getDateTime(d));
+    //   }
+    // }
 
     this.lineChart = new Chart(this.lineCanvas.nativeElement, {
       type: "line",
