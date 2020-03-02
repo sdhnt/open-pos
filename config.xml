@@ -117,5 +117,4 @@
     <plugin name="cordova-plugin-x-toast" spec="^2.7.2" />
     <plugin name="cordova-plugin-firebasex" spec="^7.0.1" />
     <allow-navigation href="http://localhost:8101" sessionid="1b7a093e" />
-    <allow-navigation href="http://localhost:8100" sessionid="e756becb" />
 </widget>
