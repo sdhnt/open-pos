@@ -21,7 +21,7 @@
     </ion-refresher-content>
   </ion-refresher>
 
-<ion-select style="background-color: silver; max-width: 100%;" [(ngModel)]="group"  (ionChange)="setvalues()">
+<ion-select style="background-color: silver; max-width: 100%;" [(ngModel)]="group"  (ionChange)="setPgValues(group)">
   <ion-option value="today">{{"Today"|translate}}</ion-option>
   <!-- <ion-option value="week">This Week</ion-option> -->
   <ion-option value="last7">{{"Last 7 days"|translate}}</ion-option>
@@ -159,17 +159,17 @@
     </ion-col> -->
     <ion-col style="border: solid 1px silver;  text-align: center;" col-3>
       <div *ngIf="transac.totalatax>=0">
-      Income
+      {{"Income"|translate}}
     </div>
     <div *ngIf="!(transac.totalatax>=0)">
-      Expense
+      {{"Expense"|translate}}
     </div>   
     </ion-col>
     <ion-col style="border: solid 1px silver; color:white; text-align: center;" col-3>
       <div *ngIf="transac.totalatax>=0" style="background-color: green">     {{transac.totalatax}}  </div>
       <div *ngIf="!(transac.totalatax>=0)" style="background-color: red">       {{transac.totalatax}}</div>
     </ion-col>
-    <ion-col col-2 style="padding:0px">
+    <ion-col col-2 style="padding:0px"> 
       <button small ion-button full style="background-color: black;"(click)="expandTransac(transac)" >{{transac.expandedvar}}</button>
     </ion-col>
 
