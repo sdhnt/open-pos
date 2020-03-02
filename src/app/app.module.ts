@@ -33,7 +33,7 @@ import { Base64ToGallery } from "@ionic-native/base64-to-gallery";
 import { PhotoLibrary } from "@ionic-native/photo-library";
 import { Facebook } from "@ionic-native/facebook";
 import { Contacts } from "@ionic-native/contacts";
-import { LocalNotifications } from '@ionic-native/local-notifications'
+import { LocalNotifications } from "@ionic-native/local-notifications";
 
 import { LoginPageModule } from "../pages/login/login.module";
 import { TransactionHomePageModule } from "../pages/transaction-home/transaction-home.module";
@@ -123,7 +123,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     PhotoLibrary,
     Facebook,
     Contacts,
-    LocalNotifications
+    LocalNotifications,
   ],
 })
 export class AppModule {}

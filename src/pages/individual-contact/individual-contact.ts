@@ -33,7 +33,7 @@ export class IndividualContactPage {
     public sp: StorageProvider,
     private toastCtrl: ToastController,
     private translateConfigService: TranslateConfigService,
-    private localNotif: LocalNotifications
+    private localNotif: LocalNotifications,
   ) {
     this.contact = this.navParams.get("data");
     this.newDate = this.contact.dueDate;
@@ -71,19 +71,19 @@ export class IndividualContactPage {
       if (this.newDate != this.contact.dueDate) {
         await this.sp.updateContactDate(this.contact.displayName, this.newDate);
         const phoneNumToUse: string = this.contact.phno[0];
-        const notifId: number = parseInt(phoneNumToUse.substring(phoneNumToUse.length-8, phoneNumToUse.length));
+        const notifId: number = parseInt(phoneNumToUse.substring(phoneNumToUse.length - 8, phoneNumToUse.length));
         console.log(notifId);
-        this.localNotif.isScheduled(notifId).then(isSchdeuled=>{
-          if(isSchdeuled){
+        this.localNotif.isScheduled(notifId).then(isSchdeuled => {
+          if (isSchdeuled) {
             this.localNotif.cancel(notifId);
             console.log("Cleared notif of", notifId);
           }
-          if(this.newDate!=""){
+          if (this.newDate != "") {
             this.localNotif.schedule({
-              text: "Credit/Debit due today from "+this.contact.displayName+". Amount due: "+this.contact.balance,
+              text: "Credit/Debit due today from " + this.contact.displayName,
               id: notifId,
-              trigger: {at: new Date(this.newDate)},
-              silent: true
+              trigger: { at: new Date(this.newDate) },
+              silent: true,
               // trigger: {at: new Date(2020, 2, 2, 20, 3)}
             });
             console.log("Notif scheduled for: ", new Date(this.newDate));

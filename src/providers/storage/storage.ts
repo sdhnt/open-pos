@@ -12,7 +12,7 @@ import {
 } from "./utilities/firestore";
 import { syncDocuments, transactionCallback } from "./utilities/backupStorage";
 import { initializeFirebase } from "../../utilities/initializeFirebase";
-import { LocalNotifications } from '@ionic-native/local-notifications';
+import { LocalNotifications } from "@ionic-native/local-notifications";
 
 @Injectable()
 export class StorageProvider {
@@ -31,8 +31,12 @@ export class StorageProvider {
     return [[Storage]];
   }
 
-  constructor(public storage: Storage, public toastCtrl: ToastController, public navCtrl: NavController,
-    private localNotif: LocalNotifications) {}
+  constructor(
+    public storage: Storage,
+    public toastCtrl: ToastController,
+    public navCtrl: NavController,
+    private localNotif: LocalNotifications,
+  ) {}
 
   async isThereFirebase(): Promise<boolean> {
     const isThereFirebase = await initializeFirebase();
@@ -448,7 +452,7 @@ export class StorageProvider {
       //       }
       //     });
       //   }
-        
+
       // }).catch(e=>console.log("Permission error", e));
       contact.dueDate = newDate;
       contact.updatedAt = new Date();

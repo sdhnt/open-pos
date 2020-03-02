@@ -132,20 +132,22 @@ export class ContactsPage {
             handler: data => {
               if (data.name != "") {
                 try {
-                  if(data.phno.length<8) throw Error;
-                  for(let i=0; i<data.phno.length; i++){
-                    let char : String = data.phno.charAt(i);
-                    if(char=="+"){
-                      if(i!=0) throw Error;
-                    } else if (char.localeCompare("0")<0 || char.localeCompare("9")>0){
+                  if (data.phno.length < 8) throw Error;
+                  for (let i = 0; i < data.phno.length; i++) {
+                    const char: string = data.phno.charAt(i);
+                    if (char == "+") {
+                      if (i != 0) throw Error;
+                    } else if (char.localeCompare("0") < 0 || char.localeCompare("9") > 0) {
                       throw Error;
                     }
                   }
                 } catch (error) {
-                  this.toastController.create({
-                    message: "Improper phone number",
-                    duration: 2500
-                  }).present();
+                  this.toastController
+                    .create({
+                      message: "Improper phone number",
+                      duration: 2500,
+                    })
+                    .present();
                   return false;
                 }
                 const temp = {
