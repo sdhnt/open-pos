@@ -354,12 +354,12 @@
       </ion-row>
     </div>
   </ion-card>
-  <ion-row style="padding: 2px;">
+  <ion-row style="padding: 2px;" *ngIf="showrec==false && isReady==true && lastTransaction"> 
     <button ion-button full style="background-color:#301924" (click)="printOldRec(lastTransaction)" round>
       {{'PRINT '|translate}} &nbsp;<ion-icon name="print"></ion-icon>
     </button>
   </ion-row>
-  <ion-row style="padding: 2px;">
+  <ion-row style="padding: 2px;" *ngIf="showrec==false && isReady==true && lastTransaction">
     <ion-col col-6>
     <button ion-button full round style="background-color: #301924;" (click)="recAction()" [disabled]="disableDownload">
       <ion-icon name="download" style="padding-right: 5px;"></ion-icon>
