@@ -408,11 +408,12 @@ export class StorageProvider {
     newContacts.forEach(newContact => {
       const index = contacts.findIndex(contact => contact.displayName === newContact.displayName);
       if (index != -1) {
-        const { id, balance, transacHistory, transac_new } = contacts[index];
+        const { id, balance, transacHistory, transac_new, dueDate } = contacts[index];
         contacts[index] = {
           ...newContact,
           id,
           balance,
+          dueDate,
           transacHistory,
           transac_new,
           updatedAt: new Date(),
@@ -420,6 +421,7 @@ export class StorageProvider {
       } else {
         const defaultKeys = {
           balance: 0,
+          dueDate: "",
           transacHistory: [],
           transac_new: [],
           updatedAt: new Date(),
@@ -429,6 +431,18 @@ export class StorageProvider {
     });
 
     contacts.sort((a, b) => a.displayName.localeCompare(b.displayName));
+    await this.storage.set("contacts", JSON.stringify(contacts));
+  }
+
+  async updateContactDate(contactName, oldDate, newDate): Promise<void>{ //old and new date for local notification purposes
+    const contacts = JSON.parse(await this.getContacts());
+    const contact = contacts.find(contact => contact.displayName === contactName);
+    if(contact){
+      contact.dueDate = newDate;
+      contact.updatedAt = new Date();
+    } else {
+      console.log("No contact found for date change");
+    }
     await this.storage.set("contacts", JSON.stringify(contacts));
   }
 
@@ -464,7 +478,6 @@ export class StorageProvider {
     } else {
       console.log("no contact found to add new transaction");
     }
-
     await this.storage.set("contacts", JSON.stringify(contacts));
   }
 

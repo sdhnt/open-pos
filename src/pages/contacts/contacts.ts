@@ -7,7 +7,6 @@ import {
   FabContainer,
   AlertController,
   ModalController,
-  Events,
   ViewController,
 } from "ionic-angular";
 import { Contacts, ContactFindOptions } from "@ionic-native/contacts";
@@ -40,7 +39,6 @@ export class ContactsPage {
     private modalCtrl: ModalController,
     private translateConfigService: TranslateConfigService,
     private zone: NgZone,
-    private event: Events,
     private view: ViewController,
   ) {}
 

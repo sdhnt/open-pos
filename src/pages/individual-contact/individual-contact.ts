@@ -22,6 +22,7 @@ export class IndividualContactPage {
     balance: 0,
     phno: "",
     transacHistory: [],
+    dueDate: ""
   };
 
   constructor(
@@ -33,19 +34,29 @@ export class IndividualContactPage {
     private translateConfigService: TranslateConfigService,
   ) {
     this.contact = this.navParams.get("data");
+    this.newDate = this.contact.dueDate;
+    // if(this.newDate==undefined) this.remDate();
   }
 
   listOfNewTransactions = [];
+  minDate = new Date().toISOString();
+  maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 2)).toISOString();
+  newDate;
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad IndividualContactPage");
   }
 
+  remDate(){
+    this.newDate = "";
+  }
+
   async goBack() {
-    if (this.listOfNewTransactions.length == 0) {
+    if (this.listOfNewTransactions.length == 0 && this.newDate==this.contact.dueDate) {
       this.navCtrl.pop();
     } else {
-      this.toastCtrl
+      if(this.listOfNewTransactions.length>0){
+        this.toastCtrl
         .create({
           //@ts-ignore
           message: this.translateConfigService.getTranslatedMessage("Updating contact").value,
@@ -54,6 +65,10 @@ export class IndividualContactPage {
         })
         .present();
       await this.sp.updateContactTransaction(this.contact.displayName, this.listOfNewTransactions);
+      }
+      if(this.newDate!=this.contact.dueDate){
+        await this.sp.updateContactDate(this.contact.displayName, this.contact.dueDate, this.newDate);
+      }
       this.navCtrl.pop();
     }
   }
@@ -94,7 +109,7 @@ export class IndividualContactPage {
       const transaction = {
         amount: amountToAdd,
         date: new Date(),
-        reminderDate: "",
+        // reminderDate: "",
         discount: 0,
         note: "",
         img: "",
