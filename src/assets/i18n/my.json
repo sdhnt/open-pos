@@ -128,7 +128,7 @@
  "Please fill all the information!": "အချက်အလက်အားလုံးကိုဖြည့်ပါ",
  "Backup Online":"အရန်ကူးခြင်း",
  "Cash Balance":"ငွေလက်ကျန်",
- "Login with Facebook":"ဖေ့စ်ဘုတ်ဖြင့်ဝင်ရောက်ပါ",
+ "Login with Facebook":"Facebook ဖြင့်ဝင်ရန်",
  "Discard Changes":"ပြောင်းလဲမှုမလုပ်တော့ပါ",
  "Average Buying Cost:":"ပျမ်းမျှ ၀ ယ်တဲ့ကုန်ကျစရိတ်:",
  "Clear Fields":"ဖျက်ပစ်မည်",
@@ -302,5 +302,14 @@
 "Not Now":"မတင်သေးဘူး",
 "Update now":"တင်မယ်",
 "Edit Profile": "တည်းဖြတ်ပါပရိုဖိုင်း",
-  "Contacts": "အဆက်အသွယ်များ"
+  "Contacts": "အဆက်အသွယ်များ",
+  "Resend OTP":"ထပ်မံ OTP ပို့ပါ",
+  "Retry in": "ထပ်ကြိုးစားပါ: ",
+  "Complete Sale":"အားလုံးရောင်းရန်",
+  "Created using OPEN Business app!": "OPEN Business app ကိုအသုံးပြု၍ပြုလုပ်သည်",
+  "Edit Business Card":"စီးပွားရေးကဒ်ပြားလုပ်ပါ",
+  "Download":"သိမ်းမည်",
+  "Share":"မျှဝေမည်",
+"Swipe for tutorial":"နည်းပြရန်ဘေးသို့ဆွဲပါ",
+"Select bottom buttons for advanced navigation":"အဆင့်မြင့်သွားလာရန်အတွက်အောက်ခြေခလုတ်များကိုရွေးချယ်ပါ"
 }

@@ -31,7 +31,8 @@ import { AddProductCategoryPage } from "../add-product-category/add-product-cate
   templateUrl: "transaction-product.html",
 })
 export class TransactionProductPage {
-  updateOrCreate = "Complete Sale";
+  //@ts-ignore
+  updateOrCreate = this.translateConfigService.getTranslatedMessage("Complete Sale").value;
 
   constructor(
     public navCtrl: NavController,
@@ -66,7 +67,8 @@ export class TransactionProductPage {
     this.events.subscribe("addRecProd:created", data => {
       console.log("ENTERED!");
       console.log("Received 0 " + data);
-      this.updateOrCreate = "Update Receipt";
+      //@ts-ignore
+      this.updateOrCreate = this.translateConfigService.getTranslatedMessage("Update Receipt").value;
 
       const tempdat = JSON.parse(data);
       this.getProducts();
@@ -154,7 +156,8 @@ export class TransactionProductPage {
   }
 
   ionViewDidLeave() {
-    this.updateOrCreate = "Complete Sale";
+    //@ts-ignore
+    this.updateOrCreate = this.translateConfigService.getTranslatedMessage("Complete Sale").value;
   }
 
   calcitems: any = [];

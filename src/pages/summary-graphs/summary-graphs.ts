@@ -192,13 +192,6 @@ export class SummaryGraphsPage {
         .getTransactions()
         .then(async val => {
           this.listtransac = JSON.parse(val);
-
-          // await this.listtransac.forEach(element => {
-          //   if(element.isDisabled){
-
-          //   }
-          // });
-
           this.listtransac = this.listtransac.filter(transac => {
             return !transac.isDisabled;
           });
