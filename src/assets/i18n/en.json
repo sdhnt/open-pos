@@ -336,5 +336,7 @@
 "Remove":"Remove",
 "Amount to be paid later":"Amount to be paid later",
 "On Full Credit":"On Full Credit",
-"Income":"Income"
+"Income":"Income",
+"Due Date":"Due Date",
+"None":"None"
 }

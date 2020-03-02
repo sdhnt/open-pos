@@ -29,8 +29,8 @@
   <ion-row>
     <ion-col col-12 class="top-text" style="font-weight: 400;">
       <ion-item>
-        <ion-label style="font-weight: 600; color: black;"><b>Due Date:</b></ion-label>
-        <ion-datetime [(ngModel)]="newDate" style="border: 1px solid black;" placeholder="None" 
+        <ion-label style="font-weight: 600; color: black;"><b>{{"Due Date"|translate}}:</b></ion-label>
+        <ion-datetime [(ngModel)]="newDate" style="border: 1px solid black;" placeholder="{{'None'|translate}}" 
         style="min-width: 30%;" [min]="minDate" [max]="maxDate">
         </ion-datetime>
       </ion-item>
