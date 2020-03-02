@@ -1,9 +1,18 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, Events, ToastController, ViewController } from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  Events,
+  ToastController,
+  ViewController,
+  ModalController,
+} from "ionic-angular";
 import { StorageProvider } from "../../providers/storage/storage";
 import firebase from "firebase";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import { GeolocationService } from "../../providers/geolocation/geolocation.service";
+import { ContactsPage } from "../contacts/contacts";
 
 /**
  * Generated class for the ExpenseGeneralPage page.
@@ -33,6 +42,7 @@ export class ExpenseGeneralPage {
     public toastCtrl: ToastController,
     private gps: GeolocationService,
     private view: ViewController,
+    private modal: ModalController,
   ) {
     this.getUserData();
     this.listOfExpenses = [];
@@ -86,6 +96,17 @@ export class ExpenseGeneralPage {
           qty: 1,
           stock_qty: 0,
         };
+        if (element.contact != "") {
+          const transaction = {
+            amount: 1*element.amount,
+            date: new Date(),
+            reminderDate: "",
+            discount: 0,
+            note: "",
+            img: "",
+          };
+          this.sp.updateContactTransaction(element.contact, [transaction]);
+        }
         itemslist.push(prodOfExpense);
       }
     });
@@ -129,6 +150,21 @@ export class ExpenseGeneralPage {
     this.view.dismiss();
   }
 
+  addContact(exp: Expense) {
+    const m = this.modal.create(ContactsPage, { data: true });
+    m.present();
+    m.onDidDismiss((contactName: string) => {
+      if (contactName == null || contactName == undefined) {
+        return;
+      }
+      exp.contact = contactName;
+    });
+  }
+
+  clearContact(exp: Expense) {
+    exp.contact = "";
+  }
+
   async updateCb(negtransacsum) {
     this.getUserData();
     this.userdata.cash_balance = (parseInt(this.userdata.cash_balance) - parseInt(negtransacsum)).toString();
@@ -156,9 +192,11 @@ class Expense {
   public amount: number;
   //public notes: String;
   public flag: boolean;
+  public contact: string;
 
   constructor() {
     this.flag = true;
+    this.contact = "";
   }
 
   isValid() {
