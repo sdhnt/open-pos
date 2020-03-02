@@ -9,8 +9,8 @@
   <ion-fab right bottom #fab style="margin-bottom: 10px;" *ngIf="!choosingContact">
     <button ion-fab><ion-icon name="person-add"></ion-icon></button>
     <ion-fab-list side="left">
-      <button ion-button (click)="navAdd(1, fab)">From Contacts</button>
-      <button ion-button (click)="navAdd(2, fab)">Manually</button>
+      <button ion-button (click)="navAdd(1, fab)">{{"From Contacts"|translate}}</button>
+      <button ion-button (click)="navAdd(2, fab)">{{"Manually"|translate}}</button>
     </ion-fab-list>
   </ion-fab>
   <ion-fab right bottom style="margin-bottom: 10px;" *ngIf="choosingContact">
@@ -40,11 +40,11 @@
 
   <ion-list>
     <div style="width: 100%; text-align: center;" *ngIf="!filteredList || filteredList.length==0">
-      <p>No contacts!</p>
+      <p>{{"No contacts"|translate}}!</p>
       <ion-card padding>
-        Track which customers owe you money and how much they owe you using this page! <br><br>
-        Add a customer name/number and then enter in how much they owe you to keep a track. <br><br>
-        We are soon releasing a send automatic SMS reminder feature and an option to see who owes you money on a particular date.
+       {{"Track which customers owe you money and how much they owe you using this page!"|translate}} <br><br>
+        {{"Add a customer name/number and then enter in how much they owe you to keep a track."|translate}} <br><br>
+        {{"We are soon releasing a send automatic SMS reminder feature and an option to see who owes you money on a particular date."|translate}}
       </ion-card>
     </div>
     <ion-card *ngFor="let contact of filteredList">

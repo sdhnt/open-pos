@@ -311,5 +311,14 @@
 "Download":"Download",
 "Share":"Share",
 "Swipe for tutorial":"Swipe for tutorial",
-"Select bottom buttons for advanced navigation":"Select bottom buttons for advanced navigation"
+"Select bottom buttons for advanced navigation":"Select bottom buttons for advanced navigation",
+"No contacts":"No contacts",
+"Track which customers owe you money and how much they owe you using this page!":" Track which customers owe you money and how much they owe you using this page!",
+"Add a customer name/number and then enter in how much they owe you to keep a track.":"Add a customer name/number and then enter in how much they owe you to keep a track.",
+"We are soon releasing a send automatic SMS reminder feature and an option to see who owes you money on a particular date.":"We are soon releasing a send automatic SMS reminder feature and an option to see who owes you money on a particular date.",
+"Manually":"Manually",
+"From Contacts":"From Contacts",
+"Borrowed":"Borrowed",
+"Paid":"Paid",
+"Done":"Done"
 }

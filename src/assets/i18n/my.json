@@ -311,5 +311,14 @@
   "Download":"သိမ်းမည်",
   "Share":"မျှဝေမည်",
 "Swipe for tutorial":"နည်းပြရန်ဘေးသို့ဆွဲပါ",
-"Select bottom buttons for advanced navigation":"အဆင့်မြင့်သွားလာရန်အတွက်အောက်ခြေခလုတ်များကိုရွေးချယ်ပါ"
+"Select bottom buttons for advanced navigation":"အဆင့်မြင့်သွားလာရန်အတွက်အောက်ခြေခလုတ်များကိုရွေးချယ်ပါ",
+"No contacts":"အဆက်အသွယ်မရှိသေးပါ!",
+"Track which customers owe you money and how much they owe you using this page!":"သင်ဤငွေကိုမည်သည့်ဖောက်သည်များကသင့်အားပေးရမည်၊ ဘယ်လောက်ပေးဆပ်သည်ကိုဒီနေရာတွင်ခြေရာခံနိုင်သည်။",
+"Add a customer name/number and then enter in how much they owe you to keep a track.":"ဖောက်သည်တစ် ဦး ၏အမည် / နံပါတ်ကိုထည့်ပြီးခြေရာခံရန်သင့်အားမည်မျှပေးဆပ်ရမည်ကိုထည့်ပါ",
+"We are soon releasing a send automatic SMS reminder feature and an option to see who owes you money on a particular date.":"မကြာမီကျွန်ုပ်တို့အလိုအလျောက် SMS ပေးပို့နိုင်သည့်သတိပေးချက်နှင့်ရက်တစ်ရက်တွင်သင့်အားမည်သူကအကြွေးပေးရမည်ကိုရွေးရန်ရွေးချယ်မှုတစ်ခုကိုမကြာမီပြုလုပ်တော့မည်။",
+"Manually":"ရေးထည့်ရန်",
+"From Contacts":"ဖုန်းစာအုပ်မှထည့်ရန်",
+"Borrowed":"ချေးငွေ",
+"Paid":"ပြန်အပ်ငွေ",
+"Done":"ပြီးပြီ"
 }
