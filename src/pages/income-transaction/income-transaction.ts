@@ -791,7 +791,7 @@ export class IncomeTransactionPage {
               if (data.creditAmount && data.creditAmount > 0) {
                 amountToCredit = data.creditAmount;
               } else {
-                a.present();
+                return false;
               }
             },
           },
