@@ -90,7 +90,7 @@ export class IndividualContactPage {
             });
             console.log("Notif scheduled for: ", new Date(this.newDate));
           }
-        });
+        }).catch(e=>console.log(e));
       }
       this.navCtrl.pop();
     }

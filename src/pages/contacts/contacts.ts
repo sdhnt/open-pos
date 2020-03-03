@@ -207,4 +207,15 @@ export class ContactsPage {
       contact.displayName.toLowerCase().includes(this.searchterm.toLowerCase()),
     );
   }
+
+  // sortVal;
+  // sort(num){
+  //   console.log(num);
+  //   this.sortVal = num;
+  //   if(this.sortVal==1||this.sortVal==2){
+  //     this.filteredList.sort((a,b)=>Math.pow(-1, this.sortVal+1)*a.displayName.localeCompare(b.displayName));
+  //   } else if(this.sortVal==3||this.sortVal==4){
+  //     this.filteredList.sort((a,b)=>Math.pow(-1, this.sortVal+1)*(a.balance-b.balance))
+  //   }
+  // }
 }
