@@ -408,8 +408,7 @@ export class StorageProvider {
 
   async saveContacts(newContacts, manualAdd: boolean): Promise<void> {
     if (!newContacts || newContacts.length === 0) return;
-    await this.storage.ready();
-    const contacts = JSON.parse(await this.storage.get("contacts"));
+    const contacts = JSON.parse(await this.getContacts());
 
     newContacts.forEach(newContact => {
       const index = contacts.findIndex(contact => contact.displayName === newContact.displayName);

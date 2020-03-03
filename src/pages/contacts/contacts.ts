@@ -88,22 +88,43 @@ export class ContactsPage {
   navAdd(num: number, fab: FabContainer) {
     fab.close();
     if (num == 1) {
-      const modal = this.modalCtrl.create(AddFromContactsPage);
-      modal.present();
-      modal.onWillDismiss(listToAdd => {
-        const newContactList = [];
-        listToAdd.forEach(element => {
-          const temp = {
-            displayName: element.displayName,
-            phno: element.phoneNumbers,
-          };
-          // this.contactList.push(temp);
-          newContactList.push(temp);
-        });
-        this.sp.saveContacts(newContactList, false).then(() => {
+      // const modal = this.modalCtrl.create(AddFromContactsPage);
+      // modal.present();
+      // modal.onWillDismiss(listToAdd => {
+      //   const newContactList = [];
+      //   listToAdd.forEach(element => {
+      //     const temp = {
+      //       displayName: element.displayName,
+      //       phno: element.phoneNumbers,
+      //     };
+      //     // this.contactList.push(temp);
+      //     newContactList.push(temp);
+      //   });
+      //   this.sp.saveContacts(newContactList, false).then(() => {
+      //     this.ionViewDidEnter();
+      //   });
+      // });
+      this.contacts.pickContact().then(contactReturned=>{
+        let phNoList = [];
+        if(!contactReturned.phoneNumbers){
+          alert("Cannot add contact without phone number");
+          return;
+        }
+        contactReturned.phoneNumbers.forEach(num=>{
+          let phoneNum = num.value;
+          while(phoneNum.indexOf(" ")!=-1){
+            phoneNum = phoneNum.replace(" ", "");
+          }
+          phNoList.push(phoneNum);
+        })
+        const temp = {
+          displayName: contactReturned.displayName,
+          phno: phNoList
+        };
+        this.sp.saveContacts([temp], false).then(()=>{
           this.ionViewDidEnter();
-        });
-      });
+        })
+      })
     } else if (num == 2) {
       const a = this.alertCtrl.create({
         //@ts-ignore
