@@ -104,27 +104,27 @@ export class ContactsPage {
       //     this.ionViewDidEnter();
       //   });
       // });
-      this.contacts.pickContact().then(contactReturned=>{
-        let phNoList = [];
-        if(!contactReturned.phoneNumbers){
+      this.contacts.pickContact().then(contactReturned => {
+        const phNoList = [];
+        if (!contactReturned.phoneNumbers) {
           alert("Cannot add contact without phone number");
           return;
         }
-        contactReturned.phoneNumbers.forEach(num=>{
+        contactReturned.phoneNumbers.forEach(num => {
           let phoneNum = num.value;
-          while(phoneNum.indexOf(" ")!=-1){
+          while (phoneNum.indexOf(" ") != -1) {
             phoneNum = phoneNum.replace(" ", "");
           }
           phNoList.push(phoneNum);
-        })
+        });
         const temp = {
           displayName: contactReturned.displayName,
-          phno: phNoList
+          phno: phNoList,
         };
-        this.sp.saveContacts([temp], false).then(()=>{
+        this.sp.saveContacts([temp], false).then(() => {
           this.ionViewDidEnter();
-        })
-      })
+        });
+      });
     } else if (num == 2) {
       const a = this.alertCtrl.create({
         //@ts-ignore

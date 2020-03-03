@@ -86,7 +86,7 @@ export class IndividualContactPage {
               text: "Credit/Debit due today from " + this.contact.displayName,
               id: notifId,
               // trigger: { at: new Date(this.newDate) },
-              trigger: {at: new Date(new Date().getTime() + timeSchedule)}
+              trigger: { at: new Date(new Date().getTime() + timeSchedule) },
             });
             console.log("Notif scheduled for: ", new Date(this.newDate));
           }
