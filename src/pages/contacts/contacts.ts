@@ -9,10 +9,9 @@ import {
   ModalController,
   ViewController,
 } from "ionic-angular";
-import { Contacts, ContactFindOptions } from "@ionic-native/contacts";
+import { Contacts } from "@ionic-native/contacts";
 import { StorageProvider } from "../../providers/storage/storage";
 import { IndividualContactPage } from "../individual-contact/individual-contact";
-import { AddFromContactsPage } from "../add-from-contacts/add-from-contacts";
 
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 
