@@ -42,7 +42,6 @@ export class ContactsPage {
     private view: ViewController,
   ) {}
 
-  hasPermission = true;
   choosingContact;
 
   ionViewDidLoad() {
@@ -77,46 +76,6 @@ export class ContactsPage {
   searchterm = "";
   filteredList;
 
-  importContacts() {
-    const fields = ["*"];
-
-    const options = new ContactFindOptions();
-    options.multiple = true;
-    options.desiredFields = ["id", "displayName", "phoneNumbers"];
-    options.hasPhoneNumber = true;
-
-    const onSuccess = contacts => {
-      this.contactList = contacts;
-      console.log(contacts);
-      contacts.forEach(element => {
-        console.log(element.displayName);
-      });
-      // un-comment the next line to save in storage provider
-      // this.sp.saveContacts(contacts);
-      this.toastController
-        .create({
-          //@ts-ignore
-          message: this.translateConfigService.getTranslatedMessage("Phone contacts have been imported.").value,
-          duration: 2000,
-        })
-        .present()
-        .then(() => {});
-    };
-
-    if (this.hasPermission)
-      this.contacts
-        // @ts-ignore
-        .find(fields, options)
-        .then(contacts => onSuccess(contacts))
-        .catch(error => console.log(error));
-    else console.log("no user permission to access phone contacts");
-  }
-
-  setPermission(permission: boolean) {
-    console.log(`phone contacts permission: ${permission}`);
-    this.hasPermission = permission;
-  }
-
   navToIndividual(contact) {
     if (this.choosingContact) {
       this.view.dismiss(contact.displayName);
@@ -129,19 +88,40 @@ export class ContactsPage {
   navAdd(num: number, fab: FabContainer) {
     fab.close();
     if (num == 1) {
-      const modal = this.modalCtrl.create(AddFromContactsPage);
-      modal.present();
-      modal.onWillDismiss(listToAdd => {
-        const newContactList = [];
-        listToAdd.forEach(element => {
-          const temp = {
-            displayName: element.displayName,
-            phno: element.phoneNumbers,
-          };
-          // this.contactList.push(temp);
-          newContactList.push(temp);
+      // const modal = this.modalCtrl.create(AddFromContactsPage);
+      // modal.present();
+      // modal.onWillDismiss(listToAdd => {
+      //   const newContactList = [];
+      //   listToAdd.forEach(element => {
+      //     const temp = {
+      //       displayName: element.displayName,
+      //       phno: element.phoneNumbers,
+      //     };
+      //     // this.contactList.push(temp);
+      //     newContactList.push(temp);
+      //   });
+      //   this.sp.saveContacts(newContactList, false).then(() => {
+      //     this.ionViewDidEnter();
+      //   });
+      // });
+      this.contacts.pickContact().then(contactReturned => {
+        const phNoList = [];
+        if (!contactReturned.phoneNumbers) {
+          alert("Cannot add contact without phone number");
+          return;
+        }
+        contactReturned.phoneNumbers.forEach(num => {
+          let phoneNum = num.value;
+          while (phoneNum.indexOf(" ") != -1) {
+            phoneNum = phoneNum.replace(" ", "");
+          }
+          phNoList.push(phoneNum);
         });
-        this.sp.saveContacts(newContactList, false).then(() => {
+        const temp = {
+          displayName: contactReturned.displayName,
+          phno: phNoList,
+        };
+        this.sp.saveContacts([temp], false).then(() => {
           this.ionViewDidEnter();
         });
       });
@@ -172,9 +152,28 @@ export class ContactsPage {
             text: this.translateConfigService.getTranslatedMessage("Add").value,
             handler: data => {
               if (data.name != "") {
+                try {
+                  if (data.phno.length < 8) throw Error;
+                  for (let i = 0; i < data.phno.length; i++) {
+                    const char: string = data.phno.charAt(i);
+                    if (char == "+") {
+                      if (i != 0) throw Error;
+                    } else if (char.localeCompare("0") < 0 || char.localeCompare("9") > 0) {
+                      throw Error;
+                    }
+                  }
+                } catch (error) {
+                  this.toastController
+                    .create({
+                      message: "Improper phone number",
+                      duration: 2500,
+                    })
+                    .present();
+                  return false;
+                }
                 const temp = {
                   displayName: data.name,
-                  phno: data.phno != "" ? [data.phno] : ["0000"],
+                  phno: [data.phno],
                 };
                 // this.contactList.push(temp);
                 this.sp.saveContacts([temp], true).then(() => {
@@ -189,6 +188,7 @@ export class ContactsPage {
                   })
                   .present();
                 a.present();
+                return false;
               }
             },
           },
