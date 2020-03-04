@@ -37,12 +37,12 @@
   </ion-list> -->
 
   <ion-searchbar showCancelButton="always" [(ngModel)]="searchterm" (ionChange)="filter()"></ion-searchbar>
-  <!-- <ion-select [(ngModel)]="sortVal" (ionChange)="sort($event)" style="min-width: 100%;">
+  <ion-select (ionChange)="sort($event)" style="min-width: 100%;">
     <ion-option value="1" selected>A-Z</ion-option>
     <ion-option value="2">Z-A</ion-option>
     <ion-option value="3">Balance: High to Low</ion-option>
     <ion-option value="4">Balance: Low to High</ion-option>
-  </ion-select> -->
+  </ion-select>
 
   <ion-list>
     <div style="width: 100%; text-align: center;" *ngIf="!filteredList || filteredList.length==0">

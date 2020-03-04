@@ -208,14 +208,17 @@ export class ContactsPage {
     );
   }
 
-  // sortVal;
-  // sort(num){
-  //   console.log(num);
-  //   this.sortVal = num;
-  //   if(this.sortVal==1||this.sortVal==2){
-  //     this.filteredList.sort((a,b)=>Math.pow(-1, this.sortVal+1)*a.displayName.localeCompare(b.displayName));
-  //   } else if(this.sortVal==3||this.sortVal==4){
-  //     this.filteredList.sort((a,b)=>Math.pow(-1, this.sortVal+1)*(a.balance-b.balance))
-  //   }
-  // }
+  sort(num){
+    if(num==1||num==2){
+      this.filteredList.sort( (a, b) => a.displayName.localeCompare(b.displayName) );
+      if(num==2){
+        this.filteredList.reverse();
+      }
+    } else if(num==3||num==4){
+      this.filteredList.sort( (a, b) => a.balance-b.balance );
+      if(num==4){
+        this.filteredList.reverse();
+      }
+    }
+  }
 }
