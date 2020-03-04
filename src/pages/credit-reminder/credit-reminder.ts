@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { StorageProvider } from '../../providers/storage/storage';
-import { IndividualContactPage } from '../individual-contact/individual-contact';
+import { Component } from "@angular/core";
+import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { StorageProvider } from "../../providers/storage/storage";
+import { IndividualContactPage } from "../individual-contact/individual-contact";
 
 /**
  * Generated class for the CreditReminderPage page.
@@ -12,15 +12,11 @@ import { IndividualContactPage } from '../individual-contact/individual-contact'
 
 @IonicPage()
 @Component({
-  selector: 'page-credit-reminder',
-  templateUrl: 'credit-reminder.html',
+  selector: "page-credit-reminder",
+  templateUrl: "credit-reminder.html",
 })
 export class CreditReminderPage {
-
-  constructor(public navCtrl: NavController, 
-    public navParams: NavParams,
-    public sp: StorageProvider) {
-  }
+  constructor(public navCtrl: NavController, public navParams: NavParams, public sp: StorageProvider) {}
 
   todayList = [];
   tomList = [];
@@ -28,20 +24,21 @@ export class CreditReminderPage {
   async ionViewWillEnter() {
     this.todayList = [];
     this.tomList = [];
-    let contacts = JSON.parse(await this.sp.getContacts());
-    let todayDate = new Date();
-    contacts.forEach((contact)=>{
-      if(contact.dueDate && contact.dueDate!="" && contact.balance!=0){
+    const contacts = JSON.parse(await this.sp.getContacts());
+    const todayDate = new Date();
+    contacts.forEach(contact => {
+      if (contact.dueDate && contact.dueDate != "" && contact.balance != 0) {
         const contactDate = new Date(contact.dueDate);
-        if(contactDate.getFullYear() == todayDate.getFullYear()){
-          if(contactDate.getMonth() == todayDate.getMonth()){
-            if(contactDate.getDate() == todayDate.getDate()){
+        if (contactDate.getFullYear() == todayDate.getFullYear()) {
+          if (contactDate.getMonth() == todayDate.getMonth()) {
+            if (contactDate.getDate() == todayDate.getDate()) {
               this.todayList.push(contact);
-            } else if(contactDate.getDate() == todayDate.getDate() + 1 ){
+            } else if (contactDate.getDate() == todayDate.getDate() + 1) {
               this.tomList.push(contact);
             }
-          } else if(todayDate.getMonth() == contactDate.getMonth() -1 ){
-            if(contactDate.valueOf()-todayDate.valueOf() < 86400000){ //8.64e7 is one day in milliseconds
+          } else if (todayDate.getMonth() == contactDate.getMonth() - 1) {
+            if (contactDate.valueOf() - todayDate.valueOf() < 86400000) {
+              //8.64e7 is one day in milliseconds
               this.tomList.push(contact);
             }
           }
@@ -50,12 +47,11 @@ export class CreditReminderPage {
     });
   }
 
-  navToIndividual(contact){
-    this.navCtrl.push(IndividualContactPage, {data: contact});
+  navToIndividual(contact) {
+    this.navCtrl.push(IndividualContactPage, { data: contact });
   }
 
-  goBack(){
+  goBack() {
     this.navCtrl.pop();
   }
-
 }

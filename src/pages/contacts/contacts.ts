@@ -223,7 +223,7 @@ export class ContactsPage {
     }
   }
 
-  navCredReminder(){
+  navCredReminder() {
     this.navCtrl.push(CreditReminderPage);
   }
 }
