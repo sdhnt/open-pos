@@ -51,6 +51,8 @@ import { ContactsPageModule } from "../pages/contacts/contacts.module";
 import { ContactsPage } from "../pages/contacts/contacts";
 import { IndividualContactPage } from "../pages/individual-contact/individual-contact";
 import { IndividualContactPageModule } from "../pages/individual-contact/individual-contact.module";
+import { CreditReminderPage } from "../pages/credit-reminder/credit-reminder";
+import { CreditReminderPageModule } from "../pages/credit-reminder/credit-reminder.module";
 
 // language translation service
 export function HttpLoaderFactory(http: HttpClient) {
@@ -75,6 +77,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     UserDataPageModule,
     ContactsPageModule,
     IndividualContactPageModule,
+    CreditReminderPageModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -95,6 +98,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AddProductCategoryPage,
     ContactsPage,
     IndividualContactPage,
+    CreditReminderPage,
   ],
   providers: [
     StatusBar,

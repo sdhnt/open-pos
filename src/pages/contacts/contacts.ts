@@ -14,6 +14,7 @@ import { StorageProvider } from "../../providers/storage/storage";
 import { IndividualContactPage } from "../individual-contact/individual-contact";
 
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
+import { CreditReminderPage } from "../credit-reminder/credit-reminder";
 
 /**
  * Generated class for the ContactsPage page.
@@ -208,17 +209,21 @@ export class ContactsPage {
     );
   }
 
-  sort(num){
-    if(num==1||num==2){
-      this.filteredList.sort( (a, b) => a.displayName.localeCompare(b.displayName) );
-      if(num==2){
+  sort(num) {
+    if (num == 1 || num == 2) {
+      this.filteredList.sort((a, b) => a.displayName.localeCompare(b.displayName));
+      if (num == 2) {
         this.filteredList.reverse();
       }
-    } else if(num==3||num==4){
-      this.filteredList.sort( (a, b) => a.balance-b.balance );
-      if(num==4){
+    } else if (num == 3 || num == 4) {
+      this.filteredList.sort((a, b) => a.balance - b.balance);
+      if (num == 4) {
         this.filteredList.reverse();
       }
     }
+  }
+
+  navCredReminder(){
+    this.navCtrl.push(CreditReminderPage);
   }
 }
