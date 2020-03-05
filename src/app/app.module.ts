@@ -34,6 +34,7 @@ import { PhotoLibrary } from "@ionic-native/photo-library";
 import { Facebook } from "@ionic-native/facebook";
 import { Contacts } from "@ionic-native/contacts";
 import { LocalNotifications } from "@ionic-native/local-notifications";
+import { SMS } from '@ionic-native/sms';
 
 import { LoginPageModule } from "../pages/login/login.module";
 import { TransactionHomePageModule } from "../pages/transaction-home/transaction-home.module";
@@ -128,6 +129,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     Facebook,
     Contacts,
     LocalNotifications,
+    SMS,
   ],
 })
 export class AppModule {}

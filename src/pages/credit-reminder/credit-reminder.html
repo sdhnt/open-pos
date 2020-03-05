@@ -6,7 +6,7 @@
 -->
 <ion-content padding>
   <ion-buttons end>
-    <button ion-button style="background-color: red; color: white;" (click)="goBack()">CANCEL</button>
+    <button ion-button style="background-color: red; color: white;" (click)="goBack()" round>CANCEL</button>
   </ion-buttons>
   <h3>Due Today</h3>
   <p *ngIf="todayList.length==0" style="font-size: large; text-align: center;">No dues today</p>

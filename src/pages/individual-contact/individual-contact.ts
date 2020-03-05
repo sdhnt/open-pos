@@ -4,6 +4,9 @@ import { StorageProvider } from "../../providers/storage/storage";
 
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import { LocalNotifications } from "@ionic-native/local-notifications";
+import html2canvas from 'html2canvas';
+import { SocialSharing } from "@ionic-native/social-sharing";
+import { SMS } from "@ionic-native/sms";
 
 /**
  * Generated class for the IndividualContactPage page.
@@ -34,6 +37,8 @@ export class IndividualContactPage {
     private toastCtrl: ToastController,
     private translateConfigService: TranslateConfigService,
     private localNotif: LocalNotifications,
+    private social: SocialSharing,
+    private sms: SMS
   ) {
     this.contact = this.navParams.get("data");
     this.newDate = this.contact.dueDate;
@@ -202,5 +207,41 @@ export class IndividualContactPage {
       ],
     });
     a.present();
+  }
+
+  usingShare=false;
+  share(){
+    this.usingShare = true;
+    html2canvas(document.querySelector("#share"), {useCORS: true}).then(canvas=>{
+      const dataUrl = canvas.toDataURL();
+      this.social.share("Made using Open POS app\n", "", dataUrl, "facebook.com/openfinanceapp")
+        .then(response=>console.log(response))
+        .catch(e=>console.log(e))
+    });
+    setTimeout(()=>this.usingShare = false, 5000);
+  }
+
+  sendSMS(){
+    const message = "Dear customer,\nYou have a payment of "+Math.abs(this.contact.balance).toString()+" due on "+this.contact.dueDate+"\nMade using Open POS app\nfacebook.com/openfinanceapp";
+    this.alertCtrl.create({
+      title: "Semd SMS",
+      subTitle: "Message will be sent to "+this.contact.phno[0],
+      buttons: [
+        {
+          text: "Cancel",
+          role: "cancel"
+        },
+        {
+          text: "Send",
+          handler: ()=>{
+            this.sms.send(this.contact.phno[0],
+              message, 
+              {replaceLineBreaks: true}
+            ).then(response=>console.log(response))
+            .catch(e=>console.log(e));
+          }
+        }
+      ]
+    }).present();
   }
 }
