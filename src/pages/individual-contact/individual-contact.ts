@@ -4,7 +4,7 @@ import { StorageProvider } from "../../providers/storage/storage";
 
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import { LocalNotifications } from "@ionic-native/local-notifications";
-import html2canvas from 'html2canvas';
+import html2canvas from "html2canvas";
 import { SocialSharing } from "@ionic-native/social-sharing";
 import { SMS } from "@ionic-native/sms";
 
@@ -38,7 +38,7 @@ export class IndividualContactPage {
     private translateConfigService: TranslateConfigService,
     private localNotif: LocalNotifications,
     private social: SocialSharing,
-    private sms: SMS
+    private sms: SMS,
   ) {
     this.contact = this.navParams.get("data");
     this.newDate = this.contact.dueDate;
@@ -79,23 +79,26 @@ export class IndividualContactPage {
         console.log(phoneNumToUse.toString());
         const notifId: number = parseInt(phoneNumToUse.substring(phoneNumToUse.length - 8, phoneNumToUse.length));
         console.log(notifId);
-        this.localNotif.isScheduled(notifId).then(isSchdeuled => {
-          if (isSchdeuled) {
-            this.localNotif.cancel(notifId);
-            console.log("Cleared notif of", notifId);
-          }
-          if (this.newDate != "") {
-            let timeSchedule = new Date(this.newDate).getTime() - new Date().getTime();
-            timeSchedule = timeSchedule <= 0 ? 0 : timeSchedule;
-            this.localNotif.schedule({
-              text: "Credit/Debit due today from " + this.contact.displayName,
-              id: notifId,
-              // trigger: { at: new Date(this.newDate) },
-              trigger: { at: new Date(new Date().getTime() + timeSchedule) },
-            });
-            console.log("Notif scheduled for: ", new Date(this.newDate));
-          }
-        }).catch(e=>console.log(e));
+        this.localNotif
+          .isScheduled(notifId)
+          .then(isSchdeuled => {
+            if (isSchdeuled) {
+              this.localNotif.cancel(notifId);
+              console.log("Cleared notif of", notifId);
+            }
+            if (this.newDate != "") {
+              let timeSchedule = new Date(this.newDate).getTime() - new Date().getTime();
+              timeSchedule = timeSchedule <= 0 ? 0 : timeSchedule;
+              this.localNotif.schedule({
+                text: "Credit/Debit due today from " + this.contact.displayName,
+                id: notifId,
+                // trigger: { at: new Date(this.newDate) },
+                trigger: { at: new Date(new Date().getTime() + timeSchedule) },
+              });
+              console.log("Notif scheduled for: ", new Date(this.newDate));
+            }
+          })
+          .catch(e => console.log(e));
       }
       this.navCtrl.pop();
     }
@@ -209,39 +212,46 @@ export class IndividualContactPage {
     a.present();
   }
 
-  usingShare=false;
-  share(){
+  usingShare = false;
+  share() {
     this.usingShare = true;
-    html2canvas(document.querySelector("#share"), {useCORS: true}).then(canvas=>{
+    html2canvas(document.querySelector("#share"), { useCORS: true }).then(canvas => {
       const dataUrl = canvas.toDataURL();
-      this.social.share("Made using Open POS app\n", "", dataUrl, "facebook.com/openfinanceapp")
-        .then(response=>console.log(response))
-        .catch(e=>console.log(e))
+      this.social
+        .share("Made using Open POS app\n", "", dataUrl, "facebook.com/openfinanceapp")
+        .then(response => console.log(response))
+        .catch(e => console.log(e));
     });
-    setTimeout(()=>this.usingShare = false, 5000);
+    setTimeout(() => (this.usingShare = false), 5000);
   }
 
-  sendSMS(){
-    const message = "Dear customer,\nYou have a payment of "+Math.abs(this.contact.balance).toString()+" due on "+this.contact.dueDate+"\nMade using Open POS app\nfacebook.com/openfinanceapp";
-    this.alertCtrl.create({
-      title: "Semd SMS",
-      subTitle: "Message will be sent to "+this.contact.phno[0],
-      buttons: [
-        {
-          text: "Cancel",
-          role: "cancel"
-        },
-        {
-          text: "Send",
-          handler: ()=>{
-            this.sms.send(this.contact.phno[0],
-              message, 
-              {replaceLineBreaks: true}
-            ).then(response=>console.log(response))
-            .catch(e=>console.log(e));
-          }
-        }
-      ]
-    }).present();
+  sendSMS() {
+    const message =
+      "Dear customer,\nYou have a payment of " +
+      Math.abs(this.contact.balance).toString() +
+      " due on " +
+      this.contact.dueDate +
+      "\nMade using Open POS app\nfacebook.com/openfinanceapp";
+    this.alertCtrl
+      .create({
+        title: "Semd SMS",
+        subTitle: "Message will be sent to " + this.contact.phno[0],
+        buttons: [
+          {
+            text: "Cancel",
+            role: "cancel",
+          },
+          {
+            text: "Send",
+            handler: () => {
+              this.sms
+                .send(this.contact.phno[0], message, { replaceLineBreaks: true })
+                .then(response => console.log(response))
+                .catch(e => console.log(e));
+            },
+          },
+        ],
+      })
+      .present();
   }
 }
