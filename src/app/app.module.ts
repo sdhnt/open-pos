@@ -35,7 +35,7 @@ import { Facebook } from "@ionic-native/facebook";
 import { Contacts } from "@ionic-native/contacts";
 import { LocalNotifications } from "@ionic-native/local-notifications";
 import { SMS } from "@ionic-native/sms";
-import { AndroidPermissions } from '@ionic-native/android-permissions'
+import { AndroidPermissions } from "@ionic-native/android-permissions";
 
 import { LoginPageModule } from "../pages/login/login.module";
 import { TransactionHomePageModule } from "../pages/transaction-home/transaction-home.module";

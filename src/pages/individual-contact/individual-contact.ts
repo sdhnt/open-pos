@@ -230,17 +230,22 @@ export class IndividualContactPage {
   }
 
   sendSMS() {
-    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.SEND_SMS).then(result=>{
-      console.log(result.hasPermission);
-      if(result.hasPermission==false){
-        this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.SEND_SMS);
-      }
-      else{
-        console.log("Permission is granted");
-      }
-    }, err => {
-      this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.SEND_SMS);
-    }).catch(e=>console.log(e));
+    this.androidPermissions
+      .checkPermission(this.androidPermissions.PERMISSION.SEND_SMS)
+      .then(
+        result => {
+          console.log(result.hasPermission);
+          if (result.hasPermission == false) {
+            this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.SEND_SMS);
+          } else {
+            console.log("Permission is granted");
+          }
+        },
+        err => {
+          this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.SEND_SMS);
+        },
+      )
+      .catch(e => console.log(e));
 
     const message =
       "Dear customer,\nYou have a payment of " +
@@ -252,10 +257,12 @@ export class IndividualContactPage {
       .create({
         title: "Send SMS",
         subTitle: "Message will be sent to: ",
-        inputs: [{
-          name: "phoneNum",
-          value: this.contact.phno[0],
-        }],
+        inputs: [
+          {
+            name: "phoneNum",
+            value: this.contact.phno[0],
+          },
+        ],
         buttons: [
           {
             text: "Cancel",
@@ -263,10 +270,10 @@ export class IndividualContactPage {
           },
           {
             text: "Send",
-            handler: (data) => {
-              try{
-                if(data.phoneNum.length<8) throw Error;
-                for(let i = 0; i<data.phoneNum.length; ++i){
+            handler: data => {
+              try {
+                if (data.phoneNum.length < 8) throw Error;
+                for (let i = 0; i < data.phoneNum.length; ++i) {
                   const char: string = data.phoneNum.charAt(i);
                   if (char == "+") {
                     if (i != 0) throw Error;
@@ -274,14 +281,15 @@ export class IndividualContactPage {
                     throw Error;
                   }
                 }
-              } catch{
+              } catch {
                 this.toastController
-                    .create({
-                      message: "Improper phone number. Number should be greater than 8 characters and not have any spaces",
-                      duration: 2500,
-                    })
-                    .present();
-                  return false;
+                  .create({
+                    message:
+                      "Improper phone number. Number should be greater than 8 characters and not have any spaces",
+                    duration: 2500,
+                  })
+                  .present();
+                return false;
               }
               this.contact.phno[0] = data.phoneNum;
               const temp = {
