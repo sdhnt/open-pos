@@ -7,6 +7,8 @@ import { LocalNotifications } from "@ionic-native/local-notifications";
 import html2canvas from "html2canvas";
 import { SocialSharing } from "@ionic-native/social-sharing";
 import { SMS } from "@ionic-native/sms";
+import { AndroidPermissions } from "@ionic-native/android-permissions";
+import { THROW_IF_NOT_FOUND } from "@angular/core/src/di/injector";
 
 /**
  * Generated class for the IndividualContactPage page.
@@ -24,7 +26,7 @@ export class IndividualContactPage {
   contact = {
     displayName: "",
     balance: 0,
-    phno: "",
+    phno: [],
     transacHistory: [],
     dueDate: "",
   };
@@ -39,6 +41,8 @@ export class IndividualContactPage {
     private localNotif: LocalNotifications,
     private social: SocialSharing,
     private sms: SMS,
+    private androidPermissions: AndroidPermissions,
+    private toastController: ToastController,
   ) {
     this.contact = this.navParams.get("data");
     this.newDate = this.contact.dueDate;
@@ -226,6 +230,18 @@ export class IndividualContactPage {
   }
 
   sendSMS() {
+    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.SEND_SMS).then(result=>{
+      console.log(result.hasPermission);
+      if(result.hasPermission==false){
+        this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.SEND_SMS);
+      }
+      else{
+        console.log("Permission is granted");
+      }
+    }, err => {
+      this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.SEND_SMS);
+    }).catch(e=>console.log(e));
+
     const message =
       "Dear customer,\nYou have a payment of " +
       Math.abs(this.contact.balance).toString() +
@@ -234,8 +250,12 @@ export class IndividualContactPage {
       "\nMade using Open POS app\nfacebook.com/openfinanceapp";
     this.alertCtrl
       .create({
-        title: "Semd SMS",
-        subTitle: "Message will be sent to " + this.contact.phno[0],
+        title: "Send SMS",
+        subTitle: "Message will be sent to: ",
+        inputs: [{
+          name: "phoneNum",
+          value: this.contact.phno[0],
+        }],
         buttons: [
           {
             text: "Cancel",
@@ -243,9 +263,34 @@ export class IndividualContactPage {
           },
           {
             text: "Send",
-            handler: () => {
+            handler: (data) => {
+              try{
+                if(data.phoneNum.length<8) throw Error;
+                for(let i = 0; i<data.phoneNum.length; ++i){
+                  const char: string = data.phoneNum.charAt(i);
+                  if (char == "+") {
+                    if (i != 0) throw Error;
+                  } else if (char.localeCompare("0") < 0 || char.localeCompare("9") > 0) {
+                    throw Error;
+                  }
+                }
+              } catch{
+                this.toastController
+                    .create({
+                      message: "Improper phone number. Number should be greater than 8 characters and not have any spaces",
+                      duration: 2500,
+                    })
+                    .present();
+                  return false;
+              }
+              this.contact.phno[0] = data.phoneNum;
+              const temp = {
+                displayName: this.contact.displayName,
+                phno: [this.contact.phno],
+              };
+              this.sp.saveContacts([temp], false);
               this.sms
-                .send(this.contact.phno[0], message, { replaceLineBreaks: true })
+                .send(data.phoneNum, message, { replaceLineBreaks: true })
                 .then(response => console.log(response))
                 .catch(e => console.log(e));
             },
