@@ -14,6 +14,7 @@ import { StorageProvider } from "../../providers/storage/storage";
 import { IndividualContactPage } from "../individual-contact/individual-contact";
 
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
+import { CreditReminderPage } from "../credit-reminder/credit-reminder";
 
 /**
  * Generated class for the ContactsPage page.
@@ -103,27 +104,30 @@ export class ContactsPage {
       //     this.ionViewDidEnter();
       //   });
       // });
-      this.contacts.pickContact().then(contactReturned => {
-        const phNoList = [];
-        if (!contactReturned.phoneNumbers) {
-          alert("Cannot add contact without phone number");
-          return;
-        }
-        contactReturned.phoneNumbers.forEach(num => {
-          let phoneNum = num.value;
-          while (phoneNum.indexOf(" ") != -1) {
-            phoneNum = phoneNum.replace(" ", "");
+      this.contacts
+        .pickContact()
+        .then(contactReturned => {
+          const phNoList = [];
+          if (!contactReturned.phoneNumbers) {
+            alert("Cannot add contact without phone number");
+            return;
           }
-          phNoList.push(phoneNum);
-        });
-        const temp = {
-          displayName: contactReturned.displayName,
-          phno: phNoList,
-        };
-        this.sp.saveContacts([temp], false).then(() => {
-          this.ionViewDidEnter();
-        });
-      });
+          contactReturned.phoneNumbers.forEach(num => {
+            let phoneNum = num.value;
+            while (phoneNum.indexOf(" ") != -1) {
+              phoneNum = phoneNum.replace(" ", "");
+            }
+            phNoList.push(phoneNum);
+          });
+          const temp = {
+            displayName: contactReturned.displayName,
+            phno: phNoList,
+          };
+          this.sp.saveContacts([temp], false).then(() => {
+            this.ionViewDidEnter();
+          });
+        })
+        .catch(e => console.log(e));
     } else if (num == 2) {
       const a = this.alertCtrl.create({
         //@ts-ignore
@@ -208,14 +212,21 @@ export class ContactsPage {
     );
   }
 
-  // sortVal;
-  // sort(num){
-  //   console.log(num);
-  //   this.sortVal = num;
-  //   if(this.sortVal==1||this.sortVal==2){
-  //     this.filteredList.sort((a,b)=>Math.pow(-1, this.sortVal+1)*a.displayName.localeCompare(b.displayName));
-  //   } else if(this.sortVal==3||this.sortVal==4){
-  //     this.filteredList.sort((a,b)=>Math.pow(-1, this.sortVal+1)*(a.balance-b.balance))
-  //   }
-  // }
+  sort(num) {
+    if (num == 1 || num == 2) {
+      this.filteredList.sort((a, b) => a.displayName.localeCompare(b.displayName));
+      if (num == 2) {
+        this.filteredList.reverse();
+      }
+    } else if (num == 3 || num == 4) {
+      this.filteredList.sort((a, b) => a.balance - b.balance);
+      if (num == 4) {
+        this.filteredList.reverse();
+      }
+    }
+  }
+
+  navCredReminder() {
+    this.navCtrl.push(CreditReminderPage);
+  }
 }

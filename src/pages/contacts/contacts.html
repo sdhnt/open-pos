@@ -6,7 +6,7 @@
 -->
 
 <ion-content padding>
-  <ion-fab right bottom #fab style="margin-bottom: 10px;" *ngIf="!choosingContact">
+  <ion-fab right bottom #fab *ngIf="!choosingContact">
     <button ion-fab style="background-color: #301924;"><ion-icon name="person-add"></ion-icon></button>
     <ion-fab-list side="left">
       <button ion-button style="background-color: #301924;" (click)="navAdd(1, fab)">{{"From Contacts"|translate}}</button>
@@ -37,12 +37,20 @@
   </ion-list> -->
 
   <ion-searchbar showCancelButton="always" [(ngModel)]="searchterm" (ionChange)="filter()"></ion-searchbar>
-  <!-- <ion-select [(ngModel)]="sortVal" (ionChange)="sort($event)" style="min-width: 100%;">
-    <ion-option value="1" selected>A-Z</ion-option>
-    <ion-option value="2">Z-A</ion-option>
-    <ion-option value="3">Balance: High to Low</ion-option>
-    <ion-option value="4">Balance: Low to High</ion-option>
-  </ion-select> -->
+  <ion-grid>
+    <ion-row>
+      <ion-col col-3 style="font-size: medium; padding-top: 15px; text-align: center;">Sort By:</ion-col>
+      <ion-col col-9>
+        <ion-select (ionChange)="sort($event)" style="min-width: 100%;" interface="popover">
+          <ion-option value="1" selected>A-Z</ion-option>
+          <ion-option value="2">Z-A</ion-option>
+          <ion-option value="3">Balance: High to Low</ion-option>
+          <ion-option value="4">Balance: Low to High</ion-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
 
   <ion-list>
     <div style="width: 100%; text-align: center;" *ngIf="!filteredList || filteredList.length==0">
@@ -65,3 +73,12 @@
     </ion-card>
   </ion-list>
 </ion-content>
+<ion-footer>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12>
+        <button ion-button full style="background-color: #301924;" (click)="navCredReminder()">Credit Reminder</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

@@ -406,7 +406,7 @@ export class StorageProvider {
     await this.storage.set("products", JSON.stringify(newProducts));
   }
 
-  async saveContacts(newContacts, manualAdd: boolean): Promise<void> {
+  async saveContacts(newContacts: any[], manualAdd: boolean): Promise<void> {
     if (!newContacts || newContacts.length === 0) return;
     const contacts = JSON.parse(await this.getContacts());
 
