@@ -14,11 +14,17 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-buttons end>
-    <button ion-button (click)="editProfile()" style="background-color: transparent; color: #757575;">
-      <ion-icon name="settings" style="padding-right: 5px;"></ion-icon> {{ "Edit Profile" | translate }}
-    </button>
-  </ion-buttons>
+  <ion-row>
+    <ion-col col-5>
+      <button ion-button (click)="bCard()">Business Card</button>
+    </ion-col>
+    <ion-col col-2></ion-col>
+    <ion-col col-5 style="text-align: end;">
+      <button ion-button (click)="editProfile()" style="background-color: transparent; color: #757575;">
+        <ion-icon name="settings" style="padding-right: 5px;"></ion-icon> {{ "Edit Profile" | translate }}
+      </button>
+    </ion-col>
+  </ion-row>
   <br>
   <br>
   <ion-card style="text-align: center; padding-top: 20px; padding-bottom: 15px;" button 
