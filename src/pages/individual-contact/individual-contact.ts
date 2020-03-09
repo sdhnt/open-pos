@@ -234,9 +234,11 @@ export class IndividualContactPage {
       .checkPermission(this.androidPermissions.PERMISSION.SEND_SMS)
       .then(
         result => {
-          console.log(result.hasPermission);
-          if (result.hasPermission == false) {
-            this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.SEND_SMS);
+          console.log(result);
+          if (!result.hasPermission) {
+            this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.SEND_SMS)
+            .then(res=>console.log(res))
+            .catch(e=>console.log(e));
           } else {
             console.log("Permission is granted");
           }
@@ -291,12 +293,14 @@ export class IndividualContactPage {
                   .present();
                 return false;
               }
-              this.contact.phno[0] = data.phoneNum;
-              const temp = {
-                displayName: this.contact.displayName,
-                phno: [this.contact.phno],
-              };
-              this.sp.saveContacts([temp], false);
+              if(this.contact.phno[0]!=data.phoneNum) {
+                this.contact.phno[0] = data.phoneNum;
+                const temp = {
+                  displayName: this.contact.displayName,
+                  phno: this.contact.phno,
+                };
+                this.sp.saveContacts([temp], false);
+              }
               this.sms
                 .send(data.phoneNum, message, { replaceLineBreaks: true })
                 .then(response => console.log(response))
