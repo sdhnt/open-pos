@@ -10,8 +10,8 @@ page-business-card {
         //max-width: 450px;
         border-radius: 10px;
         border: solid 1px black;
-        width: 90%;
-        height: 80%;
+        width: 94%;
+        height: 70%;
         top: 0;
         bottom: 0%;
         left: 0;
@@ -20,5 +20,24 @@ page-business-card {
         border: 0;
         box-shadow: 0 16px 20px rgba(0,0,0,.4);
         background-color: #fafafa;
+    }
+    #card{
+        background-color: #301924;
+        border: 0.75px solid black;
+    }
+    ion-icon{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    ion-row{
+        padding-top: 5px;
+        padding-bottom: 3px;
+        font-size: medium;
+        color: wheat;
+    }
+    ion-card-title{
+        font-size: 19px;
+        font-weight: 600;
+        text-align: center;
     }
 }

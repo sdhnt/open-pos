@@ -74,7 +74,14 @@ export class UserDataPage {
   }
 
   bCard(){
-    let m = this.modalCtrl.create(BusinessCardPage);
+    const dataToPass = {
+      o_name: this.user.owner_name,
+      b_name: this.user.business_name,
+      b_add: this.user.business_address,
+      email: this.user.email,
+      phno: this.user.ph_no,
+    }
+    let m = this.modalCtrl.create(BusinessCardPage, {data: dataToPass});
     m.present();
   }
 }
