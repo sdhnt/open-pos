@@ -35,8 +35,12 @@ export class UserDataPage {
     discount: 0.0,
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private sp: StorageProvider,
-    private modalCtrl: ModalController) {}
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private sp: StorageProvider,
+    private modalCtrl: ModalController,
+  ) {}
 
   language: string;
 
@@ -73,15 +77,15 @@ export class UserDataPage {
     });
   }
 
-  bCard(){
+  bCard() {
     const dataToPass = {
       o_name: this.user.owner_name,
       b_name: this.user.business_name,
       b_add: this.user.business_address,
       email: this.user.email,
       phno: this.user.ph_no,
-    }
-    let m = this.modalCtrl.create(BusinessCardPage, {data: dataToPass});
+    };
+    const m = this.modalCtrl.create(BusinessCardPage, { data: dataToPass });
     m.present();
   }
 }
