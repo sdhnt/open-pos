@@ -124,7 +124,7 @@ export class ContactsPage {
         this.sp.saveContacts([temp], false).then(() => {
           this.ionViewDidEnter();
         });
-      });
+      }).catch(e=>console.log(e));
     } else if (num == 2) {
       const a = this.alertCtrl.create({
         //@ts-ignore

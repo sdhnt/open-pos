@@ -59,7 +59,7 @@
       <ion-col col-3 class="table-col">{{"Paid"|translate}}</ion-col>
     </ion-row>
     <ion-row *ngFor="let val of contact.transacHistory">
-      <ion-col col-6 class="table-col">{{ getDateTime(val.date) }}</ion-col>
+      <ion-col col-6 class="table-col">{{ getDateTime(val.date, false) }}</ion-col>
       <ion-col col-3 style="text-align: center;" class="table-col">
         <span *ngIf="val.amount<0" style="color: red;">{{ val.amount }}</span>
       </ion-col>

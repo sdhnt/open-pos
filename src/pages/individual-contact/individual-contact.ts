@@ -7,8 +7,6 @@ import { LocalNotifications } from "@ionic-native/local-notifications";
 import html2canvas from "html2canvas";
 import { SocialSharing } from "@ionic-native/social-sharing";
 import { SMS } from "@ionic-native/sms";
-import { AndroidPermissions } from "@ionic-native/android-permissions";
-import { THROW_IF_NOT_FOUND } from "@angular/core/src/di/injector";
 
 /**
  * Generated class for the IndividualContactPage page.
@@ -41,7 +39,6 @@ export class IndividualContactPage {
     private localNotif: LocalNotifications,
     private social: SocialSharing,
     private sms: SMS,
-    private androidPermissions: AndroidPermissions,
     private toastController: ToastController,
   ) {
     this.contact = this.navParams.get("data");
@@ -156,16 +153,18 @@ export class IndividualContactPage {
     });
   }
 
-  getDateTime(datetime) {
+  getDateTime(datetime, forSMS: boolean) {
     //return (datetime.getDate() + "/" + (datetime.getMonth() + 1) + "/" + datetime. getFullYear())
     const temp = new Date(datetime);
 
-    const t =
+    let t =
       temp.getDate().toString() +
       "/" +
       (temp.getMonth() + 1).toString() +
       "/" +
-      temp.getFullYear().toString() +
+      temp.getFullYear().toString(); 
+    if(!forSMS)
+      t = t +
       " " +
       this.getHours(temp) +
       ":" +
@@ -230,31 +229,15 @@ export class IndividualContactPage {
   }
 
   sendSMS() {
-    this.androidPermissions
-      .checkPermission(this.androidPermissions.PERMISSION.SEND_SMS)
-      .then(
-        result => {
-          console.log(result);
-          if (!result.hasPermission) {
-            this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.SEND_SMS)
-            .then(res=>console.log(res))
-            .catch(e=>console.log(e));
-          } else {
-            console.log("Permission is granted");
-          }
-        },
-        err => {
-          this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.SEND_SMS);
-        },
-      )
-      .catch(e => console.log(e));
-
-    const message =
+    
+    let message =
       "Dear customer,\nYou have a payment of " +
       Math.abs(this.contact.balance).toString() +
-      " due on " +
-      this.contact.dueDate +
-      "\nMade using Open POS app\nfacebook.com/openfinanceapp";
+      " due";
+      if(this.newDate!=""){
+        message+=" on "+this.getDateTime(this.newDate, true);
+      }
+      message+=".\nMade using Open POS app\nfacebook.com/openfinanceapp";
     this.alertCtrl
       .create({
         title: "Send SMS",
@@ -293,7 +276,7 @@ export class IndividualContactPage {
                   .present();
                 return false;
               }
-              if(this.contact.phno[0]!=data.phoneNum) {
+              if (this.contact.phno[0] != data.phoneNum) {
                 this.contact.phno[0] = data.phoneNum;
                 const temp = {
                   displayName: this.contact.displayName,
@@ -302,7 +285,7 @@ export class IndividualContactPage {
                 this.sp.saveContacts([temp], false);
               }
               this.sms
-                .send(data.phoneNum, message, { replaceLineBreaks: true })
+                .send(data.phoneNum, message, { replaceLineBreaks: true, android: {intent: "INTENT"} })
                 .then(response => console.log(response))
                 .catch(e => console.log(e));
             },
