@@ -157,18 +157,8 @@ export class IndividualContactPage {
     //return (datetime.getDate() + "/" + (datetime.getMonth() + 1) + "/" + datetime. getFullYear())
     const temp = new Date(datetime);
 
-    let t =
-      temp.getDate().toString() +
-      "/" +
-      (temp.getMonth() + 1).toString() +
-      "/" +
-      temp.getFullYear().toString(); 
-    if(!forSMS)
-      t = t +
-      " " +
-      this.getHours(temp) +
-      ":" +
-      this.getMinutes(temp);
+    let t = temp.getDate().toString() + "/" + (temp.getMonth() + 1).toString() + "/" + temp.getFullYear().toString();
+    if (!forSMS) t = t + " " + this.getHours(temp) + ":" + this.getMinutes(temp);
     return t;
     //if any hours or mins <0 then need to add 0 4 use cases
   }
@@ -229,15 +219,11 @@ export class IndividualContactPage {
   }
 
   sendSMS() {
-    
-    let message =
-      "Dear customer,\nYou have a payment of " +
-      Math.abs(this.contact.balance).toString() +
-      " due";
-      if(this.newDate!=""){
-        message+=" on "+this.getDateTime(this.newDate, true);
-      }
-      message+=".\nMade using Open POS app\nfacebook.com/openfinanceapp";
+    let message = "Dear customer,\nYou have a payment of " + Math.abs(this.contact.balance).toString() + " due";
+    if (this.newDate != "") {
+      message += " on " + this.getDateTime(this.newDate, true);
+    }
+    message += ".\nMade using Open POS app\nfacebook.com/openfinanceapp";
     this.alertCtrl
       .create({
         title: "Send SMS",
@@ -285,7 +271,7 @@ export class IndividualContactPage {
                 this.sp.saveContacts([temp], false);
               }
               this.sms
-                .send(data.phoneNum, message, { replaceLineBreaks: true, android: {intent: "INTENT"} })
+                .send(data.phoneNum, message, { replaceLineBreaks: true, android: { intent: "INTENT" } })
                 .then(response => console.log(response))
                 .catch(e => console.log(e));
             },
