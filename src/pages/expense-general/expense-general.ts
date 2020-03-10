@@ -77,12 +77,15 @@ export class ExpenseGeneralPage {
     this.listOfExpenses.splice(index, 1);
   }
 
-  async updateExpenses() {
+  updateExpenses() {
     const itemslist = [];
     let totalsum = 0;
+    let b = true;
     this.listOfExpenses.forEach(element => {
       if (!element.isValid()) {
+        console.log("HERE!")
         element.flag = false;
+        b = false;
         return;
       } else {
         element.flag = true;
@@ -98,7 +101,7 @@ export class ExpenseGeneralPage {
         };
         if (element.contact != "") {
           const transaction = {
-            amount: 1*element.amount,
+            amount: 1*element.contactAmount,
             date: new Date(),
             reminderDate: "",
             discount: 0,
@@ -110,6 +113,10 @@ export class ExpenseGeneralPage {
         itemslist.push(prodOfExpense);
       }
     });
+    if(b) this.asyncActivity(totalsum, itemslist);
+  }
+
+  async asyncActivity(totalsum, itemslist){
     console.log(totalsum);
     console.log(itemslist);
     const dataexp = {
@@ -158,6 +165,7 @@ export class ExpenseGeneralPage {
         return;
       }
       exp.contact = contactName;
+      exp.contactAmount = exp.amount;
     });
   }
 
@@ -193,6 +201,7 @@ class Expense {
   //public notes: String;
   public flag: boolean;
   public contact: string;
+  public contactAmount: number;
 
   constructor() {
     this.flag = true;
@@ -200,7 +209,8 @@ class Expense {
   }
 
   isValid() {
-    if (this.name == undefined || this.type == undefined || this.amount == undefined) return false;
+    if (this.name == undefined || this.type == undefined || !(this.amount>0)
+      || !(this.contactAmount>0)) return false;
     return true;
   }
 }

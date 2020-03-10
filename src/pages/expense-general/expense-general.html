@@ -72,6 +72,16 @@ a<!--
           </ion-col>
         </ion-row>
         <br>-->
+        <ion-row *ngIf="item.contact!=''">
+          <ion-col col-6>
+            Debit to customer
+          </ion-col>
+          <ion-col col-6>
+            <ion-item>
+              <ion-input type="number" placeholder="Debit to customer" [(ngModel)]="item.contactAmount"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
         <ion-row>
           <button ion-button small (click)="addContact(item)" round style="background-color: green;" *ngIf="item.contact==''">
             Assign to Contact
