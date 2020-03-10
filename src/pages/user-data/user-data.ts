@@ -1,8 +1,9 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { IonicPage, NavController, NavParams, ModalController } from "ionic-angular";
 import { TransactionHomePage } from "../transaction-home/transaction-home";
 import { UserProfilePage } from "../user-profile/user-profile";
 import { StorageProvider } from "../../providers/storage/storage";
+import { BusinessCardPage } from "../business-card/business-card";
 
 /**
  * Generated class for the UserDataPage page.
@@ -34,7 +35,12 @@ export class UserDataPage {
     discount: 0.0,
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private sp: StorageProvider) {}
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private sp: StorageProvider,
+    private modalCtrl: ModalController,
+  ) {}
 
   language: string;
 
@@ -69,5 +75,17 @@ export class UserDataPage {
         }
       });
     });
+  }
+
+  bCard() {
+    const dataToPass = {
+      o_name: this.user.owner_name,
+      b_name: this.user.business_name,
+      b_add: this.user.business_address,
+      email: this.user.email,
+      phno: this.user.ph_no,
+    };
+    const m = this.modalCtrl.create(BusinessCardPage, { data: dataToPass });
+    m.present();
   }
 }

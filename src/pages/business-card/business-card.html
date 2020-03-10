@@ -1,0 +1,69 @@
+<!--
+  Generated template for the BusinessCardPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<div class="modal">
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-title>Your Business Card</ion-title>
+    <ion-buttons end style="padding-right: 10px;">
+      <button ion-button style="background-color: red; color: white;" (click)="goBack()">Cancel</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content style="padding-left: 12px; padding-right: 12px;">
+  <ion-buttons end style="padding-top: 15px;">
+    <button ion-button round color="dark" (click)="share()">
+      <ion-icon name="share" style="padding-right: 7px; padding-left: 0px;"></ion-icon>
+      Share
+    </button>
+  </ion-buttons>
+  <br>
+  <ion-card id="card">
+    <ion-card-title style="color: wheat; padding-top: 7px;">{{ userData.b_name }}</ion-card-title>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-2 style="text-align: center;">
+          <ion-icon name="person"></ion-icon>
+        </ion-col>
+        <ion-col col-10>
+          {{ userData.o_name }}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-2 style="text-align: center;">
+          <ion-icon name="call"></ion-icon>
+        </ion-col>
+        <ion-col col-10>
+          {{ userData.phno }}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-2 style="text-align: center;">
+          <ion-icon name="mail"></ion-icon>
+        </ion-col>
+        <ion-col col-10>
+          <span *ngIf="userData.email">{{ userData.email }}</span>
+          <span *ngIf="!userData.email">-</span>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-2 style="text-align: center;">
+          <ion-icon name="home"></ion-icon>
+        </ion-col>
+        <ion-col col-10>
+          {{ userData.b_add }}
+        </ion-col>
+      </ion-row>
+      <br>
+      <ion-row style="font-size: small; text-align: center;">
+        Created using OPEN Business app!
+        facebook.com/openfinanceapp
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+</ion-content>
+</div>
