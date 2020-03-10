@@ -83,7 +83,7 @@ export class ExpenseGeneralPage {
     let b = true;
     this.listOfExpenses.forEach(element => {
       if (!element.isValid()) {
-        console.log("HERE!")
+        console.log("HERE!");
         element.flag = false;
         b = false;
         return;
@@ -101,7 +101,7 @@ export class ExpenseGeneralPage {
         };
         if (element.contact != "") {
           const transaction = {
-            amount: 1*element.contactAmount,
+            amount: 1 * element.contactAmount,
             date: new Date(),
             reminderDate: "",
             discount: 0,
@@ -113,10 +113,10 @@ export class ExpenseGeneralPage {
         itemslist.push(prodOfExpense);
       }
     });
-    if(b) this.asyncActivity(totalsum, itemslist);
+    if (b) this.asyncActivity(totalsum, itemslist);
   }
 
-  async asyncActivity(totalsum, itemslist){
+  async asyncActivity(totalsum, itemslist) {
     console.log(totalsum);
     console.log(itemslist);
     const dataexp = {
@@ -209,8 +209,8 @@ class Expense {
   }
 
   isValid() {
-    if (this.name == undefined || this.type == undefined || !(this.amount>0)
-      || !(this.contactAmount>0)) return false;
+    if (this.name == undefined || this.type == undefined || !(this.amount > 0) || !(this.contactAmount > 0))
+      return false;
     return true;
   }
 }
