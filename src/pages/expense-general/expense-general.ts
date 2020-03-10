@@ -80,40 +80,42 @@ export class ExpenseGeneralPage {
   updateExpenses() {
     const itemslist = [];
     let totalsum = 0;
-    let b = true;
-    this.listOfExpenses.forEach(element => {
-      if (!element.isValid()) {
-        console.log("HERE!");
-        element.flag = false;
-        b = false;
-        return;
-      } else {
-        element.flag = true;
-        totalsum -= element.amount;
-        const prodOfExpense = {
-          cat: element.type,
-          code: "EXPENSE",
-          discount: 0,
-          name: element.name,
-          price: element.amount * -1,
-          qty: 1,
-          stock_qty: 0,
-        };
-        if (element.contact != "") {
-          const transaction = {
-            amount: 1 * element.contactAmount,
-            date: new Date(),
-            reminderDate: "",
+    try{
+      this.listOfExpenses.forEach(element => {
+        if (!element.isValid()) {
+          console.log("HERE!");
+          element.flag = false;
+          throw Error
+        } else {
+          element.flag = true;
+          totalsum -= element.amount;
+          const prodOfExpense = {
+            cat: element.type,
+            code: "EXPENSE",
             discount: 0,
-            note: "",
-            img: "",
+            name: element.name,
+            price: element.amount * -1,
+            qty: 1,
+            stock_qty: 0,
           };
-          this.sp.updateContactTransaction(element.contact, [transaction]);
+          if (element.contact != "") {
+            const transaction = {
+              amount: 1 * element.contactAmount,
+              date: new Date(),
+              reminderDate: "",
+              discount: 0,
+              note: "",
+              img: "",
+            };
+            this.sp.updateContactTransaction(element.contact, [transaction]);
+          }
+          itemslist.push(prodOfExpense);
         }
-        itemslist.push(prodOfExpense);
-      }
-    });
-    if (b) this.asyncActivity(totalsum, itemslist);
+      });
+    } catch(e){ 
+      return;
+    }
+    this.asyncActivity(totalsum, itemslist);
   }
 
   async asyncActivity(totalsum, itemslist) {
