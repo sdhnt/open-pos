@@ -43,7 +43,7 @@ export class IndividualContactPage {
     private toastController: ToastController,
   ) {
     this.contact = this.navParams.get("data");
-    if(!this.contact.discount){
+    if (!this.contact.discount) {
       this.contact.discount = 0;
     }
     this.newDate = this.contact.dueDate;
@@ -66,17 +66,21 @@ export class IndividualContactPage {
   }
 
   async goBack() {
-    if (this.listOfNewTransactions.length == 0 && this.newDate == this.contact.dueDate && this.newDisc == this.contact.discount) {
+    if (
+      this.listOfNewTransactions.length == 0 &&
+      this.newDate == this.contact.dueDate &&
+      this.newDisc == this.contact.discount
+    ) {
       this.navCtrl.pop();
     } else {
       this.toastCtrl
-          .create({
-            //@ts-ignore
-            message: this.translateConfigService.getTranslatedMessage("Updating contact").value,
-            dismissOnPageChange: true,
-            duration: 1500,
-          })
-          .present();
+        .create({
+          //@ts-ignore
+          message: this.translateConfigService.getTranslatedMessage("Updating contact").value,
+          dismissOnPageChange: true,
+          duration: 1500,
+        })
+        .present();
       if (this.listOfNewTransactions.length > 0) {
         await this.sp.updateContactTransaction(this.contact.displayName, this.listOfNewTransactions);
       }
@@ -107,7 +111,7 @@ export class IndividualContactPage {
           })
           .catch(e => console.log(e));
       }
-      if(this.newDisc!=this.contact.discount){
+      if (this.newDisc != this.contact.discount) {
         await this.sp.updateContactDisc(this.contact.displayName, this.newDisc);
       }
       this.navCtrl.pop();

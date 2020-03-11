@@ -441,10 +441,10 @@ export class StorageProvider {
     await this.storage.set("contacts", JSON.stringify(contacts));
   }
 
-  async updateContactDisc(contactName, newDisc): Promise<void>{
+  async updateContactDisc(contactName, newDisc): Promise<void> {
     const contacts = JSON.parse(await this.getContacts());
     const contact = contacts.find(contact => contact.displayName === contactName);
-    if(contact){
+    if (contact) {
       contact.discount = newDisc;
       contact.updatedAt = new Date();
     } else {

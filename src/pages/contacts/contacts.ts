@@ -88,8 +88,8 @@ export class ContactsPage {
     if (this.choosingContact) {
       const sendBack = {
         name: contact.displayName,
-        discount: contact.discount
-      }
+        discount: contact.discount,
+      };
       this.view.dismiss(sendBack);
       this.choosingContact = false;
       return;
