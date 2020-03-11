@@ -5,7 +5,7 @@ import html2canvas from "html2canvas";
 import { TranslateConfigService } from "../../providers/translation/translate-config.service";
 import { StorageProvider } from "../../providers/storage/storage";
 import { CameraOptions, Camera } from "@ionic-native/camera";
-import firebase from 'firebase';
+import firebase from "firebase";
 
 /**
  * Generated class for the BusinessCardPage page.
@@ -29,7 +29,7 @@ export class BusinessCardPage {
     private toastCtrl: ToastController,
     private alertCtrl: AlertController,
     private sp: StorageProvider,
-    private camera: Camera
+    private camera: Camera,
   ) {}
 
   userdata;
