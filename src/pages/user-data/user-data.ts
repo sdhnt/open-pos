@@ -33,6 +33,7 @@ export class UserDataPage {
     businesstype: "",
     taxrate: 0.0,
     discount: 0.0,
+    email: "",
   };
 
   constructor(
@@ -57,7 +58,7 @@ export class UserDataPage {
     this.navCtrl.push(UserProfilePage);
   }
 
-  getUser() {
+  async getUser() {
     this.sp.storageReady().then(() => {
       this.sp.getUserDat().then(user => {
         if (user == null) {
@@ -78,14 +79,7 @@ export class UserDataPage {
   }
 
   bCard() {
-    const dataToPass = {
-      o_name: this.user.owner_name,
-      b_name: this.user.business_name,
-      b_add: this.user.business_address,
-      email: this.user.email,
-      phno: this.user.ph_no,
-    };
-    const m = this.modalCtrl.create(BusinessCardPage, { data: dataToPass });
+    const m = this.modalCtrl.create(BusinessCardPage, { data: this.user });
     m.present();
   }
 }

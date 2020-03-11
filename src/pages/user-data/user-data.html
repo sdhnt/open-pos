@@ -48,6 +48,10 @@
         <ion-col col-10 class="dataCol">{{ user.ph_no }}</ion-col>
       </ion-row>
       <ion-row>
+        <ion-col col-2><ion-icon name="mail"></ion-icon></ion-col>
+        <ion-col col-10 class="dataCol">{{ user.email }}</ion-col>
+      </ion-row>
+      <ion-row>
         <ion-col col-2><ion-icon name="cash"></ion-icon></ion-col>
         <ion-col col-10>
           <ion-row class="cashRow"><b>{{ "Cash Balance" | translate}}</b> : {{ user.cash_balance }}</ion-row>

@@ -9,53 +9,67 @@
   <ion-navbar color="dark">
     <ion-title>Your Business Card</ion-title>
     <ion-buttons end style="padding-right: 10px;">
-      <button ion-button style="background-color: red; color: white;" (click)="goBack()">Cancel</button>
+      <button ion-button style="background-color: red; color: white;" (click)="goBack()">{{ "Cancel" | translate }}</button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content style="padding-left: 12px; padding-right: 12px;">
-  <ion-buttons end style="padding-top: 15px;">
-    <button ion-button round color="dark" (click)="share()">
-      <ion-icon name="share" style="padding-right: 7px; padding-left: 0px;"></ion-icon>
-      Share
-    </button>
-  </ion-buttons>
-  <br>
+  <ion-row style="padding-top: 15px;">
+    <ion-col col-6 style="padding-left: 10px;">
+      <button ion-button round color="dark" (click)="editRecTop()">
+        <ion-icon name="create" style="padding-right: 7px; padding-left: 0px;"></ion-icon>
+        Edit Card
+      </button>
+    </ion-col>
+    <ion-col col-6 style="text-align: end; padding-right: 10px;">
+      <button ion-button round color="dark" (click)="share()">
+        <ion-icon name="share" style="padding-right: 7px; padding-left: 0px;"></ion-icon>
+        Share
+      </button>
+    </ion-col>
+  </ion-row>
   <ion-card id="card">
-    <ion-card-title style="color: wheat; padding-top: 7px;">{{ userData.b_name }}</ion-card-title>
+    <ion-card-title style="color: wheat; padding-top: 13px;">{{ userdata.business_name }}</ion-card-title>
     <ion-grid>
       <ion-row>
-        <ion-col col-2 style="text-align: center;">
-          <ion-icon name="person"></ion-icon>
+        <ion-col>
+          <ion-row>
+            <ion-col col-2 style="text-align: center;">
+              <ion-icon name="person"></ion-icon>
+            </ion-col>
+            <ion-col col-10>
+              {{ userdata.owner_name }}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-2 style="text-align: center;">
+              <ion-icon name="call"></ion-icon>
+            </ion-col>
+            <ion-col col-10>
+              {{ userdata.ph_no }}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-2 style="text-align: center;">
+              <ion-icon name="mail"></ion-icon>
+            </ion-col>
+            <ion-col col-10>
+              <span *ngIf="userdata.email">{{ userdata.email }}</span>
+              <span *ngIf="!userdata.email">-</span>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-2 style="text-align: center;">
+              <ion-icon name="home"></ion-icon>
+            </ion-col>
+            <ion-col col-10>
+              {{ userdata.business_address }}
+            </ion-col>
+          </ion-row>
         </ion-col>
-        <ion-col col-10>
-          {{ userData.o_name }}
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col col-2 style="text-align: center;">
-          <ion-icon name="call"></ion-icon>
-        </ion-col>
-        <ion-col col-10>
-          {{ userData.phno }}
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col col-2 style="text-align: center;">
-          <ion-icon name="mail"></ion-icon>
-        </ion-col>
-        <ion-col col-10>
-          <span *ngIf="userData.email">{{ userData.email }}</span>
-          <span *ngIf="!userData.email">-</span>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col col-2 style="text-align: center;">
-          <ion-icon name="home"></ion-icon>
-        </ion-col>
-        <ion-col col-10>
-          {{ userData.b_add }}
+        <ion-col col-3 *ngIf="userdata.logo_url">
+          <img [src]="userdata?userdata.logo_url:''">
         </ion-col>
       </ion-row>
       <br>
