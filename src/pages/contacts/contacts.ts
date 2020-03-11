@@ -71,9 +71,9 @@ export class ContactsPage {
         this.contactList = JSON.parse(val);
         this.totalUserCredit = 0;
         this.totalUserDebit = 0;
-        this.contactList.forEach(contact=>{
-          if(contact.balance>0) this.totalUserDebit+=contact.balance;
-          if(contact.balance<0) this.totalUserCredit+=contact.balance;
+        this.contactList.forEach(contact => {
+          if (contact.balance > 0) this.totalUserDebit += contact.balance;
+          if (contact.balance < 0) this.totalUserCredit += contact.balance;
         });
         this.filteredList = this.contactList;
       });
