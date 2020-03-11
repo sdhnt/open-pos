@@ -146,7 +146,7 @@ export class SummaryGraphsPage {
     this.fromDate = new Date().toISOString();
     this.getUserData();
     // this.setPgValues("today");
-    this.dateChange()
+    this.dateChange();
   }
 
   currentdatetime = Date.now();
@@ -213,11 +213,11 @@ export class SummaryGraphsPage {
     });
   }
 
-  dateChange(){
+  dateChange() {
     let start = new Date(this.fromDate); //subtract one day
     start = new Date(start.getFullYear(), start.getMonth(), start.getDate(), 0, 0, 0);
-    let end = new Date(this.toDate);
-    this.getTransac({start: start, end: end});
+    const end = new Date(this.toDate);
+    this.getTransac({ start: start, end: end });
   }
 
   setPgValues(group) {
