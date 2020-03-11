@@ -413,7 +413,7 @@ export class StorageProvider {
     newContacts.forEach(newContact => {
       const index = contacts.findIndex(contact => contact.displayName === newContact.displayName);
       if (index != -1) {
-        const { id, balance, transacHistory, transac_new, dueDate } = contacts[index];
+        const { id, balance, transacHistory, transac_new, dueDate, discount } = contacts[index];
         contacts[index] = {
           ...newContact,
           id,
@@ -421,11 +421,13 @@ export class StorageProvider {
           dueDate,
           transacHistory,
           transac_new,
+          discount,
           updatedAt: new Date(),
         };
       } else {
         const defaultKeys = {
           balance: 0,
+          discount: 0,
           dueDate: "",
           transacHistory: [],
           transac_new: [],
@@ -436,6 +438,18 @@ export class StorageProvider {
     });
 
     contacts.sort((a, b) => a.displayName.localeCompare(b.displayName));
+    await this.storage.set("contacts", JSON.stringify(contacts));
+  }
+
+  async updateContactDisc(contactName, newDisc): Promise<void>{
+    const contacts = JSON.parse(await this.getContacts());
+    const contact = contacts.find(contact => contact.displayName === contactName);
+    if(contact){
+      contact.discount = newDisc;
+      contact.updatedAt = new Date();
+    } else {
+      console.log("No contact found for discount change");
+    }
     await this.storage.set("contacts", JSON.stringify(contacts));
   }
 

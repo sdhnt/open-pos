@@ -86,7 +86,11 @@ export class ContactsPage {
 
   navToIndividual(contact) {
     if (this.choosingContact) {
-      this.view.dismiss(contact.displayName);
+      const sendBack = {
+        name: contact.displayName,
+        discount: contact.discount
+      }
+      this.view.dismiss(sendBack);
       this.choosingContact = false;
       return;
     }

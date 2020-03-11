@@ -38,6 +38,12 @@
     </ion-col>
   </ion-row>
   <ion-row>
+    <ion-item>
+      <ion-label style="color: black;">Customer discount</ion-label>
+      <ion-input [(ngModel)]="newDisc" type="number" min="0" max="100" placeholder="Usual dicount to customer"></ion-input>
+    </ion-item>
+  </ion-row>
+  <ion-row>
     <ion-col col-12 class="top-text" style="font-weight: 400;">
       <ion-item>
         <ion-label style="font-weight: 600; color: black;"><b>{{"Due Date"|translate}}:</b></ion-label>

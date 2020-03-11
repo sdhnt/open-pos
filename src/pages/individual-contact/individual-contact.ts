@@ -27,6 +27,7 @@ export class IndividualContactPage {
     phno: [],
     transacHistory: [],
     dueDate: "",
+    discount: 0,
   };
 
   constructor(
@@ -42,7 +43,11 @@ export class IndividualContactPage {
     private toastController: ToastController,
   ) {
     this.contact = this.navParams.get("data");
+    if(!this.contact.discount){
+      this.contact.discount = 0;
+    }
     this.newDate = this.contact.dueDate;
+    this.newDisc = this.contact.discount;
     // if(this.newDate==undefined) this.remDate();
   }
 
@@ -50,6 +55,7 @@ export class IndividualContactPage {
   minDate = new Date().toISOString();
   maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 2)).toISOString();
   newDate;
+  newDisc;
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad IndividualContactPage");
@@ -60,11 +66,10 @@ export class IndividualContactPage {
   }
 
   async goBack() {
-    if (this.listOfNewTransactions.length == 0 && this.newDate == this.contact.dueDate) {
+    if (this.listOfNewTransactions.length == 0 && this.newDate == this.contact.dueDate && this.newDisc == this.contact.discount) {
       this.navCtrl.pop();
     } else {
-      if (this.listOfNewTransactions.length > 0) {
-        this.toastCtrl
+      this.toastCtrl
           .create({
             //@ts-ignore
             message: this.translateConfigService.getTranslatedMessage("Updating contact").value,
@@ -72,6 +77,7 @@ export class IndividualContactPage {
             duration: 1500,
           })
           .present();
+      if (this.listOfNewTransactions.length > 0) {
         await this.sp.updateContactTransaction(this.contact.displayName, this.listOfNewTransactions);
       }
       if (this.newDate != this.contact.dueDate) {
@@ -100,6 +106,9 @@ export class IndividualContactPage {
             }
           })
           .catch(e => console.log(e));
+      }
+      if(this.newDisc!=this.contact.discount){
+        await this.sp.updateContactDisc(this.contact.displayName, this.newDisc);
       }
       this.navCtrl.pop();
     }

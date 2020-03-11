@@ -1464,11 +1464,21 @@ export class IncomeTransactionPage {
     // this.events.publish("chooseContact");
     const m = this.modal.create(ContactsPage, { data: true });
     m.present();
-    m.onDidDismiss((contactName: string) => {
-      if (contactName == null || contactName == undefined) {
+    m.onDidDismiss((data) => {
+      if (data == null || data == undefined) {
         return;
       }
-      this.contact = contactName;
+      this.contact = data.name;
+      if(!data.discount || data.discount==0) return;
+      if(this.discbtn==0){
+        this.setDisc();
+      }
+      let tempNumberVal: any = this.discount;
+      tempNumberVal = parseFloat(tempNumberVal);
+      this.discount = tempNumberVal + parseFloat(data.discount);
+      console.log("Discount is", this.discount);
+      if(this.discount>100) this.discount = 100;
+      this.updateRec();
     });
   }
   clearContact() {
