@@ -20,15 +20,18 @@ export class CreditReminderPage {
 
   todayList = [];
   tomList = [];
+  pendingList = [];
 
   async ionViewWillEnter() {
     this.todayList = [];
     this.tomList = [];
+    this.pendingList = [];
     const contacts = JSON.parse(await this.sp.getContacts());
     const todayDate = new Date();
     contacts.forEach(contact => {
       if (contact.dueDate && contact.dueDate != "" && contact.balance != 0) {
         const contactDate = new Date(contact.dueDate);
+        console.log( contactDate.valueOf() - todayDate.valueOf());
         if (contactDate.getFullYear() == todayDate.getFullYear()) {
           if (contactDate.getMonth() == todayDate.getMonth()) {
             if (contactDate.getDate() == todayDate.getDate()) {
@@ -41,7 +44,11 @@ export class CreditReminderPage {
               //8.64e7 is one day in milliseconds
               this.tomList.push(contact);
             }
-          }
+          } 
+        }
+        if ( contactDate.valueOf() - todayDate.valueOf() < 0){
+          if(contactDate.getDate()!=todayDate.getDate() || contactDate.getMonth()!=todayDate.getMonth() || contactDate.getFullYear()!=todayDate.getFullYear())
+            this.pendingList.push(contact);
         }
       }
     });

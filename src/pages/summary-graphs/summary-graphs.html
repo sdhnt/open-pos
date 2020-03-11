@@ -21,13 +21,26 @@
     </ion-refresher-content>
   </ion-refresher>
 
-<ion-select style="background-color: silver; max-width: 100%;" [(ngModel)]="group"  (ionChange)="setPgValues(group)">
+<!-- <ion-select style="background-color: silver; max-width: 100%;" [(ngModel)]="group"  (ionChange)="setPgValues(group)">
   <ion-option value="today">{{"Today"|translate}}</ion-option>
-  <!-- <ion-option value="week">This Week</ion-option> -->
+  <ion-option value="week">This Week</ion-option>
   <ion-option value="last7">{{"Last 7 days"|translate}}</ion-option>
   <ion-option value="month">{{"This Month"|translate}}</ion-option>
   <ion-option value="last30">{{"Last 30 days"|translate}}</ion-option>
-</ion-select>
+</ion-select> -->
+<ion-row>
+  <ion-item>
+    <ion-label>From</ion-label>
+    <ion-datetime [(ngModel)]="fromDate" [max]="toDate" (ionChange)="dateChange()"></ion-datetime>
+  </ion-item>
+</ion-row>
+<ion-row>
+  <ion-item>
+    <ion-label>To</ion-label>
+    <ion-datetime [(ngModel)]="toDate" [max]="todayDate" [min]="fromDate" (ionChange)="dateChange()"></ion-datetime>
+  </ion-item>
+</ion-row>
+<br>
 <ion-item>
   <ion-row>
     <ion-col col-6 style="text-align: left;">{{"Revenue"|translate}}:</ion-col>

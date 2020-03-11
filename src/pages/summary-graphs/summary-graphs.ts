@@ -141,8 +141,12 @@ export class SummaryGraphsPage {
     this.isgraph = 0;
     this.islist = 1;
     this.usrchoice = "today";
+    this.todayDate = new Date().toISOString();
+    this.toDate = new Date().toISOString();
+    this.fromDate = new Date().toISOString();
     this.getUserData();
-    this.setPgValues("today");
+    // this.setPgValues("today");
+    this.dateChange()
   }
 
   currentdatetime = Date.now();
@@ -175,6 +179,10 @@ export class SummaryGraphsPage {
   listtransacrev: any;
   totalsaletoday = 0;
 
+  todayDate;
+  toDate;
+  fromDate;
+
   getTransac(options?: { start?: Date; end?: Date }) {
     this.rev = 0;
     this.exp = 0;
@@ -203,6 +211,13 @@ export class SummaryGraphsPage {
           alert("Error: " + err);
         });
     });
+  }
+
+  dateChange(){
+    let start = new Date(this.fromDate); //subtract one day
+    start = new Date(start.getFullYear(), start.getMonth(), start.getDate(), 0, 0, 0);
+    let end = new Date(this.toDate);
+    this.getTransac({start: start, end: end});
   }
 
   setPgValues(group) {
