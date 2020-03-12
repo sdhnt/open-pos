@@ -1,18 +1,18 @@
 <ion-content padding>
   <ion-buttons end>
-    <button ion-button (click)="goBack()" style="background-color: green; color: white;">{{"SAVE "|translate}}</button>
-    <button ion-button (click)="goBack()" style="background-color: red; color: white;">{{ "CANCEL" | translate }}</button>
+    <!-- <button ion-button (click)="goBack()" style="background-color: green; color: white;">{{"SAVE "|translate}}</button>
+    <button ion-button (click)="goBack()" style="background-color: red; color: white;">{{ "CANCEL" | translate }}</button> -->
+    <button ion-button color="dark" round (click)="goBack()">{{ "Done" | translate }}</button>
   </ion-buttons>
   <ion-grid>
     <ion-row>
       <ion-col col-8>
-        <ion-item>
+        <!-- <ion-item> -->
           <ion-input type="text" placeholder="{{'Enter Category Here'|translate}}" [(ngModel)]='newprodCat'></ion-input>
-        </ion-item>
+        <!-- </ion-item> -->
       </ion-col>
-      <ion-col col-4>
-        <button ion-button full color="dark" (click)="addCategory()"> {{'Add Category' | translate}}</button>
-
+      <ion-col col-4 style="padding-top: 10px;">
+        <button ion-button full color="dark" (click)="addCategory()" style="font-size: small;"> {{'Add Category' | translate}}</button>
       </ion-col>
     </ion-row>
   </ion-grid>
