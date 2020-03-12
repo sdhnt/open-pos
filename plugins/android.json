@@ -105,6 +105,9 @@
     },
     "cordova-sms-plugin": {
       "PACKAGE_NAME": "com.openfintech.openpos"
+    },
+    "cordova-plugin-android-permissions": {
+      "PACKAGE_NAME": "com.openfintech.openpos"
     }
   },
   "dependent_plugins": {

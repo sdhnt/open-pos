@@ -497,6 +497,14 @@ module.exports = [
         "clobbers": [
             "window.sms"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-android-permissions/www/permissions-dummy.js",
+        "id": "cordova-plugin-android-permissions.Permissions",
+        "pluginId": "cordova-plugin-android-permissions",
+        "clobbers": [
+            "cordova.plugins.permissions"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -531,7 +539,8 @@ module.exports.metadata =
     "cordova-plugin-file": "6.0.2",
     "cordova-plugin-photo-library": "2.2.1",
     "cordova-plugin-contacts": "3.0.1",
-    "cordova-sms-plugin": "1.0.0"
+    "cordova-sms-plugin": "1.0.0",
+    "cordova-plugin-android-permissions": "1.0.2"
 }
 // BOTTOM OF METADATA
 });
