@@ -1,15 +1,10 @@
-<ion-menu [content]="content" type="overlay">
+<!-- <ion-menu [content]="content" type="overlay">
   <ion-header>
     <ion-toolbar>
-      <!-- <ion-row>
-        <button ion-button block medium></button>{{'Menu' | translate}}</button> 
-      </ion-row> -->
       <ion-row>
         <ion-select [(ngModel)]="userLang" (ionChange) = "onLangChange()" interface="popover" style="min-width: 100%; text-align: center;" padding>
           <ion-option value="en">🇬🇧 English</ion-option>
           <ion-option value="my">🇲🇲 ဗမာ</ion-option>
-          <!-- <ion-option value="fil">🇵🇭 wikang filipino</ion-option>
-          <ion-option value="hi">🇮🇳 हिंदी</ion-option> -->
         </ion-select>
       </ion-row>
       <ion-row>
@@ -30,16 +25,11 @@
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title | translate}}
       </button>
-      <!-- <button menuClose ion-item (click)="logout()" >
-        {{'Logout'| translate}}
-      </button> -->
-      
-       
       
     </ion-list>
   </ion-content>
 
-</ion-menu>
+</ion-menu> -->
 
 <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
 <ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

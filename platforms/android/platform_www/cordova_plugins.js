@@ -471,6 +471,14 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "merges": [
         ""
       ]
+    },
+    {
+      "id": "cordova-sms-plugin.Sms",
+      "file": "plugins/cordova-sms-plugin/www/sms.js",
+      "pluginId": "cordova-sms-plugin",
+      "clobbers": [
+        "window.sms"
+      ]
     }
   ];
   module.exports.metadata = {
@@ -502,6 +510,7 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-x-socialsharing": "5.6.3",
     "cordova-plugin-file": "6.0.2",
     "cordova-plugin-photo-library": "2.2.1",
-    "cordova-plugin-contacts": "3.0.1"
+    "cordova-plugin-contacts": "3.0.1",
+    "cordova-sms-plugin": "1.0.0"
   };
 });

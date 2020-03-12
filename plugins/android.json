@@ -102,6 +102,9 @@
     },
     "cordova-plugin-contacts": {
       "PACKAGE_NAME": "com.openfintech.openpos"
+    },
+    "cordova-sms-plugin": {
+      "PACKAGE_NAME": "com.openfintech.openpos"
     }
   },
   "dependent_plugins": {

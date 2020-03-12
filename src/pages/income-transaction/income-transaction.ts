@@ -30,6 +30,7 @@ import download from "downloadjs";
 //import { File } from "@ionic-native/file";
 import { PhotoLibrary } from "@ionic-native/photo-library";
 import { ContactsPage } from "../contacts/contacts";
+import { UserDataPage } from "../user-data/user-data";
 /**
  * Generated class for the IncomeTransactionPage page.
  *
@@ -398,66 +399,67 @@ export class IncomeTransactionPage {
   }
 
   editRecTop() {
-    const message = this.translateConfigService.getTranslatedMessage("Cancel");
-    const message1 = this.translateConfigService.getTranslatedMessage("Save");
-    const message2 = this.translateConfigService.getTranslatedMessage("Edit Receipt Details");
-    const message3 = this.translateConfigService.getTranslatedMessage("Enter Information");
+    // const message = this.translateConfigService.getTranslatedMessage("Cancel");
+    // const message1 = this.translateConfigService.getTranslatedMessage("Save");
+    // const message2 = this.translateConfigService.getTranslatedMessage("Edit Receipt Details");
+    // const message3 = this.translateConfigService.getTranslatedMessage("Enter Information");
 
-    const message4 = this.translateConfigService.getTranslatedMessage("Add Logo");
-    const message5 = this.translateConfigService.getTranslatedMessage("Remove Logo");
+    // const message4 = this.translateConfigService.getTranslatedMessage("Add Logo");
+    // const message5 = this.translateConfigService.getTranslatedMessage("Remove Logo");
 
-    this.alertCtrl
-      .create({
-        //@ts-ignore
-        title: message2.value,
-        inputs: [
-          //@ts-ignore
-          { name: "Line1", placeholder: message3.value, value: this.userdata.business_name },
-          //@ts-ignore
-          { name: "Line2", placeholder: message3.value, value: this.userdata.business_address },
-          //@ts-ignore
-          { name: "Line3", placeholder: message3.value, value: this.userdata.businesstype },
-          //@ts-ignore
-          { name: "Line4", placeholder: message3.value, value: this.userdata.ph_no },
-        ],
-        buttons: [
-          //@ts-ignore
-          { text: message.value, role: "cancel" },
-          {
-            //@ts-ignore
-            text: message1.value,
-            handler: data => {
-              this.userdata.business_name = data.Line1;
-              this.userdata.business_address = data.Line2;
-              this.userdata.businesstype = data.Line3;
-              this.userdata.ph_no = data.Line4;
-              this.sp.setUserDat(this.userdata);
-            },
-          },
-          {
-            //@ts-ignore
-            text: message4.value,
-            handler: data => {
-              this.launchCamera().then(() => {
-                this.upload_new();
-              });
-            },
-          },
-          {
-            //@ts-ignore
-            text: message5.value,
-            handler: data => {
-              this.toastCtrl.create({ message: "Please wait- removing...", duration: 2000 }).present();
-              this.userdata.logo_url =
-                "https://scontent.fhkg10-1.fna.fbcdn.net/v/t1.0-9/79674109_100715951430298_615106696234139648_n.png?_nc_cat=109&_nc_ohc=2pdu1s1LRmoAX-04NCO&_nc_ht=scontent.fhkg10-1.fna&oh=70fea5a886837de2b9cf4aaf4a4112a8&oe=5EF6F085";
-              this.sp.setUserDat(this.userdata).then(() => {
-                this.toastCtrl.create({ message: "Removed!", duration: 2000 }).present();
-              });
-            },
-          },
-        ],
-      })
-      .present();
+    // this.alertCtrl
+    //   .create({
+    //     //@ts-ignore
+    //     title: message2.value,
+    //     inputs: [
+    //       //@ts-ignore
+    //       { name: "Line1", placeholder: message3.value, value: this.userdata.business_name },
+    //       //@ts-ignore
+    //       { name: "Line2", placeholder: message3.value, value: this.userdata.business_address },
+    //       //@ts-ignore
+    //       { name: "Line3", placeholder: message3.value, value: this.userdata.businesstype },
+    //       //@ts-ignore
+    //       { name: "Line4", placeholder: message3.value, value: this.userdata.ph_no },
+    //     ],
+    //     buttons: [
+    //       //@ts-ignore
+    //       { text: message.value, role: "cancel" },
+    //       {
+    //         //@ts-ignore
+    //         text: message1.value,
+    //         handler: data => {
+    //           this.userdata.business_name = data.Line1;
+    //           this.userdata.business_address = data.Line2;
+    //           this.userdata.businesstype = data.Line3;
+    //           this.userdata.ph_no = data.Line4;
+    //           this.sp.setUserDat(this.userdata);
+    //         },
+    //       },
+    //       {
+    //         //@ts-ignore
+    //         text: message4.value,
+    //         handler: data => {
+    //           this.launchCamera().then(() => {
+    //             this.upload_new();
+    //           });
+    //         },
+    //       },
+    //       {
+    //         //@ts-ignore
+    //         text: message5.value,
+    //         handler: data => {
+    //           this.toastCtrl.create({ message: "Please wait- removing...", duration: 2000 }).present();
+    //           this.userdata.logo_url =
+    //             "https://scontent.fhkg10-1.fna.fbcdn.net/v/t1.0-9/79674109_100715951430298_615106696234139648_n.png?_nc_cat=109&_nc_ohc=2pdu1s1LRmoAX-04NCO&_nc_ht=scontent.fhkg10-1.fna&oh=70fea5a886837de2b9cf4aaf4a4112a8&oe=5EF6F085";
+    //           this.sp.setUserDat(this.userdata).then(() => {
+    //             this.toastCtrl.create({ message: "Removed!", duration: 2000 }).present();
+    //           });
+    //         },
+    //       },
+    //     ],
+    //   })
+    //   .present();
+    this.app.getRootNav().push(UserDataPage);
   }
 
   setTax() {

@@ -489,6 +489,14 @@ module.exports = [
         "merges": [
             "navigator.contacts"
         ]
+    },
+    {
+        "file": "plugins/cordova-sms-plugin/www/sms.js",
+        "id": "cordova-sms-plugin.Sms",
+        "pluginId": "cordova-sms-plugin",
+        "clobbers": [
+            "window.sms"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -522,7 +530,8 @@ module.exports.metadata =
     "cordova-plugin-x-socialsharing": "5.6.3",
     "cordova-plugin-file": "6.0.2",
     "cordova-plugin-photo-library": "2.2.1",
-    "cordova-plugin-contacts": "3.0.1"
+    "cordova-plugin-contacts": "3.0.1",
+    "cordova-sms-plugin": "1.0.0"
 }
 // BOTTOM OF METADATA
 });

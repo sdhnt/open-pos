@@ -9,7 +9,7 @@
         "parents": {
           "/manifest/application": [
             {
-              "xml": "<application android:networkSecurityConfig=\"@xml/network_security_config\" />",
+              "xml": "<application android:usesCleartextTraffic=\"true\" />",
               "count": 2,
               "mode": "merge",
               "id": "config.xml",
@@ -23,7 +23,7 @@
               }
             },
             {
-              "xml": "<application android:usesCleartextTraffic=\"true\" />",
+              "xml": "<application android:networkSecurityConfig=\"@xml/network_security_config\" />",
               "count": 1,
               "mode": "merge",
               "id": "config.xml",
@@ -157,6 +157,10 @@
             {
               "xml": "<feature name=\"Contacts\"><param name=\"android-package\" value=\"org.apache.cordova.contacts.ContactManager\" /></feature>",
               "count": 1
+            },
+            {
+              "xml": "<feature name=\"Sms\"><param name=\"android-package\" value=\"com.cordova.plugins.sms.Sms\" /></feature>",
+              "count": 1
             }
           ],
           "/widget": [
@@ -192,6 +196,10 @@
             },
             {
               "xml": "<uses-feature android:name=\"android.hardware.camera\" android:required=\"true\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-feature android:name=\"android.hardware.telephony\" android:required=\"false\" />",
               "count": 1
             }
           ],
@@ -496,6 +504,9 @@
       "PACKAGE_NAME": "com.openfintech.openpos"
     },
     "cordova-plugin-contacts": {
+      "PACKAGE_NAME": "com.openfintech.openpos"
+    },
+    "cordova-sms-plugin": {
       "PACKAGE_NAME": "com.openfintech.openpos"
     }
   },
@@ -972,6 +983,14 @@
       "merges": [
         ""
       ]
+    },
+    {
+      "id": "cordova-sms-plugin.Sms",
+      "file": "plugins/cordova-sms-plugin/www/sms.js",
+      "pluginId": "cordova-sms-plugin",
+      "clobbers": [
+        "window.sms"
+      ]
     }
   ],
   "plugin_metadata": {
@@ -1003,6 +1022,7 @@
     "cordova-plugin-x-socialsharing": "5.6.3",
     "cordova-plugin-file": "6.0.2",
     "cordova-plugin-photo-library": "2.2.1",
-    "cordova-plugin-contacts": "3.0.1"
+    "cordova-plugin-contacts": "3.0.1",
+    "cordova-sms-plugin": "1.0.0"
   }
 }

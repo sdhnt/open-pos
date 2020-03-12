@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.openfintech.openpos" version="0.0.7" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>OPEN POS</name>
-    <description>Free POS Application</description>
+<widget id="com.openfintech.openpos" version="0.0.8" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>OPEN Business App</name>
+    <description>Free Business Managment Application for Small Businesses</description>
     <author email="openfintechapp@gmail.com" href="openfinance.app">Open Financial Technology</author>
     <content src="index.html" />
     <allow-navigation href="*" />
