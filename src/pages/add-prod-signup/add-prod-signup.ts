@@ -421,4 +421,37 @@ export class AddProdSignupPage {
       //this.navCtrl.pop();
     }
   }
+
+  isNewCategory(){
+    if(this.prodCat === "New"){
+      const message1 = this.translateConfigService.getTranslatedMessage("Enter Category Here");
+      const message2 = this.translateConfigService.getTranslatedMessage("CANCEL");
+      const message3 = this.translateConfigService.getTranslatedMessage("Ok");
+      this.alertCtrl.create({
+        //@ts-ignore
+        subTitle: message1.value,
+        inputs: [
+          {
+            //@ts-ignore
+            placeholder: message1.value,
+            name: "cat",
+          }
+        ],
+        buttons: [
+          {
+            //@ts-ignore
+            text: message2.value,
+            role: "cancel"
+          },
+          {
+            //@ts-ignore
+            text: message3.value,
+            handler: data => {
+              this.newprodCat = data.cat;
+            }
+          }
+        ]
+      }).present();
+    }
+  }
 }

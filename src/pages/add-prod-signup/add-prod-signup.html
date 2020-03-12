@@ -96,7 +96,7 @@
       <ion-item>
 
         <ion-label>{{'Product Category' | translate}}</ion-label>
-        <ion-select multiple="false" [(ngModel)]='prodCat'>
+        <ion-select multiple="false" [(ngModel)]='prodCat' (ionChange)="isNewCategory()">
 
           <!-- <ion-option>New</ion-option> -->
           <ion-option value="New"> {{'Add New Category'| translate}}</ion-option>
