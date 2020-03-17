@@ -132,16 +132,21 @@ export class LoanHomePage {
   //@ts-ignore
   randovar = this.translateConfigService.getTranslatedMessage("Close");
 
-  emptyField: boolean = false;
+  emptyField = false;
 
   async submitloanform() {
-
-    if(this.loan1==undefined||this.loan2==undefined||this.loan3==undefined
-        ||this.loan4==undefined||this.loan5==undefined||this.loan6==undefined) {
-          this.emptyField = true;
-          return;
-        }
-    this.emptyField=false;
+    if (
+      this.loan1 == undefined ||
+      this.loan2 == undefined ||
+      this.loan3 == undefined ||
+      this.loan4 == undefined ||
+      this.loan5 == undefined ||
+      this.loan6 == undefined
+    ) {
+      this.emptyField = true;
+      return;
+    }
+    this.emptyField = false;
     this.loanvar.push({
       q: this.loanq1,
       a: this.loan1,
@@ -167,17 +172,19 @@ export class LoanHomePage {
       a: this.loan6,
     });
 
-    await this.gps.getCoordinates()
-      .then(coordinates=>{
-        const c:any = coordinates;
+    await this.gps
+      .getCoordinates()
+      .then(coordinates => {
+        const c: any = coordinates;
         this.loanvar.push({
           q: "Location",
-          a: "Latitude: "+c.latitude+" Longitude: "+c.longitude,
+          a: "Latitude: " + c.latitude + " Longitude: " + c.longitude,
         });
-      }).catch(e=>{
+      })
+      .catch(e => {
         this.loanvar.push({
           q: "Location",
-          a: "Error obtaining location"
+          a: "Error obtaining location",
         });
       });
 
