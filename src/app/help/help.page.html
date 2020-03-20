@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <h4 style="padding-left: 10px; color: white;">{{"Info"|translate}}</h4>
+    <ion-buttons slot="end">
+      <ion-button style="background-color: red; color: white" (click)="close()">{{"Close"|translate}}</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- <h2>{{ data.page }}</h2>
+  <br>
+  <div *ngFor="let item of data.text">
+    <h4>{{item.heading}}</h4>
+    <p>{{item.content}}</p>
+  </div> -->
+  <!-- <div *ngIf="data!=null && data!=undefined">
+  <div *ngFor="let item of data.video; let i = index">
+    <div *ngIf="item.language==translateConfigService.getCurrentLanguage();">
+    <ion-row (click) = "openVid(i)">
+      <ion-col size="8"><h4>{{item.heading}}</h4></ion-col>
+      <ion-col size="2"><ion-icon name="videocam"></ion-icon></ion-col>
+      <ion-col size="2" *ngIf="i!=openVidVal"><ion-icon name="arrow-dropdown"></ion-icon></ion-col>
+      <ion-col size="2" *ngIf="i==openVidVal"><ion-icon name="arrow-dropup"></ion-icon></ion-col>
+    </ion-row>
+    <div *ngIf="i==openVidVal">
+    <iframe width="300" height="300" [src]="secureLink(item.url)" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+     </div>
+    <br>
+    <br>
+  </div>
+  </div>
+</div> -->
+
+  <ion-slides (ionSlideDidChange)="slideChanged()" style="height: 80%">
+    <ion-slide *ngFor="let i of hasSlideBeenVisited; let ind = index">
+      <div *ngIf="ind==0">
+        <ion-card style="border: 2px solid black; border-radius: 30px;">
+          <ion-card-header>
+            <h1>{{"Swipe for tutorial"|translate}}</h1>
+            <ion-icon name="arrow-round-forward" style="font-size: 40px;"></ion-icon>
+          </ion-card-header>
+          <hr style="height: 1px; background-color: black;">
+          <ion-card-content>
+            <h2>{{"Select bottom buttons for advanced navigation"|translate}}</h2>
+            <ion-icon name="arrow-down" style="font-size: 30px;"></ion-icon>
+          </ion-card-content>
+        </ion-card>
+      </div>
+      <img [id]="ind" *ngIf="ind!=0">
+    </ion-slide>
+  </ion-slides>
+  <br>
+  <ion-row>
+    <ion-col>
+      <ion-button class="directionButton" (click)="selectSlide('p')" fill="clear">
+        <ion-icon name="arrow-back-circle"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-input [value]="currentIndex" type="number" clearOnEdit="true" [(ngModel)]="currentIndex"
+        class="ion-text-center">
+      </ion-input>
+      <ion-button (click)="selectSlide('o')">{{ "OK" | translate }}
+      </ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button class="directionButton" (click)="selectSlide('n')" fill="clear">
+        <ion-icon name="arrow-forward-circle"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+
+  <!-- <iframe width="100%" height="315" src="https://www.youtube.com/embed/AwtlNWeE8wY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+</ion-content>
+<!--for [src] use the secureLink() function with link as param-->
+
+<!-- <ion-footer style="padding-left: 3px; padding-right: 3px;">
+  <ion-button block color="dark" (click)="navigate()">{{"More Coach"|translate}}</ion-button>
+</ion-footer> -->
+<!-- </div> -->

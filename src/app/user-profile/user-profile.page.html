@@ -1,0 +1,81 @@
+<ion-content>
+  <ion-row>
+    <ion-col size="2">
+      <ion-button fill="clear" (click)=goBack() menuToggle>
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-title style="line-height: 210%;">{{ "User Profile" | translate}}</ion-title>
+    </ion-col>
+  </ion-row>
+  <form [formGroup]="formUser">
+    <ion-list inset>
+      <ion-item>
+        <ion-label>{{ 'Business Name' | translate }}</ion-label>
+        <ion-input type="text" formControlName="business_name" [(ngModel)]="user.business_name"
+          (ionChange)="onChange()"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{ 'Full Business Address' | translate }}</ion-label>
+        <ion-input type="text" formControlName="business_address" [(ngModel)]="user.business_address"
+          (ionChange)="onChange()"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{ 'Owner' | translate }}</ion-label>
+        <ion-input type="text" formControlName="owner_name" [(ngModel)]="user.owner_name" (ionChange)="onChange()">
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="globe" color="semi-light" class="icon"></ion-icon>
+        <ion-label>{{"Business Type"|translate}}</ion-label>
+        <ion-input type="text" formControlName="businesstype" [(ngModel)]="user.businesstype" (ionChange)="onChange()">
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{ 'Phone Number' | translate }}</ion-label>
+        <ion-input type="text" formControlName="ph_no" [(ngModel)]="user.ph_no" (ionChange)="onChange()"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="logo-usd" color="semi-light" class="icon"></ion-icon>
+        <ion-label>{{"Currency"|translate}}</ion-label>
+        <ion-select formControlName="currency" [(ngModel)]="user.currency" (ionChange)="onChange()">
+          <ion-select-option value="USD">USD</ion-select-option>
+          <ion-select-option value="MMK">MMK</ion-select-option>
+          <ion-select-option value="PHP">PHP</ion-select-option>
+          <ion-select-option value="HKD">HKD</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{ 'Balance' | translate }}</ion-label>
+        <ion-input type="number" formControlName="cash_balance" [(ngModel)]="user.cash_balance"
+          (ionChange)="onChange()"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{ 'Usual Discount %' | translate }}</ion-label>
+        <ion-input type="number" formControlName="discount" [(ngModel)]="user.discount" (ionChange)="onChange()">
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{ 'Tax Rate %:' | translate }}</ion-label>
+        <ion-input type="number" formControlName="taxrate" [(ngModel)]="user.taxrate" (ionChange)="onChange()">
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{"Language"|translate}}</ion-label>
+        <ion-select formControlName="language" [(ngModel)]="user.language" (ionChange)="onChange()">
+          <ion-select-option value="en">🇬🇧 English</ion-select-option>
+          <ion-select-option value="my">🇲🇲 ဗမာ</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Autosave Receipt</ion-label>
+        <ion-toggle formControlName="autosave" (ionChange)="toggleButton()" color="dark" [checked]="user.autosave==1">
+        </ion-toggle>
+      </ion-item>
+    </ion-list>
+
+    <ion-button *ngIf="submitButton" expand="block" color="primary" (click)="setUser()" color="dark">
+      {{'Update Profile'| translate}}</ion-button>
+  </form>
+</ion-content>

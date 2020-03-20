@@ -1,0 +1,166 @@
+<ion-header *ngIf="lang!=1">
+  <ion-row>
+    <ion-col size="8">
+      <ion-select interface="popover" [(ngModel)]="selectedLanguage" (ionChange)="languageChanged()"
+        style="min-width: 50%;">
+        <ion-select-option value="en">🇬🇧 English</ion-select-option>
+        <ion-select-option value="my">🇲🇲 ဗမာ</ion-select-option>
+        <ion-select-option value="fil">🇵🇭 wikang filipino</ion-select-option>
+        <ion-select-option value="hi">🇮🇳 हिंदी</ion-select-option>
+      </ion-select>
+    </ion-col>
+    <ion-col></ion-col>
+  </ion-row>
+
+
+</ion-header>
+
+
+<ion-content class="ion-padding">
+
+
+  <!-- <countryflag country="mm"></countryflag>  -->
+  <!-- <span class="flag-icon flag-icon-gr flag-icon-squared"></span> -->
+
+  <ion-button expand="block" fill="clear" color="light" class="nametop"><b>Open</b></ion-button>
+
+
+
+  <!-- 
+  <ion-grid style="width: 75%;">
+    
+    <ion-row class="row-style">
+      
+      <ion-icon name="mail" color="semi-light" class="icon"></ion-icon>
+      <ion-input type="email" placeholder="{{ 'email' | translate }}" [(ngModel)]="email"></ion-input>
+    </ion-row>
+    <ion-row class="row-style">
+      <ion-icon name="key" color="semi-light" class="icon"></ion-icon>
+      <ion-input type="password" placeholder="{{ 'password' | translate }}" [(ngModel)]="password" ></ion-input>
+    </ion-row>
+    <ion-row>
+      <ion-button expand="block" shape="round" fill="outline" color="light" style="margin-top: 20px;" (click)="login()">{{"Sign in"|translate}}</ion-button>
+    </ion-row>
+  
+  </ion-grid> 
+
+
+  <ion-button expand="block" fill="clear" color="light" style="margin-top: 10px;" (click)="gotoSignUp()">{{"Don't have an account?"|translate}}</ion-button>
+
+-->
+
+
+  <div id="PhoneLogin">
+    <div id="recaptcha-container"></div>
+
+    <div *ngIf="lang==1">
+      <br>
+      <ion-button expand="block" shape="round" fill="outline" color="light" style="margin-top: 20px;"
+        (click)="selectLang('my')">
+        🇲🇲 ဗမာ
+      </ion-button>
+      <ion-button expand="block" shape="round" fill="outline" color="light" style="margin-top: 20px;"
+        (click)="selectLang('en')">
+        🇬🇧 English
+      </ion-button>
+    </div>
+
+    <div *ngIf="signup!=1&&otpmode!=1&&lang!=1">
+      <ion-button expand="block" fill="clear" color="light" style="margin-top: 10px;">
+        {{"Enter your Phone Number"|translate}}
+      </ion-button>
+      <ion-grid style="width: 75%;">
+        <ion-row class="row-style">
+
+          <ion-select [(ngModel)]="countryCode">
+            <ion-select-option value="95" selected>🇲🇲 +95 </ion-select-option>
+            <ion-select-option value="63">🇵🇭 +63 </ion-select-option>
+            <ion-select-option value="852">🇭🇰 +852 </ion-select-option>
+            <ion-select-option value="91">🇮🇳 +91 </ion-select-option>
+
+          </ion-select>
+          <ion-input type=”number” placeholder="9964758505" [(ngModel)]="phone"></ion-input>
+        </ion-row>
+        <ion-button expand="block" shape="round" fill="outline" color="light" style="margin-top: 20px;"
+          (click)="signInPhone()">{{"Login with Phone Number"|translate}}</ion-button>
+        <ion-button expand="block" shape="round" style="margin-top: 10px;"
+          (click)="fbLogin()">{{"Login with Facebook"|translate}}</ion-button>
+        <!-- <ion-button block round style="margin-top: 10px;" (click)="backToLang()" color="light" clear>
+        <ion-icon name="arrow-round-back"></ion-icon>
+      </ion-button> -->
+        <ion-row padding></ion-row>
+        <!-- <div class="btn_container">
+        <ion-button full (click)="loginWithFB();">{{"Login with Facebook"|translate}}</ion-button>
+      </div> -->
+      </ion-grid>
+    </div>
+  </div>
+  <div *ngIf="otpmode==1">
+    <ion-button expand="block" fill="clear" color="light" style="margin-top: 10px;">
+      {{"Enter the Confirmation code"|translate}}</ion-button>
+    <ion-button expand="block" fill="clear" color="light" style="margin-top: 10px;">{{phone}}</ion-button>
+    <ion-row class="row-style" style="margin-top: 20px;">
+      <ion-input placeholder="Enter OTP here" type=”number” [(ngModel)]="otpnum"></ion-input>
+    </ion-row>
+    <ion-button expand="block" shape="round" fill="outline" color="light" style="margin-top: 20px;" (click)="otpFn()"
+      [disabled]="timer2!=0">
+      {{"Submit OTP"|translate}}
+    </ion-button>
+    <ion-button expand="block" shape="round" fill="outline" color="light" style="margin-top: 20px;"
+      (click)="backToLogin()">{{"Cancel"|translate}}</ion-button>
+    <ion-row style="margin-top: 20px;">
+      <ion-col col-9>
+        <ion-button [disabled]="timer!=0" (click)="signInPhone()" shape="round" fill="outline" color="light">
+          {{"Resend OTP"|translate}}</ion-button>
+      </ion-col>
+      <ion-col col-3 style="color: white; margin-top: 10px; text-align: center;" *ngIf="timer!=0">
+        <span>{{"Retry in"|translate}} {{ timer }}s</span>
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <div *ngIf="signup==1">
+    <ion-grid style="width: 75%;">
+      <ion-button expand="block" fill="clear" color="light" style="margin-top: 10px;">{{"Create Account"|translate}}
+      </ion-button>
+      <ion-row class="row-style" style="margin-top: 20px;">
+        <ion-input placeholder="{{'Owner'|translate}}" [(ngModel)]="newaccOwnName"></ion-input>
+      </ion-row>
+      <ion-row class="row-style" style="margin-top: 20px;">
+        <ion-input placeholder="{{'Business Name'|translate}}" [(ngModel)]="newaccBName"></ion-input>
+      </ion-row>
+      <ion-row class="row-style" style="margin-top: 20px;">
+        <ion-input placeholder="{{'Business Type'|translate}}" [(ngModel)]="newaccBType"></ion-input>
+      </ion-row>
+      <ion-row class="row-style" style="margin-top: 20px;">
+        <ion-input placeholder="{{'Business Area & City'|translate}}" [(ngModel)]="newaccBArea"></ion-input>
+      </ion-row>
+      <ion-row class="row-style" style="margin-top: 20px;">
+        <ion-select [(ngModel)]="country_code" [disabled]="fb==false">
+          <ion-select-option value="95" selected>🇲🇲 +95 </ion-select-option>
+          <ion-select-option value="63">🇵🇭 +63 </ion-select-option>
+          <ion-select-option value="852">🇭🇰 +852 </ion-select-option>
+          <ion-select-option value="91">🇮🇳 +91 </ion-select-option>
+
+        </ion-select>
+        <ion-input type=”text” placeholder="{{'Phone Number'|translate}}" [(ngModel)]="phone" [disabled]="fb==false">
+        </ion-input>
+      </ion-row>
+      <ion-button ion-button expand="block" shape="round" fill="outline" [disabled]="dis" color="light"
+        style="margin-top: 20px;" (click)="createAccount()">{{"Create Account"|translate}}</ion-button>
+      <ion-row padding>
+
+      </ion-row>
+      <ion-row padding>
+
+      </ion-row>
+      <ion-row padding>
+
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-button expand="full" (click)="getInfo()" style="background-color: black;">{{"Contact Us"|translate}}</ion-button>
+</ion-footer>

@@ -1,0 +1,47 @@
+<div class="modal">
+  <ion-header>
+    <ion-toolbar color="dark">
+      <ion-title style="color: white;">{{"Update Stock"|translate}}</ion-title>
+      <ion-buttons slot="end">
+        <ion-button style="background-color: red; color: white;" (click)="dismiss()">{{"Close"|translate}}</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="ion-padding">
+    <ion-list>
+      <ion-item>
+        {{"Product Name:"|translate}} {{ product.name }}
+      </ion-item>
+      <ion-item>
+        <ion-input placeholder="{{'Product Qty'|translate}}" type="number" [(ngModel)]='prodqty'
+          (ionChange)="updatebalance('prodqty')"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input placeholder="{{'Purchase Price per Item'|translate}}" type="number" [(ngModel)]='prodcostitem'
+          (ionChange)="updatebalance('prodcostitem')"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="number" placeholder="{{'Total Expenditure'|translate}}" [(ngModel)]='prodcost'
+          (ionChange)="updatebalance('prodcost')"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <h3>{{"Optional"|translate}}:</h3>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{"Batch Expiry Date:"|translate}}</ion-label>
+        <ion-datetime displayFormat="DD/MMM/YYYY" [(ngModel)]='expiryDate' [min]="minDate" [max]="maxDate">
+        </ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{"Number of damaged items:"|translate}}</ion-label>
+        <ion-input displayFormat="DD/MMM/YYYY" [(ngModel)]='damage'></ion-input>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+  <ion-footer class="ion-padding">
+    <ion-button expand="block" (click)="addinventoryexpense()" style="background-color: #FFA500;">{{"Add Stock"|translate}}
+    </ion-button>
+  </ion-footer>
+</div>

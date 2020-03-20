@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{"Contact Us"| translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <h1>{{"Contact the OPEN Helpline"| translate}}</h1>
+  {{"Contact us msg"| translate}}
+
+  <br><br>
+
+  <ion-grid>
+
+
+
+    <ion-row style="background-color: #f0f0f0;" *ngIf="phone.length==0">
+      <ion-col>
+        <ion-button expand="block" style="text-align: center; background-color: indigo; color: palevioletred;">
+          LOADING...
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row style="background-color: #f0f0f0" *ngFor="let num of phone">
+      <ion-col>
+
+        <ion-button expand="block" style="text-align: center ; background-color: indigo; color: palevioletred;"
+          (click)="call(num)">
+          {{ num }}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="block"
+          style="text-align: center ; background-color: indigo; color: palevioletred; text-transform:lowercase"
+          (click)="sendMail()">
+          {{ email }}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="block"
+          style="text-align: center ; background-color: indigo; color: palevioletred; text-transform: unset;"
+          (click)="navFB()">
+          {{"Reach us on Facebook"|translate}}!
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

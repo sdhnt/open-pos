@@ -1,0 +1,233 @@
+<div class="modal">
+  <ion-header>
+    <ion-toolbar color="dark">
+      <h4 style="padding-left: 10px; color: white;">{{"Calculator"|translate}}</h4>
+      <ion-buttons slot="end">
+        <ion-button style="background-color: red; color: white" (click)="close()">{{"Close"|translate}}</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <!-- <ion-fab bottom right>
+      <button ion-fab color="primary" item-right><ion-icon name="calculator"></ion-icon></button>
+    </ion-fab> -->
+    <!-- <ion-card *ngIf="showSampleRec==false">
+      ကျေးဇူးပြုပြီးပစ္စည်းအတွက်ပမာဏကိုမြှောက်ပါ၊ ရှိပြီးသားငွေတောင်းခံလွှာကိုထည့်ရန်တူညီသောစာလုံးကိုနှိပ်ပါ။
+
+        အလွတ်ပစ္စည်းပေါင်းများစွာကိုထည့်သွင်းလိုပါက * qty တစ်ခုချင်းစီကိုရိုက်ထည့်ပြီးနောက်တစ်ခုကိုရိုက်ထည့်ရန် + သင်္ကေတကိုနှိပ်ပါ
+    </ion-card>
+     -->
+    <ion-grid>
+      <ion-row>
+
+        <ion-col size="12">
+
+          <div class="calculator">
+            <div class="header">
+              <div class="window"></div>
+              <div class="input">
+                <!-- <ion-row>
+                
+                <ion-input type="text" placeholder="0" name="display" [(ngModel)]="result">
+                </ion-input>
+                
+               
+                <ion-icon name="backspace" (click)="btnClicked('b')"></ion-icon>
+                
+              </ion-row>  -->
+                <ion-row>
+                  <ion-col size="10">
+                    <div style="text-align: left; overflow-y: scroll; height: 80px;">
+                      {{result}}
+                    </div>
+                  </ion-col>
+
+                  <!-- <ion-col size="10">
+                    <ion-scroll scrollX="true" style="  white-space: nowrap; height: 80px;">
+                      <div style="text-align: right;">
+                        {{result}}
+                      </div>
+                    </ion-scroll>
+                </ion-col> -->
+
+
+
+
+                  <ion-col size="2">
+                    <ion-icon name="backspace" (click)="btnClicked('b')"></ion-icon>
+                  </ion-col>
+
+                </ion-row>
+
+
+
+              </div>
+
+
+            </div>
+            <div class="keys">
+              <div class="row">
+                <div class="number">
+                  <span (click)="btnClicked('7')">7</span>
+                  <span (click)="btnClicked('8')">8</span>
+                  <span (click)="btnClicked('9')">9</span>
+                </div>
+                <div class="symbol">
+                  <span (click)="btnClicked('*')">×</span>
+
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="number">
+                  <span (click)="btnClicked('4')">4</span>
+                  <span (click)="btnClicked('5')">5</span>
+                  <span (click)="btnClicked('6')">6</span>
+                </div>
+
+                <div class="symbol">
+                  <span (click)="btnClicked('+')">+</span>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="number">
+                  <span (click)="btnClicked('1')">1</span>
+                  <span (click)="btnClicked('2')">2</span>
+                  <span (click)="btnClicked('3')">3</span>
+                </div>
+
+                <div class="symbol">
+                  <span (click)="btnClicked('/')">÷</span>
+                </div>
+
+
+              </div>
+
+
+              <div class="row">
+                <div class="number">
+
+                  <span (click)="btnClicked('.')">.</span>
+                  <span (click)="btnClicked('0')">0</span>
+                  <span (click)="btnClicked('%')">%</span>
+
+
+                </div>
+
+                <div class="symbol">
+                  <span (click)="btnClicked('-')">-</span>
+                </div>
+
+              </div>
+
+              <div class="row">
+                <div class="number">
+                  <div class="lastrow">
+                    <span (click)="btnClicked('C')">{{"Clear"|translate}}</span>
+                  </div>
+
+                </div>
+                <div class="symbol action">
+                  <span (click)="btnClicked('=')">=</span>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+
+
+
+        </ion-col>
+
+        <ion-col size="12">
+
+          <!-- 
+      <ion-card *ngIf="showSampleRec==true"> 
+
+              <ion-grid>
+        
+                <ion-row> <ion-col style="text-align: center; padding-top: 5px;">{{userdata? userdata.business_name: null}} </ion-col> </ion-row>
+        
+                <ion-row>
+                    <ion-col size="12" style="color: grey; font-size: 10px; text-align: center"> {{userdata?userdata.business_address:null}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="12" style="color: grey; font-size: 10px; text-align: center"> {{userdata?userdata.ph_no:null}}</ion-col>
+                </ion-row>          
+                <ion-row style="padding-top: 5px;">
+                    <ion-col size="1" style="color: black; font-size: 10px; text-align: center"><b>{{"Sl" | translate}}</b></ion-col>
+                    <ion-col size="5" style="color: black; font-size: 10px; text-align: center"><b>{{"Name" | translate}}</b></ion-col>
+                    <ion-col size="3" style="color: black; font-size: 10px; text-align: center"><b>{{"Price"| translate}}</b></ion-col>
+                    <ion-col size="3" style="color: black; font-size: 10px; text-align: center"><b>{{"Qty"| translate}}</b></ion-col>
+               </ion-row>
+        
+               
+        
+                <ion-list *ngFor="let item of itemsprice; let i = index" no-lines>
+        
+            
+                  <ion-row>
+                      <ion-col size="1" style="color: black; font-size: 10px; text-align: center">{{i+1}}.</ion-col>
+                      <ion-col size="5" style="color: black; font-size: 10px; text-align: center">
+                       Item {{i+1}}</ion-col>   
+                      <ion-col size="3" style="color: black; font-size: 10px; text-align: center">{{item}}</ion-col>
+                      <ion-col size="3" style="color: black; font-size: 10px; text-align: center">{{itemsqty[i]}}</ion-col>
+
+                  </ion-row>
+              
+        
+                </ion-list>
+        
+                <ion-row padding>
+                    <ion-col size="1"></ion-col>  
+                  <ion-col size="4" style="text-align: center;font-size: 10px;"><b>{{"Total"| translate}}</b> </ion-col>
+                    <ion-col size="2" style="text-align: center;font-size: 10px;"><b>{{lastsum}}</b> </ion-col>
+                    <ion-col size="5"></ion-col>
+                  </ion-row>
+        
+        
+                 
+        
+        
+              </ion-grid>
+        
+        
+        
+
+      </ion-card> -->
+
+        </ion-col>
+
+
+
+      </ion-row>
+
+
+    </ion-grid>
+
+
+
+    <!-- Dynamically Generate All transactions from backend - see feed from prev -->
+
+  </ion-content>
+  <!-- 
+<ion-footer style="background-color: #ffffff">
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+          <button ion-button (click)="createRec()" full style="background-color: #FFA500" *ngIf="showSampleRec==true">
+            {{updateOrCreate|translate}}
+        </button>
+        <button ion-button (click)="addSalesExp()" full style="background-color: #FFA500" *ngIf="showSampleRec==false">
+            {{"Add Sales/Expenses" |translate}}
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+ 
+</ion-footer> -->
+</div>

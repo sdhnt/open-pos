@@ -1,5 +1,7 @@
 {
   "name": "open-pos-ionic4",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

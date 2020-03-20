@@ -1,0 +1,68 @@
+<ion-content class="ion-padding">
+  <ion-row>
+    <ion-col>
+      <ion-buttons slot="start" style="display: flex;">
+        <ion-button color="dark" (click)="goToUpdateStock()">{{ "Update Stock" | translate }}</ion-button>
+      </ion-buttons>
+    </ion-col>
+    <ion-col></ion-col>
+    <ion-col>
+      <ion-buttons slot="end">
+        <ion-button style="background-color: red;" (click)="goBack()">{{ "Cancel" | translate}}</ion-button>
+      </ion-buttons>
+    </ion-col>
+  </ion-row>
+  <form [formGroup]="formProduct">
+    <ion-list inset="true">
+
+      <!-- <ion-item>
+        <ion-label>Photo</ion-label>
+            <ion-input type="number" [(ngModel)]='product.price'></ion-input>
+        </ion-item> -->
+
+      <ion-item>
+        <ion-button (click)="askCamera()" color="dark">{{'Take Picture' | translate}}</ion-button>
+        <img *ngIf="image!=null" [src]="image" style="width: 100px;">
+      </ion-item>
+      <ion-button block color="primary" (click)="scanQR()" color="dark">{{'Scan Barcode'| translate}}</ion-button>
+
+      <ion-item>
+        <ion-label>{{'Product Code:'| translate}}</ion-label>
+        <ion-label style="color: red; font-size: 25px;" *ngIf="isProdCode000000"><b>!</b></ion-label>
+        <ion-input type="text" formControlName="prodCode" [(ngModel)]='product.code'></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{'Product Name:'| translate}}</ion-label>
+        <ion-input type="text" formControlName="prodName" [(ngModel)]='product.name'></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{'Product Retail Price:'| translate}}</ion-label>
+        <ion-input type="number" formControlName="prodPrice" [(ngModel)]='product.price'></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{'Product Wholesale Price:'| translate}}</ion-label>
+        <ion-input type="number" formControlName="prodWholesalePrice" [(ngModel)]='product.wholesale_price'></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{'Average Buying Cost:'| translate}}</ion-label>
+        <ion-input type="number" formControlName="prodCost" [(ngModel)]='product.cost'></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{'Current Stock Qty:'| translate}}</ion-label>
+        <ion-input type="number" formControlName="currstock" [(ngModel)]='product.stock_qty'></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{'Product Category' | translate}}</ion-label>
+        <ion-select multiple="false" formControlName="prodCat" [(ngModel)]='product.cat'>
+          <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  </form>
+  <ion-button expand="block" color="dark" [disabled]="disabled" (click)="updateProduct()">
+    {{'Update Product'| translate}}</ion-button>
+  <ion-button expand="block" style="color: whitesmoke; background-color: gray;" (click)="discardChange()">
+    {{"Discard Changes"|translate}}</ion-button>
+  <ion-button expand="block" color="danger" [disabled]="disabled" (click)="confirmDelete(product)">
+    {{'Delete Product'| translate}}</ion-button>
+</ion-content>

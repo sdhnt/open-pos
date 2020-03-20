@@ -1,0 +1,42 @@
+<ion-content class="ion-padding">
+  <ion-buttons slot="end">
+    <ion-button (click)="goBack()" style="background-color: green; color: white;">{{"SAVE "|translate}}</ion-button>
+    <ion-button (click)="goBack()"
+      style="background-color: red; color: white;">{{ "CANCEL" | translate }}</ion-button>
+  </ion-buttons>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-8>
+        <ion-item>
+          <ion-input type="text" placeholder="{{'Enter Category Here'|translate}}" [(ngModel)]='newprodCat'></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-4>
+        <ion-button full color="dark" (click)="addCategory()"> {{'Add Category' | translate}}</ion-button>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+
+
+  <ion-item>
+    <h2> <b>{{'View/Delete Category' | translate}} </b> </h2>
+  </ion-item>
+
+  <ion-list *ngFor="let element of listCat">
+
+    <ion-item>
+      {{element.name}}
+      <ion-icon item-end name="close-circle" (click)="delCat(element)" color="danger"></ion-icon>
+    </ion-item>
+  </ion-list>
+
+
+
+
+
+
+
+</ion-content>

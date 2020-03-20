@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <!-- <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button> -->
+    <ion-title size="large" style="color:orange"> OPEN </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="uploadbtn()">
+        <ion-icon name="cloud-upload"></ion-icon>
+      </ion-button>
+      <ion-button (click)="cashbtn()">
+        <ion-icon name="logo-usd"></ion-icon>
+      </ion-button>
+      <ion-button (click)="help()">
+        <ion-icon name="help-circle"></ion-icon>
+      </ion-button>
+      <ion-button (click)="contactpg()">
+        <ion-icon name="call"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+<ion-content>
+  <ion-router-outlet></ion-router-outlet>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="income-transaction">
+        <ion-icon name="list"></ion-icon>
+        <ion-label>{{'Receipt'|translate}}</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button tab="contacts">
+        <ion-icon name="people-circle-outline"></ion-icon>
+        <ion-label>{{'Contacts'|translate}}</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button tab="transaction-product">
+        <ion-icon name="grid"></ion-icon>
+        <ion-label>{{'Stock'|translate}}</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button tab="summary-graphs">
+        <ion-icon name="wallet"></ion-icon>
+        <ion-label>{{'Accounts'|translate}}</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-content>

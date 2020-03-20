@@ -1,0 +1,72 @@
+<ion-content padding>
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed" *ngIf="!choosingContact">
+    <ion-fab-button color="light">
+      <ion-icon md="person-add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="start">
+      <!-- <ion-fab-button color="light"> -->
+        <ion-button style="background-color: #301924;" (click)="navAdd(1)">
+          {{"From Contacts"|translate}}
+        </ion-button>
+      <!-- </ion-fab-button> -->
+      <!-- <ion-fab-button color="light"> -->
+        <ion-button style="background-color: #301924;" (click)="navAdd(2)">
+          {{"Manually"|translate}}
+        </ion-button>
+      <!-- </ion-fab-button> -->
+    </ion-fab-list>
+  </ion-fab>
+
+
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed" *ngIf="choosingContact">
+    <ion-fab-button color="light" (click)="dismiss()">
+      <ion-icon name="close"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <!--   
+  Do you give us consent to access your phone's contact information? -->
+  <!-- <ion-list>
+     <ion-item>
+      <button ion-button (click)="setPermission(true)">
+        Yes
+      </button>
+      <button ion-button (click)="setPermission(false)">
+        No
+      </button>
+    </ion-item>
+    <ion-item>
+      <button ion-button (click)="importContacts()">
+        Import contacts now
+      </button>
+    </ion-item>
+  </ion-list> -->
+
+  <ion-searchbar showCancelButton="always" [(ngModel)]="searchterm" (ionChange)="filter()"></ion-searchbar>
+  <!-- <ion-select [(ngModel)]="sortVal" (ionChange)="sort($event)" style="min-width: 100%;">
+    <ion-option value="1" selected>A-Z</ion-option>
+    <ion-option value="2">Z-A</ion-option>
+    <ion-option value="3">Balance: High to Low</ion-option>
+    <ion-option value="4">Balance: Low to High</ion-option>
+  </ion-select> -->
+
+  <ion-list>
+    <div style="width: 100%; text-align: center;" *ngIf="!filteredList || filteredList.length==0">
+      <p>{{"No contacts"|translate}}!</p>
+      <ion-card class="ion-padding">
+        {{"Track which customers owe you money and how much they owe you using this page!"|translate}} <br><br>
+        {{"Add a customer name/number and then enter in how much they owe you to keep a track."|translate}} <br><br>
+        {{"We are soon releasing a send automatic SMS reminder feature and an option to see who owes you money on a particular date."|translate}}
+      </ion-card>
+    </div>
+    <ion-card *ngFor="let contact of filteredList">
+      <ion-row (click)="navToIndividual(contact)" class="ion-padding">
+        <ion-col size="7" style="font-size: 16px;">{{ contact.displayName }}</ion-col>
+        <ion-col size="5" style="font-size: medium;">{{"Balance"|translate}}:
+          <span style="color: red;" *ngIf="contact.balance<0; else nonNeg">{{ contact.balance }}</span>
+          <span style="color: green;" *ngIf="contact.balance>0; else zero" id="nonNeg">{{ contact.balance }}</span>
+          <span style="color: blue;" *ngIf="contact.balance==0" id="zero">0</span>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+  </ion-list>
+</ion-content>

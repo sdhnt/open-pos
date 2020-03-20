@@ -1,0 +1,98 @@
+<div class="modal">
+  <ion-header>
+    <ion-toolbar color="dark">
+      <h4 style="padding-left: 10px; color: white;">Expenses</h4>
+      <ion-buttons slot="end">
+        <ion-button style="background-color: red; color: white" (click)="close()">{{"Close"|translate}}</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-item>
+      <b>{{"Add non-inventory expense"|translate}}:</b>
+    </ion-item>
+
+    <ion-list inset="true">
+      <ion-card *ngFor="let item of listOfExpenses; let i = index">
+        <ion-grid>
+          <ion-row [hidden]="item.flag">
+            <ion-col size="12">
+              <ion-label style="color: red;">
+                {{"Invalid! Some required fields are empty"|translate}}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-label style="font-size: 16px;">
+                <b>{{"Expense"|translate}} #{{ i + 1 }}</b>
+              </ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-item>
+                <ion-input placeholder="{{'Expense name'|translate}}" [(ngModel)]="item.name"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6">
+              <ion-row>
+                <ion-select placeholder="{{'Expense Type'|translate}}" [(ngModel)]="item.type">
+                  <ion-select-option *ngFor="let itemType of expType1" value="{{itemType}}">{{itemType}}</ion-select-option>
+                </ion-select>
+              </ion-row>
+            </ion-col>
+            <ion-col size="6" align-self-end>
+              <ion-item>
+                <ion-input placeholder="{{'Amount'|translate}}" type="number" [(ngModel)]="item.amount"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <br>
+          <!--<ion-row>
+          <ion-col size="12">
+            <ion-item>
+              <ion-textarea autogrow placeholder="Additional notes\n(optional)" [(ngModel)]="item.notes"></ion-textarea>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <br>-->
+          <ion-row>
+            <ion-button size="small" (click)="addContact(item)" shape="round" style="background-color: green;"
+              *ngIf="item.contact==''">
+              Assign to Contact
+            </ion-button>
+            <ion-col size="8" *ngIf="item.contact!=''" style="padding-top: 15px; font-size: medium;">
+              Assigned to <b>{{ item.contact }}</b>
+            </ion-col>
+            <ion-col size="4" *ngIf="item.contact!=''">
+              <ion-button (click)="clearContact(item)"
+                style="background-color: red; color: white;">Remove</ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-justify-content-end">
+            <ion-button style="background-color: red; color: whitesmoke; float: right;"
+              (click)="removeExpense(i)" *ngIf="listOfExpenses.length!=1">
+              {{"Delete Expense"|translate}}
+            </ion-button>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+      <ion-button style="float: right;" (click)="addExpense()">{{"Add another expense"|translate}}</ion-button>
+    </ion-list>
+  </ion-content>
+
+  <ion-footer style="background-color: #ffffff">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-button expand="full" style="background-color: #FFA500"
+            (click)="updateExpenses()">{{"Update Expense"|translate}}</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-footer>
+</div>
