@@ -14,6 +14,7 @@ import { PrinterProvider } from '../services/printer/printer';
 import { LoanHomePage } from '../loan-home/loan-home.page';
 import { Observable } from 'rxjs';
 import { EventService } from '../services/event.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-summary-graphs',
@@ -32,10 +33,11 @@ export class SummaryGraphsPage implements OnInit {
     private alertCtrl: AlertController,
     private printer: PrinterProvider,
     private loadCtrl: LoadingController,
+    private router: Router
   ) {
     // this.getSummary();
     this.events.viewRecs.subscribe(data => {
-      // (this.navCtrl.parent as Tabs).select(0);
+      this.router.navigate(['/home']);
       console.log('ViewRecs Event');
     });
     this.getUserData();
@@ -78,8 +80,7 @@ export class SummaryGraphsPage implements OnInit {
   netcashweek = 0;
   netcashmonth = 0;
   netcashlast30 = 0;
-  // @ts-ignore
-  expandedvar = this.translateConfigService.getTranslatedMessage('More').value;
+  expandedvar = this.subscriber(this.translateConfigService.getTranslatedMessage('More'));
 
   rev = 0;
   exp = 0;
@@ -90,6 +91,10 @@ export class SummaryGraphsPage implements OnInit {
   listtransacrev: any;
   totalsaletoday = 0;
 
+  todayDate;
+  toDate;
+  fromDate;
+
   receipt: any;
 
   isgraph = 0;
@@ -99,6 +104,15 @@ export class SummaryGraphsPage implements OnInit {
   doRefresh(refresher) {
     this.ngOnInit();
     refresher.target.complete();
+  }
+
+  subscriber(message: Observable<any>): string {
+    let msg;
+    message.subscribe(res => {
+      msg = res;
+    });
+    console.log(msg);
+    return msg;
   }
 
   async getUserData() {
@@ -136,8 +150,8 @@ export class SummaryGraphsPage implements OnInit {
   }
 
   async applyLoan() {
-    const loanModal = await this.modal.create({ component: LoanHomePage });
-    loanModal.present();
+    const modal = await this.modal.create({ component: LoanHomePage });
+    modal.present();
   }
 
   ionViewDidLoad() {
@@ -147,13 +161,11 @@ export class SummaryGraphsPage implements OnInit {
   expandTransac(transac) {
     if (transac.expanded === true) {
       transac.expanded = false;
-      // @ts-ignore
-      transac.expandedvar = this.translateConfigService.getTranslatedMessage('Close').value;
+      transac.expandedvar = this.subscriber(this.translateConfigService.getTranslatedMessage('Close'));
     } else {
       transac.expanded = true;
-      // @ts-ignore
 
-      transac.expandedvar = this.translateConfigService.getTranslatedMessage('More').value;
+      transac.expandedvar = this.subscriber(this.translateConfigService.getTranslatedMessage('More'));
     }
   }
 
@@ -173,8 +185,7 @@ export class SummaryGraphsPage implements OnInit {
           this.listtransac.forEach(element => {
             element.datetime1 = this.getDateTime(element.datetime);
             element.expanded = true;
-            // @ts-ignore
-            element.expandedvar = this.translateConfigService.getTranslatedMessage('More').value;
+            element.expandedvar = this.subscriber(this.translateConfigService.getTranslatedMessage('More'));
           });
           this.listtransacrev = this.listtransac.reverse();
         })
@@ -185,6 +196,13 @@ export class SummaryGraphsPage implements OnInit {
           alert('Error: ' + err);
         });
     });
+  }
+
+  dateChange() {
+    let start = new Date(this.fromDate); // subtract one day
+    start = new Date(start.getFullYear(), start.getMonth(), start.getDate(), 0, 0, 0);
+    const end = new Date(this.toDate);
+    this.getTransac({ start, end });
   }
 
   setPgValues(group) {
@@ -257,10 +275,9 @@ export class SummaryGraphsPage implements OnInit {
       await this.updateCb(transac.totalatax);
 
       setTimeout(async () => {
-        const message: Observable<any> = this.translateConfigService.getTranslatedMessage('Finish');
+        const message = this.subscriber(this.translateConfigService.getTranslatedMessage('Finish'));
         const toast = await this.toastCtrl.create({
-          // @ts-ignore
-          message: this.subscriber(message),
+          message,
           duration: 3000,
         });
         this.getTransac();
@@ -268,15 +285,6 @@ export class SummaryGraphsPage implements OnInit {
       }, 1000);
       this.ngOnInit();
     });
-  }
-
-  subscriber(message: Observable<any>) {
-    let msg;
-    message.subscribe(res => {
-      msg = res;
-    });
-    console.log(msg);
-    return msg;
   }
 
   printRec(transac) {
@@ -386,23 +394,19 @@ export class SummaryGraphsPage implements OnInit {
       'There was an error connecting the printer, please try again!',
     );
     const msg6: Observable<any> = this.translateConfigService.getTranslatedMessage('Error activating bluetooth, please try again!');
-
+    const alertInput = [];
     const alert = await this.alertCtrl.create({
       // TRANSLATE THIS
-      // @ts-ignore
-      title: this.subscriber(msg1),
+      header: this.subscriber(msg1),
       buttons: [
         {
-          // @ts-ignore
           text: this.subscriber(msg2),
           role: 'cancel',
         },
         {
-          // @ts-ignore
           text: this.subscriber(msg3),
           handler: device => {
             if (!device) {
-              // @ts-ignore
               this.showToast(this.subscriber(msg4));
               return false;
             }
@@ -411,6 +415,7 @@ export class SummaryGraphsPage implements OnInit {
           },
         },
       ],
+      inputs: alertInput
     });
 
     this.printer
@@ -419,9 +424,9 @@ export class SummaryGraphsPage implements OnInit {
         this.printer
           .searchBluetooth()
           .then(devices => {
-            devices.forEach(device => {
+            devices.forEach(async device => {
               // console.log("Devices: ", JSON.stringify(device));
-              alert.addInput({
+              await alertInput.push({
                 name: 'printer',
                 value: device.address,
                 label: device.name,
@@ -432,14 +437,12 @@ export class SummaryGraphsPage implements OnInit {
           })
           .catch(error => {
             console.log(error);
-            // @ts-ignore
             this.showToast(this.subscriber(msg5));
             this.mountAlertBt(this.receipt);
           });
       })
       .catch(error => {
         console.log(error);
-        // @ts-ignore
         this.showToast(this.subscriber(msg6));
         this.mountAlertBt(this.receipt);
       });
@@ -454,9 +457,8 @@ export class SummaryGraphsPage implements OnInit {
     const msg3: Observable<any> = this.translateConfigService.getTranslatedMessage('Ok');
     const msg4: Observable<any> = this.translateConfigService.getTranslatedMessage('There was an error printing, please try again!');
     const load = await this.loadCtrl.create({
-      // @ts-ignore
-      content: this.subscriber(msg1),
-      enableBackdropDismiss: true,
+      message: this.subscriber(msg1),
+      backdropDismiss: true,
     });
     load.present();
     this.printer.connectBluetooth(device).subscribe(
@@ -467,11 +469,9 @@ export class SummaryGraphsPage implements OnInit {
           .then(async printStatus => {
             // console.log(printStatus);
             const alert = await this.alertCtrl.create({
-              // @ts-ignore
-              title: this.subscriber(msg2),
+              header: this.subscriber(msg2),
               buttons: [
                 {
-                  // @ts-ignore
                   text: this.subscriber(msg3),
                   handler: () => {
                     load.dismiss();
@@ -481,16 +481,14 @@ export class SummaryGraphsPage implements OnInit {
               ],
             });
             alert.present();
-            // (this.navCtrl.parent as Tabs).select(0);
+            this.router.navigate(['/home']);
           })
           .catch(async error => {
             console.log(error);
             const alert = await this.alertCtrl.create({
-              // @ts-ignore
-              title: this.subscriber(msg4),
+              header: this.subscriber(msg4),
               buttons: [
                 {
-                  // @ts-ignore
                   text: this.subscriber(msg3),
                   handler: () => {
                     load.dismiss();
@@ -500,7 +498,7 @@ export class SummaryGraphsPage implements OnInit {
               ],
             });
             alert.present();
-            // (this.navCtrl.parent as Tabs).select(0);
+            this.router.navigate(['/home']);
           });
       }, async error => {
         console.log(error);
@@ -614,8 +612,12 @@ export class SummaryGraphsPage implements OnInit {
     this.isgraph = 0;
     this.islist = 1;
     this.usrchoice = 'today';
+    this.todayDate = new Date().toISOString();
+    this.toDate = new Date().toISOString();
+    this.fromDate = new Date().toISOString();
     this.getUserData();
-    this.setPgValues('today');
+    // this.setPgValues("today");
+    this.dateChange();
   }
 
   generateGraphs() {
@@ -667,16 +669,17 @@ export class SummaryGraphsPage implements OnInit {
         temprev += Number(element.totalatax);
         datarev.push(element.totalatax);
         dataexp.push(0);
-        let temppro1 = 0;
+        // tslint:disable-next-line: no-shadowed-variable
+        let temppro = 0;
         element.itemslist.forEach((product, index) => {
           if (product.code !== '000000') {
-            temppro1 =
-              temppro1 +
+            temppro =
+              temppro +
               ((parseFloat(product.price) * (100 - parseFloat(product.discount))) / 100 - parseFloat(product.cost)) *
               parseFloat(product.qty);
           }
         });
-        datapro.push(temppro1);
+        datapro.push(temppro);
         labels.push(this.getDateTime(element.datetime));
       } else {
         tempexp = -Number(element.totalatax);

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   ToastController,
   AlertController,
@@ -22,7 +22,7 @@ import { Observable } from 'rxjs';
   templateUrl: 'tabs.page.html',
   styleUrls: ['tabs.page.scss']
 })
-export class TabsPage {
+export class TabsPage implements OnInit {
 
   // Calculator = CalculatorPage;
   userdata: any = {
@@ -58,12 +58,13 @@ export class TabsPage {
     // this.getUserData();
     // this.tutorial();
     this.route.queryParams.subscribe(params => {
-      if (params.res) {
-        const res = JSON.parse(params.res);
-        if (res.lang) {
-          this.language = res.lang;
+      console.log('params ========================', params);
+      if (params) {
+        // const res = JSON.parse(params.res);
+        if (params.lang) {
+          this.language = params.lang;
         }
-        if (res.data === 'newUser') {
+        if (params.data === 'newUser') {
           this.delay(500).then(() => {
             this.tutorial();
             this.getUserData();
@@ -142,7 +143,7 @@ export class TabsPage {
     });
   }
 
-  async ionViewDidEnter() {
+  async ngOnInit() {
     console.log('ionViewDidLoad TransactionHomePage');
     const userSnapshot = await firebase
       .firestore()
@@ -153,7 +154,6 @@ export class TabsPage {
       const user = doc.data();
       await dataSet.push({ id: doc.id, user });
     });
-    console.log(dataSet);
     if (
       this.language !== this.userdata.language &&
       this.language !== null &&
@@ -164,6 +164,10 @@ export class TabsPage {
     this.delay(500).then(() => {
       this.getUserData();
     });
+  }
+
+  async ionViewDidEnter() {
+
   }
 
   async delay(ms: number) {
@@ -289,8 +293,8 @@ export class TabsPage {
   }
 
   setUsrLang() {
-    this.translateConfigService.setLanguage(this.userdata.language);
     console.log(this.userdata.language);
+    this.translateConfigService.setLanguage(this.userdata.language);
   }
 
   async tutorial() {

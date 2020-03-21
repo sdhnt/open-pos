@@ -132,6 +132,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     if (firebase.auth().currentUser) {
+      console.log(this.userLang);
       const navigationExtras: NavigationExtras = {
         queryParams: {
           lang: this.userLang

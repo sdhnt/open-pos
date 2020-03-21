@@ -9,9 +9,10 @@ export class TranslateConfigService {
   constructor(private translate: TranslateService) {}
 
   getDefaultLanguage() {
+    console.log(`device default language:line one ${this.translate.getBrowserLang()}`);
     const language = this.translate.getBrowserLang();
+    console.log(`device default language:second line ${language}`);
     this.translate.setDefaultLang(language);
-    console.log(`device default language: ${language}`);
     return language;
   }
 

@@ -35,12 +35,14 @@ export class IndividualContactPage implements OnInit {
     private route: ActivatedRoute
   ) {
     this.route.queryParams.subscribe(params => {
-      if (params.res) {
-        const res = JSON.parse(params.res);
-        this.contact = res.data;
+      console.log(params);
+      if (params.data) {
+        const res = JSON.parse(params.data);
+        console.log('res', res);
+        this.contact = res;
+        this.newDate = this.contact.dueDate;
       }
     });
-    this.newDate = this.contact.dueDate;
     // if(this.newDate==undefined) this.remDate();
   }
 

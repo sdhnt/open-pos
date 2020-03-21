@@ -1,7 +1,7 @@
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
 import { hasInternet } from './hasInternet';
 
-const config = {
+export const config = {
   apiKey: 'AIzaSyBlxUkCX8OPsb9QL2p_jN8vaHdb5LhsS7A',
   authDomain: 'open-fintech.firebaseapp.com',
   databaseURL: 'https://open-fintech.firebaseio.com',
@@ -24,11 +24,13 @@ const config = {
 
 export const initializeFirebase = async (): Promise<boolean> => {
   // check if there is internet and if there is an app running already
+  console.log('initialize firebase app first line', await hasInternet());
   const condition = (await hasInternet()) && firebase.apps.length === 0;
+  console.log('initialize firebase app second line', condition);
   if (condition) {
     console.log('initialize firebase app');
     firebase.initializeApp(config);
   }
-
+  console.log('initialize firebase app second line', (await hasInternet()) && firebase.apps.length !== 0);
   return (await hasInternet()) && firebase.apps.length !== 0;
 };

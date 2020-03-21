@@ -173,6 +173,15 @@ const routes: Routes = [
             loadChildren: () => import('../user-profile/user-profile.module').then(m => m.UserProfilePageModule)
           }
         ]
+      },
+      {
+        path: 'credit-reminder',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../credit-reminder/credit-reminder.module').then(m => m.CreditReminderPageModule)
+          }
+        ]
       }
     ]
   }

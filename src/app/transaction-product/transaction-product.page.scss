@@ -3,10 +3,10 @@ ion-card {
     border: solid 1px black;
     margin: 5px;
   }
-  max-width: 400px;
-  ion-avatar img {
-    border-radius: 10%;
-    height: 12rem;
-    width: 12rem;
+  ion-col.image {
+    display: flex;
+    ion-avatar img {
+      border-radius: 10%;
+    }
   }
 }

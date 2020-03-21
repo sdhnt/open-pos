@@ -146,10 +146,10 @@ export class TransactionProductPage implements OnInit {
 
   navAdd(num: number) {
     if (num === 1) {
-      this.router.navigate(['addproduct']);
+      this.router.navigate(['/home/addproduct']);
       // this.navCtrl.push(AddProductPage);
     } else if (num === 2) {
-      this.router.navigate(['add-product-category']);
+      this.router.navigate(['/home/add-product-category']);
       // this.navCtrl.push(AddProductCategoryPage);
     }
   }
@@ -492,10 +492,10 @@ export class TransactionProductPage implements OnInit {
     console.log(data);
     const naviExtra: NavigationExtras = {
       queryParams: {
-        data
+        data: JSON.stringify(data)
       }
     };
-    this.router.navigate(['singleproduct'], naviExtra);
+    this.router.navigate(['/home/singleproduct'], naviExtra);
     // this.navCtrl.push(SingleProductPage, { data });
   }
 }

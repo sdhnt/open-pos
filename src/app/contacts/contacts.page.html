@@ -1,18 +1,18 @@
-<ion-content padding>
+<ion-content class="ion-padding">
   <ion-fab horizontal="end" vertical="bottom" slot="fixed" *ngIf="!choosingContact">
     <ion-fab-button color="light">
       <ion-icon md="person-add"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="start">
       <!-- <ion-fab-button color="light"> -->
-        <ion-button style="background-color: #301924;" (click)="navAdd(1)">
-          {{"From Contacts"|translate}}
-        </ion-button>
+      <ion-button style="background-color: #301924;" (click)="navAdd(1)">
+        {{"From Contacts"|translate}}
+      </ion-button>
       <!-- </ion-fab-button> -->
       <!-- <ion-fab-button color="light"> -->
-        <ion-button style="background-color: #301924;" (click)="navAdd(2)">
-          {{"Manually"|translate}}
-        </ion-button>
+      <ion-button style="background-color: #301924;" (click)="navAdd(2)">
+        {{"Manually"|translate}}
+      </ion-button>
       <!-- </ion-fab-button> -->
     </ion-fab-list>
   </ion-fab>
@@ -42,15 +42,23 @@
   </ion-list> -->
 
   <ion-searchbar showCancelButton="always" [(ngModel)]="searchterm" (ionChange)="filter()"></ion-searchbar>
-  <!-- <ion-select [(ngModel)]="sortVal" (ionChange)="sort($event)" style="min-width: 100%;">
-    <ion-option value="1" selected>A-Z</ion-option>
-    <ion-option value="2">Z-A</ion-option>
-    <ion-option value="3">Balance: High to Low</ion-option>
-    <ion-option value="4">Balance: Low to High</ion-option>
-  </ion-select> -->
+  <ion-grid>
+    <ion-row>
+      <ion-col size="3" style="font-size: medium; padding-top: 15px; text-align: center;">Sort By:</ion-col>
+      <ion-col>
+        <ion-select (ionChange)="sort($event)" style="min-width: 100%;" interface="popover">
+          <ion-select-option value="1" selected>A-Z</ion-select-option>
+          <ion-select-option value="2">Z-A</ion-select-option>
+          <ion-select-option value="3">Balance: High to Low</ion-select-option>
+          <ion-select-option value="4">Balance: Low to High</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 
   <ion-list>
-    <div style="width: 100%; text-align: center;" *ngIf="!filteredList || filteredList.length==0">
+    <div style="width: 100%; text-align: center;" *ngIf="!contactList || contactList.length==0">
       <p>{{"No contacts"|translate}}!</p>
       <ion-card class="ion-padding">
         {{"Track which customers owe you money and how much they owe you using this page!"|translate}} <br><br>
@@ -58,10 +66,27 @@
         {{"We are soon releasing a send automatic SMS reminder feature and an option to see who owes you money on a particular date."|translate}}
       </ion-card>
     </div>
+    <ion-card style="border: 2px solid black; border-radius: 10px;" *ngIf="contactList&&contactList.length>0">
+      <ion-row class="ion-padding">
+        <ion-col style="font-size: 20px; font-weight: 500; margin-top: 5px;">Total</ion-col>
+        <ion-col style="font-size: medium; font-weight: 500; padding: 0;">
+          <ion-row>
+            <ion-col style="text-align:center; pad: 0;">
+              Credit: <span style="color: red; padding-left: 5px;">{{ totalUserCredit }}</span>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col style="text-align:center; padding: 0;">
+              Debit: <span style="color: green; padding-left: 5px;  text-align:center;">{{ totalUserDebit }}</span>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-card>
     <ion-card *ngFor="let contact of filteredList">
-      <ion-row (click)="navToIndividual(contact)" class="ion-padding">
-        <ion-col size="7" style="font-size: 16px;">{{ contact.displayName }}</ion-col>
-        <ion-col size="5" style="font-size: medium;">{{"Balance"|translate}}:
+      <ion-row (click)="navToIndividual(contact)" padding>
+        <ion-col style="font-size: 16px;">{{ contact.displayName }}</ion-col>
+        <ion-col style="font-size: medium;">{{"Balance"|translate}}:
           <span style="color: red;" *ngIf="contact.balance<0; else nonNeg">{{ contact.balance }}</span>
           <span style="color: green;" *ngIf="contact.balance>0; else zero" id="nonNeg">{{ contact.balance }}</span>
           <span style="color: blue;" *ngIf="contact.balance==0" id="zero">0</span>
@@ -70,3 +95,6 @@
     </ion-card>
   </ion-list>
 </ion-content>
+<ion-footer>
+  <ion-button expand="full" color="dark" (click)="navCredReminder()">Credit Reminder</ion-button>
+</ion-footer>

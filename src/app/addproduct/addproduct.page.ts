@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastController, NavController, NavParams, AlertController } from '@ionic/angular';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { ToastController, AlertController } from '@ionic/angular';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { StorageProvider } from '../services/storage/storage';
-import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import * as firebase from 'firebase';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { TranslateConfigService } from '../services/translation/translate-config.service';
 import { EventService } from '../services/event.service';
 import { Location } from '@angular/common';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-addproduct',
@@ -41,7 +42,6 @@ export class AddproductPage implements OnInit {
     public navCtrl: Location,
     public barcodeScanner: BarcodeScanner,
     private translateConfigService: TranslateConfigService,
-    public navParams: NavParams,
     public sp: StorageProvider,
     public toastCtrl: ToastController,
     public events: EventService,
@@ -50,7 +50,6 @@ export class AddproductPage implements OnInit {
     private formBuilder: FormBuilder,
   ) {
     this.isProdCode000000 = false;
-    this.prodCode = this.navParams.get('code');
     this.getUserData();
     this.formProduct = this.formBuilder.group({
       prodName: new FormControl('', Validators.required),
@@ -115,24 +114,21 @@ export class AddproductPage implements OnInit {
       targetWidth: 300,
       allowEdit: false,
     };
-    const msg1 = this.translateConfigService.getTranslatedMessage('Gallery or Camera?');
-    const msg2 = this.translateConfigService.getTranslatedMessage('Gallery');
-    const msg3 = this.translateConfigService.getTranslatedMessage('Camera');
+    const msg1: Observable<any> = this.translateConfigService.getTranslatedMessage('Gallery or Camera?');
+    const msg2: Observable<any> = this.translateConfigService.getTranslatedMessage('Gallery');
+    const msg3: Observable<any> = this.translateConfigService.getTranslatedMessage('Camera');
     const alert = await this.alertCtrl
       .create({
-        // @ts-ignore
-        message: msg1.value,
+        message: this.subscriber(msg1),
         buttons: [
           {
-            // @ts-ignore
-            text: msg3.value,
+            text: this.subscriber(msg3),
             handler: () => {
               this.launchCamera(options);
             },
           },
           {
-            // @ts-ignore
-            text: msg2.value,
+            text: this.subscriber(msg2),
             handler: () => {
               this.launchCamera(options1);
             },
@@ -195,10 +191,9 @@ export class AddproductPage implements OnInit {
       this.sp.storageReady().then(() => {
         this.sp.addCategory(data).then();
         setTimeout(async () => {
-          const message = this.translateConfigService.getTranslatedMessage('Finish');
+          const message: Observable<any> = this.translateConfigService.getTranslatedMessage('Finish');
           const toast = await this.toastCtrl.create({
-            // @ts-ignore
-            message: message.value,
+            message: this.subscriber(message),
             duration: 3000,
           });
           this.newprodCat = '';
@@ -235,6 +230,15 @@ export class AddproductPage implements OnInit {
       });
   }
 
+  subscriber(message: Observable<any>): string {
+    let msg;
+    message.subscribe(res => {
+      msg = res;
+    });
+    console.log(msg);
+    return msg;
+  }
+
   async addproduct() {
     if (this.prodCode === '000000') {
       const msg = this.translateConfigService.getTranslatedMessage('Code not permitted. Please use a different code');
@@ -247,11 +251,10 @@ export class AddproductPage implements OnInit {
     this.disabled = true;
 
     if (!this.formProduct.valid || (this.prodCat === 'New' && this.newprodCat === '')) {
-      const message = this.translateConfigService.getTranslatedMessage('Incomplete');
+      const message: Observable<any> = this.translateConfigService.getTranslatedMessage('Incomplete');
       const toast = await this.toastCtrl
         .create({
-          // @ts-ignore
-          message: message.value,
+          message: this.subscriber(message),
           duration: 1000,
         });
       toast.present();
@@ -268,11 +271,10 @@ export class AddproductPage implements OnInit {
         this.prodCat = this.newprodCat;
       }
       if (this.image === '') {
-        const message = this.translateConfigService.getTranslatedMessage('Creating item, please wait a moment');
+        const message: Observable<any> = this.translateConfigService.getTranslatedMessage('Creating item, please wait a moment');
         const toast = await this.toastCtrl
           .create({
-            // @ts-ignore
-            message: message.value,
+            message: this.subscriber(message),
             duration: 2000,
           });
         toast.present();
@@ -294,10 +296,9 @@ export class AddproductPage implements OnInit {
         this.sp.storageReady().then(() => {
           this.sp.addProduct(data);
           setTimeout(async () => {
-            const message1 = this.translateConfigService.getTranslatedMessage('Finish');
+            const message1: Observable<any> = this.translateConfigService.getTranslatedMessage('Finish');
             const toast1 = await this.toastCtrl.create({
-              // @ts-ignore
-              message: message1.value,
+              message: this.subscriber(message1),
               duration: 2000,
             });
             this.prodCode = '';
@@ -314,12 +315,11 @@ export class AddproductPage implements OnInit {
             // this.navCtrl.push(ProductListPage);
             this.events.emitProdAddCreated(0);
             toast1.onDidDismiss().then(async () => {
-              const msg = this.translateConfigService.getTranslatedMessage('Refresh page to see changes');
+              const msg: Observable<any> = this.translateConfigService.getTranslatedMessage('Refresh page to see changes');
               this.events.emitProductUpdateCreated(0);
               const toast2 = await this.toastCtrl
                 .create({
-                  // @ts-ignore
-                  message: msg.value,
+                  message: this.subscriber(msg),
                   duration: 1500,
                 });
               toast2.present();
@@ -329,11 +329,10 @@ export class AddproductPage implements OnInit {
         });
       } else {
         this.temp = this.prodName;
-        const message = this.translateConfigService.getTranslatedMessage('Creating item, please wait a moment');
+        const message: Observable<any> = this.translateConfigService.getTranslatedMessage('Creating item, please wait a moment');
         const toast3 = await this.toastCtrl
           .create({
-            // @ts-ignore
-            message: message.value,
+            message: this.subscriber(message),
             duration: 2000,
           });
         toast3.present();
@@ -356,10 +355,9 @@ export class AddproductPage implements OnInit {
           this.sp.storageReady().then(() => {
             this.sp.addProduct(data);
             setTimeout(async () => {
-              const message1 = this.translateConfigService.getTranslatedMessage('Finish');
+              const message1: Observable<any> = this.translateConfigService.getTranslatedMessage('Finish');
               const toast = await this.toastCtrl.create({
-                // @ts-ignore
-                message: message1.value,
+                message: this.subscriber(message1),
                 duration: 2000,
               });
               this.prodCode = '';
@@ -375,11 +373,10 @@ export class AddproductPage implements OnInit {
               // this.navCtrl.push(ProductListPage);
               this.events.emitProdAddCreated(0);
               toast.onDidDismiss().then(async () => {
-                const msg = this.translateConfigService.getTranslatedMessage('Refresh page to see changes');
+                const msg: Observable<any> = this.translateConfigService.getTranslatedMessage('Refresh page to see changes');
                 const toast1 = await this.toastCtrl
                   .create({
-                    // @ts-ignore
-                    message: msg.value,
+                    message: this.subscriber(msg),
                     duration: 1500,
                   });
                 toast1.present();

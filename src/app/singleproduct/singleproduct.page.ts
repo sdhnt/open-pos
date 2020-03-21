@@ -34,23 +34,26 @@ export class SingleproductPage implements OnInit {
     private route: ActivatedRoute
   ) {
     this.route.queryParams.subscribe(params => {
-      if (params.res) {
-        const res = JSON.parse(params.res);
-        this.product = res.data;
+      console.log(params);
+      if (params.data) {
+        const res = JSON.parse(params.data);
+        console.log('res', res);
+        this.product = res;
+
+        this.prodCodeOld = this.product.code;
+        this.image = this.product.url;
+
+        this.orgData.image = this.image;
+        this.orgData.prodCode = this.product.code;
+        this.orgData.prodName = this.product.name;
+        this.orgData.prodPrice = this.product.price;
+        this.orgData.prodWholesalePrice = this.product.wholesale_price;
+        this.orgData.prodCost = this.product.cost;
+        this.orgData.stock = this.product.stock_qty;
+        this.orgData.prodCat = this.product.cat;
       }
     });
-    this.prodCodeOld = this.product.code;
-    this.image = this.product.url;
-
-    this.orgData.image = this.image;
-    this.orgData.prodCode = this.product.code;
-    this.orgData.prodName = this.product.name;
-    this.orgData.prodPrice = this.product.price;
-    this.orgData.prodWholesalePrice = this.product.wholesale_price;
-    this.orgData.prodCost = this.product.cost;
-    this.orgData.stock = this.product.stock_qty;
-    this.orgData.prodCat = this.product.cat;
-
+    console.log(this.product);
     this.getUserData();
     this.formProduct = this.formBuilder.group({
       prodCode: new FormControl('', Validators.required),
@@ -63,7 +66,7 @@ export class SingleproductPage implements OnInit {
     });
   }
   prodCodeOld: any;
-  product: any;
+  product: any = {};
 
   prodCode: any = '';
   prodName: any = '';
@@ -401,6 +404,7 @@ export class SingleproductPage implements OnInit {
   }
 
   async discardChange() {
+    console.log({ product: this.product, orgPr: this.orgData });
     const message: Observable<any> = this.translateConfigService.getTranslatedMessage('Changes discarded');
     this.image = this.orgData.image;
     this.product.code = this.orgData.prodCode;
@@ -410,7 +414,6 @@ export class SingleproductPage implements OnInit {
     this.product.cost = this.orgData.prodCost;
     this.product.stock_qty = this.orgData.stock;
     this.product.cat = this.orgData.prodCat;
-
     const toast = await this.toastCtrl
       .create({
         message: this.subscriber(message),

@@ -12,8 +12,10 @@ import { TranslateConfigService } from '../services/translation/translate-config
 import { Message, Placeholder } from '@angular/compiler/src/i18n/i18n_ast';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { createAccountDocument } from '../../utilities/createAccountDocument';
+import { config } from '../../utilities/initializeFirebase';
 import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -70,7 +72,7 @@ export class LoginPage implements OnInit {
     // this.getInfo();
     this.countryCode = '95';
     this.dis = 0;
-
+    // firebase.initializeApp(config);
     firebase.auth().onAuthStateChanged(async user => {
       const loading = await this.loadingCtrl.create({
         message: `
@@ -78,6 +80,7 @@ export class LoginPage implements OnInit {
             <div class="custom-spinner-box"></div>
           </div>`,
       });
+      console.log(user);
       if (user) {
         console.log(user);
         loading.present();
@@ -107,7 +110,7 @@ export class LoginPage implements OnInit {
 
               // this.toastCtrl
               //   .create({
-              //     // @ts-ignore
+
               //     message: msg.value,
               //     duration: 2000,
               //   })
@@ -178,23 +181,50 @@ export class LoginPage implements OnInit {
   //     });
   // }
 
+  subscriber(message: Observable<any>): string {
+    let msg;
+    message.subscribe(res => {
+      msg = res;
+    });
+    console.log(msg);
+    return msg;
+  }
+
+  goBack() {
+    console.log(this.lang,
+      this.signup,
+      this.otpmode);
+    if (this.lang === 0 && this.otpmode === 0 && this.signup === 0) {
+      this.lang = 1;
+      this.signup = 0;
+      this.otpmode = 0;
+    } else if (this.signup === 1) {
+      this.lang = 0;
+      this.signup = 0;
+      this.otpmode = 1;
+    } else if (this.otpmode === 1) {
+      this.lang = 0;
+      this.signup = 1;
+      this.otpmode = 0;
+      this.timer2 = 0;
+    }
+  }
 
   getInfo() {
-    const msg = this.translateConfigService.getTranslatedMessage('Helpline');
+    const msg: Observable<any> = this.translateConfigService.getTranslatedMessage('Helpline');
 
     firebase
       .firestore()
       .collection('contact-us')
       .get()
-      .then(doc => {
+      .then(async doc => {
         this.contactphone = doc.docs[0].data().phone;
-        const abc = this.alertCtrl
+        const abc = await this.alertCtrl
           .create({
-            // @ts-ignore
-            title: msg.value,
-            subTitle: this.contactphone,
-          })
-          .present();
+            header: this.subscriber(msg),
+            subHeader: this.contactphone,
+          });
+        abc.present();
       });
   }
   startTimer() {
@@ -302,11 +332,10 @@ export class LoginPage implements OnInit {
   // }
 
   async loginAction() {
-    const message = this.translateConfigService.getTranslatedMessage('This feature will open shortly');
+    const message: Observable<any> = this.translateConfigService.getTranslatedMessage('This feature will open shortly');
     const toast = await this.toastCtrl
       .create({
-        // @ts-ignore
-        message: message.value,
+        message: this.subscriber(message),
         duration: 2000,
       });
     toast.present();
@@ -354,14 +383,12 @@ export class LoginPage implements OnInit {
         if (!user.owner) { throw new Error('firebase authentication uid missing'); }
         await createAccountDocument(user);
 
-        const title = this.translateConfigService.getTranslatedMessage('Account Created');
-        const message = this.translateConfigService.getTranslatedMessage('Your account has been created successfully');
+        const title: Observable<any> = this.translateConfigService.getTranslatedMessage('Account Created');
+        const message: Observable<any> = this.translateConfigService.getTranslatedMessage('Your account has been created successfully');
         const aletr = await this.alertCtrl
           .create({
-            // @ts-ignore
-            title: title.value,
-            // @ts-ignore
-            message: message.value,
+            header: this.subscriber(title),
+            message: this.subscriber(message),
             buttons: [
               {
                 text: 'OK',
@@ -499,27 +526,25 @@ export class LoginPage implements OnInit {
   async signInPhone() {
     if (this.phone == null || this.countryCode == null) {
       console.log('hi');
-      const msg = this.translateConfigService.getTranslatedMessage('No Phone Number Entered');
-      const msg1 = this.translateConfigService.getTranslatedMessage('CANCEL');
+      const msg: Observable<any> = this.translateConfigService.getTranslatedMessage('No Phone Number Entered');
+      const msg1: Observable<any> = this.translateConfigService.getTranslatedMessage('CANCEL');
 
       const a = await this.alertCtrl
         .create({
-          // @ts-ignore
-          message: msg.value,
+          message: this.subscriber(msg),
           buttons: [
             {
-              // @ts-ignore
-              text: msg1.value,
+              text: this.subscriber(msg1),
               role: 'cancel',
             },
           ],
         });
       a.present();
     } else {
+      const message: Observable<any> = this.translateConfigService.getTranslatedMessage('Please Wait...');
       const toast = await this.toastCtrl
         .create({
-          // @ts-ignore
-          message: this.translateConfigService.getTranslatedMessage('Please Wait...').value,
+          message: this.subscriber(message),
           duration: 2000,
         });
       toast.present();

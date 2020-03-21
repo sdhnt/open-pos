@@ -47,15 +47,13 @@ export class LoanHomePage implements OnInit {
   loan4;
   loan5;
   loan6;
-  loanq1: Observable<any> = this.translateConfigService.getTranslatedMessage('1. How urgently do you need a loan?');
-  loanq2: Observable<any> = this.translateConfigService.getTranslatedMessage('2. When would you like to get this loan?');
-  loanq3: Observable<any> = this.translateConfigService.getTranslatedMessage('3. How much would you like to borrow?');
-  loanq4: Observable<any> = this.translateConfigService.getTranslatedMessage('4. How long will you need to pay it back?');
-  loanq5: Observable<any> = this.translateConfigService.getTranslatedMessage('5. What do you need the loan for?');
-  loanq6: Observable<any> = this.translateConfigService.getTranslatedMessage('6. What\'s the best way to contact you?');
-  randovar = this.translateConfigService.getTranslatedMessage('Close').subscribe((res) => {
-    return res;
-  });
+  loanq1 = this.subscriber(this.translateConfigService.getTranslatedMessage('1. How urgently do you need a loan?'));
+  loanq2 = this.subscriber(this.translateConfigService.getTranslatedMessage('2. When would you like to get this loan?'));
+  loanq3 = this.subscriber(this.translateConfigService.getTranslatedMessage('3. How much would you like to borrow?'));
+  loanq4 = this.subscriber(this.translateConfigService.getTranslatedMessage('4. How long will you need to pay it back?'));
+  loanq5 = this.subscriber(this.translateConfigService.getTranslatedMessage('5. What do you need the loan for?'));
+  loanq6 = this.subscriber(this.translateConfigService.getTranslatedMessage('6. What\'s the best way to contact you?'));
+  randovar = this.subscriber(this.translateConfigService.getTranslatedMessage('Close'));
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,

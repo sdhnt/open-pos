@@ -10,6 +10,7 @@ import { IndividualContactPage } from '../individual-contact/individual-contact.
 
 import { TranslateConfigService } from '../services/translation/translate-config.service';
 import { Router, NavigationExtras } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-contacts',
@@ -22,6 +23,8 @@ export class ContactsPage implements OnInit {
   contactList = [];
   searchterm = '';
   filteredList;
+  totalUserCredit: number;
+  totalUserDebit: number;
   constructor(
     // @Inject(NavParams) public navParams: NavParams,
     // tslint:disable-next-line: deprecation
@@ -59,11 +62,17 @@ export class ContactsPage implements OnInit {
   ionViewDidEnter() {
     console.log('ionViewDidEnter ContactPage');
     this.sp.getContacts().then(val => {
-      if (val == null) {
+      if (val === null) {
         this.contactList = [];
       }
       this.zone.run(() => {
         this.contactList = JSON.parse(val);
+        this.totalUserCredit = 0;
+        this.totalUserDebit = 0;
+        this.contactList.forEach(contact => {
+          if (contact.balance > 0) { this.totalUserDebit += contact.balance; }
+          if (contact.balance < 0) { this.totalUserCredit += contact.balance; }
+        });
         this.filteredList = this.contactList;
       });
     });
@@ -75,12 +84,22 @@ export class ContactsPage implements OnInit {
       this.choosingContact = false;
       return;
     }
+    console.log(contact);
     const naviExtra: NavigationExtras = {
       queryParams: {
-        data: contact
+        data: JSON.stringify(contact)
       }
     };
     this.router.navigate(['/home/individual-contact'], naviExtra);
+  }
+
+  subscriber(message: Observable<any>): string {
+    let msg;
+    message.subscribe(res => {
+      msg = res;
+    });
+    console.log(msg);
+    return msg;
   }
 
   async navAdd(num: number) {
@@ -123,30 +142,30 @@ export class ContactsPage implements OnInit {
         });
       });
     } else if (num === 2) {
+      const m1 = this.subscriber(this.translateConfigService.getTranslatedMessage('Add Contact'));
+      const m2 = this.subscriber(this.translateConfigService.getTranslatedMessage('Contact Name'));
+      const m3 = this.subscriber(this.translateConfigService.getTranslatedMessage('Contact Number'));
+      const m4 = this.subscriber(this.translateConfigService.getTranslatedMessage('Cancel'));
+      const m5 = this.subscriber(this.translateConfigService.getTranslatedMessage('Add'));
       const a = await this.alertCtrl.create({
-        // @ts-ignore
-        subTitle: this.translateConfigService.getTranslatedMessage('Add Contact').value,
+        subHeader: m1,
         inputs: [
           {
             name: 'name',
-            // @ts-ignore
-            placeholder: this.translateConfigService.getTranslatedMessage('Contact Name').value,
+            placeholder: m2,
           },
           {
             name: 'phno',
-            // @ts-ignore
-            placeholder: this.translateConfigService.getTranslatedMessage('Contact Number').value,
+            placeholder: m3,
           },
         ],
         buttons: [
           {
-            // @ts-ignore
-            text: this.translateConfigService.getTranslatedMessage('Cancel').value,
+            text: m4,
             role: 'cancel',
           },
           {
-            // @ts-ignore
-            text: this.translateConfigService.getTranslatedMessage('Add').value,
+            text: m5,
             handler: async data => {
               if (data.name !== '') {
                 try {
@@ -179,8 +198,7 @@ export class ContactsPage implements OnInit {
               } else {
                 const toast = await this.toastController
                   .create({
-                    // @ts-ignore
-                    message: this.translateConfigService.getTranslatedMessage('Please fill in name').value,
+                    message: this.subscriber(this.translateConfigService.getTranslatedMessage('Please fill in name')),
                     duration: 2500,
                   });
                 toast.present();
@@ -200,20 +218,27 @@ export class ContactsPage implements OnInit {
   }
 
   filter() {
-    if (this.contactList == null) { return; }
+    if (this.contactList === null) { return; }
     this.filteredList = this.contactList.filter(contact =>
       contact.displayName.toLowerCase().includes(this.searchterm.toLowerCase()),
     );
   }
 
-  // sortVal;
-  // sort(num){
-  //   console.log(num);
-  //   this.sortVal = num;
-  //   if(this.sortVal==1||this.sortVal==2){
-  //     this.filteredList.sort((a,b)=>Math.pow(-1, this.sortVal+1)*a.displayName.localeCompare(b.displayName));
-  //   } else if(this.sortVal==3||this.sortVal==4){
-  //     this.filteredList.sort((a,b)=>Math.pow(-1, this.sortVal+1)*(a.balance-b.balance))
-  //   }
-  // }
+  sort(num) {
+    if (num === 1 || num === 2) {
+      this.filteredList.sort((a, b) => a.displayName.localeCompare(b.displayName));
+      if (num === 2) {
+        this.filteredList.reverse();
+      }
+    } else if (num === 3 || num === 4) {
+      this.filteredList.sort((a, b) => a.balance - b.balance);
+      if (num === 4) {
+        this.filteredList.reverse();
+      }
+    }
+  }
+
+  navCredReminder() {
+    this.router.navigate(['/home/credit-reminder']);
+  }
 }

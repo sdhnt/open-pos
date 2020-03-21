@@ -1,0 +1,50 @@
+<ion-content class="ion-padding">
+  <ion-row>
+    <ion-col style="display: flex;" class="ion-justify-content-end">
+      <ion-button color="danger" (click)="goBack()" shape="round">CANCEL</ion-button>
+    </ion-col>
+  </ion-row>
+  <h3 *ngIf="pendingList.length!=0">Pending</h3>
+  <ion-list *ngIf="pendingList.length!=0">
+    <ion-card *ngFor="let contact of pendingList">
+      <ion-row (click)="navToIndividual(contact)" class="ion-padding">
+        <ion-col style="font-size: 16px;">{{ contact.displayName }}</ion-col>
+        <ion-col style="font-size: medium;">Balance
+          <span style="color: red;" *ngIf="contact.balance<0; else nonNeg">{{ contact.balance }}</span>
+          <span style="color: green;" *ngIf="contact.balance>0; else zero" id="nonNeg">{{ contact.balance }}</span>
+          <span style="color: blue;" *ngIf="contact.balance==0" id="zero">0</span>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+  </ion-list>
+  <br>
+  <h3>Due Today</h3>
+  <p *ngIf="todayList.length==0" style="font-size: large; text-align: center;">No dues today</p>
+  <ion-list>
+    <ion-card *ngFor="let contact of todayList">
+      <ion-row (click)="navToIndividual(contact)" class="ion-padding">
+        <ion-col style="font-size: 16px;">{{ contact.displayName }}</ion-col>
+        <ion-col style="font-size: medium;">Balance
+          <span style="color: red;" *ngIf="contact.balance<0; else nonNeg">{{ contact.balance }}</span>
+          <span style="color: green;" *ngIf="contact.balance>0; else zero" id="nonNeg">{{ contact.balance }}</span>
+          <span style="color: blue;" *ngIf="contact.balance==0" id="zero">0</span>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+  </ion-list>
+  <br>
+  <h3>Due Tomorrow</h3>
+  <p *ngIf="tomList.length==0" style="font-size: large; text-align: center;">No dues tomorrow</p>
+  <ion-list>
+    <ion-card *ngFor="let contact of tomList">
+      <ion-row (click)="navToIndividual(contact)" class="ion-padding">
+        <ion-col style="font-size: 16px;">{{ contact.displayName }}</ion-col>
+        <ion-col style="font-size: medium;">Balance
+          <span style="color: red;" *ngIf="contact.balance<0; else nonNeg">{{ contact.balance }}</span>
+          <span style="color: green;" *ngIf="contact.balance>0; else zero" id="nonNeg">{{ contact.balance }}</span>
+          <span style="color: blue;" *ngIf="contact.balance==0" id="zero">0</span>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+  </ion-list>
+</ion-content>

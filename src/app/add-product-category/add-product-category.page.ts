@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams, ToastController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 import { StorageProvider } from '../services/storage/storage';
 import { TranslateConfigService } from '../services/translation/translate-config.service';
 import { EventService } from '../services/event.service';
@@ -12,9 +12,7 @@ import { Location } from '@angular/common';
 })
 export class AddProductCategoryPage implements OnInit {
   constructor(
-    public navCtrl: NavController,
     private translateConfigService: TranslateConfigService,
-    public navParams: NavParams,
     public sp: StorageProvider,
     public toastCtrl: ToastController,
     public events: EventService,

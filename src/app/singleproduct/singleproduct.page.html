@@ -13,7 +13,7 @@
     </ion-col>
   </ion-row>
   <form [formGroup]="formProduct">
-    <ion-list inset="true">
+    <ion-list inset="true" *ngIf="product">
 
       <!-- <ion-item>
         <ion-label>Photo</ion-label>
@@ -54,7 +54,7 @@
       <ion-item>
         <ion-label>{{'Product Category' | translate}}</ion-label>
         <ion-select multiple="false" formControlName="prodCat" [(ngModel)]='product.cat'>
-          <ion-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-option>
+          <ion-select-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>

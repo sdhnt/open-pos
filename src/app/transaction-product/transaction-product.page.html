@@ -42,7 +42,7 @@
           </ion-item>
         </ion-col>
         <ion-col>
-          <ion-button size="small" shape="round" style="background-color: red;" (click)="buttonReset()">
+          <ion-button size="small" shape="round" color="danger" (click)="buttonReset()">
             {{"Clear"|translate}}</ion-button>
         </ion-col>
       </ion-row>
@@ -172,12 +172,10 @@
           </ion-col>
 
 
-          <ion-col>
-            <ion-row>
-              <ion-avatar>
-                <img [src]="product.url">
-              </ion-avatar>
-            </ion-row>
+          <ion-col class="image ion-justify-content-center">
+            <ion-avatar>
+              <img class="ion-image" [src]="product.url">
+            </ion-avatar>
           </ion-col>
           <!-- <ion-col style="color: grey; font-size: 10px;">{{"Retail Price"|translate}} : {{product.price}} </ion-col>    -->
 

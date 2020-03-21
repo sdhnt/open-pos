@@ -16,6 +16,8 @@ import { AllTransactionPageModule } from '../all-transaction/all-transaction.mod
 import { ContactsPageModule } from '../contacts/contacts.module';
 import { ExpenseGeneralPageModule } from '../expense-general/expense-general.module';
 import { HelpPageModule } from '../help/help.module';
+import { LoanHomePageModule } from '../loan-home/loan-home.module';
+import { LoanHomePage } from '../loan-home/loan-home.page';
 
 @NgModule({
   imports: [
@@ -27,13 +29,15 @@ import { HelpPageModule } from '../help/help.module';
     AllTransactionPageModule,
     ContactsPageModule,
     ExpenseGeneralPageModule,
-    HelpPageModule
+    HelpPageModule,
+    LoanHomePageModule
   ],
   entryComponents: [
     AllTransactionPage,
     ContactsPage,
     ExpenseGeneralPage,
-    HelpPage
+    HelpPage,
+    LoanHomePage
   ],
   declarations: [TabsPage]
 })

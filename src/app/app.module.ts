@@ -25,11 +25,14 @@ import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ng
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicStorageModule } from '@ionic/storage';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-
+import { config } from '../utilities/initializeFirebase';
+import * as firebase from 'firebase';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
 }
+
+firebase.initializeApp(config);
 
 @NgModule({
   declarations: [AppComponent],

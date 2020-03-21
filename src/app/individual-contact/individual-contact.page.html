@@ -1,14 +1,12 @@
 <ion-content class="ion-padding">
   <ion-row>
     <ion-col>
-      <ion-button style="background-color: red; color: white;" (click)="delete()">{{"Delete"|translate}}</ion-button>
+      <ion-button expand="block" color="danger" (click)="delete()">{{"Delete"|translate}}</ion-button>
     </ion-col>
     <ion-col></ion-col>
     <ion-col>
-      <ion-buttons slot="end">
-        <ion-button style="background-color: black; color: white; text-align: end;"
-          (click)="goBack()">{{"Done"|translate}}</ion-button>
-      </ion-buttons>
+      <ion-button expand="block" color="dark" (click)="goBack()">
+        {{"Done"|translate}}</ion-button>
     </ion-col>
   </ion-row>
   <ion-row>
@@ -29,7 +27,7 @@
           style="min-width: 30%;" [min]="minDate" [max]="maxDate">
         </ion-datetime>
       </ion-item>
-      <ion-buttons slot="end" *ngIf="newDate!=''&&newDate">
+      <ion-buttons slot="end" *ngIf="newDate && newDate != ''">
         <ion-button style="background-color: red; color: white; font-size: small;" (click)="remDate()">Remove
           date</ion-button>
       </ion-buttons>
@@ -55,12 +53,12 @@
 <ion-footer>
   <ion-row>
     <ion-col>
-      <ion-button style="background-color: red; color: white;"
-        (click)="transaction(-1)">{{"Borrowed"|translate}}</ion-button>
+      <ion-button expand="block" color="danger" (click)="transaction(-1)">{{"Borrowed"|translate}}
+      </ion-button>
     </ion-col>
     <ion-col>
-      <ion-button style="background-color: green; color: white;"
-        (click)="transaction(1)">{{"Paid"|translate}}</ion-button>
+      <ion-button expand="block" color="success" (click)="transaction(1)">{{"Paid"|translate}}
+      </ion-button>
     </ion-col>
   </ion-row>
 </ion-footer>
