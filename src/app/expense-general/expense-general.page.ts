@@ -11,6 +11,7 @@ import { TranslateConfigService } from '../services/translation/translate-config
 import { GeolocationService } from '../services/geolocation/geolocation.service';
 import { ContactsPage } from '../contacts/contacts.page';
 import { EventService } from '../services/event.service';
+import { Observable } from 'rxjs';
 
 class Expense {
   public name: string;
@@ -69,13 +70,18 @@ export class ExpenseGeneralPage implements OnInit {
 
   ngOnInit() {
     console.log('ionViewDidLoad ExpenseGeneralPage');
-    this.expType.forEach(element => {
+    this.expType.forEach(async element => {
       console.log(element);
-      // @ts-ignore
-      console.log(this.translateConfigService.getTranslatedMessage(element).value);
-      // @ts-ignore
-      this.expType1.push(this.translateConfigService.getTranslatedMessage(element).value);
+      await this.expType1.push(this.subscriber(this.translateConfigService.getTranslatedMessage(element)));
     });
+  }
+
+  subscriber(message: Observable<any>) {
+    let msg;
+    message.subscribe(res => {
+      msg = res;
+    });
+    return msg;
   }
 
   ionViewDidLoad() {

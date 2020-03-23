@@ -1,9 +1,9 @@
-<div class="modal">
+<!-- <div class="modal"> -->
   <ion-header>
     <ion-toolbar color="dark">
       <ion-title>{{"Apply for Loan"|translate}}</ion-title>
       <ion-buttons slot="end">
-        <ion-button style="background-color: red; color: white;" (click)="dismiss()">Close</ion-button>
+        <ion-button color="danger" (click)="dismiss()">Close</ion-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
@@ -34,33 +34,33 @@
           <li>{{"High Borrow Amount"|translate}}</li>
         </ion-col>
       </ion-row>
-
-      <ion-button style="background-color: orange;" (click)="showloanform()">
-        {{"Interested in Applying for Loan"|translate}}</ion-button>
-
-      <ion-card *ngIf="showloan==1" class="ion-padding">
-        {{loanq1 }}
-        <ion-input style="background-color: #d8d7d7;" placeholder="{{'Enter Details Here'|translate}}"
-          [(ngModel)]="loan1"></ion-input>
-        {{loanq2}}
-        <ion-input style="background-color: #d8d7d7;" placeholder="{{'Enter Details Here'|translate}}"
-          [(ngModel)]="loan2"></ion-input>
-        {{loanq3}}
-        <ion-input style="background-color: #d8d7d7;" placeholder="{{'Enter Details Here'|translate}}"
-          [(ngModel)]="loan3"></ion-input>
-        {{loanq4}}
-        <ion-input style="background-color: #d8d7d7;" placeholder="{{'Enter Details Here'|translate}}"
-          [(ngModel)]="loan4"></ion-input>
-        {{loanq5}}
-        <ion-input style="background-color: #d8d7d7;" placeholder="{{'Enter Details Here'|translate}}"
-          [(ngModel)]="loan5"></ion-input>
-        {{loanq6}}
-        <ion-input style="background-color: #d8d7d7;" placeholder="{{'Enter Details Here'|translate}}"
-          [(ngModel)]="loan6"></ion-input>
-        <ion-button style="background-color: orange;" (click)="submitloanform()">{{"Send Details"|translate}}
-        </ion-button>
-      </ion-card>
-
     </ion-grid>
+
+    <ion-button color="warning" (click)="showloanform()">
+      {{"Interested in Applying for Loan"|translate}}</ion-button>
+
+    <ion-card *ngIf="showloan==1" class="ion-padding">
+      {{loanq1 }}
+      <ion-input style="background-color: #d8d7d7;" placeholder="{{'Enter Details Here'|translate}}"
+        [(ngModel)]="loan1"></ion-input>
+      {{loanq2}}
+      <ion-input style="background-color: #d8d7d7;" placeholder="{{'Enter Details Here'|translate}}"
+        [(ngModel)]="loan2"></ion-input>
+      {{loanq3}}
+      <ion-input style="background-color: #d8d7d7;" placeholder="{{'Enter Details Here'|translate}}"
+        [(ngModel)]="loan3"></ion-input>
+      {{loanq4}}
+      <ion-input style="background-color: #d8d7d7;" placeholder="{{'Enter Details Here'|translate}}"
+        [(ngModel)]="loan4"></ion-input>
+      {{loanq5}}
+      <ion-input style="background-color: #d8d7d7;" placeholder="{{'Enter Details Here'|translate}}"
+        [(ngModel)]="loan5"></ion-input>
+      {{loanq6}}
+      <ion-input style="background-color: #d8d7d7;" placeholder="{{'Enter Details Here'|translate}}"
+        [(ngModel)]="loan6"></ion-input>
+      <ion-button color="warning" (click)="submitloanform()">{{"Send Details"|translate}}
+      </ion-button>
+    </ion-card>
+
   </ion-content>
-</div>
+<!-- </div> -->
