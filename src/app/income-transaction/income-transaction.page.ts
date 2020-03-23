@@ -438,59 +438,60 @@ export class IncomeTransactionPage implements OnInit {
   }
 
   async editRecTop() {
-    const message: Observable<any> = this.translateConfigService.getTranslatedMessage('Cancel');
-    const message1: Observable<any> = this.translateConfigService.getTranslatedMessage('Save');
-    const message2: Observable<any> = this.translateConfigService.getTranslatedMessage('Edit Receipt Details');
-    const message3: Observable<any> = this.translateConfigService.getTranslatedMessage('Enter Information');
+    // const message: Observable<any> = this.translateConfigService.getTranslatedMessage('Cancel');
+    // const message1: Observable<any> = this.translateConfigService.getTranslatedMessage('Save');
+    // const message2: Observable<any> = this.translateConfigService.getTranslatedMessage('Edit Receipt Details');
+    // const message3: Observable<any> = this.translateConfigService.getTranslatedMessage('Enter Information');
 
-    const message4: Observable<any> = this.translateConfigService.getTranslatedMessage('Add Logo');
-    const message5: Observable<any> = this.translateConfigService.getTranslatedMessage('Remove Logo');
+    // const message4: Observable<any> = this.translateConfigService.getTranslatedMessage('Add Logo');
+    // const message5: Observable<any> = this.translateConfigService.getTranslatedMessage('Remove Logo');
 
-    const alert = await this.alertCtrl
-      .create({
-        header: this.subscriber(message2),
-        inputs: [
-          { name: 'Line1', placeholder: this.subscriber(message3), value: this.userdata.business_name },
-          { name: 'Line2', placeholder: this.subscriber(message3), value: this.userdata.business_address },
-          { name: 'Line3', placeholder: this.subscriber(message3), value: this.userdata.businesstype },
-          { name: 'Line4', placeholder: this.subscriber(message3), value: this.userdata.ph_no },
-        ],
-        buttons: [
-          { text: this.subscriber(message), role: 'cancel' },
-          {
-            text: this.subscriber(message1),
-            handler: data => {
-              this.userdata.business_name = data.Line1;
-              this.userdata.business_address = data.Line2;
-              this.userdata.businesstype = data.Line3;
-              this.userdata.ph_no = data.Line4;
-              this.sp.setUserDat(this.userdata);
-            },
-          },
-          {
-            text: this.subscriber(message4),
-            handler: data => {
-              this.launchCamera().then(() => {
-                this.upload_new();
-              });
-            },
-          },
-          {
-            text: this.subscriber(message5),
-            handler: async  data => {
-              const toast = await this.toastCtrl.create({ message: 'Please wait- removing...', duration: 2000 });
-              toast.present();
-              // tslint:disable-next-line: max-line-length
-              this.userdata.logo_url = 'https://scontent.fhkg10-1.fna.fbcdn.net/v/t1.0-9/79674109_100715951430298_615106696234139648_n.png?_nc_cat=109&_nc_ohc=2pdu1s1LRmoAX-04NCO&_nc_ht=scontent.fhkg10-1.fna&oh=70fea5a886837de2b9cf4aaf4a4112a8&oe=5EF6F085';
-              this.sp.setUserDat(this.userdata).then(async () => {
-                const toast1 = await this.toastCtrl.create({ message: 'Removed!', duration: 2000 });
-                toast1.present();
-              });
-            },
-          },
-        ],
-      });
-    alert.present();
+    // const alert = await this.alertCtrl
+    //   .create({
+    //     header: this.subscriber(message2),
+    //     inputs: [
+    //       { name: 'Line1', placeholder: this.subscriber(message3), value: this.userdata.business_name },
+    //       { name: 'Line2', placeholder: this.subscriber(message3), value: this.userdata.business_address },
+    //       { name: 'Line3', placeholder: this.subscriber(message3), value: this.userdata.businesstype },
+    //       { name: 'Line4', placeholder: this.subscriber(message3), value: this.userdata.ph_no },
+    //     ],
+    //     buttons: [
+    //       { text: this.subscriber(message), role: 'cancel' },
+    //       {
+    //         text: this.subscriber(message1),
+    //         handler: data => {
+    //           this.userdata.business_name = data.Line1;
+    //           this.userdata.business_address = data.Line2;
+    //           this.userdata.businesstype = data.Line3;
+    //           this.userdata.ph_no = data.Line4;
+    //           this.sp.setUserDat(this.userdata);
+    //         },
+    //       },
+    //       {
+    //         text: this.subscriber(message4),
+    //         handler: data => {
+    //           this.launchCamera().then(() => {
+    //             this.upload_new();
+    //           });
+    //         },
+    //       },
+    //       {
+    //         text: this.subscriber(message5),
+    //         handler: async  data => {
+    //           const toast = await this.toastCtrl.create({ message: 'Please wait- removing...', duration: 2000 });
+    //           toast.present();
+                 // tslint:disable-next-line: max-line-length
+    //           this.userdata.logo_url = 'https://scontent.fhkg10-1.fna.fbcdn.net/v/t1.0-9/79674109_100715951430298_615106696234139648_n.png?_nc_cat=109&_nc_ohc=2pdu1s1LRmoAX-04NCO&_nc_ht=scontent.fhkg10-1.fna&oh=70fea5a886837de2b9cf4aaf4a4112a8&oe=5EF6F085';
+    //           this.sp.setUserDat(this.userdata).then(async () => {
+    //             const toast1 = await this.toastCtrl.create({ message: 'Removed!', duration: 2000 });
+    //             toast1.present();
+    //           });
+    //         },
+    //       },
+    //     ],
+    //   });
+    // alert.present();
+    this.router.navigate(['/home/user-data']);
   }
 
   setTax() {

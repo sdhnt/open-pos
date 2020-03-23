@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { StorageProvider } from '../services/storage/storage';
 import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import { BusinessCardPage } from '../business-card/business-card.page';
 
 @Component({
   selector: 'app-user-data',
@@ -9,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class UserDataPage implements OnInit {
 
-  constructor(private sp: StorageProvider, private router: Router) { }
+  constructor(private sp: StorageProvider, private router: Router, private modalCtrl: ModalController) { }
   user: any = {
     autosave: 0,
     business_address: '',
@@ -65,5 +67,15 @@ export class UserDataPage implements OnInit {
         }
       });
     });
+  }
+
+  async bCard() {
+    const m = await this.modalCtrl.create({
+      component: BusinessCardPage,
+      componentProps: {
+        userdata: this.user
+      }
+    });
+    m.present();
   }
 }

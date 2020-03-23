@@ -182,6 +182,15 @@ const routes: Routes = [
             loadChildren: () => import('../credit-reminder/credit-reminder.module').then(m => m.CreditReminderPageModule)
           }
         ]
+      },
+      {
+        path: 'business-card',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../business-card/business-card.module').then(m => m.BusinessCardPageModule)
+          }
+        ]
       }
     ]
   }

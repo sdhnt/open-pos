@@ -30,15 +30,15 @@ ion-footer {
 }
 
 ion-content {
-  --background: transparent;
-  .scroll-content {
+  // --background: transparent;
+  --background: linear-gradient(#301924, #000000);
+  // .scroll-content {
     // background-image: url("…/../../../assets/imgs/bckground.jpg") ;
     // -webkit-background-size: cover;
     //   -moz-background-size: cover;
     //   -o-background-size: cover;
     //   background-size: cover;
-    background-image: linear-gradient(#301924, #000000);
-  }
+  // }
 }
 .item-cover {
   width: 0;

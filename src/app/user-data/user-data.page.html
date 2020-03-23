@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header> -->
 
-<ion-content class="ion-padding">
+<ion-content class="">
   <ion-row>
     <ion-col size="2">
       <ion-button fill="clear" (click)=goBack() menuToggle>
@@ -16,10 +16,14 @@
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col></ion-col>
+    <ion-col size="6">
+      <ion-button (click)="bCard()" shape="round" color="dark">
+        {{ 'Business Card' | translate }}
+      </ion-button>
+    </ion-col>
     <ion-col>
-      <ion-button (click)="editProfile()">
-        <ion-icon slot="start" name="settings" style="padding-right: 5px;"></ion-icon> {{ "Edit Profile" | translate }}
+      <ion-button (click)="editProfile()"  shape="round" color="primary">
+        {{ "Edit Profile" | translate }}
       </ion-button>
     </ion-col>
   </ion-row>

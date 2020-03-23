@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams } from '@ionic/angular';
+import { NavController, NavParams, ModalController } from '@ionic/angular';
 import * as firebase from 'firebase';
 import { TranslateConfigService } from '../services/translation/translate-config.service';
 import { CallNumber } from '@ionic-native/call-number/ngx';
@@ -19,6 +19,7 @@ export class ContactUsPage implements OnInit {
     private translateConfigService: TranslateConfigService,
     private callNumber: CallNumber,
     private emailComposer: EmailComposer,
+    private modal: ModalController
   ) {
     this.getInfo();
   }
@@ -73,5 +74,9 @@ export class ContactUsPage implements OnInit {
       .open(emailSettings)
       .then(res => console.log('Successful', res))
       .catch(err => console.log('Error on email', err));
+  }
+
+  goBack() {
+    this.modal.dismiss();
   }
 }

@@ -16,6 +16,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HelpPage } from '../help/help.page';
 import { EventService } from '../services/event.service';
 import { Observable } from 'rxjs';
+import { ContactUsPage } from '../contact-us/contact-us.page';
 
 @Component({
   selector: 'app-tabs',
@@ -377,7 +378,11 @@ export class TabsPage implements OnInit {
     helpModal.present();
   }
 
-  contactpg() {
-    this.router.navigate(['/home/contact-us']);
+  async contactpg() {
+    // this.router.navigate(['/home/contact-us']);
+    const helpModal = await this.modal.create({
+      component: ContactUsPage
+    });
+    helpModal.present();
   }
 }

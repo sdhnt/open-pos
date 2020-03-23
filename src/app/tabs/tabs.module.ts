@@ -18,6 +18,10 @@ import { ExpenseGeneralPageModule } from '../expense-general/expense-general.mod
 import { HelpPageModule } from '../help/help.module';
 import { LoanHomePageModule } from '../loan-home/loan-home.module';
 import { LoanHomePage } from '../loan-home/loan-home.page';
+import { BusinessCardPageModule } from '../business-card/business-card.module';
+import { BusinessCardPage } from '../business-card/business-card.page';
+import { ContactUsPageModule } from '../contact-us/contact-us.module';
+import { ContactUsPage } from '../contact-us/contact-us.page';
 
 @NgModule({
   imports: [
@@ -30,15 +34,19 @@ import { LoanHomePage } from '../loan-home/loan-home.page';
     ContactsPageModule,
     ExpenseGeneralPageModule,
     HelpPageModule,
-    LoanHomePageModule
+    LoanHomePageModule,
+    BusinessCardPageModule,
+    ContactUsPageModule
   ],
   entryComponents: [
     AllTransactionPage,
     ContactsPage,
     ExpenseGeneralPage,
     HelpPage,
-    LoanHomePage
+    LoanHomePage,
+    BusinessCardPage,
+    ContactUsPage
   ],
   declarations: [TabsPage]
 })
-export class TabsPageModule {}
+export class TabsPageModule { }
