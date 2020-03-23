@@ -1,15 +1,10 @@
 <ion-content class="ion-padding">
-  <ion-row>
+  <ion-row class="ion-justify-content-between">
     <ion-col>
-      <ion-buttons slot="start" style="display: flex;">
-        <ion-button color="dark" (click)="goToUpdateStock()">{{ "Update Stock" | translate }}</ion-button>
-      </ion-buttons>
+      <ion-button color="dark" (click)="goToUpdateStock()">{{ "Update Stock" | translate }}</ion-button>
     </ion-col>
-    <ion-col></ion-col>
     <ion-col>
-      <ion-buttons slot="end">
-        <ion-button style="background-color: red;" (click)="goBack()">{{ "Cancel" | translate}}</ion-button>
-      </ion-buttons>
+      <ion-button color="danger" (click)="goBack()">{{ "Cancel" | translate}}</ion-button>
     </ion-col>
   </ion-row>
   <form [formGroup]="formProduct">
