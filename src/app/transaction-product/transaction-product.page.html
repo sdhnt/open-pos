@@ -28,7 +28,7 @@
 </ion-fab> -->
 
   <div *ngIf="showmanual==0">
-    <ion-searchbar showCancelButton="always" [(ngModel)]="searchterm" (ionChange)="filteredProduct()"></ion-searchbar>
+    <ion-searchbar showCancelButton="focus" [(ngModel)]="searchterm" (ionChange)="filteredProduct()"></ion-searchbar>
 
     <ion-grid>
       <ion-row>
