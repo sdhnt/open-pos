@@ -47,102 +47,75 @@
 
         <ion-row>
           <ion-col size="3">
-            <ion-row>
-              <img [src]="userdata?userdata.logo_url:''" *ngIf="userdata.logo_url">
-            </ion-row>
-
+            <img [src]="userdata?userdata.logo_url:''" *ngIf="userdata.logo_url">
           </ion-col>
-
-
-          <ion-col size="7">
-            <ion-row>
-              <ion-col style="text-align: center; padding-top: 5px;"> {{userdata?userdata.business_name:null}}
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="12" style="color: grey;  text-align: center"> {{userdata?userdata.business_address:null}}
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="12" style="color: grey;  text-align: center"> {{userdata?userdata.businesstype:null}}
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="12" style="color: grey; text-align: center"> {{userdata?userdata.ph_no:null}}</ion-col>
-            </ion-row>
+          <ion-col>
+            <p style="text-align: center; padding-top: 5px;"> {{userdata?userdata.business_name:null}}</p>
+            <p style="color: grey;  text-align: center"> {{userdata?userdata.business_address:null}}</p>
+            <p style="color: grey;  text-align: center"> {{userdata?userdata.businesstype:null}}</p>
+            <p style="color: grey; text-align: center"> {{userdata?userdata.ph_no:null}}</p>
           </ion-col>
-          <ion-col size="2">
-            <ion-row>
-              <ion-button small (click)="editRecTop()">
-                <ion-icon name="create"></ion-icon>
-              </ion-button>
-            </ion-row>
+          <ion-col size="3">
+            <ion-button fill="clear" size="small" (click)="editRecTop()">
+              <ion-icon name="create"></ion-icon>
+            </ion-button>
           </ion-col>
-
         </ion-row>
-
         <ion-row style="padding-top: 5px;">
-          <ion-col size="4" style="color: black; font-size: 1.0rem; text-align: center"><b>{{"Name" | translate}}</b>
-          </ion-col>
-          <ion-col size="2" style="color: black; font-size: 1.0rem; text-align: center"><b>{{"Price"| translate}}</b>
-          </ion-col>
-          <ion-col size="2" style="color: black; font-size: 1.0rem; text-align: center"><b>{{"Qty"| translate}}</b>
-          </ion-col>
-          <ion-col size="3" style="color: black; font-size: 1.0rem; text-align: center"><b>{{"Subtotal"| translate}}</b>
-          </ion-col>
+          <ion-col style="color: black; font-size: 1.0rem;"><b>{{"Name" | translate}}</b></ion-col>
+          <ion-col style="color: black; font-size: 1.0rem;"><b>{{"Price"| translate}}</b></ion-col>
+          <ion-col style="color: black; font-size: 1.0rem;"><b>{{"Qty"| translate}}</b></ion-col>
+          <ion-col style="color: black; font-size: 1.0rem;"><b>{{"Subtotal"| translate}}</b></ion-col>
         </ion-row>
-
-
         <ion-list *ngFor="let item of datastore.itemslist; let i = index">
           <div style="border: solid 1px grey;">
             <ion-row>
               <ion-col size="9"></ion-col>
-              <ion-col size="1" style="color: black;  font-size: large; text-align: center;">
-                <ion-icon name="add" style=" color: green" (click)="addQty(i)"></ion-icon>
+              <ion-col>
+                <ion-icon name="add" color="success" (click)="addQty(i)"></ion-icon>
               </ion-col>
-              <ion-col size="1" style="color: black;  font-size: large;  text-align: center;">
-                <ion-icon name="remove" style=" color: red" (click)="removeQty(i)"></ion-icon>
+              <ion-col>
+                <ion-icon name="remove" color="danger" (click)="removeQty(i)"></ion-icon>
               </ion-col>
-              <ion-col size="1" style="color: black;  font-size: large;  text-align: center;">
-                <ion-icon name="close" style=" color: red" (click)="removeItem(i)"></ion-icon>
+              <ion-col>
+                <ion-icon name="close" color="danger" (click)="removeItem(i)"></ion-icon>
               </ion-col>
             </ion-row>
             <ion-row>
-              <ion-col size="4" style="color: black; text-align: center;">
+              <ion-col style="color: black; text-align: center;">
                 <div *ngIf="item.name.includes('Item'); else itemexist">
-                  <ion-button small (click)="addSingleProd(item,i)">{{"Choose"|translate}}</ion-button>
+                  <ion-button size="small" (click)="addSingleProd(item,i)">{{"Choose"|translate}}</ion-button>
                 </div>
                 <ng-template #itemexist>{{item.name}}</ng-template>
               </ion-col>
-              <ion-col size="2" style="color: black;   text-align: center;">{{item.price}}</ion-col>
-              <ion-col size="2" style="color: black;   text-align: center;">{{item.qty}}</ion-col>
-              <ion-col size="3" style="color: black; text-align: center">{{(item.price*item.qty)| number:0}}
+              <ion-col style="color: black; text-align: center;">{{item.price}}</ion-col>
+              <ion-col style="color: black; text-align: center;">{{item.qty}}</ion-col>
+              <ion-col style="color: black; text-align: center">{{(item.price*item.qty)| number:0}}
               </ion-col>
             </ion-row>
             <ion-row>
-              <ion-col size="4" style="color: grey; text-align: center;">{{ 'Discount' | translate }} %</ion-col>
-              <ion-col size="2" style="color: black;   text-align: center;">
+              <ion-col style="color: grey; text-align: center;">{{ 'Discount' | translate }} %</ion-col>
+              <ion-col style="color: black; text-align: center;">
                 <ion-input type="number" [(ngModel)]="item.discount" (ionChange)="updateRec()" min="0" max="100">
                 </ion-input>
               </ion-col>
-              <ion-col size="2" style="color: black;   text-align: center;">
+              <ion-col style="color: black; text-align: center;">
                 {{(item.qty*item.price*(item.discount)/100)| number:0}}
               </ion-col>
-              <ion-col size="3" style="color: black;   text-align: center;">
+              <ion-col style="color: black; text-align: center;">
                 <b>{{(item.price*((100-item.discount))/100*item.qty)| number:0}}</b>
               </ion-col>
             </ion-row>
             <!-- <ion-row>
-            <ion-col size="12" style="text-align: center"><ion-icon name="cut" style=" color: maroon"></ion-icon></ion-col>
+            <ion-col style="text-align: center"><ion-icon name="cut" style=" color: maroon"></ion-icon></ion-col>
             </ion-row> -->
           </div>
         </ion-list>
         <ion-row>
-          <ion-col size="4" style="text-align: center; font-size: 1.5rem; "><b>{{"Grand total:"|translate}}</b>
+          <ion-col style="text-align: center; font-size: 1.5rem; "><b>{{"Grand total:"|translate}}</b>
           </ion-col>
-          <ion-col size="4"></ion-col>
-          <ion-col size="4" style="text-align: center; ">{{lastsumAfterIndividualDiscount}} </ion-col>
+          <ion-col></ion-col>
+          <ion-col style="text-align: center; ">{{lastsumAfterIndividualDiscount}} </ion-col>
 
         </ion-row>
       </div>
@@ -206,7 +179,7 @@
 
       <div *ngIf="showrec==true">
         <ion-row *ngIf="discbtn==0">
-          <ion-button small (click)="setDisc()" shape="round">{{"Add Discount"|translate}}</ion-button>
+          <ion-button size="small" (click)="setDisc()" shape="round">{{"Add Discount"|translate}}</ion-button>
         </ion-row>
         <ion-row *ngIf="discbtn==1">
           <ion-col size="5">
@@ -223,12 +196,12 @@
           <ion-col size="7" style="text-align: left; ">{{lastsumdisc}}</ion-col>
         </ion-row>
         <ion-row *ngIf="discbtn==1">
-          <ion-button small (click)="remDisc()" shape="round">
+          <ion-button size="small" (click)="remDisc()" shape="round">
             {{"Remove Discount"|translate}}</ion-button>
         </ion-row>
 
         <ion-row *ngIf="taxbtn==0">
-          <ion-button small (click)="setTax()" shape="round">{{"Add Tax"|translate}}
+          <ion-button size="small" (click)="setTax()" shape="round">{{"Add Tax"|translate}}
           </ion-button>
         </ion-row>
 
@@ -247,11 +220,11 @@
           <ion-col size="7" style="text-align: left; ">{{lastsumtax}}</ion-col>
         </ion-row>
         <ion-row *ngIf="taxbtn==1">
-          <ion-button small (click)="remTax()" shape="round">{{"Remove Tax"|translate}}
+          <ion-button size="small" (click)="remTax()" shape="round">{{"Remove Tax"|translate}}
           </ion-button>
         </ion-row>
         <ion-row>
-          <ion-button small (click)="addContact()" shape="round" *ngIf="contact==''">
+          <ion-button size="small" (click)="addContact()" shape="round" *ngIf="contact==''">
             {{"Assign to Contact"|translate}}
           </ion-button>
           <ion-col size="8" *ngIf="contact!=''" style="padding-top: 15px; font-size: medium;">
@@ -275,65 +248,36 @@
     <div id="recImg">
       <ion-row>
         <ion-col size="3">
-          <ion-row>
-            <img [src]="userdata?userdata.logo_url:''" id="userLogo">
-          </ion-row>
-
+          <img [src]="userdata?userdata.logo_url:''" id="userLogo">
         </ion-col>
-
-
-        <ion-col size="7">
-          <ion-row>
-            <ion-col style="text-align: center; padding-top: 5px;"> {{userdata?userdata.business_name:null}} </ion-col>
-          </ion-row>
-
-          <ion-row>
-            <ion-col size="12" style="color: grey;  text-align: center"> {{userdata?userdata.business_address:null}}
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="12" style="color: grey;  text-align: center"> {{userdata?userdata.businesstype:null}}
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="12" style="color: grey; text-align: center"> {{userdata?userdata.ph_no:null}}</ion-col>
-          </ion-row>
-          <ion-row style="padding-top: 5px;">
-            <ion-col size="12" style="color: grey; text-align: center;"> <b>{{ getDateTime(datetime) }}</b></ion-col>
-          </ion-row>
+        <ion-col id="userDetails">
+          <p style="color: grey;"> {{userdata?userdata.business_name:null}} </p>
+          <p style="color: grey;"> {{userdata?userdata.business_address:null}} </p>
+          <p style="color: grey;"> {{userdata?userdata.businesstype:null}} </p>
+          <p style="color: grey;"> {{userdata?userdata.ph_no:null}}</p>
+          <p style="color: grey;"> <b>{{ getDateTime(datetime) }}</b></p>
         </ion-col>
-        <ion-col size="2"></ion-col>
+        <ion-col size="3"></ion-col>
       </ion-row>
       <ion-row style="padding-top: 5px;">
-        <ion-col size="4" style="color: black; font-size: 1.0rem; text-align: center"><b>{{"Name" | translate}}</b>
-        </ion-col>
-        <ion-col size="2" style="color: black; font-size: 1.0rem; text-align: center"><b>{{"Price"| translate}}</b>
-        </ion-col>
-        <ion-col size="2" style="color: black; font-size: 1.0rem; text-align: center"><b>{{"Qty"| translate}}</b>
-        </ion-col>
-        <ion-col size="3" style="color: black; font-size: 1.0rem; text-align: center"><b>{{"Subtotal"| translate}}</b>
-        </ion-col>
+        <ion-col style="color: black; font-size: 1.0rem; text-align: center"><b>{{"Name" | translate}}</b></ion-col>
+        <ion-col style="color: black; font-size: 1.0rem; text-align: center"><b>{{"Price"| translate}}</b></ion-col>
+        <ion-col style="color: black; font-size: 1.0rem; text-align: center"><b>{{"Qty"| translate}}</b></ion-col>
+        <ion-col style="color: black; font-size: 1.0rem; text-align: center"><b>{{"Subtotal"| translate}}</b></ion-col>
       </ion-row>
       <ion-list *ngFor="let item of lastTransaction.itemslist">
         <ion-row>
-          <ion-col size="4" style="color: black; text-align: center;">
-            {{item.name}}
-          </ion-col>
-          <ion-col size="2" style="color: black;   text-align: center;">{{item.price}}</ion-col>
-          <ion-col size="2" style="color: black;   text-align: center;">{{item.qty}}</ion-col>
-          <ion-col size="3" style="color: black; text-align: center">{{(item.price*item.qty)| number:0}}
-          </ion-col>
+          <ion-col style="color: black; text-align: center;">{{item.name}}</ion-col>
+          <ion-col style="color: black;   text-align: center;">{{item.price}}</ion-col>
+          <ion-col style="color: black;   text-align: center;">{{item.qty}}</ion-col>
+          <ion-col style="color: black; text-align: center">{{(item.price*item.qty)| number:0}}</ion-col>
         </ion-row>
       </ion-list>
       <ion-row>
-        <ion-col size="4" style="color: black; text-align: center;">
-          <b>{{"Total"|translate}}</b>
-        </ion-col>
-        <ion-col size="2" style="color: black;   text-align: center;"></ion-col>
-        <ion-col size="2" style="color: black;   text-align: center;"></ion-col>
-        <ion-col size="3" style="color: black; text-align: center">
-          <b>{{ lastTransaction.totalsum }}</b>
-        </ion-col>
+        <ion-col style="color: black; text-align: center;"><b>{{"Total"|translate}}</b></ion-col>
+        <ion-col style="color: black;   text-align: center;"></ion-col>
+        <ion-col style="color: black;   text-align: center;"></ion-col>
+        <ion-col style="color: black; text-align: center"><b>{{ lastTransaction.totalsum }}</b></ion-col>
       </ion-row>
       <!-- <ion-row>
           <ion-col size="8">

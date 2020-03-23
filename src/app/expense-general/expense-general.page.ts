@@ -53,7 +53,8 @@ export class ExpenseGeneralPage implements OnInit {
     public events: EventService,
     public toastCtrl: ToastController,
     private gps: GeolocationService,
-    private modal: ModalController,
+    // tslint:disable-next-line: variable-name
+    private _modal: ModalController,
   ) {
     this.getUserData();
     this.listOfExpenses = [];
@@ -160,21 +161,28 @@ export class ExpenseGeneralPage implements OnInit {
       this.currtime = new Date();
       this.listOfExpenses = [];
       this.listOfExpenses.push(new Expense());
-      this.modal.dismiss();
+      this._modal.dismiss();
     });
   }
 
   close() {
-    this.modal.dismiss();
+    this._modal.dismiss();
   }
 
   async addContact(exp: Expense) {
-    const m = await this.modal.create({
+    const modal = await this._modal.create({
       component: ContactsPage,
-      componentProps: { choosingContact: true }
+      componentProps: {
+        choosingContact: true
+      }
     });
-    m.present();
-    m.onDidDismiss().then((contactName: any) => {
+    modal.present();
+    // const m = await this.modal.create({
+    //   component: ContactsPage,
+    //   componentProps: { choosingContact: true }
+    // });
+    // m.present();
+    modal.onDidDismiss().then((contactName: any) => {
       if (contactName === null || contactName === undefined) {
         return;
       }
