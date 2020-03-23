@@ -27,6 +27,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { config } from '../utilities/initializeFirebase';
 import * as firebase from 'firebase';
+import { SMS } from '@ionic-native/sms/ngx';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
@@ -71,7 +72,8 @@ firebase.initializeApp(config);
     // tslint:disable-next-line: deprecation
     Contacts,
     FirebaseAuthentication,
-    BluetoothSerial
+    BluetoothSerial,
+    SMS
   ],
   bootstrap: [AppComponent]
 })

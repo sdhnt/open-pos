@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, ToastController } from '@ionic/angular';
 import { StorageProvider } from '../services/storage/storage';
-
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { TranslateConfigService } from '../services/translation/translate-config.service';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import html2canvas from 'html2canvas';
+import { SMS } from '@ionic-native/sms/ngx';
 
 @Component({
   selector: 'app-individual-contact',
@@ -13,17 +15,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./individual-contact.page.scss'],
 })
 export class IndividualContactPage implements OnInit {
-  contact = {
-    displayName: '',
-    balance: 0,
-    phno: '',
-    transacHistory: [],
-    dueDate: '',
-  };
-  listOfNewTransactions = [];
-  minDate = new Date().toISOString();
-  maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 2)).toISOString();
-  newDate;
 
   constructor(
     public alertCtrl: AlertController,
@@ -32,7 +23,9 @@ export class IndividualContactPage implements OnInit {
     private translateConfigService: TranslateConfigService,
     private localNotif: LocalNotifications,
     private location: Location,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private social: SocialSharing,
+    private sms: SMS
   ) {
     this.route.queryParams.subscribe(params => {
       console.log(params);
@@ -45,6 +38,19 @@ export class IndividualContactPage implements OnInit {
     });
     // if(this.newDate==undefined) this.remDate();
   }
+  contact = {
+    displayName: '',
+    balance: 0,
+    phno: [],
+    transacHistory: [],
+    dueDate: '',
+  };
+  listOfNewTransactions = [];
+  minDate = new Date().toISOString();
+  maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 2)).toISOString();
+  newDate;
+
+  usingShare = false;
 
   ngOnInit() {
 
@@ -148,20 +154,12 @@ export class IndividualContactPage implements OnInit {
     });
   }
 
-  getDateTime(datetime) {
+  getDateTime(datetime, forSMS: boolean) {
     // return (datetime.getDate() + "/" + (datetime.getMonth() + 1) + "/" + datetime. getFullYear())
     const temp = new Date(datetime);
 
-    const t =
-      temp.getDate().toString() +
-      '/' +
-      (temp.getMonth() + 1).toString() +
-      '/' +
-      temp.getFullYear().toString() +
-      ' ' +
-      this.getHours(temp) +
-      ':' +
-      this.getMinutes(temp);
+    let t = temp.getDate().toString() + '/' + (temp.getMonth() + 1).toString() + '/' + temp.getFullYear().toString();
+    if (!forSMS) { t = t + ' ' + this.getHours(temp) + ':' + this.getMinutes(temp); }
     return t;
     // if any hours or mins <0 then need to add 0 4 use cases
   }
@@ -206,5 +204,79 @@ export class IndividualContactPage implements OnInit {
       ],
     });
     a.present();
+  }
+  share() {
+    this.usingShare = true;
+    html2canvas(document.querySelector('#share'), { useCORS: true }).then(canvas => {
+      const dataUrl = canvas.toDataURL();
+      this.social
+        .share('Made using Open POS app\n', '', dataUrl, 'facebook.com/openfinanceapp')
+        .then(response => console.log(response))
+        .catch(e => console.log(e));
+    });
+    setTimeout(() => (this.usingShare = false), 5000);
+  }
+
+  async sendSMS() {
+    let message = 'Dear customer,\nYou have a payment of ' + Math.abs(this.contact.balance).toString() + ' due';
+    if (this.newDate !== '') {
+      message += ' on ' + this.getDateTime(this.newDate, true);
+    }
+    message += '.\nMade using Open POS app\nfacebook.com/openfinanceapp';
+    const alert = await this.alertCtrl
+      .create({
+        header: 'Send SMS',
+        subHeader: 'Message will be sent to: ',
+        inputs: [
+          {
+            name: 'phoneNum',
+            value: this.contact.phno[0],
+          },
+        ],
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+          },
+          {
+            text: 'Send',
+            handler: async data => {
+              try {
+                if (data.phoneNum.length < 8) { throw Error; }
+                for (let i = 0; i < data.phoneNum.length; ++i) {
+                  const char: string = data.phoneNum.charAt(i);
+                  if (char === '+') {
+                    if (i !== 0) { throw Error; }
+                  } else if (char.localeCompare('0') < 0 || char.localeCompare('9') > 0) {
+                    throw Error;
+                  }
+                }
+              } catch {
+                const toast = await this.toastCtrl
+                  .create({
+                    message:
+                      'Improper phone number. Number should be greater than 8 characters and not have any spaces',
+                    duration: 2500,
+                  });
+                toast.present();
+                return false;
+              }
+              if (this.contact.phno[0] !== data.phoneNum) {
+                this.contact.phno[0] = data.phoneNum;
+                const temp = {
+                  displayName: this.contact.displayName,
+                  phno: this.contact.phno,
+                };
+                this.sp.saveContacts([temp], false);
+              }
+              this.sms
+                .send(data.phoneNum, message, { replaceLineBreaks: true, android: { intent: 'INTENT' } })
+                .then(response => console.log(response))
+                .catch(e => console.log(e));
+            },
+          },
+        ],
+      });
+    alert.present();
   }
 }
