@@ -110,8 +110,8 @@ export class SingleproductPage implements OnInit {
   ionViewDidLoad() {
   }
 
-  getCategories() {
-    this.sp.getCategories().then(value => {
+  async getCategories() {
+    await this.sp.getCategories().then(value => {
       this.listCat = JSON.parse(value);
     });
   }
