@@ -208,10 +208,8 @@
                 </div> -->
         <ion-row>
           <ion-col *ngIf="product.qty==0">
-            <ion-buttons slot="end" *ngIf="event1!=true">
-              <ion-button expand="full" size="small" style="background-color:green;" (click)="sellProd(product)">
-                {{"Sell"|translate}}</ion-button>
-            </ion-buttons>
+            <ion-button *ngIf="event1!=true" expand="full" size="small" color="success" (click)="sellProd(product)">
+              {{"Sell"|translate}}</ion-button>
           </ion-col>
           <ion-col style="border: solid silver; text-align: center;background-color:green;"
             *ngIf="event1==false&&product.qty>0" (click)="addUp(i)">

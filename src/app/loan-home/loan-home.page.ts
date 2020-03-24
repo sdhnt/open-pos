@@ -127,27 +127,27 @@ export class LoanHomePage implements OnInit {
 
   async submitloanform() {
     this.loanvar.push({
-      q: this.subscriber(this.loanq1),
+      q: this.loanq1,
       a: this.loan1,
     });
     this.loanvar.push({
-      q: this.subscriber(this.loanq2),
+      q: this.loanq2,
       a: this.loan2,
     });
     this.loanvar.push({
-      q: this.subscriber(this.loanq3),
+      q: this.loanq3,
       a: this.loan3,
     });
     this.loanvar.push({
-      q: this.subscriber(this.loanq4),
+      q: this.loanq4,
       a: this.loan4,
     });
     this.loanvar.push({
-      q: this.subscriber(this.loanq5),
+      q: this.loanq5,
       a: this.loan5,
     });
     this.loanvar.push({
-      q: this.subscriber(this.loanq6),
+      q: this.loanq6,
       a: this.loan6,
     });
 

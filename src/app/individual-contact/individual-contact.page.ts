@@ -8,6 +8,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import html2canvas from 'html2canvas';
 import { SMS } from '@ionic-native/sms/ngx';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-individual-contact',
@@ -64,6 +65,14 @@ export class IndividualContactPage implements OnInit {
     this.newDate = '';
   }
 
+  subscriber(message: Observable<any>) {
+    let msg;
+    message.subscribe(res => {
+      msg = res;
+    });
+    return msg;
+  }
+
   async goBack() {
     if (this.listOfNewTransactions.length === 0 && this.newDate === this.contact.dueDate) {
       this.location.back();
@@ -71,8 +80,7 @@ export class IndividualContactPage implements OnInit {
       if (this.listOfNewTransactions.length > 0) {
         const toast = await this.toastCtrl
           .create({
-            // @ts-ignore
-            message: this.translateConfigService.getTranslatedMessage('Updating contact').value,
+            message: this.subscriber(this.translateConfigService.getTranslatedMessage('Updating contact')),
             duration: 1500,
           });
         toast.present();
@@ -112,20 +120,17 @@ export class IndividualContactPage implements OnInit {
       inputs: [
         {
           name: 'amount',
-          // @ts-ignore
-          placeholder: this.translateConfigService.getTranslatedMessage('Amount').value,
+          placeholder: this.subscriber(this.translateConfigService.getTranslatedMessage('Amount')),
           type: 'number',
         },
       ],
       buttons: [
         {
-          // @ts-ignore
-          text: this.translateConfigService.getTranslatedMessage('Cancel').value,
+          text: this.subscriber(this.translateConfigService.getTranslatedMessage('Cancel')),
           role: 'cancel',
         },
         {
-          // @ts-ignore
-          text: this.translateConfigService.getTranslatedMessage('Okay').value,
+          text: this.subscriber(this.translateConfigService.getTranslatedMessage('Okay')),
           handler: data => {
             if (data.amount > 0) {
               amountToAdd = data.amount * signedOne;
@@ -186,17 +191,14 @@ export class IndividualContactPage implements OnInit {
 
   async delete() {
     const a = await this.alertCtrl.create({
-      // @ts-ignore
-      subTitle: this.translateConfigService.getTranslatedMessage('Are you sure you want to delete this contact?').value,
+      subHeader: this.subscriber(this.translateConfigService.getTranslatedMessage('Are you sure you want to delete this contact?')),
       buttons: [
         {
-          // @ts-ignore
-          text: this.translateConfigService.getTranslatedMessage('Cancel').value,
+          text: this.subscriber(this.translateConfigService.getTranslatedMessage('Cancel')),
           role: 'cancel',
         },
         {
-          // @ts-ignore
-          text: this.translateConfigService.getTranslatedMessage('Okay').value,
+          text: this.subscriber(this.translateConfigService.getTranslatedMessage('Okay')),
           handler: () => {
             this.sp.deleteContact(this.contact.displayName).then(() => this.location.back());
           },

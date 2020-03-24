@@ -1,78 +1,77 @@
-<div class="modal">
-  <ion-header>
-    <ion-toolbar color="dark">
-      <ion-title>Your Business Card</ion-title>
-      <ion-buttons slot="end" style="padding-right: 10px;">
-        <ion-button style="background-color: red; color: white;"
-          (click)="goBack()">{{ "Cancel" | translate }}</ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
+<!-- <div class="modal"> -->
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title>Your Business Card</ion-title>
+    <ion-buttons slot="end" style="padding-right: 10px;">
+      <ion-button color="danger" (click)="goBack()">{{ "Cancel" | translate }}</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
-  <ion-content style="padding-left: 12px; padding-right: 12px;">
-    <ion-row style="padding-top: 15px;">
-      <ion-col style="padding-left: 10px;">
-        <ion-button shape="round" color="dark" (click)="editRecTop()">
-          <ion-icon name="create" style="padding-right: 7px; padding-left: 0px;"></ion-icon>
-          Edit Card
-        </ion-button>
-      </ion-col>
-      <ion-col style="text-align: end; padding-right: 10px;">
-        <ion-button shape="round" color="dark" (click)="share()">
-          <ion-icon name="share" style="padding-right: 7px; padding-left: 0px;"></ion-icon>
-          Share
-        </ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-card id="card">
-      <ion-card-title style="color: wheat; padding-top: 13px;">{{ userdata.business_name }}</ion-card-title>
-      <ion-grid>
-        <ion-row>
-          <ion-col>
-            <ion-row>
-              <ion-col size="2" style="text-align: center;">
-                <ion-icon name="person"></ion-icon>
-              </ion-col>
-              <ion-col>
-                {{ userdata.owner_name }}
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="2" style="text-align: center;">
-                <ion-icon name="call"></ion-icon>
-              </ion-col>
-              <ion-col>
-                {{ userdata.ph_no }}
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="2" style="text-align: center;">
-                <ion-icon name="mail"></ion-icon>
-              </ion-col>
-              <ion-col>
-                <span *ngIf="userdata.email">{{ userdata.email }}</span>
-                <span *ngIf="!userdata.email">-</span>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="2" style="text-align: center;">
-                <ion-icon name="home"></ion-icon>
-              </ion-col>
-              <ion-col>
-                {{ userdata.business_address }}
-              </ion-col>
-            </ion-row>
-          </ion-col>
-          <ion-col *ngIf="userdata.logo_url">
-            <img [src]="userdata?userdata.logo_url:''">
-          </ion-col>
-        </ion-row>
-        <br>
-        <ion-row style="font-size: small; text-align: center;">
-          Created using OPEN Business app!
-          facebook.com/openfinanceapp
-        </ion-row>
-      </ion-grid>
-    </ion-card>
-  </ion-content>
-</div>
+<ion-content style="padding-left: 12px; padding-right: 12px;">
+  <ion-row style="padding-top: 15px;">
+    <ion-col style="padding-left: 10px;">
+      <ion-button shape="round" color="dark" (click)="editRecTop()">
+        <ion-icon name="create" style="padding-right: 7px; padding-left: 0px;"></ion-icon>
+        Edit Card
+      </ion-button>
+    </ion-col>
+    <ion-col style="text-align: end; padding-right: 10px;">
+      <ion-button shape="round" color="dark" (click)="share()">
+        <ion-icon name="share" style="padding-right: 7px; padding-left: 0px;"></ion-icon>
+        Share
+      </ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-card id="card">
+    <ion-card-title style="color: wheat; padding-top: 13px;">{{ userdata.business_name }}</ion-card-title>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-row>
+            <ion-col size="2" style="text-align: center;">
+              <ion-icon name="person"></ion-icon>
+            </ion-col>
+            <ion-col>
+              {{ userdata.owner_name }}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="2" style="text-align: center;">
+              <ion-icon name="call"></ion-icon>
+            </ion-col>
+            <ion-col>
+              {{ userdata.ph_no }}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="2" style="text-align: center;">
+              <ion-icon name="mail"></ion-icon>
+            </ion-col>
+            <ion-col>
+              <span *ngIf="userdata.email">{{ userdata.email }}</span>
+              <span *ngIf="!userdata.email">-</span>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="2" style="text-align: center;">
+              <ion-icon name="home"></ion-icon>
+            </ion-col>
+            <ion-col>
+              {{ userdata.business_address }}
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col *ngIf="userdata.logo_url">
+          <img [src]="userdata?userdata.logo_url:''">
+        </ion-col>
+      </ion-row>
+      <br>
+      <ion-row style="font-size: small; text-align: center;">
+        Created using OPEN Business app!
+        facebook.com/openfinanceapp
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+</ion-content>
+<!-- </div> -->

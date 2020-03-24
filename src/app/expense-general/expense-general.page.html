@@ -76,7 +76,7 @@
         </ion-row>
         <ion-row class="ion-justify-content-end">
           <ion-col>
-            <ion-button color="danger" slot="end" (click)="removeExpense(i)" *ngIf="listOfExpenses.length!=1">
+            <ion-button color="danger" (click)="removeExpense(i)" *ngIf="listOfExpenses.length!=1">
               {{"Delete Expense"|translate}}
             </ion-button>
           </ion-col>

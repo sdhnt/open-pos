@@ -8,9 +8,6 @@ import { IncomeTransactionPageRoutingModule } from './income-transaction-routing
 
 import { IncomeTransactionPage } from './income-transaction.page';
 import { TranslateModule } from '@ngx-translate/core';
-import { AllTransactionPage } from '../all-transaction/all-transaction.page';
-import { ContactsPage } from '../contacts/contacts.page';
-import { ExpenseGeneralPage } from '../expense-general/expense-general.page';
 
 @NgModule({
   imports: [
@@ -18,7 +15,7 @@ import { ExpenseGeneralPage } from '../expense-general/expense-general.page';
     FormsModule,
     IonicModule,
     IncomeTransactionPageRoutingModule,
-    TranslateModule.forChild()
+    TranslateModule.forRoot()
   ],
   declarations: [IncomeTransactionPage],
 })

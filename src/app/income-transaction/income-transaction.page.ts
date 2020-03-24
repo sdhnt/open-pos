@@ -931,7 +931,7 @@ export class IncomeTransactionPage implements OnInit {
         itemList: this.datastore.itemslist
       }
     };
-    this.router.navigate(['transaction-product']);
+    this.router.navigate(['/home/transaction-product']);
     // (this.navCtrl.parent as Tabs).select(2);
     this.delay(300).then(() => {
       this.events.emitAddSingleProdCreated({

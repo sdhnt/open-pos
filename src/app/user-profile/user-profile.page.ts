@@ -180,7 +180,8 @@ export class UserProfilePage implements OnInit {
         });
       toast.present();
     } else {
-      this.translateConfigService.setLanguage(this.user.language);
+      console.log(this.user.language);
+      await this.translateConfigService.setLanguage(this.user.language);
       this.sp.storageReady().then(() => {
         this.sp
           .setUserDat(this.user)
@@ -193,7 +194,7 @@ export class UserProfilePage implements OnInit {
             console.error(error);
           });
       });
-      const message: Observable<any> = this.translateConfigService.getTranslatedMessage('Update profile successful');
+      const message: Observable<any> = await this.translateConfigService.getTranslatedMessage('Update profile successful');
       const toast = await this.toastCtrl
         .create({
           message: this.subscriber(message),

@@ -19,6 +19,7 @@
     "@angular/platform-browser": "~8.2.14",
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
+    "@ionic-native/app-minimize": "^5.23.0",
     "@ionic-native/app-version": "^5.22.0",
     "@ionic-native/barcode-scanner": "^5.22.0",
     "@ionic-native/base64-to-gallery": "^5.22.0",
@@ -49,6 +50,7 @@
     "@ngx-translate/core": "^12.1.2",
     "@ngx-translate/http-loader": "^4.0.0",
     "axios": "^0.19.2",
+    "bootstrap": "^4.4.1",
     "call-number": "^1.0.1",
     "chart.js": "^2.9.3",
     "cordova-android": "^8.1.0",
@@ -58,6 +60,7 @@
     "cordova-plugin-androidx": "^1.0.2",
     "cordova-plugin-androidx-adapter": "^1.1.0",
     "cordova-plugin-app-version": "^0.1.9",
+    "cordova-plugin-appminimize": "^1.0.1",
     "cordova-plugin-backbutton": "^0.3.0",
     "cordova-plugin-badge": "^0.8.8",
     "cordova-plugin-bluetooth-serial": "^0.4.7",
@@ -89,6 +92,7 @@
     "flag-icon-css": "^3.4.6",
     "html-to-image": "^0.1.1",
     "html2canvas": "^1.0.0-rc.5",
+    "jquery": "^3.4.1",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "lodash.isequal": "^4.5.0",
@@ -551,7 +555,8 @@
         "APP_ID": "1521978867943856",
         "APP_NAME": "Open FinTech"
       },
-      "cordova-sms-plugin": {}
+      "cordova-sms-plugin": {},
+      "cordova-plugin-appminimize": {}
     },
     "platforms": [
       "android"

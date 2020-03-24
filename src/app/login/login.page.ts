@@ -145,15 +145,15 @@ export class LoginPage implements OnInit {
     console.log('ionViewDidLoad LoginPage');
     this.menuCtrl.swipeGesture(false);
     this.signup = 0;
-    const userSnapshot = await firebase
-      .firestore()
-      .collection('users')
-      .get();
-    const dataSet = [];
-    userSnapshot.forEach(async doc => {
-      const user = doc.data();
-      await dataSet.push({ id: doc.id, user });
-    });
+    // const userSnapshot = await firebase
+    //   .firestore()
+    //   .collection('users')
+    //   .get();
+    // const dataSet = [];
+    // userSnapshot.forEach(async doc => {
+    //   const user = doc.data();
+    //   await dataSet.push({ id: doc.id, user });
+    // });
   }
 
 

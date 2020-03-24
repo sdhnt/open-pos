@@ -183,10 +183,10 @@ export class ExpenseGeneralPage implements OnInit {
     // });
     // m.present();
     modal.onDidDismiss().then((contactName: any) => {
-      if (contactName === null || contactName === undefined) {
+      if (contactName && (contactName.data === null || contactName.data === undefined)) {
         return;
       }
-      exp.contact = contactName;
+      exp.contact = contactName.data;
     });
   }
 

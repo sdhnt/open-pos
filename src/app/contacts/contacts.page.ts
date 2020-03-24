@@ -84,7 +84,6 @@ export class ContactsPage implements OnInit {
       this.choosingContact = false;
       return;
     }
-    console.log(contact);
     const naviExtra: NavigationExtras = {
       queryParams: {
         data: JSON.stringify(contact)

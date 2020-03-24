@@ -114,14 +114,15 @@ export class TransactionProductPage implements OnInit {
     // })
 
     this.events.addSingleProdCreated.subscribe(async (res) => {
-      const { data, index, fulldat } = res;
+      console.log(res);
+      const { item, index, itemList } = res;
       console.log('ENTERED!');
-      console.log('Received 1 ' + data + index);
-      this.recitemslist = JSON.parse(fulldat);
+      console.log('Received 1 ' + item + index);
+      this.recitemslist = itemList;
 
       this.index = Number(index);
 
-      const tempdat = JSON.parse(data);
+      const tempdat = item;
       this.event1 = true;
       await this.getProducts();
       this.price = tempdat.price;
@@ -137,6 +138,12 @@ export class TransactionProductPage implements OnInit {
     console.log('ionViewDidLoad TransactionProductPage');
     this.getProducts();
     this.getCategories();
+  }
+
+  ionViewDidLoad() {
+    this.translateConfigService.getTranslatedMessage('Complete Sale').subscribe((res) => {
+      this.updateOrCreate = res;
+    });
   }
 
   doRefresh(refresher) {
@@ -161,7 +168,7 @@ export class TransactionProductPage implements OnInit {
       this.showmanual = 0;
       this.itname = '';
       this.ngOnInit();
-      this.router.navigate(['income-transaction']);
+      this.router.navigate(['/home/income-transaction']);
       // (this.navCtrl.parent as Tabs).select(0);
     } else {
       console.log('Create Rec');
@@ -179,7 +186,9 @@ export class TransactionProductPage implements OnInit {
   }
 
   ionViewDidLeave() {
-
+    this.translateConfigService.getTranslatedMessage('Complete Sale').subscribe((res) => {
+      this.updateOrCreate = res;
+    });
   }
 
   subscriber(message: Observable<any>) {
@@ -197,12 +206,8 @@ export class TransactionProductPage implements OnInit {
     this.showmanual = 0;
     this.itname = '';
     this.ngOnInit();
-    this.router.navigate(['income-transaction']);
+    this.router.navigate(['/home/income-transaction']);
     // (this.navCtrl.parent as Tabs).select(0);
-  }
-
-  ionViewDidLoad() {
-
   }
 
   buttonReset() {

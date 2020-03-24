@@ -43,6 +43,11 @@ export class BusinessCardPage implements OnInit {
   }
 
   share() {
+    console.log(document.querySelector('#card'));
+    const card = document.createElement('canvas');
+    card.appendChild(document.querySelector('#card').cloneNode(true));
+    const url = card.toDataURL();
+    console.log(url);
     html2canvas(document.querySelector('#card'), { useCORS: true }).then(canvas => {
       const dataUrl = canvas.toDataURL();
       this.social

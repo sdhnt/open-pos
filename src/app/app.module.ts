@@ -28,9 +28,10 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { config } from '../utilities/initializeFirebase';
 import * as firebase from 'firebase';
 import { SMS } from '@ionic-native/sms/ngx';
+import { AppMinimize } from '@ionic-native/app-minimize/ngx';
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
 
 firebase.initializeApp(config);
@@ -49,7 +50,7 @@ firebase.initializeApp(config);
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
+        useFactory: (HttpLoaderFactory),
         deps: [HttpClient],
       },
     })
@@ -73,7 +74,8 @@ firebase.initializeApp(config);
     Contacts,
     FirebaseAuthentication,
     BluetoothSerial,
-    SMS
+    SMS,
+    AppMinimize
   ],
   bootstrap: [AppComponent]
 })

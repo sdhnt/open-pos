@@ -9,6 +9,7 @@ import { TranslateConfigService } from './services/translation/translate-config.
 import { StorageProvider } from './services/storage/storage';
 import { hasInternet } from '../utilities/hasInternet';
 import { initializeFirebase } from '../utilities/initializeFirebase';
+import { AppMinimize } from '@ionic-native/app-minimize/ngx';
 
 @Component({
   selector: 'app-root',
@@ -38,7 +39,8 @@ export class AppComponent implements OnInit {
     public toastCtrl: ToastController,
     public alertCtrl: AlertController,
     public sp: StorageProvider,
-    private menu: MenuController
+    private menu: MenuController,
+    private appMinimize: AppMinimize
   ) {
     this.initializeApp();
     this.backButtonEvent();
@@ -59,7 +61,8 @@ export class AppComponent implements OnInit {
 
       // or if that doesn't work, try
       // tslint:disable-next-line: no-string-literal
-      navigator['app'].exitApp();
+      // navigator['app'].exitApp();
+      this.appMinimize.minimize();
     });
 
     document.addEventListener('backbutton', onBackKeyDown, false);
@@ -120,8 +123,15 @@ export class AppComponent implements OnInit {
           subHeader: 'Please connect to the internet, and restart this app.',
         });
         await alert.present();
-
+        this.router.navigate(['/login']);
         return;
+      } else {
+        const navigationExtras: NavigationExtras = {
+          queryParams: {
+            lang: this.userLang
+          }
+        };
+        this.router.navigate(['/home'], navigationExtras);
       }
     });
   }
@@ -131,17 +141,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (firebase.auth().currentUser) {
-      console.log(this.userLang);
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          lang: this.userLang
-        }
-      };
-      this.router.navigate(['/home'], navigationExtras);
-    } else {
-      this.router.navigate(['/login']);
-    }
     const path = window.location.pathname.split('home/')[1];
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
