@@ -223,7 +223,8 @@ export class ContactsPage implements OnInit {
     );
   }
 
-  sort(num) {
+  sort(event) {
+    const num = Number(event.target.value);
     if (num === 1 || num === 2) {
       this.filteredList.sort((a, b) => a.displayName.localeCompare(b.displayName));
       if (num === 2) {
