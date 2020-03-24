@@ -7,6 +7,8 @@ import { StorageProvider } from '../services/storage/storage';
 import { CameraOptions, Camera } from '@ionic-native/camera/ngx';
 import * as firebase from 'firebase';
 import { Observable } from 'rxjs';
+import * as jsPDF from 'jspdf';
+import domtoimage from 'dom-to-image';
 
 @Component({
   selector: 'app-business-card',
@@ -43,13 +45,9 @@ export class BusinessCardPage implements OnInit {
   }
 
   share() {
-    console.log(document.querySelector('#card'));
-    const card = document.createElement('canvas');
-    card.appendChild(document.querySelector('#card').cloneNode(true));
-    const url = card.toDataURL();
-    console.log(url);
-    html2canvas(document.querySelector('#card'), { useCORS: true }).then(canvas => {
-      const dataUrl = canvas.toDataURL();
+    const div = document.getElementById('card');
+    const options = { background: 'white' };
+    domtoimage.toPng(div, options).then((dataUrl) => {
       this.social
         .share(
           'This is my business card. Please feel free to contact us for any enquiries\nCreated by OpenPOS',
@@ -60,6 +58,9 @@ export class BusinessCardPage implements OnInit {
         .then(response => console.log(response))
         .catch(e => console.log(e));
     });
+    // html2canvas(document.querySelector('#card'), { useCORS: true }).then(canvas => {
+    //   const dataUrl = canvas.toDataURL();
+    // });
   }
 
   subscriber(message: Observable<any>): string {

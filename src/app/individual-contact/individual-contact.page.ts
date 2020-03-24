@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import html2canvas from 'html2canvas';
 import { SMS } from '@ionic-native/sms/ngx';
 import { Observable } from 'rxjs';
+import domtoimage from 'dom-to-image';
 
 @Component({
   selector: 'app-individual-contact',
@@ -209,13 +210,17 @@ export class IndividualContactPage implements OnInit {
   }
   share() {
     this.usingShare = true;
-    html2canvas(document.querySelector('#share'), { useCORS: true }).then(canvas => {
-      const dataUrl = canvas.toDataURL();
+    const div = document.getElementById('share');
+    const options = { background: 'white' };
+    domtoimage.toPng(div, options).then((dataUrl) => {
       this.social
         .share('Made using Open POS app\n', '', dataUrl, 'facebook.com/openfinanceapp')
         .then(response => console.log(response))
         .catch(e => console.log(e));
     });
+    // html2canvas(document.querySelector('#share'), { useCORS: true }).then(canvas => {
+    //   const dataUrl = canvas.toDataURL();
+    // });
     setTimeout(() => (this.usingShare = false), 5000);
   }
 

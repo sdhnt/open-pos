@@ -29,6 +29,7 @@ import { ExpenseGeneralPage } from '../expense-general/expense-general.page';
 import { Router, NavigationExtras } from '@angular/router';
 import { EventService } from '../services/event.service';
 import { Observable } from 'rxjs';
+import domtoimage from 'dom-to-image';
 
 @Component({
   selector: 'app-income-transaction',
@@ -480,7 +481,7 @@ export class IncomeTransactionPage implements OnInit {
     //         handler: async  data => {
     //           const toast = await this.toastCtrl.create({ message: 'Please wait- removing...', duration: 2000 });
     //           toast.present();
-                 // tslint:disable-next-line: max-line-length
+    // tslint:disable-next-line: max-line-length
     //           this.userdata.logo_url = 'https://scontent.fhkg10-1.fna.fbcdn.net/v/t1.0-9/79674109_100715951430298_615106696234139648_n.png?_nc_cat=109&_nc_ohc=2pdu1s1LRmoAX-04NCO&_nc_ht=scontent.fhkg10-1.fna&oh=70fea5a886837de2b9cf4aaf4a4112a8&oe=5EF6F085';
     //           this.sp.setUserDat(this.userdata).then(async () => {
     //             const toast1 = await this.toastCtrl.create({ message: 'Removed!', duration: 2000 });
@@ -684,17 +685,21 @@ export class IncomeTransactionPage implements OnInit {
 
   shareRec() {
     this.disableShare = true;
-    html2canvas(document.querySelector('#recImg'), { useCORS: true }).then(canvas => {
-      // var ctx = canvas.getContext("2d");
-      // var img = new Image();
-      // img.src = this.userdata.logo_url
-      // ctx.drawImage(img, 10, 10);
-      const dataUrl = canvas.toDataURL();
+    const div = document.getElementById('recImg');
+    const options = { background: 'white' };
+    domtoimage.toPng(div, options).then((dataUrl) => {
       this.social
         .share('Receipt made using Open POS app\n', '', dataUrl, 'facebook.com/openfinanceapp')
         .then(response => console.log(response))
         .catch(err => console.log(err));
     });
+    // html2canvas(document.querySelector('#recImg'), { useCORS: true }).then(canvas => {
+    //   // var ctx = canvas.getContext("2d");
+    //   // var img = new Image();
+    //   // img.src = this.userdata.logo_url
+    //   // ctx.drawImage(img, 10, 10);
+    //   const dataUrl = canvas.toDataURL();
+    // });
     setTimeout(() => (this.disableShare = false), 1000);
   }
 
@@ -742,17 +747,9 @@ export class IncomeTransactionPage implements OnInit {
     this.disableDownload = true;
     const toast = await this.toastCtrl.create({ message: 'Please Wait...', duration: 3000 });
     toast.present();
-    html2canvas(document.querySelector('#recImg'), { useCORS: true }).then(canvas => {
-      const dataUrl = canvas.toDataURL();
-      //   const options: Base64ToGalleryOptions = {
-      //     prefix: "_img",
-      //     mediaScanner: true,
-      //   };
-      //   this.base64toGallery
-      //     .base64ToGallery(dataUrl, options)
-      //     .then(res => console.log(res))
-      //     .catch(err => console.log(err));
-      //   // download(dataUrl, 'r.png');
+    const div = document.getElementById('recImg');
+    const options = { background: 'white' };
+    domtoimage.toPng(div, options).then((dataUrl) => {
       this.photoLibrary
         .requestAuthorization({ read: true, write: true })
         .then(() => {
@@ -767,6 +764,18 @@ export class IncomeTransactionPage implements OnInit {
         })
         .catch(err => console.log('Permission not granted'));
     });
+    // html2canvas(document.querySelector('#recImg'), { useCORS: true }).then(canvas => {
+    //   const dataUrl = canvas.toDataURL();
+    //   //   const options: Base64ToGalleryOptions = {
+    //   //     prefix: "_img",
+    //   //     mediaScanner: true,
+    //   //   };
+    //   //   this.base64toGallery
+    //   //     .base64ToGallery(dataUrl, options)
+    //   //     .then(res => console.log(res))
+    //   //     .catch(err => console.log(err));
+    //   //   // download(dataUrl, 'r.png');
+    // });
     setTimeout(() => (this.disableDownload = false), 1000);
   }
 
