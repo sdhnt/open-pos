@@ -108,7 +108,7 @@ export class AppComponent implements OnInit {
       console.log(firebase.auth().currentUser);
       this.translateService.addLangs(['en', 'my']);
       this.translateService.setDefaultLang('en');
-      this.translateService.use('en');
+      this.userLang ? this.translateService.use(this.userLang) : this.translateService.use('en');
       // do not remove the next line of code, will fix FCM in due time
       // this.setupNotifications();
 

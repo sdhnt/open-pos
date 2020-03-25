@@ -5,7 +5,8 @@ import {
   ToastController,
   ModalController,
   AlertController,
-  LoadingController
+  LoadingController,
+  Platform
 } from '@ionic/angular';
 import { AllTransactionPage } from '../all-transaction/all-transaction.page';
 import * as firebase from 'firebase';
@@ -124,7 +125,8 @@ export class IncomeTransactionPage implements OnInit {
     private modal: ModalController,
     private social: SocialSharing,
     private photoLibrary: PhotoLibrary,
-    private router: Router
+    private router: Router,
+    private platform: Platform
   ) {
     this.isReady = false;
     // const nav = app._appRoot._getActivePortal() || app.getActiveNav();
@@ -686,8 +688,8 @@ export class IncomeTransactionPage implements OnInit {
   shareRec() {
     this.disableShare = true;
     const div = document.getElementById('recImg');
-    const options = { background: 'white' };
-    domtoimage.toPng(div, options).then((dataUrl) => {
+    const options = { background: 'white', height: this.platform.height(), width: this.platform.width() };
+    domtoimage.toPng(div).then((dataUrl) => {
       this.social
         .share('Receipt made using Open POS app\n', '', dataUrl, 'facebook.com/openfinanceapp')
         .then(response => console.log(response))
@@ -748,8 +750,8 @@ export class IncomeTransactionPage implements OnInit {
     const toast = await this.toastCtrl.create({ message: 'Please Wait...', duration: 3000 });
     toast.present();
     const div = document.getElementById('recImg');
-    const options = { background: 'white' };
-    domtoimage.toPng(div, options).then((dataUrl) => {
+    const options = { background: 'white', height: this.platform.height(), width: this.platform.width() };
+    domtoimage.toPng(div).then((dataUrl) => {
       this.photoLibrary
         .requestAuthorization({ read: true, write: true })
         .then(() => {
@@ -1487,10 +1489,10 @@ export class IncomeTransactionPage implements OnInit {
     });
     m.present();
     m.onDidDismiss().then((contactName: any) => {
-      if (contactName === null || contactName === undefined) {
+      if (contactName && (contactName.data === null || contactName.data === undefined)) {
         return;
       }
-      this.contact = contactName;
+      this.contact = contactName.data;
     });
   }
   clearContact() {

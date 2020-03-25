@@ -327,7 +327,7 @@ export class TransactionProductPage implements OnInit {
     this.showmanual = 0;
     this.itname = '';
     this.ngOnInit();
-    this.router.navigate(['income-transaction']);
+    this.router.navigate(['/home/income-transaction']);
     // (this.navCtrl.parent as Tabs).select(0);
     this.delay(300).then(() => {
       this.events.emitGenRecCreated(myObjStr);
@@ -472,7 +472,7 @@ export class TransactionProductPage implements OnInit {
 
       console.log(this.datlist);
       const myObjStr = JSON.stringify(tempJSON);
-      this.router.navigate(['income-transaction']);
+      this.router.navigate(['/home/income-transaction']);
       // (this.navCtrl.parent as Tabs).select(0);
       this.delay(300).then(() => {
         this.events.emitGenRecCreated(myObjStr);

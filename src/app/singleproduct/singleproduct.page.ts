@@ -62,7 +62,7 @@ export class SingleproductPage implements OnInit {
       prodWholesalePrice: new FormControl(0, Validators.required),
       prodCost: new FormControl(0, Validators.required),
       currstock: new FormControl(0, Validators.required),
-      prodCat: new FormControl('', Validators.required),
+      prodCat: new FormControl(this.product.cat, Validators.required),
     });
   }
   prodCodeOld: any;
@@ -431,7 +431,7 @@ export class SingleproductPage implements OnInit {
     const m = await this.modal.create({
       component: UpdateStockPage,
       componentProps: {
-        data: this.product
+        product: this.product
       }
     });
     m.present();

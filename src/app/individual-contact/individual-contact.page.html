@@ -22,41 +22,38 @@
   <div id="share" style="padding: 10px;">
     <ion-row>
       <ion-col class="top-text">
-        {{ contact.displayName }}
+        <p>{{ contact.displayName }}</p>
       </ion-col>
       <ion-col style="text-align: end;" class="top-text">
-        <span style="color: red;" *ngIf="contact.balance<0; else nonNeg">{{ contact.balance }}</span>
-        <span style="color: green;" *ngIf="contact.balance>0; else zero" id="nonNeg">{{ contact.balance }}</span>
-        <span style="color: blue;" *ngIf="contact.balance==0" id="zero">0</span>
+        <p style="color: red;" *ngIf="contact.balance<0; else nonNeg">{{ contact.balance }}</p>
+        <p style="color: green;" *ngIf="contact.balance>0; else zero" id="nonNeg">{{ contact.balance }}</p>
+        <p style="color: blue;" *ngIf="contact.balance==0" id="zero">0</p>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col class="top-text" style="font-weight: 400;">
         <ion-item>
-          <ion-label style="font-weight: 600; color: black;"><b>{{"Due Date"|translate}}:</b></ion-label>
+          <ion-label style="font-weight: 600; color: black;"><p><b>{{"Due Date"|translate}}:</b></p></ion-label>
           <ion-datetime [(ngModel)]="newDate" style="border: 1px solid black;" placeholder="{{'None'|translate}}"
             style="min-width: 30%;" [min]="minDate" [max]="maxDate">
           </ion-datetime>
         </ion-item>
-        <ion-buttons slot="end" *ngIf="newDate && newDate != ''">
-          <ion-button style="background-color: red; color: white; font-size: small;" (click)="remDate()">Remove
-            date</ion-button>
-        </ion-buttons>
+        <ion-button slot="end" color="danger" size="small" (click)="remDate()" *ngIf="newDate && newDate != ''">Remove date</ion-button>
       </ion-col>
     </ion-row>
     <ion-grid style="padding: 0px;">
       <ion-row style="text-align: center; font-weight: bold; font-size: 16px;">
-        <ion-col class="table-col">{{"Date"|translate}}</ion-col>
-        <ion-col class="table-col">{{"Borrowed"|translate}}</ion-col>
-        <ion-col class="table-col">{{"Paid"|translate}}</ion-col>
+        <ion-col class="table-col"><p>{{"Date"|translate}}</p></ion-col>
+        <ion-col class="table-col"><p>{{"Borrowed"|translate}}</p></ion-col>
+        <ion-col class="table-col"><p>{{"Paid"|translate}}</p></ion-col>
       </ion-row>
       <ion-row *ngFor="let val of contact.transacHistory">
-        <ion-col class="table-col">{{ getDateTime(val.date) }}</ion-col>
+        <ion-col class="table-col"><p>{{ getDateTime(val.date) }}</p></ion-col>
         <ion-col style="text-align: center;" class="table-col">
-          <span *ngIf="val.amount<0" style="color: red;">{{ val.amount }}</span>
+          <p *ngIf="val.amount<0" style="color: red;">{{ val.amount }}</p>
         </ion-col>
         <ion-col style="text-align: center;" class="table-col">
-          <span *ngIf="val.amount>0" style="color: green;">{{ val.amount }}</span>
+          <p *ngIf="val.amount>0" style="color: green;">{{ val.amount }}</p>
         </ion-col>
       </ion-row>
     </ion-grid>

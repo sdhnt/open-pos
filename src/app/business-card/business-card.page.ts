@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams, ModalController, ToastController, AlertController } from '@ionic/angular';
+import { NavController, NavParams, ModalController, ToastController, AlertController, Platform } from '@ionic/angular';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import html2canvas from 'html2canvas';
 import { TranslateConfigService } from '../services/translation/translate-config.service';
@@ -26,6 +26,7 @@ export class BusinessCardPage implements OnInit {
     private alertCtrl: AlertController,
     private sp: StorageProvider,
     private camera: Camera,
+    private platform: Platform
   ) { }
 
   userdata;
@@ -46,8 +47,8 @@ export class BusinessCardPage implements OnInit {
 
   share() {
     const div = document.getElementById('card');
-    const options = { background: 'white' };
-    domtoimage.toPng(div, options).then((dataUrl) => {
+    const options = { background: 'white', height: this.platform.height(), width: this.platform.width() };
+    domtoimage.toPng(div).then((dataUrl) => {
       this.social
         .share(
           'This is my business card. Please feel free to contact us for any enquiries\nCreated by OpenPOS',

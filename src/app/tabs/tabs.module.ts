@@ -24,6 +24,8 @@ import { ContactUsPageModule } from '../contact-us/contact-us.module';
 import { ContactUsPage } from '../contact-us/contact-us.page';
 import { HttpLoaderFactory } from '../app.module';
 import { HttpClient } from '@angular/common/http';
+import { UpdateStockPage } from '../update-stock/update-stock.page';
+import { UpdateStockPageModule } from '../update-stock/update-stock.module';
 
 @NgModule({
   imports: [
@@ -44,7 +46,8 @@ import { HttpClient } from '@angular/common/http';
     HelpPageModule,
     LoanHomePageModule,
     BusinessCardPageModule,
-    ContactUsPageModule
+    ContactUsPageModule,
+    UpdateStockPageModule
   ],
   entryComponents: [
     AllTransactionPage,
@@ -53,7 +56,8 @@ import { HttpClient } from '@angular/common/http';
     HelpPage,
     LoanHomePage,
     BusinessCardPage,
-    ContactUsPage
+    ContactUsPage,
+    UpdateStockPage
   ],
   declarations: [TabsPage]
 })

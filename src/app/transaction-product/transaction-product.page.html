@@ -155,9 +155,9 @@
         <!-- <div *ngIf="product.qty==0"> -->
         <ion-row>
           <ion-col>
-            <ion-radio-group (ionChange)="addwholesaledisc($event, product)">
+            <ion-radio-group value="r" (ionChange)="addwholesaledisc($event, product)">
               <ion-label style="color: grey; font-size: 12px;">
-                <ion-radio value="r" slot="end" checked *ngIf="product.qty>0"></ion-radio> &nbsp;
+                <ion-radio value="r" slot="end" *ngIf="product.qty>0"></ion-radio> &nbsp;
                 {{"Retail Price"|translate}} : {{product.price}}
               </ion-label>
               <ion-label style="color: grey; font-size: 12px;">
@@ -230,7 +230,7 @@
         </ion-row> -->
         <ion-row *ngIf="event1==true">
           <ion-col>
-            <ion-button expand="full" slot="end" color="dark" (click)="singleProduct(product)">{{"Add"|translate}}
+            <ion-button expand="full" color="dark" (click)="singleProduct(product)">{{"Add"|translate}}
             </ion-button>
           </ion-col>
         </ion-row>

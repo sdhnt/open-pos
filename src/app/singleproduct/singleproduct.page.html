@@ -46,7 +46,7 @@
         <ion-label>{{'Current Stock Qty:'| translate}}</ion-label>
         <ion-input type="number" formControlName="currstock" [(ngModel)]='product.stock_qty'></ion-input>
       </ion-item>
-      <ion-item>
+      <ion-item *ngIf="product && product.cat">
         <ion-label>{{'Product Category' | translate}}</ion-label>
         <ion-select multiple="false" formControlName="prodCat" [(ngModel)]='product.cat'>
           <ion-select-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-select-option>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController, ToastController, Platform } from '@ionic/angular';
 import { StorageProvider } from '../services/storage/storage';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { TranslateConfigService } from '../services/translation/translate-config.service';
@@ -27,7 +27,8 @@ export class IndividualContactPage implements OnInit {
     private location: Location,
     private route: ActivatedRoute,
     private social: SocialSharing,
-    private sms: SMS
+    private sms: SMS,
+    private platform: Platform
   ) {
     this.route.queryParams.subscribe(params => {
       console.log(params);
@@ -211,8 +212,8 @@ export class IndividualContactPage implements OnInit {
   share() {
     this.usingShare = true;
     const div = document.getElementById('share');
-    const options = { background: 'white' };
-    domtoimage.toPng(div, options).then((dataUrl) => {
+    const options = { background: 'white', height: this.platform.height(), width: this.platform.width() };
+    domtoimage.toPng(div).then((dataUrl) => {
       this.social
         .share('Made using Open POS app\n', '', dataUrl, 'facebook.com/openfinanceapp')
         .then(response => console.log(response))

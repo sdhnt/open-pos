@@ -46,11 +46,11 @@ export class UpdateStockPage implements OnInit {
 
   ngOnInit() {
     console.log('ionViewDidLoad UpdateStockPage');
+    // this.product = this.navParams.get('data');
     this.getUserData();
   }
 
   ionViewWillLoad() {
-    this.product = this.navParams.get('data');
   }
 
   ionViewDidLoad() {
