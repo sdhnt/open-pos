@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { TabsPageRoutingModule } from './tabs-routing.module';
 
 import { TabsPage } from './tabs.page';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
 import { AllTransactionPage } from '../all-transaction/all-transaction.page';
 import { ContactsPage } from '../contacts/contacts.page';
@@ -22,6 +22,8 @@ import { BusinessCardPageModule } from '../business-card/business-card.module';
 import { BusinessCardPage } from '../business-card/business-card.page';
 import { ContactUsPageModule } from '../contact-us/contact-us.module';
 import { ContactUsPage } from '../contact-us/contact-us.page';
+import { HttpLoaderFactory } from '../app.module';
+import { HttpClient } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -29,7 +31,13 @@ import { ContactUsPage } from '../contact-us/contact-us.page';
     CommonModule,
     FormsModule,
     TabsPageRoutingModule,
-    TranslateModule.forRoot(),
+    TranslateModule.forChild({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
     AllTransactionPageModule,
     ContactsPageModule,
     ExpenseGeneralPageModule,

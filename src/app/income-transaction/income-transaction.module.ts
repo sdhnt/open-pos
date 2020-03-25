@@ -15,7 +15,7 @@ import { TranslateModule } from '@ngx-translate/core';
     FormsModule,
     IonicModule,
     IncomeTransactionPageRoutingModule,
-    TranslateModule.forRoot()
+    TranslateModule.forChild(),
   ],
   declarations: [IncomeTransactionPage],
 })
