@@ -84,6 +84,15 @@
   --ion-color-magenta-tint: #f5f6f9;
 }
 
+.ion-color-magenta {
+  --ion-color-base: var(--ion-color-magenta) !important;
+  --ion-color-base-rgb: var(--ion-color-magenta-rgb) !important;
+  --ion-color-contrast: var(--ion-color-magenta-contrast) !important;
+  --ion-color-contrast-rgb: var(--ion-color-magenta-contrast-rgb) !important;
+  --ion-color-shade: var(--ion-color-magenta-shade) !important;
+  --ion-color-tint: var(--ion-color-magenta-tint) !important;
+}
+
 @media (prefers-color-scheme: dark) {
   /*
    * Dark Colors

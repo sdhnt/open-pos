@@ -62,7 +62,7 @@ export class SingleproductPage implements OnInit {
       prodWholesalePrice: new FormControl(0, Validators.required),
       prodCost: new FormControl(0, Validators.required),
       currstock: new FormControl(0, Validators.required),
-      prodCat: new FormControl(this.product.cat, Validators.required),
+      prodCat: new FormControl('', Validators.required),
     });
   }
   prodCodeOld: any;

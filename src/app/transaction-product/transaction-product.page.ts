@@ -76,7 +76,7 @@ export class TransactionProductPage implements OnInit {
       });
     });
 
-    this.events.addRecProdCreated.subscribe(data => {
+    this.events.addRecProdCreated.subscribe(async data => {
       console.log('ENTERED!');
       console.log('Received 0 ' + data);
       this.translateConfigService.getTranslatedMessage('Update Receipt').subscribe((res) => {
@@ -84,7 +84,7 @@ export class TransactionProductPage implements OnInit {
       });
 
       const tempdat = data;
-      this.getProducts();
+      await this.getProducts();
       console.log(tempdat);
 
       tempdat.forEach(element => {
@@ -117,7 +117,7 @@ export class TransactionProductPage implements OnInit {
       console.log(res);
       const { item, index, itemList } = res;
       console.log('ENTERED!');
-      console.log('Received 1 ' + item + index);
+      console.log('Received 1 ', item, index);
       this.recitemslist = itemList;
 
       this.index = Number(index);
@@ -126,7 +126,7 @@ export class TransactionProductPage implements OnInit {
       this.event1 = true;
       await this.getProducts();
       this.price = tempdat.price;
-      this.filteredProductPrice(tempdat.price);
+      this.filteredProductPrice(Number(tempdat.price));
       // console.log(this.listProducts)
     });
   }
@@ -231,7 +231,7 @@ export class TransactionProductPage implements OnInit {
   sellProd(product) {
     product.qty = 1;
   }
-  getProducts() {
+  async getProducts() {
     this.sp.storageReady().then(() => {
       this.sp
         .getProducts()
@@ -343,9 +343,10 @@ export class TransactionProductPage implements OnInit {
   setfilter(price) {
     return new Promise(async resolve => {
       this.filteredList = await this.listProducts.filter(item => {
-        console.log(item.price + ' and ' + price);
-
-        if (item.price === price || item.wholesale_price === price) {
+        // tslint:disable-next-line: triple-equals
+        console.log(item.price, item.price == price || item.wholesale_price == price , price);
+        // tslint:disable-next-line: triple-equals
+        if (item.price == price || item.wholesale_price == price) {
           return true;
         } else {
           return false;

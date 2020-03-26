@@ -11,8 +11,8 @@
     </ion-col>
     <ion-col></ion-col>
   </ion-row> -->
-  <ion-toolbar>
-    <ion-button fill="clear" (click)=goBack() slot="start">
+  <ion-toolbar color="magenta">
+    <ion-button fill="clear" (click)=goBack() slot="start" color="light">
       <ion-icon name="arrow-back"></ion-icon> Back
     </ion-button>
   </ion-toolbar>
@@ -60,11 +60,11 @@
 
     <div *ngIf="lang==1">
       <br>
-      <ion-button expand="block" shape="round" fill="outline" color="light" style="margin-top: 20px;"
+      <ion-button expand="block" fill="outline" color="light" style="margin-top: 20px;"
         (click)="selectLang('my')">
         🇲🇲 ဗမာ
       </ion-button>
-      <ion-button expand="block" shape="round" fill="outline" color="light" style="margin-top: 20px;"
+      <ion-button expand="block" fill="outline" color="light" style="margin-top: 20px;"
         (click)="selectLang('en')">
         🇬🇧 English
       </ion-button>
