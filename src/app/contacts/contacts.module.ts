@@ -8,6 +8,7 @@ import { ContactsPageRoutingModule } from './contacts-routing.module';
 
 import { ContactsPage } from './contacts.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { BottomSheetModule, BottomSheetComponent } from 'ionic-custom-bottom-sheet';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { TranslateModule } from '@ngx-translate/core';
     FormsModule,
     IonicModule,
     ContactsPageRoutingModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    BottomSheetModule
   ],
   declarations: [ContactsPage]
 })

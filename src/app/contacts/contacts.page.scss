@@ -1,3 +1,128 @@
-ion-card {
-  border: 1px solid gray;
+.topCards ion-card {
+    border: 1px solid gray;
+}
+
+.topCards ion-card {
+    min-height: 120px;
+}
+
+.cardIcons {
+    text-align: center;
+    margin: 10px 20px;
+    background: #ffd9e0;
+    padding: 30px;
+    border-radius: 50%;
+    position: relative;
+}
+
+.cardIcons ion-icon {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    font-size: 18px;
+}
+
+.cardText p {
+    text-align: center;
+    font-size: 12px;
+    margin: 0;
+    font-weight: bolder;
+}
+
+.pageTitle {
+    text-align: center;
+    margin: 22px;
+}
+
+.totalBox {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin: 10px 18px;
+    box-shadow: none;
+}
+
+.popover-wrapper .popover-content {
+    --position: relative !important;
+    --margin: 0 auto !important;
+    --left: auto !important;
+    --top: auto !important;
+}
+
+.totalCol {
+    font-size: medium;
+    font-weight: 500;
+    padding: 5px;
+    margin: auto;
+    text-align: center;
+}
+
+.headingCard {
+    box-shadow: none;
+}
+
+.headingCard ion-col {
+    text-align: center;
+}
+
+.headingCard ion-icon {
+    font-size: 17px;
+    font-weight: bolder;
+}
+
+.dataCard {
+    box-shadow: rgba(0, 0, 0, 0.001) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
+    border-radius: 10px;
+}
+
+.dataCard p {
+    margin: 7px;
+}
+
+ion-row.searchRow {
+    border: 1px solid #ddd;
+    margin: 0 18px;
+}
+
+.searchBar ion-icon {
+    font-size: 20px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-top: 17px;
+    margin-left: 6px;
+}
+
+.searchBar input[type=text]:focus {
+    outline: none;
+}
+
+.searchBar input[type=text] {
+    background: transparent;
+    border: none;
+    width: 84px;
+    position: absolute;
+    margin-left: 38px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.filter p {
+    margin: 0;
+}
+
+span.seperator {
+    font-size: 26px;
+    color: #ddd;
+}
+
+ion-select {
+    width: 80%;
+    float: right;
 }

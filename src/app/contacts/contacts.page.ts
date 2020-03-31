@@ -11,7 +11,7 @@ import { IndividualContactPage } from '../individual-contact/individual-contact.
 import { TranslateConfigService } from '../services/translation/translate-config.service';
 import { Router, NavigationExtras } from '@angular/router';
 import { Observable } from 'rxjs';
-
+import { SheetStates } from 'ionic-custom-bottom-sheet';
 @Component({
   selector: 'app-contacts',
   templateUrl: './contacts.page.html',
@@ -25,6 +25,7 @@ export class ContactsPage implements OnInit {
   filteredList;
   totalUserCredit: number;
   totalUserDebit: number;
+  public BottomSheetState: SheetStates = SheetStates.Closed;
   constructor(
     // @Inject(NavParams) public navParams: NavParams,
     // tslint:disable-next-line: deprecation
@@ -103,6 +104,7 @@ export class ContactsPage implements OnInit {
 
   async navAdd(num: number) {
     if (num === 1) {
+      this.BottomSheetState = SheetStates.Closed
       // const modal = this.modalCtrl.create(AddFromContactsPage);
       // modal.present();
       // modal.onWillDismiss(listToAdd => {
@@ -141,6 +143,7 @@ export class ContactsPage implements OnInit {
         });
       });
     } else if (num === 2) {
+      this.BottomSheetState = SheetStates.Closed
       const m1 = this.subscriber(this.translateConfigService.getTranslatedMessage('Add Contact'));
       const m2 = this.subscriber(this.translateConfigService.getTranslatedMessage('Contact Name'));
       const m3 = this.subscriber(this.translateConfigService.getTranslatedMessage('Contact Number'));
@@ -217,6 +220,7 @@ export class ContactsPage implements OnInit {
   }
 
   filter() {
+    console.log('this.contactList', this.contactList)
     if (this.contactList === null) { return; }
     this.filteredList = this.contactList.filter(contact =>
       contact.displayName.toLowerCase().includes(this.searchterm.toLowerCase()),
@@ -239,6 +243,21 @@ export class ContactsPage implements OnInit {
   }
 
   navCredReminder() {
+    this.BottomSheetState = SheetStates.Closed
     this.router.navigate(['/home/credit-reminder']);
+  }
+
+  public openSheet() {
+    this.BottomSheetState = SheetStates.Opened;
+  }
+
+  public closeSheet() {
+    this.BottomSheetState = SheetStates.Closed;
+  }
+
+  public StateChanged(event) {
+    if (event === SheetStates.Closed) {
+      console.log('Sheet Closed');
+    }
   }
 }
