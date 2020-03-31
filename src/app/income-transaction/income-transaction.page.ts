@@ -6,7 +6,8 @@ import {
   ModalController,
   AlertController,
   LoadingController,
-  Platform
+  Platform,
+  PopoverController
 } from '@ionic/angular';
 import { AllTransactionPage } from '../all-transaction/all-transaction.page';
 import * as firebase from 'firebase';
@@ -31,6 +32,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { EventService } from '../services/event.service';
 import { Observable } from 'rxjs';
 import domtoimage from 'dom-to-image';
+import { SheetStates } from 'ionic-custom-bottom-sheet';
 
 @Component({
   selector: 'app-income-transaction',
@@ -111,6 +113,7 @@ export class IncomeTransactionPage implements OnInit {
 
   receipt: any;
   inputData: any = {};
+  public BottomSheetState: SheetStates = SheetStates.Closed;
   constructor(
     public events: EventService,
     public camera: Camera,
@@ -123,6 +126,7 @@ export class IncomeTransactionPage implements OnInit {
     private loadCtrl: LoadingController,
     private gps: GeolocationService,
     private modal: ModalController,
+    private popover: PopoverController,
     private social: SocialSharing,
     private photoLibrary: PhotoLibrary,
     private router: Router,
@@ -173,6 +177,20 @@ export class IncomeTransactionPage implements OnInit {
       });
       this.updateRec();
     });
+  }
+
+  public openSheet() {
+    this.BottomSheetState = SheetStates.Opened;
+  }
+
+  public closeSheet() {
+    this.BottomSheetState = SheetStates.Closed;
+  }
+
+  public StateChanged(event) {
+    if (event === SheetStates.Closed) {
+      console.log('Sheet Closed');
+    }
   }
 
   async delay(ms: number) {
@@ -330,6 +348,7 @@ export class IncomeTransactionPage implements OnInit {
       .create({
         header: 'Add From', // translate this
         backdropDismiss: true,
+        cssClass: 'addItemAlert',
         buttons: [
           {
             text: subscriber(message2),
@@ -575,12 +594,29 @@ export class IncomeTransactionPage implements OnInit {
     return msg;
   }
 
-  dispM() {
+  async dispM() {
     console.log('DisM = ' + this.displayManual);
-    if (this.displayManual === 0) {
-      this.displayManual = 1;
-    } else {
-      this.displayManual = 0;
+    if (this.showrec) {
+      if (this.displayManual === 0) {
+        this.displayManual = 1;
+      } else {
+        this.displayManual = 0;
+      }
+      const popover = await this.popover.create({
+        // tslint:disable-next-line: no-use-before-declare
+        component: AdditionalChargePage,
+        componentProps: {
+          newItemName: this.newItemName,
+          newUnitPrice: this.newUnitPrice,
+          displayManual: 1
+        }
+      });
+      popover.present();
+      popover.onDidDismiss().then(data => {
+        console.log(data);
+        this.datastore.itemslist.push(data.data);
+        this.updateRec();
+      });
     }
   }
 
@@ -923,7 +959,7 @@ export class IncomeTransactionPage implements OnInit {
   }
   async addCalc() {
     // (this.navCtrl.parent as Tabs).select(0);
-    const helpModal = await this.modal.create({ component: AllTransactionPage });
+    const helpModal = await this.popover.create({ component: AllTransactionPage });
     helpModal.present();
     this.delay(300).then(() => {
       this.events.emitAddRecCalcCcreated(this.datastore.itemslist); // SEND ITEMS PRICE
@@ -1499,3 +1535,53 @@ export class IncomeTransactionPage implements OnInit {
     this.contact = '';
   }
 }
+
+@Component({
+  template: `<ion-card class="ion-padding" *ngIf="displayManual==1;">
+  <ion-list lines="none">
+  <ion-item>
+    <ion-label style="font-size: 1.0rem;">{{"Name"|translate}}</ion-label>
+    <ion-input type="text" placeholder="{{'Enter Product Name'|translate}}" [(ngModel)]="newItemName"
+      ngDefaultControl></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label style="font-size: 1.0rem;">{{"Price"|translate}}</ion-label>
+    <ion-input type="number" placeholder="{{'Enter Price'|translate}}" [(ngModel)]="newUnitPrice"
+      ngDefaultControl></ion-input>
+  </ion-item>
+  <ion-item>
+  <ion-button style="font-size: 1.0rem;" expand="full" (click)="addNewItem()" shape="round">
+    {{"Add Charges"|translate}}
+  </ion-button>
+  </ion-item>
+  </ion-list>
+</ion-card>`,
+  styleUrls: ['./income-transaction.page.scss'],
+})
+export class AdditionalChargePage implements OnInit {
+  newItemName;
+  newUnitPrice;
+  newUnitQty = 1;
+  displayManual;
+  constructor(private modal: PopoverController) {
+
+  }
+
+  ngOnInit() {
+
+  }
+
+  addNewItem() {
+    if (this.newItemName !== '' && this.newUnitPrice !== null && this.newUnitQty !== null) {
+      const newitem = {
+        code: '000000',
+        name: this.newItemName,
+        price: this.newUnitPrice,
+        qty: this.newUnitQty,
+        discount: 0,
+      };
+      this.modal.dismiss(newitem);
+    }
+  }
+}
+

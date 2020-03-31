@@ -29,6 +29,8 @@ import { config } from '../utilities/initializeFirebase';
 import * as firebase from 'firebase';
 import { SMS } from '@ionic-native/sms/ngx';
 import { AppMinimize } from '@ionic-native/app-minimize/ngx';
+import { NgOtpInputModule } from 'ng-otp-input';
+import { BottomSheetComponent, BottomSheetModule } from 'ionic-custom-bottom-sheet';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -53,8 +55,11 @@ firebase.initializeApp(config);
         useFactory: (HttpLoaderFactory),
         deps: [HttpClient],
       },
-    })
+    }),
+    NgOtpInputModule,
+    BottomSheetModule
   ],
+  entryComponents: [BottomSheetComponent],
   providers: [
     StatusBar,
     SplashScreen,

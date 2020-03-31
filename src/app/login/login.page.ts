@@ -54,6 +54,10 @@ export class LoginPage implements OnInit {
 
   timer2 = 0;
 
+  ngOtpConfig = {
+    length: 6
+  };
+
   confirmres: any;
   constructor(
     public zone: NgZone,
@@ -139,6 +143,12 @@ export class LoginPage implements OnInit {
     });
 
     this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
+  }
+
+  onOtpChange(event) {
+    console.log(typeof event);
+    this.otpnum = event;
+    console.log(this.otpnum);
   }
 
   async ngOnInit() {
@@ -394,7 +404,7 @@ export class LoginPage implements OnInit {
                 text: 'OK',
                 handler: () => {
                   this.sp.setMem({ force: true }).then(() => {
-                    this.router.navigate(['/home/add-product-signup']);
+                    this.router.navigate(['/add-product-signup']);
                   });
                 },
               },

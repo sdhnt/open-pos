@@ -11,6 +11,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { AllTransactionPage } from '../all-transaction/all-transaction.page';
 import { EventService } from '../services/event.service';
 import { Observable } from 'rxjs';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-transaction-product',
@@ -210,7 +211,13 @@ export class TransactionProductPage implements OnInit {
     // (this.navCtrl.parent as Tabs).select(0);
   }
 
-  buttonReset() {
+  async buttonReset() {
+    // $('#select-col-1').css({
+    //   'max-width': '100%'
+    // });
+    await console.log($('#select-col-1').hasClass('item-selected'));
+    await $('#select-col-1').removeClass('item-selected');
+    await console.log($('#select-col-1').hasClass('item-selected'));
     this.selectedCat = [];
   }
 
@@ -269,7 +276,13 @@ export class TransactionProductPage implements OnInit {
     helpModal.present();
   }
 
-  filteredProduct() {
+  filteredProduct(option?) {
+    if (option && !$('#select-col-1').hasClass('item-selected')) {
+      // $('#select-col-1').css({
+      //   'max-width': '70%'
+      // });
+      $('#select-col-1').addClass('item-selected');
+    }
     this.filteredList = this.listProducts.filter(item => {
       // console.log(this.searchterm);
       // console.log(item);
@@ -344,7 +357,7 @@ export class TransactionProductPage implements OnInit {
     return new Promise(async resolve => {
       this.filteredList = await this.listProducts.filter(item => {
         // tslint:disable-next-line: triple-equals
-        console.log(item.price, item.price == price || item.wholesale_price == price , price);
+        console.log(item.price, item.price == price || item.wholesale_price == price, price);
         // tslint:disable-next-line: triple-equals
         if (item.price == price || item.wholesale_price == price) {
           return true;

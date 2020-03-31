@@ -22,15 +22,6 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'add-product-signup',
-        children: [
-          {
-            path: '',
-            loadChildren: () => import('../add-product-signup/add-product-signup.module').then(m => m.AddProductSignupPageModule)
-          }
-        ]
-      },
-      {
         path: 'add-product-category',
         children: [
           {

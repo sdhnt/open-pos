@@ -14,53 +14,72 @@
   <ion-option value="last30">{{"Last 30 days"|translate}}</ion-option>
 </ion-select> -->
   <ion-row>
-    <ion-col>
+    <ion-text>
+      <h4>Account</h4>
+    </ion-text>
+  </ion-row>
+  <ion-item class="no-border" lines="none">
+    <ion-avatar slot="start">
+      <img [src]="userdata.logo_url">
+    </ion-avatar>
+    <ion-label>
+      <a href="javascript:void(0)" [routerLink]="['/home/user-data']">Go to business profile</a>
+    </ion-label>
+  </ion-item>
+  <ion-card>
+    <ion-card-content>
       <ion-item>
         <ion-label>From</ion-label>
         <ion-datetime [(ngModel)]="fromDate" [max]="toDate" (ionChange)="dateChange()"></ion-datetime>
       </ion-item>
-    </ion-col>
-    <ion-col>
-      <ion-item>
+      <ion-item lines="none" class="no-border">
         <ion-label>To</ion-label>
-        <ion-datetime [(ngModel)]="toDate" [max]="todayDate" [min]="fromDate" (ionChange)="dateChange()"></ion-datetime>
+        <ion-datetime [(ngModel)]="toDate" [max]="toDate" (ionChange)="dateChange()"></ion-datetime>
       </ion-item>
-    </ion-col>
-  </ion-row>
-  <br>
-  <!-- <ion-item> -->
-  <ion-row>
-    <ion-col size="6" style="text-align: left;">{{"Revenue"|translate}}:</ion-col>
-    <ion-col size="6" style="text-align: end;">{{rev|number:0}}</ion-col>
-    <!-- </ion-row>
-    <ion-row> -->
-    <ion-col size="6" style="text-align: left;">{{"Expenditure"|translate}}:</ion-col>
-    <ion-col size="6" style="text-align: end;">{{exp|number:0}}</ion-col>
-  </ion-row>
-  <!-- </ion-item>
-  <ion-item> -->
-  <ion-row>
-    <ion-col size="6" style="text-align: left;">{{"Profit"|translate}}:</ion-col>
-    <ion-col size="6" style="text-align: end;">{{pro|number:0}}</ion-col>
-    <!-- </ion-row>
-    <ion-row> -->
-    <ion-col size="6" style="text-align: left;">{{"Net Cashflow"|translate}}:</ion-col>
-    <ion-col size="6" style="text-align: end;">{{rev+exp|number:0}}</ion-col>
-  </ion-row>
+      <br>
+      <!-- <ion-item> -->
+      <ion-row>
+        <ion-col size="6" style="text-align: left;">{{"Revenue"|translate}}:</ion-col>
+        <ion-col size="6" style="text-align: end;">{{rev|number:0}}</ion-col>
+        <!-- </ion-row>
+        <ion-row> -->
+        <ion-col size="6" style="text-align: left;">{{"Expenditure"|translate}}:</ion-col>
+        <ion-col size="6" style="text-align: end;">{{exp|number:0}}</ion-col>
+      </ion-row>
+      <!-- </ion-item>
+      <ion-item> -->
+      <ion-row>
+        <ion-col size="6" style="text-align: left;">{{"Profit"|translate}}:</ion-col>
+        <ion-col size="6" style="text-align: end;">{{pro|number:0}}</ion-col>
+        <!-- </ion-row>
+        <ion-row> -->
+        <ion-col size="6" style="text-align: left;">{{"Net Cashflow"|translate}}:</ion-col>
+        <ion-col size="6" style="text-align: end;">{{rev+exp|number:0}}</ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
   <!-- </ion-item> -->
-  <ion-item style="text-align: center;">
+  <div style="text-align: center;">
     <div *ngIf="!((rev+exp)>=0)" style="color: red;"> {{"You have negative cash"|translate}} !</div>
     <h6>{{"Interested in borrowing money"|translate}}?</h6>
-
-  </ion-item>
-  <ion-button expand="full" size="small" color="success" (click)="applyLoan()" shape="round">{{"Apply for Loan"|translate}}
+  </div>
+  <ion-button expand="block" size="large" color="success" (click)="applyLoan()">
+    <img src="assets/new-ui-imgs/icons/Mask Group 10.png" class="mr-3" alt="" width="30">{{"Apply for Loan"|translate}}
   </ion-button>
-  <ion-row>
+  <ion-segment value="graph">
+    <ion-segment-button value="graph" color="yellow" (click)="toggleGL()">
+      <ion-label>{{"View Graph"|translate}}</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="list" color="dark" (click)="toggleList()">
+      <ion-label>{{"Hide Graph"|translate}}</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <!-- <ion-row>
     <ion-button expand="full" (click)="toggleGL()" *ngIf="islist==0" style="background-color: orange;">
       {{"View Graph"|translate}}</ion-button>
     <ion-button expand="full" (click)="toggleList()" *ngIf="isgraph==0" color="dark">{{"Hide Graph"|translate}}
     </ion-button>
-  </ion-row>
+  </ion-row> -->
   <!-- <ion-button expand="full" shape="round" style="background-color: black; color: white;" (click)="toggleGL()" *ngIf="isgraph==1">View as List</ion-button>
 <ion-button expand="full" shape="round" style="background-color: black; color: white;" (click)="toggleGL()" *ngIf="isgraph==0">View as Graph</ion-button> -->
 

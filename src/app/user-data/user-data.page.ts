@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { StorageProvider } from '../services/storage/storage';
 import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { ModalController, PopoverController } from '@ionic/angular';
 import { BusinessCardPage } from '../business-card/business-card.page';
+import { EventService } from '../services/event.service';
 
 @Component({
   selector: 'app-user-data',
@@ -11,7 +12,11 @@ import { BusinessCardPage } from '../business-card/business-card.page';
 })
 export class UserDataPage implements OnInit {
 
-  constructor(private sp: StorageProvider, private router: Router, private modalCtrl: ModalController) { }
+  constructor(
+    private sp: StorageProvider, private router: Router, private modalCtrl: ModalController,
+    private event: EventService, private popover: PopoverController) {
+
+  }
   user: any = {
     autosave: 0,
     business_address: '',
@@ -39,8 +44,17 @@ export class UserDataPage implements OnInit {
   ionViewDidLoad() {
   }
 
+  ionViewDidEnter() {
+    this.event.emitIsBack(true);
+    console.log('ionViewDidLoad UserDataPage');
+  }
+
+  ionViewWillLeave() {
+    this.event.emitIsBack(false);
+  }
+
   goBack() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/home/income-transaction']);
     // this.navCtrl.setRoot(TransactionHomePage);
   }
 
@@ -56,7 +70,7 @@ export class UserDataPage implements OnInit {
           this.editProfile();
         } else {
           this.user = JSON.parse(user);
-          console.log(this.user.language);
+          console.log(this.user);
           if (this.user.language === 'en') {
             this.language = '🇬🇧 English';
           } else if (this.user.language === 'my') {
@@ -70,11 +84,12 @@ export class UserDataPage implements OnInit {
   }
 
   async bCard() {
-    const m = await this.modalCtrl.create({
+    const m = await this.popover.create({
       component: BusinessCardPage,
       componentProps: {
         userdata: this.user
-      }
+      },
+      cssClass: 'contact-popover'
     });
     m.present();
   }

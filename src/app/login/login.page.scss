@@ -29,22 +29,29 @@ ion-footer {
   text-align: center;
 }
 
-ion-content {
-  // --background: transparent;
-  --background: linear-gradient(#301924, #000000);
-  // .scroll-content {
-    // background-image: url("…/../../../assets/imgs/bckground.jpg") ;
-    // -webkit-background-size: cover;
-    //   -moz-background-size: cover;
-    //   -o-background-size: cover;
-    //   background-size: cover;
-  // }
-}
+// ion-content {
+// --background: transparent;
+// --background: linear-gradient(#301924, #000000);
+// .scroll-content {
+// background-image: url("…/../../../assets/imgs/bckground.jpg") ;
+// -webkit-background-size: cover;
+//   -moz-background-size: cover;
+//   -o-background-size: cover;
+//   background-size: cover;
+// }
+// }
 .item-cover {
   width: 0;
   height: 0;
 }
 
+.terms-of-use {
+  position: absolute;
+  bottom: 10vh;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
 ion-input {
   text-align: center;
 }

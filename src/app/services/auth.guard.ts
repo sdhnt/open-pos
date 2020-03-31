@@ -15,7 +15,8 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const dataExist = this.sp.hasData();
-    if (dataExist && firebase.auth().currentUser) {
+    const user = firebase.auth().currentUser;
+    if (user) {
       return true;
     }
     this.router.navigate(['/login']);

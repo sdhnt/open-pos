@@ -37,7 +37,7 @@ export class SummaryGraphsPage implements OnInit {
   ) {
     // this.getSummary();
     this.events.viewRecs.subscribe(data => {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/home/income-transaction']);
       console.log('ViewRecs Event');
     });
     this.getUserData();
@@ -481,7 +481,7 @@ export class SummaryGraphsPage implements OnInit {
               ],
             });
             alert.present();
-            this.router.navigate(['/home']);
+            this.router.navigate(['/home/income-transaction']);
           })
           .catch(async error => {
             console.log(error);
@@ -498,7 +498,7 @@ export class SummaryGraphsPage implements OnInit {
               ],
             });
             alert.present();
-            this.router.navigate(['/home']);
+            this.router.navigate(['/home/income-transaction']);
           });
       }, async error => {
         console.log(error);
@@ -520,22 +520,26 @@ export class SummaryGraphsPage implements OnInit {
   }
 
   toggleGL() {
-    if (this.isgraph === 1) {
-      this.isgraph = 0;
-      this.islist = 1;
-    } else {
-      this.isgraph = 1;
-      this.islist = 1;
-    }
+    this.isgraph = 0;
+    this.islist = 1;
+    // if (this.isgraph === 1) {
+    //   this.isgraph = 0;
+    //   this.islist = 1;
+    // } else {
+    //   this.isgraph = 1;
+    //   this.islist = 1;
+    // }
   }
   toggleList() {
-    if (this.islist === 1) {
-      this.isgraph = 1;
-      this.islist = 0;
-    } else {
-      this.islist = 1;
-      this.isgraph = 0;
-    }
+    this.islist = 0;
+    this.isgraph = 1;
+    // if (this.islist === 1) {
+    //   this.isgraph = 1;
+    //   this.islist = 0;
+    // } else {
+    //   this.islist = 1;
+    //   this.isgraph = 0;
+    // }
   }
 
   getDateTime(datetime) {

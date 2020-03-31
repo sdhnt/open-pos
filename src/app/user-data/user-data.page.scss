@@ -1,8 +1,3 @@
-.dataCol {
-  text-align: start;
-  font-size: 17px;
-  padding-bottom: 8px;
-}
 ion-icon {
   size: 15px;
 }
@@ -14,4 +9,16 @@ ion-icon {
   border-radius: 25px;
   border: 2px solid black;
   background-color: #f4f4f4;
+}
+
+ion-col {
+  font-size: 14px;
+  text-align: left;
+  &.dataCol ion-text {
+    color: var(--ion-color-dark);
+  }
+}
+
+ion-text {
+  color: grey;
 }

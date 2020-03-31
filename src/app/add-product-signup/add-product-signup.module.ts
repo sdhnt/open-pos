@@ -8,6 +8,7 @@ import { AddProductSignupPageRoutingModule } from './add-product-signup-routing.
 
 import { AddProductSignupPage } from './add-product-signup.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { BottomSheetComponent, BottomSheetModule } from 'ionic-custom-bottom-sheet';
 
 @NgModule({
   imports: [
@@ -15,8 +16,10 @@ import { TranslateModule } from '@ngx-translate/core';
     FormsModule,
     IonicModule,
     AddProductSignupPageRoutingModule,
-    TranslateModule.forRoot()
+    TranslateModule.forRoot(),
+    BottomSheetModule
   ],
+  entryComponents: [BottomSheetComponent],
   declarations: [AddProductSignupPage]
 })
-export class AddProductSignupPageModule {}
+export class AddProductSignupPageModule { }

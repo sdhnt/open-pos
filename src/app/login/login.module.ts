@@ -9,6 +9,7 @@ import { LoginPageRoutingModule } from './login-routing.module';
 import { LoginPage } from './login.page';
 
 import { TranslateModule } from '@ngx-translate/core';
+import { NgOtpInputModule } from 'ng-otp-input';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { TranslateModule } from '@ngx-translate/core';
     FormsModule,
     IonicModule,
     LoginPageRoutingModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    NgOtpInputModule
   ],
   declarations: [LoginPage]
 })

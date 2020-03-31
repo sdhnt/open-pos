@@ -100,11 +100,11 @@ export class AppComponent implements OnInit {
   initializeApp() {
     this.platform.ready().then(async () => {
       console.log('App Initialization');
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();
       const isThereFirebase = await initializeFirebase();
       if (!isThereFirebase) { console.log('no firebase'); }
 
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
       console.log(firebase.auth().currentUser);
       this.translateService.addLangs(['en', 'my']);
       this.translateService.setDefaultLang('en');
@@ -123,16 +123,14 @@ export class AppComponent implements OnInit {
           subHeader: 'Please connect to the internet, and restart this app.',
         });
         await alert.present();
-        this.router.navigate(['/login']);
         return;
-      } else {
-        const navigationExtras: NavigationExtras = {
-          queryParams: {
-            lang: this.userLang
-          }
-        };
-        this.router.navigate(['/home'], navigationExtras);
       }
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          lang: this.userLang
+        }
+      };
+      dataExist ? this.router.navigate(['/home/income-transaction'], navigationExtras) : this.router.navigate(['/login']);
     });
   }
 
@@ -141,10 +139,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    const path = window.location.pathname.split('home/')[1];
-    if (path !== undefined) {
-      this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
-    }
+
   }
 
   openUserProfilePage() {
@@ -160,7 +155,7 @@ export class AppComponent implements OnInit {
         lang: this.userLang
       }
     };
-    this.router.navigate(['/home'], navigationExtras);
+    this.router.navigate(['/home/income-transaction'], navigationExtras);
   }
   async getUserData() {
     this.sp.storageReady().then(() => {

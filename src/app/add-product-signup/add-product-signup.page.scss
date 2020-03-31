@@ -1,4 +1,51 @@
+.mode1 {
+  background-image: url("../../assets/new-ui-imgs/introduction/INTRODUCTION.png");
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+}
+
+.mode5 {
+  background-image: url("../../assets/new-ui-imgs/introduction/CONGRATULATION.png");
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+}
+
 ion-input {
   border: solid 1px black;
   margin: 5px;
+}
+
+.prodCate {
+  position: relative;
+  .add {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+  }
+  ion-input {
+    justify-content: center !important;
+  }
+  .remove {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+  }
+}
+
+:host ::ng-deep ion-input .native-input {
+  max-width: 70% !important;
+}
+
+hr.default {
+  width: 30%;
+  border-top: 3px solid rgba(0,0,0,.1);
+  border-radius: 50%;
 }

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import {
   ToastController,
   AlertController,
-  ModalController
+  ModalController,
+  PopoverController
 } from '@ionic/angular';
 // import { Events } from 'ionic-angular';
 import * as firebase from 'firebase';
@@ -43,6 +44,7 @@ export class TabsPage implements OnInit {
     discount: 0.0,
   };
   language;
+  isBackEnable = false;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -54,6 +56,8 @@ export class TabsPage implements OnInit {
     private modal: ModalController,
     private appVersion: AppVersion,
     private market: Market,
+    private popover: PopoverController,
+    private change: ChangeDetectorRef
   ) {
     this.userdata.language = this.translateConfigService.getCurrentLanguage();
     // this.getUserData();
@@ -79,6 +83,12 @@ export class TabsPage implements OnInit {
         this.tutorial();
         this.getUserData();
       });
+    });
+
+    this.events.isback.subscribe(res => {
+      console.log('isBack-------------------------->', res);
+      this.isBackEnable = res;
+      this.change.detectChanges();
     });
 
     this.events.cbUpdateCreated.subscribe(async data => {
@@ -165,6 +175,7 @@ export class TabsPage implements OnInit {
     this.delay(500).then(() => {
       this.getUserData();
     });
+    this.isBackEnable = false;
   }
 
   async ionViewDidEnter() {
@@ -379,6 +390,242 @@ export class TabsPage implements OnInit {
   }
 
   async contactpg() {
+    // this.router.navigate(['/home/contact-us']);
+    const helpModal = await this.modal.create({
+      component: ContactUsPage
+    });
+    helpModal.present();
+  }
+
+  async openPopover(event) {
+    const popover = await this.popover.create({
+      // tslint:disable-next-line: no-use-before-declare
+      component: PopOverComponent,
+      event,
+      translucent: true
+    });
+    popover.present();
+  }
+}
+
+@Component({
+  template: `<ion-list>
+  <ion-item button (click)="uploadbtn()">
+      <ion-icon class="mr-1" name="cloud-upload"></ion-icon>
+      <ion-label>Upload</ion-label>
+  </ion-item>
+  <ion-item button (click)="cashbtn()">
+      <ion-icon class="mr-1" name="logo-usd"></ion-icon>
+      <ion-label>Cask Balance</ion-label>
+  </ion-item>
+  <ion-item button (click)="help()">
+      <ion-icon class="mr-1" name="help-circle"></ion-icon>
+      <ion-label>Help</ion-label>
+  </ion-item>
+  <ion-item button (click)="contactpg()">
+      <ion-icon class="mr-1" name="call"></ion-icon>
+      <ion-label>Contact us</ion-label>
+  </ion-item>
+</ion-list>`,
+  styleUrls: ['tabs.page.scss']
+})
+export class PopOverComponent implements OnInit {
+  userdata: any = {
+    autosave: 0,
+    business_address: '',
+    business_name: '',
+    cash_balance: '',
+    currency: '',
+    created: '',
+    language: this.translateConfigService.getCurrentLanguage(),
+    logo_url: '',
+    owner: '',
+    owner_name: '',
+    ph_no: '',
+    businesstype: '',
+    taxrate: 0.0,
+    discount: 0.0,
+  };
+  constructor(
+    private sp: StorageProvider,
+    private translateConfigService: TranslateConfigService,
+    private alertCtrl: AlertController,
+    private toastCtrl: ToastController,
+    private modal: ModalController,
+    private modal1: ModalController
+  ) {
+
+  }
+  ngOnInit() {
+
+  }
+
+  subscriber(message: Observable<any>): string {
+    let msg;
+    message.subscribe(res => {
+      msg = res;
+    });
+    console.log(msg);
+    return msg;
+  }
+
+  setUsrLang() {
+    console.log(this.userdata.language);
+    this.translateConfigService.setLanguage(this.userdata.language);
+  }
+
+  async getUserData() {
+    return new Promise((resolve, reject) => {
+      this.sp.storageReady().then(() => {
+        this.sp
+          .getUserDat()
+          .then(async val => {
+            if (val) {
+              this.userdata = JSON.parse(val);
+              console.log(this.userdata);
+              this.setUsrLang();
+              resolve();
+            } else {
+              await this.getUserData();
+            }
+          })
+          .catch(err => {
+            alert('Error: ' + err);
+          });
+      });
+    });
+  }
+
+  async uploadbtn() {
+    // await this.modal1.dismiss();
+    this.sp
+      .backupStorage()
+      .then()
+      .catch();
+    const message: Observable<any> = this.translateConfigService.getTranslatedMessage('Online backup ready');
+
+    const message1: Observable<any> = this.translateConfigService.getTranslatedMessage('Backup Online');
+    const message2: Observable<any> = this.translateConfigService.getTranslatedMessage('backupdescrip');
+
+    const alert = await this.alertCtrl
+      .create({
+        header: this.subscriber(message1),
+        subHeader: this.subscriber(message2),
+        buttons: [{ text: 'OK', role: 'cancel' }],
+      });
+    alert.present();
+    const toast = await this.toastCtrl
+      .create({
+        message: this.subscriber(message),
+        duration: 2000,
+      });
+    toast.present();
+  }
+
+  async cashbtn() {
+    // await this.modal1.dismiss();
+    await this.getUserData();
+    const message: Observable<any> = this.translateConfigService.getTranslatedMessage('Balance');
+    const message1: Observable<any> = this.translateConfigService.getTranslatedMessage('Edit');
+    const message2: Observable<any> = this.translateConfigService.getTranslatedMessage('Enter Current Cash Balance');
+    const message3: Observable<any> = this.translateConfigService.getTranslatedMessage('Update');
+    const message4: Observable<any> = this.translateConfigService.getTranslatedMessage('Cancel');
+    const message5: Observable<any> = this.translateConfigService.getTranslatedMessage('OK');
+    const ms: Observable<any> = this.translateConfigService.getTranslatedMessage('Cash Balance');
+    const ms1: Observable<any> = this.translateConfigService.getTranslatedMessage('cashbalancedescrip');
+
+    const a = await this.alertCtrl
+      .create({
+        header: this.subscriber(ms),
+        subHeader: this.subscriber(ms1),
+        message: this.subscriber(message) + ': ' + this.userdata.cash_balance,
+
+        buttons: [
+          {
+            text: this.subscriber(message1),
+            handler: async (data) => {
+              const alert = await this.alertCtrl
+                .create({
+                  inputs: [
+                    { name: 'cb', placeholder: this.subscriber(message2) },
+                  ],
+                  buttons: [
+                    {
+                      text: this.subscriber(message4),
+                      role: 'cancel',
+                    },
+                    {
+                      text: this.subscriber(message3),
+                      handler: data1 => {
+                        if (data1.cb != null && data1.cb !== '' && data1.cb !== undefined) {
+                          // console.log("Update CB to :"+data1.cb)
+                          this.getUserData();
+                          this.userdata.cash_balance = parseFloat(data1.cb).toString();
+                          this.sp.setUserDat(this.userdata);
+                        }
+                      },
+                    },
+                  ],
+                });
+              alert.present();
+            },
+          }, // end Edit Button
+          {
+            // translate these buttons
+            text: this.subscriber(message5),
+            role: 'Cancel',
+          }, // end OK Button
+        ], // end button
+      });
+    a.present();
+  }
+
+  async help() {
+    // await this.modal1.dismiss();
+    // const msg = this.translateConfigService.getTranslatedMessage("Create New Sales");
+    // const temptxt = [];
+    // let tempvid = [];
+
+    // firebase
+    //   .firestore()
+    //   .collection("tutorial")
+    //   .get()
+    //   .then(doc => {
+    //     //console.log(doc)
+    //     doc.docs.forEach(element => {
+    //       console.log(element);
+    //       if (element.id == this.userdata.language) {
+    //         element.data().text.forEach(element1 => {
+    //           if (element1.page == "Sale") {
+    //             temptxt.push(element1);
+    //           }
+    //         });
+
+    //         element.data().video.forEach(element2 => {
+    //           if (element2.page == "Sale") {
+    //             tempvid.push(element2);
+    //           }
+    //         });
+    //         tempvid = element.data().video;
+    //       }
+    //     });
+    //   });
+
+    // const passedData = {
+    //   //youtube link, required text
+    //   //@ts-ignore
+    //   page: msg.value,
+    //   text: temptxt,
+    //   video: tempvid,
+    // };
+    const helpModal = await this.modal.create({
+      component: HelpPage
+    });
+    helpModal.present();
+  }
+
+  async contactpg() {
+    // await this.modal1.dismiss();
     // this.router.navigate(['/home/contact-us']);
     const helpModal = await this.modal.create({
       component: ContactUsPage

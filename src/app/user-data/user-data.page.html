@@ -5,58 +5,129 @@
 </ion-header> -->
 
 <ion-content class="">
-  <ion-row>
-    <ion-col size="2">
-      <ion-button fill="clear" (click)=goBack() menuToggle>
-        <ion-icon name="arrow-back"></ion-icon>
-      </ion-button>
-    </ion-col>
-    <ion-col>
-      <ion-title style="line-height: 210%;">{{ "User Profile" | translate}}</ion-title>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col size="6">
-      <ion-button (click)="bCard()" shape="round" color="dark">
-        {{ 'Business Card' | translate }}
-      </ion-button>
-    </ion-col>
-    <ion-col>
-      <ion-button (click)="editProfile()"  shape="round" color="primary">
-        {{ "Edit Profile" | translate }}
-      </ion-button>
-    </ion-col>
-  </ion-row>
+  <ion-item class="no-border" lines="none">
+    <ion-avatar slot="start">
+      <img [src]="user.logo_url">
+    </ion-avatar>
+    <ion-label>
+      {{ user.business_name }}
+    </ion-label>
+  </ion-item>
 
   <br>
+  <ion-button (click)="bCard()" expand="block" size="large" color="yellow">
+    <ion-icon slot="icon-only" name="card-outline" class="mr-3"></ion-icon>{{ 'Business Card' | translate }}
+  </ion-button>
   <br>
-  <ion-card style="text-align: center; padding-top: 20px; padding-bottom: 15px;" button (click)="editProfile()"
+  <ion-list>
+    <ion-item-divider color="lgrey">
+      <ion-label class="m-0">
+        Basic Information
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button (click)="editProfile()">
+          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item-divider>
+    <ion-row class="px-3">
+      <ion-col>
+        <ion-text>{{ 'Onwer Name:' }}</ion-text>
+      </ion-col>
+      <ion-col class="dataCol">
+        <ion-text>{{ user.owner_name }}</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row class="px-3">
+      <ion-col>
+        <ion-text>{{ 'Shop Name:' }}</ion-text>
+      </ion-col>
+      <ion-col class="dataCol">
+        <ion-text>{{ user.business_name }}</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row class="px-3">
+      <ion-col>
+        <ion-text>{{ 'Address:' }}</ion-text>
+      </ion-col>
+      <ion-col class="dataCol">
+        <ion-text>{{ user.business_address }}</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row class="px-3">
+      <ion-col>
+        <ion-text>{{ 'phone number:' }}</ion-text>
+      </ion-col>
+      <ion-col class="dataCol">
+        <ion-text>{{ user.ph_no }}</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-item-divider color="lgrey">
+      <ion-label class="m-0">
+        Invoices
+      </ion-label>
+    </ion-item-divider>
+    <ion-row class="px-3">
+      <ion-col>
+        <ion-text>{{ 'Cash Balance:' | translate }}</ion-text>
+      </ion-col>
+      <ion-col class="dataCol">
+        <ion-text>{{ user.cash_balance }}</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row class="px-3">
+      <ion-col>
+        <ion-text>{{ 'Usual Discount %:' | translate }}</ion-text>
+      </ion-col>
+      <ion-col class="dataCol">
+        <ion-text>{{ user.discount }}</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row class="px-3">
+      <ion-col>
+        <ion-text>{{ 'Usual Tax %:' | translate }}</ion-text>
+      </ion-col>
+      <ion-col class="dataCol">
+        <ion-text>{{ user.taxrate }}</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-item-divider color="lgrey">
+      <ion-label class="m-0">
+        Other Details
+      </ion-label>
+    </ion-item-divider>
+    <ion-row class="px-3">
+      <ion-col>
+        <ion-text>{{ 'Language:' | translate }}</ion-text>
+      </ion-col>
+      <ion-col class="dataCol">
+        <ion-text>{{ language }}</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row class="px-3">
+      <ion-col>
+        <ion-text>{{ "Business Type" | translate }}</ion-text>
+      </ion-col>
+      <ion-col class="dataCol">
+        <ion-text>{{ user.businesstype }}</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row class="px-3">
+      <ion-col>
+        <ion-text>{{ "Currency" | translate }}</ion-text>
+      </ion-col>
+      <ion-col class="dataCol">
+        <ion-text>{{ user.currency}}</ion-text>
+      </ion-col>
+    </ion-row>
+
+  </ion-list>
+  <!-- <ion-card style="text-align: center; padding-top: 20px; padding-bottom: 15px;" button (click)="editProfile()"
     class="card">
     <ion-card-header>
       <ion-card-title>{{ user.business_name }}</ion-card-title>
     </ion-card-header>
-    <!-- <ion-card-subtitle>{{ user.business_address }}</ion-card-subtitle> -->
     <ion-grid>
-      <ion-row>
-        <ion-col size="2">
-          <ion-icon name="person"></ion-icon>
-        </ion-col>
-        <ion-col class="dataCol">{{ user.owner_name }}</ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="2">
-          <ion-icon name="home"></ion-icon>
-        </ion-col>
-        <ion-col class="dataCol">
-          {{ user.business_address }}
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="2">
-          <ion-icon name="call"></ion-icon>
-        </ion-col>
-        <ion-col class="dataCol">{{ user.ph_no }}</ion-col>
-      </ion-row>
       <ion-row>
         <ion-col size="2">
           <ion-icon name="cash"></ion-icon>
@@ -83,5 +154,5 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-  </ion-card>
+  </ion-card> -->
 </ion-content>

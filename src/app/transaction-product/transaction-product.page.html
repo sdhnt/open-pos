@@ -32,17 +32,14 @@
 
     <ion-grid>
       <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label>{{"Select category"|translate}}</ion-label>
-            <ion-select multiple="true" [(ngModel)]='selectedCat' (ionChange)="filteredProduct()">
-              <ion-select-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}
-              </ion-select-option>
-            </ion-select>
-          </ion-item>
-        </ion-col>
-        <ion-col>
-          <ion-button size="small" shape="round" color="danger" (click)="buttonReset()">
+        <ion-col class="select-col">
+          <ion-select id="select-col-1" placeholder="{{'Select category'|translate}}" multiple="true"
+            [(ngModel)]='selectedCat' (ionChange)="filteredProduct('fromSelection')">
+            <ion-select-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}
+            </ion-select-option>
+          </ion-select>
+          <ion-button *ngIf="selectedCat && selectedCat.length" size="small" shape="round" color="danger"
+            (click)="buttonReset()">
             {{"Clear"|translate}}</ion-button>
         </ion-col>
       </ion-row>
@@ -114,9 +111,99 @@
 
 
 
-  <ion-list inset *ngFor="let product of filteredList; let i=index">
+  <span *ngFor="let product of filteredList; let i=index">
+    <ion-card *ngIf="product.isDisabled !== true">
+      <ion-card-content>
+        <ion-row>
+          <ion-col size="4">
+            <ion-img class="img-fluid"
+              [src]="product.url != '' ? product.url : 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'">
+            </ion-img>
+          </ion-col>
+          <ion-col>
+            <table class="text-left">
+              <tr>
+                <td colspan="2">{{product.name}}</td>
+              </tr>
+              <tr>
+                <td>
+                  <small>
+                    Retail Price
+                  </small>
+                </td>
+                <td class="text-right">
+                  <small>{{product.price}}</small>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <small>Wholesale Price</small>
+                </td>
+                <td class="text-right">
+                  <small>{{product.wholesale_price}}</small>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <small>
+                    Category
+                  </small>
+                </td>
+                <td class="text-right">
+                  <small>{{product.cat}}</small>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <small>
+                    Stock
+                  </small>
+                </td>
+                <td class="text-right">
+                  <small>{{product.stock_qty}}</small>
+                </td>
+              </tr>
+            </table>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-justify-content-around">
+          <ion-col *ngIf="event1!=true&&product.qty==0">
+            <ion-button size="small" expand="block" shape="round" color="magenta" (click)="viewEditProduct(product)">
+              <ion-icon slot="icon-only" name="create-outline" class="mr-1"></ion-icon> {{"View / Edit"|translate}}
+            </ion-button>
+          </ion-col>
+          <ion-col *ngIf="event1!=true&&product.qty==0">
+            <ion-button size="small" expand="block" shape="round" color="success" (click)="sellProd(product)">
+              <ion-icon slot="icon-only" name="cart-outline" class="mr-1"></ion-icon> {{"Sell"|translate}}
+            </ion-button>
+          </ion-col>
+          <ion-col class="justify-content-center text-center" *ngIf="event1==false&&product.qty>0">
+            <ion-button fill="clear" color="success" (click)="addUp(i)">
+              <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col class="text-center align-self-center" *ngIf="event1==false&&product.qty>0">
+            <ion-text>
+              {{product.qty}}
+            </ion-text>
+          </ion-col>
+          <ion-col class="justify-content-center text-center" *ngIf="event1==false&&product.qty>0">
+            <ion-button fill="clear" color="danger" (click)="addDown(i)">
+              <ion-icon slot="icon-only" name="remove-circle-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="event1==true">
+          <ion-col>
+            <ion-button expand="full" color="dark" (click)="singleProduct(product)">{{"Add"|translate}}
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </span>
 
-    <ion-card *ngIf="product.isDisabled !== true" style="border: solid 1px gray;">
+  <!-- <ion-card *ngIf="product.isDisabled !== true" style="border: solid 1px gray;">
       <ion-grid>
         <ion-row>
           <ion-col>
@@ -131,28 +218,6 @@
             </ion-row>
           </ion-col>
         </ion-row>
-        <!-- <div *ngIf="event1==false">
-            <ion-row *ngIf="product.qty>0">
-              <ion-col *ngIf="product.discount==null || product.discount==0">
-                <button ion-button style="font-size: 0.9rem;" (click)="addwholesaledisc(product)">{{"Add Wholesale Discount"|translate}}</ion-button>
-              </ion-col>
-              <ion-col *ngIf="product.discount==(((product.price - product.wholesale_price) / product.price) * 100)">
-                  <button ion-button style="font-size: 0.9rem;" (click)="remwholesaledisc(product)">{{"Remove Wholesale Discount"|translate}}</ion-button>
-                </ion-col>
-            </ion-row>
-          </div> -->
-
-        <!-- 
-            <ion-row>
-              <ion-col style="color: grey; font-size: 10px;"> {{"Retail Price"|translate}} {{product.price}}
-              </ion-col>
-              <ion-col style="color: grey; font-size: 10px; text-align: center;"> {{"Wholesale Price"|translate}}
-                {{product.wholesale_price}} </ion-col>
-              <ion-col style="color: grey; font-size: 10px; text-align: slot="end";"> {{"Category"|translate}}
-                {{product.cat}} </ion-col>
-            </ion-row> -->
-
-        <!-- <div *ngIf="product.qty==0"> -->
         <ion-row>
           <ion-col>
             <ion-radio-group value="r" (ionChange)="addwholesaledisc($event, product)">
@@ -177,35 +242,7 @@
               <img class="ion-image" [src]="product.url">
             </ion-avatar>
           </ion-col>
-          <!-- <ion-col style="color: grey; font-size: 10px;">{{"Retail Price"|translate}} : {{product.price}} </ion-col>    -->
-
         </ion-row>
-        <!-- <ion-row>
-                  <ion-col style="color: grey; font-size: 10px; text-align: left;">  {{"Category"|translate}} : {{product.cat}} </ion-col>  
-              </ion-row> -->
-        <!-- </div>
-            <div *ngIf="product.qty!=0 && product.discount!=(((product.price - product.wholesale_price) / product.price) * 100)">
-                <ion-row>
-                    <ion-col style="color: grey; font-size: 10px;"><b>{{"Retail Price"|translate}} : {{product.price}} </b> </ion-col>   
-                  </ion-row>
-                  <ion-row>
-                      <ion-col style="color: grey; font-size: 10px; text-align: left;"> {{"Wholesale Price"|translate}} : {{product.wholesale_price}} </ion-col>
-                    </ion-row>  
-                  <ion-row>
-                      <ion-col style="color: grey; font-size: 10px; text-align: left;">  {{"Category"|translate}} : {{product.cat}} </ion-col>  
-                  </ion-row>
-                </div>
-                <div *ngIf="product.qty!=0 && product.discount==(((product.price - product.wholesale_price) / product.price) * 100)">
-                    <ion-row>
-                        <ion-col style="color: grey; font-size: 10px;">{{"Retail Price"|translate}} : {{product.price}}  </ion-col>   
-                      </ion-row>
-                      <ion-row>
-                          <ion-col style="color: grey; font-size: 10px; text-align: left;"> <b>{{"Wholesale Price"|translate}} : {{product.wholesale_price}} </b></ion-col>
-                        </ion-row>  
-                      <ion-row>
-                          <ion-col style="color: grey; font-size: 10px; text-align: left;">  {{"Category"|translate}} : {{product.cat}} </ion-col>  
-                      </ion-row>
-                </div> -->
         <ion-row>
           <ion-col *ngIf="product.qty==0">
             <ion-button *ngIf="event1!=true" expand="full" size="small" color="success" (click)="sellProd(product)">
@@ -223,11 +260,6 @@
             <ion-icon name="remove" style=" color: white"></ion-icon>
           </ion-col>
         </ion-row>
-
-
-        <!-- <ion-row>
-          <ion-col><ion-button expand="full" slot="end" color="dark">{{ "Update Stock" | translate }}</ion-button></ion-col>
-        </ion-row> -->
         <ion-row *ngIf="event1==true">
           <ion-col>
             <ion-button expand="full" color="dark" (click)="singleProduct(product)">{{"Add"|translate}}
@@ -235,23 +267,24 @@
           </ion-col>
         </ion-row>
       </ion-grid>
-    </ion-card>
-  </ion-list>
+    </ion-card> -->
 </ion-content>
 
 <ion-footer>
   <ion-grid>
     <ion-row *ngIf="event1==false">
       <ion-col>
-        <ion-button (click)="createRec()" expand="full" style="background-color: #301924">{{updateOrCreate|translate}}
+        <ion-button (click)="createRec()" expand="block" color="yellow">
+          <ion-icon name="checkmark-circle-outline" class="mr-3"></ion-icon> {{updateOrCreate|translate}}
         </ion-button>
       </ion-col>
     </ion-row>
     <ion-row *ngIf="event1==true">
       <ion-col>
-        <ion-button (click)="reset()" expand="full" style="background-color: #222">{{"CANCEL"|translate}}</ion-button>
+        <ion-button (click)="reset()" expand="block" color="yellow">
+          <ion-icon name="close-circle-outline" class="mr-3"></ion-icon> {{"CANCEL"|translate}}
+        </ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
-
 </ion-footer>

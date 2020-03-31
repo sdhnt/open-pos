@@ -14,7 +14,12 @@ export class EventService {
   addRecProdCreated: EventEmitter<any> = new EventEmitter();
   addRecCalcCcreated: EventEmitter<any> = new EventEmitter();
   viewRecs: EventEmitter<any> = new EventEmitter();
+  isback: EventEmitter<any> = new EventEmitter();
   constructor() { }
+
+  emitIsBack(data) {
+    this.isback.emit(data);
+  }
 
   emitNewUserEvent(data?) {
     this.newUser.emit(data);

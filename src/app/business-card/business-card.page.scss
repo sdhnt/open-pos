@@ -21,17 +21,19 @@
   background-color: #fafafa;
 }
 #card {
-  background-color: #301924;
-  border: 0.85px solid black;
+  background-color: #7eace329;
+  border: 0.85px solid #a9c3e2;
 }
 ion-row {
   padding-top: 5px;
   padding-bottom: 3px;
-  font-size: medium;
-  color: wheat;
 }
 ion-card-title {
   font-size: 19px;
   font-weight: 600;
   text-align: center;
+}
+
+.header-row * {
+  font-size: 14px !important;
 }

@@ -10,6 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HelpPage } from '../help/help.page';
 import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
+import { EventService } from '../services/event.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -64,7 +65,8 @@ export class UserProfilePage implements OnInit {
     private modal: ModalController,
     private router: Router,
     private location: Location,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private event: EventService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params.res) {
@@ -124,9 +126,20 @@ export class UserProfilePage implements OnInit {
     console.log('ionViewDidLoad UserProfilePage');
     this.getUser().then();
     this.oldUser = cloneDeep(this.user);
+    this.event.emitIsBack(true);
   }
 
   ionViewDidLoad() {
+    console.log('ionViewDidLoad()');
+  }
+
+  ionViewDidEnter() {
+    this.event.emitIsBack(true);
+    console.log('ionViewDidLoad UserDataPage');
+  }
+
+  ionViewWillLeave() {
+    this.event.emitIsBack(false);
   }
 
   // loadDropDowns() {
@@ -187,7 +200,7 @@ export class UserProfilePage implements OnInit {
           .setUserDat(this.user)
           .then(() => {
             console.log('new user data saved in storage');
-            this.router.navigate(['/home']);
+            this.router.navigate(['/home/income-transaction']);
             // this.navCtrl.setRoot(TransactionHomePage);
           })
           .catch(error => {

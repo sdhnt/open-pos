@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController, ToastController, ActionSheetController } from '@ionic/angular';
 // import { Events } from 'ionic-angular';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
@@ -9,6 +9,7 @@ import * as firebase from 'firebase';
 import { TranslateConfigService } from '../services/translation/translate-config.service';
 import { EventService } from '../services/event.service';
 import { Location } from '@angular/common';
+import { SheetStates } from 'ionic-custom-bottom-sheet';
 
 @Component({
   selector: 'app-add-product-signup',
@@ -27,7 +28,8 @@ export class AddProductSignupPage implements OnInit {
     public camera: Camera,
     public alertCtrl: AlertController,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private actionCtrl: ActionSheetController
   ) {
     this.isProdCode000000 = false;
     this.route.queryParams.subscribe(params => {
@@ -38,6 +40,7 @@ export class AddProductSignupPage implements OnInit {
     });
     this.getUserData();
   }
+  public BottomSheetState: SheetStates = SheetStates.Closed;
   prodName: any = '';
   prodCode: any = '';
   prodPrice: number = null;
@@ -47,10 +50,10 @@ export class AddProductSignupPage implements OnInit {
   listProduct: any;
   isProdCode000000: boolean;
   mode = 0;
-
+  finalProd: any;
   userdata;
   uid;
-  currstock: number;
+  currstock = 0;
 
   newprodCat: any = '';
   listCat: any;
@@ -65,6 +68,19 @@ export class AddProductSignupPage implements OnInit {
     this.getCategories();
     this.disabled = false;
     this.mode = 1;
+  }
+  public openSheet() {
+    this.BottomSheetState = SheetStates.Opened;
+  }
+
+  public closeSheet() {
+    this.BottomSheetState = SheetStates.Closed;
+  }
+
+  public StateChanged(event) {
+    if (event === SheetStates.Closed) {
+      console.log('Sheet Closed');
+    }
   }
 
   ionViewDidLoad() {
@@ -103,6 +119,38 @@ export class AddProductSignupPage implements OnInit {
     this.sp.getCategories().then(value => {
       this.listCat = JSON.parse(value);
     });
+  }
+
+  addQuantity() {
+    this.currstock++;
+  }
+
+  remQuantity() {
+    if (this.currstock >= 1) {
+      this.currstock--;
+    }
+  }
+
+  addCategoryBtn() {
+    this.prodCat = 'New';
+  }
+
+  async openActionSheet() {
+    const sheet = await this.actionCtrl.create({
+      // header: 'Product Category',
+      // tslint:disable-next-line: max-line-length
+      header: 'Product Category',
+      cssClass: 'categoryAction',
+      buttons: [{
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    sheet.present();
   }
 
   async askCamera() {
@@ -237,7 +285,7 @@ export class AddProductSignupPage implements OnInit {
         lang: this.translateConfigService.getCurrentLanguage(),
       }
     };
-    this.router.navigate(['/home'], navigatoinExtra);
+    this.router.navigate(['/home/income-transaction'], navigatoinExtra);
     this.events.emitNewUserEvent('newUser');
   }
 
@@ -328,7 +376,7 @@ export class AddProductSignupPage implements OnInit {
           url: 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y',
           wholesale_price: '0',
         };
-
+        this.finalProd = JSON.parse(JSON.stringify(data)) || JSON.parse(JSON.stringify(exprod));
         console.log(data);
         this.temp = JSON.stringify(data);
         this.sp.storageReady().then(() => {
@@ -398,7 +446,7 @@ export class AddProductSignupPage implements OnInit {
 
           console.log(data);
           this.temp = JSON.stringify(data);
-
+          this.finalProd = JSON.parse(JSON.stringify(data));
           this.sp.storageReady().then(() => {
             this.sp.addProduct(data);
             setTimeout(async () => {

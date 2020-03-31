@@ -25,14 +25,11 @@ ion-col {
   display: inline-block;
 }
 .calculator {
-  margin: 20px;
   widows: 100px;
-  border-radius: 10px;
   box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.5);
   .header {
     background-color: #000;
     height: 120px;
-    border-radius: 10px 10px 0 0;
     .window {
       height: 15px;
       display: flex;
@@ -75,7 +72,6 @@ ion-col {
   .keys {
     background: linear-gradient(135deg, #3a3a3a, #000000);
     height: 350px;
-    border-radius: 0 0 10px 10px;
     font-size: 24px;
     .row {
       height: 70px;
@@ -128,7 +124,6 @@ ion-col {
         }
         &.action {
           background: linear-gradient(60deg, #ff0300, #ffa100);
-          border-radius: 0 0 10px 0;
           color: #ffffff;
           box-shadow: 0 25px 60px -10px rgba(255, 10, 0, 0.5);
         }

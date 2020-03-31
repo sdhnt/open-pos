@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {
   ToastController,
   AlertController,
-  ModalController
+  ModalController,
+  PopoverController
 } from '@ionic/angular';
 import * as firebase from 'firebase';
 import { StorageProvider } from '../services/storage/storage';
@@ -57,7 +58,7 @@ export class AllTransactionPage implements OnInit {
     public sp: StorageProvider,
     public tstCtrl: ToastController,
     private alertCtrl: AlertController,
-    private view: ModalController
+    private view: PopoverController
   ) {
     this.getUserData().then(() => console.log('get user data'));
     this.events.addRecCalcCreated.subscribe(data => {

@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 
 import { TabsPageRoutingModule } from './tabs-routing.module';
 
-import { TabsPage } from './tabs.page';
+import { TabsPage, PopOverComponent } from './tabs.page';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
 import { AllTransactionPage } from '../all-transaction/all-transaction.page';
@@ -57,8 +57,9 @@ import { UpdateStockPageModule } from '../update-stock/update-stock.module';
     LoanHomePage,
     BusinessCardPage,
     ContactUsPage,
-    UpdateStockPage
+    UpdateStockPage,
+    PopOverComponent
   ],
-  declarations: [TabsPage]
+  declarations: [TabsPage, PopOverComponent]
 })
 export class TabsPageModule { }
