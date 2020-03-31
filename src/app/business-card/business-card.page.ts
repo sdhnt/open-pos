@@ -47,8 +47,9 @@ export class BusinessCardPage implements OnInit {
 
   share() {
     const div = document.getElementById('card');
-    const options = { background: '#7eace329', height: this.platform.height(), width: this.platform.width() };
+    const options = { background: '#7eace329' };
     domtoimage.toPng(div, options).then((dataUrl) => {
+      console.log(dataUrl);
       this.social
         .share(
           'This is my business card. Please feel free to contact us for any enquiries\nCreated by OpenPOS',
