@@ -63,7 +63,7 @@
             send automatic SMS reminder feature and an option to see who owes you money on a particular date."|translate}}
         </ion-card>
     </div>
-    <ion-card *ngFor="let contact of filteredList" class="headingCard dataCard">
+    <ion-card *ngFor="let contact of filteredList" class="headingCard dataCard" (click)="navToIndividual(contact)">
         <ion-row>
             <ion-col size="6">
                 <div>

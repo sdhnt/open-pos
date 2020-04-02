@@ -10,7 +10,7 @@ import html2canvas from 'html2canvas';
 import { SMS } from '@ionic-native/sms/ngx';
 import { Observable } from 'rxjs';
 import domtoimage from 'dom-to-image';
-
+import { EventService } from '../services/event.service';
 @Component({
   selector: 'app-individual-contact',
   templateUrl: './individual-contact.page.html',
@@ -19,6 +19,7 @@ import domtoimage from 'dom-to-image';
 export class IndividualContactPage implements OnInit {
 
   constructor(
+    public event: EventService,
     public alertCtrl: AlertController,
     public sp: StorageProvider,
     private toastCtrl: ToastController,
@@ -56,7 +57,14 @@ export class IndividualContactPage implements OnInit {
   usingShare = false;
 
   ngOnInit() {
+  }
 
+  ionViewDidEnter() {
+    this.event.emitIsBack(true);
+  }
+
+  ionViewWillLeave() {
+    this.event.emitIsBack(false);
   }
 
   ionViewDidLoad() {

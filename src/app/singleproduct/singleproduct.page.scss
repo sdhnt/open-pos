@@ -1,4 +1,104 @@
+.dashedDiv {
+    border: 1px dashed;
+    margin: 13px;
+    border-radius: 8px;
+    background: #fff;
+}
+
+.dashedDiv img {
+    float: left;
+    height: 34px;
+    margin: 20px 30px;
+}
+
+.uploadContent p {
+    margin: 0;
+}
+
+.uploadContent ion-icon {
+    float: left;
+    font-size: 18px;
+}
+
+.uploadContent {
+    position: absolute;
+    top: 20px;
+}
+
+.uploadContent span {
+    font-size: 13px;
+    margin-left: 2px;
+}
+
+.scanBarcode {
+    border: 1px solid #e1dfdf;
+    border-radius: 10px;
+    margin: 0px;
+}
+
+.scanBarcode img {
+    height: 28px;
+    float: right;
+    margin: 11px;
+}
+
 ion-input {
-  border: solid 1px black;
-  margin: 5px;
+    border: solid 1px black;
+    height: 36px;
+}
+
+.inputDiv label {
+    font-size: 13px;
+}
+
+.inputDiv {
+    margin-top: 10px;
+}
+
+.selectCat ion-icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    margin: auto;
+    font-size: 19px;
+}
+
+ion-select {
+    opacity: 1 !important;
+    color: #000!important;
+}
+
+.selectCat {
+    border: 1px solid #ddd;
+    margin-top: 15px;
+    border-radius: 8px;
+}
+
+.addProduct {
+    margin-top: 10px;
+}
+
+.addProduct ion-col {
+    padding: 0;
+}
+
+.addProduct ion-button {
+    width: 100%;
+}
+
+.otherButtons {
+    border: 1px solid var(--ion-color-yellow) !important;
+    border-radius: 8px;
+}
+
+.otherButtons ion-col {
+    padding: 0;
+}
+
+ion-row.otherButtons p {
+    margin: 7px;
+    text-align: center;
+    padding: 0;
 }

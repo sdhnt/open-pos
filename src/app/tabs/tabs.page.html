@@ -1,48 +1,48 @@
 <ion-header>
-  <ion-toolbar class="main-header" color="magenta">
-    <ion-buttons slot="start" *ngIf="isBackEnable">
-      <ion-back-button defaultHref="/home/income-transaction"></ion-back-button>
-    </ion-buttons>
-    <!-- <button ion-button menuToggle>
+    <ion-toolbar class="main-header" color="magenta">
+        <ion-buttons slot="start" *ngIf="isBackEnable">
+            <ion-back-button defaultHref="/home/income-transaction"></ion-back-button>
+        </ion-buttons>
+        <!-- <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button> -->
-    <ion-title size="large" color="light"> OPEN </ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="openPopover($event)">
-        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
+        <ion-title size="large" color="light"> OPEN </ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="openPopover($event)">
+                <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-router-outlet></ion-router-outlet>
-  <ion-tabs>
-    <ion-tab-bar slot="bottom">
-      <ion-tab-button tab="income-transaction">
-        <ion-icon name="list"></ion-icon>
-        <ion-label>{{'Receipt'|translate}}</ion-label>
-      </ion-tab-button>
+    <ion-router-outlet></ion-router-outlet>
+    <ion-tabs>
+        <ion-tab-bar slot="bottom">
+            <ion-tab-button tab="income-transaction">
+                <ion-icon name="list"></ion-icon>
+                <ion-label>{{'Receipt'|translate}}</ion-label>
+            </ion-tab-button>
 
-      <ion-tab-button tab="contacts">
-        <ion-icon name="people-circle-outline"></ion-icon>
-        <ion-label>{{'Contacts'|translate}}</ion-label>
-      </ion-tab-button>
+            <ion-tab-button tab="contacts">
+                <ion-icon name="people-circle-outline"></ion-icon>
+                <ion-label>{{'Contacts'|translate}}</ion-label>
+            </ion-tab-button>
 
-      <ion-fab-button color="yellow">
-        <ion-icon color="light" name="add"></ion-icon>
-      </ion-fab-button>
+            <ion-fab-button color="yellow">
+                <ion-icon color="light" name="add"></ion-icon>
+            </ion-fab-button>
 
-      <ion-tab-button tab="transaction-product">
-        <ion-icon name="grid"></ion-icon>
-        <ion-label>{{'Stock'|translate}}</ion-label>
-      </ion-tab-button>
+            <ion-tab-button tab="transaction-product">
+                <ion-icon name="grid"></ion-icon>
+                <ion-label>{{'Stock'|translate}}</ion-label>
+            </ion-tab-button>
 
-      <ion-tab-button tab="summary-graphs">
-        <ion-icon name="wallet"></ion-icon>
-        <ion-label>{{'Accounts'|translate}}</ion-label>
-      </ion-tab-button>
-    </ion-tab-bar>
-  </ion-tabs>
-  <!-- <ion-fab horizontal="center" vertical="bottom" edge>
+            <ion-tab-button tab="summary-graphs">
+                <ion-icon name="wallet"></ion-icon>
+                <ion-label>{{'Accounts'|translate}}</ion-label>
+            </ion-tab-button>
+        </ion-tab-bar>
+    </ion-tabs>
+    <!-- <ion-fab horizontal="center" vertical="bottom" edge>
   </ion-fab> -->
 </ion-content>

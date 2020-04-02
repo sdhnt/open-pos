@@ -1,73 +1,99 @@
 <ion-content class="ion-padding">
-  <ion-row>
-    <ion-col>
-      <ion-button expand="block" color="danger" (click)="delete()">{{"Delete"|translate}}</ion-button>
-    </ion-col>
-    <ion-col></ion-col>
-    <ion-col>
-      <ion-button expand="block" color="dark" (click)="goBack()">
-        {{"Done"|translate}}</ion-button>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col col-12 style="text-align: center;">
-      <ion-button shape="round" class="buttonline2" (click)="share()" [disabled]="usingShare">
-        <ion-icon name="share" style="padding-right: 7px;"></ion-icon>Share
-      </ion-button>
-      <ion-button shape="round" class="buttonline2" (click)="sendSMS()">
-        <ion-icon name="mail" style="padding-right: 7px;"></ion-icon>SMS
-      </ion-button>
-    </ion-col>
-  </ion-row>
-  <div id="share" style="padding: 10px;">
+    <ion-card>
+        <div class="borderedCard">
+            <div class="item">
+                <ion-row>
+                    <ion-col size="8">
+                        <span class="title">Ken: </span>
+                    </ion-col>
+                    <ion-col size="4">
+                        <span class="content" style="color: red;" *ngIf="contact.balance<0; else nonNeg">
+                          {{ contact.balance }}
+                        </span>
+                        <span class="content" style="color: green;" *ngIf="contact.balance>0; else zero" id="nonNeg">
+                          {{ contact.balance }}
+                        </span>
+                        <span class="content" style="color: blue;" *ngIf="contact.balance==0" id="zero">
+                          0
+                        </span>
+                    </ion-col>
+                </ion-row>
+            </div>
+            <div class="item">
+                <ion-row>
+                    <ion-col size="8">
+                        <span class="title">Customer Discount: </span>
+                    </ion-col>
+                    <ion-col size="4">
+                        <span class="content">0</span>
+                    </ion-col>
+                </ion-row>
+            </div>
+            <div class="item">
+                <ion-row>
+                    <ion-col size="8">
+                        <span class="title">{{"Due Date"|translate}}: </span>
+                    </ion-col>
+                    <ion-col size="4">
+                        <span class="content">
+                          <ion-datetime [(ngModel)]="newDate" style="border: 1px solid black;" placeholder="{{'None'|translate}}" style="min-width: 30%;" [min]="minDate" [max]="maxDate">
+                          </ion-datetime>
+                        </span>
+                    </ion-col>
+                </ion-row>
+            </div>
+        </div>
+    </ion-card>
     <ion-row>
-      <ion-col class="top-text">
-        <p>{{ contact.displayName }}</p>
-      </ion-col>
-      <ion-col style="text-align: end;" class="top-text">
-        <p style="color: red;" *ngIf="contact.balance<0; else nonNeg">{{ contact.balance }}</p>
-        <p style="color: green;" *ngIf="contact.balance>0; else zero" id="nonNeg">{{ contact.balance }}</p>
-        <p style="color: blue;" *ngIf="contact.balance==0" id="zero">0</p>
-      </ion-col>
+        <ion-grid style="padding: 0px;">
+            <ion-row style="text-align: center; font-weight: bold; font-size: 16px;">
+                <ion-col class="table-col">
+                    <p>{{"Date"|translate}}</p>
+                </ion-col>
+                <ion-col class="table-col">
+                    <p>{{"Credit"|translate}}</p>
+                </ion-col>
+                <ion-col class="table-col">
+                    <p>{{"Debit"|translate}}</p>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngFor="let val of contact.transacHistory" class="tableData">
+                <ion-col>
+                    <p>{{ getDateTime(val.date) }}</p>
+                </ion-col>
+                <ion-col style="text-align: center;">
+                    <p *ngIf="val.amount<0" style="color: red;">{{ val.amount }}</p>
+                </ion-col>
+                <ion-col style="text-align: center;">
+                    <p *ngIf="val.amount>0" style="color: green;">{{ val.amount }}</p>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
     </ion-row>
+
     <ion-row>
-      <ion-col class="top-text" style="font-weight: 400;">
-        <ion-item>
-          <ion-label style="font-weight: 600; color: black;"><p><b>{{"Due Date"|translate}}:</b></p></ion-label>
-          <ion-datetime [(ngModel)]="newDate" style="border: 1px solid black;" placeholder="{{'None'|translate}}"
-            style="min-width: 30%;" [min]="minDate" [max]="maxDate">
-          </ion-datetime>
-        </ion-item>
-        <ion-button slot="end" color="danger" size="small" (click)="remDate()" *ngIf="newDate && newDate != ''">Remove date</ion-button>
-      </ion-col>
+        <ion-col>
+            <ion-button expand="block" class="addCredit" (click)="transaction(-1)">{{"Credit"|translate}}
+            </ion-button>
+        </ion-col>
+        <ion-col>
+            <ion-button expand="block" class="addDebit" (click)="transaction(1)">{{"Debit"|translate}}
+            </ion-button>
+        </ion-col>
     </ion-row>
-    <ion-grid style="padding: 0px;">
-      <ion-row style="text-align: center; font-weight: bold; font-size: 16px;">
-        <ion-col class="table-col"><p>{{"Date"|translate}}</p></ion-col>
-        <ion-col class="table-col"><p>{{"Borrowed"|translate}}</p></ion-col>
-        <ion-col class="table-col"><p>{{"Paid"|translate}}</p></ion-col>
-      </ion-row>
-      <ion-row *ngFor="let val of contact.transacHistory">
-        <ion-col class="table-col"><p>{{ getDateTime(val.date) }}</p></ion-col>
-        <ion-col style="text-align: center;" class="table-col">
-          <p *ngIf="val.amount<0" style="color: red;">{{ val.amount }}</p>
-        </ion-col>
-        <ion-col style="text-align: center;" class="table-col">
-          <p *ngIf="val.amount>0" style="color: green;">{{ val.amount }}</p>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
 </ion-content>
 <ion-footer>
-  <ion-row>
-    <ion-col>
-      <ion-button expand="block" color="danger" (click)="transaction(-1)">{{"Borrowed"|translate}}
-      </ion-button>
-    </ion-col>
-    <ion-col>
-      <ion-button expand="block" color="success" (click)="transaction(1)">{{"Paid"|translate}}
-      </ion-button>
-    </ion-col>
-  </ion-row>
+    <div class="footerButtons">
+        <ion-row>
+            <ion-col size="2">
+            </ion-col>
+            <ion-col size="8">
+                <img src="../../assets/new-ui-imgs/icons/Group 151.png" (click)="delete()" />
+                <img src="../../assets/new-ui-imgs/icons/Group 149.png" (click)="sendSMS()" />
+                <img src="../../assets/new-ui-imgs/icons/Group 147.png" (click)="share()" />
+            </ion-col>
+            <ion-col size="2">
+            </ion-col>
+        </ion-row>
+    </div>
 </ion-footer>

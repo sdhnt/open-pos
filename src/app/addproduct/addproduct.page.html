@@ -1,85 +1,100 @@
 <ion-content class="ion-padding">
-  <ion-item>
-    <ion-button slot="end" expand="block" (click)="clearFields()" color="danger">{{"Cancel"|translate}}</ion-button>
-  </ion-item>
-  <ion-item>
-    <b>{{"Enter Information:" | translate}}</b>
+    <div class="pageTitle">
+        <h5>{{"Enter Information:" | translate}}</h5>
+    </div>
 
-  </ion-item>
-
-  <ion-item>
-    <ion-button extend="full" color="primary" (click)="askCamera()">{{'Take Picture' | translate}}</ion-button>
-    <img *ngIf="image!=null" [src]="image" style="width: 100px;">
-  </ion-item>
-  <ion-list inset>
-    <ion-button extend="block" color="primary" (click)="scanQR()" color="dark">{{'Scan Barcode'| translate}}</ion-button>
-    <ion-item>
-      <ion-label>{{'Product Code:'| translate}}</ion-label>
-      <ion-label style="color: red; font-size: 25px;" *ngIf="isProdCode000000"><b>!</b></ion-label>
-      <ion-input type="text" [(ngModel)]='prodCode'></ion-input>
-    </ion-item>
+    <div class="uploadPic" (click)="askCamera()">
+        <h6 class="fieldTitle">Upload Picture</h6>
+        <ion-card *ngIf="!image" style="margin-left: 0;--background:#f8f8f8;margin-right: 0;">
+            <div class="dashedDiv">
+                <ion-row>
+                    <ion-col size="3">
+                        <img src="../../assets/new-ui-imgs/icons/noun_Picture_3182777.png" alt="">
+                    </ion-col>
+                    <ion-col size="9">
+                        <div class="uploadContent">
+                            <p>Upload Product Image</p>
+                            <ion-icon name="camera-outline"></ion-icon>
+                            <span>Take picture</span>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </div>
+        </ion-card>
+        <img *ngIf="image!=null" [src]="image" style="width: 100px;">
+    </div>
+    <div class="scanBarcode" (click)="scanQR()">
+        <ion-row>
+            <ion-col size="3">
+                <img src="../../assets/new-ui-imgs/icons/noun_Scanner_2976066.png" alt="">
+            </ion-col>
+            <ion-col size="9">
+                <div class="uploadContent">
+                    <p>{{'Scan Barcode'| translate}}</p>
+                </div>
+            </ion-col>
+        </ion-row>
+    </div>
+    <div class="inputDiv">
+        <label for="">{{'Product Code:'| translate}}: </label>
+        <ion-input [(ngModel)]='prodCode'></ion-input>
+    </div>
     <form [formGroup]="formProduct">
-
-      <!-- <ion-button extend="full" color="dark" (click)="getProdPic()">Upload Picture</ion-button> -->
-
-      <ion-item>
-        <ion-label>{{'Product Name:'| translate}}</ion-label>
-        <ion-input type="text" formControlName="prodName" [(ngModel)]='prodName'></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label>{{'Product Retail Price:'| translate}}</ion-label>
-        <ion-input type="number" formControlName="prodPrice" [(ngModel)]='prodPrice'></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label>{{'Product Wholesale Price:'| translate}}</ion-label>
-        <ion-input type="number" formControlName="prodWholesalePrice" [(ngModel)]='prodWholesalePrice'></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label>{{'Product Buying Cost:'| translate}}</ion-label>
-        <ion-input type="number" formControlName="prodCost" [(ngModel)]='prodCost'></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label>{{'Current Stock Qty:'| translate}}</ion-label>
-        <ion-input type="number" formControlName="currstock" [(ngModel)]='currstock'></ion-input>
-      </ion-item>
-      <!-- OPTIONAL EXPIRY/Shelf Life in time -->
-
-      <ion-item>
-
-        <ion-label>{{'Product Category' | translate}}</ion-label>
-        <ion-select multiple="false" formControlName="prodCat" [(ngModel)]='prodCat'>
-
-          <!-- <ion-select-option>New</ion-select-option> -->
-          <ion-select-option value="New"> {{'Add New Category'| translate}}</ion-select-option>
-          <ion-select-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-select-option>
-
-        </ion-select>
-
-        <!-- <ion-label>Select Category</ion-label>
-        <ion-select multiple="false" [(ngModel)]='prodCat'>
-              <ion-select-option>New</ion-select-option>
-              <ion-select-option>Snacks</ion-select-option>
-              <ion-select-option>Drinks</ion-select-option>
-              <ion-select-option>Noodles</ion-select-option>
-        </ion-select> -->
-      </ion-item>
-
-
-
-
-      <ion-item *ngIf="prodCat=='New'">
-        <ion-label>{{'Enter New Category Name' | translate}}</ion-label>
-        <ion-input type="text" placeholder="{{'Enter Category Here' | translate}}" formControlName="newprodCat"
-          [(ngModel)]='newprodCat'></ion-input>
-      </ion-item>
-
-
+        <div class="inputDiv">
+            <label for="">{{'Product Name:'| translate}} </label>
+            <ion-input type="text" formControlName="prodName" [(ngModel)]='prodName'></ion-input>
+        </div>
+        <div class="inputDiv">
+            <label for="">{{'Product Retail Price:'| translate}}</label>
+            <ion-input type="number" formControlName="prodPrice" [(ngModel)]='prodPrice'></ion-input>
+        </div>
+        <div class="inputDiv">
+            <label for="">{{'Product Wholesale Price:'| translate}} </label>
+            <ion-input type="number" formControlName="prodWholesalePrice" [(ngModel)]='prodWholesalePrice'></ion-input>
+        </div>
+        <div class="inputDiv">
+            <label for="">{{'Product Buying Cost:'| translate}}</label>
+            <ion-input type="number" formControlName="prodCost" [(ngModel)]='prodCost'></ion-input>
+        </div>
+        <div class="inputDiv">
+            <label for="">{{'Current Stock Qty:'| translate}} </label>
+            <ion-input type="number" formControlName="currstock" [(ngModel)]='currstock'></ion-input>
+        </div>
+        <div class="selectCat">
+            <ion-row>
+                <ion-col size="2">
+                    <ion-icon name="grid-outline"></ion-icon>
+                </ion-col>
+                <ion-col size="10">
+                    <ion-select multiple="false" formControlName="prodCat" [(ngModel)]='prodCat' placeholder="{{'Product Category' | translate}}">
+                        <ion-select-option value="New"> {{'Add New Category'| translate}}</ion-select-option>
+                        <ion-select-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-select-option>
+                    </ion-select>
+                </ion-col>
+            </ion-row>
+        </div>
+        <div class="inputDiv" *ngIf="prodCat=='New'">
+            <label for="">{{'Enter New Category Name' | translate}} </label>
+            <ion-input type="text" formControlName="newprodCat" [(ngModel)]='newprodCat'></ion-input>
+        </div>
     </form>
-  </ion-list>
-  <ion-button extend="block" color="primary" [disabled]="disabled" (click)="addproduct()"
-    color="dark">{{'Add Product'| translate}}</ion-button>
-  <ion-button extend="block" style="background-color: red; color: white;"
-    (click)="clearFields()">{{"Clear Fields"|translate}}</ion-button>
-
+    <div class="addProduct">
+        <ion-row>
+            <ion-col size="12">
+                <ion-button extend="block" color="magenta" [disabled]="disabled" (click)="addproduct()">
+                    <ion-icon name="checkmark-circle" style="margin-right: 10px;"></ion-icon>{{'Add Product'| translate}}</ion-button>
+            </ion-col>
+        </ion-row>
+    </div>
+    <div class="addProduct">
+        <ion-row class="otherButtons">
+            <ion-col size="6" (click)="clearFields()" style="background-color: var(--ion-color-yellow) !important;color: #fff;">
+                <p>{{"Clear Fields"|translate}}</p>
+            </ion-col>
+            <ion-col size="6" style="color: var(--ion-color-yellow) !important;" (click)="clearFields()">
+                <p>{{"Cancel"|translate}}</p>
+            </ion-col>
+        </ion-row>
+    </div>
 
 </ion-content>

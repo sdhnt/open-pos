@@ -11,7 +11,6 @@ import { EventService } from '../services/event.service';
   styleUrls: ['./user-data.page.scss'],
 })
 export class UserDataPage implements OnInit {
-
   constructor(
     private sp: StorageProvider, private router: Router, private modalCtrl: ModalController,
     private event: EventService, private popover: PopoverController) {
