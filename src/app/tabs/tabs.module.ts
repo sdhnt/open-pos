@@ -26,6 +26,8 @@ import { HttpLoaderFactory } from '../app.module';
 import { HttpClient } from '@angular/common/http';
 import { UpdateStockPage } from '../update-stock/update-stock.page';
 import { UpdateStockPageModule } from '../update-stock/update-stock.module';
+import { CashPopoverPage } from '../cash-popover/cash-popover.page';
+import { CashPopoverPageModule } from '../cash-popover/cash-popover.module';
 
 @NgModule({
   imports: [
@@ -47,7 +49,8 @@ import { UpdateStockPageModule } from '../update-stock/update-stock.module';
     LoanHomePageModule,
     BusinessCardPageModule,
     ContactUsPageModule,
-    UpdateStockPageModule
+    UpdateStockPageModule,
+    CashPopoverPageModule
   ],
   entryComponents: [
     AllTransactionPage,
@@ -58,7 +61,8 @@ import { UpdateStockPageModule } from '../update-stock/update-stock.module';
     BusinessCardPage,
     ContactUsPage,
     UpdateStockPage,
-    PopOverComponent
+    PopOverComponent,
+    CashPopoverPage
   ],
   declarations: [TabsPage, PopOverComponent]
 })

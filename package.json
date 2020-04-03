@@ -556,7 +556,9 @@
       },
       "cordova-plugin-facebook4-no-zxing": {
         "APP_ID": "1521978867943856",
-        "APP_NAME": "Open FinTech"
+        "APP_NAME": "Open FinTech",
+        "FACEBOOK_HYBRID_APP_EVENTS": "false",
+        "FACEBOOK_ANDROID_SDK_VERSION": "4.40.0"
       },
       "cordova-sms-plugin": {},
       "cordova-plugin-appminimize": {}

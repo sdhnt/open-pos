@@ -1,48 +1,55 @@
 <!-- <div class="modal"> -->
 <ion-header>
-  <ion-toolbar color="dark">
-    <ion-title style="color: white;">{{"Update Stock"|translate}}</ion-title>
-    <ion-buttons slot="end">
-      <ion-button color="danger" (click)="dismiss()">{{"Close"|translate}}</ion-button>
-    </ion-buttons>
-  </ion-toolbar>
+    <ion-toolbar color="dark">
+        <ion-icon name="arrow-back-outline" (click)="dismiss()"></ion-icon>
+        <ion-title style="color: white;">{{"Update Stock"|translate}}</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-list *ngIf="product">
-    <ion-item>
-      {{"Product Name:"|translate}} {{ product.name }}
-    </ion-item>
-    <ion-item>
-      <ion-input placeholder="{{'Product Qty'|translate}}" type="number" [(ngModel)]='prodqty'
-        (ionChange)="updatebalance('prodqty')"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input placeholder="{{'Purchase Price per Item'|translate}}" type="number" [(ngModel)]='prodcostitem'
-        (ionChange)="updatebalance('prodcostitem')"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input type="number" placeholder="{{'Total Expenditure'|translate}}" [(ngModel)]='prodcost'
-        (ionChange)="updatebalance('prodcost')"></ion-input>
-    </ion-item>
+    <ion-list *ngIf="product" lines="none">
+        <ion-item>
+            {{ product.name }}
+        </ion-item>
+        <ion-item>
+            <ion-input placeholder="{{'Product Qty'|translate}}" type="number" [(ngModel)]='prodqty' (ionChange)="updatebalance('prodqty')"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-input placeholder="{{'Purchase Price per Item'|translate}}" type="number" [(ngModel)]='prodcostitem' (ionChange)="updatebalance('prodcostitem')"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-input type="number" placeholder="{{'Total Expenditure'|translate}}" [(ngModel)]='prodcost' (ionChange)="updatebalance('prodcost')"></ion-input>
+        </ion-item>
 
-    <ion-item>
-      <h3>{{"Optional"|translate}}:</h3>
-    </ion-item>
-    <ion-item>
-      <ion-label>{{"Batch Expiry Date:"|translate}}</ion-label>
-      <ion-datetime displayFormat="DD/MMM/YYYY" [(ngModel)]='expiryDate' [min]="minDate" [max]="maxDate">
-      </ion-datetime>
-    </ion-item>
-    <ion-item>
-      <ion-label>{{"Number of damaged items:"|translate}}</ion-label>
-      <ion-input displayFormat="DD/MMM/YYYY" [(ngModel)]='damage'></ion-input>
-    </ion-item>
-  </ion-list>
+        <ion-item>
+            <h6>{{"Optional"|translate}}:</h6>
+        </ion-item>
+        <ion-item>
+            <ion-label>{{"Batch Expiry Date:"|translate}}</ion-label>
+            <ion-datetime #datePicker displayFormat="DD MMM YYYY" [(ngModel)]='expiryDate' [min]="minDate" [max]="maxDate">
+            </ion-datetime>
+        </ion-item>
+        <ion-item>
+            <div class="pickDate" (click)="datePicker.open()">
+                <div class="icon">
+                    <img src="../../assets/new-ui-imgs/icons/Mask Group 27.png" />
+                </div>
+                <div class="picker">
+                    <p>Tap to change the date</p>
+                </div>
+            </div>
+        </ion-item>
+        <ion-item>
+            <p>{{"Number of damaged items:"|translate}}</p>
+        </ion-item>
+        <ion-item>
+            <ion-input displayFormat="DD/MMM/YYYY" [(ngModel)]='damage' placeholder="{{'Number of damaged items:'|translate}}"></ion-input>
+        </ion-item>
+    </ion-list>
 </ion-content>
 <ion-footer class="ion-padding">
-  <ion-button expand="block" (click)="addinventoryexpense()" color="warning">
-    {{"Add Stock"|translate}}
-  </ion-button>
+    <ion-button expand="block" (click)="addinventoryexpense()" color="yellow">
+        {{"Add Stock"|translate}}
+    </ion-button>
 </ion-footer>
 <!-- </div> -->

@@ -21,6 +21,14 @@ const routes: Routes = [
     path: 'add-product-signup',
     loadChildren: () => import('./add-product-signup/add-product-signup.module').then(m => m.AddProductSignupPageModule)
   },
+  {
+    path: 'cash-popover',
+    loadChildren: () => import('./cash-popover/cash-popover.module').then( m => m.CashPopoverPageModule)
+  },
+  {
+    path: 'add-item-popover',
+    loadChildren: () => import('./add-item-popover/add-item-popover.module').then( m => m.AddItemPopoverPageModule)
+  }
 ];
 
 @NgModule({

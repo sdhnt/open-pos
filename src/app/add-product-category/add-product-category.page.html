@@ -1,37 +1,50 @@
 <ion-content class="ion-padding">
-  <ion-item>
-    <ion-button slot="end" color="dark" shape="round" (click)="goBack()">{{ "Done" | translate }}</ion-button>
-  </ion-item>
-  <ion-grid>
-    <ion-row>
-      <ion-col size="8">
-        <ion-input type="text" placeholder="{{'Enter Category Here'|translate}}" [(ngModel)]='newprodCat'></ion-input>
-      </ion-col>
-      <ion-col>
-        <ion-button expand="full" color="dark" (click)="addCategory()"> {{'Add Category' | translate}}</ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+    <div class="pageTitle">
+        <ion-row>
+            <ion-col>
+                <h5>{{'View Categories' | translate}}</h5>
+            </ion-col>
+        </ion-row>
+    </div>
+    <div class="addCatInput">
+        <ion-row>
+            <ion-col size="10">
+                <ion-input type="text" placeholder="{{'Enter Category Here'|translate}}" [(ngModel)]='newprodCat'></ion-input>
+            </ion-col>
+            <ion-col size="2" class="addButton" (click)="addCategory()">
+                <div>
+                    <ion-icon name="add-circle-outline"></ion-icon>
+                </div>
+            </ion-col>
+        </ion-row>
+    </div>
 
+    <div class="pageSubTitle">
+        <ion-row>
+            <ion-col>
+                <p>Added Categories</p>
+            </ion-col>
+        </ion-row>
+    </div>
 
-
-
-  <ion-item>
-    <h2> <b>{{'View/Delete Category' | translate}} </b> </h2>
-  </ion-item>
-
-  <ion-list *ngFor="let element of listCat">
-
-    <ion-item>
-      {{element.name}}
-      <ion-icon item-end name="close-circle" (click)="delCat(element)" color="danger"></ion-icon>
-    </ion-item>
-  </ion-list>
-
-
-
-
-
-
-
+    <div *ngFor="let element of listCat" class="categoryList">
+        <div class="catTitle">
+            <span>{{element.name}}</span>
+        </div>
+        <div class="catDelete">
+            <ion-icon item-end name="close-circle" (click)="delCat(element)" color="danger"></ion-icon>
+        </div>
+    </div>
 </ion-content>
+
+<ion-footer>
+    <ion-row class="doneButton">
+        <ion-col size="1">
+        </ion-col>
+        <ion-col size="10">
+            <ion-button color="yellow" (click)="goBack()">{{ "Done" | translate }}</ion-button>
+        </ion-col>
+        <ion-col size="1">
+        </ion-col>
+    </ion-row>
+</ion-footer>

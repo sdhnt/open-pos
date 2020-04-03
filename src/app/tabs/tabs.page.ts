@@ -18,6 +18,8 @@ import { HelpPage } from '../help/help.page';
 import { EventService } from '../services/event.service';
 import { Observable } from 'rxjs';
 import { ContactUsPage } from '../contact-us/contact-us.page';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import {CashPopoverPage} from '../cash-popover/cash-popover.page'
 
 @Component({
   selector: 'app-tabs',
@@ -447,6 +449,8 @@ export class PopOverComponent implements OnInit {
     discount: 0.0,
   };
   constructor(
+    private popover: PopoverController,
+    private popover2: PopoverController,
     private sp: StorageProvider,
     private translateConfigService: TranslateConfigService,
     private alertCtrl: AlertController,
@@ -523,61 +527,64 @@ export class PopOverComponent implements OnInit {
   }
 
   async cashbtn() {
+    console.log("CASH BUUTTON")
+    const cashPopover = await this.popover2.create({ component: CashPopoverPage });
+    cashPopover.present();
     // await this.modal1.dismiss();
-    await this.getUserData();
-    const message: Observable<any> = this.translateConfigService.getTranslatedMessage('Balance');
-    const message1: Observable<any> = this.translateConfigService.getTranslatedMessage('Edit');
-    const message2: Observable<any> = this.translateConfigService.getTranslatedMessage('Enter Current Cash Balance');
-    const message3: Observable<any> = this.translateConfigService.getTranslatedMessage('Update');
-    const message4: Observable<any> = this.translateConfigService.getTranslatedMessage('Cancel');
-    const message5: Observable<any> = this.translateConfigService.getTranslatedMessage('OK');
-    const ms: Observable<any> = this.translateConfigService.getTranslatedMessage('Cash Balance');
-    const ms1: Observable<any> = this.translateConfigService.getTranslatedMessage('cashbalancedescrip');
+    // await this.getUserData();
+    // const message: Observable<any> = this.translateConfigService.getTranslatedMessage('Balance');
+    // const message1: Observable<any> = this.translateConfigService.getTranslatedMessage('Edit');
+    // const message2: Observable<any> = this.translateConfigService.getTranslatedMessage('Enter Current Cash Balance');
+    // const message3: Observable<any> = this.translateConfigService.getTranslatedMessage('Update');
+    // const message4: Observable<any> = this.translateConfigService.getTranslatedMessage('Cancel');
+    // const message5: Observable<any> = this.translateConfigService.getTranslatedMessage('OK');
+    // const ms: Observable<any> = this.translateConfigService.getTranslatedMessage('Cash Balance');
+    // const ms1: Observable<any> = this.translateConfigService.getTranslatedMessage('cashbalancedescrip');
 
-    const a = await this.alertCtrl
-      .create({
-        header: this.subscriber(ms),
-        subHeader: this.subscriber(ms1),
-        message: this.subscriber(message) + ': ' + this.userdata.cash_balance,
+    // const a = await this.alertCtrl
+    //   .create({
+    //     header: this.subscriber(ms),
+    //     subHeader: this.subscriber(ms1),
+    //     message: this.subscriber(message) + ': ' + this.userdata.cash_balance,
 
-        buttons: [
-          {
-            text: this.subscriber(message1),
-            handler: async (data) => {
-              const alert = await this.alertCtrl
-                .create({
-                  inputs: [
-                    { name: 'cb', placeholder: this.subscriber(message2) },
-                  ],
-                  buttons: [
-                    {
-                      text: this.subscriber(message4),
-                      role: 'cancel',
-                    },
-                    {
-                      text: this.subscriber(message3),
-                      handler: data1 => {
-                        if (data1.cb != null && data1.cb !== '' && data1.cb !== undefined) {
-                          // console.log("Update CB to :"+data1.cb)
-                          this.getUserData();
-                          this.userdata.cash_balance = parseFloat(data1.cb).toString();
-                          this.sp.setUserDat(this.userdata);
-                        }
-                      },
-                    },
-                  ],
-                });
-              alert.present();
-            },
-          }, // end Edit Button
-          {
-            // translate these buttons
-            text: this.subscriber(message5),
-            role: 'Cancel',
-          }, // end OK Button
-        ], // end button
-      });
-    a.present();
+    //     buttons: [
+    //       {
+    //         text: this.subscriber(message1),
+    //         handler: async (data) => {
+    //           const alert = await this.alertCtrl
+    //             .create({
+    //               inputs: [
+    //                 { name: 'cb', placeholder: this.subscriber(message2) },
+    //               ],
+    //               buttons: [
+    //                 {
+    //                   text: this.subscriber(message4),
+    //                   role: 'cancel',
+    //                 },
+    //                 {
+    //                   text: this.subscriber(message3),
+    //                   handler: data1 => {
+    //                     if (data1.cb != null && data1.cb !== '' && data1.cb !== undefined) {
+    //                       // console.log("Update CB to :"+data1.cb)
+    //                       this.getUserData();
+    //                       this.userdata.cash_balance = parseFloat(data1.cb).toString();
+    //                       this.sp.setUserDat(this.userdata);
+    //                     }
+    //                   },
+    //                 },
+    //               ],
+    //             });
+    //           alert.present();
+    //         },
+    //       }, // end Edit Button
+    //       {
+    //         // translate these buttons
+    //         text: this.subscriber(message5),
+    //         role: 'Cancel',
+    //       }, // end OK Button
+    //     ], // end button
+    //   });
+    // a.present();
   }
 
   async help() {
