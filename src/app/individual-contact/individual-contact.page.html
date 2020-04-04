@@ -8,13 +8,13 @@
                     </ion-col>
                     <ion-col size="4">
                         <span class="content" style="color: red;" *ngIf="contact.balance<0; else nonNeg">
-                          {{ contact.balance }}
+                            {{ contact.balance }}
                         </span>
                         <span class="content" style="color: green;" *ngIf="contact.balance>0; else zero" id="nonNeg">
-                          {{ contact.balance }}
+                            {{ contact.balance }}
                         </span>
                         <span class="content" style="color: blue;" *ngIf="contact.balance==0" id="zero">
-                          0
+                            0
                         </span>
                     </ion-col>
                 </ion-row>
@@ -36,8 +36,9 @@
                     </ion-col>
                     <ion-col size="4">
                         <span class="content">
-                          <ion-datetime [(ngModel)]="newDate" style="border: 1px solid black;" placeholder="{{'None'|translate}}" style="min-width: 30%;" [min]="minDate" [max]="maxDate">
-                          </ion-datetime>
+                            <ion-datetime [(ngModel)]="newDate" style="min-width: 30%; padding: 0;"
+                                placeholder="{{'None'|translate}}" [min]="minDate" [max]="maxDate">
+                            </ion-datetime>
                         </span>
                     </ion-col>
                 </ion-row>
@@ -85,14 +86,14 @@
 <ion-footer>
     <div class="footerButtons">
         <ion-row>
-            <ion-col size="2">
+            <ion-col>
+                <img src="assets/new-ui-imgs/icons/Group 151.png" (click)="delete()" />
             </ion-col>
-            <ion-col size="8">
-                <img src="../../assets/new-ui-imgs/icons/Group 151.png" (click)="delete()" />
-                <img src="../../assets/new-ui-imgs/icons/Group 149.png" (click)="sendSMS()" />
-                <img src="../../assets/new-ui-imgs/icons/Group 147.png" (click)="share()" />
+            <ion-col>
+                <img src="assets/new-ui-imgs/icons/Group 149.png" (click)="sendSMS()" />
             </ion-col>
-            <ion-col size="2">
+            <ion-col>
+                <img src="assets/new-ui-imgs/icons/Group 147.png" (click)="share()" />
             </ion-col>
         </ion-row>
     </div>

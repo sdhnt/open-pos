@@ -19,7 +19,8 @@ import { EventService } from '../services/event.service';
 import { Observable } from 'rxjs';
 import { ContactUsPage } from '../contact-us/contact-us.page';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import {CashPopoverPage} from '../cash-popover/cash-popover.page'
+import {CashPopoverPage} from '../cash-popover/cash-popover.page';
+import { AddItemPopoverPage } from '../add-item-popover/add-item-popover.page';
 
 @Component({
   selector: 'app-tabs',
@@ -408,10 +409,23 @@ export class TabsPage implements OnInit {
     });
     popover.present();
   }
+
+  async addNewItembtn() {
+    const addItem = await this.popover.create({
+      component: AddItemPopoverPage
+    });
+    addItem.present();
+    addItem.onDidDismiss().then(res => {
+      console.log(res);
+      if (res.data) {
+        this.events.emitAddNewItemFunc(res.data);
+      }
+    });
+  }
 }
 
 @Component({
-  template: `<ion-list>
+  template: `<ion-list lines="none">
   <ion-item button (click)="uploadbtn()">
       <ion-icon class="mr-1" name="cloud-upload"></ion-icon>
       <ion-label>Upload</ion-label>
@@ -527,7 +541,8 @@ export class PopOverComponent implements OnInit {
   }
 
   async cashbtn() {
-    console.log("CASH BUUTTON")
+    console.log('CASH BUUTTON');
+    this.popover.dismiss();
     const cashPopover = await this.popover2.create({ component: CashPopoverPage });
     cashPopover.present();
     // await this.modal1.dismiss();

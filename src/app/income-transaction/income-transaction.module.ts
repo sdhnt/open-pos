@@ -27,4 +27,4 @@ import { SelectPrinterPopoverPageModule } from '../select-printer-popover/select
   entryComponents: [SelectPrinterPopoverPage,BottomSheetComponent, AdditionalChargePage,AddItemPopoverPage],
   declarations: [IncomeTransactionPage, AdditionalChargePage],
 })
-export class IncomeTransactionPageModule {}
+export class IncomeTransactionPageModule { }

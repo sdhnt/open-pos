@@ -33,7 +33,7 @@ import { EventService } from '../services/event.service';
 import { Observable } from 'rxjs';
 import domtoimage from 'dom-to-image';
 import { SheetStates } from 'ionic-custom-bottom-sheet';
-import {AddItemPopoverPage} from '../add-item-popover/add-item-popover.page'
+import { AddItemPopoverPage } from '../add-item-popover/add-item-popover.page'
 import { SelectPrinterPopoverPage } from '../select-printer-popover/select-printer-popover.page';
 @Component({
   selector: 'app-income-transaction',
@@ -152,6 +152,30 @@ export class IncomeTransactionPage implements OnInit {
       .catch(error => {
         console.log(error);
       });
+
+    this.events.addNewItemFunc.subscribe((res) => {
+      console.log(res);
+      switch (res) {
+        case 'calc':
+          this.addCalc();
+          break;
+
+        case 'prod':
+          this.addProdList();
+          break;
+
+        case 'additional':
+          this.dispM();
+          break;
+
+        case 'barcode':
+          this.qrscan();
+          break;
+
+        default:
+          break;
+      }
+    });
     this.events.genRecCreated.subscribe(data => {
       console.log('ENTERED!');
       console.log('Received 0 ' + typeof JSON.parse(data));
@@ -199,8 +223,6 @@ export class IncomeTransactionPage implements OnInit {
   }
 
   async printOldRec(transac) {
-    const addItem = await this.popover.create({ component: SelectPrinterPopoverPage });
-    addItem.present();
     console.log(transac);
     const encoder = new EscPosEncoder();
     const result = encoder.initialize();
@@ -327,8 +349,35 @@ export class IncomeTransactionPage implements OnInit {
   }
 
   async addNewItembtn() {
-    const addItem = await this.popover.create({ component: AddItemPopoverPage });
+    const addItem = await this.popover.create({
+      component: AddItemPopoverPage
+    });
     addItem.present();
+    addItem.onDidDismiss().then(res => {
+      console.log(res);
+      if (res.data) {
+        switch (res.data) {
+          case 'calc':
+            this.addCalc();
+            break;
+
+          case 'prod':
+            this.addProdList();
+            break;
+
+          case 'additional':
+            this.dispM();
+            break;
+
+          case 'barcode':
+            this.qrscan();
+            break;
+
+          default:
+            break;
+        }
+      }
+    });
     // const message1: Observable<any> = await this.translateConfigService.getTranslatedMessage('CANCEL ');
     // const message2: Observable<any> = await this.translateConfigService.getTranslatedMessage('Add from Calculator');
     // const message3: Observable<any> = await this.translateConfigService.getTranslatedMessage('Scan Barcode');
@@ -1081,7 +1130,7 @@ export class IncomeTransactionPage implements OnInit {
         this.prepareToPrint();
       });
     }
-  }
+  } // do you got conflicts?yes
 
   async showToast(data) {
     const toast = await this.toastCtrl.create({
@@ -1469,35 +1518,22 @@ export class IncomeTransactionPage implements OnInit {
     );
     const msg6: Observable<any> = this.translateConfigService.getTranslatedMessage('Error activating bluetooth, please try again!');
     const alertInputs = [];
-    const alert = await this.alertCtrl.create({
-      // TRANSLATE THIS
-      header: this.subscriber(msg1),
-      buttons: [
-        {
-          text: this.subscriber(msg2),
-          role: 'cancel',
-        },
-        {
-          text: this.subscriber(msg3),
-          handler: device => {
-            if (!device) {
-              this.showToast(this.subscriber(msg4));
-              return false;
-            }
-            console.log(device);
-            this.print(device, this.receipt);
-          },
-        },
-      ],
-      inputs: alertInputs
-    });
 
     this.printer
       .enableBluetooth()
       .then(() => {
         this.printer
           .searchBluetooth()
-          .then(devices => {
+          .then(async devices => {
+            const printerScreen = await this.popover.create({ component: SelectPrinterPopoverPage, componentProps: devices });
+            printerScreen.present();
+
+            printerScreen.onDidDismiss()
+              .then((result) => {
+                this.print(result['data'].address, this.receipt);
+                console.log(result['data']);
+              });
+
             devices.forEach(device => {
               // console.log("Devices: ", JSON.stringify(device));
               alertInputs.push({
@@ -1507,7 +1543,6 @@ export class IncomeTransactionPage implements OnInit {
                 type: 'radio',
               });
             });
-            alert.present();
           })
           .catch(error => {
             console.log(error);

@@ -1,7 +1,7 @@
 <ion-content class="ion-padding">
     <ion-fab horizontal="end" vertical="bottom" slot="fixed">
         <ion-fab-button color="magenta" (click)="openSheet()">
-            <ion-icon name="ellipsis-horizontal"></ion-icon>
+            <ion-icon name="add"></ion-icon>
         </ion-fab-button>
     </ion-fab>
     <div class="pageTitle">
@@ -56,10 +56,13 @@
             </ion-col>
         </ion-row>
     </ion-card>
-    <div style="width: 100%; text-align: center;" *ngIf="!contactList || contactList.length==0 || filteredList.length === 0">
+    <div style="width: 100%; text-align: center;"
+        *ngIf="!contactList || contactList.length==0 || filteredList.length === 0">
         <p>{{"No contacts"|translate}}!</p>
         <ion-card class="ion-padding">
-            {{"Track which customers owe you money and how much they owe you using this page!"|translate}} <br><br> {{"Add a customer name/number and then enter in how much they owe you to keep a track."|translate}} <br><br> {{"We are soon releasing a
+            {{"Track which customers owe you money and how much they owe you using this page!"|translate}} <br><br>
+            {{"Add a customer name/number and then enter in how much they owe you to keep a track."|translate}} <br><br>
+            {{"We are soon releasing a
             send automatic SMS reminder feature and an option to see who owes you money on a particular date."|translate}}
         </ion-card>
     </div>
@@ -82,7 +85,36 @@
 </ion-content>
 
 <bottom-sheet [(State)]="BottomSheetState" (StateChange)="StateChanged($event)">
-    <ion-row class="topCards">
+    <div class="row m-0 py-5 option justify-content-around">
+        <div class="col-4 py-3">
+            <ion-fab-button color="magenta" class="m-auto" size="small" (click)="navCredReminder()">
+                <ion-icon name="notifications-outline"></ion-icon>
+            </ion-fab-button><br>
+            <ion-text class="font-weight-bold"
+                style="position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; margin: auto;">
+                <small> Reminder</small>
+            </ion-text>
+        </div>
+        <div class="col-4 py-3">
+            <ion-fab-button color="magenta" class="m-auto" size="small" (click)="navAdd(1)">
+                <ion-icon name="call-outline"></ion-icon>
+            </ion-fab-button><br>
+            <ion-text class="font-weight-bold"
+                style="position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; margin: auto;">
+                <small> {{"From Contacts"|translate}}</small>
+            </ion-text>
+        </div>
+        <div class="col-4 py-3">
+            <ion-fab-button color="magenta" class="m-auto" size="small" (click)="navAdd(2)">
+                <ion-icon name="settings-outline"></ion-icon>
+            </ion-fab-button><br>
+            <ion-text class="font-weight-bold"
+                style="position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; margin: auto;">
+                <small> {{"Manually"|translate}}</small>
+            </ion-text>
+        </div>
+    </div>
+    <!-- <ion-row class="topCards">
         <ion-col size="4" (click)="navCredReminder()">
             <ion-card style="border: 1px solid rgb(99, 93, 93); border-radius: 10px;">
                 <div class="cardIcons">
@@ -113,5 +145,5 @@
                 </div>
             </ion-card>
         </ion-col>
-    </ion-row>
+    </ion-row> -->
 </bottom-sheet>

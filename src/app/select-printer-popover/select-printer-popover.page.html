@@ -1,19 +1,16 @@
 <ion-content>
-    SELECT PRINTER
-    <!-- <div class="pageTitle">
-        <h5>Add Details From</h5>
-    </div> -->
-    <!-- <hr> -->
-    <!-- <div class="itemsDiv" (click)="addCalc()">
-        <ion-row>
-            <ion-col size="3" id="icon">
-                <ion-icon name="add-circle-outline"></ion-icon>
-            </ion-col>
-            <ion-col size="9" id="name">
-                <p>PRINTER 1</p>
-            </ion-col>
-        </ion-row>
+    <div class="pageTitle">
+        <h5>Select your printer</h5>
     </div>
+    <hr>
+    <ion-list>
+        <ion-item (click)="selectDevice(device)" *ngFor="let device of printerList">
+            <div class="mr-3">
+                <img src="../../assets/new-ui-imgs/icons/noun_Printer_1573159.png" alt="">
+            </div>
+            <ion-label>{{device.name}}</ion-label>
+        </ion-item>
+    </ion-list>
 
     <div class="cancelButton" (click)="goBack()">
         <ion-row>
@@ -23,5 +20,5 @@
                 <p>CANCEL</p>
             </ion-col>
         </ion-row>
-    </div> -->
+    </div>
 </ion-content>
