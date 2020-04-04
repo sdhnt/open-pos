@@ -1,0 +1,42 @@
+.pageTitle {
+    margin: 12px 0 20px 10px;
+}
+
+#icon ion-icon {
+    text-align: center;
+    font-size: 38px;
+    margin-left: 10px;
+}
+
+#name p {
+    font-size: 17px;
+    margin: 0;
+    margin-top: 7px;
+}
+
+.scanBarcode {
+    background: #fbdbe1;
+    height: 60px;
+}
+
+.scanBarcode #icon {
+    text-align: center;
+}
+
+.scanBarcode img {
+    margin-right: 11px;
+    margin-top: 13px;
+}
+
+.scanBarcode p {
+    margin-top: 15px!important;
+}
+
+#cancel p {
+    float: right;
+    margin: 20px;
+}
+
+.cancelButton {
+    height: 64px;
+}

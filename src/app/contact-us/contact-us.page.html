@@ -1,58 +1,76 @@
 <ion-header>
-  <ion-toolbar color="dark">
-    <ion-buttons slot="start">
-      <ion-button fill="clear" (click)="goBack()">
-        <ion-icon name="arrow-back"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title>{{"Contact Us"| translate}}</ion-title>
-  </ion-toolbar>
+    <ion-toolbar color="dark">
+        <ion-buttons slot="start">
+            <ion-button fill="clear" (click)="goBack()">
+                <ion-icon name="arrow-back"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>{{"Contact Us"| translate}}</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <h1>{{"Contact the OPEN Helpline"| translate}}</h1>
-  {{"Contact us msg"| translate}}
 
-  <br><br>
+    <div class="logo">
+        <img src="../../assets/icon/icon.svg">
+    </div>
 
-  <ion-grid>
+    <div class="title">
+        <p>{{"Contact Us"| translate}}</p>
+    </div>
 
+    <div class="description">
+        <p>Let us know if you have any question</p>
+    </div>
 
+    <div class="description">
+        <h4>Way to commuicate</h4>
+    </div>
 
-    <ion-row style="background-color: #f0f0f0;" *ngIf="phone.length==0">
-      <ion-col>
-        <ion-button expand="block" style="text-align: center; background-color: indigo; color: palevioletred;">
-          LOADING...
-        </ion-button>
-      </ion-col>
+    <ion-row style="text-align: center;" *ngIf="phone.length==0">
+        <ion-col>
+            LOADING...
+        </ion-col>
     </ion-row>
 
-    <ion-row style="background-color: #f0f0f0" *ngFor="let num of phone">
-      <ion-col>
+    <div *ngFor="let num of phone">
+        <div class="buttons facebookBtn" (click)="navFB()">
+            <ion-row>
+                <ion-col size="12">
+                    <div class="buttonIcon">
+                        <ion-icon name="logo-facebook"></ion-icon>
+                    </div>
+                    <div class="buttonTitle">
+                        <p>Using Facebook</p>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </div>
 
-        <ion-button expand="block" style="text-align: center ; background-color: indigo; color: palevioletred;"
-          (click)="call(num)">
-          {{ num }}
-        </ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-button expand="block"
-          style="text-align: center ; background-color: indigo; color: palevioletred; text-transform:lowercase"
-          (click)="sendMail()">
-          {{ email }}
-        </ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-button expand="block"
-          style="text-align: center ; background-color: indigo; color: palevioletred; text-transform: unset;"
-          (click)="navFB()">
-          {{"Reach us on Facebook"|translate}}!
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+        <div class="buttons mailBtn" (click)="sendMail()">
+            <ion-row>
+                <ion-col size="12">
+                    <div class="buttonIcon">
+                        <ion-icon name="mail-outline"></ion-icon>
+                    </div>
+                    <div class="buttonTitle">
+                        <p>Mail Us</p>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </div>
+
+        <div class="buttons callBtn" (click)="call(num)">
+            <ion-row>
+                <ion-col size="12">
+                    <div class="buttonIcon">
+                        <ion-icon name="call-outline"></ion-icon>
+                    </div>
+                    <div class="buttonTitle">
+                        <p>Make a call</p>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </div>
+    </div>
 </ion-content>

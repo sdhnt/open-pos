@@ -28,6 +28,10 @@ const routes: Routes = [
   {
     path: 'add-item-popover',
     loadChildren: () => import('./add-item-popover/add-item-popover.module').then( m => m.AddItemPopoverPageModule)
+  },
+  {
+    path: 'select-printer-popover',
+    loadChildren: () => import('./select-printer-popover/select-printer-popover.module').then( m => m.SelectPrinterPopoverPageModule)
   }
 ];
 

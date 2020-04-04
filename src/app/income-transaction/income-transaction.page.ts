@@ -34,6 +34,7 @@ import { Observable } from 'rxjs';
 import domtoimage from 'dom-to-image';
 import { SheetStates } from 'ionic-custom-bottom-sheet';
 import {AddItemPopoverPage} from '../add-item-popover/add-item-popover.page'
+import { SelectPrinterPopoverPage } from '../select-printer-popover/select-printer-popover.page';
 @Component({
   selector: 'app-income-transaction',
   templateUrl: './income-transaction.page.html',
@@ -197,7 +198,9 @@ export class IncomeTransactionPage implements OnInit {
     await new Promise(resolve => setTimeout(() => resolve(), ms)).then(() => console.log('fired'));
   }
 
-  printOldRec(transac) {
+  async printOldRec(transac) {
+    const addItem = await this.popover.create({ component: SelectPrinterPopoverPage });
+    addItem.present();
     console.log(transac);
     const encoder = new EscPosEncoder();
     const result = encoder.initialize();

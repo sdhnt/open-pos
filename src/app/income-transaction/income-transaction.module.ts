@@ -11,6 +11,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { BottomSheetModule, BottomSheetComponent } from 'ionic-custom-bottom-sheet';
 import {AddItemPopoverPage} from '../add-item-popover/add-item-popover.page'
 import {AddItemPopoverPageModule} from '../add-item-popover/add-item-popover.module'
+import { SelectPrinterPopoverPage } from '../select-printer-popover/select-printer-popover.page';
+import { SelectPrinterPopoverPageModule } from '../select-printer-popover/select-printer-popover.module';
 @NgModule({
   imports: [
     CommonModule,
@@ -19,9 +21,10 @@ import {AddItemPopoverPageModule} from '../add-item-popover/add-item-popover.mod
     IncomeTransactionPageRoutingModule,
     TranslateModule.forChild(),
     BottomSheetModule,
-    AddItemPopoverPageModule
+    AddItemPopoverPageModule,
+    SelectPrinterPopoverPageModule
   ],
-  entryComponents: [BottomSheetComponent, AdditionalChargePage,AddItemPopoverPage],
+  entryComponents: [SelectPrinterPopoverPage,BottomSheetComponent, AdditionalChargePage,AddItemPopoverPage],
   declarations: [IncomeTransactionPage, AdditionalChargePage],
 })
 export class IncomeTransactionPageModule {}

@@ -101,7 +101,6 @@ export class AppComponent implements OnInit {
     this.platform.ready().then(async () => {
       console.log('App Initialization');
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
       const isThereFirebase = await initializeFirebase();
       if (!isThereFirebase) { console.log('no firebase'); }
 
@@ -131,6 +130,7 @@ export class AppComponent implements OnInit {
         }
       };
       dataExist ? this.router.navigate(['/home/income-transaction'], navigationExtras) : this.router.navigate(['/login']);
+      this.splashScreen.hide();
     });
   }
 
