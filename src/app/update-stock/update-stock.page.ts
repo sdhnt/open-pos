@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavController, NavParams, ToastController, ModalController } from '@ionic/angular';
 import { TranslateConfigService } from '../services/translation/translate-config.service';
 import { GeolocationService } from '../services/geolocation/geolocation.service';
@@ -12,6 +12,7 @@ import { EventService } from '../services/event.service';
   styleUrls: ['./update-stock.page.scss'],
 })
 export class UpdateStockPage implements OnInit {
+  @ViewChild('datePicker',{static:true}) datePicker;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,

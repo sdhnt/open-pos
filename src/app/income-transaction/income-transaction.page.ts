@@ -33,7 +33,7 @@ import { EventService } from '../services/event.service';
 import { Observable } from 'rxjs';
 import domtoimage from 'dom-to-image';
 import { SheetStates } from 'ionic-custom-bottom-sheet';
-
+import {AddItemPopoverPage} from '../add-item-popover/add-item-popover.page'
 @Component({
   selector: 'app-income-transaction',
   templateUrl: './income-transaction.page.html',
@@ -324,63 +324,65 @@ export class IncomeTransactionPage implements OnInit {
   }
 
   async addNewItembtn() {
-    const message1: Observable<any> = await this.translateConfigService.getTranslatedMessage('CANCEL ');
-    const message2: Observable<any> = await this.translateConfigService.getTranslatedMessage('Add from Calculator');
-    const message3: Observable<any> = await this.translateConfigService.getTranslatedMessage('Scan Barcode');
-    const message4: Observable<any> = await this.translateConfigService.getTranslatedMessage('Add from Product List');
-    const message5: Observable<any> = await this.translateConfigService.getTranslatedMessage('Add Additional Charges');
-    console.log({
-      message1,
-      message2,
-      message3,
-      message4,
-      message5
-    });
+    const addItem = await this.popover.create({ component: AddItemPopoverPage });
+    addItem.present();
+    // const message1: Observable<any> = await this.translateConfigService.getTranslatedMessage('CANCEL ');
+    // const message2: Observable<any> = await this.translateConfigService.getTranslatedMessage('Add from Calculator');
+    // const message3: Observable<any> = await this.translateConfigService.getTranslatedMessage('Scan Barcode');
+    // const message4: Observable<any> = await this.translateConfigService.getTranslatedMessage('Add from Product List');
+    // const message5: Observable<any> = await this.translateConfigService.getTranslatedMessage('Add Additional Charges');
+    // console.log({
+    //   message1,
+    //   message2,
+    //   message3,
+    //   message4,
+    //   message5
+    // });
 
-    const subscriber = (message: Observable<any>) => {
-      let msg;
-      message.subscribe(res => {
-        msg = res;
-      });
-      return msg;
-    };
-    const alert = await this.alertCtrl
-      .create({
-        header: 'Add From', // translate this
-        backdropDismiss: true,
-        cssClass: 'addItemAlert',
-        buttons: [
-          {
-            text: subscriber(message2),
-            handler: () => {
-              this.addCalc();
-            },
-          },
-          {
-            text: subscriber(message3),
-            handler: () => {
-              this.qrscan();
-            },
-          },
-          {
-            text: subscriber(message4),
-            handler: () => {
-              this.addProdList();
-            },
-          },
-          {
-            text: subscriber(message5),
-            handler: () => {
-              this.dispM();
-            },
-          },
-          {
-            text: subscriber(message1),
-            role: 'cancel',
-          },
-        ],
-      });
-    alert.present();
+    // const subscriber = (message: Observable<any>) => {
+    //   let msg;
+    //   message.subscribe(res => {
+    //     msg = res;
+    //   });
+    //   return msg;
+    // };
+    // const alert = await this.alertCtrl
+    //   .create({
+    //     header: 'Add From', // translate this
+    //     backdropDismiss: true,
+    //     cssClass: 'addItemAlert',
+    //     buttons: [
+    //       {
+    //         text: subscriber(message2),
+    //         handler: () => {
+    //           this.addCalc();
+    //         },
+    //       },
+    //       {
+    //         text: subscriber(message3),
+    //         handler: () => {
+    //           this.qrscan();
+    //         },
+    //       },
+    //       {
+    //         text: subscriber(message4),
+    //         handler: () => {
+    //           this.addProdList();
+    //         },
+    //       },
+    //       {
+    //         text: subscriber(message5),
+    //         handler: () => {
+    //           this.dispM();
+    //         },
+    //       },
+    //       {
+    //         text: subscriber(message1),
+    //         role: 'cancel',
+    //       },
+    //     ],
+    //   });
+    // alert.present();
   }
 
   async addNewExp() {

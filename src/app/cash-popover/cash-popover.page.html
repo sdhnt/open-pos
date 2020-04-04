@@ -1,0 +1,31 @@
+<ion-content>
+    <div class="pageTitle">
+        <h5>{{newMs}}</h5>
+    </div>
+    <hr>
+    <div class="description">
+        <p>{{newMs1}}</p>
+    </div>
+
+    <div class="cashBalance">
+        <ion-row>
+            <ion-col size="6" id="title">
+                <p>{{newMs}}</p>
+            </ion-col>
+            <ion-col size="6" id="balance" *ngIf="userdata">
+                <p>{{userdata.cash_balance}}</p>
+            </ion-col>
+        </ion-row>
+    </div>
+
+    <div class="bottomButtons">
+        <ion-row>
+            <ion-col size="6" id="edit" (click)="edit()">
+                <p>Edit</p>
+            </ion-col>
+            <ion-col size="6" id="ok" (click)="DismissClick()">
+                <p>Ok</p>
+            </ion-col>
+        </ion-row>
+    </div>
+</ion-content>

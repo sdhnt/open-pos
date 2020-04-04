@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { StorageProvider } from '../services/storage/storage';
 import { Location } from '@angular/common';
 import { Router, NavigationExtras } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-credit-reminder',
@@ -9,47 +10,29 @@ import { Router, NavigationExtras } from '@angular/router';
   styleUrls: ['./credit-reminder.page.scss'],
 })
 export class CreditReminderPage implements OnInit {
+  @ViewChild('datePicker', { static: true }) datePicker;
   todayList = [];
   tomList = [];
   pendingList = [];
+  dateSelected: any;
+  contacts: any;
+  filteredArray: any;
+  constructor(private datePipe: DatePipe, public sp: StorageProvider, private location: Location, private router: Router) { }
 
-  constructor(public sp: StorageProvider, private location: Location, private router: Router) { }
-
+  ionViewDidLeave() {
+    this.contacts = [];
+    this.dateSelected = null;
+  }
+  async ionViewDidEnter() {
+    this.contacts = JSON.parse(await this.sp.getContacts());
+    console.log('contacts==========', this.contacts)
+  }
   async ngOnInit() {
     this.todayList = [];
     this.tomList = [];
     this.pendingList = [];
-    const contacts = JSON.parse(await this.sp.getContacts());
+    this.contacts = JSON.parse(await this.sp.getContacts());
     const todayDate = new Date();
-    contacts.forEach(contact => {
-      if (contact.dueDate && contact.dueDate !== '' && contact.balance !== 0) {
-        const contactDate = new Date(contact.dueDate);
-        console.log(contactDate.valueOf() - todayDate.valueOf());
-        if (contactDate.getFullYear() === todayDate.getFullYear()) {
-          if (contactDate.getMonth() === todayDate.getMonth()) {
-            if (contactDate.getDate() === todayDate.getDate()) {
-              this.todayList.push(contact);
-            } else if (contactDate.getDate() === todayDate.getDate() + 1) {
-              this.tomList.push(contact);
-            }
-          } else if (todayDate.getMonth() === contactDate.getMonth() - 1) {
-            if (contactDate.valueOf() - todayDate.valueOf() < 86400000) {
-              // 8.64e7 is one day in milliseconds
-              this.tomList.push(contact);
-            }
-          }
-        }
-        if (contactDate.valueOf() - todayDate.valueOf() < 0) {
-          if (
-            contactDate.getDate() !== todayDate.getDate() ||
-            contactDate.getMonth() !== todayDate.getMonth() ||
-            contactDate.getFullYear() !== todayDate.getFullYear()
-          ) {
-            this.pendingList.push(contact);
-          }
-        }
-      }
-    });
   }
 
 
@@ -67,5 +50,19 @@ export class CreditReminderPage implements OnInit {
 
   goBack() {
     this.location.back();
+  }
+
+  async dateChanged() {
+    this.contacts = JSON.parse(await this.sp.getContacts());
+    const selectedDate = this.datePipe.transform(this.dateSelected, 'yyyy-MM-dd');
+
+    this.contacts.forEach(contact => {
+      console.log(contact)
+      if (selectedDate == this.datePipe.transform(contact.updatedAt, 'yyyy-MM-dd')) {
+        this.filteredArray.push(contact)
+      }
+    })
+
+    this.contacts = this.filteredArray;
   }
 }

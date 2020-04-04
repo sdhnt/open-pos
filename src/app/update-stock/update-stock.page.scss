@@ -1,26 +1,59 @@
 @media (min-width: 300px) and (min-height: 500px) {
-  ion-backdrop {
-    visibility: visible;
-  }
+    ion-backdrop {
+        visibility: visible;
+    }
 }
+
 .modal {
-  position: absolute;
-  overflow: hidden;
-  max-width: 450px;
-  border-radius: 2px;
-  border: solid 1px black;
-  width: 90%;
-  height: 75%;
-  top: 0;
-  bottom: 0%;
-  left: 0;
-  right: 0;
-  margin: auto;
-  border: 0;
-  box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
-  background-color: #fafafa;
+    position: absolute;
+    overflow: hidden;
+    max-width: 450px;
+    border-radius: 2px;
+    border: solid 1px black;
+    width: 90%;
+    height: 75%;
+    top: 0;
+    bottom: 0%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border: 0;
+    box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
+    background-color: #fafafa;
 }
+
 ion-input {
-  border: solid 1px black;
-  margin: 5px;
+    margin: 5px;
+    border: 1px solid #ddd;
+}
+
+ion-item:not(.item-label) .sc-ion-input-md-h {
+    --padding-start: 10px;
+}
+
+ion-header ion-icon {
+    float: left;
+    font-size: 28px;
+    margin-left: 15px;
+}
+
+.pickDate {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    padding-bottom: 0;
+}
+
+.icon {
+    float: left;
+}
+
+.icon img {
+    height: 37px;
+}
+
+.picker {
+    margin: 7px;
+    text-align: center;
+    margin-bottom: 0;
 }

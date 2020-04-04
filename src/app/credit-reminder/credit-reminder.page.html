@@ -1,50 +1,75 @@
 <ion-content class="ion-padding">
-  <ion-row>
-    <ion-col style="display: flex;" class="ion-justify-content-end">
-      <ion-button color="danger" (click)="goBack()" shape="round">CANCEL</ion-button>
-    </ion-col>
-  </ion-row>
-  <h3 *ngIf="pendingList.length!=0">Pending</h3>
-  <ion-list *ngIf="pendingList.length!=0">
-    <ion-card *ngFor="let contact of pendingList">
-      <ion-row (click)="navToIndividual(contact)" class="ion-padding">
-        <ion-col style="font-size: 16px;">{{ contact.displayName }}</ion-col>
-        <ion-col style="font-size: medium;">Balance
-          <span style="color: red;" *ngIf="contact.balance<0; else nonNeg">{{ contact.balance }}</span>
-          <span style="color: green;" *ngIf="contact.balance>0; else zero" id="nonNeg">{{ contact.balance }}</span>
-          <span style="color: blue;" *ngIf="contact.balance==0" id="zero">0</span>
-        </ion-col>
-      </ion-row>
+    <ion-list>
+        <ion-item>
+            <div class="pickDate" (click)="datePicker.open()">
+                <div class="icon">
+                    <img src="../../assets/new-ui-imgs/icons/Mask Group 27.png" />
+                </div>
+                <div class="picker">
+                    <p>Select Date</p>
+                </div>
+            </div>
+        </ion-item>
+    </ion-list>
+    <ion-datetime #datePicker [hidden]="true" [(ngModel)]="dateSelected" (ionChange)="dateChanged()"></ion-datetime>
+    <div class="totalItems">
+        <ion-row>
+            <ion-col size="6" id="selectedDate">
+                <p>Selected Date</p>
+                <h6 *ngIf="dateSelected">{{dateSelected | date: 'dd MMM yyyy'}}</h6>
+                <h6 *ngIf="!dateSelected">-</h6>
+            </ion-col>
+            <ion-col size="6">
+                <div id="noOfResult">
+                    <p>Found Result</p>
+                    <h6 *ngIf="contacts">{{contacts.length}}</h6>
+                    <h6 *ngIf="!contacts">-</h6>
+                </div>
+            </ion-col>
+        </ion-row>
+    </div>
+
+    <ion-card class="headingCard">
+        <ion-row style="font-weight: bolder;">
+            <ion-col size="6">
+                <div>
+                    <ion-icon name="person-outline"></ion-icon>
+                </div>
+                <div>
+                    <h6 style="font-weight: 800;">{{"Name"|translate}}</h6>
+                </div>
+            </ion-col>
+            <ion-col size="6">
+                <div>
+                    <ion-icon name="wallet-outline"></ion-icon>
+                </div>
+                <div>
+                    <h6 style="font-weight: 800;">{{"Balance"|translate}}</h6>
+                </div>
+            </ion-col>
+        </ion-row>
     </ion-card>
-  </ion-list>
-  <br>
-  <h3>Due Today</h3>
-  <p *ngIf="todayList.length==0" style="font-size: large; text-align: center;">No dues today</p>
-  <ion-list>
-    <ion-card *ngFor="let contact of todayList">
-      <ion-row (click)="navToIndividual(contact)" class="ion-padding">
-        <ion-col style="font-size: 16px;">{{ contact.displayName }}</ion-col>
-        <ion-col style="font-size: medium;">Balance
-          <span style="color: red;" *ngIf="contact.balance<0; else nonNeg">{{ contact.balance }}</span>
-          <span style="color: green;" *ngIf="contact.balance>0; else zero" id="nonNeg">{{ contact.balance }}</span>
-          <span style="color: blue;" *ngIf="contact.balance==0" id="zero">0</span>
-        </ion-col>
-      </ion-row>
+    <div style="width: 100%; text-align: center;" *ngIf="!contacts || contacts.length==0 || contacts.length === 0">
+        <p>{{"No contacts"|translate}}!</p>
+        <ion-card class="ion-padding">
+            {{"Track which customers owe you money and how much they owe you using this page!"|translate}} <br><br> {{"Add a customer name/number and then enter in how much they owe you to keep a track."|translate}} <br><br> {{"We are soon releasing a
+            send automatic SMS reminder feature and an option to see who owes you money on a particular date."|translate}}
+        </ion-card>
+    </div>
+    <ion-card *ngFor="let contact of contacts" class="headingCard dataCard" (click)="navToIndividual(contact)">
+        <ion-row>
+            <ion-col size="6">
+                <div>
+                    <p>{{ contact.displayName }}</p>
+                </div>
+            </ion-col>
+            <ion-col size="6">
+                <div>
+                    <p style="color: red;" *ngIf="contact.balance<0; else nonNeg">{{ contact.balance }}</p>
+                    <p style="color: green;" *ngIf="contact.balance>0; else zero" id="nonNeg">{{ contact.balance }}</p>
+                    <p style="color: blue;" *ngIf="contact.balance==0" id="zero">0</p>
+                </div>
+            </ion-col>
+        </ion-row>
     </ion-card>
-  </ion-list>
-  <br>
-  <h3>Due Tomorrow</h3>
-  <p *ngIf="tomList.length==0" style="font-size: large; text-align: center;">No dues tomorrow</p>
-  <ion-list>
-    <ion-card *ngFor="let contact of tomList">
-      <ion-row (click)="navToIndividual(contact)" class="ion-padding">
-        <ion-col style="font-size: 16px;">{{ contact.displayName }}</ion-col>
-        <ion-col style="font-size: medium;">Balance
-          <span style="color: red;" *ngIf="contact.balance<0; else nonNeg">{{ contact.balance }}</span>
-          <span style="color: green;" *ngIf="contact.balance>0; else zero" id="nonNeg">{{ contact.balance }}</span>
-          <span style="color: blue;" *ngIf="contact.balance==0" id="zero">0</span>
-        </ion-col>
-      </ion-row>
-    </ion-card>
-  </ion-list>
 </ion-content>

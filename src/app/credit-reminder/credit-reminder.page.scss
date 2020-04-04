@@ -1,0 +1,55 @@
+.pickDate {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    padding-bottom: 0;
+}
+
+.icon {
+    float: left;
+}
+
+.icon img {
+    height: 37px;
+}
+
+.picker {
+    margin: 7px;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.totalItems {
+    margin: 10px;
+}
+
+#noOfResult {
+    float: right;
+}
+
+#noOfResult h6 {
+    text-align: center;
+    font-weight: bolder;
+}
+
+.headingCard {
+    box-shadow: none;
+}
+
+.headingCard ion-col {
+    text-align: center;
+}
+
+.headingCard ion-icon {
+    font-size: 17px;
+    font-weight: bolder;
+}
+
+.dataCard {
+    box-shadow: rgba(0, 0, 0, 0.001) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
+    border-radius: 10px;
+}
+
+.dataCard p {
+    margin: 7px;
+}

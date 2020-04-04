@@ -9,7 +9,8 @@ import { IncomeTransactionPageRoutingModule } from './income-transaction-routing
 import { IncomeTransactionPage, AdditionalChargePage } from './income-transaction.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { BottomSheetModule, BottomSheetComponent } from 'ionic-custom-bottom-sheet';
-
+import {AddItemPopoverPage} from '../add-item-popover/add-item-popover.page'
+import {AddItemPopoverPageModule} from '../add-item-popover/add-item-popover.module'
 @NgModule({
   imports: [
     CommonModule,
@@ -17,9 +18,10 @@ import { BottomSheetModule, BottomSheetComponent } from 'ionic-custom-bottom-she
     IonicModule,
     IncomeTransactionPageRoutingModule,
     TranslateModule.forChild(),
-    BottomSheetModule
+    BottomSheetModule,
+    AddItemPopoverPageModule
   ],
-  entryComponents: [BottomSheetComponent, AdditionalChargePage],
+  entryComponents: [BottomSheetComponent, AdditionalChargePage,AddItemPopoverPage],
   declarations: [IncomeTransactionPage, AdditionalChargePage],
 })
 export class IncomeTransactionPageModule {}
