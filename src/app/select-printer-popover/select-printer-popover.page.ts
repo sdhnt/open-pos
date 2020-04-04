@@ -27,6 +27,9 @@ export class SelectPrinterPopoverPage implements OnInit {
   ngOnInit() {
   }
 
+  goBack(){
+    this.popoverCtrl.dismiss();
+  }
   selectDevice(device){
     this.popoverCtrl.dismiss(device);
   }

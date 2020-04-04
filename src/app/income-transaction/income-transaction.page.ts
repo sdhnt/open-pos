@@ -1530,7 +1530,9 @@ export class IncomeTransactionPage implements OnInit {
 
             printerScreen.onDidDismiss()
               .then((result) => {
-                this.print(result['data'].address, this.receipt);
+                if(result['data']){
+                  this.print(result['data'].address, this.receipt);
+                }
                 console.log(result['data']);
               });
 
