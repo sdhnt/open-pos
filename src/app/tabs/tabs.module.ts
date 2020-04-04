@@ -28,6 +28,8 @@ import { UpdateStockPage } from '../update-stock/update-stock.page';
 import { UpdateStockPageModule } from '../update-stock/update-stock.module';
 import { CashPopoverPage } from '../cash-popover/cash-popover.page';
 import { CashPopoverPageModule } from '../cash-popover/cash-popover.module';
+import { AddItemPopoverPage } from '../add-item-popover/add-item-popover.page';
+import { AddItemPopoverPageModule } from '../add-item-popover/add-item-popover.module';
 
 @NgModule({
   imports: [
@@ -50,7 +52,8 @@ import { CashPopoverPageModule } from '../cash-popover/cash-popover.module';
     BusinessCardPageModule,
     ContactUsPageModule,
     UpdateStockPageModule,
-    CashPopoverPageModule
+    CashPopoverPageModule,
+    AddItemPopoverPageModule
   ],
   entryComponents: [
     AllTransactionPage,
@@ -62,7 +65,8 @@ import { CashPopoverPageModule } from '../cash-popover/cash-popover.module';
     ContactUsPage,
     UpdateStockPage,
     PopOverComponent,
-    CashPopoverPage
+    CashPopoverPage,
+    AddItemPopoverPage
   ],
   declarations: [TabsPage, PopOverComponent]
 })

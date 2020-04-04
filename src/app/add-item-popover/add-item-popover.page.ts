@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TranslateConfigService } from '../services/translation/translate-config.service'
+import { TranslateConfigService } from '../services/translation/translate-config.service';
+import { PopoverController } from '@ionic/angular';
 @Component({
   selector: 'app-add-item-popover',
   templateUrl: './add-item-popover.page.html',
@@ -13,7 +14,7 @@ export class AddItemPopoverPage implements OnInit {
   newMessage4: any;
   newMessage5: any;
 
-  constructor(private translateConfigService: TranslateConfigService) { }
+  constructor(private translateConfigService: TranslateConfigService, private popover: PopoverController) { }
 
   async ngOnInit() {
     const message1: Observable<any> = await this.translateConfigService.getTranslatedMessage('CANCEL ');
@@ -22,11 +23,11 @@ export class AddItemPopoverPage implements OnInit {
     const message4: Observable<any> = await this.translateConfigService.getTranslatedMessage('Add from Product List');
     const message5: Observable<any> = await this.translateConfigService.getTranslatedMessage('Add Additional Charges');
 
-    this.newMessage1 = this.subscriber(message1)
-    this.newMessage2 = this.subscriber(message2)
-    this.newMessage3 = this.subscriber(message3)
-    this.newMessage4 = this.subscriber(message4)
-    this.newMessage5 = this.subscriber(message5)
+    this.newMessage1 = this.subscriber(message1);
+    this.newMessage2 = this.subscriber(message2);
+    this.newMessage3 = this.subscriber(message3);
+    this.newMessage4 = this.subscriber(message4);
+    this.newMessage5 = this.subscriber(message5);
     console.log(
       this.newMessage1,
       this.newMessage2,
@@ -43,6 +44,14 @@ export class AddItemPopoverPage implements OnInit {
     });
     console.log(msg);
     return msg;
+  }
+
+  selectOption(option) {
+    this.popover.dismiss(option);
+  }
+
+  close() {
+    this.popover.dismiss();
   }
 }
 

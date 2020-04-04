@@ -1,8 +1,15 @@
-<ion-content>
-    <div class="pageTitle">
+<ion-header>
+    <ion-row class="py-3">
+        <ion-title>
+            {{newMs}}
+        </ion-title>
+    </ion-row>
+</ion-header>
+<ion-content class="ion-padding">
+    <!-- <div class="pageTitle">
         <h5>{{newMs}}</h5>
     </div>
-    <hr>
+    <hr> -->
     <div class="description">
         <p>{{newMs1}}</p>
     </div>
@@ -18,7 +25,7 @@
         </ion-row>
     </div>
 
-    <div class="bottomButtons">
+    <!-- <div class="bottomButtons">
         <ion-row>
             <ion-col size="6" id="edit" (click)="edit()">
                 <p>Edit</p>
@@ -27,5 +34,12 @@
                 <p>Ok</p>
             </ion-col>
         </ion-row>
-    </div>
+    </div> -->
 </ion-content>
+
+<ion-footer>
+    <ion-row class="ion-justify-content-between">
+        <ion-button fill="clear" color="lgrey" (click)="edit()">Edit</ion-button>
+        <ion-button fill="clear" color="lgrey" (click)="DismissClick()">Ok</ion-button>
+    </ion-row>
+</ion-footer>

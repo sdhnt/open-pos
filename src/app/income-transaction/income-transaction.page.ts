@@ -33,7 +33,7 @@ import { EventService } from '../services/event.service';
 import { Observable } from 'rxjs';
 import domtoimage from 'dom-to-image';
 import { SheetStates } from 'ionic-custom-bottom-sheet';
-import {AddItemPopoverPage} from '../add-item-popover/add-item-popover.page'
+import { AddItemPopoverPage } from '../add-item-popover/add-item-popover.page';
 @Component({
   selector: 'app-income-transaction',
   templateUrl: './income-transaction.page.html',
@@ -151,6 +151,30 @@ export class IncomeTransactionPage implements OnInit {
       .catch(error => {
         console.log(error);
       });
+
+    this.events.addNewItemFunc.subscribe((res) => {
+      console.log(res);
+      switch (res) {
+        case 'calc':
+          this.addCalc();
+          break;
+
+        case 'prod':
+          this.addProdList();
+          break;
+
+        case 'additional':
+          this.dispM();
+          break;
+
+        case 'barcode':
+          this.qrscan();
+          break;
+
+        default:
+          break;
+      }
+    });
     this.events.genRecCreated.subscribe(data => {
       console.log('ENTERED!');
       console.log('Received 0 ' + typeof JSON.parse(data));
@@ -324,8 +348,35 @@ export class IncomeTransactionPage implements OnInit {
   }
 
   async addNewItembtn() {
-    const addItem = await this.popover.create({ component: AddItemPopoverPage });
+    const addItem = await this.popover.create({
+      component: AddItemPopoverPage
+    });
     addItem.present();
+    addItem.onDidDismiss().then(res => {
+      console.log(res);
+      if (res.data) {
+        switch (res.data) {
+          case 'calc':
+            this.addCalc();
+            break;
+
+          case 'prod':
+            this.addProdList();
+            break;
+
+          case 'additional':
+            this.dispM();
+            break;
+
+          case 'barcode':
+            this.qrscan();
+            break;
+
+          default:
+            break;
+        }
+      }
+    });
     // const message1: Observable<any> = await this.translateConfigService.getTranslatedMessage('CANCEL ');
     // const message2: Observable<any> = await this.translateConfigService.getTranslatedMessage('Add from Calculator');
     // const message3: Observable<any> = await this.translateConfigService.getTranslatedMessage('Scan Barcode');

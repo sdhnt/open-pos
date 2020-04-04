@@ -15,6 +15,7 @@ export class EventService {
   addRecCalcCcreated: EventEmitter<any> = new EventEmitter();
   viewRecs: EventEmitter<any> = new EventEmitter();
   isback: EventEmitter<any> = new EventEmitter();
+  addNewItemFunc: EventEmitter<any> = new EventEmitter();
   constructor() { }
 
   emitIsBack(data) {
@@ -61,5 +62,9 @@ export class EventService {
 
   emitViewRecs(data?) {
     this.viewRecs.emit(data);
+  }
+
+  emitAddNewItemFunc(data) {
+    this.addNewItemFunc.emit(data);
   }
 }

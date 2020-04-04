@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateConfigService } from '../services/translation/translate-config.service';
 import { Observable } from 'rxjs';
 import { StorageProvider } from '../services/storage/storage';
-import { PopoverController, AlertController } from '@ionic/angular'
+import { PopoverController, AlertController } from '@ionic/angular';
 @Component({
   selector: 'app-cash-popover',
   templateUrl: './cash-popover.page.html',
@@ -31,14 +31,14 @@ export class CashPopoverPage implements OnInit {
     const ms: Observable<any> = this.translateConfigService.getTranslatedMessage('Cash Balance');
     const ms1: Observable<any> = this.translateConfigService.getTranslatedMessage('cashbalancedescrip');
 
-    this.newMessage = this.subscriber(message)
-    this.newMessage1 = this.subscriber(message1)
-    this.newMessage2 = this.subscriber(message2)
-    this.newMessage3 = this.subscriber(message3)
-    this.newMessage4 = this.subscriber(message4)
-    this.newMessage5 = this.subscriber(message5)
-    this.newMs = this.subscriber(ms)
-    this.newMs1 = this.subscriber(ms1)
+    this.newMessage = this.subscriber(message);
+    this.newMessage1 = this.subscriber(message1);
+    this.newMessage2 = this.subscriber(message2);
+    this.newMessage3 = this.subscriber(message3);
+    this.newMessage4 = this.subscriber(message4);
+    this.newMessage5 = this.subscriber(message5);
+    this.newMs = this.subscriber(ms);
+    this.newMs1 = this.subscriber(ms1);
   }
 
   subscriber(message: Observable<any>): string {

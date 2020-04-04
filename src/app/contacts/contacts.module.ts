@@ -19,6 +19,7 @@ import { BottomSheetModule, BottomSheetComponent } from 'ionic-custom-bottom-she
     TranslateModule.forChild(),
     BottomSheetModule
   ],
+  entryComponents: [BottomSheetComponent],
   declarations: [ContactsPage]
 })
-export class ContactsPageModule {}
+export class ContactsPageModule { }
