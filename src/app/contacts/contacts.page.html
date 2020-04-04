@@ -87,7 +87,7 @@
 <bottom-sheet [(State)]="BottomSheetState" (StateChange)="StateChanged($event)">
     <div class="row m-0 py-5 option justify-content-around">
         <div class="col-4 py-3">
-            <ion-fab-button color="magenta" class="m-auto" size="small" (click)="navCredReminder()">
+            <ion-fab-button color="magenta" class="m-auto" size="small" (click)="closeSheet(); navCredReminder()">
                 <ion-icon name="notifications-outline"></ion-icon>
             </ion-fab-button><br>
             <ion-text class="font-weight-bold"
@@ -96,7 +96,7 @@
             </ion-text>
         </div>
         <div class="col-4 py-3">
-            <ion-fab-button color="magenta" class="m-auto" size="small" (click)="navAdd(1)">
+            <ion-fab-button color="magenta" class="m-auto" size="small" (click)="closeSheet(); navAdd(1)">
                 <ion-icon name="call-outline"></ion-icon>
             </ion-fab-button><br>
             <ion-text class="font-weight-bold"
@@ -105,7 +105,7 @@
             </ion-text>
         </div>
         <div class="col-4 py-3">
-            <ion-fab-button color="magenta" class="m-auto" size="small" (click)="navAdd(2)">
+            <ion-fab-button color="magenta" class="m-auto" size="small" (click)="closeSheet(); navAdd(2)">
                 <ion-icon name="settings-outline"></ion-icon>
             </ion-fab-button><br>
             <ion-text class="font-weight-bold"

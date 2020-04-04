@@ -33,7 +33,7 @@ import { EventService } from '../services/event.service';
 import { Observable } from 'rxjs';
 import domtoimage from 'dom-to-image';
 import { SheetStates } from 'ionic-custom-bottom-sheet';
-import { AddItemPopoverPage } from '../add-item-popover/add-item-popover.page'
+import { AddItemPopoverPage } from '../add-item-popover/add-item-popover.page';
 import { SelectPrinterPopoverPage } from '../select-printer-popover/select-printer-popover.page';
 @Component({
   selector: 'app-income-transaction',
@@ -1530,10 +1530,10 @@ export class IncomeTransactionPage implements OnInit {
 
             printerScreen.onDidDismiss()
               .then((result) => {
-                if(result['data']){
-                  this.print(result['data'].address, this.receipt);
+                if (result.data) {
+                  this.print(result.data.address, this.receipt);
                 }
-                console.log(result['data']);
+                console.log(result.data);
               });
 
             devices.forEach(device => {

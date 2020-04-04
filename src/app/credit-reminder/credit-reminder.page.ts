@@ -14,9 +14,10 @@ export class CreditReminderPage implements OnInit {
   todayList = [];
   tomList = [];
   pendingList = [];
-  dateSelected: any;
-  contacts: any;
-  filteredArray: any;
+  dateSelected = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+  contacts = [];
+  filteredArray = [];
+  today = new Date();
   constructor(private datePipe: DatePipe, public sp: StorageProvider, private location: Location, private router: Router) { }
 
   ionViewDidLeave() {
@@ -25,8 +26,11 @@ export class CreditReminderPage implements OnInit {
   }
   async ionViewDidEnter() {
     this.contacts = JSON.parse(await this.sp.getContacts());
-    console.log('contacts==========', this.contacts)
+    console.log('contacts==========', this.contacts);
+    this.dateSelected = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+    this.dateChanged();
   }
+
   async ngOnInit() {
     this.todayList = [];
     this.tomList = [];
@@ -55,14 +59,10 @@ export class CreditReminderPage implements OnInit {
   async dateChanged() {
     this.contacts = JSON.parse(await this.sp.getContacts());
     const selectedDate = this.datePipe.transform(this.dateSelected, 'yyyy-MM-dd');
-
-    this.contacts.forEach(contact => {
-      console.log(contact)
-      if (selectedDate == this.datePipe.transform(contact.updatedAt, 'yyyy-MM-dd')) {
-        this.filteredArray.push(contact)
-      }
-    })
-
-    this.contacts = this.filteredArray;
+    this.filteredArray = this.contacts.filter(contact => {
+      console.log(contact, selectedDate, selectedDate === this.datePipe.transform(contact.dueDate, 'yyyy-MM-dd'), this.datePipe.transform(contact.dueDate, 'yyyy-MM-dd'));
+      return selectedDate === this.datePipe.transform(contact.dueDate, 'yyyy-MM-dd');
+    });
+    // this.contacts = this.filteredArray;
   }
 }

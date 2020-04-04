@@ -222,6 +222,7 @@ export class IndividualContactPage implements OnInit {
     const div = document.getElementById('share');
     const options = { background: 'white', height: this.platform.height(), width: this.platform.width() };
     domtoimage.toPng(div).then((dataUrl) => {
+      console.log(dataUrl);
       this.social
         .share('Made using Open POS app\n', '', dataUrl, 'facebook.com/openfinanceapp')
         .then(response => console.log(response))

@@ -12,6 +12,7 @@ import { AllTransactionPage } from '../all-transaction/all-transaction.page';
 import { EventService } from '../services/event.service';
 import { Observable } from 'rxjs';
 import * as $ from 'jquery';
+import { SheetStates } from 'ionic-custom-bottom-sheet';
 
 @Component({
   selector: 'app-transaction-product',
@@ -46,6 +47,7 @@ export class TransactionProductPage implements OnInit {
   showmanual = 0;
 
   datlist: any = [];
+  public BottomSheetState: SheetStates = SheetStates.Closed;
   constructor(
     private translateConfigService: TranslateConfigService,
     public sp: StorageProvider,
@@ -130,6 +132,20 @@ export class TransactionProductPage implements OnInit {
       this.filteredProductPrice(Number(tempdat.price));
       // console.log(this.listProducts)
     });
+  }
+
+  public openSheet() {
+    this.BottomSheetState = SheetStates.Opened;
+  }
+
+  public closeSheet() {
+    this.BottomSheetState = SheetStates.Closed;
+  }
+
+  public StateChanged(event) {
+    if (event === SheetStates.Closed) {
+      console.log('Sheet Closed');
+    }
   }
 
   ngOnInit() {

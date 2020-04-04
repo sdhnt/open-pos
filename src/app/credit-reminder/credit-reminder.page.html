@@ -1,6 +1,6 @@
 <ion-content class="ion-padding">
     <ion-list>
-        <ion-item>
+        <ion-item lines="none">
             <div class="pickDate" (click)="datePicker.open()">
                 <div class="icon">
                     <img src="../../assets/new-ui-imgs/icons/Mask Group 27.png" />
@@ -22,7 +22,7 @@
             <ion-col size="6">
                 <div id="noOfResult">
                     <p>Found Result</p>
-                    <h6 *ngIf="contacts">{{contacts.length}}</h6>
+                    <h6 *ngIf="contacts">{{filteredArray.length}}</h6>
                     <h6 *ngIf="!contacts">-</h6>
                 </div>
             </ion-col>
@@ -31,7 +31,7 @@
 
     <ion-card class="headingCard">
         <ion-row style="font-weight: bolder;">
-            <ion-col size="6">
+            <ion-col>
                 <div>
                     <ion-icon name="person-outline"></ion-icon>
                 </div>
@@ -39,7 +39,7 @@
                     <h6 style="font-weight: 800;">{{"Name"|translate}}</h6>
                 </div>
             </ion-col>
-            <ion-col size="6">
+            <ion-col>
                 <div>
                     <ion-icon name="wallet-outline"></ion-icon>
                 </div>
@@ -49,14 +49,14 @@
             </ion-col>
         </ion-row>
     </ion-card>
-    <div style="width: 100%; text-align: center;" *ngIf="!contacts || contacts.length==0 || contacts.length === 0">
-        <p>{{"No contacts"|translate}}!</p>
-        <ion-card class="ion-padding">
+    <div style="width: 100%; text-align: center;" *ngIf="!filteredArray || filteredArray.length==0 || filteredArray.length === 0">
+        <p>{{"No Reminders Due"|translate}}!</p>
+        <!-- <ion-card class="ion-padding">
             {{"Track which customers owe you money and how much they owe you using this page!"|translate}} <br><br> {{"Add a customer name/number and then enter in how much they owe you to keep a track."|translate}} <br><br> {{"We are soon releasing a
             send automatic SMS reminder feature and an option to see who owes you money on a particular date."|translate}}
-        </ion-card>
+        </ion-card> -->
     </div>
-    <ion-card *ngFor="let contact of contacts" class="headingCard dataCard" (click)="navToIndividual(contact)">
+    <ion-card *ngFor="let contact of filteredArray" class="headingCard dataCard" (click)="navToIndividual(contact)">
         <ion-row>
             <ion-col size="6">
                 <div>

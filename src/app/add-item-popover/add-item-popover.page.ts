@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TranslateConfigService } from '../services/translation/translate-config.service'
-import { PopoverController, ToastController } from '@ionic/angular'
+import { TranslateConfigService } from '../services/translation/translate-config.service';
+import { PopoverController, ToastController } from '@ionic/angular';
 import { AllTransactionPage } from '../all-transaction/all-transaction.page';
 import { EventService } from '../services/event.service';
 import { Router, NavigationExtras } from '@angular/router';
@@ -21,7 +21,7 @@ export class AddItemPopoverPage implements OnInit {
   newMessage4: any;
   newMessage5: any;
   datastore: any;
-  showrec: boolean = true;
+  showrec = true;
   lastsum: number;
   lastsumAfterIndividualDiscount: number;
   lastsumdisc: number;

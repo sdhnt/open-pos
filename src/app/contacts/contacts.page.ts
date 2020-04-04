@@ -243,7 +243,7 @@ export class ContactsPage implements OnInit {
   }
 
   navCredReminder() {
-    this.BottomSheetState = SheetStates.Closed;
+    // this.BottomSheetState = SheetStates.Closed;
     this.router.navigate(['/home/credit-reminder']);
   }
 

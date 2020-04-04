@@ -516,6 +516,7 @@ export class PopOverComponent implements OnInit {
 
   async uploadbtn() {
     // await this.modal1.dismiss();
+    this.popover.dismiss();
     this.sp
       .backupStorage()
       .then()
@@ -640,6 +641,7 @@ export class PopOverComponent implements OnInit {
     //   text: temptxt,
     //   video: tempvid,
     // };
+    this.popover.dismiss();
     const helpModal = await this.modal.create({
       component: HelpPage
     });
@@ -647,6 +649,7 @@ export class PopOverComponent implements OnInit {
   }
 
   async contactpg() {
+    this.popover.dismiss();
     // await this.modal1.dismiss();
     // this.router.navigate(['/home/contact-us']);
     const helpModal = await this.modal.create({
