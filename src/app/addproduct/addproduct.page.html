@@ -9,7 +9,7 @@
             <div class="dashedDiv">
                 <ion-row>
                     <ion-col size="3">
-                        <img src="../../assets/new-ui-imgs/icons/noun_Picture_3182777.png" alt="">
+                        <img src="assets/new-ui-imgs/icons/noun_Picture_3182777.png" alt="">
                     </ion-col>
                     <ion-col size="9">
                         <div class="uploadContent">
@@ -26,7 +26,7 @@
     <div class="scanBarcode" (click)="scanQR()">
         <ion-row>
             <ion-col size="3">
-                <img src="../../assets/new-ui-imgs/icons/noun_Scanner_2976066.png" alt="">
+                <img src="assets/new-ui-imgs/icons/noun_Scanner_2976066.png" alt="">
             </ion-col>
             <ion-col size="9">
                 <div class="uploadContent">
@@ -65,7 +65,7 @@
                 <ion-col size="2">
                     <ion-icon name="grid-outline"></ion-icon>
                 </ion-col>
-                <ion-col size="10">
+                <ion-col>
                     <ion-select multiple="false" formControlName="prodCat" [(ngModel)]='prodCat' placeholder="{{'Product Category' | translate}}">
                         <ion-select-option value="New"> {{'Add New Category'| translate}}</ion-select-option>
                         <ion-select-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-select-option>
