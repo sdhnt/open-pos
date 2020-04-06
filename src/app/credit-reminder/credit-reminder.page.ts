@@ -3,6 +3,8 @@ import { StorageProvider } from '../services/storage/storage';
 import { Location } from '@angular/common';
 import { Router, NavigationExtras } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { borderTopRightRadius } from 'html2canvas/dist/types/css/property-descriptors/border-radius';
+import { EventService } from '../services/event.service';
 
 @Component({
   selector: 'app-credit-reminder',
@@ -18,13 +20,17 @@ export class CreditReminderPage implements OnInit {
   contacts = [];
   filteredArray = [];
   today = new Date();
-  constructor(private datePipe: DatePipe, public sp: StorageProvider, private location: Location, private router: Router) { }
+  constructor(public events: EventService,private datePipe: DatePipe, public sp: StorageProvider, private location: Location, private router: Router) { }
 
   ionViewDidLeave() {
+    this.events.emitIsBack(false);
+    this.events.emitBackRoute('')
     this.contacts = [];
     this.dateSelected = null;
   }
   async ionViewDidEnter() {
+    this.events.emitIsBack(true);
+    this.events.emitBackRoute('home/contacts')
     this.contacts = JSON.parse(await this.sp.getContacts());
     console.log('contacts==========', this.contacts);
     this.dateSelected = this.datePipe.transform(new Date(), 'yyyy-MM-dd');

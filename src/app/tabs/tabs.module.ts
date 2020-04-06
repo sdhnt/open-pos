@@ -30,7 +30,8 @@ import { CashPopoverPage } from '../cash-popover/cash-popover.page';
 import { CashPopoverPageModule } from '../cash-popover/cash-popover.module';
 import { AddItemPopoverPage } from '../add-item-popover/add-item-popover.page';
 import { AddItemPopoverPageModule } from '../add-item-popover/add-item-popover.module';
-
+import { GridTabsPopoverPage } from '../grid-tabs-popover/grid-tabs-popover.page';
+import { GridTabsPopoverPageModule } from '../grid-tabs-popover/grid-tabs-popover.module';
 @NgModule({
   imports: [
     IonicModule,
@@ -53,11 +54,13 @@ import { AddItemPopoverPageModule } from '../add-item-popover/add-item-popover.m
     ContactUsPageModule,
     UpdateStockPageModule,
     CashPopoverPageModule,
-    AddItemPopoverPageModule
+    AddItemPopoverPageModule,
+    GridTabsPopoverPageModule
   ],
   entryComponents: [
     AllTransactionPage,
     ContactsPage,
+    GridTabsPopoverPage,
     ExpenseGeneralPage,
     HelpPage,
     LoanHomePage,

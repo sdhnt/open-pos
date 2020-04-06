@@ -37,6 +37,7 @@ export class IndividualContactPage implements OnInit {
         const res = JSON.parse(params.data);
         console.log('res', res);
         this.contact = res;
+        this.newDisc = this.contact.discount;
         this.newDate = this.contact.dueDate;
       }
     });
@@ -48,12 +49,13 @@ export class IndividualContactPage implements OnInit {
     phno: [],
     transacHistory: [],
     dueDate: '',
+    discount: 0
   };
   listOfNewTransactions = [];
   minDate = new Date().toISOString();
   maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 2)).toISOString();
   newDate;
-
+  newDisc;
   usingShare = false;
 
   ngOnInit() {
@@ -61,9 +63,11 @@ export class IndividualContactPage implements OnInit {
 
   ionViewDidEnter() {
     this.event.emitIsBack(true);
+    this.event.emitBackRoute('home/contacts')
   }
 
   ionViewWillLeave() {
+    this.event.emitBackRoute('')
     this.event.emitIsBack(false);
   }
 
@@ -84,7 +88,8 @@ export class IndividualContactPage implements OnInit {
   }
 
   async goBack() {
-    if (this.listOfNewTransactions.length === 0 && this.newDate === this.contact.dueDate) {
+    if (this.listOfNewTransactions.length === 0 && this.newDate === this.contact.dueDate && this.newDisc == this.contact.discount
+    ) {
       this.location.back();
     } else {
       if (this.listOfNewTransactions.length > 0) {
@@ -119,6 +124,12 @@ export class IndividualContactPage implements OnInit {
             console.log('Notif scheduled for: ', new Date(this.newDate));
           }
         }).catch(e => console.log(e));
+      }
+
+      if (this.newDisc != this.contact.discount) {
+        console.log(this.newDisc)
+        console.log(this.contact.discount)
+        await this.sp.updateContactDisc(this.contact.displayName, this.newDisc);
       }
       this.location.back();
     }

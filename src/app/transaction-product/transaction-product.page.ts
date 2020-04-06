@@ -48,6 +48,7 @@ export class TransactionProductPage implements OnInit {
 
   datlist: any = [];
   public BottomSheetState: SheetStates = SheetStates.Closed;
+  showSellButton: boolean;
   constructor(
     private translateConfigService: TranslateConfigService,
     public sp: StorageProvider,
@@ -153,10 +154,16 @@ export class TransactionProductPage implements OnInit {
       this.updateOrCreate = res;
     });
     console.log('ionViewDidLoad TransactionProductPage');
-    this.getProducts();
-    this.getCategories();
   }
 
+  ionViewDidEnter() {
+    this.getCategories();
+    this.getProducts();
+  }
+
+  ionViewWillLeave(){
+    this.showSellButton = false;
+  }
   ionViewDidLoad() {
     this.translateConfigService.getTranslatedMessage('Complete Sale').subscribe((res) => {
       this.updateOrCreate = res;
@@ -170,9 +177,11 @@ export class TransactionProductPage implements OnInit {
 
   navAdd(num: number) {
     if (num === 1) {
+      this.closeSheet();
       this.router.navigate(['/home/addproduct']);
       // this.navCtrl.push(AddProductPage);
     } else if (num === 2) {
+      this.closeSheet();
       this.router.navigate(['/home/add-product-category']);
       // this.navCtrl.push(AddProductCategoryPage);
     }
@@ -245,13 +254,28 @@ export class TransactionProductPage implements OnInit {
 
   addUp(index) {
     this.listProducts[index].qty++;
+    this.listProducts.forEach(product => {
+      if(product.qty > 0){
+        this.showSellButton = true;
+      }
+    });
   }
   addDown(index) {
     if (this.listProducts[index].qty > 0) {
       this.listProducts[index].qty--;
     }
+    let qtySum = 0;
+    this.listProducts.forEach(product => {
+      qtySum += parseInt(product.qty);
+      console.log(qtySum)
+    });
+
+    if(qtySum == 0){
+      this.showSellButton = false;
+    }
   }
   sellProd(product) {
+    this.showSellButton = true;
     product.qty = 1;
   }
   async getProducts() {

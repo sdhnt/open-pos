@@ -1,111 +1,110 @@
 <ion-content class="ion-padding">
 
-  <ion-refresher (ionRefresh)="doRefresh($event)" slot="fixed">
-    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
-      refreshingText="Refreshing...">
-    </ion-refresher-content>
-  </ion-refresher>
+    <ion-refresher (ionRefresh)="doRefresh($event)" slot="fixed">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher>
 
-  <!-- <ion-select style="background-color: silver; max-width: 100%;" [(ngModel)]="group"  (ionChange)="setPgValues(group)">
+    <!-- <ion-select style="background-color: silver; max-width: 100%;" [(ngModel)]="group"  (ionChange)="setPgValues(group)">
   <ion-option value="today">{{"Today"|translate}}</ion-option>
   <ion-option value="week">This Week</ion-option>
   <ion-option value="last7">{{"Last 7 days"|translate}}</ion-option>
   <ion-option value="month">{{"This Month"|translate}}</ion-option>
   <ion-option value="last30">{{"Last 30 days"|translate}}</ion-option>
 </ion-select> -->
-  <ion-row>
-    <ion-text>
-      <h4>Account</h4>
-    </ion-text>
-  </ion-row>
-  <ion-item class="no-border" lines="none">
-    <ion-avatar slot="start">
-      <img [src]="userdata.logo_url">
-    </ion-avatar>
-    <ion-label>
-      <a href="javascript:void(0)" [routerLink]="['/home/user-data']">Go to business profile</a>
-    </ion-label>
-  </ion-item>
-  <ion-card>
-    <ion-card-content>
-      <ion-item>
-        <ion-label>From</ion-label>
-        <ion-datetime [(ngModel)]="fromDate" [max]="toDate" (ionChange)="dateChange()"></ion-datetime>
-      </ion-item>
-      <ion-item lines="none" class="no-border">
-        <ion-label>To</ion-label>
-        <ion-datetime [(ngModel)]="toDate" [max]="toDate" (ionChange)="dateChange()"></ion-datetime>
-      </ion-item>
-      <br>
-      <!-- <ion-item> -->
-      <ion-row>
-        <ion-col size="6" style="text-align: left;">{{"Revenue"|translate}}:</ion-col>
-        <ion-col size="6" style="text-align: end;">{{rev|number:0}}</ion-col>
-        <!-- </ion-row>
+    <ion-row>
+        <ion-text>
+            <h4>Account</h4>
+        </ion-text>
+    </ion-row>
+    <ion-item class="no-border" lines="none">
+        <ion-avatar slot="start">
+            <img [src]="userdata.logo_url">
+        </ion-avatar>
+        <ion-label>
+            <a href="javascript:void(0)" [routerLink]="['/home/user-data']">Go to business profile</a>
+        </ion-label>
+    </ion-item>
+    <ion-card>
+        <ion-card-content>
+            <ion-item>
+                <ion-label>From</ion-label>
+                <ion-datetime [(ngModel)]="fromDate" [max]="toDate" (ionChange)="dateChange()"></ion-datetime>
+            </ion-item>
+            <ion-item lines="none" class="no-border">
+                <ion-label>To</ion-label>
+                <ion-datetime [(ngModel)]="toDate" [max]="toDate" (ionChange)="dateChange()"></ion-datetime>
+            </ion-item>
+            <br>
+            <!-- <ion-item> -->
+            <ion-row>
+                <ion-col size="6" style="text-align: left;">{{"Revenue"|translate}}:</ion-col>
+                <ion-col size="6" style="text-align: end;">{{rev|number:0}}</ion-col>
+                <!-- </ion-row>
         <ion-row> -->
-        <ion-col size="6" style="text-align: left;">{{"Expenditure"|translate}}:</ion-col>
-        <ion-col size="6" style="text-align: end;">{{exp|number:0}}</ion-col>
-      </ion-row>
-      <!-- </ion-item>
+                <ion-col size="6" style="text-align: left;">{{"Expenditure"|translate}}:</ion-col>
+                <ion-col size="6" style="text-align: end;">{{exp|number:0}}</ion-col>
+            </ion-row>
+            <!-- </ion-item>
       <ion-item> -->
-      <ion-row>
-        <ion-col size="6" style="text-align: left;">{{"Profit"|translate}}:</ion-col>
-        <ion-col size="6" style="text-align: end;">{{pro|number:0}}</ion-col>
-        <!-- </ion-row>
+            <ion-row>
+                <ion-col size="6" style="text-align: left;">{{"Profit"|translate}}:</ion-col>
+                <ion-col size="6" style="text-align: end;">{{pro|number:0}}</ion-col>
+                <!-- </ion-row>
         <ion-row> -->
-        <ion-col size="6" style="text-align: left;">{{"Net Cashflow"|translate}}:</ion-col>
-        <ion-col size="6" style="text-align: end;">{{rev+exp|number:0}}</ion-col>
-      </ion-row>
-    </ion-card-content>
-  </ion-card>
-  <!-- </ion-item> -->
-  <div style="text-align: center;">
-    <div *ngIf="!((rev+exp)>=0)" style="color: red;"> {{"You have negative cash"|translate}} !</div>
-    <h6>{{"Interested in borrowing money"|translate}}?</h6>
-  </div>
-  <ion-button expand="block" size="large" color="success" (click)="applyLoan()">
-    <img src="assets/new-ui-imgs/icons/Mask Group 10.png" class="mr-3" alt="" width="30">{{"Apply for Loan"|translate}}
-  </ion-button>
-  <ion-segment value="graph">
-    <ion-segment-button value="graph" color="yellow" (click)="toggleGL()">
-      <ion-label>{{"View Graph"|translate}}</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="list" color="dark" (click)="toggleList()">
-      <ion-label>{{"Hide Graph"|translate}}</ion-label>
-    </ion-segment-button>
-  </ion-segment>
-  <!-- <ion-row>
+                <ion-col size="6" style="text-align: left;">{{"Net Cashflow"|translate}}:</ion-col>
+                <ion-col size="6" style="text-align: end;">{{rev+exp|number:0}}</ion-col>
+            </ion-row>
+        </ion-card-content>
+    </ion-card>
+    <!-- </ion-item> -->
+    <div style="text-align: center;">
+        <div *ngIf="!((rev+exp)>=0)" style="color: red;"> {{"You have negative cash"|translate}} !</div>
+        <h6>{{"Interested in borrowing money"|translate}}?</h6>
+    </div>
+    <ion-button expand="block" size="large" color="success" (click)="applyLoan()">
+        <img src="assets/new-ui-imgs/icons/Mask Group 10.png" class="mr-3" alt="" width="30">{{"Apply for Loan"|translate}}
+    </ion-button>
+    <ion-segment [(ngModel)]="selectedOne">
+        <ion-segment-button value="graph" color="yellow" (click)="toggleGL()">
+            <ion-label>{{"View Graph"|translate}}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="list" color="dark" (click)="toggleList()">
+            <ion-label>{{"Hide Graph"|translate}}</ion-label>
+        </ion-segment-button>
+    </ion-segment>
+    <!-- <ion-row>
     <ion-button expand="full" (click)="toggleGL()" *ngIf="islist==0" style="background-color: orange;">
       {{"View Graph"|translate}}</ion-button>
     <ion-button expand="full" (click)="toggleList()" *ngIf="isgraph==0" color="dark">{{"Hide Graph"|translate}}
     </ion-button>
   </ion-row> -->
-  <!-- <ion-button expand="full" shape="round" style="background-color: black; color: white;" (click)="toggleGL()" *ngIf="isgraph==1">View as List</ion-button>
+    <!-- <ion-button expand="full" shape="round" style="background-color: black; color: white;" (click)="toggleGL()" *ngIf="isgraph==1">View as List</ion-button>
 <ion-button expand="full" shape="round" style="background-color: black; color: white;" (click)="toggleGL()" *ngIf="isgraph==0">View as Graph</ion-button> -->
 
 
-  <div [hidden]="isgraph">
-    <ion-card>
-      <ion-card-header>
-        {{"Bar Chart"|translate}}
-      </ion-card-header>
-      <ion-card-content>
-        <canvas #barCanvas></canvas>
-      </ion-card-content>
-    </ion-card>
-    <ion-card>
-      <ion-card-header>
-        {{"Line Chart"|translate}}
-      </ion-card-header>
-      <ion-card-content>
-        <canvas #lineCanvas></canvas>
-      </ion-card-content>
-    </ion-card>
-  </div>
+    <div [hidden]="isgraph">
+        <ion-card>
+            <ion-card-header>
+                {{"Bar Chart"|translate}}
+            </ion-card-header>
+            <ion-card-content>
+                <canvas #barCanvas></canvas>
+            </ion-card-content>
+        </ion-card>
+        <ion-card>
+            <ion-card-header>
+                {{"Line Chart"|translate}}
+            </ion-card-header>
+            <ion-card-content>
+                <canvas #lineCanvas></canvas>
+            </ion-card-content>
+        </ion-card>
+    </div>
 
 
-  <ion-grid>
-    <!-- <ion-row style="border: solid 1px black;">
+    <ion-grid>
+        <!-- <ion-row style="border: solid 1px black;">
     <ion-col style="border: solid 1px black; background-color: black;color: white; text-align: left;"><b>{{"Current Cash Balance"|translate}}</b></ion-col>
     <ion-col style="border: solid 1px black ;color: white; text-align: end;"><b>
       <div *ngIf="userdata.cash_balance>=0" style="background-color: color="success"div>
@@ -116,7 +115,7 @@
   </ion-row> -->
 
 
-    <!-- <ion-row style="border: solid 1px black;">
+        <!-- <ion-row style="border: solid 1px black;">
     <ion-col style="border: solid 1px black; background-color: black;color: white; text-align: left;"><b>{{"Net Cashflow today"|translate}}</b></ion-col>
     <ion-col style="border: solid 1px black;color: white; text-align: end;"><b> 
       <div *ngIf="netcashtoday>=0" style="background-color: color="success">
@@ -127,7 +126,7 @@
   </ion-row> -->
 
 
-    <!-- <ion-row style="border: solid 1px black;">
+        <!-- <ion-row style="border: solid 1px black;">
     <ion-col style="border: solid 1px black; background-color: black;color: white; text-align: left;"><b>{{"Net Cashflow 7 days"|translate}}</b></ion-col>
     <ion-col style="border: solid 1px black; color: white; text-align: end;"><b>
       <div *ngIf="netcashweek>=0" style="background-color: color="success">
@@ -152,30 +151,76 @@
       </div>
       </b></ion-col> 
   </ion-row> -->
+        <div class="lastTransaction">
+            <h6>Last Transactions</h6>
+        </div>
+        <ion-list lines="none" *ngFor="let transac of listtransac; let i = index">
+            <ion-card>
+                <ion-item (click)="expandTransac(transac)">
+                    <ion-icon class="mr-3" name="checkmark-circle-outline" color="success" style="font-size: 27px;"></ion-icon>
+                    <ion-label class="mr-6" *ngFor="let prod of transac.itemslist">
+                        <p>{{prod.name}}</p>
+                        <p>{{transac.updatedAt | date: 'dd/MM/yyyy'}}</p>
+                    </ion-label>
+                    <ion-label class="mr-3" style="text-align: right;">{{transac.totalatax}}</ion-label>
+                </ion-item>
 
-
-    <ion-row style="border: solid 1px silver;">
+                <ion-card [hidden]="transac.expanded" style="margin: 19px 48px;">
+                    <!-- <ion-row>
+                    <ion-col style="text-align: left; color: gray;">{{transac.datetime1}}</ion-col>
+                    <ion-col style="text-align: end;"><b>{{transac.totalatax}}</b></ion-col>
+                </ion-row> -->
+                    <ion-list *ngFor="let item of transac.itemslist" [hidden]="transac.expanded">
+                        <ion-row style="padding: 0px;">
+                            <ion-col size="12"><span style="font-weight: bolder;">Name: </span> {{item.name}}</ion-col>
+                            <ion-col size="12"><span style="font-weight: bolder;">Quantity: </span> {{item.qty}}</ion-col>
+                            <ion-col size="12"><span style="font-weight: bolder;">Price: </span> {{item.price}}</ion-col>
+                        </ion-row>
+                    </ion-list>
+                    <ion-row *ngIf="transac.totaldisc!=transac.totalsum" style="padding: 0px;text-align: left; " [hidden]="transac.expanded">
+                        <ion-col>
+                            {{"Discounted total:"|translate}} ({{transac.discount}}%)
+                        </ion-col>
+                        <ion-col style="text-align: end;">
+                            {{transac.totaldisc}}
+                        </ion-col>
+                    </ion-row>
+                    <ion-row *ngIf="transac.totalsum!=transac.totalatax" style="padding: 0px; text-align: left;" [hidden]="transac.expanded">
+                        <ion-col>
+                            {{"Total after tax:"|translate}} ({{transac.taxrate}}%)
+                        </ion-col>
+                        <ion-col style="text-align: end;">
+                            {{transac.totalatax}}
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col *ngIf="getDate(transac.datetime) == getDate(currentdatetime)">
+                            <ion-button size="small" expand="full" color="magenta " (click)="delTransac(transac)">{{"Delete"|translate}}
+                            </ion-button>
+                        </ion-col>
+                        <ion-col>
+                            <ion-button size="small" expand="full" color="yellow" (click)="printRec(transac)">
+                                {{'PRINT '|translate}} <br>
+                                <ion-icon name="print"></ion-icon>
+                            </ion-button>
+                        </ion-col>
+                    </ion-row>
+                </ion-card>
+            </ion-card>
+        </ion-list>
+        <!-- <ion-row style="border: solid 1px silver;">
       <ion-col style="border: solid 1px silver; background-color: black;color: white; text-align: center;">
         {{"Date"|translate}}</ion-col>
-      <!-- <ion-col  style="border: solid 1px silver; background-color: black;color: white; text-align: center;"><b>{{"Item"|translate}}</b></ion-col>-->
       <ion-col style="border: solid 1px silver; background-color: black;color: white; text-align: center;">
         {{"Amount"|translate}}</ion-col>
       <ion-col style="border: solid 1px silver; background-color: black;color: white; text-align: center;">
         {{"Type"|translate}}</ion-col>
       <ion-col style="border: solid 1px silver; background-color: black;color: white; text-align: center;">Options
       </ion-col>
-    </ion-row>
+    </ion-row> -->
 
-    <ion-row style="border: solid 1px silver;" *ngFor="let transac of listtransac; let i = index">
+        <!-- <ion-row style="border: solid 1px silver;" *ngFor="let transac of listtransac; let i = index">
       <ion-col style="border: solid 1px silver;  text-align: center;">{{transac.datetime1}}</ion-col>
-      <!-- <ion-col style="border: solid 1px black;  text-align: center;">
-      <div *ngIf="transac.totalatax>=0">
-        {{transac.itemslist[0].name}} ..
-      </div>
-      <div *ngIf="!(transac.totalatax>=0)">
-        {{transac.itemslist[0].name}}
-      </div>   
-    </ion-col> -->
       <ion-col style="border: solid 1px silver;  text-align: center;">
         <div *ngIf="transac.totalatax>=0">
           {{"Income"|translate}}
@@ -244,9 +289,9 @@
 
 
       </ion-card>
-    </ion-row>
+    </ion-row> -->
 
-    <!-- 
+        <!-- 
   <ion-row>
     <ion-card [hidden]="transac.expanded">
         <ion-row>
@@ -292,16 +337,16 @@
 
 
 
-  </ion-grid>
+    </ion-grid>
 
 
 
-  <!-- 
+    <!-- 
 <ion-select style="background-color: silver;max-width: 100%;" [(ngModel)]="usrchoice">
   <ion-option value="today" selected>{{"Today"|translate}}</ion-option>
   <ion-option value="last100">{{"Last 100"|translate}}</ion-option>
 </ion-select> -->
-  <!-- <ion-list *ngFor="let transac of listtransacrev">
+    <!-- <ion-list *ngFor="let transac of listtransacrev">
   <ion-card>
     <ion-grid>
       <ion-row>

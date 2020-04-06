@@ -15,7 +15,8 @@ import { Observable } from 'rxjs';
   templateUrl: './addproduct.page.html',
   styleUrls: ['./addproduct.page.scss'],
 })
-export class AddproductPage implements OnInit {
+export class 
+AddproductPage implements OnInit {
   prodCode: any = '';
   prodName: any = '';
   prodPrice: number = null;
@@ -71,6 +72,15 @@ export class AddproductPage implements OnInit {
   ionViewDidLoad() {
   }
 
+  ionViewDidEnter() {
+    this.events.emitIsBack(true);
+    this.events.emitBackRoute('home/transaction-product')
+  }
+
+  ionViewWillLeave() {
+    this.events.emitIsBack(false);
+    this.events.emitBackRoute('')
+  }
   async getUserData() {
     this.sp.storageReady().then(() => {
       this.sp

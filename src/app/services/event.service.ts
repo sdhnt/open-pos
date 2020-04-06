@@ -15,11 +15,16 @@ export class EventService {
   addRecCalcCcreated: EventEmitter<any> = new EventEmitter();
   viewRecs: EventEmitter<any> = new EventEmitter();
   isback: EventEmitter<any> = new EventEmitter();
+  backButtonRoute: EventEmitter<any> = new EventEmitter();
   addNewItemFunc: EventEmitter<any> = new EventEmitter();
   constructor() { }
 
   emitIsBack(data) {
     this.isback.emit(data);
+  }
+
+  emitBackRoute(data){
+    this.backButtonRoute.emit(data);
   }
 
   emitNewUserEvent(data?) {

@@ -59,3 +59,8 @@ ion-button.addCredit {
     padding-left: 34px;
     margin-bottom: 11%;
 }
+
+ion-input {
+    --padding-top: 0;
+    text-align: right;
+}

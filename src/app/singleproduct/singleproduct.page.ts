@@ -39,7 +39,7 @@ export class SingleproductPage implements OnInit {
         const res = JSON.parse(params.data);
         console.log('res', res);
         this.product = res;
-
+        console.log('this.product',this.product)
         this.prodCodeOld = this.product.code;
         this.image = this.product.url;
 
@@ -113,6 +113,7 @@ export class SingleproductPage implements OnInit {
   async getCategories() {
     await this.sp.getCategories().then(value => {
       this.listCat = JSON.parse(value);
+      console.log("CAT LIST",this.listCat)
     });
   }
 
@@ -414,6 +415,7 @@ export class SingleproductPage implements OnInit {
     this.product.cost = this.orgData.prodCost;
     this.product.stock_qty = this.orgData.stock;
     this.product.cat = this.orgData.prodCat;
+
     const toast = await this.toastCtrl
       .create({
         message: this.subscriber(message),

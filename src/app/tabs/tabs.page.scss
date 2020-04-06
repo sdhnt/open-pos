@@ -1,18 +1,23 @@
 ion-tab-button {
-  --color-selected: var(--ion-color-magenta);
-  color: var(--ion-color-lgrey);
-  &:hover {
-    color: var(--ion-color-magenta);
-  }
-  &.tab-selected {
-    color: var(--ion-color-magenta) !important;
-  }
+    --color-selected: var(--ion-color-magenta);
+    color: var(--ion-color-lgrey);
+    &:hover {
+        color: var(--ion-color-magenta);
+    }
+    &.tab-selected {
+        color: var(--ion-color-magenta) !important;
+    }
 }
 
 :host ::ng-deep .tab-selected span.button-inner {
-  border-top: 3px solid var(--ion-color-magenta);
+    border-top: 3px solid var(--ion-color-magenta);
 }
 
+ion-icon.homeIcon {
+    float: left;
+    margin-left: 28px;
+    font-size: 25px;
+}
 
 // ion-fab-button {
 //   --background: var(--ion-color-yellow) !important;

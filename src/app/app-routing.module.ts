@@ -32,6 +32,10 @@ const routes: Routes = [
   {
     path: 'select-printer-popover',
     loadChildren: () => import('./select-printer-popover/select-printer-popover.module').then( m => m.SelectPrinterPopoverPageModule)
+  },
+  {
+    path: 'grid-tabs-popover',
+    loadChildren: () => import('./grid-tabs-popover/grid-tabs-popover.module').then( m => m.GridTabsPopoverPageModule)
   }
 ];
 

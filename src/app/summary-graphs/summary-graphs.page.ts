@@ -100,7 +100,7 @@ export class SummaryGraphsPage implements OnInit {
   isgraph = 0;
   islist = 0;
   netcash = 0;
-
+  selectedOne = 'graph';
   doRefresh(refresher) {
     this.ngOnInit();
     refresher.target.complete();
@@ -154,8 +154,8 @@ export class SummaryGraphsPage implements OnInit {
     modal.present();
   }
 
-  ionViewDidLoad() {
-
+  ionViewDidEnter() {
+    this.selectedOne = 'graph';
   }
 
   expandTransac(transac) {
@@ -178,6 +178,7 @@ export class SummaryGraphsPage implements OnInit {
         .getTransactions(options)
         .then(async val => {
           this.listtransac = JSON.parse(val);
+          console.log('this.listtransac',this.listtransac)
           // console.log(this.listtransac)
           this.listtransac = this.listtransac.filter(transac => {
             return !transac.isDisabled;
