@@ -1,6 +1,6 @@
 <ion-content class="ion-padding">
     <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-        <ion-fab-button color="magenta" (click)="openSheet()">
+        <ion-fab-button color="yellow" (click)="openSheet()">
             <ion-icon name="add"></ion-icon>
         </ion-fab-button>
     </ion-fab>
@@ -56,13 +56,10 @@
             </ion-col>
         </ion-row>
     </ion-card>
-    <div style="width: 100%; text-align: center;"
-        *ngIf="!contactList || contactList.length==0 || filteredList.length === 0">
+    <div style="width: 100%; text-align: center;" *ngIf="!contactList || contactList.length==0 || filteredList.length === 0">
         <p>{{"No contacts"|translate}}!</p>
         <ion-card class="ion-padding">
-            {{"Track which customers owe you money and how much they owe you using this page!"|translate}} <br><br>
-            {{"Add a customer name/number and then enter in how much they owe you to keep a track."|translate}} <br><br>
-            {{"We are soon releasing a
+            {{"Track which customers owe you money and how much they owe you using this page!"|translate}} <br><br> {{"Add a customer name/number and then enter in how much they owe you to keep a track."|translate}} <br><br> {{"We are soon releasing a
             send automatic SMS reminder feature and an option to see who owes you money on a particular date."|translate}}
         </ion-card>
     </div>
@@ -90,8 +87,7 @@
             <ion-fab-button color="magenta" class="m-auto" size="small" (click)="closeSheet(); navCredReminder()">
                 <ion-icon name="notifications-outline"></ion-icon>
             </ion-fab-button><br>
-            <ion-text class="font-weight-bold"
-                style="position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; margin: auto;">
+            <ion-text class="font-weight-bold" style="position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; margin: auto;">
                 <small> Reminder</small>
             </ion-text>
         </div>
@@ -99,8 +95,7 @@
             <ion-fab-button color="magenta" class="m-auto" size="small" (click)="closeSheet(); navAdd(1)">
                 <ion-icon name="call-outline"></ion-icon>
             </ion-fab-button><br>
-            <ion-text class="font-weight-bold"
-                style="position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; margin: auto;">
+            <ion-text class="font-weight-bold" style="position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; margin: auto;">
                 <small> {{"From Contacts"|translate}}</small>
             </ion-text>
         </div>
@@ -108,8 +103,7 @@
             <ion-fab-button color="magenta" class="m-auto" size="small" (click)="closeSheet(); navAdd(2)">
                 <ion-icon name="settings-outline"></ion-icon>
             </ion-fab-button><br>
-            <ion-text class="font-weight-bold"
-                style="position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; margin: auto;">
+            <ion-text class="font-weight-bold" style="position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; margin: auto;">
                 <small> {{"Manually"|translate}}</small>
             </ion-text>
         </div>

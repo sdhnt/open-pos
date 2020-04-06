@@ -37,7 +37,7 @@ export class StorageProvider {
     public storage: Storage,
     public toastCtrl: ToastController,
     private localNotif: LocalNotifications,
-  ) {}
+  ) { }
 
   async isThereFirebase(): Promise<boolean> {
     const isThereFirebase = await initializeFirebase();
@@ -460,6 +460,18 @@ export class StorageProvider {
       console.log('No contact found for date change');
     }
     await this.storage.set('contacts', JSON.stringify(contacts));
+  }
+
+  async updateContactDisc(contactName, newDisc): Promise<void> {
+    const contacts = JSON.parse(await this.getContacts());
+    const contact = contacts.find(contact => contact.displayName === contactName);
+    if (contact) {
+      contact.discount = newDisc;
+      contact.updatedAt = new Date();
+    } else {
+      console.log("No contact found for discount change");
+    }
+    await this.storage.set("contacts", JSON.stringify(contacts));
   }
 
   async getContacts(): Promise<string | null> {

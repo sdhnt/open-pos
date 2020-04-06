@@ -21,7 +21,7 @@ import { ContactUsPage } from '../contact-us/contact-us.page';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import {CashPopoverPage} from '../cash-popover/cash-popover.page';
 import { AddItemPopoverPage } from '../add-item-popover/add-item-popover.page';
-
+import {GridTabsPopoverPage} from '../grid-tabs-popover/grid-tabs-popover.page'
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
@@ -48,6 +48,7 @@ export class TabsPage implements OnInit {
   };
   language;
   isBackEnable = false;
+  backButtonRoute: any;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -91,6 +92,12 @@ export class TabsPage implements OnInit {
     this.events.isback.subscribe(res => {
       console.log('isBack-------------------------->', res);
       this.isBackEnable = res;
+      this.change.detectChanges();
+    });
+
+    this.events.backButtonRoute.subscribe(res => {
+      console.log('backButtonRoute-------------------------->', res);
+      this.backButtonRoute = res;
       this.change.detectChanges();
     });
 
@@ -157,6 +164,11 @@ export class TabsPage implements OnInit {
     });
   }
 
+  backPress(){
+    if(this.backButtonRoute != ''){
+      this.router.navigateByUrl(this.backButtonRoute)
+    }
+  }
   async ngOnInit() {
     console.log('ionViewDidLoad TransactionHomePage');
     // const userSnapshot = await firebase
@@ -248,6 +260,11 @@ export class TabsPage implements OnInit {
     });
     console.log(msg);
     return msg;
+  }
+
+  async openPopoverGrid(){
+    const gridPopOver = await this.popover.create({component: GridTabsPopoverPage})
+    gridPopOver.present();
   }
 
   async cashbtn() {

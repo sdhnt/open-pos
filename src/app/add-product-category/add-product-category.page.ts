@@ -27,6 +27,14 @@ export class AddProductCategoryPage implements OnInit {
     this.getCategories();
   }
 
+  ionViewDidEnter() {
+    this.events.emitIsBack(true);
+  }
+
+  ionViewWillLeave() {
+    this.events.emitIsBack(false);
+  }
+
   ionViewDidLoad() {
   }
   getCategories() {

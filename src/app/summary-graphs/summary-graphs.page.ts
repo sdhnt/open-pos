@@ -178,6 +178,7 @@ export class SummaryGraphsPage implements OnInit {
         .getTransactions(options)
         .then(async val => {
           this.listtransac = JSON.parse(val);
+          console.log('this.listtransac',this.listtransac)
           // console.log(this.listtransac)
           this.listtransac = this.listtransac.filter(transac => {
             return !transac.isDisabled;

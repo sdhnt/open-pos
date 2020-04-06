@@ -1,0 +1,36 @@
+<ion-content>
+    <div class="row m-0 py-5 option justify-content-around">
+        <div class="col-5 py-3" (click)="navigateTo('home/income-transaction')">
+            <ion-fab-button color="magenta" class="m-auto" size="small">
+                <ion-icon name="list"></ion-icon>
+            </ion-fab-button><br>
+            <ion-text class="font-weight-bold" style="position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; margin: auto;">
+                <small>{{'Receipt'|translate}}</small>
+            </ion-text>
+        </div>
+        <div class="col-5 py-3" (click)="navigateTo('home/contacts')">
+            <ion-fab-button color="magenta" class="m-auto" size="small">
+                <ion-icon name="people-circle-outline"></ion-icon>
+            </ion-fab-button><br>
+            <ion-text class="font-weight-bold" style="position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; margin: auto;">
+                <small>{{'Contacts'|translate}}</small>
+            </ion-text>
+        </div>
+        <div class="col-5 py-3" (click)="navigateTo('home/transaction-product')">
+            <ion-fab-button color="magenta" class="m-auto" size="small">
+                <ion-icon name="grid"></ion-icon>
+            </ion-fab-button><br>
+            <ion-text class="font-weight-bold" style="position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; margin: auto;">
+                <small>{{'Stock'|translate}}</small>
+            </ion-text>
+        </div>
+        <div class="col-5 py-3" (click)="navigateTo('home/summary-graphs')">
+            <ion-fab-button color="magenta" class="m-auto" size="small">
+                <ion-icon name="wallet"></ion-icon>
+            </ion-fab-button><br>
+            <ion-text class="font-weight-bold" style="position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; margin: auto;">
+                <small>{{'Accounts'|translate}}</small>
+            </ion-text>
+        </div>
+    </div>
+</ion-content>

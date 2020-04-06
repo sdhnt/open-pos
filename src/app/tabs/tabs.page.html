@@ -1,12 +1,13 @@
 <ion-header>
     <ion-toolbar class="main-header" color="magenta">
         <ion-buttons slot="start" *ngIf="isBackEnable">
-            <ion-back-button defaultHref="/home/income-transaction"></ion-back-button>
+            <ion-back-button defaultHref="/home/income-transaction" (click)="backPress()"></ion-back-button>
         </ion-buttons>
         <!-- <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button> -->
-        <ion-title size="large" color="light"> OPEN </ion-title>
+        <ion-icon name="home-outline" class="homeIcon" (click)="openPopoverGrid()"></ion-icon>
+        <!-- <ion-title size="large" color="light"> OPEN </ion-title> -->
         <ion-buttons slot="end">
             <ion-button (click)="openPopover($event)">
                 <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
