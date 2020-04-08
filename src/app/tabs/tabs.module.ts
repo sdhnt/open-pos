@@ -32,6 +32,7 @@ import { AddItemPopoverPage } from '../add-item-popover/add-item-popover.page';
 import { AddItemPopoverPageModule } from '../add-item-popover/add-item-popover.module';
 import { GridTabsPopoverPage } from '../grid-tabs-popover/grid-tabs-popover.page';
 import { GridTabsPopoverPageModule } from '../grid-tabs-popover/grid-tabs-popover.module';
+import { BottomSheetModule, BottomSheetComponent } from 'ionic-custom-bottom-sheet';
 @NgModule({
   imports: [
     IonicModule,
@@ -46,6 +47,7 @@ import { GridTabsPopoverPageModule } from '../grid-tabs-popover/grid-tabs-popove
       }
     }),
     AllTransactionPageModule,
+    BottomSheetModule,
     ContactsPageModule,
     ExpenseGeneralPageModule,
     HelpPageModule,
@@ -69,8 +71,11 @@ import { GridTabsPopoverPageModule } from '../grid-tabs-popover/grid-tabs-popove
     UpdateStockPage,
     PopOverComponent,
     CashPopoverPage,
-    AddItemPopoverPage
+    ContactsPage,
+    AddItemPopoverPage,
+    BottomSheetComponent
   ],
-  declarations: [TabsPage, PopOverComponent]
+  providers: [ContactsPageModule],
+  declarations: [TabsPage,PopOverComponent]
 })
 export class TabsPageModule { }

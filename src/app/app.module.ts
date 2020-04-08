@@ -31,7 +31,8 @@ import { SMS } from '@ionic-native/sms/ngx';
 import { AppMinimize } from '@ionic-native/app-minimize/ngx';
 import { NgOtpInputModule } from 'ng-otp-input';
 import { BottomSheetComponent, BottomSheetModule } from 'ionic-custom-bottom-sheet';
-
+import {ContactsPage} from './contacts/contacts.page'
+import {TransactionProductPage} from './transaction-product/transaction-product.page'
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
@@ -70,6 +71,7 @@ firebase.initializeApp(config);
     AppVersion,
     Market,
     CallNumber,
+    ContactsPage,
     EmailComposer,
     SocialSharing,
     Base64ToGallery,
@@ -79,6 +81,7 @@ firebase.initializeApp(config);
     Contacts,
     FirebaseAuthentication,
     BluetoothSerial,
+    TransactionProductPage,
     SMS,
     AppMinimize
   ],

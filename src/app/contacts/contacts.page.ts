@@ -12,6 +12,7 @@ import { TranslateConfigService } from '../services/translation/translate-config
 import { Router, NavigationExtras } from '@angular/router';
 import { Observable } from 'rxjs';
 import { SheetStates } from 'ionic-custom-bottom-sheet';
+import {EventService} from '../services/event.service'
 @Component({
   selector: 'app-contacts',
   templateUrl: './contacts.page.html',
@@ -36,7 +37,8 @@ export class ContactsPage implements OnInit {
     private translateConfigService: TranslateConfigService,
     private zone: NgZone,
     private view: ModalController,
-    private router: Router
+    private router: Router,
+    public event: EventService
   ) { }
 
 
@@ -60,7 +62,13 @@ export class ContactsPage implements OnInit {
     this.view.dismiss();
   }
 
+  ionViewDidLeave(){
+    // this.event.emitFabButton('');
+  }
+
   ionViewDidEnter() {
+    this.event.emitFabButton('contacts');
+    this.BottomSheetState = SheetStates.Closed
     console.log('ionViewDidEnter ContactPage');
     this.sp.getContacts().then(val => {
       if (val === null) {
@@ -243,8 +251,10 @@ export class ContactsPage implements OnInit {
   }
 
   navCredReminder() {
-    // this.BottomSheetState = SheetStates.Closed;
-    this.router.navigate(['/home/credit-reminder']);
+    this.BottomSheetState = SheetStates.Closed;
+    setTimeout(() => {
+      this.router.navigate(['/home/credit-reminder']);
+    }, 200);
   }
 
   public openSheet() {

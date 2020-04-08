@@ -29,7 +29,7 @@
                 <ion-label>{{'Contacts'|translate}}</ion-label>
             </ion-tab-button>
 
-            <ion-fab-button color="yellow" (click)="addNewItembtn()">
+            <ion-fab-button color="yellow" edge (click)="addNewItembtn()">
                 <ion-icon color="light" name="add"></ion-icon>
             </ion-fab-button>
 
@@ -47,3 +47,51 @@
     <!-- <ion-fab horizontal="center" vertical="bottom" edge>
   </ion-fab> -->
 </ion-content>
+<bottom-sheet [(State)]="BottomSheetState" (StateChange)="StateChanged($event)">
+    <div class="row m-0 py-5 option justify-content-around">
+        <div class="col-4 py-3">
+            <ion-fab-button color="magenta" class="m-auto" size="small" (click)="closeSheet(); navCredReminder()">
+                <ion-icon name="notifications-outline"></ion-icon>
+            </ion-fab-button><br>
+            <ion-text class="font-weight-bold" style="position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; margin: auto;">
+                <small> Reminder</small>
+            </ion-text>
+        </div>
+        <div class="col-4 py-3">
+            <ion-fab-button color="magenta" class="m-auto" size="small" (click)="closeSheet(); navAdd(1)">
+                <ion-icon name="call-outline"></ion-icon>
+            </ion-fab-button><br>
+            <ion-text class="font-weight-bold" style="position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; margin: auto;">
+                <small> {{"From Contacts"|translate}}</small>
+            </ion-text>
+        </div>
+        <div class="col-4 py-3">
+            <ion-fab-button color="magenta" class="m-auto" size="small" (click)="closeSheet(); navAdd(2)">
+                <ion-icon name="settings-outline"></ion-icon>
+            </ion-fab-button><br>
+            <ion-text class="font-weight-bold" style="position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; margin: auto;">
+                <small> {{"Manually"|translate}}</small>
+            </ion-text>
+        </div>
+    </div>
+</bottom-sheet>
+<bottom-sheet [(State)]="BottomSheetState1" (StateChange)="StateChanged($event)">
+    <div class="row m-0 py-5 option justify-content-around">
+        <div class="col-6 py-3">
+            <ion-fab-button color="magenta" class="m-auto" size="small" (click)="navAddT(2)">
+                <ion-icon name="exit-outline"></ion-icon>
+            </ion-fab-button><br>
+            <ion-text class="font-weight-bold" style="position: absolute; bottom: 0; left: 0; right: 0; text-align: center; margin: auto;">
+                <small> Add New Category</small>
+            </ion-text>
+        </div>
+        <div class="col-6 py-3">
+            <ion-fab-button color="magenta" class="m-auto" size="small" (click)="navAddT(1)">
+                <ion-icon name="card-outline"></ion-icon>
+            </ion-fab-button><br>
+            <ion-text class="font-weight-bold" style="position: absolute; bottom: 0; left: 0; right: 0; text-align: center; margin: auto;">
+                <small> Add New Product</small>
+            </ion-text>
+        </div>
+    </div>
+</bottom-sheet>
