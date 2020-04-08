@@ -62,6 +62,7 @@ export class IndividualContactPage implements OnInit {
   }
 
   ionViewDidEnter() {
+    this.newDisc = 0;
     this.event.emitIsBack(true);
     this.event.emitBackRoute('/home/contacts');
   }

@@ -70,16 +70,28 @@
                         </td>
                         <td>{{item.price}}</td>
                         <td class="px-0" width="30%">
-                            <ion-row>
-                                <ion-col class="p-0">
-                                    <ion-icon style="font-size: 20px;" name="add-circle-outline" color="success" (click)="addQty(i)">
+                            <ion-row style="border: 1px solid;">
+                                <ion-col class="p-0" style="margin-top: 1px;">
+                                    <ion-icon style="font-size: 20px;
+                                    color: #fff;
+                                    background: #078607;
+                                    margin-top: 3px;
+                                    margin-left: 3px;
+                                    padding: 2px;" name="add-circle-outline" (click)="addQty(i)">
                                     </ion-icon>
                                 </ion-col>
-                                <ion-col class="p-0">
+                                <ion-col class="p-0" style="margin-top: 8px;
+                                text-align: center;
+                                font-size: 13px;">
                                     {{item.qty}}
                                 </ion-col>
-                                <ion-col class="p-0">
-                                    <ion-icon style="font-size: 20px;" name="remove-circle-outline" color="danger" (click)="removeQty(i)">
+                                <ion-col class="p-0" style="margin-top: 1px;text-align: right;">
+                                    <ion-icon style="font-size: 20px;
+                                    background: red;
+                                    color: #fff;
+                                    margin-top: 4px;
+                                    margin-right: 4px;
+                                    padding: 2px;" name="remove-circle-outline" (click)="removeQty(i)">
                                     </ion-icon>
                                 </ion-col>
                             </ion-row>
@@ -442,17 +454,17 @@
                 </ion-button>
             </ion-col>
         </ion-row>
+        <ion-row *ngIf="showrec==false">
+            <ion-col>
+                <ion-fab-button color="yellow" class="ml-auto" (click)="openSheet()">
+                    <ion-icon name="add"></ion-icon>
+                </ion-fab-button>
+            </ion-col>
+        </ion-row>
     </ion-card>
     <!-- <ion-row class="ion-padding"></ion-row>
   <ion-row class="ion-padding"></ion-row>
   <ion-row class="ion-padding"></ion-row> -->
-    <ion-row class="ion-justify-content-end" *ngIf="showrec==false">
-        <ion-col>
-            <ion-fab-button color="yellow" class="ml-auto" (click)="openSheet()">
-                <ion-icon name="add"></ion-icon>
-            </ion-fab-button>
-        </ion-col>
-    </ion-row>
 </ion-content>
 
 <ion-footer *ngIf="showrec==true" style="background-color: white;">

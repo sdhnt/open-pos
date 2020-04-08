@@ -159,9 +159,11 @@ export class TransactionProductPage implements OnInit {
   ionViewDidEnter() {
     this.getCategories();
     this.getProducts();
+    this.events.emitFabButton('transaction-product');
   }
 
   ionViewWillLeave() {
+    // this.events.emitFabButton('');
     this.showSellButton = false;
   }
   ionViewDidLoad() {

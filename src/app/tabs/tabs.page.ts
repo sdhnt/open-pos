@@ -19,9 +19,12 @@ import { EventService } from '../services/event.service';
 import { Observable } from 'rxjs';
 import { ContactUsPage } from '../contact-us/contact-us.page';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import {CashPopoverPage} from '../cash-popover/cash-popover.page';
+import { CashPopoverPage } from '../cash-popover/cash-popover.page';
 import { AddItemPopoverPage } from '../add-item-popover/add-item-popover.page';
-import {GridTabsPopoverPage} from '../grid-tabs-popover/grid-tabs-popover.page'
+import { GridTabsPopoverPage } from '../grid-tabs-popover/grid-tabs-popover.page'
+import { SheetStates } from 'ionic-custom-bottom-sheet';
+import {ContactsPage} from '../contacts/contacts.page';
+import {TransactionProductPage} from '../transaction-product/transaction-product.page'
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
@@ -46,10 +49,15 @@ export class TabsPage implements OnInit {
     taxrate: 0.0,
     discount: 0.0,
   };
+  public BottomSheetState: SheetStates = SheetStates.Closed;
+  public BottomSheetState1: SheetStates = SheetStates.Closed;
   language;
   isBackEnable = false;
   backButtonRoute: any;
+  fabePage: any;
   constructor(
+    private contactsPage: ContactsPage,
+    private trnasProduct: TransactionProductPage,
     private route: ActivatedRoute,
     private router: Router,
     private translateConfigService: TranslateConfigService,
@@ -93,6 +101,11 @@ export class TabsPage implements OnInit {
       console.log('isBack-------------------------->', res);
       this.isBackEnable = res;
       this.change.detectChanges();
+    });
+
+    this.events.fabButtonAction.subscribe(res => {
+      this.fabePage = res;
+      console.log('fabbuton-------------------------->', res);
     });
 
     this.events.backButtonRoute.subscribe(res => {
@@ -164,8 +177,8 @@ export class TabsPage implements OnInit {
     });
   }
 
-  backPress(){
-    if(this.backButtonRoute != ''){
+  backPress() {
+    if (this.backButtonRoute != '') {
       this.router.navigateByUrl(this.backButtonRoute)
     }
   }
@@ -194,7 +207,10 @@ export class TabsPage implements OnInit {
   }
 
   async ionViewDidEnter() {
-
+    this.events.fabButtonAction.subscribe(res => {
+      console.log("___________________________-")
+      console.log(res)
+    });
   }
 
   async delay(ms: number) {
@@ -262,8 +278,8 @@ export class TabsPage implements OnInit {
     return msg;
   }
 
-  async openPopoverGrid(){
-    const gridPopOver = await this.popover.create({component: GridTabsPopoverPage})
+  async openPopoverGrid() {
+    const gridPopOver = await this.popover.create({ component: GridTabsPopoverPage })
     gridPopOver.present();
   }
 
@@ -427,17 +443,55 @@ export class TabsPage implements OnInit {
     popover.present();
   }
 
+  public StateChanged(event) {
+    if (event === SheetStates.Closed) {
+      console.log('Sheet Closed');
+    }
+  }
+
+  public closeSheet() {
+    this.BottomSheetState = SheetStates.Closed;
+  }
+
+  navAdd(page){
+    this.BottomSheetState = SheetStates.Closed;
+    setTimeout(() => {
+      this.contactsPage.navAdd(page);
+    }, 200);
+  }
+  navAddT(page){
+    this.BottomSheetState1 = SheetStates.Closed;
+    setTimeout(() => {
+      this.trnasProduct.navAdd(page)
+    }, 200);
+  }
+  navCredReminder() {
+    this.BottomSheetState = SheetStates.Closed;
+    setTimeout(() => {
+      this.router.navigate(['/home/credit-reminder']);
+    }, 200);
+  }
+
   async addNewItembtn() {
-    const addItem = await this.popover.create({
-      component: AddItemPopoverPage
-    });
-    addItem.present();
-    addItem.onDidDismiss().then(res => {
-      console.log(res);
-      if (res.data) {
-        this.events.emitAddNewItemFunc(res.data);
-      }
-    });
+    console.log('this.fabePage',this.fabePage)
+    if (this.fabePage == 'contacts') {
+      this.BottomSheetState = SheetStates.Opened;
+    }else if(this.fabePage == 'transaction-product'){
+      console.log("HELLO")
+      this.BottomSheetState1 = SheetStates.Opened;
+    }else {
+
+      const addItem = await this.popover.create({
+        component: AddItemPopoverPage
+      });
+      addItem.present();
+      addItem.onDidDismiss().then(res => {
+        console.log(res);
+        if (res.data) {
+          this.events.emitAddNewItemFunc(res.data);
+        }
+      });
+    }
   }
 }
 

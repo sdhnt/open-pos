@@ -17,12 +17,16 @@ export class EventService {
   isback: EventEmitter<any> = new EventEmitter();
   backButtonRoute: EventEmitter<any> = new EventEmitter();
   addNewItemFunc: EventEmitter<any> = new EventEmitter();
+  fabButtonAction: EventEmitter<any> = new EventEmitter();
   constructor() { }
 
   emitIsBack(data) {
     this.isback.emit(data);
   }
 
+  emitFabButton(data) {
+    this.fabButtonAction.emit(data);
+  }
   emitBackRoute(data) {
     this.backButtonRoute.emit(data);
   }

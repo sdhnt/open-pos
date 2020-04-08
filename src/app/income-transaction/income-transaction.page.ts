@@ -686,7 +686,9 @@ export class IncomeTransactionPage implements OnInit {
     this.getUserData();
     this.getLastTransaction();
   }
-
+  ionViewWillEnter() {
+    this.events.emitFabButton('');
+  }
   createRec() {
     // Nav to Rec Page
     // Build Expand Feature on REC Page
@@ -783,7 +785,7 @@ export class IncomeTransactionPage implements OnInit {
   shareRec() {
     this.disableShare = true;
     const div = document.getElementById('recImg');
-    const options = { width: div.offsetWidth, height: div.offsetHeight  };
+    const options = { width: div.offsetWidth, height: div.offsetHeight };
     domtoimage.toPng(div, options).then((dataUrl) => {
       console.log(dataUrl);
       this.social
@@ -846,7 +848,7 @@ export class IncomeTransactionPage implements OnInit {
     const toast = await this.toastCtrl.create({ message: 'Please Wait...', duration: 3000 });
     toast.present();
     const div = document.getElementById('recImg');
-    const options = { width: div.offsetWidth, height: div.offsetHeight  };
+    const options = { width: div.offsetWidth, height: div.offsetHeight };
     domtoimage.toPng(div, options).then((dataUrl) => {
       console.log(dataUrl);
       this.photoLibrary
