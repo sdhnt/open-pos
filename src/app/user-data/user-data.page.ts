@@ -45,11 +45,13 @@ export class UserDataPage implements OnInit {
 
   ionViewDidEnter() {
     this.event.emitIsBack(true);
+    this.event.emitBackRoute('/home/income-transaction');
     console.log('ionViewDidLoad UserDataPage');
   }
 
   ionViewWillLeave() {
     this.event.emitIsBack(false);
+    this.event.emitBackRoute('');
   }
 
   goBack() {

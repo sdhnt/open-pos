@@ -21,7 +21,7 @@ export class AllTransactionPage implements OnInit {
   loitems: any = [];
   buttonColor = '#ffa100';
   buttonColor1 = '#ff0300';
-
+  datastore = {};
   result = '';
   // tslint:disable-next-line: variable-name
   flag_mode = 0;
@@ -61,7 +61,7 @@ export class AllTransactionPage implements OnInit {
     private view: PopoverController
   ) {
     this.getUserData().then(() => console.log('get user data'));
-    this.events.addRecCalcCreated.subscribe(data => {
+    this.events.addRecCalcCcreated.subscribe(data => {
       this.updateOrCreate = 'Update Receipt';
       // console.log("ENTERED!");
       console.log('Received 0 ' + data);
@@ -69,6 +69,7 @@ export class AllTransactionPage implements OnInit {
       // Same for Product Transaction Page
       // console.log(this.showSampleRec);
       const tempdat = JSON.parse(data);
+      this.datastore = tempdat;
       this.showSampleRec = true;
       // this.itemsname=null;
       // this.itemsprice=null;

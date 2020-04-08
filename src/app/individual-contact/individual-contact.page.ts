@@ -63,11 +63,11 @@ export class IndividualContactPage implements OnInit {
 
   ionViewDidEnter() {
     this.event.emitIsBack(true);
-    this.event.emitBackRoute('home/contacts')
+    this.event.emitBackRoute('/home/contacts');
   }
 
   ionViewWillLeave() {
-    this.event.emitBackRoute('')
+    this.event.emitBackRoute('');
     this.event.emitIsBack(false);
   }
 
@@ -88,7 +88,7 @@ export class IndividualContactPage implements OnInit {
   }
 
   async goBack() {
-    if (this.listOfNewTransactions.length === 0 && this.newDate === this.contact.dueDate && this.newDisc == this.contact.discount
+    if (this.listOfNewTransactions.length === 0 && this.newDate === this.contact.dueDate && this.newDisc === this.contact.discount
     ) {
       this.location.back();
     } else {
@@ -126,9 +126,9 @@ export class IndividualContactPage implements OnInit {
         }).catch(e => console.log(e));
       }
 
-      if (this.newDisc != this.contact.discount) {
-        console.log(this.newDisc)
-        console.log(this.contact.discount)
+      if (this.newDisc !== this.contact.discount) {
+        console.log(this.newDisc);
+        console.log(this.contact.discount);
         await this.sp.updateContactDisc(this.contact.displayName, this.newDisc);
       }
       this.location.back();
@@ -231,8 +231,8 @@ export class IndividualContactPage implements OnInit {
   share() {
     this.usingShare = true;
     const div = document.getElementById('share');
-    const options = { background: 'white', height: this.platform.height(), width: this.platform.width() };
-    domtoimage.toPng(div).then((dataUrl) => {
+    const options = { width: div.offsetWidth, height: div.offsetHeight  };
+    domtoimage.toPng(div, options).then((dataUrl) => {
       console.log(dataUrl);
       this.social
         .share('Made using Open POS app\n', '', dataUrl, 'facebook.com/openfinanceapp')

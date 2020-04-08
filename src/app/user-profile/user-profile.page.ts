@@ -135,11 +135,13 @@ export class UserProfilePage implements OnInit {
 
   ionViewDidEnter() {
     this.event.emitIsBack(true);
+    this.event.emitBackRoute('/home/user-data');
     console.log('ionViewDidLoad UserDataPage');
   }
 
   ionViewWillLeave() {
     this.event.emitIsBack(false);
+    this.event.emitBackRoute('');
   }
 
   // loadDropDowns() {

@@ -183,7 +183,7 @@ export class IncomeTransactionPage implements OnInit {
       this.showrec = true;
 
       // Here if 2 items have same code then coagulate/merge - price is always full price, merge discounts accordingly
-
+      console.log(this.datastore.itemslist);
       this.datastore.itemslist.map((item, index) => {
         this.datastore.itemslist.map((item1, index1) => {
           if (index1 !== index) {
@@ -349,6 +349,7 @@ export class IncomeTransactionPage implements OnInit {
   }
 
   async addNewItembtn() {
+    this.BottomSheetState = SheetStates.Closed;
     const addItem = await this.popover.create({
       component: AddItemPopoverPage
     });
@@ -438,6 +439,7 @@ export class IncomeTransactionPage implements OnInit {
   }
 
   async addNewExp() {
+    this.BottomSheetState = SheetStates.Closed;
     const expModal = await this.modal.create({ component: ExpenseGeneralPage });
     expModal.present();
   }
@@ -446,7 +448,9 @@ export class IncomeTransactionPage implements OnInit {
     this.lastsum = 0;
     let totalDiscount = 0,
       totalIndividualDiscount = 0;
+    console.log(this.datastore.itemslist);
     this.datastore.itemslist.forEach(item => {
+      console.log(item);
       if (item.discount !== 0) {
         totalIndividualDiscount += ((item.price * parseFloat(item.discount)) / 100) * item.qty;
         console.log(((parseFloat(item.price) * parseFloat(item.discount)) / 100) * item.qty);
@@ -567,6 +571,7 @@ export class IncomeTransactionPage implements OnInit {
     //     ],
     //   });
     // alert.present();
+    this.BottomSheetState = SheetStates.Closed;
     this.router.navigate(['/home/user-data']);
   }
 
@@ -778,8 +783,9 @@ export class IncomeTransactionPage implements OnInit {
   shareRec() {
     this.disableShare = true;
     const div = document.getElementById('recImg');
-    const options = { background: 'white', height: this.platform.height(), width: this.platform.width() };
-    domtoimage.toPng(div).then((dataUrl) => {
+    const options = { width: div.offsetWidth, height: div.offsetHeight  };
+    domtoimage.toPng(div, options).then((dataUrl) => {
+      console.log(dataUrl);
       this.social
         .share('Receipt made using Open POS app\n', '', dataUrl, 'facebook.com/openfinanceapp')
         .then(response => console.log(response))
@@ -840,8 +846,9 @@ export class IncomeTransactionPage implements OnInit {
     const toast = await this.toastCtrl.create({ message: 'Please Wait...', duration: 3000 });
     toast.present();
     const div = document.getElementById('recImg');
-    const options = { background: 'white', height: this.platform.height(), width: this.platform.width() };
-    domtoimage.toPng(div).then((dataUrl) => {
+    const options = { width: div.offsetWidth, height: div.offsetHeight  };
+    domtoimage.toPng(div, options).then((dataUrl) => {
+      console.log(dataUrl);
       this.photoLibrary
         .requestAuthorization({ read: true, write: true })
         .then(() => {
@@ -1016,7 +1023,7 @@ export class IncomeTransactionPage implements OnInit {
     const helpModal = await this.popover.create({ component: AllTransactionPage });
     helpModal.present();
     this.delay(300).then(() => {
-      this.events.emitAddRecCalcCcreated(this.datastore.itemslist); // SEND ITEMS PRICE
+      this.events.emitAddRecCalcCcreated(JSON.stringify(this.datastore.itemslist)); // SEND ITEMS PRICE
 
       console.log('Sent: 1332 ');
 

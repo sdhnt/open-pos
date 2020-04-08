@@ -9,6 +9,7 @@ import * as firebase from 'firebase';
 import { Observable } from 'rxjs';
 import * as jsPDF from 'jspdf';
 import domtoimage from 'dom-to-image';
+import { Html2canvasService } from '../services/html2canvas.service';
 
 @Component({
   selector: 'app-business-card',
@@ -26,12 +27,14 @@ export class BusinessCardPage implements OnInit {
     private alertCtrl: AlertController,
     private sp: StorageProvider,
     private camera: Camera,
-    private platform: Platform
+    private platform: Platform,
+    // tslint:disable-next-line: no-shadowed-variable
+    private html2canvas: Html2canvasService
   ) { }
 
   userdata;
   file: any;
-
+  img;
   ngOnInit() {
     console.log('ionViewWillLoad BusinessCardPage');
     // this.userdata = this.navParams.get('data');
@@ -47,7 +50,7 @@ export class BusinessCardPage implements OnInit {
 
   share() {
     const div = document.getElementById('card');
-    const options = { background: '#7eace329' };
+    const options = { width: div.offsetWidth, height: div.offsetHeight  };
     domtoimage.toPng(div, options).then((dataUrl) => {
       console.log(dataUrl);
       this.social
@@ -60,6 +63,24 @@ export class BusinessCardPage implements OnInit {
         .then(response => console.log(response))
         .catch(e => console.log(e));
     });
+
+    // const element = document.getElementById('html2canvas');
+    // const targetElement = document.getElementById('card').cloneNode(true);
+    // element.appendChild(targetElement);
+    // this.html2canvas.html2canvas(element.firstChild).then((img) => {
+    //   console.log('this is component line 70', img);
+    //   this.img = img;
+    //   element.firstChild.remove();
+    //   this.social
+    //     .share(
+    //       'This is my business card. Please feel free to contact us for any enquiries\nCreated by OpenPOS',
+    //       '',
+    //       this.img,
+    //       'facebook.com/openfinanceapp',
+    //     ).then(response => console.log(response)).catch(e => console.log(e));
+    // }).catch((res) => {
+    //   console.log(res);
+    // });
     // html2canvas(document.querySelector('#card'), { useCORS: true }).then(canvas => {
     //   const dataUrl = canvas.toDataURL();
     // });

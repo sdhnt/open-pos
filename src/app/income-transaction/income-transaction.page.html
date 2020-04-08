@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content class="ion-padding">
     <!--   
     <ion-button expand="full" style="font-size: 1.2rem;" (click)="printLogo()" style="background-color: green; color: white;" shape="round"> Print Logo</ion-button> -->
 
@@ -327,7 +327,7 @@
     <ion-row *ngIf="showrec==false && isReady==true && lastTransaction">
         <ion-col><b>{{"Last Receipt"|translate}}</b></ion-col>
     </ion-row>
-    <ion-card id="recImg" *ngIf="showrec==false && isReady==true && lastTransaction" class="ion-padding last-rec-card">
+    <ion-card id="recImg" *ngIf="showrec==false && isReady==true && lastTransaction" class="m-0 last-rec-card">
         <ion-card-header>
             <ion-row>
                 <ion-col size="3">

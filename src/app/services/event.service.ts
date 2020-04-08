@@ -23,7 +23,7 @@ export class EventService {
     this.isback.emit(data);
   }
 
-  emitBackRoute(data){
+  emitBackRoute(data) {
     this.backButtonRoute.emit(data);
   }
 

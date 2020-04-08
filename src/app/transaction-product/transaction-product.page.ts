@@ -161,7 +161,7 @@ export class TransactionProductPage implements OnInit {
     this.getProducts();
   }
 
-  ionViewWillLeave(){
+  ionViewWillLeave() {
     this.showSellButton = false;
   }
   ionViewDidLoad() {
@@ -176,12 +176,11 @@ export class TransactionProductPage implements OnInit {
   }
 
   navAdd(num: number) {
+    this.BottomSheetState = SheetStates.Closed;
     if (num === 1) {
-      this.closeSheet();
       this.router.navigate(['/home/addproduct']);
       // this.navCtrl.push(AddProductPage);
     } else if (num === 2) {
-      this.closeSheet();
       this.router.navigate(['/home/add-product-category']);
       // this.navCtrl.push(AddProductCategoryPage);
     }
@@ -255,7 +254,7 @@ export class TransactionProductPage implements OnInit {
   addUp(index) {
     this.listProducts[index].qty++;
     this.listProducts.forEach(product => {
-      if(product.qty > 0){
+      if (product.qty > 0) {
         this.showSellButton = true;
       }
     });
@@ -266,11 +265,11 @@ export class TransactionProductPage implements OnInit {
     }
     let qtySum = 0;
     this.listProducts.forEach(product => {
-      qtySum += parseInt(product.qty);
-      console.log(qtySum)
+      qtySum += Number(product.qty);
+      console.log(qtySum);
     });
 
-    if(qtySum == 0){
+    if (qtySum === 0) {
       this.showSellButton = false;
     }
   }
