@@ -23,3 +23,31 @@ ion-row {
   max-width: 100px;
   height: 120px;
 }
+
+.reciept-row {
+  position: relative;
+  .add {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -10px;
+    margin: auto;
+    z-index: 100;
+  }
+  ion-input {
+    justify-content: center !important;
+  }
+  .remove {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: -10px;
+    margin: auto;
+    z-index: 100;
+  }
+}
+
+:host ::ng-deep ion-input.qtyInput .native-input {
+  max-width: 50% !important;
+  padding: 5px 0 5px 10px;
+}

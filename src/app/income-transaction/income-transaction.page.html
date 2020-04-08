@@ -53,105 +53,102 @@
                 <thead>
                     <tr>
                         <th><b>{{"Name" | translate}}</b></th>
-                        <th><b>{{"Price"| translate}}</b></th>
+                        <th width="20%"><b>{{"Price"| translate}}</b></th>
                         <th width="30%"><b>{{"Qty"| translate}}</b></th>
-                        <th><b>{{"Subtotal"| translate}}</b></th>
-                        <th></th>
+                        <th width="15%"><b>{{"Subtotal"| translate}}</b></th>
+                        <th width="5%"></th>
                     </tr>
                 </thead>
                 <tbody *ngFor="let item of datastore.itemslist; let i = index">
                     <tr>
-                        <td>
-                            <div *ngIf="item.name.includes('Item'); else itemexist">
-                                <ion-button color="yellow" fill="clear" size="small" (click)="addSingleProd(item,i)">
-                                    {{"Choose"|translate}}</ion-button>
-                            </div>
-                            <ng-template #itemexist>{{item.name}}</ng-template>
+                        <td style="padding: 14px 0px;" *ngIf="item.name.includes('Item'); else itemexist">
+                            <ion-button color="magenta" fill="clear" size="small" (click)="addSingleProd(item,i)"
+                                style="margin: 0;font-size: 10px;">
+                                {{"Choose"|translate}}</ion-button>
                         </td>
-                        <td>{{item.price}}</td>
+                        <ng-template #itemexist>
+                            <td>{{item.name}}</td>
+                        </ng-template>
+
+                        <td width="20%">{{item.price}}</td>
                         <td class="px-0" width="30%">
-                            <ion-row style="border: 1px solid;">
-                                <ion-col class="p-0" style="margin-top: 1px;">
-                                    <ion-icon style="font-size: 20px;
-                                    color: #fff;
-                                    background: #078607;
-                                    margin-top: 3px;
-                                    margin-left: 3px;
-                                    padding: 2px;" name="add-circle-outline" (click)="addQty(i)">
-                                    </ion-icon>
-                                </ion-col>
-                                <ion-col class="p-0" style="margin-top: 8px;
-                                text-align: center;
-                                font-size: 13px;">
-                                    {{item.qty}}
-                                </ion-col>
-                                <ion-col class="p-0" style="margin-top: 1px;text-align: right;">
-                                    <ion-icon style="font-size: 20px;
-                                    background: red;
-                                    color: #fff;
-                                    margin-top: 4px;
-                                    margin-right: 4px;
-                                    padding: 2px;" name="remove-circle-outline" (click)="removeQty(i)">
-                                    </ion-icon>
-                                </ion-col>
+                            <ion-row class="reciept-row" style="border: 1px solid;">
+                                <ion-button class="add" size="small" (click)="addQty(i)" fill="clear" color="success">
+                                    <ion-icon slot="icon-only" name="add-circle"></ion-icon>
+                                </ion-button>
+                                <ion-input class="qtyInput" type="number" [(ngModel)]='item.qty' [min]="0" readonly>
+                                </ion-input>
+                                <ion-button class="remove" size="small" (click)="removeQty(i)" fill="clear"
+                                    color="danger">
+                                    <ion-icon slot="icon-only" name="remove-circle"></ion-icon>
+                                </ion-button>
                             </ion-row>
                         </td>
-                        <td>{{(item.price*item.qty)| number:0}}</td>
-                        <td>
-                            <ion-icon style="font-size: 20px;" name="close-circle-outline" color="danger" (click)="removeItem(i)">
+                        <td width="15%" class="text-right">{{(item.price*item.qty)| number:0}}</td>
+                        <td width="5%">
+                            <ion-icon style="font-size: 20px;" name="close-circle-outline" color="danger"
+                                (click)="removeItem(i)">
                             </ion-icon>
                         </td>
                     </tr>
                     <tr>
                         <td>{{ 'Discount' | translate }} %</td>
                         <td class="p-0">
-                            <ion-input class="form-control" type="number" [(ngModel)]="item.discount" (ionChange)="updateRec()" min="0" max="100">
+                            <ion-input class="form-control" type="number" [(ngModel)]="item.discount"
+                                (ionChange)="updateRec()" min="0" max="100">
                             </ion-input>
                         </td>
                         <td>
                             {{(item.qty*item.price*(item.discount)/100)| number:0}}
                         </td>
-                        <td>
+                        <td class="text-right">
                             <b>{{(item.price*((100-item.discount))/100*item.qty)| number:0}}</b>
                         </td>
                     </tr>
                 </tbody>
                 <tbody>
                     <tr>
-                        <td colspan="3"><b>{{"Grand total:"|translate}}</b></td>
-                        <td colspan="2">{{lastsumAfterIndividualDiscount}}</td>
+                        <td colspan="2"><b>{{"Grand total:"|translate}}</b></td>
+                        <td colspan="2" class="text-right">{{lastsumAfterIndividualDiscount}}</td>
                     </tr>
                     <tr *ngIf="discbtn==1">
                         <td><b>{{"Disc. %:"|translate}}</b></td>
                         <td class="p-0">
-                            <ion-input class="form-control" type="number" name="discount" [(ngModel)]="discount" (change)="updateRec()" min="0" max="100">
+                            <ion-input class="form-control" type="number" name="discount" [(ngModel)]="discount"
+                                (change)="updateRec()" min="0" max="100">
                             </ion-input>
                         </td>
+                        <td></td>
                         <td>
                             {{lastsumdisc}}
                         </td>
                         <td>
-                            <ion-icon style="font-size: 16px;" name="close" color="danger" (click)="remDisc()"></ion-icon>
+                            <ion-icon style="font-size: 16px;" name="close" color="danger" (click)="remDisc()">
+                            </ion-icon>
                         </td>
                     </tr>
                     <tr *ngIf="taxbtn==1">
                         <td><b>{{"Tax %:"|translate}}</b></td>
                         <td class="p-0">
-                            <ion-input class="form-control" type="number" name="taxrate" [(ngModel)]="taxrate" (change)="updateRec()" min="0" max="100">
+                            <ion-input class="form-control" type="number" name="taxrate" [(ngModel)]="taxrate"
+                                (change)="updateRec()" min="0" max="100">
                             </ion-input>
                         </td>
+                        <td></td>
                         <td>
                             {{lastsumtax}}
                         </td>
                         <td>
-                            <ion-icon style="font-size: 16px;" name="close" color="danger" (click)="remTax()"></ion-icon>
+                            <ion-icon style="font-size: 16px;" name="close" color="danger" (click)="remTax()">
+                            </ion-icon>
                         </td>
                     </tr>
                     <tr *ngIf="contact!=''">
                         <td colspan="2">{{"Assign to Contact" | translate}}:</td>
                         <td colspan="2">{{ contact }}</td>
                         <td>
-                            <ion-icon style="font-size: 16px;" name="close" color="danger" (click)="clearContact()"></ion-icon>
+                            <ion-icon style="font-size: 16px;" name="close" color="danger" (click)="clearContact()">
+                            </ion-icon>
                         </td>
                     </tr>
                 </tbody>
@@ -159,25 +156,31 @@
             <div *ngIf="showrec==true">
                 <ion-row class="ion-justify-content-center">
                     <ion-button expand="block" (click)="addNewItembtn()" color="magenta">
-                        <ion-icon slot="icon-only" name="add-circle-outline" class="mr-3"></ion-icon>{{"Add New Item"|translate}}
+                        <ion-icon slot="icon-only" name="add-circle-outline" class="mr-3"></ion-icon>
+                        {{"Add New Item"|translate}}
                     </ion-button>
                 </ion-row>
                 <br><br>
                 <ion-row class="ion-justify-content-center">
                     <ion-col>
-                        <ion-button style="font-size: 10px; width: 100%;" color="magenta" fill="outline" size="small" (click)="setDisc()" [disabled]="discbtn!=0">
-                            <ion-icon slot="icon-only" name="add-circle-outline" class="mr-1"></ion-icon>{{"Discount"|translate}}
+                        <ion-button style="font-size: 10px; width: 100%;" color="magenta" fill="outline" size="small"
+                            (click)="setDisc()" [disabled]="discbtn!=0">
+                            <ion-icon slot="icon-only" name="add-circle-outline" class="mr-1"></ion-icon>
+                            {{"Discount"|translate}}
                         </ion-button>
                     </ion-col>
                     <ion-col>
-                        <ion-button style="font-size: 10px; width: 100%;" color="magenta" fill="outline" size="small" (click)="addContact()" [disabled]="contact!=''">
+                        <ion-button style="font-size: 10px; width: 100%;" color="magenta" fill="outline" size="small"
+                            (click)="addContact()" [disabled]="contact!=''">
                             <ion-icon slot="icon-only" name="add-circle-outline" class="mr-1"></ion-icon>
                             {{"Contact"|translate}}
                         </ion-button>
                     </ion-col>
                     <ion-col>
-                        <ion-button style="font-size: 10px; width: 100%;" color="magenta" fill="outline" size="small" (click)="setTax()" [disabled]="taxbtn!=0">
-                            <ion-icon slot="icon-only" name="add-circle-outline" class="mr-1"></ion-icon>{{"Tax"|translate}}
+                        <ion-button style="font-size: 10px; width: 100%;" color="magenta" fill="outline" size="small"
+                            (click)="setTax()" [disabled]="taxbtn!=0">
+                            <ion-icon slot="icon-only" name="add-circle-outline" class="mr-1"></ion-icon>
+                            {{"Tax"|translate}}
                         </ion-button>
                     </ion-col>
                 </ion-row>
@@ -434,37 +437,37 @@
                 <p> facebook.com/openfinanceapp</p>
             </ion-col>
         </ion-row>
-        <ion-row *ngIf="showrec==false && isReady==true && lastTransaction">
-            <ion-col class="p-0">
-                <ion-button (click)="printOldRec(lastTransaction)" fill="clear" color="dark" class="m-0">
-                    <ion-icon style="font-size: 16px;" slot="icon-only" class="mr-1" name="print"></ion-icon>
-                    <small style="color: grey;">{{'PRINT '|translate}}</small>
-                </ion-button>
-            </ion-col>
-            <ion-col class="p-0">
-                <ion-button fill="clear" (click)="recAction()" [disabled]="disableDownload" color="dark" class="m-0">
-                    <ion-icon style="font-size: 16px;" slot="icon-only" class="mr-1" name="download"></ion-icon>
-                    <small style="color: grey;">{{"Download"|translate}}</small>
-                </ion-button>
-            </ion-col>
-            <ion-col class="p-0">
-                <ion-button fill="clear" (click)="shareRec()" [disabled]="disableShare" color="dark" class="m-0">
-                    <ion-icon style="font-size: 16px;" slot="icon-only" class="mr-1" name="share"></ion-icon>
-                    <small style="color: grey;">{{"Share"|translate}}</small>
-                </ion-button>
-            </ion-col>
-        </ion-row>
-        <ion-row *ngIf="showrec==false">
-            <ion-col>
-                <ion-fab-button color="yellow" class="ml-auto" (click)="openSheet()">
-                    <ion-icon name="add"></ion-icon>
-                </ion-fab-button>
-            </ion-col>
-        </ion-row>
     </ion-card>
+    <ion-row *ngIf="showrec==false && isReady==true && lastTransaction">
+        <ion-col class="p-0">
+            <ion-button (click)="printOldRec(lastTransaction)" fill="clear" color="dark" class="m-0">
+                <ion-icon style="font-size: 16px;" slot="icon-only" class="mr-1" name="print"></ion-icon>
+                <small style="color: grey;">{{'PRINT '|translate}}</small>
+            </ion-button>
+        </ion-col>
+        <ion-col class="p-0">
+            <ion-button fill="clear" (click)="recAction()" [disabled]="disableDownload" color="dark" class="m-0">
+                <ion-icon style="font-size: 16px;" slot="icon-only" class="mr-1" name="download"></ion-icon>
+                <small style="color: grey;">{{"Download"|translate}}</small>
+            </ion-button>
+        </ion-col>
+        <ion-col class="p-0">
+            <ion-button fill="clear" (click)="shareRec()" [disabled]="disableShare" color="dark" class="m-0">
+                <ion-icon style="font-size: 16px;" slot="icon-only" class="mr-1" name="share"></ion-icon>
+                <small style="color: grey;">{{"Share"|translate}}</small>
+            </ion-button>
+        </ion-col>
+    </ion-row>
     <!-- <ion-row class="ion-padding"></ion-row>
-  <ion-row class="ion-padding"></ion-row>
-  <ion-row class="ion-padding"></ion-row> -->
+        <ion-row class="ion-padding"></ion-row>
+        <ion-row class="ion-padding"></ion-row> -->
+    <ion-row *ngIf="showrec==false">
+        <ion-col>
+            <ion-fab-button color="yellow" class="ml-auto" (click)="openSheet()">
+                <ion-icon name="add"></ion-icon>
+            </ion-fab-button>
+        </ion-col>
+    </ion-row>
 </ion-content>
 
 <ion-footer *ngIf="showrec==true" style="background-color: white;">
@@ -507,7 +510,8 @@
             <ion-fab-button color="magenta" class="m-auto" size="small" (click)="closeSheet(); addNewItembtn()">
                 <ion-icon name="apps"></ion-icon>
             </ion-fab-button><br>
-            <ion-text class="font-weight-bold" style="position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; margin: auto;">
+            <ion-text class="font-weight-bold"
+                style="position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; margin: auto;">
                 <small> Add New Sale</small>
             </ion-text>
         </div>
@@ -515,7 +519,8 @@
             <ion-fab-button color="magenta" class="m-auto" size="small" (click)="closeSheet(); addNewExp()">
                 <ion-icon name="exit-outline"></ion-icon>
             </ion-fab-button><br>
-            <ion-text class="font-weight-bold" style="position: absolute; bottom: 0; left: 0; right: 0; text-align: center; margin: auto;">
+            <ion-text class="font-weight-bold"
+                style="position: absolute; bottom: 0; left: 0; right: 0; text-align: center; margin: auto;">
                 <small> Add New Expense</small>
             </ion-text>
         </div>
@@ -523,7 +528,8 @@
             <ion-fab-button color="magenta" class="m-auto" size="small" (click)="closeSheet(); editRecTop()">
                 <ion-icon name="card-outline"></ion-icon>
             </ion-fab-button><br>
-            <ion-text class="font-weight-bold" style="position: absolute; bottom: 0; left: 0; right: 0; text-align: center; margin: auto;">
+            <ion-text class="font-weight-bold"
+                style="position: absolute; bottom: 0; left: 0; right: 0; text-align: center; margin: auto;">
                 <small> Edit Business Card</small>
             </ion-text>
         </div>
