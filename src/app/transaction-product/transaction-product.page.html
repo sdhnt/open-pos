@@ -1,16 +1,17 @@
 <ion-content class="ion-padding">
-    <ion-refresher (ionRefresh)="doRefresh($event)" slot="fixed">
-        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
-        </ion-refresher-content>
-    </ion-refresher>
-    <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-        <ion-fab-button size="small" color="yellow" (click)="openSheet()">
-            <ion-icon name="add"></ion-icon>
-        </ion-fab-button>
-        <!-- <ion-fab-button color="light">
+  <ion-refresher (ionRefresh)="doRefresh($event)" slot="fixed">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button size="small" color="yellow" (click)="openSheet()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <!-- <ion-fab-button color="light">
       <ion-icon md="add"></ion-icon>
     </ion-fab-button> -->
-        <!-- <ion-fab-list side="start">
+    <!-- <ion-fab-list side="start">
       <ion-button style="background-color: #301924;" (click)="navAdd(1)">
         {{"Add Product"|translate}}
       </ion-button>
@@ -18,34 +19,36 @@
         {{"Add Category"|translate}}
       </ion-button>
     </ion-fab-list> -->
-    </ion-fab>
+  </ion-fab>
 
-    <!-- 
+  <!-- 
  <ion-fab left bottom>
   <button ion-fab style="background-color: black;" (click)="openCalc()"><ion-icon name="calculator"></ion-icon></ion-button>
 </ion-fab> -->
 
-    <div *ngIf="showmanual==0">
-        <ion-searchbar showCancelButton="focus" [(ngModel)]="searchterm" (ionChange)="filteredProduct()"></ion-searchbar>
+  <div *ngIf="showmanual==0">
+    <ion-searchbar showCancelButton="focus" [(ngModel)]="searchterm" (ionChange)="filteredProduct()"></ion-searchbar>
 
-        <ion-grid>
-            <ion-row>
-                <ion-col class="select-col">
-                    <ion-select id="select-col-1" placeholder="{{'Select category'|translate}}" multiple="true" [(ngModel)]='selectedCat' (ionChange)="filteredProduct('fromSelection')">
-                        <ion-select-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}
-                        </ion-select-option>
-                    </ion-select>
-                    <ion-button *ngIf="selectedCat && selectedCat.length" size="small" shape="round" color="danger" (click)="buttonReset()">
-                        {{"Clear"|translate}}</ion-button>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
+    <ion-grid>
+      <ion-row>
+        <ion-col class="select-col">
+          <ion-select id="select-col-1" placeholder="{{'Select category'|translate}}" multiple="true"
+            [(ngModel)]='selectedCat' (ionChange)="filteredProduct('fromSelection')">
+            <ion-select-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}
+            </ion-select-option>
+          </ion-select>
+          <ion-button *ngIf="selectedCat && selectedCat.length" size="small" shape="round" color="danger"
+            (click)="buttonReset()">
+            {{"Clear"|translate}}</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
 
-    </div>
+  </div>
 
 
-    <!-- <ion-card>
+  <!-- <ion-card>
       <ion-grid line>
         <ion-row>
         <ion-col>
@@ -84,30 +87,23 @@
     </ion-card>  -->
 
 
-    <ion-card *ngIf="showmanual==1" class="ion-padding">
-        <h2> {{"There is no item with "|translate}} {{price}} {{" price in database. Please type the item name:"|translate}}
-        </h2>
-        <ion-input autofocus="true" type="text" [(ngModel)]="itname" placeholder="{{'Enter Name Here'|translate}}">
-        </ion-input>
-        <ion-grid>
-            <ion-row>
-                <ion-col>
-                    <ion-button expand="full" (click)="updateName()"> {{"CANCEL"|translate}}</ion-button>
-                </ion-col>
-                <ion-col>
-                    <ion-button expand="full" (click)="updateName()"> {{"Update Receipt"|translate}}</ion-button>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-
-
-
-    </ion-card>
-
-
-
-
-    <span *ngFor="let product of filteredList; let i=index">
+  <ion-card *ngIf="showmanual==1" class="ion-padding">
+    <h2> {{"There is no item with "|translate}} {{price}} {{" price in database. Please type the item name:"|translate}}
+    </h2>
+    <ion-input autofocus="true" type="text" [(ngModel)]="itname" placeholder="{{'Enter Name Here'|translate}}">
+    </ion-input>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-button size="small" expand="block" color="danger" (click)="updateName()"> {{"CANCEL"|translate}}</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button size="small" expand="block" color="yellow" (click)="updateName()"> {{"Update Receipt"|translate}}</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+  <span *ngFor="let product of filteredList; let i=index">
     <ion-card *ngIf="product.isDisabled !== true">
       <ion-card-content>
         <ion-row>
@@ -118,47 +114,52 @@
           </ion-col>
           <ion-col>
             <table class="text-left">
-              <tr>
-                <td colspan="2">{{product.name}}</td>
-              </tr>
-              <tr>
-                <td>
-                  <small>
-                    Retail Price
-                  </small>
-                </td>
-                <td class="text-right">
-                  <small>{{product.price}}</small>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <small>Wholesale Price</small>
-                </td>
-                <td class="text-right">
-                  <small>{{product.wholesale_price}}</small>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <small>
-                    Category
-                  </small>
-                </td>
-                <td class="text-right">
-                  <small>{{product.cat}}</small>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <small>
-                    Stock
-                  </small>
-                </td>
-                <td class="text-right">
-                  <small>{{product.stock_qty}}</small>
-                </td>
-              </tr>
+              <tbody>
+                <tr>
+                  <td colspan="2">{{product.name}}</td>
+                </tr>
+              </tbody>
+              <tbody>
+                <ion-radio-group value="r" (ionChange)="addwholesaledisc($event, product)">
+                  <tr>
+                    <td colspan="2">
+                      <ion-radio color="magenta" size="small" class="qty-radio" value="r" *ngIf="product.qty>0"></ion-radio> &nbsp;
+                      <small>{{"Retail Price"|translate}} : {{product.price}}</small>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2">
+                      <small>
+                        <ion-radio color="magenta" size="small" class="qty-radio" value="w" *ngIf="product.qty>0"></ion-radio> &nbsp;
+                        {{"Wholesale Price"|translate}}
+                        : {{product.wholesale_price}}
+                      </small>
+                    </td>
+                  </tr>
+                </ion-radio-group>
+              </tbody>
+              <tbody>
+                <tr>
+                  <td>
+                    <small>
+                      Category
+                    </small>
+                  </td>
+                  <td class="text-right">
+                    <small>{{product.cat}}</small>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <small>
+                      Stock
+                    </small>
+                  </td>
+                  <td class="text-right">
+                    <small>{{product.stock_qty}}</small>
+                  </td>
+                </tr>
+              </tbody>
             </table>
           </ion-col>
         </ion-row>
@@ -199,109 +200,108 @@
     </ion-card>
   </span>
 
-    <!-- <ion-card *ngIf="product.isDisabled !== true" style="border: solid 1px gray;">
-      <ion-grid>
-        <ion-row>
-          <ion-col>
-            <ion-row>
-              <ion-col>
-                {{product.name}}
-              </ion-col>
-              <ion-col *ngIf="event1!=true&&product.qty==0" style="align-items: flex-end;">
-                <ion-button size="small" expand="full" shape="round" color="dark" (click)="viewEditProduct(product)">
-                  {{"View / Edit"|translate}}</ion-button>
-              </ion-col>
-            </ion-row>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <ion-radio-group value="r" (ionChange)="addwholesaledisc($event, product)">
-              <ion-label style="color: grey; font-size: 12px;">
-                <ion-radio value="r" slot="end" *ngIf="product.qty>0"></ion-radio> &nbsp;
-                {{"Retail Price"|translate}} : {{product.price}}
-              </ion-label>
-              <ion-label style="color: grey; font-size: 12px;">
-                <ion-radio value="w" slot="end" *ngIf="product.qty>0"></ion-radio> &nbsp;
-                {{"Wholesale Price"|translate}}
-                : {{product.wholesale_price}}
-              </ion-label>
-              <ion-label style="color: grey; font-size: 12px;">{{"Category"|translate}} : {{product.cat}}</ion-label>
-              <ion-label>{{"Stock"|translate}}: {{product.stock_qty}}</ion-label>
-
-            </ion-radio-group>
-          </ion-col>
-
-
-          <ion-col class="image ion-justify-content-center">
-            <ion-avatar>
-              <img class="ion-image" [src]="product.url">
-            </ion-avatar>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col *ngIf="product.qty==0">
-            <ion-button *ngIf="event1!=true" expand="full" size="small" color="success" (click)="sellProd(product)">
-              {{"Sell"|translate}}</ion-button>
-          </ion-col>
-          <ion-col style="border: solid silver; text-align: center;background-color:green;"
-            *ngIf="event1==false&&product.qty>0" (click)="addUp(i)">
-            <ion-icon name="add" style="color: white"></ion-icon>
-          </ion-col>
-          <ion-col style="border: solid silver; text-align: center;" *ngIf="event1==false&&product.qty>0">
-            {{product.qty}}
-          </ion-col>
-          <ion-col style="border: solid silver; text-align: center;background-color: red;"
-            *ngIf="event1==false&&product.qty>0" (click)="addDown(i)">
-            <ion-icon name="remove" style=" color: white"></ion-icon>
-          </ion-col>
-        </ion-row>
-        <ion-row *ngIf="event1==true">
-          <ion-col>
-            <ion-button expand="full" color="dark" (click)="singleProduct(product)">{{"Add"|translate}}
-            </ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card> -->
+  <!-- <ion-card *ngIf="product.isDisabled !== true" style="border: solid 1px gray;">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-row>
+            <ion-col>
+              {{product.name}}
+            </ion-col>
+            <ion-col *ngIf="event1!=true&&product.qty==0" style="align-items: flex-end;">
+              <ion-button size="small" expand="full" shape="round" color="dark" (click)="viewEditProduct(product)">
+                {{"View / Edit"|translate}}</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-radio-group value="r" (ionChange)="addwholesaledisc($event, product)">
+            <ion-label style="color: grey; font-size: 12px;">
+              <ion-radio value="r" slot="end" *ngIf="product.qty>0"></ion-radio> &nbsp;
+              {{"Retail Price"|translate}} : {{product.price}}
+            </ion-label>
+            <ion-label style="color: grey; font-size: 12px;">
+              <ion-radio value="w" slot="end" *ngIf="product.qty>0"></ion-radio> &nbsp;
+              {{"Wholesale Price"|translate}}
+              : {{product.wholesale_price}}
+            </ion-label>
+          </ion-radio-group>
+            <ion-label style="color: grey; font-size: 12px;">{{"Category"|translate}} : {{product.cat}}</ion-label>
+            <ion-label>{{"Stock"|translate}}: {{product.stock_qty}}</ion-label>
+        </ion-col>
+        <ion-col class="image ion-justify-content-center">
+          <ion-avatar>
+            <img class="ion-image" [src]="product.url">
+          </ion-avatar>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col *ngIf="product.qty==0">
+          <ion-button *ngIf="event1!=true" expand="full" size="small" color="success" (click)="sellProd(product)">
+            {{"Sell"|translate}}</ion-button>
+        </ion-col>
+        <ion-col style="border: solid silver; text-align: center;background-color:green;"
+          *ngIf="event1==false&&product.qty>0" (click)="addUp(i)">
+          <ion-icon name="add" style="color: white"></ion-icon>
+        </ion-col>
+        <ion-col style="border: solid silver; text-align: center;" *ngIf="event1==false&&product.qty>0">
+          {{product.qty}}
+        </ion-col>
+        <ion-col style="border: solid silver; text-align: center;background-color: red;"
+          *ngIf="event1==false&&product.qty>0" (click)="addDown(i)">
+          <ion-icon name="remove" style=" color: white"></ion-icon>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="event1==true">
+        <ion-col>
+          <ion-button expand="full" color="dark" (click)="singleProduct(product)">{{"Add"|translate}}
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card> -->
 </ion-content>
 
 <ion-footer>
-    <ion-grid>
-        <ion-row *ngIf="event1==false && showSellButton">
-            <ion-col>
-                <ion-button (click)="createRec()" expand="block" color="yellow">
-                    <ion-icon name="checkmark-circle-outline" class="mr-3"></ion-icon> {{updateOrCreate|translate}}
-                </ion-button>
-            </ion-col>
-        </ion-row>
-        <ion-row *ngIf="event1==true">
-            <ion-col>
-                <ion-button (click)="reset()" expand="block" color="yellow">
-                    <ion-icon name="close-circle-outline" class="mr-3"></ion-icon> {{"CANCEL"|translate}}
-                </ion-button>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
+  <ion-grid>
+    <ion-row *ngIf="event1==false && showSellButton">
+      <ion-col>
+        <ion-button (click)="createRec()" expand="block" color="yellow">
+          <ion-icon name="checkmark-circle-outline" class="mr-3"></ion-icon> {{updateOrCreate|translate}}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="event1==true">
+      <ion-col>
+        <ion-button (click)="reset()" expand="block" color="yellow">
+          <ion-icon name="close-circle-outline" class="mr-3"></ion-icon> {{"CANCEL"|translate}}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-footer>
 
 <bottom-sheet [(State)]="BottomSheetState" (StateChange)="StateChanged($event)">
-    <div class="row m-0 py-5 option justify-content-around">
-        <div class="col-6 py-3">
-            <ion-fab-button color="magenta" class="m-auto" size="small" (click)="navAdd(2)">
-                <ion-icon name="exit-outline"></ion-icon>
-            </ion-fab-button><br>
-            <ion-text class="font-weight-bold" style="position: absolute; bottom: 0; left: 0; right: 0; text-align: center; margin: auto;">
-                <small> Add New Category</small>
-            </ion-text>
-        </div>
-        <div class="col-6 py-3">
-            <ion-fab-button color="magenta" class="m-auto" size="small" (click)="navAdd(1)">
-                <ion-icon name="card-outline"></ion-icon>
-            </ion-fab-button><br>
-            <ion-text class="font-weight-bold" style="position: absolute; bottom: 0; left: 0; right: 0; text-align: center; margin: auto;">
-                <small> Add New Product</small>
-            </ion-text>
-        </div>
+  <div class="row m-0 py-5 option justify-content-around">
+    <div class="col-6 py-3">
+      <ion-fab-button color="magenta" class="m-auto" size="small" (click)="navAdd(2)">
+        <ion-icon name="exit-outline"></ion-icon>
+      </ion-fab-button><br>
+      <ion-text class="font-weight-bold"
+        style="position: absolute; bottom: 0; left: 0; right: 0; text-align: center; margin: auto;">
+        <small> Add New Category</small>
+      </ion-text>
     </div>
+    <div class="col-6 py-3">
+      <ion-fab-button color="magenta" class="m-auto" size="small" (click)="navAdd(1)">
+        <ion-icon name="card-outline"></ion-icon>
+      </ion-fab-button><br>
+      <ion-text class="font-weight-bold"
+        style="position: absolute; bottom: 0; left: 0; right: 0; text-align: center; margin: auto;">
+        <small> Add New Product</small>
+      </ion-text>
+    </div>
+  </div>
 </bottom-sheet>

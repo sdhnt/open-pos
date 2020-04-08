@@ -81,36 +81,38 @@ export class TransactionProductPage implements OnInit {
     });
 
     this.events.addRecProdCreated.subscribe(async data => {
-      console.log('ENTERED!');
-      console.log('Received 0 ' + data);
-      this.translateConfigService.getTranslatedMessage('Update Receipt').subscribe((res) => {
-        this.updateOrCreate = res;
-      });
+      if (data) {
+        console.log('ENTERED!');
+        console.log('Received 0 ', data);
+        this.translateConfigService.getTranslatedMessage('Update Receipt').subscribe((res) => {
+          this.updateOrCreate = res;
+        });
 
-      const tempdat = data;
-      await this.getProducts();
-      console.log(tempdat);
+        const tempdat = data;
+        await this.getProducts();
+        console.log(tempdat);
 
-      tempdat.forEach(element => {
-        this.event = true;
+        tempdat.forEach(element => {
+          this.event = true;
 
-        // this.itemsname.push(element.name)
-        // this.itemsprice.push(element.price);
-        // this.itemsqty.push(element.qty)
+          // this.itemsname.push(element.name)
+          // this.itemsprice.push(element.price);
+          // this.itemsqty.push(element.qty)
 
-        if (this.listProducts.length !== 0) {
-          this.listProducts.forEach(element1 => {
-            if (element1.name === element.name) {
-              element1.qty = element.qty;
-              element1.discount = element.discount;
-            }
-          });
-        }
-        if (element.code === '000000') {
-          this.calcitems.push(element);
-        }
-      });
-      console.log(this.calcitems);
+          if (this.listProducts.length !== 0) {
+            this.listProducts.forEach(element1 => {
+              if (element1.name === element.name) {
+                element1.qty = element.qty;
+                element1.discount = element.discount;
+              }
+            });
+          }
+          if (element.code === '000000') {
+            this.calcitems.push(element);
+          }
+        });
+        console.log(this.calcitems);
+      }
     });
 
     // this.events.subscribe("cbUpdate:created", async ()=>{
@@ -396,6 +398,7 @@ export class TransactionProductPage implements OnInit {
 
   setfilter(price) {
     return new Promise(async resolve => {
+      console.log(this.listProducts);
       this.filteredList = await this.listProducts.filter(item => {
         // tslint:disable-next-line: triple-equals
         console.log(item.price, item.price == price || item.wholesale_price == price, price);
@@ -406,6 +409,7 @@ export class TransactionProductPage implements OnInit {
           return false;
         }
       });
+      console.log(this.filteredList);
       resolve();
     });
   }

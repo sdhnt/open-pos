@@ -61,7 +61,6 @@ export class EventService {
   }
 
   emitAddRecProdCreated(data?) {
-    console.log(data);
     this.addRecProdCreated.emit(data);
   }
 

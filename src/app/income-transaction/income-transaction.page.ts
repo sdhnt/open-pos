@@ -1066,7 +1066,7 @@ export class IncomeTransactionPage implements OnInit {
     // (this.navCtrl.parent as Tabs).select(2);
     console.log(this.datastore.itemslist);
     this.delay(300).then(() => {
-      this.events.emitAddRecProdCreated(this.datastore.itemslist);
+      this.events.emitAddRecProdCreated(JSON.stringify(this.datastore.itemslist));
 
       console.log('Sent: 1331 ');
 
