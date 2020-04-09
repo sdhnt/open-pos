@@ -48,7 +48,7 @@
             </ion-row>
         </ion-card-header>
         <hr style="border: 1px dashed grey;">
-        <ion-card-content>
+        <ion-card-content class="p-0">
             <table class="table" style="font-size: 10px;">
                 <thead>
                     <tr>
@@ -62,7 +62,7 @@
                 <tbody *ngFor="let item of datastore.itemslist; let i = index">
                     <tr>
                         <td style="padding: 14px 0px;" *ngIf="item.name.includes('Item'); else itemexist">
-                            <ion-button color="magenta" fill="clear" size="small" (click)="addSingleProd(item,i)"
+                            <ion-button color="magenta" fill="outline" size="small" (click)="addSingleProd(item,i)"
                                 style="margin: 0;font-size: 10px;">
                                 {{"Choose"|translate}}</ion-button>
                         </td>
@@ -104,12 +104,14 @@
                         <td class="text-right">
                             <b>{{(item.price*((100-item.discount))/100*item.qty)| number:0}}</b>
                         </td>
+                        <td></td>
                     </tr>
                 </tbody>
                 <tbody>
                     <tr>
                         <td colspan="2"><b>{{"Grand total:"|translate}}</b></td>
                         <td colspan="2" class="text-right">{{lastsumAfterIndividualDiscount}}</td>
+                        <td></td>
                     </tr>
                     <tr *ngIf="discbtn==1">
                         <td><b>{{"Disc. %:"|translate}}</b></td>
@@ -145,7 +147,7 @@
                     </tr>
                     <tr *ngIf="contact!=''">
                         <td colspan="2">{{"Assign to Contact" | translate}}:</td>
-                        <td colspan="2">{{ contact }}</td>
+                        <td colspan="2" class="text-right">{{ contact }}</td>
                         <td>
                             <ion-icon style="font-size: 16px;" name="close" color="danger" (click)="clearContact()">
                             </ion-icon>

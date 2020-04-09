@@ -21,10 +21,11 @@ import { ContactUsPage } from '../contact-us/contact-us.page';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { CashPopoverPage } from '../cash-popover/cash-popover.page';
 import { AddItemPopoverPage } from '../add-item-popover/add-item-popover.page';
-import { GridTabsPopoverPage } from '../grid-tabs-popover/grid-tabs-popover.page'
+import { GridTabsPopoverPage } from '../grid-tabs-popover/grid-tabs-popover.page';
 import { SheetStates } from 'ionic-custom-bottom-sheet';
-import {ContactsPage} from '../contacts/contacts.page';
-import {TransactionProductPage} from '../transaction-product/transaction-product.page'
+import { ContactsPage } from '../contacts/contacts.page';
+import { TransactionProductPage } from '../transaction-product/transaction-product.page';
+import { ExpenseGeneralPage } from '../expense-general/expense-general.page';
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
@@ -51,6 +52,7 @@ export class TabsPage implements OnInit {
   };
   public BottomSheetState: SheetStates = SheetStates.Closed;
   public BottomSheetState1: SheetStates = SheetStates.Closed;
+  public BottomSheetState2: SheetStates = SheetStates.Closed;
   language;
   isBackEnable = false;
   backButtonRoute: any;
@@ -179,7 +181,7 @@ export class TabsPage implements OnInit {
 
   backPress() {
     if (this.backButtonRoute != '') {
-      this.router.navigateByUrl(this.backButtonRoute)
+      this.router.navigateByUrl(this.backButtonRoute);
     }
   }
   async ngOnInit() {
@@ -208,8 +210,8 @@ export class TabsPage implements OnInit {
 
   async ionViewDidEnter() {
     this.events.fabButtonAction.subscribe(res => {
-      console.log("___________________________-")
-      console.log(res)
+      console.log('___________________________-');
+      console.log(res);
     });
   }
 
@@ -279,7 +281,7 @@ export class TabsPage implements OnInit {
   }
 
   async openPopoverGrid() {
-    const gridPopOver = await this.popover.create({ component: GridTabsPopoverPage })
+    const gridPopOver = await this.popover.create({ component: GridTabsPopoverPage });
     gridPopOver.present();
   }
 
@@ -453,16 +455,16 @@ export class TabsPage implements OnInit {
     this.BottomSheetState = SheetStates.Closed;
   }
 
-  navAdd(page){
+  navAdd(page) {
     this.BottomSheetState = SheetStates.Closed;
     setTimeout(() => {
       this.contactsPage.navAdd(page);
     }, 200);
   }
-  navAddT(page){
+  navAddT(page) {
     this.BottomSheetState1 = SheetStates.Closed;
     setTimeout(() => {
-      this.trnasProduct.navAdd(page)
+      this.trnasProduct.navAdd(page);
     }, 200);
   }
   navCredReminder() {
@@ -473,24 +475,42 @@ export class TabsPage implements OnInit {
   }
 
   async addNewItembtn() {
-    console.log('this.fabePage',this.fabePage)
+    this.BottomSheetState2 = SheetStates.Closed;
+    const addItem = await this.popover.create({
+      component: AddItemPopoverPage
+    });
+    addItem.present();
+    addItem.onDidDismiss().then(res => {
+      console.log(res);
+      if (res.data) {
+        this.events.emitAddNewItemFunc(res.data);
+      }
+    });
+  }
+
+  async addNewExp() {
+    this.BottomSheetState2 = SheetStates.Closed;
+    const expModal = await this.modal.create({ component: ExpenseGeneralPage });
+    expModal.present();
+  }
+
+  editRecTop() {
+    this.BottomSheetState2 = SheetStates.Closed;
+    setTimeout(() => {
+      this.router.navigate(['/home/user-data']);
+    }, 200);
+  }
+
+
+  async addNewItem() {
+    console.log('this.fabePage', this.fabePage);
     if (this.fabePage == 'contacts') {
       this.BottomSheetState = SheetStates.Opened;
-    }else if(this.fabePage == 'transaction-product'){
-      console.log("HELLO")
+    } else if (this.fabePage == 'transaction-product') {
+      console.log('HELLO');
       this.BottomSheetState1 = SheetStates.Opened;
-    }else {
-
-      const addItem = await this.popover.create({
-        component: AddItemPopoverPage
-      });
-      addItem.present();
-      addItem.onDidDismiss().then(res => {
-        console.log(res);
-        if (res.data) {
-          this.events.emitAddNewItemFunc(res.data);
-        }
-      });
+    } else if (this.fabePage == 'income-transaction') {
+      this.BottomSheetState2 = SheetStates.Opened;
     }
   }
 }

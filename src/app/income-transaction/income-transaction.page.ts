@@ -687,7 +687,7 @@ export class IncomeTransactionPage implements OnInit {
     this.getLastTransaction();
   }
   ionViewWillEnter() {
-    this.events.emitFabButton('');
+    this.events.emitFabButton('income-transaction');
   }
   createRec() {
     // Nav to Rec Page

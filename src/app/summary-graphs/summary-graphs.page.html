@@ -162,10 +162,14 @@
                         <p>{{prod.name}}</p>
                         <p>{{transac.updatedAt | date: 'dd/MM/yyyy'}}</p>
                     </ion-label>
-                    <ion-label class="mr-3" style="text-align: right;">{{transac.totalatax}}</ion-label>
+                    <ion-label class="mr-3" style="text-align: right;">
+                      {{transac.totalatax}}
+                      <ion-icon class="ml-1" [hidden]="!transac.expanded" name="caret-down-outline"></ion-icon>
+                      <ion-icon class="ml-1" [hidden]="transac.expanded" name="caret-up-outline"></ion-icon>
+                    </ion-label>
                 </ion-item>
 
-                <ion-card [hidden]="transac.expanded" style="margin: 19px 48px;">
+                <ion-card [hidden]="transac.expanded">
                     <!-- <ion-row>
                     <ion-col style="text-align: left; color: gray;">{{transac.datetime1}}</ion-col>
                     <ion-col style="text-align: end;"><b>{{transac.totalatax}}</b></ion-col>
@@ -181,7 +185,7 @@
                         <ion-col>
                             {{"Discounted total:"|translate}} ({{transac.discount}}%)
                         </ion-col>
-                        <ion-col style="text-align: end;">
+                        <ion-col size="3" style="text-align: end;">
                             {{transac.totaldisc}}
                         </ion-col>
                     </ion-row>
@@ -189,7 +193,7 @@
                         <ion-col>
                             {{"Total after tax:"|translate}} ({{transac.taxrate}}%)
                         </ion-col>
-                        <ion-col style="text-align: end;">
+                        <ion-col size="3" style="text-align: end;">
                             {{transac.totalatax}}
                         </ion-col>
                     </ion-row>
