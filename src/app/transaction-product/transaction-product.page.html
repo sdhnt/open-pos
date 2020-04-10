@@ -5,9 +5,9 @@
     </ion-refresher-content>
   </ion-refresher>
   <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-    <ion-fab-button size="small" color="yellow" (click)="openSheet()">
+    <!-- <ion-fab-button size="small" color="yellow" (click)="openSheet()">
       <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
+    </ion-fab-button> -->
     <!-- <ion-fab-button color="light">
       <ion-icon md="add"></ion-icon>
     </ion-fab-button> -->
@@ -164,7 +164,7 @@
           </ion-col>
         </ion-row>
         <ion-row class="ion-justify-content-around">
-          <ion-col *ngIf="event1!=true&&product.qty==0">
+          <ion-col *ngIf="event1!=true&&product.qty==0&&!showSellButton">
             <ion-button size="small" expand="block" color="magenta" (click)="viewEditProduct(product)">
               <ion-icon slot="icon-only" name="create-outline" class="mr-1"></ion-icon> {{"View / Edit"|translate}}
             </ion-button>
