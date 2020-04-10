@@ -122,10 +122,12 @@ export class AddProductSignupPage implements OnInit {
   }
 
   addQuantity() {
+    console.log("ADD")
     this.currstock++;
   }
 
   remQuantity() {
+    console.log("REMOVE")
     if (this.currstock >= 1) {
       this.currstock--;
     }

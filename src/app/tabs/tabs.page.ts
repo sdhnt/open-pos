@@ -348,40 +348,42 @@ export class TabsPage implements OnInit {
   }
 
   async tutorial() {
-    const msg: Observable<any> = this.translateConfigService.getTranslatedMessage('Create New Sales');
-    const passedData = {
-      // youtube link, required text
-      page: this.subscriber(msg),
-    };
-    const msg1: Observable<any> = this.translateConfigService.getTranslatedMessage('Help Button');
-    const msg2: Observable<any> = this.translateConfigService.getTranslatedMessage(
-      'For any queries about a page, click the ? icon in the top right for more information',
-    );
-    const msg3: Observable<any> = this.translateConfigService.getTranslatedMessage(
-      'For further queries, you can reach us through the Contact Us page',
-    );
-    const msg4: Observable<any> = this.translateConfigService.getTranslatedMessage('Contact Us');
-    const msg5: Observable<any> = this.translateConfigService.getTranslatedMessage('Okay');
+    const gridPopOver = await this.popover.create({ component: GridTabsPopoverPage });
+    gridPopOver.present();
+    // const msg: Observable<any> = this.translateConfigService.getTranslatedMessage('Create New Sales');
+    // const passedData = {
+    //   // youtube link, required text
+    //   page: this.subscriber(msg),
+    // };
+    // const msg1: Observable<any> = this.translateConfigService.getTranslatedMessage('Help Button');
+    // const msg2: Observable<any> = this.translateConfigService.getTranslatedMessage(
+    //   'For any queries about a page, click the ? icon in the top right for more information',
+    // );
+    // const msg3: Observable<any> = this.translateConfigService.getTranslatedMessage(
+    //   'For further queries, you can reach us through the Contact Us page',
+    // );
+    // const msg4: Observable<any> = this.translateConfigService.getTranslatedMessage('Contact Us');
+    // const msg5: Observable<any> = this.translateConfigService.getTranslatedMessage('Okay');
 
-    const helpAlert = await this.alertCtrl.create({
-      header: this.subscriber(msg1),
-      subHeader: this.subscriber(msg2),
-      message: this.subscriber(msg3),
-      buttons: [
-        {
-          text: this.subscriber(msg4),
-          handler: () => {
-            // this.navCtrl.push(ContactUsPage);
-            this.router.navigate(['/home/contact-us']);
-          },
-        },
-        {
-          text: this.subscriber(msg5),
-          role: 'cancel',
-        },
-      ],
-    });
-    helpAlert.present();
+    // const helpAlert = await this.alertCtrl.create({
+    //   header: this.subscriber(msg1),
+    //   subHeader: this.subscriber(msg2),
+    //   message: this.subscriber(msg3),
+    //   buttons: [
+    //     {
+    //       text: this.subscriber(msg4),
+    //       handler: () => {
+    //         // this.navCtrl.push(ContactUsPage);
+    //         this.router.navigate(['/home/contact-us']);
+    //       },
+    //     },
+    //     {
+    //       text: this.subscriber(msg5),
+    //       role: 'cancel',
+    //     },
+    //   ],
+    // });
+    // helpAlert.present();
   }
 
   async help() {
