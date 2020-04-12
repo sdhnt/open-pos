@@ -487,6 +487,10 @@ export class LoginPage implements OnInit {
 
   async otpFn() {
     this.startTimer2();
+    SMSReceive.stopWatch(
+      ()=>{ console.log("watch stopped") },
+      ()=>{ console.log("watch stop failed") },
+    );
     const confirmationResult = this.confirmres;
     let flag = 0;
     await confirmationResult
@@ -586,12 +590,13 @@ export class LoginPage implements OnInit {
           var incomingSMS = e.data;
           const message:string = incomingSMS.body;
           if(message){
+            for(let i=0; i<6; i++){
+              if(!(message[i]<='9' && message[i]>='0')){
+                return;
+              }
+            }
             this.otpnum = message.slice(0,6);
             // this.otpInput.setValue(this.otpnum);
-            SMSReceive.stopWatch(
-              ()=>{ console.log("watch stopped") },
-              ()=>{ console.log("watch stop failed") },
-            );
             this.otpFn();
           }
         })
