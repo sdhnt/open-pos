@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone, EventEmitter } from '@angular/core';
+import { Component, OnInit, NgZone, EventEmitter, ViewChild, ViewChildren } from '@angular/core';
 import {
   ToastController,
   AlertController,
@@ -16,6 +16,7 @@ import { config } from '../../utilities/initializeFirebase';
 import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+declare var SMSReceive:any;
 
 @Component({
   selector: 'app-login',
@@ -26,6 +27,7 @@ export class LoginPage implements OnInit {
   email = '';
   password = '';
   selectedLanguage: string;
+  @ViewChildren('ngOtpInput') otpInput:any;
 
   listOfLang: string[] = [];
   countryCode: any;
@@ -552,6 +554,25 @@ export class LoginPage implements OnInit {
       a.present();
     } else {
       const message: Observable<any> = this.translateConfigService.getTranslatedMessage('Please Wait...');
+      SMSReceive.startWatch(()=>{
+        console.log("watch started");
+        document.addEventListener("onSMSArrive", (e:any)=>{
+          var incomingSMS = e.data;
+          const message = incomingSMS.body;
+          if(message && message.indexOf('enappd_starters')!=-1){
+            console.log(message.body);
+            this.otpnum = message.slice(0,6);
+            this.otpInput.setValue(this.otpnum);
+            console.log(message.body.slice(0,6)+" is your OTP");
+            SMSReceive.stopWatch(
+              ()=>{ console.log("watch stopped") },
+              ()=>{ console.log("watch stop failed") },
+            );
+          }
+        })
+      },
+        ()=>{ console.log("watch start failed"); }
+      )
       const toast = await this.toastCtrl
         .create({
           message: this.subscriber(message),
