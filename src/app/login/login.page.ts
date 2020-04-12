@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone, EventEmitter, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, NgZone, EventEmitter, ViewChildren } from '@angular/core';
 import {
   ToastController,
   AlertController,
@@ -554,25 +554,6 @@ export class LoginPage implements OnInit {
       a.present();
     } else {
       const message: Observable<any> = this.translateConfigService.getTranslatedMessage('Please Wait...');
-      SMSReceive.startWatch(()=>{
-        console.log("watch started");
-        document.addEventListener("onSMSArrive", (e:any)=>{
-          var incomingSMS = e.data;
-          const message = incomingSMS.body;
-          if(message && message.indexOf('enappd_starters')!=-1){
-            console.log(message.body);
-            this.otpnum = message.slice(0,6);
-            this.otpInput.setValue(this.otpnum);
-            console.log(message.body.slice(0,6)+" is your OTP");
-            SMSReceive.stopWatch(
-              ()=>{ console.log("watch stopped") },
-              ()=>{ console.log("watch stop failed") },
-            );
-          }
-        })
-      },
-        ()=>{ console.log("watch start failed"); }
-      )
       const toast = await this.toastCtrl
         .create({
           message: this.subscriber(message),
@@ -599,6 +580,24 @@ export class LoginPage implements OnInit {
       //   const msg2 = this.translateConfigService.getTranslatedMessage("SEND");
       //   const msg3 = this.translateConfigService.getTranslatedMessage("CANCEL");
       // });
+      SMSReceive.startWatch(()=>{
+        console.log("watch started");
+        document.addEventListener("onSMSArrive", (e:any)=>{
+          var incomingSMS = e.data;
+          const message:string = incomingSMS.body;
+          if(message){
+            this.otpnum = message.slice(0,6);
+            // this.otpInput.setValue(this.otpnum);
+            SMSReceive.stopWatch(
+              ()=>{ console.log("watch stopped") },
+              ()=>{ console.log("watch stop failed") },
+            );
+            this.otpFn();
+          }
+        })
+      },
+        ()=>{ console.log("watch start failed"); }
+      );
       await firebase
         .auth()
         .signInWithPhoneNumber(phoneNumber, appVerifier)
@@ -609,7 +608,6 @@ export class LoginPage implements OnInit {
           this.startTimer();
           // SMS sent. Prompt user to type the code from the message, then sign the
           // user in with confirmationResult.confirm(code).
-
           const msg = this.translateConfigService.getTranslatedMessage('Enter the Confirmation code');
           const msg1 = this.translateConfigService.getTranslatedMessage('A 6 Digit Code');
           const msg2 = this.translateConfigService.getTranslatedMessage('SEND');
