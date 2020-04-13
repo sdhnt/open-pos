@@ -10,6 +10,7 @@ import { TranslateConfigService } from '../services/translation/translate-config
 import { EventService } from '../services/event.service';
 import { Location } from '@angular/common';
 import { SheetStates } from 'ionic-custom-bottom-sheet';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-add-product-signup',
@@ -122,12 +123,12 @@ export class AddProductSignupPage implements OnInit {
   }
 
   addQuantity() {
-    console.log("ADD")
+    console.log('ADD');
     this.currstock++;
   }
 
   remQuantity() {
-    console.log("REMOVE")
+    console.log('REMOVE');
     if (this.currstock >= 1) {
       this.currstock--;
     }
@@ -155,6 +156,14 @@ export class AddProductSignupPage implements OnInit {
     sheet.present();
   }
 
+  subscriber(message: Observable<any>) {
+    let msg;
+    message.subscribe(res => {
+      msg = res;
+    });
+    return msg;
+  }
+
   async askCamera() {
     const options: CameraOptions = {
       quality: 20,
@@ -179,24 +188,21 @@ export class AddProductSignupPage implements OnInit {
       allowEdit: false,
     };
 
-    const msg1 = this.translateConfigService.getTranslatedMessage('Gallery or Camera?');
-    const msg2 = this.translateConfigService.getTranslatedMessage('Gallery');
-    const msg3 = this.translateConfigService.getTranslatedMessage('Camera');
+    const msg1 = this.subscriber(this.translateConfigService.getTranslatedMessage('Gallery or Camera?'));
+    const msg2 = this.subscriber(this.translateConfigService.getTranslatedMessage('Gallery'));
+    const msg3 = this.subscriber(this.translateConfigService.getTranslatedMessage('Camera'));
     const alert = await this.alertCtrl
       .create({
-        // @ts-ignore
-        message: msg1.value,
+        message: msg1,
         buttons: [
           {
-            // @ts-ignore
-            text: msg3.value,
+            text: msg3,
             handler: () => {
               this.launchCamera(options);
             },
           },
           {
-            // @ts-ignore
-            text: msg2.value,
+            text: msg2,
             handler: () => {
               this.launchCamera(options1);
             },
@@ -259,10 +265,9 @@ export class AddProductSignupPage implements OnInit {
       this.sp.storageReady().then(() => {
         this.sp.addCategory(data).then();
         setTimeout(async () => {
-          const message = this.translateConfigService.getTranslatedMessage('Finish');
+          const message = this.subscriber(this.translateConfigService.getTranslatedMessage('Finish'));
           const toast = await this.toastCtrl.create({
-            // @ts-ignore
-            message: message.value,
+            message,
             duration: 3000,
           });
           this.newprodCat = '';
@@ -326,11 +331,10 @@ export class AddProductSignupPage implements OnInit {
     this.disabled = true;
 
     if (this.prodCat === 'New' && this.newprodCat === '') {
-      const message = this.translateConfigService.getTranslatedMessage('Incomplete');
+      const message = this.subscriber(this.translateConfigService.getTranslatedMessage('Incomplete'));
       const toast = await this.toastCtrl
         .create({
-          // @ts-ignore
-          message: message.value,
+          message,
           duration: 1000,
         });
       toast.present();
@@ -347,11 +351,10 @@ export class AddProductSignupPage implements OnInit {
         this.prodCat = this.newprodCat;
       }
       if (this.image === '') {
-        const message = this.translateConfigService.getTranslatedMessage('Creating item, please wait a moment');
+        const message = this.subscriber(this.translateConfigService.getTranslatedMessage('Creating item, please wait a moment'));
         const toast = await this.toastCtrl
           .create({
-            // @ts-ignore
-            message: message.value,
+            message,
             duration: 2000,
           });
         toast.present();
@@ -385,11 +388,10 @@ export class AddProductSignupPage implements OnInit {
           this.sp.addProduct(data);
           setTimeout(async () => {
             // tslint:disable-next-line: no-shadowed-variable
-            const message = this.translateConfigService.getTranslatedMessage('Finish');
+            const message = this.subscriber(this.translateConfigService.getTranslatedMessage('Finish'));
             // tslint:disable-next-line: no-shadowed-variable
             const toast = await this.toastCtrl.create({
-              // @ts-ignore
-              message: message.value,
+              message,
               duration: 2000,
             });
             this.sp.deleteProduct(exprod);
@@ -425,11 +427,10 @@ export class AddProductSignupPage implements OnInit {
         });
       } else {
         this.temp = this.prodName;
-        const message = this.translateConfigService.getTranslatedMessage('Creating item, please wait a moment');
+        const message = this.subscriber(this.translateConfigService.getTranslatedMessage('Creating item, please wait a moment'));
         const toast = await this.toastCtrl
           .create({
-            // @ts-ignore
-            message: message.value,
+            message,
             duration: 2000,
           });
         toast.present();
@@ -452,10 +453,9 @@ export class AddProductSignupPage implements OnInit {
           this.sp.storageReady().then(() => {
             this.sp.addProduct(data);
             setTimeout(async () => {
-              const message1 = this.translateConfigService.getTranslatedMessage('Finish');
+              const message1 = this.subscriber(this.translateConfigService.getTranslatedMessage('Finish'));
               const toast1 = await this.toastCtrl.create({
-                // @ts-ignore
-                message: message1.value,
+                message: message1,
                 duration: 2000,
               });
               this.prodCode = '';

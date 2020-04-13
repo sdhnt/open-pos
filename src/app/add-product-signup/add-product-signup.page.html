@@ -1,278 +1,278 @@
 <ion-header *ngIf="mode!==1 && mode!==5">
-    <ion-toolbar color="magenta">
-        <ion-buttons slot="start">
-            <ion-button (click)="remMode()">
-                <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
-            </ion-button>
-        </ion-buttons>
-        <ion-title>Back</ion-title>
-    </ion-toolbar>
+  <ion-toolbar color="magenta">
+    <ion-buttons slot="start">
+      <ion-button (click)="remMode()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Back</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <div *ngIf="mode==1" class="ion-padding mode1">
-        <div style="text-align: center; align-content: center;">
-            <img class="img-fluid" src="assets/new-ui-imgs/introduction/Capture.png">
-            <!-- <h1>{{"Hello"|translate}}</h1> -->
-            <br>
-            <br>
-            <h5>{{"Welcome to OPEN!"|translate}}</h5>
-            <ion-row class="ion-justify-content-center">
-                <ion-text color="lgrey">Still using pen nad paper to track your sell and inventory? Time to change and save time.</ion-text>
-            </ion-row>
-            <br>
-            <br>
-            <br>
-            <br>
-        </div>
-        <br>
-        <br>
-        <br>
-        <div style="font-size: 1.4rem; color: white; text-align: center;">
-            <!-- {{"OpenIntro"|translate}}<br><br> -->
-            {{"Let’s start by adding your first product!"|translate}} <br><br>
-            <!-- {{"Take a picture of the product using your camera:"|translate}} -->
-        </div>
-        <ion-button expand="block" size="large" color="yellow" (click)="askCamera()">
-            {{'Take Picture' | translate}}</ion-button>
-        <br>
-        <img *ngIf="image!=null" [src]="image" class="img-fluid">
-        <br>
-        <ion-button expand="block" size="large" color="yellow" (click)="addMode()" *ngIf="image!=''">{{"Next"|translate}}
-        </ion-button>
-        <ion-row class="ion-justify-content-center">
-            <ion-button fill="clear" color="light" (click)="addMode()">{{"Skip"|translate}}</ion-button>
-        </ion-row>
+  <div *ngIf="mode==1" class="ion-padding mode1">
+    <div style="text-align: center; align-content: center;">
+      <img class="img-fluid" src="assets/new-ui-imgs/introduction/Capture.png">
+      <!-- <h1>{{"Hello"|translate}}</h1> -->
+      <br>
+      <br>
+      <h5>{{"Welcome to OPEN!"|translate}}</h5>
+      <ion-row class="ion-justify-content-center">
+        <ion-text color="lgrey">Still using pen nad paper to track your sell and inventory? Time to change and save
+          time.</ion-text>
+      </ion-row>
+      <br>
+      <br>
+      <br>
+      <br>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div style="font-size: 1.4rem; color: white; text-align: center;">
+      <!-- {{"OpenIntro"|translate}}<br><br> -->
+      {{"Let’s start by adding your first product!"|translate}} <br><br>
+      <!-- {{"Take a picture of the product using your camera:"|translate}} -->
+    </div>
+    <ion-button expand="block" size="large" color="yellow" (click)="askCamera()">
+      {{'Take Picture' | translate}}</ion-button>
+    <br>
+    <img *ngIf="image!=null" [src]="image" class="img-fluid">
+    <br>
+    <ion-button expand="block" size="large" color="yellow" (click)="addMode()" *ngIf="image!=''">{{"Next"|translate}}
+    </ion-button>
+    <ion-row class="ion-justify-content-center">
+      <ion-button fill="clear" color="light" (click)="addMode()">{{"Skip"|translate}}</ion-button>
+    </ion-row>
+  </div>
+
+  <div *ngIf="mode==2" class="ion-padding" style="align-content: center; text-align: center;">
+    <ion-row>
+      <ion-text class="font-weight-bold">{{'Scan Barcode'| translate}}</ion-text>
+    </ion-row>
+    <img class="img-fluid" src="assets/new-ui-imgs/barcode/Group 218.png">
+    <br>
+    <br>
+    <h4>{{"Great!"|translate}}</h4><br>
+    <h6>{{"Let’s scan the barcode"|translate}}</h6>
+    <br> {{"Put the red line across the barcode and tap to scan"|translate}}
+    <br>
+    <br>
+    <ion-button size="large" (click)="scanQR()" color="success">
+      <ion-icon slot="start" class="mr-3" name="barcode-outline"></ion-icon>{{'Scan Barcode'| translate}}
+    </ion-button>
+    <br>
+    <div *ngIf="prodCode!=''&&prodCode!=undefined">
+      {{"Code"|translate}}: {{prodCode}}
+    </div>
+    <br>
+    <ion-row *ngIf="(prodCode==''||prodCode==undefined)" class="ion-justify-content-center">
+      <ion-button fill="clear" (click)="addMode()" color="dark">{{"Skip"|translate}}</ion-button>
+    </ion-row>
+    <ion-row *ngIf="prodCode!=''&&prodCode!=undefined" class="ion-justify-content-center">
+      <ion-button fill="clear" size="large" (click)="addMode()" color="dark">{{"Next"|translate}}
+      </ion-button>
+    </ion-row>
+  </div>
+
+  <div *ngIf="mode==3" class="ion-padding" style="align-content: center; text-align: center;">
+    <div class="mx-5 my-3">
+      <img class="img-thumbnail" [src]="image" onerror="this.src='assets/new-ui-imgs/81Bd4KP9PkL._SL1500_.png'">
+    </div>
+    <ion-row class="ion-justify-content-center">
+      {{"Now we enter the selling price and buying price!"|translate}}
+    </ion-row>
+    <br><br>
+    <div class="form-group">
+      <ion-label>{{'Product Name:'| translate}}</ion-label>
+      <ion-input type="text" [(ngModel)]='prodName' class="form-control"></ion-input>
     </div>
 
-    <div *ngIf="mode==2" class="ion-padding" style="align-content: center; text-align: center;">
-        <ion-row>
-            <ion-text class="font-weight-bold">{{'Scan Barcode'| translate}}</ion-text>
-        </ion-row>
-        <img class="img-fluid" src="assets/new-ui-imgs/barcode/Group 218.png">
-        <br>
-        <br>
-        <h4>{{"Great!"|translate}}</h4><br>
-        <h6>{{"Let’s scan the barcode"|translate}}</h6>
-        <br> {{"Put the red line across the barcode and tap to scan"|translate}}
-        <br>
-        <br>
-        <ion-button size="large" (click)="scanQR()" color="success">
-            <ion-icon slot="start" class="mr-3" name="barcode-outline"></ion-icon>{{'Scan Barcode'| translate}}
-        </ion-button>
-        <br>
-        <div *ngIf="prodCode!=''&&prodCode!=undefined">
-            {{"Code"|translate}}: {{prodCode}}
-        </div>
-        <br>
-        <ion-row *ngIf="(prodCode==''||prodCode==undefined)" class="ion-justify-content-center">
-            <ion-button fill="clear" (click)="addMode()" color="dark">{{"Skip"|translate}}</ion-button>
-        </ion-row>
-        <ion-row *ngIf="prodCode!=''&&prodCode!=undefined" class="ion-justify-content-center">
-            <ion-button fill="clear" size="large" (click)="addMode()" color="dark">{{"Next"|translate}}
-            </ion-button>
-        </ion-row>
+    <div class="form-group">
+      <ion-label>{{'Product Retail Price:'| translate}}</ion-label>
+      <ion-input type="number" [(ngModel)]='prodPrice' class="form-control"></ion-input>
     </div>
 
-    <div *ngIf="mode==3" class="ion-padding" style="align-content: center; text-align: center;">
-        <div class="mx-5 my-3">
-            <img class="img-thumbnail" [src]="image" onerror="this.src='assets/new-ui-imgs/81Bd4KP9PkL._SL1500_.png'">
-        </div>
-        <ion-row class="ion-justify-content-center">
-            {{"Now we enter the selling price and buying price!"|translate}}
-        </ion-row>
-        <br><br>
-        <div class="form-group">
-            <ion-label>{{'Product Name:'| translate}}</ion-label>
-            <ion-input type="text" [(ngModel)]='prodName' class="form-control"></ion-input>
-        </div>
-
-        <div class="form-group">
-            <ion-label>{{'Product Retail Price:'| translate}}</ion-label>
-            <ion-input type="number" [(ngModel)]='prodPrice' class="form-control"></ion-input>
-        </div>
-
-        <div class="form-group">
-            <ion-label>{{'Product Wholesale Price:'| translate}}</ion-label>
-            <ion-input type="number" [(ngModel)]='prodWholesalePrice' class="form-control"></ion-input>
-        </div>
-
-        <div class="form-group">
-            <ion-label>{{'Product Buying Cost:'| translate}}</ion-label>
-            <ion-input type="number" [(ngModel)]='prodCost' class="form-control"></ion-input>
-        </div>
-        <div class="form-group" *ngIf="(prodName!=''&&prodName!=null&& prodPrice!=null&& prodPrice!=''&& prodPrice!=undefined&&prodWholesalePrice!=null&&prodWholesalePrice!=''&&prodWholesalePrice!=undefined&&prodCost!=null&&prodCost!=''&&prodCost!=undefined)">
-            <ion-button expand="block" size="large" (click)="addMode()" color="green">{{"Next"|translate}}
-            </ion-button>
-        </div>
+    <div class="form-group">
+      <ion-label>{{'Product Wholesale Price:'| translate}}</ion-label>
+      <ion-input type="number" [(ngModel)]='prodWholesalePrice' class="form-control"></ion-input>
     </div>
 
-    <div *ngIf="mode==4" class="ion-padding">
-        <div class="mx-5 my-3">
-            <img src="assets/new-ui-imgs/onelaststep/Group_71.png" class="img-fluid">
-        </div>
-        <div style="text-align: center; align-content:center ;">
-            <h4> {{"Last Step !"|translate}} </h4>
-            <ion-text> {{"How many of these items are currently in stock?"|translate}}</ion-text>
-            <br>
-        </div>
-        <ion-row class="prodCate">
-            <ion-col size="3">
-                <ion-button class="add" (click)="addQuantity()" fill="clear" color="magenta">
-                    <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
-                </ion-button>
+    <div class="form-group">
+      <ion-label>{{'Product Buying Cost:'| translate}}</ion-label>
+      <ion-input type="number" [(ngModel)]='prodCost' class="form-control"></ion-input>
+    </div>
+    <div class="form-group"
+      *ngIf="(prodName!=''&&prodName!=null&& prodPrice!=null&& prodPrice!=''&& prodPrice!=undefined&&prodWholesalePrice!=null&&prodWholesalePrice!=''&&prodWholesalePrice!=undefined&&prodCost!=null&&prodCost!=''&&prodCost!=undefined)">
+      <ion-button expand="block" size="large" (click)="addMode()" color="green">{{"Next"|translate}}
+      </ion-button>
+    </div>
+  </div>
+
+  <div *ngIf="mode==4" class="ion-padding">
+    <div class="mx-5 my-3">
+      <img src="assets/new-ui-imgs/onelaststep/Group_71.png" class="img-fluid">
+    </div>
+    <div style="text-align: center; align-content:center ;">
+      <h4> {{"Last Step !"|translate}} </h4>
+      <ion-text> {{"How many of these items are currently in stock?"|translate}}</ion-text>
+      <br>
+    </div>
+    <ion-row class="prodCate">
+      <ion-button class="add" (click)="addQuantity()" fill="clear" color="magenta">
+        <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+      </ion-button>
+      <ion-input type="number" [(ngModel)]='currstock' [min]="0"></ion-input>
+      <ion-button class="remove" (click)="remQuantity()" fill="clear" color="magenta">
+        <ion-icon slot="icon-only" name="remove-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-row>
+    <ion-row class="ion-justify-content-center mt-3">
+      <ion-label>
+        Having product category ideas? Add yours
+      </ion-label>
+      <ion-button size="large" expand="block" color="lgrey" fill="outline" (click)="addCategoryBtn()">
+        {{'Add New Category'| translate}}
+      </ion-button>
+    </ion-row>
+    <br><br>
+    <ion-row class="ion-justify-content-center">
+      <ion-text class="text-center">
+        {{"Please create a new category for this product or use the example category already provided by us." |translate}}
+      </ion-text>
+    </ion-row>
+    <br><br>
+    <!-- OPTIONAL EXPIRY/Shelf Life in time -->
+    <ion-item style="border: 1px solid var(--ion-color-lgrey)">
+      <ion-label>{{'Product Category' | translate}}</ion-label>
+      <ion-select multiple="false" [(ngModel)]='prodCat'>
+        <!-- <ion-select-option>New</ion-select-option> -->
+        <ion-select-option value="New"> {{'Add New Category'| translate}}</ion-select-option>
+        <ion-select-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div class="form-group mt-3" *ngIf="prodCat=='New'">
+      <ion-label>{{'Enter New Category Name' | translate}}</ion-label>
+      <ion-input class="form-control" type="text" placeholder="{{'Enter Category Here' | translate}}"
+        [(ngModel)]='newprodCat'></ion-input>
+    </div>
+    <ion-row class="ion-justify-content-center mt-3">
+      <ion-text (click)="openSheet()" color="lgrey" style="text-decoration: underline;">
+        Read more about product category
+      </ion-text>
+    </ion-row>
+    <br><br>
+    <ion-button expand="block" size="large" (click)="addProdMode()" color="yellow">
+      {{"Next"|translate}}
+    </ion-button>
+
+    <!-- <ion-button  shape="round" expand="full" size="large"  (click)="addMode()" color="dark">Next</ion-button> -->
+  </div>
+
+  <div class="ion-padding mode5" *ngIf="mode==5">
+    <div style="text-align: center; align-content:center ;">
+      <!-- <img src="assets/imgs/congo5.png"> -->
+      <br><br><br><br>
+      <h4 class="text-white text-uppercase font-weight-bolder">{{"Congratulations !!" |translate}}</h4>
+      <h6 class="text-uppercase font-weight-bold">
+        {{"You added first product!"|translate}}</h6>
+      <br>
+      <br>
+      <ion-button expand="block" shape="round" (click)="startApp()" color="pink">
+        {{"START USING OPEN!"|translate}}
+      </ion-button>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <ion-row class="ion-justify-content-center">
+        <ion-text class="text-uppercase">We got your product</ion-text>
+      </ion-row>
+      <br>
+      <ion-card *ngIf="finalProd;">
+        <ion-card-content>
+          <ion-row>
+            <ion-col size="4">
+              <ion-img class="img-fluid" [src]="finalProd.url"></ion-img>
             </ion-col>
-            <ion-col size="6">
-                <ion-input type="number" [(ngModel)]='currstock' [min]="0"></ion-input>
-            </ion-col>
-            <ion-col size="3">
-                <ion-button class="remove" (click)="remQuantity()" fill="clear" color="magenta">
-                    <ion-icon slot="icon-only" name="remove-circle-outline"></ion-icon>
-                </ion-button>
-            </ion-col>
-        </ion-row>
-        <ion-row class="ion-justify-content-center mt-3">
-            <ion-label>
-                Having product category ideas? Add yours
-            </ion-label>
-            <ion-button size="large" expand="block" color="lgrey" fill="outline" (click)="addCategoryBtn()">
-                {{'Add New Category'| translate}}
-            </ion-button>
-        </ion-row>
-        <br><br>
-        <ion-row class="ion-justify-content-center">
-            <ion-text class="text-center">
-                {{"Please create a new category for this product or use the example category already provided by us." |translate}}
-            </ion-text>
-        </ion-row>
-        <br><br>
-        <!-- OPTIONAL EXPIRY/Shelf Life in time -->
-        <ion-item style="border: 1px solid var(--ion-color-lgrey)">
-            <ion-label>{{'Product Category' | translate}}</ion-label>
-            <ion-select multiple="false" [(ngModel)]='prodCat'>
-                <!-- <ion-select-option>New</ion-select-option> -->
-                <ion-select-option value="New"> {{'Add New Category'| translate}}</ion-select-option>
-                <ion-select-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-select-option>
-            </ion-select>
-        </ion-item>
-        <div class="form-group mt-3" *ngIf="prodCat=='New'">
-            <ion-label>{{'Enter New Category Name' | translate}}</ion-label>
-            <ion-input class="form-control" type="text" placeholder="{{'Enter Category Here' | translate}}" [(ngModel)]='newprodCat'></ion-input>
-        </div>
-        <ion-row class="ion-justify-content-center mt-3">
-            <ion-text (click)="openSheet()" color="lgrey" style="text-decoration: underline;">
-                Read more about product category
-            </ion-text>
-        </ion-row>
-        <br><br>
-        <ion-button expand="block" size="large" (click)="addProdMode()" color="yellow">
-            {{"Next"|translate}}
-        </ion-button>
-
-        <!-- <ion-button  shape="round" expand="full" size="large"  (click)="addMode()" color="dark">Next</ion-button> -->
-    </div>
-
-    <div class="ion-padding mode5" *ngIf="mode==5">
-        <div style="text-align: center; align-content:center ;">
-            <!-- <img src="assets/imgs/congo5.png"> -->
-            <br><br><br><br>
-            <h4 class="text-white text-uppercase font-weight-bolder">{{"Congratulations !!" |translate}}</h4>
-            <h6 class="text-uppercase font-weight-bold">
-                {{"You added first product!"|translate}}</h6>
-            <br>
-            <br>
-            <ion-button expand="block" shape="round" (click)="startApp()" color="pink">
-                {{"START USING OPEN!"|translate}}
-            </ion-button>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <ion-row class="ion-justify-content-center">
-                <ion-text class="text-uppercase">We got your product</ion-text>
-            </ion-row>
-            <br>
-            <ion-card *ngIf="finalProd;">
-                <ion-card-content>
-                    <ion-row>
-                        <ion-col size="4">
-                            <ion-img class="img-fluid" [src]="finalProd.url"></ion-img>
-                        </ion-col>
-                        <ion-col>
-                            <table class="text-left">
-                                <tr>
-                                    <td colspan="2">{{finalProd.name}}</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <small>
+            <ion-col>
+              <table class="text-left">
+                <tr>
+                  <td colspan="2">{{finalProd.name}}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <small>
                       Retail Price
                     </small>
-                                    </td>
-                                    <td class="text-right">
-                                        <small>{{finalProd.price}}</small>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <small>Wholesale Price</small>
-                                    </td>
-                                    <td class="text-right">
-                                        <small>{{finalProd.wholesale_price}}</small>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <small>
+                  </td>
+                  <td class="text-right">
+                    <small>{{finalProd.price}}</small>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <small>Wholesale Price</small>
+                  </td>
+                  <td class="text-right">
+                    <small>{{finalProd.wholesale_price}}</small>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <small>
                       Category
                     </small>
-                                    </td>
-                                    <td class="text-right">
-                                        <ion-chip color="warning" class="m-0">
-                                            <ion-label><small>{{finalProd.cat}}</small></ion-label>
-                                        </ion-chip>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <small>
+                  </td>
+                  <td class="text-right">
+                    <ion-chip color="warning" class="m-0">
+                      <ion-label><small>{{finalProd.cat}}</small></ion-label>
+                    </ion-chip>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <small>
                       Stock
                     </small>
-                                    </td>
-                                    <td class="text-right">
-                                        <small>{{finalProd.stock_qty}}</small>
-                                    </td>
-                                </tr>
-                            </table>
-                        </ion-col>
-                    </ion-row>
-                </ion-card-content>
-            </ion-card>
-        </div>
+                  </td>
+                  <td class="text-right">
+                    <small>{{finalProd.stock_qty}}</small>
+                  </td>
+                </tr>
+              </table>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
     </div>
+  </div>
 </ion-content>
 
 <bottom-sheet [(State)]="BottomSheetState" (StateChange)="StateChanged($event)">
-    <div class="mx-5 my-1">
-        <!-- <ion-thumbnail class="m-auto"> -->
-        <ion-img style="max-width: 30vw;" class="img-fluid m-auto" [src]="'assets/new-ui-imgs/onelaststep/Group_71.png'">
-        </ion-img>
-        <!-- </ion-thumbnail> -->
-    </div>
-    <ion-row class="ion-justify-content-center">
-        <ion-text class="text-uppercase">
-            Product Category
-        </ion-text>
-    </ion-row>
-    <hr class="default">
-    <p class="text-center p-1">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla at purus sit amet urna tempor convallis. Aliquam feugiat nisl libero, in aliquet ipsum hendrerit id. Vivamus at malesuada mauris, et fermentum mi. Nunc molestie vel ante at blandit. Suspendisse
-        rutrum at neque quis faucibus. Pellentesque id felis et ipsum convallis rhoncus. Vestibulum consequat rhoncus ante vitae volutpat. Etiam a rutrum turpis.
-    </p>
-    <ion-row class="ion-justify-content-end">
-        <ion-button fill="clear" color="lgrey" (click)="closeSheet()">
-            GOT IT
-        </ion-button>
-    </ion-row>
+  <div class="mx-5 my-1">
+    <!-- <ion-thumbnail class="m-auto"> -->
+    <ion-img style="max-width: 30vw;" class="img-fluid m-auto" [src]="'assets/new-ui-imgs/onelaststep/Group_71.png'">
+    </ion-img>
+    <!-- </ion-thumbnail> -->
+  </div>
+  <ion-row class="ion-justify-content-center">
+    <ion-text class="text-uppercase">
+      Product Category
+    </ion-text>
+  </ion-row>
+  <hr class="default">
+  <p class="text-center p-1">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla at purus sit amet urna tempor convallis. Aliquam
+    feugiat nisl libero, in aliquet ipsum hendrerit id. Vivamus at malesuada mauris, et fermentum mi. Nunc molestie vel
+    ante at blandit. Suspendisse
+    rutrum at neque quis faucibus. Pellentesque id felis et ipsum convallis rhoncus. Vestibulum consequat rhoncus ante
+    vitae volutpat. Etiam a rutrum turpis.
+  </p>
+  <ion-row class="ion-justify-content-end">
+    <ion-button fill="clear" color="lgrey" (click)="closeSheet()">
+      GOT IT
+    </ion-button>
+  </ion-row>
 </bottom-sheet>
