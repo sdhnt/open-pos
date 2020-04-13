@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone, EventEmitter, ViewChildren } from '@angular/core';
+import { Component, OnInit, NgZone, EventEmitter } from '@angular/core';
 import {
   ToastController,
   AlertController,
@@ -16,7 +16,6 @@ import { config } from '../../utilities/initializeFirebase';
 import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-declare var SMSReceive:any;
 
 @Component({
   selector: 'app-login',
@@ -27,7 +26,6 @@ export class LoginPage implements OnInit {
   email = '';
   password = '';
   selectedLanguage: string;
-  @ViewChildren('ngOtpInput') otpInput:any;
 
   listOfLang: string[] = [];
   countryCode: any;
@@ -310,13 +308,13 @@ export class LoginPage implements OnInit {
 
   async ionViewDidEnter() {
     firebase.auth().useDeviceLanguage();
-    this.applicationVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-      size: 'invisible',
-      callback: response => {
-        // reCAPTCHA solved, allow signInWithPhoneNumber.
-        // this.signInPhone();
-      },
-    });
+    // this.applicationVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+    //   size: 'invisible',
+    //   callback: response => {
+    //     // reCAPTCHA solved, allow signInWithPhoneNumber.
+    //     // this.signInPhone();
+    //   },
+    // });
   }
 
   // login() {
@@ -487,15 +485,14 @@ export class LoginPage implements OnInit {
 
   async otpFn() {
     this.startTimer2();
-    SMSReceive.stopWatch(
-      ()=>{ console.log("watch stopped") },
-      ()=>{ console.log("watch stop failed") },
-    );
+    console.log('otp**********',this.otpnum)
+
+
     const confirmationResult = this.confirmres;
     let flag = 0;
     await confirmationResult
-      .confirm(this.otpnum)
-      .then(async result => {
+    .confirm(this.otpnum)
+    .then(async result => {
         // User signed in successfully.
         console.log(result.user);
         flag = 1;
@@ -570,114 +567,49 @@ export class LoginPage implements OnInit {
 
       const flag = 0;
       console.log('phone number', phoneNumber);
-      // this.firebaseAuth.verifyPhoneNumber(phoneNumber, 30000).then(verificationId => {
-      //   console.log(verificationId);
-      //   this.otpmode = 1;
-      //   // this.confirmres = confirmationResult;
-      //   this.timer = 30;
-      //   this.startTimer();
-      //   // SMS sent. Prompt user to type the code from the message, then sign the
-      //   // user in with confirmationResult.confirm(code).
+      this.firebaseAuth.verifyPhoneNumber(phoneNumber, 30000).then(async (verificationId) => {
+        console.log(verificationId);
+        this.otpmode = 1;
+        this.confirmres = verificationId;
+        this.timer = 30;
+        this.startTimer();
+        // SMS sent. Prompt user to type the code from the message, then sign the
+        // user in with confirmationResult.confirm(code).
 
-      //   const msg = this.translateConfigService.getTranslatedMessage("Enter the Confirmation code");
-      //   const msg1 = this.translateConfigService.getTranslatedMessage("A 6 Digit Code");
-      //   const msg2 = this.translateConfigService.getTranslatedMessage("SEND");
-      //   const msg3 = this.translateConfigService.getTranslatedMessage("CANCEL");
-      // });
-      SMSReceive.startWatch(()=>{
-        console.log("watch started");
-        document.addEventListener("onSMSArrive", (e:any)=>{
-          var incomingSMS = e.data;
-          const message:string = incomingSMS.body;
-          if(message){
-            for(let i=0; i<6; i++){
-              if(!(message[i]<='9' && message[i]>='0')){
-                return;
-              }
-            }
-            this.otpnum = message.slice(0,6);
-            // this.otpInput.setValue(this.otpnum);
-            this.otpFn();
-          }
-        })
-      },
-        ()=>{ console.log("watch start failed"); }
-      );
-      await firebase
-        .auth()
-        .signInWithPhoneNumber(phoneNumber, appVerifier)
-        .then(confirmationResult => {
-          this.otpmode = 1;
-          this.confirmres = confirmationResult;
-          this.timer = 30;
-          this.startTimer();
-          // SMS sent. Prompt user to type the code from the message, then sign the
-          // user in with confirmationResult.confirm(code).
-          const msg = this.translateConfigService.getTranslatedMessage('Enter the Confirmation code');
-          const msg1 = this.translateConfigService.getTranslatedMessage('A 6 Digit Code');
-          const msg2 = this.translateConfigService.getTranslatedMessage('SEND');
-          const msg3 = this.translateConfigService.getTranslatedMessage('CANCEL');
+        const msg = this.translateConfigService.getTranslatedMessage("Enter the Confirmation code");
+        const msg1 = this.translateConfigService.getTranslatedMessage("A 6 Digit Code");
+        const msg2 = this.translateConfigService.getTranslatedMessage("SEND");
+        const msg3 = this.translateConfigService.getTranslatedMessage("CANCEL");
+      });
+      console.log('appVerifier',appVerifier)
+      // await firebase
+      //   .auth()
+      //   .signInWithPhoneNumber(phoneNumber, appVerifier)
+      //   .then(confirmationResult => {
+      //     this.otpmode = 1;
+      //     this.confirmres = confirmationResult;
+      //     this.timer = 30;
+      //     this.startTimer();
+      //     // SMS sent. Prompt user to type the code from the message, then sign the
+      //     // user in with confirmationResult.confirm(code).
 
-          // const prompt = this.alertCtrl.create({
-          //   //@ts-ignore
-          //   title: msg.value,
-          //   message:
-          //     //@ts-ignore
-          //     msg1.value,
-          //   inputs: [{ name: "confirmationCode", placeholder: "Confirmation Code" }],
-          //   buttons: [
-          //     {
-          //       //@ts-ignore
-          //       text: msg3.value,
-          //       handler: data => {
-          //         console.log("Cancel clicked");
-          //       },
-          //     },
-          //     {
-          //       //@ts-ignore
-          //       text: msg2.value,
-          //       handler: async data => {
-          //         await confirmationResult
-          //           .confirm(data.confirmationCode)
-          //           .then(async result => {
-          //             // User signed in successfully.
-          //             console.log(result.user);
-          //             flag = 1;
-          //             // ...
-          //           })
-          //           .catch(error => {
-          //             // User couldn't sign in (bad verification code?)
-          //             // ...
-          //             console.log(error);
-          //             this.toastCtrl
-          //               .create({
-          //                 message: error,
-          //                 duration: 2000,
-          //               })
-          //               .present();
-          //           })
-          //           .finally(() => {
-          //             if (flag == 1) {
-          //               this.checkifexist();
-          //             }
-          //           });
-          //       },
-          //     },
-          //   ],
-          // });
-          // prompt.present();
-          console.log(confirmationResult);
-        })
-        .catch(async (error) => {
-          // Error; SMS not sent
-          // ...
-          const alert = await this.alertCtrl
-            .create({
-              message: 'SMS not sent: ' + error,
-            });
-          alert.present();
-          console.log('SMS Not Sent: ' + error);
-        });
+      //     const msg = this.translateConfigService.getTranslatedMessage('Enter the Confirmation code');
+      //     const msg1 = this.translateConfigService.getTranslatedMessage('A 6 Digit Code');
+      //     const msg2 = this.translateConfigService.getTranslatedMessage('SEND');
+      //     const msg3 = this.translateConfigService.getTranslatedMessage('CANCEL');
+
+      //     console.log('confirmationResult',confirmationResult);
+      //   })
+      //   .catch(async (error) => {
+      //     // Error; SMS not sent
+      //     // ...
+      //     const alert = await this.alertCtrl
+      //       .create({
+      //         message: 'SMS not sent: ' + error,
+      //       });
+      //     alert.present();
+      //     console.log('SMS Not Sent: ' + error);
+      //   });
 
       // if(flag==1){
       //   console.log("yeahh")
