@@ -129,7 +129,7 @@ export class AppComponent implements OnInit {
           lang: this.userLang
         }
       };
-      dataExist ? this.router.navigate(['/home/income-transaction'], navigationExtras) : this.router.navigate(['/login']);
+      // dataExist ? this.router.navigate(['/home/income-transaction'], navigationExtras) : this.router.navigate(['/login']);
       this.splashScreen.hide();
     });
   }
