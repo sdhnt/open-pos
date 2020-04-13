@@ -24,20 +24,20 @@
 <ion-content class="ion-padding ion-padding-top scroll-content ion-margin-vertical">
 
 
-  <!-- <countryflag country="mm"></countryflag>  -->
-  <!-- <span class="flag-icon flag-icon-gr flag-icon-squared"></span> -->
+    <!-- <countryflag country="mm"></countryflag>  -->
+    <!-- <span class="flag-icon flag-icon-gr flag-icon-squared"></span> -->
 
-  <!-- <ion-button expand="block" fill="clear" color="warning" class="nametop"><b>Open</b></ion-button> -->
-  <ion-row class="ion-justify-content-center ion-padding-top">
-    <ion-img *ngIf="lang==1" src="assets/icon/icon.svg"></ion-img>
-    <ion-thumbnail *ngIf="signup!=1&&otpmode!=1&&lang!=1 || otpmode==1 || signup==1">
-      <img class="img-fluid" src="assets/icon/icon.svg" alt="">
-    </ion-thumbnail>
-  </ion-row>
+    <!-- <ion-button expand="block" fill="clear" color="warning" class="nametop"><b>Open</b></ion-button> -->
+    <ion-row class="ion-justify-content-center ion-padding-top">
+        <ion-img *ngIf="lang==1" src="assets/icon/icon.svg"></ion-img>
+        <ion-thumbnail *ngIf="signup!=1&&otpmode!=1&&lang!=1 || otpmode==1 || signup==1">
+            <img class="img-fluid" src="assets/icon/icon.svg" alt="">
+        </ion-thumbnail>
+    </ion-row>
 
 
 
-  <!-- 
+    <!-- 
   <ion-grid style="width: 75%;">
     
     <ion-row class="row-style">
@@ -60,114 +60,111 @@
 
 -->
 
+    <div id="PhoneLogin">
+        <div id="recaptcha-container"></div>
 
-  <div id="PhoneLogin">
-    <div id="recaptcha-container"></div>
+        <div *ngIf="lang==1">
+            <br>
+            <ion-button expand="block" fill="outline" color="lgrey" style="margin-top: 20px;" (click)="selectLang('my')">
+                ဗမာ
+            </ion-button>
+            <ion-button expand="block" fill="outline" color="lgrey" style="margin-top: 20px;" (click)="selectLang('en')">
+                English
+            </ion-button>
 
-    <div *ngIf="lang==1">
-      <br>
-      <ion-button expand="block" fill="outline" color="lgrey" style="margin-top: 20px;" (click)="selectLang('my')">
-        ဗမာ
-      </ion-button>
-      <ion-button expand="block" fill="outline" color="lgrey" style="margin-top: 20px;" (click)="selectLang('en')">
-        English
-      </ion-button>
+        </div>
 
-    </div>
-
-    <div *ngIf="signup!=1&&otpmode!=1&&lang!=1">
-      <ion-row class="ion-justify-content-center">
-        <ion-text color="dark" style="margin-top: 10px;">
-          {{"Enter your Phone Number"|translate}}
-        </ion-text>
-      </ion-row>
-      <ion-grid>
-        <ion-row class="ion-justify-content-center ion-margin-bottom">
-          <ion-select style="border: 1px solid grey;border-radius: 5px 0 0 5px;border-right: 0;"
-            [(ngModel)]="countryCode">
-            <ion-select-option value="95" selected>🇲🇲 +95 </ion-select-option>
-            <ion-select-option value="63">🇵🇭 +63 </ion-select-option>
-            <ion-select-option value="852">🇭🇰 +852 </ion-select-option>
-            <ion-select-option value="91">🇮🇳 +91 </ion-select-option>
-          </ion-select>
-          <ion-input style="border: 1px solid grey;border-radius: 0 5px 5px 0;" type="number" placeholder="9964758505"
-            [(ngModel)]="phone"></ion-input>
-        </ion-row>
-        <ion-button expand="block" color="yellow" (click)="signInPhone()">
-          {{"Login with Phone Number"|translate}}</ion-button>
-        <!-- <ion-row>
+        <div *ngIf="signup!=1&&otpmode!=1&&lang!=1">
+            <ion-row class="ion-justify-content-center">
+                <ion-text color="dark" style="margin-top: 10px;">
+                    {{"Enter your Phone Number"|translate}}
+                </ion-text>
+            </ion-row>
+            <ion-grid>
+                <ion-row class="ion-justify-content-center ion-margin-bottom">
+                    <ion-select style="border: 1px solid grey;border-radius: 5px 0 0 5px;border-right: 0;" [(ngModel)]="countryCode">
+                        <ion-select-option value="95" selected>🇲🇲 +95 </ion-select-option>
+                        <ion-select-option value="63">🇵🇭 +63 </ion-select-option>
+                        <ion-select-option value="852">🇭🇰 +852 </ion-select-option>
+                        <ion-select-option value="91">🇮🇳 +91 </ion-select-option>
+                    </ion-select>
+                    <ion-input style="border: 1px solid grey;border-radius: 0 5px 5px 0;" type="number" placeholder="9964758505" [(ngModel)]="phone"></ion-input>
+                </ion-row>
+                <ion-button expand="block" color="yellow" (click)="signInPhone()">
+                    {{"Login with Phone Number"|translate}}</ion-button>
+                <!-- <ion-row>
         </ion-row> -->
-        <ion-row class="ion-justify-content-center">
-          <ion-text>OR</ion-text>
-        </ion-row>
-        <ion-button expand="block" color="primary" (click)="fbLogin()">
-          <ion-icon slot="start" name="logo-facebook"></ion-icon> {{"Login with Facebook"|translate}}
-        </ion-button>
-        <!-- <ion-row>
+                <ion-row class="ion-justify-content-center">
+                    <ion-text>OR</ion-text>
+                </ion-row>
+                <ion-button expand="block" color="primary" (click)="fbLogin()">
+                    <ion-icon slot="start" name="logo-facebook"></ion-icon> {{"Login with Facebook"|translate}}
+                </ion-button>
+                <!-- <ion-row>
         </ion-row> -->
-        <!-- <ion-button block round style="margin-top: 10px;" (click)="backToLang()" color="light" clear>
+                <!-- <ion-button block round style="margin-top: 10px;" (click)="backToLang()" color="light" clear>
         <ion-icon name="arrow-round-back"></ion-icon>
       </ion-button> -->
-        <!-- <div class="btn_container">
+                <!-- <div class="btn_container">
         <ion-button full (click)="loginWithFB();">{{"Login with Facebook"|translate}}</ion-button>
       </div> -->
-      </ion-grid>
+            </ion-grid>
+        </div>
     </div>
-  </div>
-  <div *ngIf="otpmode==1">
-    <ion-row class="ion-justify-content-center">
-      <ion-text color="dark" style="margin-top: 10px;">
-        {{"Enter the Confirmation code"|translate}}</ion-text>
-    </ion-row>
-    <ion-row class="ion-justify-content-center">
-      <ion-text color="dark" style="margin-top: 10px;"><b>{{phone}}</b></ion-text>
-    </ion-row>
-    <ion-row class="ion-justify-content-center row-style" style="margin-top: 20px;">
-      <!-- <ion-input placeholder="Enter OTP here" type=”number” [(ngModel)]="otpnum"></ion-input> -->
-      <ng-otp-input (onInputChange)="onOtpChange($event)" allowNumbersOnly="true" [config]="ngOtpConfig"></ng-otp-input>
-    </ion-row>
-    <ion-button expand="block" color="yellow" style="margin-top: 20px;" (click)="otpFn()" [disabled]="timer2!=0">
-      {{"Submit OTP"|translate}}
-    </ion-button>
-    <!-- <ion-button expand="block" shape="round" fill="outline" color="light" style="margin-top: 20px;"
+    <div *ngIf="otpmode==1">
+        <ion-row class="ion-justify-content-center">
+            <ion-text color="dark" style="margin-top: 10px;">
+                {{"Enter the Confirmation code"|translate}}</ion-text>
+        </ion-row>
+        <ion-row class="ion-justify-content-center">
+            <ion-text color="dark" style="margin-top: 10px;"><b>{{phone}}</b></ion-text>
+        </ion-row>
+        <ion-row class="ion-justify-content-center row-style" style="margin-top: 20px;">
+            <!-- <ion-input placeholder="Enter OTP here" type=”number” [(ngModel)]="otpnum"></ion-input> -->
+            <ng-otp-input (onInputChange)="onOtpChange($event)" allowNumbersOnly="true" [config]="ngOtpConfig"></ng-otp-input>
+        </ion-row>
+        <ion-button expand="block" color="yellow" style="margin-top: 20px;" (click)="otpFn()" [disabled]="timer2!=0">
+            {{"Submit OTP"|translate}}
+        </ion-button>
+        <!-- <ion-button expand="block" shape="round" fill="outline" color="light" style="margin-top: 20px;"
       (click)="backToLogin()">{{"Cancel"|translate}}</ion-button> -->
-    <ion-row style="margin-top: 20px;">
-      <ion-col></ion-col>
-      <ion-col>
-        <ion-button [disabled]="timer!=0" (click)="signInPhone()" fill="clear" color="dark">
-          <i class="fas fa-undo mr-1"></i>{{"Resend"|translate}}</ion-button>
-      </ion-col>
-      <ion-col>
-        <ion-button fill="clear" color="dark" *ngIf="timer!=0">{{"Retry in"|translate}} {{ timer }}s</ion-button>
-      </ion-col>
-    </ion-row>
-  </div>
+        <ion-row style="margin-top: 20px;">
+            <ion-col></ion-col>
+            <ion-col>
+                <ion-button [disabled]="timer!=0" (click)="signInPhone()" fill="clear" color="dark">
+                    <i class="fas fa-undo mr-1"></i>{{"Resend"|translate}}</ion-button>
+            </ion-col>
+            <ion-col>
+                <ion-button fill="clear" color="dark" *ngIf="timer!=0">{{"Retry in"|translate}} {{ timer }}s</ion-button>
+            </ion-col>
+        </ion-row>
+    </div>
 
-  <div *ngIf="signup==1">
-    <ion-grid>
-      <ion-row class="ion-justify-content-center">
-        <ion-text class="mt-2 text-uppercase">
-          <h6 class="font-weight-bolder">{{"Create Account"|translate}}</h6>
-        </ion-text>
-      </ion-row>
+    <div *ngIf="signup==1">
+        <ion-grid>
+            <ion-row class="ion-justify-content-center">
+                <ion-text class="mt-2 text-uppercase">
+                    <h6 class="font-weight-bolder">{{"Create Account"|translate}}</h6>
+                </ion-text>
+            </ion-row>
 
-      <div class="form-group">
-        <ion-label>{{'Owner'|translate}}</ion-label>
-        <ion-input class="form-control" [(ngModel)]="newaccOwnName"></ion-input>
-      </div>
-      <div class="form-group">
-        <ion-label>{{'Business Name'|translate}}</ion-label>
-        <ion-input class="form-control" [(ngModel)]="newaccBName"></ion-input>
-      </div>
-      <div class="form-group">
-        <ion-label>{{'Business Type'|translate}}</ion-label>
-        <ion-input class="form-control" [(ngModel)]="newaccBType"></ion-input>
-      </div>
-      <div class="form-group">
-        <ion-label>{{'Business Area & City'|translate}}</ion-label>
-        <ion-input class="form-control" [(ngModel)]="newaccBArea"></ion-input>
-      </div>
-      <!-- <ion-row class="row-style" style="margin-top: 20px;">
+            <div class="form-group">
+                <ion-label>{{'Owner'|translate}}</ion-label>
+                <ion-input class="form-control" [(ngModel)]="newaccOwnName"></ion-input>
+            </div>
+            <div class="form-group">
+                <ion-label>{{'Business Name'|translate}}</ion-label>
+                <ion-input class="form-control" [(ngModel)]="newaccBName"></ion-input>
+            </div>
+            <div class="form-group">
+                <ion-label>{{'Business Type'|translate}}</ion-label>
+                <ion-input class="form-control" [(ngModel)]="newaccBType"></ion-input>
+            </div>
+            <div class="form-group">
+                <ion-label>{{'Business Area & City'|translate}}</ion-label>
+                <ion-input class="form-control" [(ngModel)]="newaccBArea"></ion-input>
+            </div>
+            <!-- <ion-row class="row-style" style="margin-top: 20px;">
       </ion-row> 
       <ion-row class="row-style" style="margin-top: 20px;">
       </ion-row>
@@ -175,34 +172,32 @@
       </ion-row>
       <ion-row class="row-style" style="margin-top: 20px;">
       </ion-row> -->
-      <div class="form-group">
-        <ion-label>{{'Phone Number'|translate}}</ion-label>
-        <ion-row class="ion-justify-content-center" style="margin-top: 20px;">
-          <ion-select style="border: 1px solid var(--ion-color-lgrey);border-radius: 5px 0 0 5px;border-right: 0;"
-            [(ngModel)]="country_code" [disabled]="fb==false">
-            <ion-select-option value="95" selected>🇲🇲 +95 </ion-select-option>
-            <ion-select-option value="63">🇵🇭 +63 </ion-select-option>
-            <ion-select-option value="852">🇭🇰 +852 </ion-select-option>
-            <ion-select-option value="91">🇮🇳 +91 </ion-select-option>
-          </ion-select>
-          <ion-input style="border: 1px solid #cdcdcd;border-radius: 0 5px 5px 0; border-left: 0;"
-            type=”text” [(ngModel)]="phone" [disabled]="fb==false">
-          </ion-input>
+            <div class="form-group">
+                <ion-label>{{'Phone Number'|translate}}</ion-label>
+                <ion-row class="ion-justify-content-center" style="margin-top: 20px;">
+                    <ion-select style="border: 1px solid var(--ion-color-lgrey);border-radius: 5px 0 0 5px;border-right: 0;" [(ngModel)]="country_code" [disabled]="fb==false">
+                        <ion-select-option value="95" selected>🇲🇲 +95 </ion-select-option>
+                        <ion-select-option value="63">🇵🇭 +63 </ion-select-option>
+                        <ion-select-option value="852">🇭🇰 +852 </ion-select-option>
+                        <ion-select-option value="91">🇮🇳 +91 </ion-select-option>
+                    </ion-select>
+                    <ion-input style="border: 1px solid #cdcdcd;border-radius: 0 5px 5px 0; border-left: 0;" type=”text” [(ngModel)]="phone" [disabled]="fb==false">
+                    </ion-input>
+                </ion-row>
+            </div>
+            <ion-button expand="block" [disabled]="dis" color="magenta" style="margin-top: 20px;" (click)="createAccount()">
+                {{"Create Account"|translate}}</ion-button>
+            <ion-row padding></ion-row>
+        </ion-grid>
+    </div>
+    <ion-grid class="terms-of-use" *ngIf="signup !== 1">
+        <ion-row class="ion-justify-content-center">
+            <ion-text class="ion-text-center">Privacy policy</ion-text>
         </ion-row>
-      </div>
-      <ion-button expand="block" [disabled]="dis" color="magenta" style="margin-top: 20px;" (click)="createAccount()">
-        {{"Create Account"|translate}}</ion-button>
-      <ion-row padding></ion-row>
+        <ion-row class="ion-justify-content-center">
+            <ion-text class="ion-text-center">Terms of service</ion-text>
+        </ion-row>
     </ion-grid>
-  </div>
-  <ion-grid class="terms-of-use" *ngIf="signup !== 1">
-    <ion-row class="ion-justify-content-center">
-      <ion-text class="ion-text-center">Privacy policy</ion-text>
-    </ion-row>
-    <ion-row class="ion-justify-content-center">
-      <ion-text class="ion-text-center">Terms of service</ion-text>
-    </ion-row>
-  </ion-grid>
 </ion-content>
 
 <!-- <ion-footer>
