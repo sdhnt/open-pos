@@ -4,13 +4,30 @@
             <ion-icon name="add"></ion-icon>
         </ion-fab-button>
     </ion-fab> -->
-    <div class="pageTitle">
+    <!-- <div class="pageTitle">
         <h4 style="font-weight: bolder;">Contacts</h4>
-    </div>
+    </div> -->
     <!-- <hr> -->
     <div class="pageTitle">
         <h5>Track who owes you money</h5>
     </div>
+   
+    <ion-row class="searchRow">
+        <ion-col size="9" class="searchBar">
+            <ion-icon name="search-outline"></ion-icon>
+            <input type="text" [(ngModel)]="searchterm" (input)="filter()" placeholder="Search">
+        </ion-col>
+        <ion-col size="3" class="filter">
+            <span class="seperator">|</span>
+            <!-- <ion-icon name="swap-vertical-outline" (click)=doSelect()></ion-icon> -->
+            <ion-select #sectionSelect (ionChange)="sort($event)" value="1">
+                <ion-select-option value="1" selected>A-Z</ion-select-option>
+                <ion-select-option value="2">Z-A</ion-select-option>
+                <ion-select-option value="3">High to Low</ion-select-option>
+                <ion-select-option value="4">Low to High</ion-select-option>
+            </ion-select>
+        </ion-col>
+    </ion-row>
     <ion-card class="totalBox" *ngIf="contactList&&contactList.length>0">
         <ion-row>
             <ion-col class="totalCol" size="6">
@@ -21,21 +38,7 @@
             </ion-col>
         </ion-row>
     </ion-card>
-    <ion-row class="searchRow">
-        <ion-col size="6" class="searchBar">
-            <ion-icon name="search-outline"></ion-icon>
-            <input type="text" [(ngModel)]="searchterm" (input)="filter()" placeholder="Search">
-        </ion-col>
-        <ion-col size="6" class="filter">
-            <span class="seperator">|</span>
-            <ion-select (ionChange)="sort($event)" value="1">
-                <ion-select-option value="1" selected>A-Z</ion-select-option>
-                <ion-select-option value="2">Z-A</ion-select-option>
-                <ion-select-option value="3">High to Low</ion-select-option>
-                <ion-select-option value="4">Low to High</ion-select-option>
-            </ion-select>
-        </ion-col>
-    </ion-row>
+
     <ion-card class="headingCard">
         <ion-row style="font-weight: bolder;">
             <ion-col size="6">
