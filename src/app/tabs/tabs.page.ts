@@ -525,7 +525,7 @@ export class TabsPage implements OnInit {
   </ion-item>
   <ion-item button (click)="cashbtn()">
       <ion-icon class="mr-1" name="logo-usd"></ion-icon>
-      <ion-label>Cask Balance</ion-label>
+      <ion-label>Cash Balance</ion-label>
   </ion-item>
   <ion-item button (click)="help()">
       <ion-icon class="mr-1" name="help-circle"></ion-icon>

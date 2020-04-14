@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone, Inject } from '@angular/core';
+import { Component, OnInit, NgZone, Inject, ViewChild } from '@angular/core';
 import {
   ToastController,
   AlertController,
@@ -13,20 +13,22 @@ import { Router, NavigationExtras } from '@angular/router';
 import { Observable } from 'rxjs';
 import { SheetStates } from 'ionic-custom-bottom-sheet';
 import { EventService } from '../services/event.service';
+
 @Component({
   selector: 'app-contacts',
   templateUrl: './contacts.page.html',
   styleUrls: ['./contacts.page.scss'],
 })
 export class ContactsPage implements OnInit {
+  
   choosingContact = false;
-
   contactList = [];
   searchterm = '';
   filteredList;
   totalUserCredit: number;
   totalUserDebit: number;
   public BottomSheetState: SheetStates = SheetStates.Closed;
+  
   constructor(
     // @Inject(NavParams) public navParams: NavParams,
     // tslint:disable-next-line: deprecation
@@ -64,6 +66,10 @@ export class ContactsPage implements OnInit {
 
   ionViewDidLeave() {
     // this.event.emitFabButton('');
+  }
+
+  doSelect(){
+    //this.sectionSelect.open();
   }
 
   ionViewDidEnter() {

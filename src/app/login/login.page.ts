@@ -16,6 +16,7 @@ import { config } from '../../utilities/initializeFirebase';
 import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+declare var SMSReceive: any;
 
 @Component({
   selector: 'app-login',
