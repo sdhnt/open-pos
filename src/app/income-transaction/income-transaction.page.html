@@ -8,11 +8,17 @@
                 <ion-text class="font-weight-bolder">{{"Receipt"|translate}}</ion-text>
             </ion-col>
             <ion-col size="2">
-                <ion-button (click)="addCalc()" color="dark" fill="clear">
+                <ion-button (click)="addCalc()" color="yellow">
                     <ion-icon slot="icon-only" name="calculator" style="font-size: 30px;"></ion-icon>
                 </ion-button>
             </ion-col>
         </ion-row>
+        <ion-button expand="block" size="large" color="success" (click)="openSheet()">
+           Create Receipt
+        </ion-button>
+        <ion-button expand="block" size="large" color="yellow" (click)="showPrevRec()">
+            Previous Receipt
+        </ion-button>
     </div>
     <ion-card *ngIf="showrec==true" class="m-0" id="imageConvert">
         <ion-card-header>
@@ -341,10 +347,10 @@
 
     </ion-card>
     <!-- Dynamically Generate All expense from backend - see feed from prev -->
-    <ion-row *ngIf="showrec==false && isReady==true && lastTransaction">
+    <ion-row *ngIf="showrec==false && isReady==true && lastTransaction && showprevrec==1">
         <ion-col><b>{{"Last Receipt"|translate}}</b></ion-col>
     </ion-row>
-    <ion-card id="recImg" *ngIf="showrec==false && isReady==true && lastTransaction" class="m-0 last-rec-card">
+    <ion-card id="recImg" *ngIf="showrec==false && isReady==true && lastTransaction  && showprevrec==1" class="m-0 last-rec-card">
         <ion-card-header>
             <ion-row>
                 <ion-col size="3">
@@ -440,7 +446,7 @@
             </ion-col>
         </ion-row>
     </ion-card>
-    <ion-row *ngIf="showrec==false && isReady==true && lastTransaction">
+    <ion-row *ngIf="showrec==false && isReady==true && lastTransaction && showprevrec==1">
         <ion-col class="p-0">
             <ion-button (click)="printOldRec(lastTransaction)" fill="clear" color="dark" class="m-0">
                 <ion-icon style="font-size: 16px;" slot="icon-only" class="mr-1" name="print"></ion-icon>

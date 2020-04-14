@@ -336,6 +336,11 @@ export class IncomeTransactionPage implements OnInit {
   ionViewDidLoad() {
 
   }
+  showprevrec=0;
+
+  showPrevRec(){
+    this.showprevrec=1;
+  }
 
   getLastTransaction() {
     this.sp.storageReady().then(() => {
