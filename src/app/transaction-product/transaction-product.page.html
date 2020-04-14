@@ -114,35 +114,34 @@
           </ion-col>
           <ion-col size="8" style="padding: 0%; margin: 0px;">
             <ion-row style="padding: 0px; margin: 0px;;">
-              <ion-col>
+              <ion-col style="color: black;">
                 {{product.name}}
               </ion-col>
             </ion-row>
             <ion-radio-group value="r" (ionChange)="addwholesaledisc($event, product)" style="padding: 0px; margin: 0px;;">
               <ion-row style="padding: 0px; margin: 0px;;">
-                <ion-col size="6" style="padding: 0px; margin: 0px;;" >
+                <ion-col size="8" style="padding: 0px; margin: 0px;;" >
                   <ion-radio color="magenta" size="small" class="qty-radio" value="r" *ngIf="product.qty>0"></ion-radio> &nbsp;
                       <small>{{"Retail Price"|translate}}:</small>
                 </ion-col>
-                <ion-col size="6" style="text-align:end;padding: 0px; margin: 0px;;">
+                <ion-col size="4" style="text-align:end;padding: 0px; margin: 0px;;">
                   <small>{{product.price}}</small>
                 </ion-col>
               </ion-row>
 
               <ion-row style="padding: 0px; margin: 0px;;">
-                <ion-col size="6" style="padding: 0px; margin: 0px;;">
-                  <ion-radio color="magenta" size="small" class="qty-radio" value="r" *ngIf="product.qty>0"></ion-radio> &nbsp;
+                <ion-col size="8" style="padding: 0px; margin: 0px;;">
+                  <ion-radio color="magenta" size="small" class="qty-radio" value="w" *ngIf="product.qty>0"></ion-radio> &nbsp;
                       <small>{{"Wholesale Price"|translate}}:</small>
                 </ion-col>
-                <ion-col size="6" style="text-align:end;padding: 0px; margin: 0px;;">
+                <ion-col size="4" style="text-align:end;padding: 0px; margin: 0px;;">
                   <small>{{product.wholesale_price}}</small>
                 </ion-col>
               </ion-row>
 
               <ion-row style="padding: 0px; margin: 0px;;">
                 <ion-col size="6" style="padding: 0px; margin: 0px;;">
-                  <ion-radio color="magenta" size="small" class="qty-radio" value="r" *ngIf="product.qty>0"></ion-radio> &nbsp;
-                      <small>{{"Category"|translate}}:</small>
+                  &nbsp;  <small>{{"Category"|translate}}:</small>
                 </ion-col>
                 <ion-col size="6" style="text-align:end;padding: 0px; margin: 0px;;">
                   <small>{{product.cat}}</small>
@@ -151,8 +150,7 @@
 
               <ion-row style="padding: 0px; margin: 0px;;">
                 <ion-col size="6" style="padding: 0px; margin: 0px;;">
-                  <ion-radio color="magenta" size="small" class="qty-radio" value="r" *ngIf="product.qty>0"></ion-radio> &nbsp;
-                      <small>{{"Stock"|translate}}:</small>
+                  &nbsp;  <small>{{"Stock"|translate}}:</small>
                 </ion-col>
                 <ion-col size="6" style="text-align:end;padding: 0px; margin: 0px;;">
                   <small>{{product.stock_qty}}</small>
@@ -219,12 +217,12 @@
 
 
         <ion-row class="ion-justify-content-around">
-          <ion-col *ngIf="event1!=true&&product.qty==0&&!showSellButton">
+          <ion-col *ngIf="event1!=true&&product.qty==0&&!showSellButton" size="4">
             <ion-button size="small" expand="block" color="magenta" (click)="viewEditProduct(product)">
-              <ion-icon slot="icon-only" name="create-outline" class="mr-1"></ion-icon> {{"View / Edit"|translate}}
+              <ion-icon slot="icon-only" name="create-outline" class="mr-1"></ion-icon> {{"View"|translate}}
             </ion-button>
           </ion-col>
-          <ion-col *ngIf="event1!=true&&product.qty==0">
+          <ion-col *ngIf="event1!=true&&product.qty==0" size="8">
             <ion-button size="small" expand="block" color="success" (click)="sellProd(product)">
               <ion-icon slot="icon-only" name="cart-outline" class="mr-1"></ion-icon> {{"Sell"|translate}}
             </ion-button>
@@ -323,7 +321,12 @@
   <ion-grid>
     <ion-row *ngIf="event1==false && showSellButton">
       <ion-col>
-        <ion-button (click)="createRec()" expand="block" color="yellow">
+        <ion-button (click)="resetPg()" expand="block" color="danger">
+          <ion-icon name="close-circle-outline" class="mr-3"></ion-icon> {{"Cancel"|translate}}
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button (click)="createRec()" expand="block" color="success">
           <ion-icon name="checkmark-circle-outline" class="mr-3"></ion-icon> {{updateOrCreate|translate}}
         </ion-button>
       </ion-col>
