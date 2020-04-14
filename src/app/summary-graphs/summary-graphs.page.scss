@@ -1,3 +1,9 @@
 :host ::ng-deep ion-item.no-border .item-inner {
     border: 0;
 }
+ion-grid {
+    height: 100%;
+    .ion-row-date {
+      height: 33.33%;
+    }
+  }

@@ -112,8 +112,58 @@
               [src]="product.url != '' ? product.url : 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'">
             </ion-img>
           </ion-col>
-          <ion-col>
-            <table class="text-left">
+          <ion-col size="8" style="padding: 0%; margin: 0px;">
+            <ion-row style="padding: 0px; margin: 0px;;">
+              <ion-col>
+                {{product.name}}
+              </ion-col>
+            </ion-row>
+            <ion-radio-group value="r" (ionChange)="addwholesaledisc($event, product)" style="padding: 0px; margin: 0px;;">
+              <ion-row style="padding: 0px; margin: 0px;;">
+                <ion-col size="6" style="padding: 0px; margin: 0px;;" >
+                  <ion-radio color="magenta" size="small" class="qty-radio" value="r" *ngIf="product.qty>0"></ion-radio> &nbsp;
+                      <small>{{"Retail Price"|translate}}:</small>
+                </ion-col>
+                <ion-col size="6" style="text-align:end;padding: 0px; margin: 0px;;">
+                  <small>{{product.price}}</small>
+                </ion-col>
+              </ion-row>
+
+              <ion-row style="padding: 0px; margin: 0px;;">
+                <ion-col size="6" style="padding: 0px; margin: 0px;;">
+                  <ion-radio color="magenta" size="small" class="qty-radio" value="r" *ngIf="product.qty>0"></ion-radio> &nbsp;
+                      <small>{{"Wholesale Price"|translate}}:</small>
+                </ion-col>
+                <ion-col size="6" style="text-align:end;padding: 0px; margin: 0px;;">
+                  <small>{{product.wholesale_price}}</small>
+                </ion-col>
+              </ion-row>
+
+              <ion-row style="padding: 0px; margin: 0px;;">
+                <ion-col size="6" style="padding: 0px; margin: 0px;;">
+                  <ion-radio color="magenta" size="small" class="qty-radio" value="r" *ngIf="product.qty>0"></ion-radio> &nbsp;
+                      <small>{{"Category"|translate}}:</small>
+                </ion-col>
+                <ion-col size="6" style="text-align:end;padding: 0px; margin: 0px;;">
+                  <small>{{product.cat}}</small>
+                </ion-col>
+              </ion-row>
+
+              <ion-row style="padding: 0px; margin: 0px;;">
+                <ion-col size="6" style="padding: 0px; margin: 0px;;">
+                  <ion-radio color="magenta" size="small" class="qty-radio" value="r" *ngIf="product.qty>0"></ion-radio> &nbsp;
+                      <small>{{"Stock"|translate}}:</small>
+                </ion-col>
+                <ion-col size="6" style="text-align:end;padding: 0px; margin: 0px;;">
+                  <small>{{product.stock_qty}}</small>
+                </ion-col>
+              </ion-row>
+
+
+            </ion-radio-group>
+
+
+            <!-- <table class="text-left">
               <tbody>
                 <tr>
                   <td colspan="2">{{product.name}}</td>
@@ -124,16 +174,19 @@
                   <tr>
                     <td colspan="2">
                       <ion-radio color="magenta" size="small" class="qty-radio" value="r" *ngIf="product.qty>0"></ion-radio> &nbsp;
-                      <small>{{"Retail Price"|translate}} : {{product.price}}</small>
+                      <small>{{"Retail Price"|translate}}:</small>
+                    </td>
+                    <td style="text-align:right;">
+                      <small>{{product.price}}</small>
                     </td>
                   </tr>
                   <tr>
                     <td colspan="2">
-                      <small>
                         <ion-radio color="magenta" size="small" class="qty-radio" value="w" *ngIf="product.qty>0"></ion-radio> &nbsp;
-                        {{"Wholesale Price"|translate}}
-                        : {{product.wholesale_price}}
-                      </small>
+                      <small>{{"Wholesale Price"|translate}}:</small>
+                    </td>
+                    <td style="text-align:right;">
+                      <small>{{product.wholesale_price}}</small>
                     </td>
                   </tr>
                 </ion-radio-group>
@@ -142,10 +195,10 @@
                 <tr>
                   <td>
                     <small>
-                      Category
+                      Category:
                     </small>
                   </td>
-                  <td class="text-right">
+                  <td style="text-align:right;">
                     <small>{{product.cat}}</small>
                   </td>
                 </tr>
@@ -155,14 +208,16 @@
                       Stock
                     </small>
                   </td>
-                  <td class="text-right">
+                  <td style="text-align:right;">
                     <small>{{product.stock_qty}}</small>
                   </td>
                 </tr>
               </tbody>
-            </table>
+            </table> -->
           </ion-col>
         </ion-row>
+
+
         <ion-row class="ion-justify-content-around">
           <ion-col *ngIf="event1!=true&&product.qty==0&&!showSellButton">
             <ion-button size="small" expand="block" color="magenta" (click)="viewEditProduct(product)">

@@ -12,43 +12,64 @@
   <ion-option value="month">{{"This Month"|translate}}</ion-option>
   <ion-option value="last30">{{"Last 30 days"|translate}}</ion-option>
 </ion-select> -->
-    <ion-row>
+    <!-- <ion-row>
         <ion-text>
             <h4>Account</h4>
         </ion-text>
-    </ion-row>
-    <ion-item class="no-border" lines="none">
+    </ion-row> -->
+    <!-- <ion-item class="no-border" lines="none">
         <ion-avatar slot="start">
             <img [src]="userdata.logo_url">
         </ion-avatar>
         <ion-label>
             <a href="javascript:void(0)" [routerLink]="['/home/user-data']">Go to business profile</a>
         </ion-label>
-    </ion-item>
+    </ion-item> -->
     <ion-card>
         <ion-card-content>
-            <ion-item>
+            <!-- <ion-item>
                 <ion-label>From</ion-label>
                 <ion-datetime [(ngModel)]="fromDate" [max]="toDate" (ionChange)="dateChange()"></ion-datetime>
             </ion-item>
             <ion-item lines="none" class="no-border">
                 <ion-label>To</ion-label>
                 <ion-datetime [(ngModel)]="toDate" [max]="toDate" (ionChange)="dateChange()"></ion-datetime>
-            </ion-item>
-            <br>
+            </ion-item> -->
+            <ion-row style="text-align: center;">
+              <ion-col style="text-align: center;">
+                Your accounts between the dates
+              </ion-col>
+              
+            </ion-row>
+            
+       <ion-grid>
+
+            <ion-row>
+              <ion-col size="5" style="height: 10px; text-align: center; font-size: medium; color: black; border: 1px dashed gray; border-radius: 1rem; background-color: hsl(39, 100%, 68%);">
+                <ion-datetime [(ngModel)]="fromDate" [max]="toDate" (ionChange)="dateChange()"></ion-datetime>
+              </ion-col>
+              <ion-col size="2" style="text-align: center; font-size: large;">
+                to
+              </ion-col>
+              <ion-col size="5" style="height: 10px;text-align: center; font-size: medium; color: black;border: 1px dashed gray; border-radius: 1rem; background-color: hsl(39, 100%, 68%);">
+                <ion-datetime [(ngModel)]="toDate" [max]="toDate" (ionChange)="dateChange()"></ion-datetime>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+      
             <!-- <ion-item> -->
             <ion-row>
-                <ion-col size="6" style="text-align: left;">{{"Revenue"|translate}}:</ion-col>
+                <ion-col size="6" style="text-align: left; font-size: medium;">{{"Revenue"|translate}}:</ion-col>
                 <ion-col size="6" style="text-align: end;">{{rev|number:0}}</ion-col>
                 <!-- </ion-row>
         <ion-row> -->
-                <ion-col size="6" style="text-align: left;">{{"Expenditure"|translate}}:</ion-col>
+                <ion-col size="6" style="text-align: left; font-size: medium;">{{"Expenditure"|translate}}:</ion-col>
                 <ion-col size="6" style="text-align: end;">{{exp|number:0}}</ion-col>
             </ion-row>
             <!-- </ion-item>
       <ion-item> -->
             <ion-row>
-                <ion-col size="6" style="text-align: left;">{{"Profit"|translate}}:</ion-col>
+                <ion-col size="6" style="text-align: left; font-size: medium;">{{"Profit"|translate}}:</ion-col>
                 <ion-col size="6" style="text-align: end;">{{pro|number:0}}</ion-col>
                 <!-- </ion-row>
         <ion-row> -->
@@ -60,19 +81,18 @@
     <!-- </ion-item> -->
     <div style="text-align: center;">
         <div *ngIf="!((rev+exp)>=0)" style="color: red;"> {{"You have negative cash"|translate}} !</div>
-        <h6>{{"Interested in borrowing money"|translate}}?</h6>
     </div>
     <ion-button expand="block" size="large" color="success" (click)="applyLoan()">
         <img src="assets/new-ui-imgs/icons/Mask Group 10.png" class="mr-3" alt="" width="30">{{"Apply for Loan"|translate}}
     </ion-button>
-    <ion-segment [(ngModel)]="selectedOne">
+    <!-- <ion-segment [(ngModel)]="selectedOne">
         <ion-segment-button value="graph" color="yellow" (click)="toggleGL()">
             <ion-label>{{"View Graph"|translate}}</ion-label>
         </ion-segment-button>
         <ion-segment-button value="list" color="dark" (click)="toggleList()">
             <ion-label>{{"Hide Graph"|translate}}</ion-label>
         </ion-segment-button>
-    </ion-segment>
+    </ion-segment> -->
     <!-- <ion-row>
     <ion-button expand="full" (click)="toggleGL()" *ngIf="islist==0" style="background-color: orange;">
       {{"View Graph"|translate}}</ion-button>
@@ -152,7 +172,7 @@
       </b></ion-col> 
   </ion-row> -->
         <div class="lastTransaction">
-            <h6>Last Transactions</h6>
+            <h6>Transactions in this period:</h6>
         </div>
         <ion-list lines="none" *ngFor="let transac of listtransac; let i = index">
             <ion-card>
