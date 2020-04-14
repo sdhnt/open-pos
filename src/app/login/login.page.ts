@@ -485,56 +485,100 @@ export class LoginPage implements OnInit {
 
   async otpFn() {
     this.startTimer2();
-    console.log('otp**********',this.otpnum)
-
-
     const confirmationResult = this.confirmres;
+    console.log('otp**********', this.otpnum)
+    console.log('otp**********', confirmationResult)
     let flag = 0;
-    await confirmationResult
-    .confirm(this.otpnum)
-    .then(async result => {
-        // User signed in successfully.
-        console.log(result.user);
-        flag = 1;
-        // ...
-      })
-      .catch(async (error) => {
-        // User couldn't sign in (bad verification code?)
-        // ...
-        console.log(error);
-        const toast = await this.toastCtrl
-          .create({
-            message: error,
-            duration: 2000,
-          });
-        toast.present();
-        const a = await this.alertCtrl.create({
-          header: 'Incorrect OTP',
-          subHeader: 'OTP entered is incorrect. Request new OTP or retry',
-          buttons: [
-            {
-              text: 'Retry',
-              role: 'cancel',
-              handler: () => {
-                this.otpnum = '';
-              },
-            },
-            {
-              text: 'New OTP',
-              handler: () => {
-                this.otpmode = 0;
-                this.otpnum = '';
-              },
-            },
-          ],
+    let signCredential = await firebase.auth.PhoneAuthProvider.credential(confirmationResult, String(this.otpnum));
+    console.log('signCredential', signCredential);
+
+    firebase.auth().signInWithCredential(signCredential).then(async (info) => {
+      console.log('USER INFO', info);
+      this.checkifexist();
+    }).catch(async (error) => {
+      const toast = await this.toastCtrl
+        .create({
+          message: error,
+          duration: 2000,
         });
-        a.present();
-      })
-      .finally(() => {
-        if (flag === 1) {
-          const temp = this.checkifexist();
-        }
+      toast.present();
+      const a = await this.alertCtrl.create({
+        header: 'Incorrect OTP',
+        subHeader: 'OTP entered is incorrect. Request new OTP or retry',
+        buttons: [
+          {
+            text: 'Retry',
+            role: 'cancel',
+            handler: () => {
+              this.otpnum = '';
+            },
+          },
+          {
+            text: 'New OTP',
+            handler: () => {
+              this.otpmode = 0;
+              this.otpnum = '';
+            },
+          },
+        ],
       });
+      a.present();
+      console.log('USER INFO ERR', error);
+    });
+    // await this.firebaseAuth.signInWithVerificationId(confirmationResult,this.otpnum).then((res: any) => {
+    //   if(res == 'OK'){
+    //     this.checkifexist();
+    //     console.log(res);
+    //   }
+    // })
+
+
+
+    // await confirmationResult
+    // .confirm(this.otpnum)
+    // .then(async result => {
+    //     // User signed in successfully.
+    //     console.log(result.user);
+    //     flag = 1;
+    //     // ...
+    //   })
+    //   .catch(async (error) => {
+    //     // User couldn't sign in (bad verification code?)
+    //     // ...
+    //     console.log(error);
+    //     const toast = await this.toastCtrl
+    //       .create({
+    //         message: error,
+    //         duration: 2000,
+    //       });
+    //     toast.present();
+    //     const a = await this.alertCtrl.create({
+    //       header: 'Incorrect OTP',
+    //       subHeader: 'OTP entered is incorrect. Request new OTP or retry',
+    //       buttons: [
+    //         {
+    //           text: 'Retry',
+    //           role: 'cancel',
+    //           handler: () => {
+    //             this.otpnum = '';
+    //           },
+    //         },
+    //         {
+    //           text: 'New OTP',
+    //           handler: () => {
+    //             this.otpmode = 0;
+    //             this.otpnum = '';
+    //           },
+    //         },
+    //       ],
+    //     });
+    //     a.present();
+    //   })
+    //   .finally(() => {
+    //     if (flag === 1) {
+    //       const temp = this.checkifexist();
+    //     }
+    //   });
   }
   async signInPhone() {
     if (this.phone == null || this.countryCode == null) {
@@ -581,7 +625,7 @@ export class LoginPage implements OnInit {
         const msg2 = this.translateConfigService.getTranslatedMessage("SEND");
         const msg3 = this.translateConfigService.getTranslatedMessage("CANCEL");
       });
-      console.log('appVerifier',appVerifier)
+      console.log('appVerifier', appVerifier)
       // await firebase
       //   .auth()
       //   .signInWithPhoneNumber(phoneNumber, appVerifier)
