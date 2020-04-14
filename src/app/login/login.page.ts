@@ -487,10 +487,15 @@ export class LoginPage implements OnInit {
 
   async otpFn() {
     this.startTimer2();
-    SMSReceive.stopWatch(
-      ()=>{ console.log("watch stopped") },
-      ()=>{ console.log("watch stop failed") },
-    );
+    try{
+      SMSReceive.stopWatch(
+        ()=>{ console.log("watch stopped") },
+        ()=>{ console.log("watch stop failed") },
+      );
+    } catch(e){
+      console.log("Error with SMSReceive Stop:");
+      console.log(e);
+    }
     const confirmationResult = this.confirmres;
     let flag = 0;
     await confirmationResult
@@ -584,25 +589,30 @@ export class LoginPage implements OnInit {
       //   const msg2 = this.translateConfigService.getTranslatedMessage("SEND");
       //   const msg3 = this.translateConfigService.getTranslatedMessage("CANCEL");
       // });
-      SMSReceive.startWatch(()=>{
-        console.log("watch started");
-        document.addEventListener("onSMSArrive", (e:any)=>{
-          var incomingSMS = e.data;
-          const message:string = incomingSMS.body;
-          if(message){
-            for(let i=0; i<6; i++){
-              if(!(message[i]<='9' && message[i]>='0')){
-                return;
+      try{
+        SMSReceive.startWatch(()=>{
+          console.log("watch started");
+          document.addEventListener("onSMSArrive", (e:any)=>{
+            var incomingSMS = e.data;
+            const message:string = incomingSMS.body;
+            if(message){
+              for(let i=0; i<6; i++){
+                if(!(message[i]<='9' && message[i]>='0')){
+                  return;
+                }
               }
+              this.otpnum = message.slice(0,6);
+              // this.otpInput.setValue(this.otpnum);
+              this.otpFn();
             }
-            this.otpnum = message.slice(0,6);
-            // this.otpInput.setValue(this.otpnum);
-            this.otpFn();
-          }
-        })
-      },
-        ()=>{ console.log("watch start failed"); }
-      );
+          })
+        },
+          ()=>{ console.log("watch start failed"); }
+        );
+      } catch(e){
+        console.log("Error with SMSReceive Start");
+        console.log(e);
+      }
       await firebase
         .auth()
         .signInWithPhoneNumber(phoneNumber, appVerifier)
