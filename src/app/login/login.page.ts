@@ -486,86 +486,100 @@ export class LoginPage implements OnInit {
 
   async otpFn() {
     this.startTimer2();
-    try{
-      SMSReceive.stopWatch(
-        ()=>{ console.log("watch stopped") },
-        ()=>{ console.log("watch stop failed") },
-      );
-    } catch(e){
-      console.log("Error with SMSReceive Stop:");
-      console.log(e);
-    }
     const confirmationResult = this.confirmres;
+    console.log('otp**********', this.otpnum)
+    console.log('otp**********', confirmationResult)
     let flag = 0;
-    try{
-      SMSReceive.startWatch(()=>{
-        console.log("watch started");
-        document.addEventListener("onSMSArrive", (e:any)=>{
-          var incomingSMS = e.data;
-          const message:string = incomingSMS.body;
-          if(message){
-            for(let i=0; i<6; i++){
-              if(!(message[i]<='9' && message[i]>='0')){
-                return;
-              }
-            }
-            this.otpnum = message.slice(0,6);
-            // this.otpInput.setValue(this.otpnum);
-            this.otpFn();
-          }
-        })
-      },
-        ()=>{ console.log("watch start failed"); }
-      );
-    } catch(e){
-      console.log("Error with SMSReceive Start");
-      console.log(e);
-    }
-    await confirmationResult
-    .confirm(this.otpnum)
-    .then(async result => {
-        // User signed in successfully.
-        console.log(result.user);
-        flag = 1;
-        // ...
-      })
-      .catch(async (error) => {
-        // User couldn't sign in (bad verification code?)
-        // ...
-        console.log(error);
-        const toast = await this.toastCtrl
-          .create({
-            message: error,
-            duration: 2000,
-          });
-        toast.present();
-        const a = await this.alertCtrl.create({
-          header: 'Incorrect OTP',
-          subHeader: 'OTP entered is incorrect. Request new OTP or retry',
-          buttons: [
-            {
-              text: 'Retry',
-              role: 'cancel',
-              handler: () => {
-                this.otpnum = '';
-              },
-            },
-            {
-              text: 'New OTP',
-              handler: () => {
-                this.otpmode = 0;
-                this.otpnum = '';
-              },
-            },
-          ],
+    let signCredential = await firebase.auth.PhoneAuthProvider.credential(confirmationResult, String(this.otpnum));
+    console.log('signCredential', signCredential);
+
+    firebase.auth().signInWithCredential(signCredential).then(async (info) => {
+      console.log('USER INFO', info);
+      this.checkifexist();
+    }).catch(async (error) => {
+      const toast = await this.toastCtrl
+        .create({
+          message: error,
+          duration: 2000,
         });
-        a.present();
-      })
-      .finally(() => {
-        if (flag === 1) {
-          const temp = this.checkifexist();
-        }
+      toast.present();
+      const a = await this.alertCtrl.create({
+        header: 'Incorrect OTP',
+        subHeader: 'OTP entered is incorrect. Request new OTP or retry',
+        buttons: [
+          {
+            text: 'Retry',
+            role: 'cancel',
+            handler: () => {
+              this.otpnum = '';
+            },
+          },
+          {
+            text: 'New OTP',
+            handler: () => {
+              this.otpmode = 0;
+              this.otpnum = '';
+            },
+          },
+        ],
       });
+      a.present();
+      console.log('USER INFO ERR', error);
+    });
+    // await this.firebaseAuth.signInWithVerificationId(confirmationResult,this.otpnum).then((res: any) => {
+    //   if(res == 'OK'){
+    //     this.checkifexist();
+    //     console.log(res);
+    //   }
+    // })
+
+
+
+    // await confirmationResult
+    // .confirm(this.otpnum)
+    // .then(async result => {
+    //     // User signed in successfully.
+    //     console.log(result.user);
+    //     flag = 1;
+    //     // ...
+    //   })
+    //   .catch(async (error) => {
+    //     // User couldn't sign in (bad verification code?)
+    //     // ...
+    //     console.log(error);
+    //     const toast = await this.toastCtrl
+    //       .create({
+    //         message: error,
+    //         duration: 2000,
+    //       });
+    //     toast.present();
+    //     const a = await this.alertCtrl.create({
+    //       header: 'Incorrect OTP',
+    //       subHeader: 'OTP entered is incorrect. Request new OTP or retry',
+    //       buttons: [
+    //         {
+    //           text: 'Retry',
+    //           role: 'cancel',
+    //           handler: () => {
+    //             this.otpnum = '';
+    //           },
+    //         },
+    //         {
+    //           text: 'New OTP',
+    //           handler: () => {
+    //             this.otpmode = 0;
+    //             this.otpnum = '';
+    //           },
+    //         },
+    //       ],
+    //     });
+    //     a.present();
+    //   })
+    //   .finally(() => {
+    //     if (flag === 1) {
+    //       const temp = this.checkifexist();
+    //     }
+    //   });
   }
   async signInPhone() {
     if (this.phone == null || this.countryCode == null) {
@@ -612,7 +626,7 @@ export class LoginPage implements OnInit {
         const msg2 = this.translateConfigService.getTranslatedMessage("SEND");
         const msg3 = this.translateConfigService.getTranslatedMessage("CANCEL");
       });
-      console.log('appVerifier',appVerifier)
+      console.log('appVerifier', appVerifier)
       // await firebase
       //   .auth()
       //   .signInWithPhoneNumber(phoneNumber, appVerifier)
