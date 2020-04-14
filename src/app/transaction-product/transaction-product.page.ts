@@ -88,7 +88,7 @@ export class TransactionProductPage implements OnInit {
           this.updateOrCreate = res;
         });
 
-        const tempdat = data;
+        const tempdat = JSON.parse(data);
         await this.getProducts();
         console.log(tempdat);
 

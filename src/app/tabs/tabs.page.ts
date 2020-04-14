@@ -13,7 +13,7 @@ import { AppVersion } from '@ionic-native/app-version/ngx';
 import axios from 'axios';
 import { Market } from '@ionic-native/market/ngx';
 import { hasInternet } from '../../utilities/hasInternet';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, Event, NavigationStart, NavigationEnd } from '@angular/router';
 import { HelpPage } from '../help/help.page';
 import { EventService } from '../services/event.service';
 import { Observable } from 'rxjs';
@@ -57,6 +57,7 @@ export class TabsPage implements OnInit {
   isBackEnable = false;
   backButtonRoute: any;
   fabePage: any;
+  isHidden = true;
   constructor(
     private contactsPage: ContactsPage,
     private trnasProduct: TransactionProductPage,
@@ -177,6 +178,40 @@ export class TabsPage implements OnInit {
           });
       }
     });
+    router.events.subscribe((routerEvent: Event) => {
+      this.checkRouterEvent(routerEvent);
+    });
+  }
+
+  checkRouterEvent(routerEvent: Event): void {
+    if (routerEvent instanceof NavigationEnd) {
+      console.log('routerEvent.url===============', routerEvent.url);
+      switch (routerEvent.url) {
+        case '/home/income-transaction?lang=en':
+          this.isHidden = false;
+          break;
+
+        case '/home/income-transaction':
+          this.isHidden = false;
+          break;
+
+        case '/home/transaction-product':
+          this.isHidden = false;
+          break;
+
+        case '/home/contacts':
+          this.isHidden = false;
+          break;
+
+        case '/home/summary-graphs':
+          this.isHidden = false;
+          break;
+
+        default:
+          this.isHidden = true;
+          break;
+      }
+    }
   }
 
   backPress() {
@@ -186,6 +221,7 @@ export class TabsPage implements OnInit {
   }
   async ngOnInit() {
     console.log('ionViewDidLoad TransactionHomePage');
+
     // const userSnapshot = await firebase
     //   .firestore()
     //   .collection('users')

@@ -18,7 +18,7 @@
 <ion-content>
     <ion-router-outlet></ion-router-outlet>
     <ion-tabs>
-        <ion-tab-bar slot="bottom">
+        <ion-tab-bar slot="bottom" [hidden]="isHidden">
             <ion-tab-button tab="income-transaction">
                 <ion-icon name="list"></ion-icon>
                 <ion-label>{{'Receipt'|translate}}</ion-label>
