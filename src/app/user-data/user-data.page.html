@@ -15,18 +15,20 @@
   </ion-item>
 
   <br>
-  <ion-button (click)="bCard()" expand="block" size="large" color="yellow">
-    <ion-icon slot="icon-only" name="card-outline" class="mr-3"></ion-icon>{{ 'Business Card' | translate }}
+  <div style="align-items: center; text-align: center; align-content: center;">
+  <ion-button (click)="bCard()"  size="large" color="success">
+    <ion-icon slot="icon-only" name="card-outline" class="mr-3"></ion-icon>{{ 'View Business Card' | translate }}
   </ion-button>
+</div>
   <br>
   <ion-list>
-    <ion-item-divider color="lgrey">
+    <ion-item-divider style="background-color: #DEDEDE;">
       <ion-label class="m-0">
         Basic Information
       </ion-label>
       <ion-buttons slot="end">
-        <ion-button (click)="editProfile()">
-          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+        <ion-button (click)="editProfile()" style="background-color:#ffa500;">
+          <ion-icon slot="icon-only" name="create-outline" style="font-size: 30px; color: white;"></ion-icon>
         </ion-button>
       </ion-buttons>
     </ion-item-divider>
@@ -62,7 +64,7 @@
         <ion-text>{{ user.ph_no }}</ion-text>
       </ion-col>
     </ion-row>
-    <ion-item-divider color="lgrey">
+    <ion-item-divider style="background-color: #DEDEDE;">
       <ion-label class="m-0">
         Invoices
       </ion-label>
@@ -91,7 +93,7 @@
         <ion-text>{{ user.taxrate }}</ion-text>
       </ion-col>
     </ion-row>
-    <ion-item-divider color="lgrey">
+    <ion-item-divider style="background-color: #DEDEDE;">
       <ion-label class="m-0">
         Other Details
       </ion-label>

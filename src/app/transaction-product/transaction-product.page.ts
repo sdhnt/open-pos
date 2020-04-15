@@ -46,6 +46,7 @@ export class TransactionProductPage implements OnInit {
   singleitemname = '';
   showmanual = 0;
 
+
   datlist: any = [];
   public BottomSheetState: SheetStates = SheetStates.Closed;
   showSellButton: boolean;
@@ -229,6 +230,8 @@ export class TransactionProductPage implements OnInit {
     return msg;
   }
 
+
+
   reset() {
     this.event1 = false;
     this.event = false;
@@ -236,6 +239,23 @@ export class TransactionProductPage implements OnInit {
     this.itname = '';
     this.ngOnInit();
     this.router.navigate(['/home/income-transaction']);
+    // (this.navCtrl.parent as Tabs).select(0);
+  }
+
+
+  resetPg() {
+    this.listProducts = [];
+    this.calcitems = [];
+    this.listArray = [];
+    this.recitemslist = [];
+    this.event = false;
+    this.event1=false;
+    this.showmanual = 0;
+    this.itname = '';
+    this.showSellButton=false;
+    //this.ngOnInit();
+    this.getProducts();
+  
     // (this.navCtrl.parent as Tabs).select(0);
   }
 

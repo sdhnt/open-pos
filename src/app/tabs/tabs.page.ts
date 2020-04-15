@@ -571,6 +571,10 @@ export class TabsPage implements OnInit {
       <ion-icon class="mr-1" name="call"></ion-icon>
       <ion-label>Contact us</ion-label>
   </ion-item>
+  <ion-item button (click)="profilepg()">
+      <ion-icon class="mr-1" name="card"></ion-icon>
+      <ion-label>Business Card</ion-label>
+  </ion-item>
 </ion-list>`,
   styleUrls: ['tabs.page.scss']
 })
@@ -599,7 +603,8 @@ export class PopOverComponent implements OnInit {
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
     private modal: ModalController,
-    private modal1: ModalController
+    private modal1: ModalController,
+    private router: Router,
   ) {
 
   }
@@ -785,5 +790,15 @@ export class PopOverComponent implements OnInit {
       component: ContactUsPage
     });
     helpModal.present();
+  }
+  async profilepg() {
+    this.popover.dismiss();
+    this.router.navigate(['/home/user-data']);
+    // await this.modal1.dismiss();
+  //   const helpModal = await this.modal.create({
+  //     component: ContactUsPage
+  //   });
+  //   helpModal.present();
+  // }
   }
 }
