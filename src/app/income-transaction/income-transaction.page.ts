@@ -337,9 +337,48 @@ export class IncomeTransactionPage implements OnInit {
 
   }
   showprevrec=0;
-
+  listOfPrevTransac: any = [];
   showPrevRec(){
-    this.showprevrec=1;
+    if(this.showprevrec==0) {
+      this.showprevrec = 1;
+      if(this.listOfPrevTransac.length == 0){
+        let todayDate = new Date();
+        todayDate = new Date(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate(), 0, 0, 0);
+        this.getTransac({start: todayDate});
+      }
+    } else this.showprevrec = 0;
+  }
+
+  getTransac(options?: {start?: Date; end?: Date }){
+    this.sp.storageReady().then(() => {
+      this.sp
+        .getTransactions(options)
+        .then(async val => {
+          this.listOfPrevTransac = JSON.parse(val);
+          console.log('this.listtransac',this.listOfPrevTransac)
+          // console.log(this.listtransac)
+          this.listOfPrevTransac = this.listOfPrevTransac.filter(transac => {
+            return !transac.isDisabled;
+          });
+          this.listOfPrevTransac.forEach(element => {
+            element.datetime1 = this.getDateTime(element.datetime);
+            element.expanded = true;
+            element.expandedvar = this.subscriber(this.translateConfigService.getTranslatedMessage('More'));
+          });
+          this.listOfPrevTransac = this.listOfPrevTransac.reverse();
+        }).catch(e=> alert("Error"+e));
+      });
+  }
+
+  expandTransac(transac) {
+    if (transac.expanded === true) {
+      transac.expanded = false;
+      transac.expandedvar = this.subscriber(this.translateConfigService.getTranslatedMessage('Close'));
+    } else {
+      transac.expanded = true;
+
+      transac.expandedvar = this.subscriber(this.translateConfigService.getTranslatedMessage('More'));
+    }
   }
 
   getLastTransaction() {
