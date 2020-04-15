@@ -396,11 +396,11 @@
                     <td colspan="2"><b>{{"Total"|translate}}</b></td>
                     <td colspan="2" class="text-right"><b>{{ lastTransaction.totalsum }}</b></td>
                 </tr>
-                <tr>
-                    <td colspan="2"><b>{{"Discounted Total:"|translate}} ({{lastTransaction.discount}}%)</b></td>
+                <tr *ngIf="lastTransaction.totaldisc!=lastTransaction.totalsum">
+                    <td colspan="2"><b>{{"Discounted Total:"|translate}} ({{lastTransaction.itemslist[0].discount}}%)</b></td>
                     <td colspan="2" class="text-right"><b>{{lastTransaction.totaldisc}}</b></td>
                 </tr>
-                <tr>
+                <tr *ngIf="lastTransaction.totalsum!=lastTransaction.totalatax">
                     <td colspan="2"><b>{{"Total after tax:"|translate}} ({{lastTransaction.taxrate}}%)</b></td>
                     <td colspan="2" class="text-right"><b>{{lastTransaction.totalatax}}</b></td>
                 </tr>

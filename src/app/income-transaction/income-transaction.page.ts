@@ -343,6 +343,7 @@ export class IncomeTransactionPage implements OnInit {
         let listOfTransactions: any[] = JSON.parse(val);
         listOfTransactions = listOfTransactions.reverse();
         this.lastTransaction = listOfTransactions[0];
+        console.log('this.lastTransactionthis.lastTransactionthis.lastTransaction', this.lastTransaction);
         this.isReady = true;
       });
     });
@@ -847,7 +848,7 @@ export class IncomeTransactionPage implements OnInit {
     this.disableDownload = true;
     const toast = await this.toastCtrl.create({ message: 'Please Wait...', duration: 3000 });
     toast.present();
-    const div = document.getElementById('recImg');
+    const div = this.showrec ? document.getElementById('imageConvert') : document.getElementById('recImg');
     const options = { width: div.offsetWidth, height: div.offsetHeight };
     domtoimage.toPng(div, options).then((dataUrl) => {
       console.log(dataUrl);

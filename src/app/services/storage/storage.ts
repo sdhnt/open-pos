@@ -401,9 +401,9 @@ export class StorageProvider {
       updatedAt: new Date(),
       isDisabled: true,
     };
-    const newProducts = products.map(product =>
-      product.code === data.code && product.id === data.id ? { ...product, ...changes } : product,
-    );
+    const newProducts = products.map(product => {
+      return product.code === data.code && product.id === data.id ? { ...product, ...changes } : product;
+    });
     await this.storage.set('products', JSON.stringify(newProducts));
   }
 
@@ -469,9 +469,9 @@ export class StorageProvider {
       contact.discount = newDisc;
       contact.updatedAt = new Date();
     } else {
-      console.log("No contact found for discount change");
+      console.log('No contact found for discount change');
     }
-    await this.storage.set("contacts", JSON.stringify(contacts));
+    await this.storage.set('contacts', JSON.stringify(contacts));
   }
 
   async getContacts(): Promise<string | null> {
