@@ -486,6 +486,15 @@ export class LoginPage implements OnInit {
 
   async otpFn() {
     this.startTimer2();
+    try{
+      SMSReceive.stopWatch(
+        ()=>{ console.log("watch stopped") },
+        ()=>{ console.log("watch stop failed") },
+      );
+    } catch(e){
+      console.log("Error with SMSReceive Stop:");
+      console.log(e);
+    }
     const confirmationResult = this.confirmres;
     console.log('otp**********', this.otpnum)
     console.log('otp**********', confirmationResult)
@@ -612,6 +621,30 @@ export class LoginPage implements OnInit {
 
       const flag = 0;
       console.log('phone number', phoneNumber);
+      try{
+        SMSReceive.startWatch(()=>{
+          console.log("watch started");
+          document.addEventListener("onSMSArrive", (e:any)=>{
+            var incomingSMS = e.data;
+            const message:string = incomingSMS.body;
+            if(message){
+              for(let i=0; i<6; i++){
+                if(!(message[i]<='9' && message[i]>='0')){
+                  return;
+                }
+              }
+              this.otpnum = message.slice(0,6);
+              // this.otpInput.setValue(this.otpnum);
+              this.otpFn();
+            }
+          })
+        },
+          ()=>{ console.log("watch start failed"); }
+        );
+      } catch(e){
+        console.log("Error with SMSReceive Start");
+        console.log(e);
+      }
       this.firebaseAuth.verifyPhoneNumber(phoneNumber, 30000).then(async (verificationId) => {
         console.log(verificationId);
         this.otpmode = 1;
