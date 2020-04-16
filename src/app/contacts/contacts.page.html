@@ -1,9 +1,9 @@
 <ion-content class="ion-padding">
-    <!-- <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-        <ion-fab-button color="yellow" (click)="openSheet()">
-            <ion-icon name="add"></ion-icon>
-        </ion-fab-button>
-    </ion-fab> -->
+    <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+        <ion-button color="yellow" (click)="openSheet()" shape="round"> 
+            <ion-icon name="add-circle-outline"></ion-icon> <ion-text>  New Customer</ion-text>
+        </ion-button>
+    </ion-fab>
     <!-- <div class="pageTitle">
         <h4 style="font-weight: bolder;">Contacts</h4>
     </div> -->
@@ -11,6 +11,33 @@
     <div class="pageTitle">
         <h6>Track who owes you money</h6>
     </div>
+
+    <ion-card class="totalBox" *ngIf="contactList&&contactList.length>0">
+
+        <ion-row>
+            <ion-col class="totalCol" size=6>
+                <ion-row>
+                    <ion-col class="totalCol" size="12">
+                        You will get: <span style="color: red;">{{ totalUserCredit }}</span>
+                    </ion-col>
+            
+                </ion-row>
+                <ion-row>
+                    <ion-col class="totalCol" size="12">
+                        You will give: <span style="color: green;">{{ totalUserDebit }}</span>
+                    </ion-col>
+                
+                </ion-row>
+
+            </ion-col>
+            <ion-col class="totalCol" size="6">
+                <ion-button color="success" (click)="navCredReminder()">
+                    <ion-icon slot="icon-only" name="notifications-outline" class="mr-1"></ion-icon> Reminders
+                  </ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-card>
+
     <ion-row class="searchRow">
         <ion-col size="9" class="searchBar" >
             <ion-icon name="search-outline"></ion-icon>
@@ -27,20 +54,10 @@
             </ion-select>
         </ion-col>
     </ion-row>
-    <ion-card class="totalBox" *ngIf="contactList&&contactList.length>0">
-        <ion-row>
-            <ion-col class="totalCol" size="6">
-                Total Credit: <span style="color: red;">{{ totalUserCredit }}</span>
-            </ion-col>
-            <ion-col class="totalCol" size="6">
-                Total Debit: <span style="color: green;">{{ totalUserDebit }}</span>
-            </ion-col>
-        </ion-row>
-    </ion-card>
 
     <ion-card class="headingCard">
         <ion-row style="font-weight: bolder; ">
-            <ion-col size="6">
+            <ion-col size="5">
                 <div>
                     <ion-icon name="person-outline"></ion-icon>
                 </div>
@@ -48,7 +65,7 @@
                     <h6 style="font-weight: 800;">{{"Name"|translate}}</h6>
                 </div>
             </ion-col>
-            <ion-col size="6">
+            <ion-col size="4">
                 <div>
                     <ion-icon name="wallet-outline"></ion-icon>
                 </div>
@@ -56,6 +73,7 @@
                     <h6 style="font-weight: 800;">{{"Balance"|translate}}</h6>
                 </div>
             </ion-col>
+            <ion-col size="3"></ion-col>
         </ion-row>
     </ion-card>
     <div style="width: 100%; text-align: center;" *ngIf="!contactList || contactList.length==0 || filteredList.length === 0">
@@ -67,17 +85,22 @@
     </div>
     <ion-card *ngFor="let contact of filteredList" class="headingCard dataCard" (click)="navToIndividual(contact)">
         <ion-row>
-            <ion-col size="6">
+            <ion-col size="5">
                 <div>
                     <p>{{ contact.displayName }}</p>
                 </div>
             </ion-col>
-            <ion-col size="6">
+            <ion-col size="4">
                 <div>
                     <p style="color: red;" *ngIf="contact.balance<0; else nonNeg">{{ contact.balance }}</p>
                     <p style="color: green;" *ngIf="contact.balance>0; else zero" id="nonNeg">{{ contact.balance }}</p>
                     <p style="color: blue;" *ngIf="contact.balance==0" id="zero">0</p>
                 </div>
+            </ion-col>
+            <ion-col size="3">
+                <ion-button color="success">
+                    <ion-icon slot="icon-only" name="expand-outline" class="mr-1" style="font-size: 18px;"></ion-icon>
+                  </ion-button>
             </ion-col>
         </ion-row>
     </ion-card>
@@ -85,14 +108,14 @@
 
 <bottom-sheet [(State)]="BottomSheetState" (StateChange)="StateChanged($event)">
     <div class="row m-0 py-5 option justify-content-around">
-        <div class="col-4 py-3">
+        <!-- <div class="col-4 py-3">
             <ion-fab-button color="magenta" class="m-auto" size="small" (click)="closeSheet(); navCredReminder()">
                 <ion-icon name="notifications-outline"></ion-icon>
             </ion-fab-button><br>
             <ion-text class="font-weight-bold" style="position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; margin: auto;">
                 <small> Reminder</small>
             </ion-text>
-        </div>
+        </div> -->
         <div class="col-4 py-3">
             <ion-fab-button color="magenta" class="m-auto" size="small" (click)="closeSheet(); navAdd(1)">
                 <ion-icon name="call-outline"></ion-icon>
