@@ -97,8 +97,8 @@ export class SummaryGraphsPage implements OnInit {
 
   receipt: any;
 
-  isgraph = 0;
-  islist = 0;
+  isgraph = 1;
+  islist = 1;
   netcash = 0;
   selectedOne = 'graph';
   doRefresh(refresher) {
@@ -521,19 +521,23 @@ export class SummaryGraphsPage implements OnInit {
   }
 
   toggleGL() {
-    this.isgraph = 0;
-    this.islist = 1;
-    // if (this.isgraph === 1) {
-    //   this.isgraph = 0;
-    //   this.islist = 1;
-    // } else {
-    //   this.isgraph = 1;
-    //   this.islist = 1;
-    // }
+    this.isgraph=1;
+    if(this.islist==1){
+      this.islist = 0;
+    }
+    else if(this.islist==0){
+      this.islist=1;
+    }
   }
   toggleList() {
-    this.islist = 0;
-    this.isgraph = 1;
+    this.islist=1;
+    if(this.isgraph==1){
+      this.isgraph = 0;
+    }
+    else if(this.isgraph==0){
+      this.isgraph=1;
+    }
+    
     // if (this.islist === 1) {
     //   this.isgraph = 1;
     //   this.islist = 0;
@@ -614,7 +618,7 @@ export class SummaryGraphsPage implements OnInit {
     this.netcashmonth = 0;
     this.netcashlast30 = 0;
     this.group = 'today';
-    this.isgraph = 0;
+    this.isgraph = 1;
     this.islist = 1;
     this.usrchoice = 'today';
     this.todayDate = new Date().toISOString();

@@ -85,6 +85,13 @@
     <ion-button expand="block" size="large" color="success" (click)="applyLoan()">
         <img src="assets/new-ui-imgs/icons/Mask Group 10.png" class="mr-3" alt="" width="30">{{"Apply for Loan"|translate}}
     </ion-button>
+    <ion-button expand="block" size="small" color="yellow" (click)="toggleList()">
+      <ion-icon name="bar-chart"></ion-icon> &nbsp; Analytics
+  </ion-button>
+  <ion-button expand="block" size="small" color="magenta" (click)="toggleGL()">
+    <ion-icon name="receipt"></ion-icon> &nbsp; Transactions
+</ion-button>
+    
     <!-- <ion-segment [(ngModel)]="selectedOne">
         <ion-segment-button value="graph" color="yellow" (click)="toggleGL()">
             <ion-label>{{"View Graph"|translate}}</ion-label>
@@ -93,6 +100,7 @@
             <ion-label>{{"Hide Graph"|translate}}</ion-label>
         </ion-segment-button>
     </ion-segment> -->
+
     <!-- <ion-row>
     <ion-button expand="full" (click)="toggleGL()" *ngIf="islist==0" style="background-color: orange;">
       {{"View Graph"|translate}}</ion-button>
@@ -123,56 +131,8 @@
     </div>
 
 
-    <ion-grid>
-        <!-- <ion-row style="border: solid 1px black;">
-    <ion-col style="border: solid 1px black; background-color: black;color: white; text-align: left;"><b>{{"Current Cash Balance"|translate}}</b></ion-col>
-    <ion-col style="border: solid 1px black ;color: white; text-align: end;"><b>
-      <div *ngIf="userdata.cash_balance>=0" style="background-color: color="success"div>
-      <div *ngIf="!(userdata.cash_balance>=0)" style="background-color: red;">
-        {{userdata.cash_balance}}
-      </div>   
-    </b></ion-col>
-  </ion-row> -->
-
-
-        <!-- <ion-row style="border: solid 1px black;">
-    <ion-col style="border: solid 1px black; background-color: black;color: white; text-align: left;"><b>{{"Net Cashflow today"|translate}}</b></ion-col>
-    <ion-col style="border: solid 1px black;color: white; text-align: end;"><b> 
-      <div *ngIf="netcashtoday>=0" style="background-color: color="success">
-      <div *ngIf="!(netcashtoday>=0)" style="background-color: red;">
-        {{netcashtoday}}
-      </div>
-    </b></ion-col>
-  </ion-row> -->
-
-
-        <!-- <ion-row style="border: solid 1px black;">
-    <ion-col style="border: solid 1px black; background-color: black;color: white; text-align: left;"><b>{{"Net Cashflow 7 days"|translate}}</b></ion-col>
-    <ion-col style="border: solid 1px black; color: white; text-align: end;"><b>
-      <div *ngIf="netcashweek>=0" style="background-color: color="success">
-      <div *ngIf="!(netcashweek>=0)" style="background-color: red;">
-        {{netcashweek}}
-      </div> </b></ion-col>
-  </ion-row>
-  <ion-row style="border: solid 1px black;">
-    <ion-col style="border: solid 1px black; background-color: black;color: white; text-align: left;"><b>{{"Net Cashflow 30 days"|translate}}</b></ion-col>
-    <ion-col style="border: solid 1px black;color:white; text-align: end;"><b>
-      <div *ngIf="netcashlast30>=0" style="background-color: color="success">
-      <div *ngIf="!(netcashlast30>=0)" style="background-color: red;">
-        {{netcashlast30}}
-      </div></b></ion-col>
-  </ion-row>
-  <ion-row style="border: solid 1px black;">
-    <ion-col style="border: solid 1px black; background-color: black;color: white; text-align: left;"><b>{{"Net Cashflow this month"|translate}}</b></ion-col>
-    <ion-col style="border: solid 1px black; color: white; text-align: end;"><b>
-      <div *ngIf="netcashmonth>=0" style="background-color: color="success">
-      <div *ngIf="!(netcashmonth>=0)" style="background-color: red;">
-        {{netcashmonth}}
-      </div>
-      </b></ion-col> 
-  </ion-row> -->
+    <ion-grid [hidden]="islist">
         <div class="lastTransaction">
-            <h6>Transactions in this period:</h6>
         </div>
         <ion-list lines="none" *ngFor="let transac of listtransac; let i = index">
             <ion-card>
