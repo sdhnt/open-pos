@@ -99,6 +99,14 @@
                         </td>
                     </tr>
                     <tr>
+                        <td *ngIf="!item.showDisc && item.discount==0" colspan="5">
+                            <ion-button (click)="showDisc(item, true)" size="small" color="success">ADD DISCOUNT</ion-button>
+                        </td>
+                        <td *ngIf="item.showDisc || item.discount!=0" colspan="5">
+                            <ion-button (click)="showDisc(item, false)" size="small" color="danger">REMOVE DISCOUNT</ion-button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="item.showDisc || item.discount!=0">
                         <td>{{ 'Discount' | translate }} %</td>
                         <td class="p-0">
                             <ion-input class="form-control" type="number" [(ngModel)]="item.discount"

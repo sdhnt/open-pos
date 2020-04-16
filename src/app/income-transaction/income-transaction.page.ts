@@ -798,6 +798,17 @@ export class IncomeTransactionPage implements OnInit {
     });
   }
 
+
+  showDisc(item, toShow: boolean){
+    if(!toShow){
+      item.showDisc=false;
+      item.discount = 0;
+      this.updateRec();
+    } else{
+      item.showDisc=true;
+    }
+  }
+
   async cancelRec() {
     this.showrec = false;
     this.datastore.itemslist = [];
