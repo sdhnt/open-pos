@@ -27,9 +27,9 @@
                 </ion-row>
 
             </ion-col>
-            <ion-col class="totalCol" size="6">
-                <ion-button color="success" (click)="navCredReminder()">
-                    <ion-icon name="notifications-outline" class="mr-1"></ion-icon> Reminders
+            <ion-col class="totalCol" size="6" style="background-color:#2fdf75; border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
+                <ion-button  (click)="navCredReminder()" fill="clear" style="color: white;">
+                    <ion-icon name="notifications-outline" class="mr-1"></ion-icon> Reminders <ion-icon name="chevron-forward-outline"></ion-icon>
                   </ion-button>
             </ion-col>
         </ion-row>
@@ -51,6 +51,49 @@
             </ion-select>
         </ion-col>
     </ion-row>
+
+    <!-- <ion-row style="background-color: #fff;">
+        <ion-grid>
+            <ion-row style="font-weight: bolder; text-align: center; ">
+                <ion-col size="5" class="table-col">
+          
+                        <ion-icon name="person-outline"></ion-icon>
+                    
+                        <h6 style="font-weight: 300; font-size: 12px;">{{"Customer"|translate}}</h6>
+         
+                </ion-col>
+                <ion-col size="4" class="table-col">
+                    <div>
+                        <ion-icon name="wallet-outline"></ion-icon>
+                    </div>
+                    <div>
+                        <h6 style="font-weight: 300; font-size: 12px;">{{"Balance"|translate}}</h6>
+                    </div>
+                </ion-col>
+                <ion-col size="3" class="table-col"></ion-col>
+            </ion-row>
+            <ion-row *ngFor="let contact of filteredList" class="tableData" (click)="navToIndividual(contact)" style="padding:0px;">
+                <ion-col size="5" style="padding:0px;">
+                   
+                        <p>{{ contact.displayName }}</p>
+                
+                </ion-col>
+                <ion-col size="4" style="padding:0px;">
+                 
+                        <p style="color: red;" *ngIf="contact.balance<0; else nonNeg">{{ contact.balance }}</p>
+                        <p style="color: green;" *ngIf="contact.balance>0; else zero" id="nonNeg">{{ contact.balance }}</p>
+                        <p style="color: blue;" *ngIf="contact.balance==0" id="zero">0</p>
+                   
+                </ion-col>
+                <ion-col size="3" style="padding:0px; align-items: center;">
+                    <ion-button color="success">
+                        <ion-icon slot="icon-only" name="expand-outline" class="mr-1" style="font-size: 18px;"></ion-icon>
+                      </ion-button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-row> -->
+
 
     <ion-card class="headingCard">
         <ion-row style="font-weight: bolder; ">
@@ -96,7 +139,7 @@
             </ion-col>
             <ion-col size="3">
                 <ion-button color="success">
-                    <ion-icon slot="icon-only" name="expand-outline" class="mr-1" style="font-size: 18px;"></ion-icon>
+                    <ion-icon slot="icon-only" name="expand-outline" size="small" class="mr-1" style="font-size: 18px; color: white;"></ion-icon>
                   </ion-button>
             </ion-col>
         </ion-row>

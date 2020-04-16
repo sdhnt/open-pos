@@ -1,9 +1,10 @@
 <ion-content class="ion-padding">
     <ion-list>
         <ion-item lines="none">
-            <div class="pickDate" (click)="datePicker.open()" style="background-color: #ffa500;">
+            <div class="pickDate" (click)="datePicker.open()" style="background-color: #2fdf75; border-radius: 10px;">
                 <div class="icon">
-                    <img src="../../assets/new-ui-imgs/icons/Mask Group 27.png" />
+                    <!-- <img src="../../assets/new-ui-imgs/icons/Mask Group 27.png" /> -->
+                    <ion-icon name="calendar-outline" style="color: white; font-size: 30px;"></ion-icon>
                 </div>
                 <div class="picker">
                     <p>Select Date</p>
@@ -12,22 +13,22 @@
         </ion-item>
     </ion-list>
     <ion-datetime #datePicker [hidden]="true" [(ngModel)]="dateSelected" (ionChange)="dateChanged()"></ion-datetime>
-    <div class="totalItems">
+    <ion-row id="selectedDate" style="font-size:100%;padding-left: 5%;">
+     For &nbsp; <p style="color: #301924; font-weight: 600;">{{(dateSelected)?(dateSelected | date: 'dd MMM yyyy'):"-"}}</p> &nbsp; there are &nbsp; <p style="color:#301924; font-weight: 600">{{(contacts)?filteredArray.length:0}}</p> &nbsp; due payments
+    </ion-row>
+    <!-- <div class="totalItems">
         <ion-row>
-            <ion-col size="6" id="selectedDate">
-                <p>Selected Date</p>
-                <h6 *ngIf="dateSelected">{{dateSelected | date: 'dd MMM yyyy'}}</h6>
-                <h6 *ngIf="!dateSelected">-</h6>
-            </ion-col>
-            <ion-col size="6">
-                <div id="noOfResult">
-                    <p>Found Result</p>
-                    <h6 *ngIf="contacts">{{filteredArray.length}}</h6>
-                    <h6 *ngIf="!contacts">-</h6>
-                </div>
-            </ion-col>
-        </ion-row>
-    </div>
+            <ion-col id="selectedDate" size="12">
+                <span>
+                <p *ngIf="dateSelected">{{dateSelected | date: 'dd MMM yyyy'}}</p>
+                <p *ngIf="!dateSelected">-</p>
+                number of payments due are:
+                <p *ngIf="contacts">{{filteredArray.length}}</p>
+                <p *ngIf="!contacts">-</p>
+            </span>
+     </ion-col>
+    </ion-row>
+    </div> -->
 
     <ion-card class="headingCard">
         <ion-row style="font-weight: bolder;">
@@ -36,7 +37,7 @@
                     <ion-icon name="person-outline"></ion-icon>
                 </div>
                 <div>
-                    <h6 style="font-weight: 800;">{{"Name"|translate}}</h6>
+                    <h6 style="font-weight: 800;">{{"Customer"|translate}}</h6>
                 </div>
             </ion-col>
             <ion-col>
@@ -58,17 +59,22 @@
     </div>
     <ion-card *ngFor="let contact of filteredArray" class="headingCard dataCard" (click)="navToIndividual(contact)">
         <ion-row>
-            <ion-col size="6">
+            <ion-col size="5">
                 <div>
                     <p>{{ contact.displayName }}</p>
                 </div>
             </ion-col>
-            <ion-col size="6">
+            <ion-col size="4">
                 <div>
                     <p style="color: red;" *ngIf="contact.balance<0; else nonNeg">{{ contact.balance }}</p>
                     <p style="color: green;" *ngIf="contact.balance>0; else zero" id="nonNeg">{{ contact.balance }}</p>
                     <p style="color: blue;" *ngIf="contact.balance==0" id="zero">0</p>
                 </div>
+            </ion-col>
+            <ion-col size="3">
+                <ion-button color="yellow">
+                    <ion-icon slot="icon-only" name="expand-outline" size="small" class="mr-1" style="font-size: 18px; color: white;"></ion-icon>
+                  </ion-button>
             </ion-col>
         </ion-row>
     </ion-card>
