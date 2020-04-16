@@ -5,9 +5,9 @@
     </ion-refresher-content>
   </ion-refresher>
   <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-    <ion-fab-button size="small" color="yellow" (click)="openSheet()">
+    <!-- <ion-fab-button size="small" color="yellow" (click)="openSheet()">
       <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
+    </ion-fab-button> -->
     <!-- <ion-fab-button color="light">
       <ion-icon md="add"></ion-icon>
     </ion-fab-button> -->
@@ -43,9 +43,9 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-
-
   </div>
+
+  <ion-button *ngIf="event1!=true&&!showSellButton" expand="block" color="success" (click)="openSheet()"> <ion-icon name="add-circle-outline"></ion-icon> &nbsp;Add Product/Category</ion-button>
 
 
   <!-- <ion-card>
@@ -108,9 +108,9 @@
       <ion-card-content>
         <ion-row>
           <ion-col size="4">
-            <ion-img class="img-fluid"
-              [src]="product.url != '' ? product.url : 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'">
-            </ion-img>
+            <ion-avatar class="img-fluid">
+              <img [src]="product.url != '' ? product.url : 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'">
+            </ion-avatar>
           </ion-col>
           <ion-col size="8" style="padding: 0%; margin: 0px;">
             <ion-row style="padding: 0px; margin: 0px;;">
