@@ -82,13 +82,20 @@
                 </ion-row>
                 <ion-row *ngFor="let val of contact.transacHistory" class="tableData">
                     <ion-col>
-                        <p>{{ getDateTime(val.date) }}</p>
-                    </ion-col>
-                    <ion-col style="text-align: center;">
-                        <p *ngIf="val.amount<0" style="color: red;">{{ val.amount }}</p>
-                    </ion-col>
-                    <ion-col style="text-align: center;">
-                        <p *ngIf="val.amount>0" style="color: green;">{{ val.amount }}</p>
+                        <ion-row>
+                            <ion-col>
+                                <p>{{ getDateTime(val.date) }}</p>
+                            </ion-col>
+                            <ion-col style="text-align: center;">
+                                <p *ngIf="val.amount<0" style="color: red;">{{ val.amount }}</p>
+                            </ion-col>
+                            <ion-col style="text-align: center;">
+                                <p *ngIf="val.amount>0" style="color: green;">{{ val.amount }}</p>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row *ngIf="val.note!=''">
+                            <p style="padding-left: 20px; padding-top: 3px; padding-bottom: 3px;">Note: {{ val.note }}</p>
+                        </ion-row>
                     </ion-col>
                 </ion-row>
             </ion-grid>
