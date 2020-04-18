@@ -136,6 +136,13 @@ export class IndividualContactPage implements OnInit {
     }
   }
 
+  noteToOpen: number = -1;
+  setNoteOpen(i: number){
+    if(i==this.noteToOpen)
+      this.noteToOpen=-1;
+    this.noteToOpen = i;
+  }
+
   async transaction(signedOne: number) {
     let amountToAdd = 0;
     let noteForTransac = '';
