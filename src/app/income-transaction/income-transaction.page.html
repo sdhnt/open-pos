@@ -70,7 +70,8 @@
                         <td style="padding: 14px 0px;" *ngIf="item.name.includes('Item'); else itemexist">
                             <ion-button color="magenta" fill="outline" size="small" (click)="addSingleProd(item,i)"
                                 style="margin: 0;font-size: 10px;">
-                                {{"Choose"|translate}}</ion-button>
+                                
+                                <ion-icon slot="icon-only" name="add-circle"></ion-icon>&nbsp; {{"Name"|translate}}</ion-button>
                         </td>
                         <ng-template #itemexist>
                             <td>{{item.name}}</td>
@@ -82,7 +83,7 @@
                                 <ion-button class="add" size="small" (click)="addQty(i)" fill="clear" color="success">
                                     <ion-icon slot="icon-only" name="add-circle"></ion-icon>
                                 </ion-button>
-                                <ion-input class="qtyInput" type="number" [(ngModel)]='item.qty' [min]="0" readonly>
+                                <ion-input class="qtyInput" type="number" [(ngModel)]='item.qty' [min]="0" readonly style="text-align: center;">
                                 </ion-input>
                                 <ion-button class="remove" size="small" (click)="removeQty(i)" fill="clear"
                                     color="danger">
@@ -92,12 +93,20 @@
                         </td>
                         <td width="15%" class="text-right">{{(item.price*item.qty)| number:0}}</td>
                         <td width="5%">
-                            <ion-icon style="font-size: 20px;" name="close-circle-outline" color="danger"
+                            <ion-icon style="font-size: 20px;" name="close-circle" color="danger"
                                 (click)="removeItem(i)">
                             </ion-icon>
                         </td>
                     </tr>
                     <tr>
+                        <td *ngIf="!item.showDisc && item.discount==0" colspan="5">
+                            <ion-button (click)="showDisc(item, true)" size="small" color="success">ADD DISCOUNT</ion-button>
+                        </td>
+                        <td *ngIf="item.showDisc || item.discount!=0" colspan="5">
+                            <ion-button (click)="showDisc(item, false)" size="small" color="danger">REMOVE DISCOUNT</ion-button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="item.showDisc || item.discount!=0">
                         <td>{{ 'Discount' | translate }} %</td>
                         <td class="p-0">
                             <ion-input class="form-control" type="number" [(ngModel)]="item.discount"
@@ -168,24 +177,24 @@
                         {{"Add New Item"|translate}}
                     </ion-button>
                 </ion-row>
-                <br><br>
+                <br>
                 <ion-row class="ion-justify-content-center">
                     <ion-col>
-                        <ion-button style="font-size: 10px; width: 100%;" color="magenta" fill="outline" size="small"
+                        <ion-button style="font-size: 10px; width: 100%;" color="magenta" fill="outline" 
                             (click)="setDisc()" [disabled]="discbtn!=0">
                             <ion-icon slot="icon-only" name="add-circle-outline" class="mr-1"></ion-icon>
                             {{"Discount"|translate}}
                         </ion-button>
                     </ion-col>
                     <ion-col>
-                        <ion-button style="font-size: 10px; width: 100%;" color="magenta" fill="outline" size="small"
+                        <ion-button style="font-size: 10px; width: 100%;" color="magenta" fill="outline" 
                             (click)="addContact()" [disabled]="contact!=''">
                             <ion-icon slot="icon-only" name="add-circle-outline" class="mr-1"></ion-icon>
-                            {{"Contact"|translate}}
+                            {{"Credit"|translate}}
                         </ion-button>
                     </ion-col>
                     <ion-col>
-                        <ion-button style="font-size: 10px; width: 100%;" color="magenta" fill="outline" size="small"
+                        <ion-button style="font-size: 10px; width: 100%;" color="magenta" fill="outline" 
                             (click)="setTax()" [disabled]="taxbtn!=0">
                             <ion-icon slot="icon-only" name="add-circle-outline" class="mr-1"></ion-icon>
                             {{"Tax"|translate}}
@@ -347,9 +356,9 @@
 
     </ion-card>
     <!-- Dynamically Generate All expense from backend - see feed from prev -->
-    <ion-row *ngIf="showrec==false && isReady==true && lastTransaction && showprevrec==1">
+    <!-- <ion-row *ngIf="showrec==false && isReady==true && lastTransaction && showprevrec==1">
         <ion-col><b>{{"Last Receipt"|translate}}</b></ion-col>
-    </ion-row>
+    </ion-row> -->
     <ion-card id="recImg" *ngIf="showrec==false && isReady==true && lastTransaction  && showprevrec==1" class="m-0 last-rec-card">
         <ion-card-header>
             <ion-row>
@@ -466,6 +475,67 @@
             </ion-button>
         </ion-col>
     </ion-row>
+    <div *ngIf="showrec==false && isReady==true && lastTransaction && showprevrec==1" style="margin-top: 15px;">
+    <!-- <h6 style="text-align: left;"><b>Transactions Today</b></h6>     -->
+    <ion-list lines="none" *ngFor="let transac of listOfPrevTransac; let i = index">
+        <ion-card>
+            <ion-item (click)="expandTransac(transac)">
+                <ion-icon class="mr-3" name="checkmark-circle-outline" color="success" style="font-size: 27px;"></ion-icon>
+                <ion-label class="mr-6" *ngFor="let prod of transac.itemslist">
+                    <p>{{prod.name}}</p>
+                    <p>{{transac.updatedAt | date: 'dd/MM/yyyy'}}</p>
+                </ion-label>
+                <ion-label class="mr-3" style="text-align: right;">
+                  {{transac.totalatax}}
+                  <ion-icon class="ml-1" [hidden]="!transac.expanded" name="caret-down-outline"></ion-icon>
+                  <ion-icon class="ml-1" [hidden]="transac.expanded" name="caret-up-outline"></ion-icon>
+                </ion-label>
+            </ion-item>
+
+            <ion-card [hidden]="transac.expanded">
+                <!-- <ion-row>
+                <ion-col style="text-align: left; color: gray;">{{transac.datetime1}}</ion-col>
+                <ion-col style="text-align: end;"><b>{{transac.totalatax}}</b></ion-col>
+            </ion-row> -->
+                <ion-list *ngFor="let item of transac.itemslist" [hidden]="transac.expanded">
+                    <ion-row style="padding: 0px;">
+                        <ion-col size="12"><span style="font-weight: bolder;">Name: </span> {{item.name}}</ion-col>
+                        <ion-col size="12"><span style="font-weight: bolder;">Quantity: </span> {{item.qty}}</ion-col>
+                        <ion-col size="12"><span style="font-weight: bolder;">Price: </span> {{item.price}}</ion-col>
+                    </ion-row>
+                </ion-list>
+                <ion-row *ngIf="transac.totaldisc!=transac.totalsum" style="padding: 0px;text-align: left; " [hidden]="transac.expanded">
+                    <ion-col>
+                        {{"Discounted total:"|translate}} ({{transac.discount}}%)
+                    </ion-col>
+                    <ion-col size="3" style="text-align: end;">
+                        {{transac.totaldisc}}
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="transac.totalsum!=transac.totalatax" style="padding: 0px; text-align: left;" [hidden]="transac.expanded">
+                    <ion-col>
+                        {{"Total after tax:"|translate}} ({{transac.taxrate}}%)
+                    </ion-col>
+                    <ion-col size="3" style="text-align: end;">
+                        {{transac.totalatax}}
+                    </ion-col>
+                </ion-row>
+                <!-- <ion-row>
+                    <ion-col *ngIf="getDate(transac.datetime) == getDate(currentdatetime)">
+                        <ion-button size="small" expand="full" color="magenta " (click)="delTransac(transac)">{{"Delete"|translate}}
+                        </ion-button>
+                    </ion-col>
+                    <ion-col>
+                        <ion-button size="small" expand="full" color="yellow" (click)="printRec(transac)">
+                            {{'PRINT '|translate}} <br>
+                            <ion-icon name="print"></ion-icon>
+                        </ion-button>
+                    </ion-col>
+                </ion-row> -->
+            </ion-card>
+        </ion-card>
+    </ion-list>
+    </div>
     <!-- <ion-row class="ion-padding"></ion-row>
         <ion-row class="ion-padding"></ion-row>
         <ion-row class="ion-padding"></ion-row> -->
@@ -482,7 +552,7 @@
     <ion-grid>
         <ion-row>
             <ion-col>
-                <ion-button expand="block" color="yellow" (click)="saveRec()"> {{'SAVE '|translate}} <br>
+                <ion-button expand="block" color="success" (click)="saveRec()"> {{'SAVE '|translate}} <br>
                     <ion-icon name="checkmark"></ion-icon>
                 </ion-button>
             </ion-col>
@@ -492,7 +562,7 @@
                 </ion-button>
             </ion-col>
             <ion-col>
-                <ion-button expand="block" color="yellow" (click)="cancelRec()"> {{'CANCEL '|translate}} <br>
+                <ion-button expand="block" color="danger" (click)="cancelRec()"> {{'CANCEL '|translate}} <br>
                     <ion-icon name="close"></ion-icon>
                 </ion-button>
             </ion-col>
@@ -520,7 +590,7 @@
             </ion-fab-button><br>
             <ion-text class="font-weight-bold"
                 style="position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; margin: auto;">
-                <small> Add New Sale</small>
+                <small> New Sale</small>
             </ion-text>
         </div>
         <div class="col-4 py-3">
@@ -528,8 +598,8 @@
                 <ion-icon name="exit-outline"></ion-icon>
             </ion-fab-button><br>
             <ion-text class="font-weight-bold"
-                style="position: absolute; bottom: 0; left: 0; right: 0; text-align: center; margin: auto;">
-                <small> Add New Expense</small>
+                style="position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; margin: auto;">
+                <small> New Expense</small>
             </ion-text>
         </div>
         <div class="col-4 py-3">
@@ -537,8 +607,8 @@
                 <ion-icon name="card-outline"></ion-icon>
             </ion-fab-button><br>
             <ion-text class="font-weight-bold"
-                style="position: absolute; bottom: 0; left: 0; right: 0; text-align: center; margin: auto;">
-                <small> Edit Business Card</small>
+                style="position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; margin: auto;">
+                <small> Business Card</small>
             </ion-text>
         </div>
     </div>

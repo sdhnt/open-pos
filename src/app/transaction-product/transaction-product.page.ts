@@ -89,6 +89,7 @@ export class TransactionProductPage implements OnInit {
         console.log('Received 0 ', data);
         this.translateConfigService.getTranslatedMessage('Update Receipt').subscribe((res) => {
           this.updateOrCreate = res;
+          this.showSellButton=true;
         });
 
         const tempdat = JSON.parse(data);

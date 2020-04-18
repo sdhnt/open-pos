@@ -557,7 +557,7 @@ export class TabsPage implements OnInit {
   template: `<ion-list lines="none">
   <ion-item button (click)="uploadbtn()">
       <ion-icon class="mr-1" name="cloud-upload"></ion-icon>
-      <ion-label>Upload</ion-label>
+      <ion-label>Backup</ion-label>
   </ion-item>
   <ion-item button (click)="cashbtn()">
       <ion-icon class="mr-1" name="logo-usd"></ion-icon>

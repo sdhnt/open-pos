@@ -16,9 +16,7 @@ p {
 }
 
 .borderedCard {
-    border: 1px dashed;
-    margin: 13px;
-    border-radius: 8px;
+    padding-left: 5px;
 }
 
 span.content {
@@ -47,7 +45,7 @@ ion-row.tableData {
 }
 
 ion-button.addDebit {
-    --background: #e1c929fa;
+    --background: yellow;
 }
 
 ion-button.addCredit {
@@ -57,7 +55,6 @@ ion-button.addCredit {
 .footerButtons img {
     height: 45px;
     padding-left: 34px;
-    margin-bottom: 11%;
 }
 
 ion-input {

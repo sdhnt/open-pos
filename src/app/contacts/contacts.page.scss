@@ -51,12 +51,29 @@
     --top: auto !important;
 }
 
+
+ion-row.tableData {
+    border-bottom: 1px solid #ddd;
+}
+.table-col {
+    padding: 3px;
+    border: 0.75px solid #ddd;
+}
+
+.tableData p {
+    padding: 10px 0;
+    color: #747272;
+    font-size: 14px;
+    text-align: center;
+}
+
+
 .totalCol {
     font-size: medium;
     font-weight: 500;
     padding: 5px;
     margin: auto;
-    text-align: center;
+    text-align: left;
 }
 
 .headingCard {
@@ -91,6 +108,7 @@
 ion-row.searchRow {
     border: 1px solid #ddd;
     margin: 0 18px;
+    border-radius: 10px;
 }
 
 .searchBar ion-icon {
