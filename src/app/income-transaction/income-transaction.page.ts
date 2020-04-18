@@ -35,6 +35,7 @@ import domtoimage from 'dom-to-image';
 import { SheetStates } from 'ionic-custom-bottom-sheet';
 import { AddItemPopoverPage } from '../add-item-popover/add-item-popover.page';
 import { SelectPrinterPopoverPage } from '../select-printer-popover/select-printer-popover.page';
+import { async } from '@angular/core/testing';
 @Component({
   selector: 'app-income-transaction',
   templateUrl: './income-transaction.page.html',
@@ -692,7 +693,19 @@ export class IncomeTransactionPage implements OnInit {
     this.getUserData();
     this.getLastTransaction();
   }
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
+    var singleUser = await firebase.firestore().collection('users').where('ph_no', '==', '+919409360641');
+    singleUser.get().then(async (querySnapshot) => {
+      querySnapshot.forEach(async function (doc) {
+        console.log('SINGLE USER', doc.data())
+        var singleUserProduct = await firebase.firestore().collection('users/'+doc.data().id+'/products')
+        singleUserProduct.get().then(async (querySnapshot) =>{
+          querySnapshot.forEach(async function (doc){
+            console.log("PRODUCT DOC",doc.data())
+          })
+        })
+      });
+    });
     this.events.emitFabButton('income-transaction');
   }
   createRec() {

@@ -15,6 +15,7 @@ import { LoanHomePage } from '../loan-home/loan-home.page';
 import { Observable } from 'rxjs';
 import { EventService } from '../services/event.service';
 import { Router } from '@angular/router';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-summary-graphs',
@@ -121,7 +122,7 @@ export class SummaryGraphsPage implements OnInit {
         .getUserDat()
         .then(val => {
           this.userdata = JSON.parse(val);
-          // console.log(this.userdata);
+          console.log('this.userdata ************',this.userdata);
         })
         .catch(err => {
           alert('Error: ' + err);
@@ -179,6 +180,17 @@ export class SummaryGraphsPage implements OnInit {
         .then(async val => {
           this.listtransac = JSON.parse(val);
           console.log('this.listtransac',this.listtransac)
+
+          if(this.userdata.isSubUser == false){
+
+            await this.findSubUserTransactions().then((result: any) => {
+              
+              console.log("RESULT ****************", result)
+              console.log("RESULT ****************", this.listtransac)
+              this.listtransac = this.listtransac.concat(result)
+            })
+          }
+          console.log("RESULT FINAL ****************", this.listtransac)
           // console.log(this.listtransac)
           this.listtransac = this.listtransac.filter(transac => {
             return !transac.isDisabled;
@@ -199,6 +211,30 @@ export class SummaryGraphsPage implements OnInit {
     });
   }
 
+  async findSubUserTransactions() {
+    console.log("USER DATA INSIDE THE FIND SUB USER Transactions ****************", this.userdata)
+    return new Promise((resolve, reject) => {
+      var findSubUsersList = firebase.firestore().collection('users').where('mainUser.owner', '==', this.userdata.owner);
+      findSubUsersList.get().then(async (querySnapshot) => {
+        if (querySnapshot.size == 0) {
+        } else {
+          let transactions = [];
+          querySnapshot.forEach(async function (doc) {
+            console.log('SUB USERS ****************', doc.data())
+            var singleUserProduct = await firebase.firestore().collection('users/' + doc.id + '/transactions')
+            await singleUserProduct.get().then(async (querySnapshot) => {
+              querySnapshot.forEach(async function (doc) {
+                transactions.push(doc.data())
+                console.log("PRODUCT DOC ****************", transactions)
+              })
+            })
+            console.log("****************", transactions)
+            resolve(transactions);
+          })
+        }
+      });
+    })
+  }
   dateChange() {
     let start = new Date(this.fromDate); // subtract one day
     start = new Date(start.getFullYear(), start.getMonth(), start.getDate(), 0, 0, 0);

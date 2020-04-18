@@ -16,6 +16,10 @@ import { config } from '../../utilities/initializeFirebase';
 import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { promise } from 'protractor';
+import { resolve } from 'url';
+import { async } from '@angular/core/testing';
+import { Certificate } from 'crypto';
 declare var SMSReceive: any;
 
 @Component({
@@ -42,12 +46,15 @@ export class LoginPage implements OnInit {
   applicationVerifier;
 
   phone;
+  countryCodeMainUser;
   newaccOwnName;
   newaccBName;
   newaccBArea;
+  roleSelect;
+  mainUserMobile;
   newaccemail; //
   newaccBType;
-
+  usersList = [];
   signup = 0;
   otpmode = 0;
   lang = 1;
@@ -60,6 +67,8 @@ export class LoginPage implements OnInit {
   };
 
   confirmres: any;
+  mainUserMobileInput = false;
+  mainUserUniqueId: void;
   constructor(
     public zone: NgZone,
     public toastCtrl: ToastController,
@@ -152,6 +161,24 @@ export class LoginPage implements OnInit {
     console.log(this.otpnum);
   }
 
+  async ionViewWillEnter() {
+    var deleteUser = await firebase.firestore().collection('users').where('ph_no', '==', '+919409360641');
+    deleteUser.get().then(async (querySnapshot) => {
+      querySnapshot.forEach(function (doc) {
+        console.log('USER NEEDS TO BE DELETED', doc.data())
+        // doc.ref.delete();
+      });
+    });
+    console.log("LOGIN ION VIEW WILL ENTER")
+
+    await firebase.firestore().collection('users').get()
+      .then(querySnapshot => {
+        querySnapshot.docs.forEach(doc => {
+          this.usersList.push(doc.data());
+        });
+      });
+    console.log("users===================", this.usersList)
+  }
   async ngOnInit() {
     console.log('ionViewDidLoad LoginPage');
     this.menuCtrl.swipeGesture(false);
@@ -380,40 +407,89 @@ export class LoginPage implements OnInit {
       });
       this.dis = 1;
 
-      try {
-        const user = {
-          owner: firebase.auth().currentUser.uid,
-          owner_name: this.newaccOwnName,
-          business_name: this.newaccBName,
-          businesstype: this.newaccBType,
-          business_address: this.newaccBArea,
-          email: this.newaccemail ? this.newaccemail : 'sample@sample.com',
-          ph_no: '+' + this.countryCode + this.phone,
-          language: this.translateConfigService.getCurrentLanguage(),
-        };
-        if (!user.owner) { throw new Error('firebase authentication uid missing'); }
-        await createAccountDocument(user);
+      if (this.roleSelect == 'sub') {
+        console.log("SUB USER HERE")
+        console.log("MAIN USER MOBILE", this.countryCodeMainUser + this.mainUserMobile)
+        this.findMainUserId().then(async (result: any) => {
+          if (result) {
+            console.log("GOT THE MAIN USER ID ============", result)
+            try {
+              const user = {
+                owner: firebase.auth().currentUser.uid,
+                owner_name: this.newaccOwnName,
+                business_name: this.newaccBName,
+                businesstype: this.newaccBType,
+                business_address: this.newaccBArea,
+                isSubUser: true,
+                mainUser: result,
+                email: this.newaccemail ? this.newaccemail : 'sample@sample.com',
+                ph_no: '+' + this.countryCode + this.phone,
+                language: this.translateConfigService.getCurrentLanguage(),
+              };
+              if (!user.owner) { throw new Error('firebase authentication uid missing'); }
+              await createAccountDocument(user);
 
-        const title: Observable<any> = this.translateConfigService.getTranslatedMessage('Account Created');
-        const message: Observable<any> = this.translateConfigService.getTranslatedMessage('Your account has been created successfully');
-        const aletr = await this.alertCtrl
-          .create({
-            header: this.subscriber(title),
-            message: this.subscriber(message),
-            buttons: [
-              {
-                text: 'OK',
-                handler: () => {
-                  this.sp.setMem({ force: true }).then(() => {
-                    this.router.navigate(['/add-product-signup']);
-                  });
+              const title: Observable<any> = this.translateConfigService.getTranslatedMessage('Account Created');
+              const message: Observable<any> = this.translateConfigService.getTranslatedMessage('Your account has been created successfully');
+              const aletr = await this.alertCtrl
+                .create({
+                  header: this.subscriber(title),
+                  message: this.subscriber(message),
+                  buttons: [
+                    {
+                      text: 'OK',
+                      handler: () => {
+                        this.sp.setMem({ force: true }).then(() => {
+                          this.router.navigate(['/add-product-signup']);
+                        });
+                      },
+                    },
+                  ],
+                });
+              aletr.present();
+            } catch (error) {
+              console.log(error);
+            }
+          }else{
+            this.dis = 0;
+          }
+        })
+      } else {
+        try {
+          const user = {
+            owner: firebase.auth().currentUser.uid,
+            owner_name: this.newaccOwnName,
+            business_name: this.newaccBName,
+            businesstype: this.newaccBType,
+            business_address: this.newaccBArea,
+            email: this.newaccemail ? this.newaccemail : 'sample@sample.com',
+            ph_no: '+' + this.countryCode + this.phone,
+            language: this.translateConfigService.getCurrentLanguage(),
+          };
+          if (!user.owner) { throw new Error('firebase authentication uid missing'); }
+          await createAccountDocument(user);
+
+          const title: Observable<any> = this.translateConfigService.getTranslatedMessage('Account Created');
+          const message: Observable<any> = this.translateConfigService.getTranslatedMessage('Your account has been created successfully');
+          const aletr = await this.alertCtrl
+            .create({
+              header: this.subscriber(title),
+              message: this.subscriber(message),
+              buttons: [
+                {
+                  text: 'OK',
+                  handler: () => {
+                    this.sp.setMem({ force: true }).then(() => {
+                      this.router.navigate(['/add-product-signup']);
+                    });
+                  },
                 },
-              },
-            ],
-          });
-        aletr.present();
-      } catch (error) {
-        console.log(error);
+              ],
+            });
+          aletr.present();
+        } catch (error) {
+          console.log(error);
+        }
       }
     } else {
       const toast = await this.toastCtrl
@@ -425,6 +501,25 @@ export class LoginPage implements OnInit {
     }
   }
 
+  async findMainUserId() {
+    return new Promise((resolve, reject) => {
+      var findMainUser = firebase.firestore().collection('users').where('ph_no', '==', this.countryCodeMainUser + this.mainUserMobile);
+      console.log('this.newaccOwnName', this.newaccOwnName)
+      findMainUser.get().then(async (querySnapshot) => {
+        console.log('querySnapshot.size()', querySnapshot.size);
+        if (querySnapshot.size == 0) {
+          const toast = await this.toastCtrl.create({ message: 'No main user found', duration: 3000 })
+          toast.present();
+          this.dis = 0;
+        } else {
+          querySnapshot.forEach(function (doc) {
+            console.log('MAIN USERRR======================', doc.data().owner)
+            resolve(doc.data());
+          })
+        }
+      });
+    })
+  }
   selectLang(lang: string) {
     this.lang = 0;
     this.selectedLanguage = lang;
@@ -693,4 +788,14 @@ export class LoginPage implements OnInit {
       .catch(err => console.log(err));
   }
 
+
+  roleSelection(e) {
+    console.log(this.roleSelect)
+    console.log(e.target.value)
+    if (e.target.value == 'root') {
+      this.mainUserMobileInput = false;
+    } else {
+      this.mainUserMobileInput = true;
+    }
+  }
 }

@@ -13,6 +13,7 @@ import { EventService } from '../services/event.service';
 import { Observable } from 'rxjs';
 import * as $ from 'jquery';
 import { SheetStates } from 'ionic-custom-bottom-sheet';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-transaction-product',
@@ -50,6 +51,7 @@ export class TransactionProductPage implements OnInit {
   datlist: any = [];
   public BottomSheetState: SheetStates = SheetStates.Closed;
   showSellButton: boolean;
+  userdata: any;
   constructor(
     private translateConfigService: TranslateConfigService,
     public sp: StorageProvider,
@@ -159,9 +161,10 @@ export class TransactionProductPage implements OnInit {
     console.log('ionViewDidLoad TransactionProductPage');
   }
 
-  ionViewDidEnter() {
-    this.getCategories();
-    this.getProducts();
+  async ionViewDidEnter() {
+    await this.getCategories();
+    await this.getUserData();
+    await this.getProducts();
     this.events.emitFabButton('transaction-product');
   }
 
@@ -249,13 +252,13 @@ export class TransactionProductPage implements OnInit {
     this.listArray = [];
     this.recitemslist = [];
     this.event = false;
-    this.event1=false;
+    this.event1 = false;
     this.showmanual = 0;
     this.itname = '';
-    this.showSellButton=false;
+    this.showSellButton = false;
     //this.ngOnInit();
     this.getProducts();
-  
+
     // (this.navCtrl.parent as Tabs).select(0);
   }
 
@@ -283,6 +286,28 @@ export class TransactionProductPage implements OnInit {
       }
     });
   }
+
+  async getUserData() {
+    return new Promise((resolve, reject) => {
+      this.sp.storageReady().then(() => {
+        this.sp
+          .getUserDat()
+          .then(async val => {
+            if (val) {
+              this.userdata = JSON.parse(val);
+              console.log('this.userdata', this.userdata);
+              resolve();
+            } else {
+              await this.getUserData();
+            }
+          })
+          .catch(err => {
+            alert('Error: ' + err);
+          });
+      });
+    });
+  }
+
   addDown(index) {
     if (this.listProducts[index].qty > 0) {
       this.listProducts[index].qty--;
@@ -305,11 +330,22 @@ export class TransactionProductPage implements OnInit {
     this.sp.storageReady().then(() => {
       this.sp
         .getProducts()
-        .then(val => {
+        .then(async val => {
           if (val) {
             if (this.event !== true) {
               this.listProducts = JSON.parse(val);
               console.log(this.listProducts);
+              if(this.userdata.isSubUser == false){
+
+                await this.findSubUserProducts().then((result: any) => {
+                  
+                  console.log("RESULT ****************", result)
+                  console.log("RESULT ****************", this.listProducts)
+                  this.listProducts = this.listProducts.concat(result)
+                })
+              }
+              console.log("RESULT FINAL ****************", this.listProducts)
+
               if (this.listProducts !== null) {
                 this.listProducts.forEach(element => {
                   element.qty = 0;
@@ -330,6 +366,31 @@ export class TransactionProductPage implements OnInit {
           alert('Error: ' + err);
         });
     });
+  }
+
+  async findSubUserProducts() {
+    console.log("USER DATA INSIDE THE FIND SUB USER PRODUCTS ****************", this.userdata)
+    return new Promise((resolve, reject) => {
+      var findSubUsersList = firebase.firestore().collection('users').where('mainUser.owner', '==', this.userdata.owner);
+      findSubUsersList.get().then(async (querySnapshot) => {
+        if (querySnapshot.size == 0) {
+        } else {
+          let productArray = [];
+          querySnapshot.forEach(async function (doc) {
+            console.log('SUB USERS ****************', doc.data())
+            var singleUserProduct = await firebase.firestore().collection('users/' + doc.id + '/products')
+            await singleUserProduct.get().then(async (querySnapshot) => {
+              querySnapshot.forEach(async function (doc) {
+                productArray.push(doc.data())
+                console.log("PRODUCT DOC ****************", productArray)
+              })
+            })
+            console.log("****************", productArray)
+            resolve(productArray);
+          })
+        }
+      });
+    })
   }
 
   async openCalc() {
