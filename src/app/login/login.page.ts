@@ -162,14 +162,14 @@ export class LoginPage implements OnInit {
   }
 
   async ionViewWillEnter() {
-    var deleteUser = await firebase.firestore().collection('users').where('ph_no', '==', '+919409360641');
+    const deleteUser = await firebase.firestore().collection('users').where('ph_no', '==', '+919409360641');
     deleteUser.get().then(async (querySnapshot) => {
-      querySnapshot.forEach(function (doc) {
-        console.log('USER NEEDS TO BE DELETED', doc.data())
+      querySnapshot.forEach(function(doc) {
+        console.log('USER NEEDS TO BE DELETED', doc.data());
         // doc.ref.delete();
       });
     });
-    console.log("LOGIN ION VIEW WILL ENTER")
+    console.log('LOGIN ION VIEW WILL ENTER');
 
     await firebase.firestore().collection('users').get()
       .then(querySnapshot => {
@@ -177,7 +177,7 @@ export class LoginPage implements OnInit {
           this.usersList.push(doc.data());
         });
       });
-    console.log("users===================", this.usersList)
+    console.log('users===================', this.usersList);
   }
   async ngOnInit() {
     console.log('ionViewDidLoad LoginPage');
@@ -408,11 +408,11 @@ export class LoginPage implements OnInit {
       this.dis = 1;
 
       if (this.roleSelect == 'sub') {
-        console.log("SUB USER HERE")
-        console.log("MAIN USER MOBILE", this.countryCodeMainUser + this.mainUserMobile)
+        console.log('SUB USER HERE');
+        console.log('MAIN USER MOBILE', this.countryCodeMainUser + this.mainUserMobile);
         this.findMainUserId().then(async (result: any) => {
           if (result) {
-            console.log("GOT THE MAIN USER ID ============", result)
+            console.log('GOT THE MAIN USER ID ============', result);
             try {
               const user = {
                 owner: firebase.auth().currentUser.uid,
@@ -450,10 +450,10 @@ export class LoginPage implements OnInit {
             } catch (error) {
               console.log(error);
             }
-          }else{
+          } else {
             this.dis = 0;
           }
-        })
+        });
       } else {
         try {
           const user = {
@@ -503,22 +503,22 @@ export class LoginPage implements OnInit {
 
   async findMainUserId() {
     return new Promise((resolve, reject) => {
-      var findMainUser = firebase.firestore().collection('users').where('ph_no', '==', this.countryCodeMainUser + this.mainUserMobile);
-      console.log('this.newaccOwnName', this.newaccOwnName)
+      const findMainUser = firebase.firestore().collection('users').where('ph_no', '==', this.countryCodeMainUser + this.mainUserMobile);
+      console.log('this.newaccOwnName', this.newaccOwnName);
       findMainUser.get().then(async (querySnapshot) => {
         console.log('querySnapshot.size()', querySnapshot.size);
         if (querySnapshot.size == 0) {
-          const toast = await this.toastCtrl.create({ message: 'No main user found', duration: 3000 })
+          const toast = await this.toastCtrl.create({ message: 'No main user found', duration: 3000 });
           toast.present();
           this.dis = 0;
         } else {
-          querySnapshot.forEach(function (doc) {
-            console.log('MAIN USERRR======================', doc.data().owner)
+          querySnapshot.forEach(function(doc) {
+            console.log('MAIN USERRR======================', doc.data().owner);
             resolve(doc.data());
-          })
+          });
         }
       });
-    })
+    });
   }
   selectLang(lang: string) {
     this.lang = 0;
@@ -581,20 +581,20 @@ export class LoginPage implements OnInit {
 
   async otpFn() {
     this.startTimer2();
-    try{
+    try {
       SMSReceive.stopWatch(
-        ()=>{ console.log("watch stopped") },
-        ()=>{ console.log("watch stop failed") },
+        () => { console.log('watch stopped'); },
+        () => { console.log('watch stop failed'); },
       );
-    } catch(e){
-      console.log("Error with SMSReceive Stop:");
+    } catch (e) {
+      console.log('Error with SMSReceive Stop:');
       console.log(e);
     }
     const confirmationResult = this.confirmres;
-    console.log('otp**********', this.otpnum)
-    console.log('otp**********', confirmationResult)
-    let flag = 0;
-    let signCredential = await firebase.auth.PhoneAuthProvider.credential(confirmationResult, String(this.otpnum));
+    console.log('otp**********' + this.otpnum + typeof this.otpnum);
+    alert('otp********** ' + confirmationResult);
+    const flag = 0;
+    const signCredential = await firebase.auth.PhoneAuthProvider.credential(confirmationResult, this.otpnum);
     console.log('signCredential', signCredential);
 
     firebase.auth().signInWithCredential(signCredential).then(async (info) => {
@@ -716,28 +716,28 @@ export class LoginPage implements OnInit {
 
       const flag = 0;
       console.log('phone number', phoneNumber);
-      try{
-        SMSReceive.startWatch(()=>{
-          console.log("watch started");
-          document.addEventListener("onSMSArrive", (e:any)=>{
-            var incomingSMS = e.data;
-            const message:string = incomingSMS.body;
-            if(message){
-              for(let i=0; i<6; i++){
-                if(!(message[i]<='9' && message[i]>='0')){
+      try {
+        SMSReceive.startWatch(() => {
+          console.log('watch started');
+          document.addEventListener('onSMSArrive', (e: any) => {
+            const incomingSMS = e.data;
+            const message: string = incomingSMS.body;
+            if (message) {
+              for (let i = 0; i < 6; i++) {
+                if (!(message[i] <= '9' && message[i] >= '0')) {
                   return;
                 }
               }
-              this.otpnum = message.slice(0,6);
+              this.otpnum = message.slice(0, 6);
               // this.otpInput.setValue(this.otpnum);
               this.otpFn();
             }
-          })
+          });
         },
-          ()=>{ console.log("watch start failed"); }
+          () => { console.log('watch start failed'); }
         );
-      } catch(e){
-        console.log("Error with SMSReceive Start");
+      } catch (e) {
+        console.log('Error with SMSReceive Start');
         console.log(e);
       }
       this.firebaseAuth.verifyPhoneNumber(phoneNumber, 30000).then(async (verificationId) => {
@@ -749,12 +749,12 @@ export class LoginPage implements OnInit {
         // SMS sent. Prompt user to type the code from the message, then sign the
         // user in with confirmationResult.confirm(code).
 
-        const msg = this.translateConfigService.getTranslatedMessage("Enter the Confirmation code");
-        const msg1 = this.translateConfigService.getTranslatedMessage("A 6 Digit Code");
-        const msg2 = this.translateConfigService.getTranslatedMessage("SEND");
-        const msg3 = this.translateConfigService.getTranslatedMessage("CANCEL");
-      }).catch(e=>console.log(e));
-      console.log('appVerifier', appVerifier)
+        const msg = this.translateConfigService.getTranslatedMessage('Enter the Confirmation code');
+        const msg1 = this.translateConfigService.getTranslatedMessage('A 6 Digit Code');
+        const msg2 = this.translateConfigService.getTranslatedMessage('SEND');
+        const msg3 = this.translateConfigService.getTranslatedMessage('CANCEL');
+      }).catch(e => console.log(e));
+      console.log('appVerifier', appVerifier);
       // await firebase
       //   .auth()
       //   .signInWithPhoneNumber(phoneNumber, appVerifier)
@@ -823,8 +823,8 @@ export class LoginPage implements OnInit {
 
 
   roleSelection(e) {
-    console.log(this.roleSelect)
-    console.log(e.target.value)
+    console.log(this.roleSelect);
+    console.log(e.target.value);
     if (e.target.value == 'root') {
       this.mainUserMobileInput = false;
     } else {
