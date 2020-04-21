@@ -344,7 +344,7 @@
 <bottom-sheet [(State)]="BottomSheetState" (StateChange)="StateChanged($event)">
   <div class="row m-0 py-5 option justify-content-around">
     <div class="col-6 py-3">
-      <ion-fab-button color="magenta" class="m-auto" size="small" (click)="navAdd(2)">
+      <ion-fab-button color="magenta" class="m-auto" size="small" (click)="closeSheet(); navAdd(2)">
         <ion-icon name="exit-outline"></ion-icon>
       </ion-fab-button><br>
       <ion-text class="font-weight-bold"
@@ -353,7 +353,7 @@
       </ion-text>
     </div>
     <div class="col-6 py-3">
-      <ion-fab-button color="magenta" class="m-auto" size="small" (click)="navAdd(1)">
+      <ion-fab-button color="magenta" class="m-auto" size="small" (click)="closeSheet(); navAdd(1)">
         <ion-icon name="card-outline"></ion-icon>
       </ion-fab-button><br>
       <ion-text class="font-weight-bold"

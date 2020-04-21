@@ -122,7 +122,7 @@ export class SummaryGraphsPage implements OnInit {
         .getUserDat()
         .then(val => {
           this.userdata = JSON.parse(val);
-          console.log('this.userdata ************',this.userdata);
+          console.log('this.userdata ************', this.userdata);
         })
         .catch(err => {
           alert('Error: ' + err);
@@ -179,18 +179,18 @@ export class SummaryGraphsPage implements OnInit {
         .getTransactions(options)
         .then(async val => {
           this.listtransac = JSON.parse(val);
-          console.log('this.listtransac',this.listtransac)
+          console.log('this.listtransac', this.listtransac);
 
-          if(this.userdata.isSubUser == false){
+          if (this.userdata.isSubUser == false) {
 
             await this.findSubUserTransactions().then((result: any) => {
-              
-              console.log("RESULT ****************", result)
-              console.log("RESULT ****************", this.listtransac)
-              this.listtransac = this.listtransac.concat(result)
-            })
+
+              console.log('RESULT ****************', result);
+              console.log('RESULT ****************', this.listtransac);
+              this.listtransac = this.listtransac.concat(result);
+            });
           }
-          console.log("RESULT FINAL ****************", this.listtransac)
+          console.log('RESULT FINAL ****************', this.listtransac);
           // console.log(this.listtransac)
           this.listtransac = this.listtransac.filter(transac => {
             return !transac.isDisabled;
@@ -212,28 +212,28 @@ export class SummaryGraphsPage implements OnInit {
   }
 
   async findSubUserTransactions() {
-    console.log("USER DATA INSIDE THE FIND SUB USER Transactions ****************", this.userdata)
+    console.log('USER DATA INSIDE THE FIND SUB USER Transactions ****************', this.userdata);
     return new Promise((resolve, reject) => {
-      var findSubUsersList = firebase.firestore().collection('users').where('mainUser.owner', '==', this.userdata.owner);
+      let findSubUsersList = firebase.firestore().collection('users').where('mainUser.owner', '==', this.userdata.owner);
       findSubUsersList.get().then(async (querySnapshot) => {
         if (querySnapshot.size == 0) {
         } else {
-          let transactions = [];
-          querySnapshot.forEach(async function (doc) {
-            console.log('SUB USERS ****************', doc.data())
-            var singleUserProduct = await firebase.firestore().collection('users/' + doc.id + '/transactions')
+          const transactions = [];
+          querySnapshot.forEach(async function(doc) {
+            console.log('SUB USERS ****************', doc.data());
+            let singleUserProduct = await firebase.firestore().collection('users/' + doc.id + '/transactions');
             await singleUserProduct.get().then(async (querySnapshot) => {
-              querySnapshot.forEach(async function (doc) {
-                transactions.push(doc.data())
-                console.log("PRODUCT DOC ****************", transactions)
-              })
-            })
-            console.log("****************", transactions)
+              querySnapshot.forEach(async function(doc) {
+                transactions.push(doc.data());
+                console.log('PRODUCT DOC ****************', transactions);
+              });
+            });
+            console.log('****************', transactions);
             resolve(transactions);
-          })
+          });
         }
       });
-    })
+    });
   }
   dateChange() {
     let start = new Date(this.fromDate); // subtract one day
@@ -265,6 +265,7 @@ export class SummaryGraphsPage implements OnInit {
   }
 
   setvalues() {
+    console.log('89687958764647079895784589578468');
     this.listtransac.forEach(element => {
       if (element.totalatax >= 0) {
         this.rev += Number(element.totalatax);
@@ -557,23 +558,21 @@ export class SummaryGraphsPage implements OnInit {
   }
 
   toggleGL() {
-    this.isgraph=1;
-    if(this.islist==1){
+    this.isgraph = 1;
+    if (this.islist == 1) {
       this.islist = 0;
-    }
-    else if(this.islist==0){
-      this.islist=1;
+    } else if (this.islist == 0) {
+      this.islist = 1;
     }
   }
   toggleList() {
-    this.islist=1;
-    if(this.isgraph==1){
+    this.islist = 1;
+    if (this.isgraph == 1) {
       this.isgraph = 0;
+    } else if (this.isgraph == 0) {
+      this.isgraph = 1;
     }
-    else if(this.isgraph==0){
-      this.isgraph=1;
-    }
-    
+
     // if (this.islist === 1) {
     //   this.isgraph = 1;
     //   this.islist = 0;
@@ -666,6 +665,7 @@ export class SummaryGraphsPage implements OnInit {
   }
 
   generateGraphs() {
+    console.log('bar graph');
     this.barChart = new Chart(this.barCanvas.nativeElement, {
       type: 'bar',
       data: {

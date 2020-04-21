@@ -42,80 +42,6 @@ import { async } from '@angular/core/testing';
   styleUrls: ['./income-transaction.page.scss'],
 })
 export class IncomeTransactionPage implements OnInit {
-  taxbtn = 0;
-  showrec = false;
-
-  lastTransaction: any;
-  isReady: boolean;
-
-  userdata: any = {
-    autosave: 0,
-    business_address: '',
-    business_name: '',
-    cash_balance: '',
-    currency: '',
-    created: '',
-    // tslint:disable-next-line: max-line-length
-    logo_url: 'https://scontent.fhkg10-1.fna.fbcdn.net/v/t1.0-9/79674109_100715951430298_615106696234139648_n.png?_nc_cat=109&_nc_ohc=2pdu1s1LRmoAX-04NCO&_nc_ht=scontent.fhkg10-1.fna&oh=70fea5a886837de2b9cf4aaf4a4112a8&oe=5EF6F085',
-    language: 'en',
-    owner: '',
-    owner_name: '',
-    ph_no: '',
-    businesstype: '',
-    taxrate: 0.0,
-    discount: 0.0,
-  };
-
-  discount = 0.0;
-  lastsumdisc = 0.0;
-  taxrate = 0.0;
-  contact = '';
-  temp;
-
-  file: any;
-  discbtn = 0;
-
-  result = '';
-  displayManual = 0;
-  datastore = { itemslist: [] };
-  // tslint:disable-next-line: variable-name
-  flag_mode = 0;
-  showSampleRec = true;
-  itemsprice: string[] = [];
-  ctr = 0;
-  lastsum = 0;
-  lastsumAfterIndividualDiscount = 0;
-  lastchar = 'NIL';
-  lastdigit = 0;
-
-  newItemName = '';
-  newUnitPrice: number = null;
-  newUnitQty = 1;
-  newItemCat = '';
-  newItemDiscount: number = null;
-
-  listProducts: any;
-  filteredList: any;
-  listArray: any = [];
-  listCat: any;
-  lastsumtax;
-
-  prodidlist: any = [];
-  pnllist: any = [];
-  datetime = new Date();
-  // tslint:disable-next-line: variable-name
-  tax_vat: any = [];
-  geolocation: {};
-
-  disableDownload = false;
-  disableShare = false;
-  discountlist = [];
-
-  ///////////////////////
-
-  receipt: any;
-  inputData: any = {};
-  public BottomSheetState: SheetStates = SheetStates.Closed;
   constructor(
     public events: EventService,
     public camera: Camera,
@@ -204,6 +130,82 @@ export class IncomeTransactionPage implements OnInit {
       this.updateRec();
     });
   }
+  taxbtn = 0;
+  showrec = false;
+
+  lastTransaction: any;
+  isReady: boolean;
+
+  userdata: any = {
+    autosave: 0,
+    business_address: '',
+    business_name: '',
+    cash_balance: '',
+    currency: '',
+    created: '',
+    // tslint:disable-next-line: max-line-length
+    logo_url: 'https://scontent.fhkg10-1.fna.fbcdn.net/v/t1.0-9/79674109_100715951430298_615106696234139648_n.png?_nc_cat=109&_nc_ohc=2pdu1s1LRmoAX-04NCO&_nc_ht=scontent.fhkg10-1.fna&oh=70fea5a886837de2b9cf4aaf4a4112a8&oe=5EF6F085',
+    language: 'en',
+    owner: '',
+    owner_name: '',
+    ph_no: '',
+    businesstype: '',
+    taxrate: 0.0,
+    discount: 0.0,
+  };
+
+  discount = 0.0;
+  lastsumdisc = 0.0;
+  taxrate = 0.0;
+  contact = '';
+  temp;
+
+  file: any;
+  discbtn = 0;
+
+  result = '';
+  displayManual = 0;
+  datastore = { itemslist: [] };
+  // tslint:disable-next-line: variable-name
+  flag_mode = 0;
+  showSampleRec = true;
+  itemsprice: string[] = [];
+  ctr = 0;
+  lastsum = 0;
+  lastsumAfterIndividualDiscount = 0;
+  lastchar = 'NIL';
+  lastdigit = 0;
+
+  newItemName = '';
+  newUnitPrice: number = null;
+  newUnitQty = 1;
+  newItemCat = '';
+  newItemDiscount: number = null;
+
+  listProducts: any;
+  filteredList: any;
+  listArray: any = [];
+  listCat: any;
+  lastsumtax;
+
+  prodidlist: any = [];
+  pnllist: any = [];
+  datetime = new Date();
+  // tslint:disable-next-line: variable-name
+  tax_vat: any = [];
+  geolocation: {};
+
+  disableDownload = false;
+  disableShare = false;
+  discountlist = [];
+
+  ///////////////////////
+
+  receipt: any;
+  inputData: any = {};
+  public BottomSheetState: SheetStates = SheetStates.Closed;
+  showprevrec = 0;
+  listOfPrevTransac: any = [];
 
   public openSheet() {
     this.BottomSheetState = SheetStates.Opened;
@@ -329,7 +331,7 @@ export class IncomeTransactionPage implements OnInit {
           console.log(this.userdata);
         })
         .catch(err => {
-          alert('Error: ' + err);
+          console.log('Error: ' + err);
         });
     });
   }
@@ -337,26 +339,26 @@ export class IncomeTransactionPage implements OnInit {
   ionViewDidLoad() {
 
   }
-  showprevrec=0;
-  listOfPrevTransac: any = [];
-  showPrevRec(){
-    if(this.showprevrec==0) {
+  showPrevRec() {
+    if (this.showprevrec == 0) {
       this.showprevrec = 1;
-      if(this.listOfPrevTransac.length == 0){
+      if (this.listOfPrevTransac.length == 0) {
         let todayDate = new Date();
         todayDate = new Date(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate(), 0, 0, 0);
-        this.getTransac({start: todayDate});
+        this.getTransac({ start: todayDate });
       }
-    } else this.showprevrec = 0;
+    } else {
+      this.showprevrec = 0;
+    }
   }
 
-  getTransac(options?: {start?: Date; end?: Date }){
+  getTransac(options?: { start?: Date; end?: Date }) {
     this.sp.storageReady().then(() => {
       this.sp
         .getTransactions(options)
         .then(async val => {
           this.listOfPrevTransac = JSON.parse(val);
-          console.log('this.listtransac',this.listOfPrevTransac)
+          console.log('this.listtransac', this.listOfPrevTransac);
           // console.log(this.listtransac)
           this.listOfPrevTransac = this.listOfPrevTransac.filter(transac => {
             return !transac.isDisabled;
@@ -367,8 +369,8 @@ export class IncomeTransactionPage implements OnInit {
             element.expandedvar = this.subscriber(this.translateConfigService.getTranslatedMessage('More'));
           });
           this.listOfPrevTransac = this.listOfPrevTransac.reverse();
-        }).catch(e=> alert("Error"+e));
-      });
+        }).catch(e => console.log('Error' + e));
+    });
   }
 
   expandTransac(transac) {
@@ -733,16 +735,16 @@ export class IncomeTransactionPage implements OnInit {
     this.getLastTransaction();
   }
   async ionViewWillEnter() {
-    var singleUser = await firebase.firestore().collection('users').where('ph_no', '==', '+919409360641');
+    let singleUser = await firebase.firestore().collection('users').where('ph_no', '==', '+919409360641');
     singleUser.get().then(async (querySnapshot) => {
-      querySnapshot.forEach(async function (doc) {
-        console.log('SINGLE USER', doc.data())
-        var singleUserProduct = await firebase.firestore().collection('users/'+doc.data().id+'/products')
-        singleUserProduct.get().then(async (querySnapshot) =>{
-          querySnapshot.forEach(async function (doc){
-            console.log("PRODUCT DOC",doc.data())
-          })
-        })
+      querySnapshot.forEach(async function(doc) {
+        console.log('SINGLE USER', doc.data());
+        let singleUserProduct = await firebase.firestore().collection('users/' + doc.data().id + '/products');
+        singleUserProduct.get().then(async (querySnapshot) => {
+          querySnapshot.forEach(async function(doc) {
+            console.log('PRODUCT DOC', doc.data());
+          });
+        });
       });
     });
     this.events.emitFabButton('income-transaction');
@@ -812,13 +814,13 @@ export class IncomeTransactionPage implements OnInit {
   }
 
 
-  showDisc(item, toShow: boolean){
-    if(!toShow){
-      item.showDisc=false;
+  showDisc(item, toShow: boolean) {
+    if (!toShow) {
+      item.showDisc = false;
       item.discount = 0;
       this.updateRec();
-    } else{
-      item.showDisc=true;
+    } else {
+      item.showDisc = true;
     }
   }
 

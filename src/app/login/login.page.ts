@@ -748,7 +748,7 @@ export class LoginPage implements OnInit {
       //   alert('line 749' + e);
       // }
       this.firebaseAuth.verifyPhoneNumber(phoneNumber, 30000).then(async (verificationId) => {
-        alert(verificationId);
+        console.log(verificationId);
         this.confirmres = verificationId;
         this.otpmode = 1;
         this.timer = 30;
@@ -760,7 +760,7 @@ export class LoginPage implements OnInit {
         const msg1 = this.translateConfigService.getTranslatedMessage('A 6 Digit Code');
         const msg2 = this.translateConfigService.getTranslatedMessage('SEND');
         const msg3 = this.translateConfigService.getTranslatedMessage('CANCEL');
-      }).catch(e => alert(e));
+      }).catch(e => console.log(e));
       console.log('appVerifier', appVerifier);
       // await firebase
       //   .auth()

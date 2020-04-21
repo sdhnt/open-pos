@@ -93,6 +93,7 @@ export class TransactionProductPage implements OnInit {
         });
 
         const tempdat = JSON.parse(data);
+        await this.getUserData();
         await this.getProducts();
         console.log(tempdat);
 
@@ -303,7 +304,7 @@ export class TransactionProductPage implements OnInit {
             }
           })
           .catch(err => {
-            alert('Error: ' + err);
+            console.log('Error: ' + err);
           });
       });
     });
@@ -364,7 +365,7 @@ export class TransactionProductPage implements OnInit {
           }
         })
         .catch(err => {
-          alert('Error: ' + err);
+          console.log('Error: ' + err);
         });
     });
   }
