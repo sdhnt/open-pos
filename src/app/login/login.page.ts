@@ -9,18 +9,14 @@ import * as firebase from 'firebase';
 import { StorageProvider } from '../services/storage/storage';
 
 import { TranslateConfigService } from '../services/translation/translate-config.service';
-import { Message, Placeholder } from '@angular/compiler/src/i18n/i18n_ast';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { createAccountDocument } from '../../utilities/createAccountDocument';
 import { config } from '../../utilities/initializeFirebase';
 import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { promise } from 'protractor';
-import { resolve } from 'url';
-import { async } from '@angular/core/testing';
-import { Certificate } from 'crypto';
-declare var SMSReceive: any;
+
+declare const SMSReceive: any;
 
 @Component({
   selector: 'app-login',
@@ -82,6 +78,20 @@ export class LoginPage implements OnInit {
     private router: Router,
     private menuCtrl: MenuController
   ) {
+    // this.firebaseAuth.onAuthStateChanged().subscribe(user => {
+
+    //   if (user) {
+    //     console.log(user)
+
+    //     console.log("success")
+    //     // OTP verifired. Do success operation
+    //   }
+    //   else {
+    //     console.log("state not changed")
+    //     // wrong otp
+    //   }
+    // })
+
     // this.loadDropDowns();
     // this.getInfo();
     this.countryCode = '95';
@@ -162,22 +172,12 @@ export class LoginPage implements OnInit {
   }
 
   async ionViewWillEnter() {
-    const deleteUser = await firebase.firestore().collection('users').where('ph_no', '==', '+919409360641');
-    deleteUser.get().then(async (querySnapshot) => {
-      querySnapshot.forEach(function(doc) {
-        console.log('USER NEEDS TO BE DELETED', doc.data());
-        // doc.ref.delete();
-      });
-    });
-    console.log('LOGIN ION VIEW WILL ENTER');
-
     await firebase.firestore().collection('users').get()
       .then(querySnapshot => {
         querySnapshot.docs.forEach(doc => {
           this.usersList.push(doc.data());
         });
       });
-    console.log('users===================', this.usersList);
   }
   async ngOnInit() {
     console.log('ionViewDidLoad LoginPage');
@@ -407,7 +407,7 @@ export class LoginPage implements OnInit {
       });
       this.dis = 1;
 
-      if (this.roleSelect == 'sub') {
+      if (this.roleSelect === 'sub') {
         console.log('SUB USER HERE');
         console.log('MAIN USER MOBILE', this.countryCodeMainUser + this.mainUserMobile);
         this.findMainUserId().then(async (result: any) => {
@@ -507,12 +507,12 @@ export class LoginPage implements OnInit {
       console.log('this.newaccOwnName', this.newaccOwnName);
       findMainUser.get().then(async (querySnapshot) => {
         console.log('querySnapshot.size()', querySnapshot.size);
-        if (querySnapshot.size == 0) {
+        if (querySnapshot.size === 0) {
           const toast = await this.toastCtrl.create({ message: 'No main user found', duration: 3000 });
           toast.present();
           this.dis = 0;
         } else {
-          querySnapshot.forEach(function(doc) {
+          querySnapshot.forEach((doc) => {
             console.log('MAIN USERRR======================', doc.data().owner);
             resolve(doc.data());
           });
@@ -591,12 +591,19 @@ export class LoginPage implements OnInit {
       console.log(e);
     }
     const confirmationResult = this.confirmres;
-    console.log('otp**********' + this.otpnum + typeof this.otpnum);
-    alert('otp********** ' + confirmationResult);
+    console.log('otp**********', this.otpnum);
+    console.log('otp**********', confirmationResult);
     const flag = 0;
     const signCredential = await firebase.auth.PhoneAuthProvider.credential(confirmationResult, this.otpnum);
     console.log('signCredential', signCredential);
-
+    // this.firebaseAuth.signInWithVerificationId(confirmationResult, this.otpnum).then(user =>{
+    //   if(user) {
+    //     console.log("user",user)
+    //   }
+    //   else {
+    //     console.log("no user")
+    //   }
+    // })
     firebase.auth().signInWithCredential(signCredential).then(async (info) => {
       console.log('USER INFO', info);
       this.checkifexist();
@@ -721,6 +728,7 @@ export class LoginPage implements OnInit {
           console.log('watch started');
           document.addEventListener('onSMSArrive', (e: any) => {
             const incomingSMS = e.data;
+            // tslint:disable-next-line: no-shadowed-variable
             const message: string = incomingSMS.body;
             if (message) {
               for (let i = 0; i < 6; i++) {
@@ -738,7 +746,7 @@ export class LoginPage implements OnInit {
         );
       } catch (e) {
         console.log('Error with SMSReceive Start');
-        console.log(e);
+        alert('line 749' + e);
       }
       this.firebaseAuth.verifyPhoneNumber(phoneNumber, 30000).then(async (verificationId) => {
         console.log(verificationId);
@@ -753,7 +761,7 @@ export class LoginPage implements OnInit {
         const msg1 = this.translateConfigService.getTranslatedMessage('A 6 Digit Code');
         const msg2 = this.translateConfigService.getTranslatedMessage('SEND');
         const msg3 = this.translateConfigService.getTranslatedMessage('CANCEL');
-      }).catch(e => console.log(e));
+      }).catch(e => alert(e));
       console.log('appVerifier', appVerifier);
       // await firebase
       //   .auth()
@@ -821,11 +829,10 @@ export class LoginPage implements OnInit {
       .catch(err => console.log(err));
   }
 
-
   roleSelection(e) {
     console.log(this.roleSelect);
     console.log(e.target.value);
-    if (e.target.value == 'root') {
+    if (e.target.value === 'root') {
       this.mainUserMobileInput = false;
     } else {
       this.mainUserMobileInput = true;
