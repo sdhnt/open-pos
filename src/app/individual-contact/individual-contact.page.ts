@@ -136,8 +136,16 @@ export class IndividualContactPage implements OnInit {
     }
   }
 
+  noteToOpen: number = -1;
+  setNoteOpen(i: number){
+    if(i==this.noteToOpen)
+      this.noteToOpen=-1;
+    this.noteToOpen = i;
+  }
+
   async transaction(signedOne: number) {
     let amountToAdd = 0;
+    let noteForTransac = '';
     const a = await this.alertCtrl.create({
       inputs: [
         {
@@ -145,6 +153,10 @@ export class IndividualContactPage implements OnInit {
           placeholder: this.subscriber(this.translateConfigService.getTranslatedMessage('Amount')),
           type: 'number',
         },
+        {
+          name: 'note',
+          placeholder: "Notes"
+        }
       ],
       buttons: [
         {
@@ -156,7 +168,11 @@ export class IndividualContactPage implements OnInit {
           handler: data => {
             if (data.amount > 0) {
               amountToAdd = data.amount * signedOne;
-            } else { console.log('Improper Number'); }
+              noteForTransac = data.note;
+            } else { 
+              console.log('Improper Number'); 
+              return false;
+            }
           },
         },
       ],
@@ -171,7 +187,7 @@ export class IndividualContactPage implements OnInit {
         date: new Date(),
         // reminderDate: "",
         discount: 0,
-        note: '',
+        note: noteForTransac,
         img: '',
       };
       if (!this.contact.transacHistory) { this.contact.transacHistory = []; }

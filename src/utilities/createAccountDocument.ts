@@ -16,6 +16,8 @@ const defaultUser = {
   language: 'en',
   currency: 'USD',
   cash_balance: 0,
+  isSubUser: false,
+  mainUser: '',
   discount: 0,
   taxrate: 0,
   // tslint:disable-next-line: max-line-length
@@ -72,6 +74,7 @@ const subCollections = [
 ];
 
 export const createAccountDocument = async user => {
+  console.log("USER DATA ================",user)
   const db = firebase.firestore();
 
   const userDoc = await db.collection('users').add({

@@ -9,14 +9,14 @@ import * as firebase from 'firebase';
 import { StorageProvider } from '../services/storage/storage';
 
 import { TranslateConfigService } from '../services/translation/translate-config.service';
-import { Message, Placeholder } from '@angular/compiler/src/i18n/i18n_ast';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { createAccountDocument } from '../../utilities/createAccountDocument';
 import { config } from '../../utilities/initializeFirebase';
 import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-declare var SMSReceive: any;
+
+declare const SMSReceive: any;
 
 @Component({
   selector: 'app-login',
@@ -42,12 +42,15 @@ export class LoginPage implements OnInit {
   applicationVerifier;
 
   phone;
+  countryCodeMainUser;
   newaccOwnName;
   newaccBName;
   newaccBArea;
+  roleSelect;
+  mainUserMobile;
   newaccemail; //
   newaccBType;
-
+  usersList = [];
   signup = 0;
   otpmode = 0;
   lang = 1;
@@ -60,6 +63,8 @@ export class LoginPage implements OnInit {
   };
 
   confirmres: any;
+  mainUserMobileInput = false;
+  mainUserUniqueId: void;
   constructor(
     public zone: NgZone,
     public toastCtrl: ToastController,
@@ -73,6 +78,20 @@ export class LoginPage implements OnInit {
     private router: Router,
     private menuCtrl: MenuController
   ) {
+    // this.firebaseAuth.onAuthStateChanged().subscribe(user => {
+
+    //   if (user) {
+    //     console.log(user)
+
+    //     console.log("success")
+    //     // OTP verifired. Do success operation
+    //   }
+    //   else {
+    //     console.log("state not changed")
+    //     // wrong otp
+    //   }
+    // })
+
     // this.loadDropDowns();
     // this.getInfo();
     this.countryCode = '95';
@@ -152,6 +171,14 @@ export class LoginPage implements OnInit {
     console.log(this.otpnum);
   }
 
+  async ionViewWillEnter() {
+    await firebase.firestore().collection('users').get()
+      .then(querySnapshot => {
+        querySnapshot.docs.forEach(doc => {
+          this.usersList.push(doc.data());
+        });
+      });
+  }
   async ngOnInit() {
     console.log('ionViewDidLoad LoginPage');
     this.menuCtrl.swipeGesture(false);
@@ -380,40 +407,89 @@ export class LoginPage implements OnInit {
       });
       this.dis = 1;
 
-      try {
-        const user = {
-          owner: firebase.auth().currentUser.uid,
-          owner_name: this.newaccOwnName,
-          business_name: this.newaccBName,
-          businesstype: this.newaccBType,
-          business_address: this.newaccBArea,
-          email: this.newaccemail ? this.newaccemail : 'sample@sample.com',
-          ph_no: '+' + this.countryCode + this.phone,
-          language: this.translateConfigService.getCurrentLanguage(),
-        };
-        if (!user.owner) { throw new Error('firebase authentication uid missing'); }
-        await createAccountDocument(user);
+      if (this.roleSelect === 'sub') {
+        console.log('SUB USER HERE');
+        console.log('MAIN USER MOBILE', this.countryCodeMainUser + this.mainUserMobile);
+        this.findMainUserId().then(async (result: any) => {
+          if (result) {
+            console.log('GOT THE MAIN USER ID ============', result);
+            try {
+              const user = {
+                owner: firebase.auth().currentUser.uid,
+                owner_name: this.newaccOwnName,
+                business_name: this.newaccBName,
+                businesstype: this.newaccBType,
+                business_address: this.newaccBArea,
+                isSubUser: true,
+                mainUser: result,
+                email: this.newaccemail ? this.newaccemail : 'sample@sample.com',
+                ph_no: '+' + this.countryCode + this.phone,
+                language: this.translateConfigService.getCurrentLanguage(),
+              };
+              if (!user.owner) { throw new Error('firebase authentication uid missing'); }
+              await createAccountDocument(user);
 
-        const title: Observable<any> = this.translateConfigService.getTranslatedMessage('Account Created');
-        const message: Observable<any> = this.translateConfigService.getTranslatedMessage('Your account has been created successfully');
-        const aletr = await this.alertCtrl
-          .create({
-            header: this.subscriber(title),
-            message: this.subscriber(message),
-            buttons: [
-              {
-                text: 'OK',
-                handler: () => {
-                  this.sp.setMem({ force: true }).then(() => {
-                    this.router.navigate(['/add-product-signup']);
-                  });
+              const title: Observable<any> = this.translateConfigService.getTranslatedMessage('Account Created');
+              const message: Observable<any> = this.translateConfigService.getTranslatedMessage('Your account has been created successfully');
+              const aletr = await this.alertCtrl
+                .create({
+                  header: this.subscriber(title),
+                  message: this.subscriber(message),
+                  buttons: [
+                    {
+                      text: 'OK',
+                      handler: () => {
+                        this.sp.setMem({ force: true }).then(() => {
+                          this.router.navigate(['/add-product-signup']);
+                        });
+                      },
+                    },
+                  ],
+                });
+              aletr.present();
+            } catch (error) {
+              console.log(error);
+            }
+          } else {
+            this.dis = 0;
+          }
+        });
+      } else {
+        try {
+          const user = {
+            owner: firebase.auth().currentUser.uid,
+            owner_name: this.newaccOwnName,
+            business_name: this.newaccBName,
+            businesstype: this.newaccBType,
+            business_address: this.newaccBArea,
+            email: this.newaccemail ? this.newaccemail : 'sample@sample.com',
+            ph_no: '+' + this.countryCode + this.phone,
+            language: this.translateConfigService.getCurrentLanguage(),
+          };
+          if (!user.owner) { throw new Error('firebase authentication uid missing'); }
+          await createAccountDocument(user);
+
+          const title: Observable<any> = this.translateConfigService.getTranslatedMessage('Account Created');
+          const message: Observable<any> = this.translateConfigService.getTranslatedMessage('Your account has been created successfully');
+          const aletr = await this.alertCtrl
+            .create({
+              header: this.subscriber(title),
+              message: this.subscriber(message),
+              buttons: [
+                {
+                  text: 'OK',
+                  handler: () => {
+                    this.sp.setMem({ force: true }).then(() => {
+                      this.router.navigate(['/add-product-signup']);
+                    });
+                  },
                 },
-              },
-            ],
-          });
-        aletr.present();
-      } catch (error) {
-        console.log(error);
+              ],
+            });
+          aletr.present();
+        } catch (error) {
+          console.log(error);
+        }
       }
     } else {
       const toast = await this.toastCtrl
@@ -425,6 +501,25 @@ export class LoginPage implements OnInit {
     }
   }
 
+  async findMainUserId() {
+    return new Promise((resolve, reject) => {
+      const findMainUser = firebase.firestore().collection('users').where('ph_no', '==', this.countryCodeMainUser + this.mainUserMobile);
+      console.log('this.newaccOwnName', this.newaccOwnName);
+      findMainUser.get().then(async (querySnapshot) => {
+        console.log('querySnapshot.size()', querySnapshot.size);
+        if (querySnapshot.size === 0) {
+          const toast = await this.toastCtrl.create({ message: 'No main user found', duration: 3000 });
+          toast.present();
+          this.dis = 0;
+        } else {
+          querySnapshot.forEach((doc) => {
+            console.log('MAIN USERRR======================', doc.data().owner);
+            resolve(doc.data());
+          });
+        }
+      });
+    });
+  }
   selectLang(lang: string) {
     this.lang = 0;
     this.selectedLanguage = lang;
@@ -486,22 +581,28 @@ export class LoginPage implements OnInit {
 
   async otpFn() {
     this.startTimer2();
-    try{
-      SMSReceive.stopWatch(
-        ()=>{ console.log("watch stopped") },
-        ()=>{ console.log("watch stop failed") },
-      );
-    } catch(e){
-      console.log("Error with SMSReceive Stop:");
-      console.log(e);
-    }
+    // try {
+    //   SMSReceive.stopWatch(
+    //     () => { console.log('watch stopped'); },
+    //     () => { console.log('watch stop failed'); },
+    //   );
+    // } catch (e) {
+    //   console.log('Error with SMSReceive Stop:');
+    //   console.log(e);
+    // }
     const confirmationResult = this.confirmres;
-    console.log('otp**********', this.otpnum)
-    console.log('otp**********', confirmationResult)
-    let flag = 0;
-    let signCredential = await firebase.auth.PhoneAuthProvider.credential(confirmationResult, String(this.otpnum));
+    console.log('otp**********', this.otpnum);
+    console.log('otp**********', confirmationResult);
+    const flag = 0;
+    const signCredential = await firebase.auth.PhoneAuthProvider.credential(confirmationResult, this.otpnum);
     console.log('signCredential', signCredential);
-
+    // this.firebaseAuth.signInWithVerificationId(confirmationResult, this.otpnum).then(user => {
+    //   if (user) {
+    //     console.log('user', user);
+    //   } else {
+    //     console.log('no user');
+    //   }
+    // });
     firebase.auth().signInWithCredential(signCredential).then(async (info) => {
       console.log('USER INFO', info);
       this.checkifexist();
@@ -621,45 +722,46 @@ export class LoginPage implements OnInit {
 
       const flag = 0;
       console.log('phone number', phoneNumber);
-      try{
-        SMSReceive.startWatch(()=>{
-          console.log("watch started");
-          document.addEventListener("onSMSArrive", (e:any)=>{
-            var incomingSMS = e.data;
-            const message:string = incomingSMS.body;
-            if(message){
-              for(let i=0; i<6; i++){
-                if(!(message[i]<='9' && message[i]>='0')){
-                  return;
-                }
-              }
-              this.otpnum = message.slice(0,6);
-              // this.otpInput.setValue(this.otpnum);
-              this.otpFn();
-            }
-          })
-        },
-          ()=>{ console.log("watch start failed"); }
-        );
-      } catch(e){
-        console.log("Error with SMSReceive Start");
-        console.log(e);
-      }
+      // try {
+      //   SMSReceive.startWatch(() => {
+      //     console.log('watch started');
+      //     document.addEventListener('onSMSArrive', (e: any) => {
+      //       const incomingSMS = e.data;
+      //       // tslint:disable-next-line: no-shadowed-variable
+      //       const message: string = incomingSMS.body;
+      //       if (message) {
+      //         for (let i = 0; i < 6; i++) {
+      //           if (!(message[i] <= '9' && message[i] >= '0')) {
+      //             return;
+      //           }
+      //         }
+      //         this.otpnum = message.slice(0, 6);
+      //         // this.otpInput.setValue(this.otpnum);
+      //         this.otpFn();
+      //       }
+      //     });
+      //   },
+      //     () => { console.log('watch start failed'); }
+      //   );
+      // } catch (e) {
+      //   console.log('Error with SMSReceive Start');
+      //   alert('line 749' + e);
+      // }
       this.firebaseAuth.verifyPhoneNumber(phoneNumber, 30000).then(async (verificationId) => {
-        console.log(verificationId);
-        this.otpmode = 1;
+        alert(verificationId);
         this.confirmres = verificationId;
+        this.otpmode = 1;
         this.timer = 30;
         this.startTimer();
         // SMS sent. Prompt user to type the code from the message, then sign the
         // user in with confirmationResult.confirm(code).
 
-        const msg = this.translateConfigService.getTranslatedMessage("Enter the Confirmation code");
-        const msg1 = this.translateConfigService.getTranslatedMessage("A 6 Digit Code");
-        const msg2 = this.translateConfigService.getTranslatedMessage("SEND");
-        const msg3 = this.translateConfigService.getTranslatedMessage("CANCEL");
-      }).catch(e=>console.log(e));
-      console.log('appVerifier', appVerifier)
+        const msg = this.translateConfigService.getTranslatedMessage('Enter the Confirmation code');
+        const msg1 = this.translateConfigService.getTranslatedMessage('A 6 Digit Code');
+        const msg2 = this.translateConfigService.getTranslatedMessage('SEND');
+        const msg3 = this.translateConfigService.getTranslatedMessage('CANCEL');
+      }).catch(e => alert(e));
+      console.log('appVerifier', appVerifier);
       // await firebase
       //   .auth()
       //   .signInWithPhoneNumber(phoneNumber, appVerifier)
@@ -726,4 +828,13 @@ export class LoginPage implements OnInit {
       .catch(err => console.log(err));
   }
 
+  roleSelection(e) {
+    console.log(this.roleSelect);
+    console.log(e.target.value);
+    if (e.target.value === 'root') {
+      this.mainUserMobileInput = false;
+    } else {
+      this.mainUserMobileInput = true;
+    }
+  }
 }

@@ -4,6 +4,7 @@ import { StorageProvider } from '../services/storage/storage';
 import { TranslateConfigService } from '../services/translation/translate-config.service';
 import { EventService } from '../services/event.service';
 import { Location } from '@angular/common';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-add-product-category',
@@ -45,6 +46,15 @@ export class AddProductCategoryPage implements OnInit {
     });
   }
 
+  subscriber(message: Observable<any>): string {
+    let msg;
+    message.subscribe(res => {
+      msg = res;
+    });
+    console.log(msg);
+    return msg;
+  }
+
   addCategory() {
     // console.log(this.listCat + " and " + this.newprodCat);
     if (this.newprodCat !== '') {
@@ -54,10 +64,9 @@ export class AddProductCategoryPage implements OnInit {
       this.sp.storageReady().then(() => {
         this.sp.addCategory(data).then(() => this.sp.getCategories().then(value => (this.listCat = JSON.parse(value))));
         setTimeout(async () => {
-          const message = this.translateConfigService.getTranslatedMessage('Finish');
+          const message = this.subscriber(this.translateConfigService.getTranslatedMessage('Finish'));
           const toast = await this.toastCtrl.create({
-            // @ts-ignore
-            message: message.value,
+            message,
             duration: 3000,
           });
           this.newprodCat = '';
@@ -78,10 +87,9 @@ export class AddProductCategoryPage implements OnInit {
         .then(() => this.sp.getCategories().then(value => (this.listCat = JSON.parse(value))));
 
       setTimeout(async () => {
-        const message = this.translateConfigService.getTranslatedMessage('Finish');
+        const message = this.subscriber(this.translateConfigService.getTranslatedMessage('Finish'));
         const toast = await this.toastCtrl.create({
-          // @ts-ignore
-          message: message.value,
+          message,
           duration: 3000,
         });
         this.getCategories();
