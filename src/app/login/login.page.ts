@@ -581,29 +581,28 @@ export class LoginPage implements OnInit {
 
   async otpFn() {
     this.startTimer2();
-    try {
-      SMSReceive.stopWatch(
-        () => { console.log('watch stopped'); },
-        () => { console.log('watch stop failed'); },
-      );
-    } catch (e) {
-      console.log('Error with SMSReceive Stop:');
-      console.log(e);
-    }
+    // try {
+    //   SMSReceive.stopWatch(
+    //     () => { console.log('watch stopped'); },
+    //     () => { console.log('watch stop failed'); },
+    //   );
+    // } catch (e) {
+    //   console.log('Error with SMSReceive Stop:');
+    //   console.log(e);
+    // }
     const confirmationResult = this.confirmres;
     console.log('otp**********', this.otpnum);
     console.log('otp**********', confirmationResult);
     const flag = 0;
     const signCredential = await firebase.auth.PhoneAuthProvider.credential(confirmationResult, this.otpnum);
     console.log('signCredential', signCredential);
-    // this.firebaseAuth.signInWithVerificationId(confirmationResult, this.otpnum).then(user =>{
-    //   if(user) {
-    //     console.log("user",user)
+    // this.firebaseAuth.signInWithVerificationId(confirmationResult, this.otpnum).then(user => {
+    //   if (user) {
+    //     console.log('user', user);
+    //   } else {
+    //     console.log('no user');
     //   }
-    //   else {
-    //     console.log("no user")
-    //   }
-    // })
+    // });
     firebase.auth().signInWithCredential(signCredential).then(async (info) => {
       console.log('USER INFO', info);
       this.checkifexist();
@@ -723,35 +722,35 @@ export class LoginPage implements OnInit {
 
       const flag = 0;
       console.log('phone number', phoneNumber);
-      try {
-        SMSReceive.startWatch(() => {
-          console.log('watch started');
-          document.addEventListener('onSMSArrive', (e: any) => {
-            const incomingSMS = e.data;
-            // tslint:disable-next-line: no-shadowed-variable
-            const message: string = incomingSMS.body;
-            if (message) {
-              for (let i = 0; i < 6; i++) {
-                if (!(message[i] <= '9' && message[i] >= '0')) {
-                  return;
-                }
-              }
-              this.otpnum = message.slice(0, 6);
-              // this.otpInput.setValue(this.otpnum);
-              this.otpFn();
-            }
-          });
-        },
-          () => { console.log('watch start failed'); }
-        );
-      } catch (e) {
-        console.log('Error with SMSReceive Start');
-        alert('line 749' + e);
-      }
+      // try {
+      //   SMSReceive.startWatch(() => {
+      //     console.log('watch started');
+      //     document.addEventListener('onSMSArrive', (e: any) => {
+      //       const incomingSMS = e.data;
+      //       // tslint:disable-next-line: no-shadowed-variable
+      //       const message: string = incomingSMS.body;
+      //       if (message) {
+      //         for (let i = 0; i < 6; i++) {
+      //           if (!(message[i] <= '9' && message[i] >= '0')) {
+      //             return;
+      //           }
+      //         }
+      //         this.otpnum = message.slice(0, 6);
+      //         // this.otpInput.setValue(this.otpnum);
+      //         this.otpFn();
+      //       }
+      //     });
+      //   },
+      //     () => { console.log('watch start failed'); }
+      //   );
+      // } catch (e) {
+      //   console.log('Error with SMSReceive Start');
+      //   alert('line 749' + e);
+      // }
       this.firebaseAuth.verifyPhoneNumber(phoneNumber, 30000).then(async (verificationId) => {
-        console.log(verificationId);
-        this.otpmode = 1;
+        alert(verificationId);
         this.confirmres = verificationId;
+        this.otpmode = 1;
         this.timer = 30;
         this.startTimer();
         // SMS sent. Prompt user to type the code from the message, then sign the
