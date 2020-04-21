@@ -43,7 +43,14 @@
     <div style="text-align: center;">
         <div *ngIf="!((rev+exp)>=0)" style="color: red;"> {{"You have negative cash"|translate}} !</div>
     </div>
-    <ion-button expand="block" size="large" color="success" (click)="applyLoan()" *ngIf="!userdata.isSubUser">
+    <ion-button expand="block" size="large" color="success" (click)="toggleList()" size="small">
+      <ion-icon name="analytics-outline"></ion-icon> &nbsp; Analytics
+  </ion-button>
+  <ion-button expand="block" size="large" color="success" (click)="toggleGL()" size="small">
+    <ion-icon name="receipt-outline"></ion-icon> &nbsp; Transactions
+</ion-button>
+
+    <ion-button expand="block" size="large" color="success" (click)="applyLoan()">
         <img src="assets/new-ui-imgs/icons/Mask Group 10.png" class="mr-3" alt="" width="30">{{"Apply for Loan"|translate}}
     </ion-button>
 
@@ -67,7 +74,7 @@
     </div>
 
 
-    <ion-grid>
+    <ion-grid [hidden]="islist">
         <div class="lastTransaction">
           Transactions during the dates:
         </div>
