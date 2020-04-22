@@ -54,7 +54,7 @@
         <img src="assets/new-ui-imgs/icons/Mask Group 10.png" class="mr-3" alt="" width="30">{{"Apply for Loan"|translate}}
     </ion-button>
 
-    <div [hidden]="isgraph == 0" *ngIf="!userdata.isSubUser">
+    <div [hidden]="isgraph" *ngIf="!userdata.isSubUser">
         <ion-card>
             <ion-card-header>
                 {{"Bar Chart"|translate}}
