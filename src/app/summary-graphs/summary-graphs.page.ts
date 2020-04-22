@@ -201,6 +201,7 @@ export class SummaryGraphsPage implements OnInit {
             element.expandedvar = this.subscriber(this.translateConfigService.getTranslatedMessage('More'));
           });
           this.listtransacrev = this.listtransac.reverse();
+          return;
         })
         .then(() => {
           this.setvalues(); // set pro, rev & exp for whatever time period
@@ -217,6 +218,7 @@ export class SummaryGraphsPage implements OnInit {
       let findSubUsersList = firebase.firestore().collection('users').where('mainUser.owner', '==', this.userdata.owner);
       findSubUsersList.get().then(async (querySnapshot) => {
         if (querySnapshot.size == 0) {
+          resolve([]);
         } else {
           const transactions = [];
           querySnapshot.forEach(async function(doc) {
@@ -239,6 +241,7 @@ export class SummaryGraphsPage implements OnInit {
     let start = new Date(this.fromDate); // subtract one day
     start = new Date(start.getFullYear(), start.getMonth(), start.getDate(), 0, 0, 0);
     const end = new Date(this.toDate);
+    console.log({ start, end });
     this.getTransac({ start, end });
   }
 
@@ -666,7 +669,7 @@ export class SummaryGraphsPage implements OnInit {
 
   generateGraphs() {
     console.log('bar graph');
-    this.barChart = new Chart(this.barCanvas.nativeElement, {
+    this.barChart = new Chart((document.getElementById('barCanvas') as HTMLCanvasElement).getContext('2d'), {
       type: 'bar',
       data: {
         labels: ['Revenue', 'Expenses', 'Profit'],
@@ -767,7 +770,7 @@ export class SummaryGraphsPage implements OnInit {
     //   }
     // }
 
-    this.lineChart = new Chart(this.lineCanvas.nativeElement, {
+    this.lineChart = new Chart((document.getElementById('lineCanvas') as HTMLCanvasElement).getContext('2d'), {
       type: 'line',
       data: {
         labels: labels.reverse(),
