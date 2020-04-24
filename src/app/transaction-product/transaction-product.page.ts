@@ -49,7 +49,7 @@ export class TransactionProductPage implements OnInit {
 
 
   datlist: any = [];
-  public BottomSheetState: SheetStates = SheetStates.Closed;
+  public ProductBottomSheetState: SheetStates = SheetStates.Closed;
   showSellButton: boolean;
   userdata: any;
   constructor(
@@ -143,14 +143,15 @@ export class TransactionProductPage implements OnInit {
   }
 
   public openSheet() {
-    this.BottomSheetState = SheetStates.Opened;
+    this.ProductBottomSheetState = SheetStates.Opened;
   }
 
   public closeSheet() {
-    this.BottomSheetState = SheetStates.Closed;
+    this.ProductBottomSheetState = 0;
   }
 
   public StateChanged(event) {
+    console.log('Sheet Closed', event);
     if (event === SheetStates.Closed) {
       console.log('Sheet Closed');
     }
@@ -160,10 +161,11 @@ export class TransactionProductPage implements OnInit {
     this.translateConfigService.getTranslatedMessage('Complete Sale').subscribe((res) => {
       this.updateOrCreate = res;
     });
-    console.log('ionViewDidLoad TransactionProductPage');
   }
 
   async ionViewDidEnter() {
+    console.log('ionViewDidLoad TransactionProductPage');
+    this.ProductBottomSheetState = 2;
     await this.getCategories();
     await this.getUserData();
     await this.getProducts();
@@ -186,7 +188,7 @@ export class TransactionProductPage implements OnInit {
   }
 
   navAdd(num: number) {
-    this.BottomSheetState = SheetStates.Closed;
+    this.ProductBottomSheetState = 0;
     if (num === 1) {
       this.router.navigate(['/home/addproduct']);
       // this.navCtrl.push(AddProductPage);
@@ -337,7 +339,7 @@ export class TransactionProductPage implements OnInit {
             if (this.event !== true) {
               this.listProducts = JSON.parse(val);
               console.log(this.listProducts);
-              if (this.userdata.isSubUser == false) {
+              if (!this.userdata.isSubUser) {
 
                 await this.findSubUserProducts().then((result: any) => {
 
@@ -373,18 +375,18 @@ export class TransactionProductPage implements OnInit {
   async findSubUserProducts() {
     console.log('USER DATA INSIDE THE FIND SUB USER PRODUCTS ****************', this.userdata);
     return new Promise((resolve, reject) => {
-      let findSubUsersList = firebase.firestore().collection('users').where('mainUser.owner', '==', this.userdata.owner);
+      const findSubUsersList = firebase.firestore().collection('users').where('mainUser.owner', '==', this.userdata.owner);
       findSubUsersList.get().then(async (querySnapshot) => {
-        if (querySnapshot.size == 0) {
+        if (querySnapshot.size === 0) {
           resolve([]);
         } else {
           const productArray = [];
-          querySnapshot.forEach(async function(doc) {
+          querySnapshot.forEach(async (doc) => {
             console.log('SUB USERS ****************', doc.data());
-            let singleUserProduct = await firebase.firestore().collection('users/' + doc.id + '/products');
-            await singleUserProduct.get().then(async (querySnapshot) => {
-              querySnapshot.forEach(async function(doc) {
-                productArray.push(doc.data());
+            const singleUserProduct = await firebase.firestore().collection('users/' + doc.id + '/products');
+            await singleUserProduct.get().then(async (querySnapshot1) => {
+              querySnapshot1.forEach(async (doc1) => {
+                productArray.push(doc1.data());
                 console.log('PRODUCT DOC ****************', productArray);
               });
             });

@@ -65,6 +65,7 @@ export class LoginPage implements OnInit {
   confirmres: any;
   mainUserMobileInput = false;
   mainUserUniqueId: void;
+  currentUser: any;
   constructor(
     public zone: NgZone,
     public toastCtrl: ToastController,
@@ -183,15 +184,6 @@ export class LoginPage implements OnInit {
     console.log('ionViewDidLoad LoginPage');
     this.menuCtrl.swipeGesture(false);
     this.signup = 0;
-    // const userSnapshot = await firebase
-    //   .firestore()
-    //   .collection('users')
-    //   .get();
-    // const dataSet = [];
-    // userSnapshot.forEach(async doc => {
-    //   const user = doc.data();
-    //   await dataSet.push({ id: doc.id, user });
-    // });
   }
 
 
@@ -336,6 +328,16 @@ export class LoginPage implements OnInit {
 
   async ionViewDidEnter() {
     firebase.auth().useDeviceLanguage();
+    // this.firebaseAuth.onAuthStateChanged().subscribe((user: firebase.User) => {
+    //   console.log(user);
+    //   if (user) {
+    //     this.lang = 0;
+    //     this.signup = 1;
+    //     this.checkifexist(user);
+    //   }
+    // }, err => {
+    //   console.log(err);
+    // });
     // this.applicationVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
     //   size: 'invisible',
     //   callback: response => {
@@ -415,7 +417,7 @@ export class LoginPage implements OnInit {
             console.log('GOT THE MAIN USER ID ============', result);
             try {
               const user = {
-                owner: firebase.auth().currentUser.uid,
+                owner: this.currentUser.uid,
                 owner_name: this.newaccOwnName,
                 business_name: this.newaccBName,
                 businesstype: this.newaccBType,
@@ -423,7 +425,7 @@ export class LoginPage implements OnInit {
                 isSubUser: true,
                 mainUser: result,
                 email: this.newaccemail ? this.newaccemail : 'sample@sample.com',
-                ph_no: '+' + this.countryCode + this.phone,
+                ph_no: this.currentUser.phoneNumber || `+${this.countryCode}${this.phone}`,
                 language: this.translateConfigService.getCurrentLanguage(),
               };
               if (!user.owner) { throw new Error('firebase authentication uid missing'); }
@@ -503,10 +505,10 @@ export class LoginPage implements OnInit {
 
   async findMainUserId() {
     return new Promise((resolve, reject) => {
+      console.log('this.newaccOwnName', this.newaccOwnName, this.countryCodeMainUser + this.mainUserMobile, typeof this.countryCodeMainUser, typeof this.mainUserMobile);
       const findMainUser = firebase.firestore().collection('users').where('ph_no', '==', this.countryCodeMainUser + this.mainUserMobile);
-      console.log('this.newaccOwnName', this.newaccOwnName);
       findMainUser.get().then(async (querySnapshot) => {
-        console.log('querySnapshot.size()', querySnapshot.size);
+        console.log('querySnapshot.size()', querySnapshot);
         if (querySnapshot.size === 0) {
           const toast = await this.toastCtrl.create({ message: 'No main user found', duration: 3000 });
           toast.present();
@@ -531,16 +533,20 @@ export class LoginPage implements OnInit {
     this.selectedLanguage = 'en';
   }
 
-  async checkifexist() {
+  async checkifexist(user?) {
     let flag = 0;
+    const currentUser: any = user ? user : firebase.auth().currentUser;
     return await firebase
       .firestore()
       .collection('users')
-      .where('owner', '==', firebase.auth().currentUser.uid)
+      .where('owner', '==', currentUser.uid)
       .get()
       .then(async querySnapshot => {
         if (querySnapshot.size === 0) {
           console.log('Bun');
+          this.currentUser = currentUser;
+          // await firebase.auth().updateCurrentUser(this.currentUser);
+          this.phone = this.currentUser.phoneNumber;
           flag = 1;
           this.otpmode = 0;
           this.signup = 1;
@@ -592,7 +598,7 @@ export class LoginPage implements OnInit {
     // }
     const confirmationResult = this.confirmres;
     console.log('otp**********', this.otpnum);
-    console.log('otp**********', confirmationResult);
+    console.log('confirmationResult**********', confirmationResult);
     const flag = 0;
     const signCredential = await firebase.auth.PhoneAuthProvider.credential(confirmationResult, this.otpnum);
     console.log('signCredential', signCredential);
@@ -747,7 +753,7 @@ export class LoginPage implements OnInit {
       //   console.log('Error with SMSReceive Start');
       //   alert('line 749' + e);
       // }
-      this.firebaseAuth.verifyPhoneNumber(phoneNumber, 30000).then(async (verificationId) => {
+      this.firebaseAuth.verifyPhoneNumber(phoneNumber, 0).then(async (verificationId) => {
         console.log(verificationId);
         this.confirmres = verificationId;
         this.otpmode = 1;

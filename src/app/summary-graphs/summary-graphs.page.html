@@ -1,6 +1,7 @@
 <ion-content class="ion-padding">
     <ion-refresher (ionRefresh)="doRefresh($event)" slot="fixed">
-        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+            refreshingText="Refreshing...">
         </ion-refresher-content>
     </ion-refresher>
     <ion-card>
@@ -15,13 +16,15 @@
             <ion-grid>
 
                 <ion-row>
-                    <ion-col size="5" style="height: 10px; text-align: center; font-size: medium; color: black; border: 1px dashed gray; border-radius: 1rem; background-color: hsl(39, 100%, 68%);">
+                    <ion-col size="5"
+                        style="height: 10px; text-align: center; font-size: medium; color: black; border: 1px dashed gray; border-radius: 1rem; background-color: hsl(39, 100%, 68%);">
                         <ion-datetime [(ngModel)]="fromDate" [max]="toDate" (ionChange)="dateChange()"></ion-datetime>
                     </ion-col>
                     <ion-col size="2" style="text-align: center; font-size: large;">
                         to
                     </ion-col>
-                    <ion-col size="5" style="height: 10px;text-align: center; font-size: medium; color: black;border: 1px dashed gray; border-radius: 1rem; background-color: hsl(39, 100%, 68%);">
+                    <ion-col size="5"
+                        style="height: 10px;text-align: center; font-size: medium; color: black;border: 1px dashed gray; border-radius: 1rem; background-color: hsl(39, 100%, 68%);">
                         <ion-datetime [(ngModel)]="toDate" [max]="toDate" (ionChange)="dateChange()"></ion-datetime>
                     </ion-col>
                 </ion-row>
@@ -43,15 +46,18 @@
     <div style="text-align: center;">
         <div *ngIf="!((rev+exp)>=0)" style="color: red;"> {{"You have negative cash"|translate}} !</div>
     </div>
-    <ion-button expand="block" size="large" color="success" (click)="toggleList()" size="small">
-      <ion-icon name="analytics-outline"></ion-icon> &nbsp; Analytics
-  </ion-button>
-  <ion-button expand="block" size="large" color="success" (click)="toggleGL()" size="small">
-    <ion-icon name="receipt-outline"></ion-icon> &nbsp; Transactions
-</ion-button>
+    <ion-button expand="block" size="large" color="success" (click)="toggleList()" size="small"
+        *ngIf="!userdata.isSubUser">
+        <ion-icon name="analytics-outline"></ion-icon> &nbsp; Analytics
+    </ion-button>
+    <ion-button expand="block" size="large" color="success" (click)="toggleGL()" size="small"
+        *ngIf="!userdata.isSubUser">
+        <ion-icon name="receipt-outline"></ion-icon> &nbsp; Transactions
+    </ion-button>
 
-    <ion-button expand="block" size="large" color="success" (click)="applyLoan()">
-        <img src="assets/new-ui-imgs/icons/Mask Group 10.png" class="mr-3" alt="" width="30">{{"Apply for Loan"|translate}}
+    <ion-button expand="block" size="large" color="success" (click)="applyLoan()" *ngIf="!userdata.isSubUser">
+        <img src="assets/new-ui-imgs/icons/Mask Group 10.png" class="mr-3" alt=""
+            width="30">{{"Apply for Loan"|translate}}
     </ion-button>
 
     <div [hidden]="isgraph == 0" *ngIf="!userdata.isSubUser">
@@ -74,14 +80,15 @@
     </div>
 
 
-    <ion-grid [hidden]="islist">
+    <ion-grid [hidden]="islist == 0">
         <div class="lastTransaction">
-          Transactions during the dates:
+            Transactions during the dates:
         </div>
         <ion-list lines="none" *ngFor="let transac of listtransac; let i = index">
             <ion-card>
                 <ion-item (click)="expandTransac(transac)">
-                    <ion-icon class="mr-3" name="checkmark-circle-outline" color="success" style="font-size: 27px;"></ion-icon>
+                    <ion-icon class="mr-3" name="checkmark-circle-outline" color="success" style="font-size: 27px;">
+                    </ion-icon>
                     <ion-label class="mr-6" *ngFor="let prod of transac.itemslist">
                         <p>{{prod.name}}</p>
                         <p>{{transac.updatedAt | date: 'dd/MM/yyyy'}}</p>
@@ -97,11 +104,14 @@
                     <ion-list *ngFor="let item of transac.itemslist" [hidden]="transac.expanded">
                         <ion-row style="padding: 0px;">
                             <ion-col size="12"><span style="font-weight: bolder;">Name: </span> {{item.name}}</ion-col>
-                            <ion-col size="12"><span style="font-weight: bolder;">Quantity: </span> {{item.qty}}</ion-col>
-                            <ion-col size="12"><span style="font-weight: bolder;">Price: </span> {{item.price}}</ion-col>
+                            <ion-col size="12"><span style="font-weight: bolder;">Quantity: </span> {{item.qty}}
+                            </ion-col>
+                            <ion-col size="12"><span style="font-weight: bolder;">Price: </span> {{item.price}}
+                            </ion-col>
                         </ion-row>
                     </ion-list>
-                    <ion-row *ngIf="transac.totaldisc!=transac.totalsum" style="padding: 0px;text-align: left; " [hidden]="transac.expanded">
+                    <ion-row *ngIf="transac.totaldisc!=transac.totalsum" style="padding: 0px;text-align: left; "
+                        [hidden]="transac.expanded">
                         <ion-col>
                             {{"Discounted total:"|translate}} ({{transac.discount}}%)
                         </ion-col>
@@ -109,7 +119,8 @@
                             {{transac.totaldisc}}
                         </ion-col>
                     </ion-row>
-                    <ion-row *ngIf="transac.totalsum!=transac.totalatax" style="padding: 0px; text-align: left;" [hidden]="transac.expanded">
+                    <ion-row *ngIf="transac.totalsum!=transac.totalatax" style="padding: 0px; text-align: left;"
+                        [hidden]="transac.expanded">
                         <ion-col>
                             {{"Total after tax:"|translate}} ({{transac.taxrate}}%)
                         </ion-col>
@@ -119,7 +130,8 @@
                     </ion-row>
                     <ion-row>
                         <ion-col *ngIf="getDate(transac.datetime) == getDate(currentdatetime)">
-                            <ion-button size="small" expand="full" color="magenta " (click)="delTransac(transac)">{{"Delete"|translate}}
+                            <ion-button size="small" expand="full" color="magenta " (click)="delTransac(transac)">
+                                {{"Delete"|translate}}
                             </ion-button>
                         </ion-col>
                         <ion-col>
@@ -130,6 +142,13 @@
                         </ion-col>
                     </ion-row>
                 </ion-card>
+            </ion-card>
+        </ion-list>
+        <ion-list lines="none" *ngIf="listtransac && listtransac.length <= 0">
+            <ion-card>
+                <ion-card-content>
+                    No record of transactions
+                </ion-card-content>
             </ion-card>
         </ion-list>
     </ion-grid>

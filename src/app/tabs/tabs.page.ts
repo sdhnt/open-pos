@@ -191,6 +191,10 @@ export class TabsPage implements OnInit {
           this.isHidden = false;
           break;
 
+        case '/home/income-transaction?data=newUser&lang=en':
+          this.isHidden = false;
+          break;
+
         case '/home/income-transaction':
           this.isHidden = false;
           break;
@@ -215,7 +219,7 @@ export class TabsPage implements OnInit {
   }
 
   backPress() {
-    if (this.backButtonRoute != '') {
+    if (this.backButtonRoute !== '') {
       this.router.navigateByUrl(this.backButtonRoute);
     }
   }
@@ -542,12 +546,12 @@ export class TabsPage implements OnInit {
 
   async addNewItem() {
     console.log('this.fabePage', this.fabePage);
-    if (this.fabePage == 'contacts') {
+    if (this.fabePage === 'contacts') {
       this.BottomSheetState = SheetStates.Opened;
-    } else if (this.fabePage == 'transaction-product') {
+    } else if (this.fabePage === 'transaction-product') {
       console.log('HELLO');
       this.BottomSheetState1 = SheetStates.Opened;
-    } else if (this.fabePage == 'income-transaction') {
+    } else if (this.fabePage === 'income-transaction') {
       this.BottomSheetState2 = SheetStates.Opened;
     }
   }
@@ -795,10 +799,10 @@ export class PopOverComponent implements OnInit {
     this.popover.dismiss();
     this.router.navigate(['/home/user-data']);
     // await this.modal1.dismiss();
-  //   const helpModal = await this.modal.create({
-  //     component: ContactUsPage
-  //   });
-  //   helpModal.present();
-  // }
+    //   const helpModal = await this.modal.create({
+    //     component: ContactUsPage
+    //   });
+    //   helpModal.present();
+    // }
   }
 }

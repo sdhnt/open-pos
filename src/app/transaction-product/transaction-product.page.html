@@ -45,7 +45,9 @@
     </ion-grid>
   </div>
 
-  <ion-button *ngIf="event1!=true&&!showSellButton" expand="block" color="success" (click)="openSheet()"> <ion-icon name="add-circle-outline"></ion-icon> &nbsp;Add Product/Category</ion-button>
+  <ion-button *ngIf="event1!=true&&!showSellButton" expand="block" color="success" (click)="openSheet()">
+    <ion-icon name="add-circle-outline"></ion-icon> &nbsp;Add Product/Category
+  </ion-button>
 
 
   <!-- <ion-card>
@@ -95,10 +97,12 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-          <ion-button size="small" expand="block" color="danger" (click)="updateName()"> {{"CANCEL"|translate}}</ion-button>
+          <ion-button size="small" expand="block" color="danger" (click)="updateName()"> {{"CANCEL"|translate}}
+          </ion-button>
         </ion-col>
         <ion-col>
-          <ion-button size="small" expand="block" color="yellow" (click)="updateName()"> {{"Update Receipt"|translate}}</ion-button>
+          <ion-button size="small" expand="block" color="yellow" (click)="updateName()"> {{"Update Receipt"|translate}}
+          </ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -109,7 +113,8 @@
         <ion-row>
           <ion-col size="4">
             <ion-avatar class="img-fluid">
-              <img [src]="product.url != '' ? product.url : 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'">
+              <img
+                [src]="product.url != '' ? product.url : 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'">
             </ion-avatar>
           </ion-col>
           <ion-col size="8" style="padding: 0%; margin: 0px;">
@@ -118,11 +123,13 @@
                 {{product.name}}
               </ion-col>
             </ion-row>
-            <ion-radio-group value="r" (ionChange)="addwholesaledisc($event, product)" style="padding: 0px; margin: 0px;;">
+            <ion-radio-group value="r" (ionChange)="addwholesaledisc($event, product)"
+              style="padding: 0px; margin: 0px;;">
               <ion-row style="padding: 0px; margin: 0px;;">
-                <ion-col size="8" style="padding: 0px; margin: 0px;;" >
-                  <ion-radio color="magenta" size="small" class="qty-radio" value="r" *ngIf="product.qty>0"></ion-radio> &nbsp;
-                      <small>{{"Retail Price"|translate}}:</small>
+                <ion-col size="8" style="padding: 0px; margin: 0px;;">
+                  <ion-radio color="magenta" size="small" class="qty-radio" value="r" *ngIf="product.qty>0"></ion-radio>
+                  &nbsp;
+                  <small>{{"Retail Price"|translate}}:</small>
                 </ion-col>
                 <ion-col size="4" style="text-align:end;padding: 0px; margin: 0px;;">
                   <small>{{product.price}}</small>
@@ -131,8 +138,9 @@
 
               <ion-row style="padding: 0px; margin: 0px;;">
                 <ion-col size="8" style="padding: 0px; margin: 0px;;">
-                  <ion-radio color="magenta" size="small" class="qty-radio" value="w" *ngIf="product.qty>0"></ion-radio> &nbsp;
-                      <small>{{"Wholesale Price"|translate}}:</small>
+                  <ion-radio color="magenta" size="small" class="qty-radio" value="w" *ngIf="product.qty>0"></ion-radio>
+                  &nbsp;
+                  <small>{{"Wholesale Price"|translate}}:</small>
                 </ion-col>
                 <ion-col size="4" style="text-align:end;padding: 0px; margin: 0px;;">
                   <small>{{product.wholesale_price}}</small>
@@ -141,7 +149,7 @@
 
               <ion-row style="padding: 0px; margin: 0px;;">
                 <ion-col size="6" style="padding: 0px; margin: 0px;;">
-                  &nbsp;  <small>{{"Category"|translate}}:</small>
+                  &nbsp; <small>{{"Category"|translate}}:</small>
                 </ion-col>
                 <ion-col size="6" style="text-align:end;padding: 0px; margin: 0px;;">
                   <small>{{product.cat}}</small>
@@ -150,7 +158,7 @@
 
               <ion-row style="padding: 0px; margin: 0px;;">
                 <ion-col size="6" style="padding: 0px; margin: 0px;;">
-                  &nbsp;  <small>{{"Stock"|translate}}:</small>
+                  &nbsp; <small>{{"Stock"|translate}}:</small>
                 </ion-col>
                 <ion-col size="6" style="text-align:end;padding: 0px; margin: 0px;;">
                   <small>{{product.stock_qty}}</small>
@@ -341,7 +349,7 @@
   </ion-grid>
 </ion-footer>
 
-<bottom-sheet [(State)]="BottomSheetState" (StateChange)="StateChanged($event)">
+<bottom-sheet [(State)]="ProductBottomSheetState" (StateChange)="StateChanged($event)" [ShowBackdrop]="true">
   <div class="row m-0 py-5 option justify-content-around">
     <div class="col-6 py-3">
       <ion-fab-button color="magenta" class="m-auto" size="small" (click)="closeSheet(); navAdd(2)">

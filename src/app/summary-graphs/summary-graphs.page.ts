@@ -181,7 +181,7 @@ export class SummaryGraphsPage implements OnInit {
           this.listtransac = JSON.parse(val);
           console.log('this.listtransac', this.listtransac);
 
-          if (this.userdata.isSubUser == false) {
+          if (!this.userdata.isSubUser) {
 
             await this.findSubUserTransactions().then((result: any) => {
 
@@ -215,18 +215,18 @@ export class SummaryGraphsPage implements OnInit {
   async findSubUserTransactions() {
     console.log('USER DATA INSIDE THE FIND SUB USER Transactions ****************', this.userdata);
     return new Promise((resolve, reject) => {
-      let findSubUsersList = firebase.firestore().collection('users').where('mainUser.owner', '==', this.userdata.owner);
+      const findSubUsersList = firebase.firestore().collection('users').where('mainUser.owner', '==', this.userdata.owner);
       findSubUsersList.get().then(async (querySnapshot) => {
-        if (querySnapshot.size == 0) {
+        if (querySnapshot.size === 0) {
           resolve([]);
         } else {
           const transactions = [];
-          querySnapshot.forEach(async function(doc) {
+          querySnapshot.forEach(async (doc) => {
             console.log('SUB USERS ****************', doc.data());
-            let singleUserProduct = await firebase.firestore().collection('users/' + doc.id + '/transactions');
-            await singleUserProduct.get().then(async (querySnapshot) => {
-              querySnapshot.forEach(async function(doc) {
-                transactions.push(doc.data());
+            const singleUserProduct = await firebase.firestore().collection('users/' + doc.id + '/transactions');
+            await singleUserProduct.get().then(async (querySnapshot1) => {
+              querySnapshot1.forEach(async (doc1) => {
+                transactions.push(doc1.data());
                 console.log('PRODUCT DOC ****************', transactions);
               });
             });
@@ -285,7 +285,7 @@ export class SummaryGraphsPage implements OnInit {
         this.exp += Number(element.totalatax);
       }
     });
-    this.generateGraphs();
+    if (!this.userdata.isSubUser) { this.generateGraphs(); }
   }
 
   async updateCb(transacsum) {
@@ -562,17 +562,17 @@ export class SummaryGraphsPage implements OnInit {
 
   toggleGL() {
     this.isgraph = 1;
-    if (this.islist == 1) {
+    if (this.islist === 1) {
       this.islist = 0;
-    } else if (this.islist == 0) {
+    } else if (this.islist === 0) {
       this.islist = 1;
     }
   }
   toggleList() {
     this.islist = 1;
-    if (this.isgraph == 1) {
+    if (this.isgraph === 1) {
       this.isgraph = 0;
-    } else if (this.isgraph == 0) {
+    } else if (this.isgraph === 0) {
       this.isgraph = 1;
     }
 
