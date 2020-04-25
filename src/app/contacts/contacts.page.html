@@ -146,7 +146,7 @@
     </ion-card>
 </ion-content>
 
-<bottom-sheet [(State)]="BottomSheetState" (StateChange)="StateChanged($event)">
+<bottom-sheet #ContactSheet [(State)]="BottomSheetState" (StateChange)="StateChanged($event)">
     <div class="row m-0 py-5 option justify-content-around">
         <!-- <div class="col-4 py-3">
             <ion-fab-button color="magenta" class="m-auto" size="small" (click)="closeSheet(); navCredReminder()">

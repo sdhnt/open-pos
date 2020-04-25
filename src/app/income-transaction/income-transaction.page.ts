@@ -735,18 +735,6 @@ export class IncomeTransactionPage implements OnInit {
     this.getLastTransaction();
   }
   async ionViewWillEnter() {
-    let singleUser = await firebase.firestore().collection('users').where('ph_no', '==', '+919409360641');
-    singleUser.get().then(async (querySnapshot) => {
-      querySnapshot.forEach(async function(doc) {
-        console.log('SINGLE USER', doc.data());
-        let singleUserProduct = await firebase.firestore().collection('users/' + doc.data().id + '/products');
-        singleUserProduct.get().then(async (querySnapshot) => {
-          querySnapshot.forEach(async function(doc) {
-            console.log('PRODUCT DOC', doc.data());
-          });
-        });
-      });
-    });
     this.events.emitFabButton('income-transaction');
   }
   createRec() {

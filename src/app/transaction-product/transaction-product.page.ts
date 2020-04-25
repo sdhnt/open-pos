@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   ToastController,
   AlertController,
@@ -12,7 +12,7 @@ import { AllTransactionPage } from '../all-transaction/all-transaction.page';
 import { EventService } from '../services/event.service';
 import { Observable } from 'rxjs';
 import * as $ from 'jquery';
-import { SheetStates } from 'ionic-custom-bottom-sheet';
+import { SheetStates, BottomSheetComponent } from 'ionic-custom-bottom-sheet';
 import * as firebase from 'firebase';
 
 @Component({
@@ -24,7 +24,7 @@ export class TransactionProductPage implements OnInit {
   updateOrCreate;
   price;
   itname = '';
-
+  @ViewChild('ProductSheet', { static: false }) ProductSheet: BottomSheetComponent;
   calcitems: any = [];
 
   selectedItem: any;
@@ -147,7 +147,7 @@ export class TransactionProductPage implements OnInit {
   }
 
   public closeSheet() {
-    this.ProductBottomSheetState = 0;
+    this.ProductBottomSheetState = SheetStates.Closed;
   }
 
   public StateChanged(event) {
@@ -165,7 +165,7 @@ export class TransactionProductPage implements OnInit {
 
   async ionViewDidEnter() {
     console.log('ionViewDidLoad TransactionProductPage');
-    this.ProductBottomSheetState = 2;
+    this.ProductBottomSheetState = SheetStates.Closed;
     await this.getCategories();
     await this.getUserData();
     await this.getProducts();
@@ -175,6 +175,7 @@ export class TransactionProductPage implements OnInit {
   ionViewWillLeave() {
     // this.events.emitFabButton('');
     this.showSellButton = false;
+    this.ProductSheet.ChangeBottomSheetStateToClosed();
   }
   ionViewDidLoad() {
     this.translateConfigService.getTranslatedMessage('Complete Sale').subscribe((res) => {
@@ -188,7 +189,7 @@ export class TransactionProductPage implements OnInit {
   }
 
   navAdd(num: number) {
-    this.ProductBottomSheetState = 0;
+    this.ProductBottomSheetState = SheetStates.Closed;
     if (num === 1) {
       this.router.navigate(['/home/addproduct']);
       // this.navCtrl.push(AddProductPage);

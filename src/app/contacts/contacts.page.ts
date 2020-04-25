@@ -11,7 +11,7 @@ import { IndividualContactPage } from '../individual-contact/individual-contact.
 import { TranslateConfigService } from '../services/translation/translate-config.service';
 import { Router, NavigationExtras } from '@angular/router';
 import { Observable } from 'rxjs';
-import { SheetStates } from 'ionic-custom-bottom-sheet';
+import { SheetStates, BottomSheetComponent } from 'ionic-custom-bottom-sheet';
 import { EventService } from '../services/event.service';
 
 @Component({
@@ -20,7 +20,7 @@ import { EventService } from '../services/event.service';
   styleUrls: ['./contacts.page.scss'],
 })
 export class ContactsPage implements OnInit {
-  
+  @ViewChild('ContactSheet', { static: false }) ContactSheet: BottomSheetComponent;
   choosingContact = false;
   contactList = [];
   searchterm = '';
@@ -28,7 +28,7 @@ export class ContactsPage implements OnInit {
   totalUserCredit: number;
   totalUserDebit: number;
   public BottomSheetState: SheetStates = SheetStates.Closed;
-  
+
   constructor(
     // @Inject(NavParams) public navParams: NavParams,
     // tslint:disable-next-line: deprecation
@@ -66,10 +66,11 @@ export class ContactsPage implements OnInit {
 
   ionViewDidLeave() {
     // this.event.emitFabButton('');
+    this.ContactSheet.ChangeBottomSheetStateToClosed();
   }
 
-  doSelect(){
-    //this.sectionSelect.open();
+  doSelect() {
+    // this.sectionSelect.open();
   }
 
   ionViewDidEnter() {
