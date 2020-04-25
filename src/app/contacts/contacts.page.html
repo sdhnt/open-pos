@@ -11,7 +11,7 @@
     <!-- <div class="pageTitle">
         <h6>Track who owes you money</h6>
     </div> -->
-    <ion-card class="totalBox" *ngIf="contactList&&contactList.length>0">
+    <ion-card class="totalBox">
         <ion-row>
             <ion-col class="totalCol" size=6>
                 <ion-row>
@@ -38,7 +38,7 @@
     <ion-row class="searchRow">
         <ion-col size="9" class="searchBar" > &nbsp;
             <ion-icon name="search-outline"></ion-icon>
-            <input type="text" [(ngModel)]="searchterm" (input)="filter()" placeholder="Search List">
+            <input type="text" [(ngModel)]="searchterm" (input)="filter()" placeholder="Search ">
         </ion-col>
         <ion-col size="3" class="filter">
             <span class="seperator">|</span>
