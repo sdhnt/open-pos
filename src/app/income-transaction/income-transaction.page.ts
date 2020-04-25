@@ -360,17 +360,59 @@ export class IncomeTransactionPage implements OnInit {
           this.listOfPrevTransac = JSON.parse(val);
           console.log('this.listtransac', this.listOfPrevTransac);
           // console.log(this.listtransac)
+          if (!this.userdata.isSubUser) {
+
+            await this.findSubUserTransactions().then((result: any) => {
+
+              console.log('RESULT ****************', result);
+              console.log('RESULT ****************', this.listOfPrevTransac);
+              this.listOfPrevTransac = this.listOfPrevTransac.concat(result);
+            });
+          }
+          // console.log(this.listOfPrevTransac)
           this.listOfPrevTransac = this.listOfPrevTransac.filter(transac => {
             return !transac.isDisabled;
           });
           this.listOfPrevTransac.forEach(element => {
-            element.datetime1 = this.getDateTime(element.datetime);
+            element.datetime1 = this.getDateTime(element.datetime.seconds ? element.datetime.seconds : element.datetime);
             element.expanded = true;
             element.expandedvar = this.subscriber(this.translateConfigService.getTranslatedMessage('More'));
           });
+          console.log('RESULT FINAL ****************', this.listOfPrevTransac);
           this.listOfPrevTransac = this.listOfPrevTransac.reverse();
+          return;
         }).catch(e => console.log('Error' + e));
     });
+  }
+
+  async findSubUserTransactions() {
+    console.log('USER DATA INSIDE THE FIND SUB USER Transactions ****************', this.userdata);
+    return new Promise((resolve, reject) => {
+      const findSubUsersList = firebase.firestore().collection('users').where('mainUser.owner', '==', this.userdata.owner);
+      findSubUsersList.get().then(async (querySnapshot) => {
+        if (querySnapshot.size === 0) {
+          resolve([]);
+        } else {
+          const transactions = [];
+          querySnapshot.forEach(async (doc) => {
+            console.log('SUB USERS ****************', doc.data());
+            const singleUserProduct = await firebase.firestore().collection('users/' + doc.id + '/transactions');
+            await singleUserProduct.get().then(async (querySnapshot1) => {
+              querySnapshot1.forEach(async (doc1) => {
+                transactions.push(doc1.data());
+                console.log('PRODUCT DOC ****************', transactions);
+              });
+            });
+            console.log('****************', transactions);
+            resolve(transactions);
+          });
+        }
+      });
+    });
+  }
+
+  getProductName(transac) {
+    return transac.itemslist.length > 1 ? `${transac.itemslist[0].name} +${transac.itemslist.length - 1}` : transac.itemslist[0].name;
   }
 
   expandTransac(transac) {
