@@ -85,12 +85,12 @@ export class TabsPage implements OnInit {
         if (params.lang) {
           this.language = params.lang;
         }
-        if (params.data === 'newUser') {
-          this.delay(500).then(() => {
-            if (this.isFirst) { this.tutorial(); }
-            this.getUserData();
-          });
-        }
+        // if (params.data === 'newUser') {
+        //   this.delay(500).then(() => {
+        //     if (this.isFirst) { this.tutorial(); }
+        //     this.getUserData();
+        //   });
+        // }
       }
     });
     this.events.newUser.subscribe(data => {

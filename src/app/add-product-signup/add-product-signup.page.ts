@@ -296,7 +296,7 @@ export class AddProductSignupPage implements OnInit {
   startApp() {
     const navigatoinExtra: NavigationExtras = {
       queryParams: {
-        data: 'newUser',
+        // data: 'newUser',
         lang: this.translateConfigService.getCurrentLanguage(),
       }
     };
