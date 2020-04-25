@@ -59,7 +59,8 @@ export class LoginPage implements OnInit {
   timer2 = 0;
 
   ngOtpConfig = {
-    length: 6
+    length: 6,
+    allowNumbersOnly: true
   };
 
   confirmres: any;

@@ -122,7 +122,7 @@
         </ion-row>
         <ion-row class="ion-justify-content-center row-style" style="margin-top: 20px;">
             <!-- <ion-input placeholder="Enter OTP here" type=”number” [(ngModel)]="otpnum"></ion-input> -->
-            <ng-otp-input (onInputChange)="onOtpChange($event)" allowNumbersOnly="true" [config]="ngOtpConfig"></ng-otp-input>
+            <ng-otp-input (onInputChange)="onOtpChange($event)" [config]="ngOtpConfig"></ng-otp-input>
         </ion-row>
         <ion-button expand="block" color="yellow" style="margin-top: 20px;" (click)="otpFn()" [disabled]="timer2!=0">
             {{"Submit OTP"|translate}}

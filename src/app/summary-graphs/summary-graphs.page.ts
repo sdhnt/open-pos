@@ -190,16 +190,16 @@ export class SummaryGraphsPage implements OnInit {
               this.listtransac = this.listtransac.concat(result);
             });
           }
-          console.log('RESULT FINAL ****************', this.listtransac);
           // console.log(this.listtransac)
           this.listtransac = this.listtransac.filter(transac => {
             return !transac.isDisabled;
           });
           this.listtransac.forEach(element => {
-            element.datetime1 = this.getDateTime(element.datetime);
+            element.datetime1 = this.getDateTime(element.datetime.seconds ? element.datetime.seconds : element.datetime);
             element.expanded = true;
             element.expandedvar = this.subscriber(this.translateConfigService.getTranslatedMessage('More'));
           });
+          console.log('RESULT FINAL ****************', this.listtransac);
           this.listtransacrev = this.listtransac.reverse();
           return;
         })
@@ -344,7 +344,7 @@ export class SummaryGraphsPage implements OnInit {
       .line(this.userdata.ph_no)
       .align('left')
       .newline()
-      .line(this.getDateTime(transac.datetime))
+      .line(this.getDateTime(transac.datetime.seconds ? transac.datetime.seconds : transac.datetime))
       .align('center')
       .text(commands.HORIZONTAL_LINE.HR_58MM)
       .newline();
@@ -588,7 +588,7 @@ export class SummaryGraphsPage implements OnInit {
   getDateTime(datetime) {
     // return (datetime.getDate() + "/" + (datetime.getMonth() + 1) + "/" + datetime. getFullYear())
     const temp = new Date(datetime);
-    // console.log(temp);
+    // console.log('temptemptemptemptemptemptemp', temp);
     const temp1 = temp;
 
     const t = temp.getDate().toString() + '/' + (temp.getMonth() + 1).toString() + ' ' + this.getTime(temp).toString();
@@ -709,7 +709,7 @@ export class SummaryGraphsPage implements OnInit {
       datarev.push(temprev);
       dataexp.push(tempexp);
       datapro.push(temppro);
-      labels.push(this.currentdatetime);
+      labels.push(this.getDateTime(this.currentdatetime));
     }
 
     this.listtransac.forEach(element => {
@@ -728,13 +728,13 @@ export class SummaryGraphsPage implements OnInit {
           }
         });
         datapro.push(temppro);
-        labels.push(this.getDateTime(element.datetime));
+        labels.push(this.getDateTime(element.datetime.seconds ? element.datetime.seconds : element.datetime));
       } else {
         tempexp = -Number(element.totalatax);
         datarev.push(0);
         dataexp.push(-element.totalatax);
         datapro.push(0);
-        labels.push(this.getDateTime(element.datetime));
+        labels.push(this.getDateTime(element.datetime.seconds ? element.datetime.seconds : element.datetime));
       }
     });
     // if (this.group === "last7") {
@@ -844,5 +844,9 @@ export class SummaryGraphsPage implements OnInit {
         ],
       },
     });
+  }
+
+  getProductName(transac) {
+    return transac.itemslist.length > 1 ? `${transac.itemslist[0].name} +${transac.itemslist.length - 1}` : transac.itemslist[0].name;
   }
 }

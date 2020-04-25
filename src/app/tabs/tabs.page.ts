@@ -58,6 +58,7 @@ export class TabsPage implements OnInit {
   backButtonRoute: any;
   fabePage: any;
   isHidden = true;
+  isFirst = true;
   constructor(
     private contactsPage: ContactsPage,
     private trnasProduct: TransactionProductPage,
@@ -86,7 +87,7 @@ export class TabsPage implements OnInit {
         }
         if (params.data === 'newUser') {
           this.delay(500).then(() => {
-            this.tutorial();
+            if (this.isFirst) { this.tutorial(); }
             this.getUserData();
           });
         }
@@ -95,7 +96,7 @@ export class TabsPage implements OnInit {
     this.events.newUser.subscribe(data => {
       // this.events.unsubscribe("newUser");
       this.delay(500).then(() => {
-        this.tutorial();
+        if (this.isFirst) { this.tutorial(); }
         this.getUserData();
       });
     });
@@ -220,7 +221,7 @@ export class TabsPage implements OnInit {
 
   backPress() {
     if (this.backButtonRoute !== '') {
-      this.router.navigateByUrl(this.backButtonRoute);
+      this.router.navigate([this.backButtonRoute]);
     }
   }
   async ngOnInit() {
@@ -388,6 +389,7 @@ export class TabsPage implements OnInit {
   }
 
   async tutorial() {
+    this.isFirst = false;
     const gridPopOver = await this.popover.create({ component: GridTabsPopoverPage });
     gridPopOver.present();
     // const msg: Observable<any> = this.translateConfigService.getTranslatedMessage('Create New Sales');

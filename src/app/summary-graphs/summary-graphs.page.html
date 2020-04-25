@@ -60,7 +60,7 @@
             width="30">{{"Apply for Loan"|translate}}
     </ion-button>
 
-    <div [hidden]="isgraph" *ngIf="!userdata.isSubUser">
+    <div *ngIf="isgraph == 1 && !userdata.isSubUser">
         <ion-card>
             <ion-card-header>
                 {{"Bar Chart"|translate}}
@@ -80,7 +80,7 @@
     </div>
 
 
-    <ion-grid [hidden]="islist == 0">
+    <div *ngIf="islist == 1">
         <div class="lastTransaction">
             Transactions during the dates:
         </div>
@@ -89,9 +89,11 @@
                 <ion-item (click)="expandTransac(transac)">
                     <ion-icon class="mr-3" name="checkmark-circle-outline" color="success" style="font-size: 27px;">
                     </ion-icon>
-                    <ion-label class="mr-6" *ngFor="let prod of transac.itemslist">
-                        <p>{{prod.name}}</p>
-                        <p>{{transac.updatedAt | date: 'dd/MM/yyyy'}}</p>
+                    <ion-label class="mr-6">
+                        <p>{{getProductName(transac)}}
+                        </p>
+                        <p>{{getDateTime(transac.updatedAt.seconds ? transac.updatedAt.seconds : transac.updatedAt)}}
+                        </p>
                     </ion-label>
                     <ion-label class="mr-3" style="text-align: right;">
                         {{transac.totalatax}}
@@ -151,5 +153,5 @@
                 </ion-card-content>
             </ion-card>
         </ion-list>
-    </ion-grid>
+    </div>
 </ion-content>

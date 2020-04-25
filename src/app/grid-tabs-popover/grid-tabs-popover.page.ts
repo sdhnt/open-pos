@@ -28,10 +28,10 @@ export class GridTabsPopoverPage implements OnInit {
   }
 
   navigateTo(page) {
-    if (page == 'home/income-transaction') {
-      this.router.navigateByUrl(page + '?lang=' + this.userLang);
+    if (page === 'home/income-transaction') {
+      this.router.navigate([page + '?lang=' + this.userLang]);
     } else {
-      this.router.navigateByUrl(page);
+      this.router.navigate([page]);
     }
     this.popover.dismiss();
   }

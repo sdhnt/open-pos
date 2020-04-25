@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, ToastController, ActionSheetController } from '@ionic/angular';
+import { AlertController, ToastController, ActionSheetController, Platform } from '@ionic/angular';
 // import { Events } from 'ionic-angular';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
@@ -30,7 +30,8 @@ export class AddProductSignupPage implements OnInit {
     public alertCtrl: AlertController,
     private router: Router,
     private location: Location,
-    private actionCtrl: ActionSheetController
+    private actionCtrl: ActionSheetController,
+    private platform: Platform
   ) {
     this.isProdCode000000 = false;
     this.route.queryParams.subscribe(params => {
@@ -165,10 +166,17 @@ export class AddProductSignupPage implements OnInit {
   }
 
   async askCamera() {
+    const getFityDest = () => {
+      if (this.platform.is('android')) {
+        return this.camera.DestinationType.DATA_URL;
+      } else if (this.platform.is('ios')) {
+        return this.camera.DestinationType.DATA_URL;
+      }
+    };
     const options: CameraOptions = {
       quality: 20,
       sourceType: this.camera.PictureSourceType.CAMERA,
-      destinationType: this.camera.DestinationType.DATA_URL,
+      destinationType: getFityDest(),
       encodingType: this.camera.EncodingType.PNG,
       mediaType: this.camera.MediaType.PICTURE,
       correctOrientation: true,
@@ -179,7 +187,7 @@ export class AddProductSignupPage implements OnInit {
     const options1: CameraOptions = {
       quality: 20,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType: this.camera.DestinationType.DATA_URL,
+      destinationType: getFityDest(),
       encodingType: this.camera.EncodingType.PNG,
       mediaType: this.camera.MediaType.PICTURE,
       correctOrientation: true,
@@ -226,7 +234,7 @@ export class AddProductSignupPage implements OnInit {
     this.camera
       .getPicture(options)
       .then(base64Image => {
-        this.image = 'data:image/png;base64,' + base64Image;
+        this.image = base64Image;
         // console.log(base64Image)
       })
       .catch(err => {

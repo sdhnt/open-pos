@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastController, AlertController } from '@ionic/angular';
+import { ToastController, AlertController, Platform } from '@ionic/angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { StorageProvider } from '../services/storage/storage';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -15,8 +15,8 @@ import { Observable } from 'rxjs';
   templateUrl: './addproduct.page.html',
   styleUrls: ['./addproduct.page.scss'],
 })
-export class 
-AddproductPage implements OnInit {
+export class
+  AddproductPage implements OnInit {
   prodCode: any = '';
   prodName: any = '';
   prodPrice: number = null;
@@ -49,6 +49,7 @@ AddproductPage implements OnInit {
     public camera: Camera,
     public alertCtrl: AlertController,
     private formBuilder: FormBuilder,
+    private platform: Platform
   ) {
     this.isProdCode000000 = false;
     this.getUserData();
@@ -102,10 +103,17 @@ AddproductPage implements OnInit {
   }
 
   async askCamera() {
+    const getFityDest = () => {
+      if (this.platform.is('android')) {
+        return this.camera.DestinationType.DATA_URL;
+      } else if (this.platform.is('ios')) {
+        return this.camera.DestinationType.DATA_URL;
+      }
+    };
     const options: CameraOptions = {
       quality: 20,
       sourceType: this.camera.PictureSourceType.CAMERA,
-      destinationType: this.camera.DestinationType.DATA_URL,
+      destinationType: getFityDest(),
       encodingType: this.camera.EncodingType.PNG,
       mediaType: this.camera.MediaType.PICTURE,
       correctOrientation: true,
@@ -116,7 +124,7 @@ AddproductPage implements OnInit {
     const options1: CameraOptions = {
       quality: 20,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType: this.camera.DestinationType.DATA_URL,
+      destinationType: getFityDest(),
       encodingType: this.camera.EncodingType.PNG,
       mediaType: this.camera.MediaType.PICTURE,
       correctOrientation: true,
@@ -151,7 +159,7 @@ AddproductPage implements OnInit {
     // const options: CameraOptions = {
     //   quality: 20,
     //   //sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-    //   destinationType: this.camera.DestinationType.DATA_URL,
+    //   destinationType: getFityDest(),
     //   encodingType: this.camera.EncodingType.JPEG,
     //   mediaType: this.camera.MediaType.PICTURE,
     //   correctOrientation: true,
@@ -162,7 +170,7 @@ AddproductPage implements OnInit {
     this.camera
       .getPicture(options)
       .then(base64Image => {
-        this.image = 'data:image/png;base64,' + base64Image;
+        this.image = base64Image;
         // console.log(base64Image)
       })
       .catch(err => {
