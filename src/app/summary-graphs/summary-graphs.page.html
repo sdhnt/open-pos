@@ -17,14 +17,14 @@
 
                 <ion-row>
                     <ion-col size="5"
-                        style="height: 10px; text-align: center; font-size: medium; color: black; border: 1px dashed gray; border-radius: 1rem; background-color: hsl(39, 100%, 68%);">
+                        style="height: 10px; text-align: center; font-size: 1em; color: black; border: 1px dashed gray; border-radius: 1rem; background-color: hsl(39, 100%, 68%);">
                         <ion-datetime [(ngModel)]="fromDate" [max]="toDate" (ionChange)="dateChange()"></ion-datetime>
                     </ion-col>
                     <ion-col size="2" style="text-align: center; font-size: large;">
                         to
                     </ion-col>
                     <ion-col size="5"
-                        style="height: 10px;text-align: center; font-size: medium; color: black;border: 1px dashed gray; border-radius: 1rem; background-color: hsl(39, 100%, 68%);">
+                        style="height: 10px;text-align: center; font-size: 1em; color: black;border: 1px dashed gray; border-radius: 1rem; background-color: hsl(39, 100%, 68%);">
                         <ion-datetime [(ngModel)]="toDate" [max]="toDate" (ionChange)="dateChange()"></ion-datetime>
                     </ion-col>
                 </ion-row>
@@ -60,8 +60,8 @@
             width="30">{{"Apply for Loan"|translate}}
     </ion-button>
 
-    <div *ngIf="isgraph == 1 && !userdata.isSubUser">
-        <ion-card>
+    <div *ngIf="!userdata.isSubUser">
+        <ion-card [hidden]="isgraph">
             <ion-card-header>
                 {{"Bar Chart"|translate}}
             </ion-card-header>
@@ -69,7 +69,7 @@
                 <canvas id="barCanvas" #barCanvas></canvas>
             </ion-card-content>
         </ion-card>
-        <ion-card>
+        <ion-card [hidden]="isgraph">
             <ion-card-header>
                 {{"Line Chart"|translate}}
             </ion-card-header>
@@ -80,7 +80,7 @@
     </div>
 
 
-    <div *ngIf="islist == 1">
+    <div [hidden]="islist">
         <div class="lastTransaction">
             Transactions during the dates:
         </div>
