@@ -61,7 +61,7 @@
     </ion-button>
 
     <div *ngIf="!userdata.isSubUser">
-        <ion-card [hidden]="isgraph">
+        <ion-card [hidden]="isgraph == 0">
             <ion-card-header>
                 {{"Bar Chart"|translate}}
             </ion-card-header>
@@ -69,7 +69,7 @@
                 <canvas id="barCanvas" #barCanvas></canvas>
             </ion-card-content>
         </ion-card>
-        <ion-card [hidden]="isgraph">
+        <ion-card [hidden]="isgraph == 0">
             <ion-card-header>
                 {{"Line Chart"|translate}}
             </ion-card-header>
@@ -80,7 +80,7 @@
     </div>
 
 
-    <div [hidden]="islist">
+    <div [hidden]="islist == 0">
         <div class="lastTransaction">
             Transactions during the dates:
         </div>
