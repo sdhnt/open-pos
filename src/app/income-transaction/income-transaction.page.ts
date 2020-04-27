@@ -923,6 +923,7 @@ export class IncomeTransactionPage implements OnInit {
                   });
                 toast.present();
               });
+              // this.showrec = false;
             },
           },
           {
@@ -941,6 +942,7 @@ export class IncomeTransactionPage implements OnInit {
       this.recAction();
     } else {
       console.log('autosave attribute is -1');
+      // this.showrec = false;
     }
   }
 
@@ -948,7 +950,7 @@ export class IncomeTransactionPage implements OnInit {
     this.disableDownload = true;
     const toast = await this.toastCtrl.create({ message: 'Please Wait...', duration: 3000 });
     toast.present();
-    const div = this.showrec ? document.getElementById('imageConvert') : document.getElementById('recImg');
+    const div = document.getElementById('recImg'); // this.showrec ? document.getElementById('imageConvert') :
     const options = { width: div.offsetWidth, height: div.offsetHeight };
     domtoimage.toPng(div, options).then((dataUrl) => {
       console.log(dataUrl);
@@ -961,6 +963,7 @@ export class IncomeTransactionPage implements OnInit {
               console.log('Success!', libItem);
               const toast1 = await this.toastCtrl.create({ message: 'Saved to Gallery!', duration: 2000 });
               toast1.present();
+              // this.showrec = false;
             })
             .catch(err => console.log('Error' + err));
         })
@@ -1115,11 +1118,15 @@ export class IncomeTransactionPage implements OnInit {
         toast.present();
 
         this.showrec = false;
+        this.showprevrec = 1;
+        let todayDate = new Date();
+        todayDate = new Date(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate(), 0, 0, 0);
+        this.getTransac({ start: todayDate });
       });
     }
     // this.getLastTransaction();
     // (this.navCtrl.parent as Tabs).select(0);
-    setTimeout(() => this.autodownloadRec(), 2000);
+    setTimeout(() => this.autodownloadRec(), 3000);
   }
   async addCalc() {
     // (this.navCtrl.parent as Tabs).select(0);

@@ -468,6 +468,7 @@ export class LoginPage implements OnInit {
             business_name: this.newaccBName,
             businesstype: this.newaccBType,
             business_address: this.newaccBArea,
+            isSubUser: false,
             email: this.newaccemail ? this.newaccemail : 'sample@sample.com',
             ph_no: `+${this.countryCode}${this.phone}`,
             language: this.translateConfigService.getCurrentLanguage(),

@@ -74,7 +74,7 @@ const subCollections = [
 ];
 
 export const createAccountDocument = async user => {
-  console.log("USER DATA ================",user)
+  console.log('USER DATA ================', user);
   const db = firebase.firestore();
 
   const userDoc = await db.collection('users').add({
@@ -83,12 +83,14 @@ export const createAccountDocument = async user => {
   });
   const userId = userDoc.id;
   const batch = db.batch();
-  subCollections.forEach(collection => {
-    collection.documents.forEach(document => {
-      const documentReference = db.collection(`/users/${userId}/${collection.id}`).doc();
-      const id = documentReference.id;
-      batch.set(documentReference, { ...document, id });
+  if (!user.isSubUser) {
+    subCollections.forEach(collection => {
+      collection.documents.forEach(document => {
+        const documentReference = db.collection(`/users/${userId}/${collection.id}`).doc();
+        const id = documentReference.id;
+        batch.set(documentReference, { ...document, id });
+      });
     });
-  });
-  await batch.commit();
+    await batch.commit();
+  }
 };
