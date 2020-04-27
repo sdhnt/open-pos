@@ -25,16 +25,12 @@ export class
   prodCat: any = '';
   listProduct: any;
   isProdCode000000: boolean;
-
   formProduct: FormGroup;
-
   userdata;
   uid;
   currstock: number;
-
   newprodCat: any = '';
   listCat: any;
-
   image: any = '';
   temp = 'na';
   produrl: any = '';
@@ -80,7 +76,20 @@ export class
 
   ionViewWillLeave() {
     this.events.emitIsBack(false);
-    this.events.emitBackRoute('')
+    this.events.emitBackRoute('');
+    this.prodCode = '';
+    this.prodName = '';
+    this.prodPrice = null;
+    this.prodWholesalePrice = null;
+    this.prodCost = null;
+    this.prodCat = '';
+    this.isProdCode000000 = false;
+    this.currstock = null;
+    this.newprodCat = '';
+    this.image = '';
+    this.temp = 'na';
+    this.produrl = '';
+    this.disabled = false;
   }
   async getUserData() {
     this.sp.storageReady().then(() => {
@@ -170,7 +179,7 @@ export class
     this.camera
       .getPicture(options)
       .then(base64Image => {
-        this.image = base64Image;
+        this.image = 'data:image/png;base64,' + base64Image;
         // console.log(base64Image)
       })
       .catch(err => {

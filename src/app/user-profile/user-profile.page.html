@@ -35,6 +35,11 @@
         </ion-input>
       </div>
       <div class="form-group">
+        <ion-label>{{ 'E-mail ID' | translate }}</ion-label>
+        <ion-input class="form-control" type="email" formControlName="email" [(ngModel)]="user.email"
+          (ionChange)="onChange()"></ion-input>
+      </div>
+      <div class="form-group">
         <ion-label>{{ 'Phone Number' | translate }}</ion-label>
         <ion-input class="form-control" type="text" formControlName="ph_no" [(ngModel)]="user.ph_no"
           (ionChange)="onChange()"></ion-input>
@@ -87,7 +92,7 @@
 <ion-footer>
   <ion-row>
     <ion-col>
-      <ion-button [disabled]="formUser.invalid" expand="block" color="success" (click)="setUser()">
+      <ion-button [disabled]="formUser.invalid || !submitButton" expand="block" color="success" (click)="setUser()">
         {{'Update Profile'| translate}}</ion-button>
     </ion-col>
     <ion-col>

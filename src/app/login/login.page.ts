@@ -4,6 +4,7 @@ import {
   AlertController,
   LoadingController,
   MenuController,
+  NavController
 } from '@ionic/angular';
 import * as firebase from 'firebase';
 import { StorageProvider } from '../services/storage/storage';
@@ -42,7 +43,7 @@ export class LoginPage implements OnInit {
   applicationVerifier;
 
   phone;
-  countryCodeMainUser;
+  countryCodeMainUser = '+95';
   newaccOwnName;
   newaccBName;
   newaccBArea;
@@ -70,7 +71,7 @@ export class LoginPage implements OnInit {
   constructor(
     public zone: NgZone,
     public toastCtrl: ToastController,
-
+    private navCtrl: NavController,
     public sp: StorageProvider,
     public alertCtrl: AlertController,
     private translateConfigService: TranslateConfigService,
@@ -392,7 +393,8 @@ export class LoginPage implements OnInit {
       // this.sp.clearMem();
 
       this.sp.setMem().then(() => {
-        this.router.navigate(['/home/income-transaction']);
+        this.navCtrl.navigateRoot(['/home/income-transaction']);
+        // this.router.navigate(['/home/income-transaction']);
       });
     });
   }
@@ -426,7 +428,7 @@ export class LoginPage implements OnInit {
                 isSubUser: true,
                 mainUser: result,
                 email: this.newaccemail ? this.newaccemail : 'sample@sample.com',
-                ph_no: this.currentUser.phoneNumber || `+${this.countryCode}${this.phone}`,
+                ph_no: `+${this.countryCode}${this.phone}`,
                 language: this.translateConfigService.getCurrentLanguage(),
               };
               if (!user.owner) { throw new Error('firebase authentication uid missing'); }
@@ -443,7 +445,8 @@ export class LoginPage implements OnInit {
                       text: 'OK',
                       handler: () => {
                         this.sp.setMem({ force: true }).then(() => {
-                          this.router.navigate(['/add-product-signup']);
+                          this.navCtrl.navigateForward(['/add-product-signup']);
+                          // this.router.navigate(['/add-product-signup']);
                         });
                       },
                     },
@@ -466,7 +469,7 @@ export class LoginPage implements OnInit {
             businesstype: this.newaccBType,
             business_address: this.newaccBArea,
             email: this.newaccemail ? this.newaccemail : 'sample@sample.com',
-            ph_no: '+' + this.countryCode + this.phone,
+            ph_no: `+${this.countryCode}${this.phone}`,
             language: this.translateConfigService.getCurrentLanguage(),
           };
           if (!user.owner) { throw new Error('firebase authentication uid missing'); }
@@ -547,7 +550,7 @@ export class LoginPage implements OnInit {
           console.log('Bun');
           this.currentUser = currentUser;
           // await firebase.auth().updateCurrentUser(this.currentUser);
-          this.phone = this.currentUser.phoneNumber;
+          // this.phone = this.currentUser.phoneNumber;
           flag = 1;
           this.otpmode = 0;
           this.signup = 1;

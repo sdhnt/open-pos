@@ -181,7 +181,7 @@
                         <ion-select-option value="+852">🇭🇰 +852 </ion-select-option>
                         <ion-select-option value="+91">🇮🇳 +91 </ion-select-option>
                     </ion-select>
-                    <ion-input style="border: 1px solid grey;border-radius: 0 5px 5px 0;" [(ngModel)]="mainUserMobile"></ion-input>
+                    <ion-input style="border: 1px solid grey;border-radius: 0 5px 5px 0;" type="number" placeholder="xxxxx xxxxx" [(ngModel)]="mainUserMobile"></ion-input>
                 </ion-row>
                 <!-- <ion-input ></ion-input> -->
             </div>
@@ -198,7 +198,7 @@
             <div class="form-group">
                 <ion-label>{{'Phone Number'|translate}}</ion-label>
                 <ion-row class="ion-justify-content-center" style="margin-top: 20px;">
-                    <ion-select style="border: 1px solid var(--ion-color-lgrey);border-radius: 5px 0 0 5px;border-right: 0;" [(ngModel)]="country_code" [disabled]="fb==false">
+                    <ion-select style="border: 1px solid var(--ion-color-lgrey);border-radius: 5px 0 0 5px;border-right: 0;" [(ngModel)]="countryCode" [disabled]="fb==false">
                         <ion-select-option value="95" selected>🇲🇲 +95 </ion-select-option>
                         <ion-select-option value="63">🇵🇭 +63 </ion-select-option>
                         <ion-select-option value="852">🇭🇰 +852 </ion-select-option>

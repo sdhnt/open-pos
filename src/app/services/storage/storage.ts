@@ -464,6 +464,7 @@ export class StorageProvider {
 
   async updateContactDisc(contactName, newDisc): Promise<void> {
     const contacts = JSON.parse(await this.getContacts());
+    // tslint:disable-next-line: no-shadowed-variable
     const contact = contacts.find(contact => contact.displayName === contactName);
     if (contact) {
       contact.discount = newDisc;

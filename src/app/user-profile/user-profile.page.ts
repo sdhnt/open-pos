@@ -114,6 +114,7 @@ export class UserProfilePage implements OnInit {
       owner_name: new FormControl('', Validators.required),
       businesstype: new FormControl('', Validators.required),
       ph_no: new FormControl('', Validators.required),
+      email: new FormControl('', Validators.required),
       currency: new FormControl('', Validators.required),
       cash_balance: new FormControl(0, Validators.required),
       discount: new FormControl(0, Validators.required),
@@ -122,10 +123,11 @@ export class UserProfilePage implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     console.log('ionViewDidLoad UserProfilePage');
-    this.getUser().then();
-    this.oldUser = cloneDeep(this.user);
+    await this.getUser().then(() => {
+      this.oldUser = cloneDeep(this.user);
+    });
     this.event.emitIsBack(true);
   }
 
@@ -181,6 +183,7 @@ export class UserProfilePage implements OnInit {
       console.log('user profile page: user is null');
     } else {
       this.user = user;
+      console.log(user);
     }
   }
 

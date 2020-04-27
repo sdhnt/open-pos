@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, ToastController, ActionSheetController, Platform } from '@ionic/angular';
+import { AlertController, ToastController, ActionSheetController, Platform, NavController } from '@ionic/angular';
 // import { Events } from 'ionic-angular';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
@@ -31,7 +31,8 @@ export class AddProductSignupPage implements OnInit {
     private router: Router,
     private location: Location,
     private actionCtrl: ActionSheetController,
-    private platform: Platform
+    private platform: Platform,
+    private navCtrl: NavController
   ) {
     this.isProdCode000000 = false;
     this.route.queryParams.subscribe(params => {
@@ -296,11 +297,11 @@ export class AddProductSignupPage implements OnInit {
   startApp() {
     const navigatoinExtra: NavigationExtras = {
       queryParams: {
-        // data: 'newUser',
+        data: 'newUser',
         lang: this.translateConfigService.getCurrentLanguage(),
       }
     };
-    this.router.navigate(['/home/income-transaction'], navigatoinExtra);
+    this.navCtrl.navigateRoot(['/home/income-transaction'], navigatoinExtra);
     this.events.emitNewUserEvent('newUser');
   }
 

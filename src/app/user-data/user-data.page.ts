@@ -37,13 +37,13 @@ export class UserDataPage implements OnInit {
 
   ngOnInit() {
     console.log('ionViewDidLoad UserDataPage');
-    this.getUser();
   }
 
   ionViewDidLoad() {
   }
 
   ionViewDidEnter() {
+    this.getUser();
     this.event.emitIsBack(true);
     this.event.emitBackRoute('/home/income-transaction');
     console.log('ionViewDidLoad UserDataPage');
