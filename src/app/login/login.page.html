@@ -168,8 +168,8 @@
             <div class="form-group">
                 <ion-label>{{'Role' | translate}}</ion-label>
                 <ion-select value="root" interface="action-sheet" [(ngModel)]="roleSelect" (ionChange)="roleSelection($event)">
-                    <ion-select-option value="root">Main User</ion-select-option>
-                    <ion-select-option value="sub">Sub User</ion-select-option>
+                    <ion-select-option value="root">Regular User</ion-select-option>
+                    <ion-select-option value="sub">Sub-Account</ion-select-option>
                 </ion-select>
             </div>
             <div class="form-group" *ngIf="mainUserMobileInput">
