@@ -11,6 +11,8 @@ import { EventService } from '../services/event.service';
 import { Location } from '@angular/common';
 import { SheetStates } from 'ionic-custom-bottom-sheet';
 import { Observable } from 'rxjs';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { Base64 } from '@ionic-native/base64/ngx';
 
 @Component({
   selector: 'app-add-product-signup',
@@ -32,7 +34,9 @@ export class AddProductSignupPage implements OnInit {
     private location: Location,
     private actionCtrl: ActionSheetController,
     private platform: Platform,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private webView: WebView,
+    private base64: Base64
   ) {
     this.isProdCode000000 = false;
     this.route.queryParams.subscribe(params => {
@@ -60,7 +64,7 @@ export class AddProductSignupPage implements OnInit {
 
   newprodCat: any = '';
   listCat: any;
-
+  previewImage: any = '';
   image: any = '';
   temp = 'na';
   produrl: any = '';
@@ -235,7 +239,15 @@ export class AddProductSignupPage implements OnInit {
     this.camera
       .getPicture(options)
       .then(base64Image => {
-        this.image = base64Image;
+        // this.image = 'data:image/png;base64,' + base64Image;
+        this.base64.encodeFile(base64Image).then((base64File: string) => {
+          this.image = base64File;
+          console.log(this.image);
+          this.previewImage = this.webView.convertFileSrc(base64Image);
+          console.log(this.previewImage);
+        }, (err) => {
+          console.log(err);
+        });
         // console.log(base64Image)
       })
       .catch(err => {
@@ -248,7 +260,7 @@ export class AddProductSignupPage implements OnInit {
       // LET REF be tied to a particular product- we save the url in the products db
       const ref = firebase.storage().ref('prodImages/' + this.uid + this.prodCode + name);
 
-      const uploadTask = ref.putString(this.image.split(',')[1], 'base64');
+      const uploadTask = ref.putString(this.image.split('base64,')[1], 'base64');
 
       this.temp = 'UPTask';
 
@@ -376,8 +388,7 @@ export class AddProductSignupPage implements OnInit {
           cost: this.prodCost,
           cat: this.prodCat,
           url: this.produrl,
-          stock_qty: this.currstock,
-          // "sub-group": (productcode, itemslist)
+          stock_qty: this.currstock
         };
 
         const exprod = {
@@ -388,7 +399,7 @@ export class AddProductSignupPage implements OnInit {
           price: '0',
           stock_qty: '10',
           url: 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y',
-          wholesale_price: '0',
+          wholesale_price: '0'
         };
         this.finalProd = JSON.parse(JSON.stringify(data)) || JSON.parse(JSON.stringify(exprod));
         console.log(data);

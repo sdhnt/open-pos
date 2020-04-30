@@ -3,6 +3,8 @@ import { ToastController, AlertController, Platform } from '@ionic/angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { StorageProvider } from '../services/storage/storage';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Base64 } from '@ionic-native/base64/ngx';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
 import * as firebase from 'firebase';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { TranslateConfigService } from '../services/translation/translate-config.service';
@@ -32,6 +34,7 @@ export class
   newprodCat: any = '';
   listCat: any;
   image: any = '';
+  previewImage: any = '';
   temp = 'na';
   produrl: any = '';
   disabled = false;
@@ -45,12 +48,15 @@ export class
     public camera: Camera,
     public alertCtrl: AlertController,
     private formBuilder: FormBuilder,
-    private platform: Platform
+    private platform: Platform,
+    private webView: WebView,
+    private base64: Base64
   ) {
     this.isProdCode000000 = false;
     this.getUserData();
     this.formProduct = this.formBuilder.group({
       prodName: new FormControl('', Validators.required),
+      prodCode: new FormControl(''),
       prodPrice: new FormControl(0, Validators.required),
       prodWholesalePrice: new FormControl(0, Validators.required),
       prodCost: new FormControl(0, Validators.required),
@@ -71,7 +77,7 @@ export class
 
   ionViewDidEnter() {
     this.events.emitIsBack(true);
-    this.events.emitBackRoute('home/transaction-product')
+    this.events.emitBackRoute('home/transaction-product');
   }
 
   ionViewWillLeave() {
@@ -114,9 +120,9 @@ export class
   async askCamera() {
     const getFityDest = () => {
       if (this.platform.is('android')) {
-        return this.camera.DestinationType.DATA_URL;
+        return this.camera.DestinationType.FILE_URI;
       } else if (this.platform.is('ios')) {
-        return this.camera.DestinationType.DATA_URL;
+        return this.camera.DestinationType.NATIVE_URI;
       }
     };
     const options: CameraOptions = {
@@ -179,8 +185,15 @@ export class
     this.camera
       .getPicture(options)
       .then(base64Image => {
-        this.image = 'data:image/png;base64,' + base64Image;
-        // console.log(base64Image)
+        // this.image = 'data:image/png;base64,' + base64Image;
+        this.base64.encodeFile(base64Image).then((base64File: string) => {
+          this.image = base64File;
+          console.log(this.image);
+          this.previewImage = this.webView.convertFileSrc(base64Image);
+          console.log(this.previewImage);
+        }, (err) => {
+          console.log(err);
+        });
       })
       .catch(err => {
         console.log(err);
@@ -192,18 +205,18 @@ export class
       // LET REF be tied to a particular product- we save the url in the products db
       const ref = firebase.storage().ref('prodImages/' + this.uid + this.prodCode + name);
 
-      const uploadTask = ref.putString(this.image.split(',')[1], 'base64');
+      const uploadTask = ref.putString(this.image.split('base64,')[1], 'base64');
 
       this.temp = 'UPTask';
 
       uploadTask.then(snap => {
         snap.ref.getDownloadURL().then(url => {
           // do something with url here
-
+          console.log('97986878789688758959', url);
           this.produrl = url;
           this.temp = url;
 
-          resolve();
+          resolve(this.produrl);
         });
       });
     });
@@ -291,6 +304,7 @@ export class
       if (this.prodCode === '' || this.prodCode === null || this.prodCode === undefined) {
         this.prodCode = Math.round(Math.random() * 10000000).toString();
         console.log('No Code ::' + this.prodCode);
+        this.formProduct.value.prodCode = this.prodCode;
       }
 
       if (this.newprodCat !== '') {
@@ -314,8 +328,7 @@ export class
           cost: this.prodCost,
           cat: this.prodCat,
           url: this.produrl,
-          stock_qty: this.currstock,
-          // "sub-group": (productcode, itemslist)
+          stock_qty: this.currstock
         };
 
         console.log(data);
@@ -364,16 +377,16 @@ export class
           });
         toast3.present();
         this.upload_new(this.prodName).then(() => {
+          console.log(this.formProduct.value);
           const data = {
-            code: this.prodCode,
-            name: this.prodName,
-            price: this.prodPrice,
-            wholesale_price: this.prodWholesalePrice,
-            cost: this.prodCost,
-            cat: this.prodCat,
+            code: this.formProduct.value.prodCode,
+            name: this.formProduct.value.prodName,
+            price: this.formProduct.value.prodPrice,
+            wholesale_price: this.formProduct.value.prodWholesalePrice,
+            cost: this.formProduct.value.prodCost,
+            cat: this.formProduct.value.prodCat,
             url: this.produrl,
-            stock_qty: this.currstock,
-            // "sub-group": (productcode, itemslist)
+            stock_qty: this.formProduct.value.currstock
           };
 
           console.log(data);

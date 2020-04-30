@@ -76,6 +76,6 @@ import { BottomSheetModule, BottomSheetComponent } from 'ionic-custom-bottom-she
     BottomSheetComponent
   ],
   providers: [ContactsPageModule],
-  declarations: [TabsPage,PopOverComponent]
+  declarations: [TabsPage, PopOverComponent]
 })
 export class TabsPageModule { }
