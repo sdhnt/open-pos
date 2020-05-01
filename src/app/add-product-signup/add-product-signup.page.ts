@@ -13,6 +13,7 @@ import { SheetStates } from 'ionic-custom-bottom-sheet';
 import { Observable } from 'rxjs';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 
 @Component({
   selector: 'app-add-product-signup',
@@ -36,7 +37,8 @@ export class AddProductSignupPage implements OnInit {
     private platform: Platform,
     private navCtrl: NavController,
     private webView: WebView,
-    private base64: Base64
+    private base64: Base64,
+    private backgroundMode: BackgroundMode
   ) {
     this.isProdCode000000 = false;
     this.route.queryParams.subscribe(params => {
@@ -224,7 +226,7 @@ export class AddProductSignupPage implements OnInit {
       });
     alert.present();
   }
-  launchCamera(options) {
+  async launchCamera(options) {
     // const options: CameraOptions = {
     //   quality: 20,
     //   //sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
@@ -236,6 +238,7 @@ export class AddProductSignupPage implements OnInit {
     //   targetWidth: 300,
     //   allowEdit: false,
     // };
+    await this.backgroundMode.enable();
     this.camera
       .getPicture(options)
       .then(base64Image => {
@@ -245,6 +248,7 @@ export class AddProductSignupPage implements OnInit {
           console.log(this.image);
           this.previewImage = this.webView.convertFileSrc(base64Image);
           console.log(this.previewImage);
+          this.backgroundMode.disable();
         }, (err) => {
           console.log(err);
         });

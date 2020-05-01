@@ -21,6 +21,7 @@
     "@angular/router": "~8.2.14",
     "@ionic-native/app-minimize": "^5.23.0",
     "@ionic-native/app-version": "^5.22.0",
+    "@ionic-native/background-mode": "^5.24.0",
     "@ionic-native/barcode-scanner": "^5.22.0",
     "@ionic-native/base64": "^5.24.0",
     "@ionic-native/base64-to-gallery": "^5.22.0",
@@ -65,6 +66,7 @@
     "cordova-plugin-app-version": "^0.1.9",
     "cordova-plugin-appminimize": "^1.0.1",
     "cordova-plugin-backbutton": "^0.3.0",
+    "cordova-plugin-background-mode": "0.7.3",
     "cordova-plugin-badge": "^0.8.8",
     "cordova-plugin-bluetooth-serial": "^0.4.7",
     "cordova-plugin-camera": "^4.1.0",
@@ -565,7 +567,8 @@
       },
       "cordova-sms-plugin": {},
       "cordova-plugin-appminimize": {},
-      "com-badrit-base64": {}
+      "com-badrit-base64": {},
+      "cordova-plugin-background-mode": {}
     },
     "platforms": [
       "android"

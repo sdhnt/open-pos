@@ -31,6 +31,7 @@ import * as firebase from 'firebase';
 import { SMS } from '@ionic-native/sms/ngx';
 import { AppMinimize } from '@ionic-native/app-minimize/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 import { NgOtpInputModule } from 'ng-otp-input';
 import { BottomSheetComponent, BottomSheetModule } from 'ionic-custom-bottom-sheet';
 import { ContactsPage } from './contacts/contacts.page';
@@ -87,7 +88,8 @@ firebase.initializeApp(config);
     SMS,
     AppMinimize,
     WebView,
-    Base64
+    Base64,
+    BackgroundMode
   ],
   bootstrap: [AppComponent]
 })

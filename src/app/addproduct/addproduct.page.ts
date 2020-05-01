@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastController, AlertController, Platform } from '@ionic/angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { StorageProvider } from '../services/storage/storage';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
@@ -50,7 +51,8 @@ export class
     private formBuilder: FormBuilder,
     private platform: Platform,
     private webView: WebView,
-    private base64: Base64
+    private base64: Base64,
+    private backgroundMode: BackgroundMode
   ) {
     this.isProdCode000000 = false;
     this.getUserData();
@@ -170,7 +172,7 @@ export class
       });
     alert.present();
   }
-  launchCamera(options) {
+  async launchCamera(options) {
     // const options: CameraOptions = {
     //   quality: 20,
     //   //sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
@@ -182,6 +184,7 @@ export class
     //   targetWidth: 300,
     //   allowEdit: false,
     // };
+    await this.backgroundMode.enable();
     this.camera
       .getPicture(options)
       .then(base64Image => {
@@ -191,6 +194,7 @@ export class
           console.log(this.image);
           this.previewImage = this.webView.convertFileSrc(base64Image);
           console.log(this.previewImage);
+          this.backgroundMode.disable();
         }, (err) => {
           console.log(err);
         });
