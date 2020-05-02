@@ -36,6 +36,10 @@ import { NgOtpInputModule } from 'ng-otp-input';
 import { BottomSheetComponent, BottomSheetModule } from 'ionic-custom-bottom-sheet';
 import { ContactsPage } from './contacts/contacts.page';
 import { TransactionProductPage } from './transaction-product/transaction-product.page';
+import { CameraPreview } from '@ionic-native/camera-preview/ngx';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import { FilePath } from '@ionic-native/file-path/ngx';
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
@@ -89,7 +93,11 @@ firebase.initializeApp(config);
     AppMinimize,
     WebView,
     Base64,
-    BackgroundMode
+    BackgroundMode,
+    CameraPreview,
+    ImagePicker,
+    FileChooser,
+    FilePath
   ],
   bootstrap: [AppComponent]
 })

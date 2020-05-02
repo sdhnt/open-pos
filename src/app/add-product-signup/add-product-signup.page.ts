@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, ToastController, ActionSheetController, Platform, NavController } from '@ionic/angular';
+import { AlertController, ToastController, ActionSheetController, Platform, NavController, ModalController } from '@ionic/angular';
 // import { Events } from 'ionic-angular';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
@@ -14,6 +14,10 @@ import { Observable } from 'rxjs';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import { CameraPreviewPage } from '../addproduct/addproduct.page';
+import { FilePath } from '@ionic-native/file-path/ngx';
+import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
 
 @Component({
   selector: 'app-add-product-signup',
@@ -38,7 +42,11 @@ export class AddProductSignupPage implements OnInit {
     private navCtrl: NavController,
     private webView: WebView,
     private base64: Base64,
-    private backgroundMode: BackgroundMode
+    private backgroundMode: BackgroundMode,
+    private modalCtrl: ModalController,
+    private filePath: FilePath,
+    private fileChooser: FileChooser,
+    private imagePicker: ImagePicker,
   ) {
     this.isProdCode000000 = false;
     this.route.queryParams.subscribe(params => {
@@ -213,7 +221,7 @@ export class AddProductSignupPage implements OnInit {
           {
             text: msg3,
             handler: () => {
-              this.launchCamera(options);
+              this.lanuchCamPreview();
             },
           },
           {
@@ -238,25 +246,62 @@ export class AddProductSignupPage implements OnInit {
     //   targetWidth: 300,
     //   allowEdit: false,
     // };
-    await this.backgroundMode.enable();
-    this.camera
-      .getPicture(options)
-      .then(base64Image => {
-        // this.image = 'data:image/png;base64,' + base64Image;
-        this.base64.encodeFile(base64Image).then((base64File: string) => {
-          this.image = base64File;
-          console.log(this.image);
-          this.previewImage = this.webView.convertFileSrc(base64Image);
-          console.log(this.previewImage);
-          this.backgroundMode.disable();
-        }, (err) => {
-          console.log(err);
-        });
-        // console.log(base64Image)
-      })
-      .catch(err => {
+    // await this.backgroundMode.enable();
+    // this.camera
+    //   .getPicture(options)
+    //   .then(base64Image => {
+    //     // this.image = 'data:image/png;base64,' + base64Image;
+    //     this.base64.encodeFile(base64Image).then((base64File: string) => {
+    //       this.image = base64File;
+    //       console.log(this.image);
+    //       this.previewImage = this.webView.convertFileSrc(base64Image);
+    //       console.log(this.previewImage);
+    //       this.backgroundMode.disable();
+    //     }, (err) => {
+    //       console.log(err);
+    //     });
+    //     // console.log(base64Image)
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
+    if (this.platform.is('android')) {
+      this.fileChooser.open().then(uri => {
+        this.filePath.resolveNativePath(uri).then(file => {
+          const filePath: string = file;
+          if (filePath) {
+            this.base64.encodeFile(filePath).then((base64File: string) => {
+              this.image = base64File;
+              this.previewImage = this.webView.convertFileSrc(filePath);
+            }, (err) => {
+              console.log('err' + JSON.stringify(err));
+            });
+          }
+        }).catch(err => console.log(err));
+      }).catch(e => console.log('uri' + JSON.stringify(e)));
+    } else if (this.platform.is('ios')) {
+      this.imagePicker.getPictures({ outputType: 1 }).then((results) => {
+        // console.log('Image URI: ' + results[0]);
+        this.image = results[0];
+        this.previewImage = results[0];
+      }, (err) => {
         console.log(err);
       });
+    }
+  }
+  async lanuchCamPreview() {
+    const modal = await this.modalCtrl.create({
+      // tslint:disable-next-line: no-use-before-declare
+      component: CameraPreviewPage
+    });
+    modal.present();
+    modal.onDidDismiss().then(data => {
+      console.log(data);
+      if (data.data) {
+        this.image = data.data;
+        this.previewImage = data.data;
+      }
+    });
   }
   upload_new(name: string) {
     return new Promise(resolve => {

@@ -1,0 +1,72 @@
+<ion-header id="previewHeader">
+    <ion-toolbar color="magenta">
+        <ion-buttons *ngIf="image == ''" slot="end">
+            <ion-button fill="clear" (click)="canclePreview()">
+                <ion-icon slot="icon-only" name="close"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-row class="d-flex justify-content-around" *ngIf="image != ''">
+            <ion-button fill="clear" (click)="removeImage()">
+                <ion-icon slot="icon-only" name="close"></ion-icon>
+            </ion-button>
+            <ion-button fill="clear" (click)="selectImage()">
+                <ion-icon slot="icon-only" name="checkmark"></ion-icon>
+            </ion-button>
+        </ion-row>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div id="camPreview" style="height: 90%; width: 100%;"></div>
+    <ion-img [ngClass]="{'ionImage': image != ''}" *ngIf="image != ''" [src]="image"></ion-img>
+</ion-content>
+
+<ion-footer>
+    <ion-row>
+        <ion-item class="w-100" lines="none" *ngIf="isCameraOpened && flash">
+            <ion-segment [(ngModel)]="flashMode" (ionChange)="changeFlashMode()" color="magenta">
+                <ion-segment-button *ngFor="let option of torchOption" value="{{option}}">
+                    <ion-label>{{option}}</ion-label>
+                </ion-segment-button>
+            </ion-segment>
+            <!-- <ion-select placeholder="Select Flash Mode" [(ngModel)]="flashMode" (ionChange)="changeFlashMode()">
+          <ion-select-option *ngFor="let option of torchOption" value="{{option}}">{{option}}</ion-select-option>
+        </ion-select> -->
+        </ion-item>
+        <ion-item class="w-100" lines="none" *ngIf="isCameraOpened && zoom">
+            <ion-range min="1" max="100" pin color="secondary" [(ngModel)]="setZoom" (ionChange)="changeZoom()">
+                <ion-icon slot="start" size="small" name="search-outline"></ion-icon>
+                <ion-icon slot="end" name="search-outline"></ion-icon>
+            </ion-range>
+        </ion-item>
+        <ion-item class="w-100" lines="none" *ngIf="isCameraOpened && size">
+            <ion-segment scrollable [(ngModel)]="pictureSize" (ionChange)="changePictureSize()" color="magenta"
+                *ngIf="allSizes && allSizes.length">
+                <ion-segment-button *ngFor="let option of allSizes" value="{{option}}">
+                    <ion-label>{{getSize(option)}}</ion-label>
+                </ion-segment-button>
+            </ion-segment>
+            <!-- <ion-select interface="popover" placeholder="Select Picture Size" [(ngModel)]="pictureSize"
+          (ionChange)="changePictureSize()" *ngIf="allSizes && allSizes.length">
+          <ion-select-option *ngFor="let s of allSizes" value="{{s}}">{{getSize(s)}}</ion-select-option>
+        </ion-select> -->
+        </ion-item>
+    </ion-row>
+    <ion-row class="d-flex justify-content-around">
+        <ion-button size="small" fill="clear" color="yellow" (click)="selectSelectionCmd('flash')">
+            <ion-icon name="flash"></ion-icon>
+        </ion-button>
+        <ion-button size="small" fill="clear" color="yellow" (click)="selectSelectionCmd('size')">
+            <ion-icon name="resize"></ion-icon>
+        </ion-button>
+        <ion-button size="small" fill="clear" color="yellow" (click)="takePicture()">
+            <ion-icon name="camera"></ion-icon>
+        </ion-button>
+        <ion-button size="small" fill="clear" color="yellow" (click)="selectSelectionCmd('zoom')">
+            <ion-icon name="search"></ion-icon>
+        </ion-button>
+        <ion-button size="small" fill="clear" color="yellow" (click)="switchCamera()">
+            <ion-icon name="camera-reverse"></ion-icon>
+        </ion-button>
+    </ion-row>
+</ion-footer>

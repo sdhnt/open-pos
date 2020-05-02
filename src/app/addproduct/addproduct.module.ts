@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { AddproductPageRoutingModule } from './addproduct-routing.module';
 
-import { AddproductPage } from './addproduct.page';
+import { AddproductPage, CameraPreviewPage } from './addproduct.page';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
@@ -18,6 +18,7 @@ import { TranslateModule } from '@ngx-translate/core';
     AddproductPageRoutingModule,
     TranslateModule.forChild()
   ],
-  declarations: [AddproductPage]
+  declarations: [AddproductPage, CameraPreviewPage],
+  entryComponents: [CameraPreviewPage]
 })
-export class AddproductPageModule {}
+export class AddproductPageModule { }
