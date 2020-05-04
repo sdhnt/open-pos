@@ -87,7 +87,7 @@ export class TabsPage implements OnInit {
         }
         if (params.data === 'newUser') {
           this.delay(500).then(() => {
-             if (this.isFirst) { this.tutorial(); }
+            //  if (this.isFirst) { this.tutorial(); }
             this.getUserData();
           });
         }
@@ -96,7 +96,7 @@ export class TabsPage implements OnInit {
     this.events.newUser.subscribe(data => {
       // this.events.unsubscribe("newUser");
       this.delay(500).then(() => {
-        if (this.isFirst) { this.tutorial(); }
+        // if (this.isFirst) { this.tutorial(); }
         this.getUserData();
       });
     });

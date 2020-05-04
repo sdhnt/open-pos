@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { StorageProvider } from '../services/storage/storage';
 @Component({
   selector: 'app-grid-tabs-popover',
@@ -29,7 +29,14 @@ export class GridTabsPopoverPage implements OnInit {
 
   navigateTo(page) {
     if (page === 'home/income-transaction') {
-      this.router.navigate([page + '?lang=' + this.userLang]);
+
+      const navigatoinExtra: NavigationExtras = {
+        queryParams: {
+          lang: this.userLang,
+        }
+      };
+      this.router.navigate(['/home/income-transaction'], navigatoinExtra);
+
     } else {
       this.router.navigate([page]);
     }

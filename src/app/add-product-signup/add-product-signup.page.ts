@@ -373,7 +373,7 @@ export class AddProductSignupPage implements OnInit {
         lang: this.translateConfigService.getCurrentLanguage(),
       }
     };
-    this.navCtrl.navigateRoot(['/home/income-transaction'], navigatoinExtra);
+    this.navCtrl.navigateRoot(['/home/contacts']);
     this.events.emitNewUserEvent('newUser');
   }
 
