@@ -36,7 +36,7 @@ export class LoginPage implements OnInit {
 
   contactphone = 'loading...';
 
-  timer = 30;
+  timer = 60;
 
   language;
 
@@ -762,7 +762,7 @@ export class LoginPage implements OnInit {
         console.log(verificationId);
         this.confirmres = verificationId;
         this.otpmode = 1;
-        this.timer = 30;
+        this.timer = 60;
         this.startTimer();
         // SMS sent. Prompt user to type the code from the message, then sign the
         // user in with confirmationResult.confirm(code).

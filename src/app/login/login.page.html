@@ -133,11 +133,14 @@
             <ion-col></ion-col>
             <ion-col>
                 <ion-button [disabled]="timer!=0" (click)="signInPhone()" fill="clear" color="dark">
-                    <i class="fas fa-undo mr-1"></i>{{"Resend"|translate}}</ion-button>
+                    <i class="fas fa-undo mr-1"></i>{{"Resend OTP"|translate}}</ion-button>
             </ion-col>
             <ion-col>
                 <ion-button fill="clear" color="dark" *ngIf="timer!=0">{{"Retry in"|translate}} {{ timer }}s</ion-button>
             </ion-col>
+        </ion-row>
+        <ion-row *ngIf="timer==0" style="align-items: center; text-align: center;">
+            <ion-button fill="clear" full color="dark" (click)="fbLogin()" style="text-align: center;">No OTP? Try Facebook Login</ion-button>
         </ion-row>
     </div>
 
@@ -168,8 +171,8 @@
             <div class="form-group">
                 <ion-label>{{'Role' | translate}}</ion-label>
                 <ion-select value="root" interface="action-sheet" [(ngModel)]="roleSelect" (ionChange)="roleSelection($event)">
-                    <ion-select-option value="root">Main User</ion-select-option>
-                    <ion-select-option value="sub">Sub User</ion-select-option>
+                    <ion-select-option value="root">Regular User</ion-select-option>
+                    <ion-select-option value="sub">Sub-Account</ion-select-option>
                 </ion-select>
             </div>
             <div class="form-group" *ngIf="mainUserMobileInput">
@@ -213,7 +216,11 @@
             <ion-row padding></ion-row>
         </ion-grid>
     </div>
-    <ion-grid class="terms-of-use" *ngIf="signup !== 1">
+
+</ion-content>
+
+<ion-footer>
+    <ion-grid class="terms-of-use" *ngIf="signup !== 1 && otpmode!=1">
         <ion-row class="ion-justify-content-center">
             <ion-text class="ion-text-center">Privacy policy</ion-text>
         </ion-row>
@@ -221,8 +228,4 @@
             <ion-text class="ion-text-center">Terms of service</ion-text>
         </ion-row>
     </ion-grid>
-</ion-content>
-
-<!-- <ion-footer>
-  <ion-button expand="full" (click)="getInfo()" style="background-color: black;">{{"Contact Us"|translate}}</ion-button>
-</ion-footer> -->
+</ion-footer>

@@ -84,7 +84,7 @@ export class AddProductSignupPage implements OnInit {
     console.log('ionViewDidLoad AddProductCategoryPage');
     this.getCategories();
     this.disabled = false;
-    this.mode = 1;
+    this.mode = 0;
   }
   public openSheet() {
     this.BottomSheetState = SheetStates.Opened;
@@ -356,6 +356,17 @@ export class AddProductSignupPage implements OnInit {
   }
 
   startApp() {
+    const navigatoinExtra: NavigationExtras = {
+      queryParams: {
+        data: 'newUser',
+        lang: this.translateConfigService.getCurrentLanguage(),
+      }
+    };
+    this.navCtrl.navigateRoot(['/home/income-transaction'], navigatoinExtra);
+    this.events.emitNewUserEvent('newUser');
+  }
+
+  startApp2() {
     const navigatoinExtra: NavigationExtras = {
       queryParams: {
         data: 'newUser',

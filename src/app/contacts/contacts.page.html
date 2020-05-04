@@ -117,10 +117,11 @@
         </ion-row>
     </ion-card>
     <div style="width: 100%; text-align: center;" *ngIf="!contactList || contactList.length==0 || filteredList.length === 0">
-        <p>{{"No contacts"|translate}}!</p>
-        <ion-card class="ion-padding">
-            {{"Track which customers owe you money and how much they owe you using this page!"|translate}} <br><br> {{"Add a customer name/number and then enter in how much they owe you to keep a track."|translate}} <br><br> {{"We are soon releasing a
-            send automatic SMS reminder feature and an option to see who owes you money on a particular date."|translate}}
+        <!-- <p>{{"No contacts"|translate}}!</p> -->
+        <ion-card class="ion-padding" style="text-align: left; font-weight: 300; color: gray;">
+            - Track who owes you & how much<br>
+            - Add a customer to keep track<br>
+            - Send SMS/Facebook reminders<br>
         </ion-card>
     </div>
     <ion-card *ngFor="let contact of filteredList" class="headingCard dataCard" (click)="navToIndividual(contact)">
