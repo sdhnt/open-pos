@@ -12,12 +12,12 @@
                         <img src="../../assets/new-ui-imgs/icons/noun_Picture_3182777.png" alt="">
                     </ion-col>
                     <ion-col size="9">
-                        <div class="uploadContent" *ngIf="!image">
+                        <div class="uploadContent" *ngIf="!previewImage">
                             <p>Upload Product Image</p>
                             <ion-icon name="camera-outline"></ion-icon>
                             <span>Take picture</span>
                         </div>
-                        <img *ngIf="image!=null" [src]="image" style="height: 66px;width: 78px;object-fit: contain;">
+                        <img *ngIf="previewImage!=null" [src]="previewImage" style="height: 66px;width: 78px;object-fit: contain;">
                     </ion-col>
                 </ion-row>
             </div>

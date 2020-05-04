@@ -1,22 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastController, AlertController, Platform } from '@ionic/angular';
+import { ToastController, AlertController, Platform, ModalController } from '@ionic/angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { StorageProvider } from '../services/storage/storage';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Base64 } from '@ionic-native/base64/ngx';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
 import * as firebase from 'firebase';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { TranslateConfigService } from '../services/translation/translate-config.service';
 import { EventService } from '../services/event.service';
 import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
+import { CameraPreview, CameraPreviewOptions, CameraPreviewPictureOptions } from '@ionic-native/camera-preview/ngx';
+import * as $ from 'jquery';
+import { FilePath } from '@ionic-native/file-path/ngx';
+import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
 
 @Component({
   selector: 'app-addproduct',
   templateUrl: './addproduct.page.html',
   styleUrls: ['./addproduct.page.scss'],
 })
-export class
-  AddproductPage implements OnInit {
+export class AddproductPage implements OnInit {
   prodCode: any = '';
   prodName: any = '';
   prodPrice: number = null;
@@ -32,6 +39,7 @@ export class
   newprodCat: any = '';
   listCat: any;
   image: any = '';
+  previewImage: any = '';
   temp = 'na';
   produrl: any = '';
   disabled = false;
@@ -45,12 +53,20 @@ export class
     public camera: Camera,
     public alertCtrl: AlertController,
     private formBuilder: FormBuilder,
-    private platform: Platform
+    private platform: Platform,
+    private webView: WebView,
+    private base64: Base64,
+    private backgroundMode: BackgroundMode,
+    private modalCtrl: ModalController,
+    private filePath: FilePath,
+    private fileChooser: FileChooser,
+    private imagePicker: ImagePicker,
   ) {
     this.isProdCode000000 = false;
     this.getUserData();
     this.formProduct = this.formBuilder.group({
       prodName: new FormControl('', Validators.required),
+      prodCode: new FormControl(''),
       prodPrice: new FormControl(0, Validators.required),
       prodWholesalePrice: new FormControl(0, Validators.required),
       prodCost: new FormControl(0, Validators.required),
@@ -71,7 +87,7 @@ export class
 
   ionViewDidEnter() {
     this.events.emitIsBack(true);
-    this.events.emitBackRoute('home/transaction-product')
+    this.events.emitBackRoute('home/transaction-product');
   }
 
   ionViewWillLeave() {
@@ -87,6 +103,7 @@ export class
     this.currstock = null;
     this.newprodCat = '';
     this.image = '';
+    this.previewImage = '';
     this.temp = 'na';
     this.produrl = '';
     this.disabled = false;
@@ -114,9 +131,9 @@ export class
   async askCamera() {
     const getFityDest = () => {
       if (this.platform.is('android')) {
-        return this.camera.DestinationType.DATA_URL;
+        return this.camera.DestinationType.FILE_URI;
       } else if (this.platform.is('ios')) {
-        return this.camera.DestinationType.DATA_URL;
+        return this.camera.DestinationType.NATIVE_URI;
       }
     };
     const options: CameraOptions = {
@@ -151,7 +168,7 @@ export class
           {
             text: this.subscriber(msg3),
             handler: () => {
-              this.launchCamera(options);
+              this.lanuchCamPreview();
             },
           },
           {
@@ -164,7 +181,7 @@ export class
       });
     alert.present();
   }
-  launchCamera(options) {
+  async launchCamera(options) {
     // const options: CameraOptions = {
     //   quality: 20,
     //   //sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
@@ -176,15 +193,61 @@ export class
     //   targetWidth: 300,
     //   allowEdit: false,
     // };
-    this.camera
-      .getPicture(options)
-      .then(base64Image => {
-        this.image = 'data:image/png;base64,' + base64Image;
-        // console.log(base64Image)
-      })
-      .catch(err => {
+    // await this.backgroundMode.enable();
+    // this.camera
+    //   .getPicture(options)
+    //   .then(base64Image => {
+    //     // this.image = 'data:image/png;base64,' + base64Image;
+    //     this.base64.encodeFile(base64Image).then((base64File: string) => {
+    //       this.image = base64File;
+    //       console.log(this.image);
+    //       this.previewImage = this.webView.convertFileSrc(base64Image);
+    //       console.log(this.previewImage);
+    //       this.backgroundMode.disable();
+    //     }, (err) => {
+    //       console.log(err);
+    //     });
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
+    if (this.platform.is('android')) {
+      this.fileChooser.open().then(uri => {
+        this.filePath.resolveNativePath(uri).then(file => {
+          const filePath: string = file;
+          if (filePath) {
+            this.base64.encodeFile(filePath).then((base64File: string) => {
+              this.image = base64File;
+              this.previewImage = this.webView.convertFileSrc(filePath);
+            }, (err) => {
+              console.log('err' + JSON.stringify(err));
+            });
+          }
+        }).catch(err => console.log(err));
+      }).catch(e => console.log('uri' + JSON.stringify(e)));
+    } else if (this.platform.is('ios')) {
+      this.imagePicker.getPictures({ outputType: 1 }).then((results) => {
+        // console.log('Image URI: ' + results[0]);
+        this.image = results[0];
+        this.previewImage = results[0];
+      }, (err) => {
         console.log(err);
       });
+    }
+  }
+  async lanuchCamPreview() {
+    const modal = await this.modalCtrl.create({
+      // tslint:disable-next-line: no-use-before-declare
+      component: CameraPreviewPage
+    });
+    modal.present();
+    modal.onDidDismiss().then(data => {
+      console.log(data);
+      if (data.data) {
+        this.image = data.data;
+        this.previewImage = data.data;
+      }
+    });
   }
   upload_new(name: string) {
     return new Promise(resolve => {
@@ -192,14 +255,14 @@ export class
       // LET REF be tied to a particular product- we save the url in the products db
       const ref = firebase.storage().ref('prodImages/' + this.uid + this.prodCode + name);
 
-      const uploadTask = ref.putString(this.image.split(',')[1], 'base64');
+      const uploadTask = ref.putString(this.image.split('base64,')[1], 'base64');
 
       this.temp = 'UPTask';
 
       uploadTask.then(snap => {
         snap.ref.getDownloadURL().then(url => {
           // do something with url here
-
+          console.log('97986878789688758959', url);
           this.produrl = url;
           this.temp = url;
 
@@ -291,6 +354,7 @@ export class
       if (this.prodCode === '' || this.prodCode === null || this.prodCode === undefined) {
         this.prodCode = Math.round(Math.random() * 10000000).toString();
         console.log('No Code ::' + this.prodCode);
+        this.formProduct.value.prodCode = this.prodCode;
       }
 
       if (this.newprodCat !== '') {
@@ -314,8 +378,7 @@ export class
           cost: this.prodCost,
           cat: this.prodCat,
           url: this.produrl,
-          stock_qty: this.currstock,
-          // "sub-group": (productcode, itemslist)
+          stock_qty: this.currstock
         };
 
         console.log(data);
@@ -364,16 +427,16 @@ export class
           });
         toast3.present();
         this.upload_new(this.prodName).then(() => {
+          console.log(this.formProduct.value);
           const data = {
-            code: this.prodCode,
-            name: this.prodName,
-            price: this.prodPrice,
-            wholesale_price: this.prodWholesalePrice,
-            cost: this.prodCost,
-            cat: this.prodCat,
+            code: this.formProduct.value.prodCode,
+            name: this.formProduct.value.prodName,
+            price: this.formProduct.value.prodPrice,
+            wholesale_price: this.formProduct.value.prodWholesalePrice,
+            cost: this.formProduct.value.prodCost,
+            cat: this.formProduct.value.prodCat,
             url: this.produrl,
-            stock_qty: this.currstock,
-            // "sub-group": (productcode, itemslist)
+            stock_qty: this.formProduct.value.currstock
           };
 
           console.log(data);
@@ -416,5 +479,129 @@ export class
       this.events.emitProductUpdateCreated();
       this.navCtrl.back();
     }
+  }
+}
+
+@Component({
+  templateUrl: './camera-preview.page.html',
+  styleUrls: ['./camera-preview.page.scss'],
+})
+export class CameraPreviewPage implements OnInit {
+  setZoom = 1;
+  flashMode = 'off';
+  settingSelection;
+  allSizes = [];
+  pictureSize;
+  torchOption = [
+    'off',
+    'on',
+    'auto',
+    'torch'
+  ];
+  flash = false;
+  zoom = false;
+  size = false;
+  pictureOpts: CameraPreviewPictureOptions = {
+    width: 1280,
+    height: 1280,
+    quality: 85
+  };
+  image = '';
+  cameraPreviewOpts: CameraPreviewOptions;
+  constructor(private cameraPreview: CameraPreview, private modal1: ModalController) {
+  }
+
+  async ionViewDidEnter() {
+    this.cameraPreviewOpts = await {
+      x: 0,
+      y: $('#previewHeader').height(),
+      width: $('#camPreview').width(),
+      height: $('#camPreview').height(),
+      camera: 'rear',
+      tapPhoto: false,
+      previewDrag: false,
+      toBack: false,
+      alpha: 1
+    };
+    await this.cameraPreview.startCamera(this.cameraPreviewOpts).then((result) => {
+      console.log(result);
+      this.cameraPreview.setFocusMode('auto');
+    }).catch((err) => {
+      console.log(err);
+    });
+  }
+
+  ngOnInit() {
+  }
+
+  // take a picture
+  takePicture() {
+    this.cameraPreview.takePicture(this.pictureOpts).then((imageData) => {
+      this.image = 'data:image/jpeg;base64,' + imageData;
+      this.cameraPreview.hide();
+    }, (err) => {
+      console.log(err);
+      this.image = '';
+    });
+  }
+
+  canclePreview() {
+    this.modal1.dismiss();
+  }
+
+  removeImage() {
+    this.image = '';
+    this.cameraPreview.show();
+  }
+
+  selectImage() {
+    this.modal1.dismiss(this.image);
+  }
+
+  async selectSelectionCmd(selection) {
+    if (selection === 'size') {
+      this.size = !this.size;
+      this.zoom = false;
+      this.flash = false;
+      await this.cameraPreview.getSupportedPictureSizes().then((sizes) => {
+        this.allSizes = sizes;
+      }, (err) => {
+        console.log(err);
+      });
+    } else if (selection === 'zoom') {
+      this.size = false;
+      this.zoom = !this.zoom;
+      this.flash = false;
+    } else if (selection === 'flash') {
+      this.size = false;
+      this.zoom = false;
+      this.flash = !this.flash;
+    }
+  }
+
+  getSize(s) {
+    return `${s.width}X${s.height}`;
+  }
+
+  ionViewWillLeave() {
+    console.log('leaving preview');
+    this.cameraPreview.stopCamera();
+  }
+  changeZoom() {
+    this.cameraPreview.setZoom(this.setZoom);
+  }
+
+  changeFlashMode() {
+    this.cameraPreview.setFlashMode(this.flashMode);
+    this.flash = false;
+  }
+
+  switchCamera() {
+    this.cameraPreview.switchCamera();
+  }
+
+  changePictureSize() {
+    this.cameraPreview.setPreviewSize(this.pictureSize);
+    this.size = false;
   }
 }

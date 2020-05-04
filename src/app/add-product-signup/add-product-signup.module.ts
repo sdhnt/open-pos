@@ -9,6 +9,7 @@ import { AddProductSignupPageRoutingModule } from './add-product-signup-routing.
 import { AddProductSignupPage } from './add-product-signup.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { BottomSheetComponent, BottomSheetModule } from 'ionic-custom-bottom-sheet';
+import { CameraPreviewPage } from '../addproduct/addproduct.page';
 
 @NgModule({
   imports: [
@@ -19,7 +20,7 @@ import { BottomSheetComponent, BottomSheetModule } from 'ionic-custom-bottom-she
     TranslateModule.forRoot(),
     BottomSheetModule
   ],
-  entryComponents: [BottomSheetComponent],
-  declarations: [AddProductSignupPage]
+  entryComponents: [BottomSheetComponent, CameraPreviewPage],
+  declarations: [AddProductSignupPage],
 })
 export class AddProductSignupPageModule { }

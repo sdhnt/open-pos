@@ -8,6 +8,8 @@ import { SingleproductPageRoutingModule } from './singleproduct-routing.module';
 
 import { SingleproductPage } from './singleproduct.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { CameraPreviewPage } from '../addproduct/addproduct.page';
+import { AddproductPageModule } from '../addproduct/addproduct.module';
 
 @NgModule({
   imports: [
@@ -16,8 +18,10 @@ import { TranslateModule } from '@ngx-translate/core';
     ReactiveFormsModule,
     IonicModule,
     SingleproductPageRoutingModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    AddproductPageModule
   ],
-  declarations: [SingleproductPage]
+  declarations: [SingleproductPage],
+  entryComponents: [CameraPreviewPage]
 })
 export class SingleproductPageModule {}

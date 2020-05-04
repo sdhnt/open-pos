@@ -14,6 +14,7 @@ import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { Market } from '@ionic-native/market/ngx';
+import { Base64 } from '@ionic-native/base64/ngx';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
@@ -29,10 +30,16 @@ import { config } from '../utilities/initializeFirebase';
 import * as firebase from 'firebase';
 import { SMS } from '@ionic-native/sms/ngx';
 import { AppMinimize } from '@ionic-native/app-minimize/ngx';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 import { NgOtpInputModule } from 'ng-otp-input';
 import { BottomSheetComponent, BottomSheetModule } from 'ionic-custom-bottom-sheet';
-import {ContactsPage} from './contacts/contacts.page'
-import {TransactionProductPage} from './transaction-product/transaction-product.page'
+import { ContactsPage } from './contacts/contacts.page';
+import { TransactionProductPage } from './transaction-product/transaction-product.page';
+import { CameraPreview } from '@ionic-native/camera-preview/ngx';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import { FilePath } from '@ionic-native/file-path/ngx';
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
@@ -83,7 +90,14 @@ firebase.initializeApp(config);
     BluetoothSerial,
     TransactionProductPage,
     SMS,
-    AppMinimize
+    AppMinimize,
+    WebView,
+    Base64,
+    BackgroundMode,
+    CameraPreview,
+    ImagePicker,
+    FileChooser,
+    FilePath
   ],
   bootstrap: [AppComponent]
 })

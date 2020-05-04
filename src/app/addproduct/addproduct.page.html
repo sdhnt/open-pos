@@ -21,9 +21,7 @@
                 </ion-row>
             </div>
         </ion-card>
-        <img *ngIf="image!=null" [src]="image" style="    width: 79px;
-        margin-left: 37%;
-        margin-bottom: 21px;">
+        <img *ngIf="previewImage!=null" [src]="previewImage" style="width: 79px;margin-left: 37%;margin-bottom: 21px;">
     </div>
     <div class="scanBarcode" (click)="scanQR()">
         <ion-row>
@@ -37,11 +35,11 @@
             </ion-col>
         </ion-row>
     </div>
-    <div class="inputDiv">
-        <label for="">{{'Product Code:'| translate}}: </label>
-        <ion-input [(ngModel)]='prodCode'></ion-input>
-    </div>
     <form [formGroup]="formProduct">
+        <div class="inputDiv">
+            <label for="">{{'Product Code:'| translate}}: </label>
+            <ion-input formControlName="prodCode" [(ngModel)]='prodCode'></ion-input>
+        </div>
         <div class="inputDiv">
             <label for="">{{'Product Name:'| translate}} </label>
             <ion-input type="text" formControlName="prodName" [(ngModel)]='prodName'></ion-input>
@@ -68,9 +66,11 @@
                     <ion-icon name="grid-outline"></ion-icon>
                 </ion-col>
                 <ion-col>
-                    <ion-select multiple="false" formControlName="prodCat" [(ngModel)]='prodCat' placeholder="{{'Product Category' | translate}}">
+                    <ion-select multiple="false" formControlName="prodCat" [(ngModel)]='prodCat'
+                        placeholder="{{'Product Category' | translate}}">
                         <ion-select-option value="New"> {{'Add New Category'| translate}}</ion-select-option>
-                        <ion-select-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}</ion-select-option>
+                        <ion-select-option *ngFor="let element of listCat" value="{{element.name}}">{{element.name}}
+                        </ion-select-option>
                     </ion-select>
                 </ion-col>
             </ion-row>
@@ -84,13 +84,16 @@
         <ion-row>
             <ion-col size="12">
                 <ion-button extend="block" color="magenta" [disabled]="disabled" (click)="addproduct()">
-                    <ion-icon name="checkmark-circle" style="margin-right: 10px;"></ion-icon>{{'Add Product'| translate}}</ion-button>
+                    <ion-icon name="checkmark-circle" style="margin-right: 10px;"></ion-icon>
+                    {{'Add Product'| translate}}
+                </ion-button>
             </ion-col>
         </ion-row>
     </div>
     <div class="addProduct">
         <ion-row class="otherButtons">
-            <ion-col size="6" (click)="clearFields()" style="background-color: var(--ion-color-yellow) !important;color: #fff;">
+            <ion-col size="6" (click)="clearFields()"
+                style="background-color: var(--ion-color-yellow) !important;color: #fff;">
                 <p>{{"Clear Fields"|translate}}</p>
             </ion-col>
             <ion-col size="6" style="color: var(--ion-color-yellow) !important;" (click)="clearFields()">

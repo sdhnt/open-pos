@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, AlertController, ToastController } from '@ionic/angular';
+import { ModalController, AlertController, ToastController, Platform } from '@ionic/angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { StorageProvider } from '../services/storage/storage';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -12,6 +12,13 @@ import { Observable } from 'rxjs';
 import { EventService } from '../services/event.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { CameraPreviewPage } from '../addproduct/addproduct.page';
+import { FilePath } from '@ionic-native/file-path/ngx';
+import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { Base64 } from '@ionic-native/base64/ngx';
+import { DomSanitizer } from '@angular/platform-browser';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
 
 @Component({
   selector: 'app-singleproduct',
@@ -31,7 +38,14 @@ export class SingleproductPage implements OnInit {
     private modal: ModalController,
     public events: EventService,
     private location: Location,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private modalCtrl: ModalController,
+    private filePath: FilePath,
+    private fileChooser: FileChooser,
+    private imagePicker: ImagePicker,
+    private base64: Base64,
+    private platform: Platform,
+    private webView: WebView
   ) {
     this.route.queryParams.subscribe(params => {
       console.log(params);
@@ -39,10 +53,10 @@ export class SingleproductPage implements OnInit {
         const res = JSON.parse(params.data);
         console.log('res', res);
         this.product = res;
-        console.log('this.product',this.product)
+        console.log('this.product', this.product);
         this.prodCodeOld = this.product.code;
         this.image = this.product.url;
-
+        this.previewImage = this.product.url;
         this.orgData.image = this.image;
         this.orgData.prodCode = this.product.code;
         this.orgData.prodName = this.product.name;
@@ -96,6 +110,7 @@ export class SingleproductPage implements OnInit {
   userdata;
   uid;
   image: any = '';
+  previewImage: any = '';
   temp = 'na';
   disabled = false;
 
@@ -113,7 +128,7 @@ export class SingleproductPage implements OnInit {
   async getCategories() {
     await this.sp.getCategories().then(value => {
       this.listCat = JSON.parse(value);
-      console.log("CAT LIST",this.listCat)
+      console.log('CAT LIST', this.listCat);
     });
   }
 
@@ -175,40 +190,60 @@ export class SingleproductPage implements OnInit {
           {
             text: this.subscriber(msg3),
             handler: () => {
-              this.launchCamera(options);
+              this.lanuchCamPreview();
             },
           },
           {
             text: this.subscriber(msg2),
             handler: () => {
-              this.launchCamera(options1);
+              this.launchCamera();
             },
           },
         ],
       });
     alert.present();
   }
-  launchCamera(options) {
-    // const options: CameraOptions = {
-    //   quality: 20,
-    //   //sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-    //   destinationType: this.camera.DestinationType.DATA_URL,
-    //   encodingType: this.camera.EncodingType.JPEG,
-    //   mediaType: this.camera.MediaType.PICTURE,
-    //   correctOrientation: true,
-    //   targetHeight: 300,
-    //   targetWidth: 300,
-    //   allowEdit: false,
-    // };
-    this.camera
-      .getPicture(options)
-      .then(base64Image => {
-        this.image = 'data:image/png;base64,' + base64Image;
+  launchCamera() {
+    if (this.platform.is('android')) {
+      this.fileChooser.open().then(uri => {
+        this.filePath.resolveNativePath(uri).then(file => {
+          const filePath: string = file;
+          if (filePath) {
+            this.base64.encodeFile(filePath).then((base64File: string) => {
+              this.image = base64File;
+              this.previewImage = this.webView.convertFileSrc(filePath);
+              this.upload_new(this.product.name);
+            }, (err) => {
+              console.log('err' + JSON.stringify(err));
+            });
+          }
+        }).catch(err => console.log(err));
+      }).catch(e => console.log('uri' + JSON.stringify(e)));
+    } else if (this.platform.is('ios')) {
+      this.imagePicker.getPictures({ outputType: 1 }).then((results) => {
+        // console.log('Image URI: ' + results[0]);
+        this.image = results[0];
+        this.previewImage = results[0];
         this.upload_new(this.product.name);
-      })
-      .catch(err => {
+      }, (err) => {
         console.log(err);
       });
+    }
+  }
+  async lanuchCamPreview() {
+    const modal = await this.modalCtrl.create({
+      // tslint:disable-next-line: no-use-before-declare
+      component: CameraPreviewPage
+    });
+    modal.present();
+    modal.onDidDismiss().then(data => {
+      console.log(data);
+      if (data.data) {
+        this.image = data.data;
+        this.previewImage = data.data;
+        this.upload_new(this.product.name);
+      }
+    });
   }
   upload_new(name: string) {
     return new Promise(async (resolve, reject) => {
@@ -223,7 +258,7 @@ export class SingleproductPage implements OnInit {
       // LET REF be tied to a particular product- we save the url in the products db
       const ref = firebase.storage().ref('prodImages/' + this.uid + this.prodCode + name);
 
-      const uploadTask = ref.putString(this.image.split(',')[1], 'base64');
+      const uploadTask = ref.putString(this.image.split('base64,')[1], 'base64');
 
       this.temp = 'UPTask';
 
