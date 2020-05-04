@@ -10,6 +10,32 @@
 </ion-header>
 
 <ion-content>
+  <div *ngIf="mode==0" class="ion-padding mode1">
+    <div style="text-align: center; align-content: center;">
+      <img class="img-fluid" src="assets/new-ui-imgs/introduction/Capture.png">
+      <!-- <h1>{{"Hello"|translate}}</h1> -->
+      <br>
+      <br>
+      <h5>{{"Welcome to OPEN!"|translate}}</h5>
+      <ion-row class="ion-justify-content-center">
+      </ion-row>
+    </div>
+    <br>
+    <br>
+    <ion-button expand="block" size="medium" color="yellow" (click)="startApp()">
+      {{'Create Receipt' | translate}}</ion-button>
+     <ion-button expand="block" size="medium" color="yellow" (click)="startApp()">
+        {{'Track who owes you money' | translate}}</ion-button>
+        <ion-button expand="block" size="medium" color="yellow" (click)="addMode()">
+          {{'Add Inventory' | translate}}</ion-button>
+    <img *ngIf="image!=null" [src]="image" class="img-fluid">
+    <br>
+    <!-- <ion-row class="ion-justify-content-center">
+      <ion-button fill="clear" color="light" (click)="addMode()">{{"Skip"|translate}}</ion-button>
+    </ion-row> -->
+  </div>
+
+
   <div *ngIf="mode==1" class="ion-padding mode1">
     <div style="text-align: center; align-content: center;">
       <img class="img-fluid" src="assets/new-ui-imgs/introduction/Capture.png">

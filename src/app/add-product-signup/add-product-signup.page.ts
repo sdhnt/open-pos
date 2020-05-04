@@ -70,7 +70,7 @@ export class AddProductSignupPage implements OnInit {
     console.log('ionViewDidLoad AddProductCategoryPage');
     this.getCategories();
     this.disabled = false;
-    this.mode = 1;
+    this.mode = 0;
   }
   public openSheet() {
     this.BottomSheetState = SheetStates.Opened;
