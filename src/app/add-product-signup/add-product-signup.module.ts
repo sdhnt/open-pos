@@ -10,17 +10,17 @@ import { AddProductSignupPage } from './add-product-signup.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { BottomSheetComponent, BottomSheetModule } from 'ionic-custom-bottom-sheet';
 import { CameraPreviewPage } from '../addproduct/addproduct.page';
-import { AddproductPageModule } from '../addproduct/addproduct.module'
+import { AddproductPageModule } from '../addproduct/addproduct.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AddproductPageModule,
     AddProductSignupPageRoutingModule,
     TranslateModule.forRoot(),
-    BottomSheetModule
+    BottomSheetModule,
+    AddproductPageModule
   ],
   entryComponents: [BottomSheetComponent, CameraPreviewPage],
   declarations: [AddProductSignupPage],
