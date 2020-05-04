@@ -305,6 +305,17 @@ export class AddProductSignupPage implements OnInit {
     this.events.emitNewUserEvent('newUser');
   }
 
+  startApp2() {
+    const navigatoinExtra: NavigationExtras = {
+      queryParams: {
+        data: 'newUser',
+        lang: this.translateConfigService.getCurrentLanguage(),
+      }
+    };
+    this.navCtrl.navigateRoot(['/home/income-transaction'], navigatoinExtra);
+    this.events.emitNewUserEvent('newUser');
+  }
+
   clearFields() {
     this.prodCode = '';
     this.prodName = '';
