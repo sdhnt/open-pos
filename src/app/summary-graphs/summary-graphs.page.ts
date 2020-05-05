@@ -44,10 +44,10 @@ export class SummaryGraphsPage implements OnInit {
     this.getUserData();
     this.events.cbUpdateCreated.subscribe(async data => {
       console.log('should update');
-      this.ngOnInit();
+      this.ionViewDidEnter();
     });
     this.events.productUpdateCreated.subscribe(async data => {
-      this.ngOnInit();
+      this.ionViewDidEnter();
     });
   }
   @ViewChild('barCanvas', { static: false }) barCanvas: ElementRef;
@@ -92,9 +92,9 @@ export class SummaryGraphsPage implements OnInit {
   listtransacrev: any;
   totalsaletoday = 0;
 
-  todayDate;
-  toDate;
-  fromDate;
+  todayDate = new Date().toISOString();
+  toDate = new Date().toISOString();
+  fromDate = new Date().toISOString();
 
   receipt: any;
 
@@ -103,7 +103,7 @@ export class SummaryGraphsPage implements OnInit {
   netcash = 0;
   selectedOne = 'graph';
   doRefresh(refresher) {
-    this.ngOnInit();
+    this.ionViewDidEnter();
     refresher.target.complete();
   }
 
@@ -153,10 +153,6 @@ export class SummaryGraphsPage implements OnInit {
   async applyLoan() {
     const modal = await this.modal.create({ component: LoanHomePage });
     modal.present();
-  }
-
-  ionViewDidEnter() {
-    this.selectedOne = 'graph';
   }
 
   expandTransac(transac) {
@@ -237,10 +233,10 @@ export class SummaryGraphsPage implements OnInit {
       });
     });
   }
-  dateChange() {
-    let start = new Date(this.fromDate); // subtract one day
+  dateChange(fromDate, toDate) {
+    let start = new Date(fromDate); // subtract one day
     start = new Date(start.getFullYear(), start.getMonth(), start.getDate(), 0, 0, 0);
-    const end = new Date(this.toDate);
+    const end = new Date(toDate);
     console.log({ start, end });
     this.getTransac({ start, end });
   }
@@ -267,22 +263,28 @@ export class SummaryGraphsPage implements OnInit {
     }
   }
 
-  setvalues() {
+  async setvalues() {
     console.log('89687958764647079895784589578468');
-    this.listtransac.forEach(element => {
+    this.listtransac.forEach(async (element, i) => {
       if (element.totalatax >= 0) {
         this.rev += Number(element.totalatax);
 
-        element.itemslist.forEach((product, index) => {
+        element.itemslist.forEach(async (product, index) => {
           if (product.code !== '000000') {
             this.pro =
               this.pro +
               ((parseFloat(product.price) * (100 - parseFloat(product.discount))) / 100 - parseFloat(product.cost)) *
               parseFloat(product.qty);
+            await console.log(`this.pro[${i}][${index}]======>${this.pro}`);
+            await console.log(`this.exp[${i}][${index}]======>${this.exp}`);
+            await console.log(`this.rev[${i}][${index}]======>${this.rev}`);
           }
         });
       } else {
         this.exp += Number(element.totalatax);
+        await console.log(`this.pro[${i}]======>${this.pro}`);
+        await console.log(`this.exp[${i}]======>${this.exp}`);
+        await console.log(`this.rev[${i}]======>${this.rev}`);
       }
     });
     if (!this.userdata.isSubUser) { this.generateGraphs(); }
@@ -324,7 +326,7 @@ export class SummaryGraphsPage implements OnInit {
         this.getTransac();
         toast.present();
       }, 1000);
-      this.ngOnInit();
+      this.ionViewDidEnter();
     });
   }
 
@@ -645,9 +647,10 @@ export class SummaryGraphsPage implements OnInit {
     }
   }
 
-  ngOnInit() {
-    console.log('ionViewDidLoad SummaryHomePage');
-    console.log('ionViewDidLoad SummaryGraphsPage');
+  ionViewDidEnter() {
+    console.log('ionViewDidEnter SummaryHomePage');
+    console.log('ionViewDidEnter SummaryGraphsPage');
+    this.selectedOne = 'graph';
     this.rev = 0;
     this.exp = 0;
     this.pro = 0;
@@ -659,12 +662,31 @@ export class SummaryGraphsPage implements OnInit {
     this.isgraph = 1;
     this.islist = 1;
     this.usrchoice = 'today';
-    this.todayDate = new Date().toISOString();
-    this.toDate = new Date().toISOString();
-    this.fromDate = new Date().toISOString();
+    // this.todayDate = new Date().toISOString();
+    // this.toDate = new Date().toISOString();
+    // this.fromDate = new Date().toISOString();
     this.getUserData();
     // this.setPgValues("today");
-    this.dateChange();
+    this.dateChange(new Date().toISOString(), new Date().toISOString());
+  }
+
+  ngOnInit() {
+
+  }
+
+  ionViewWillLeave() {
+    console.log('Leaving View');
+    this.rev = 0;
+    this.exp = 0;
+    this.pro = 0;
+    this.netcashtoday = 0;
+    this.netcashweek = 0;
+    this.netcashmonth = 0;
+    this.netcashlast30 = 0;
+    this.group = 'today';
+    this.isgraph = 1;
+    this.islist = 1;
+    this.usrchoice = 'today';
   }
 
   generateGraphs() {

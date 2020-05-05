@@ -37,7 +37,7 @@ export class TransactionProductPage implements OnInit {
   selectedCat: any = [];
   icons: string[];
   items: Array<{ title: string; note: string; icon: string }>;
-  listProducts: any;
+  listProducts: any = [];
   filteredList: any = [];
   listArray: any = [];
   listCat: any;
@@ -345,8 +345,8 @@ export class TransactionProductPage implements OnInit {
                 await this.findSubUserProducts().then((result: any) => {
 
                   console.log('RESULT ****************', result);
+                  this.listProducts.push(...result);
                   console.log('RESULT ****************', this.listProducts);
-                  this.listProducts = this.listProducts.concat(result);
                 });
               }
               console.log('RESULT FINAL ****************', this.listProducts);

@@ -111,6 +111,7 @@ export class ExpenseGeneralPage implements OnInit {
           code: 'EXPENSE',
           discount: 0,
           name: element.name,
+          cost: element.amount * -1,
           price: element.amount * -1,
           qty: 1,
           stock_qty: 0,
@@ -150,10 +151,9 @@ export class ExpenseGeneralPage implements OnInit {
       this.updateCb(Math.abs(totalsum)).then(() => {
         this.events.emitCbUpdateCreated(0);
       });
-      const message = this.translateConfigService.getTranslatedMessage('Finish');
+      const message = this.subscriber(this.translateConfigService.getTranslatedMessage('Finish'));
       const toast = await this.toastCtrl.create({
-        // @ts-ignore
-        message: message.value,
+        message,
         duration: 3000,
       });
 
@@ -195,9 +195,12 @@ export class ExpenseGeneralPage implements OnInit {
   }
 
   async updateCb(negtransacsum) {
-    this.getUserData();
-    this.userdata.cash_balance = (Number(this.userdata.cash_balance) - Number(negtransacsum)).toString();
-    this.sp.setUserDat(this.userdata);
+    return new Promise(async resolve => {
+      await this.getUserData();
+      this.userdata.cash_balance = await (Number(this.userdata.cash_balance) - Number(negtransacsum)).toString();
+      await this.sp.setUserDat(this.userdata);
+      resolve();
+    });
   }
 
   async getUserData() {
