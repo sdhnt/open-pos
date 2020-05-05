@@ -137,10 +137,15 @@ export class IndividualContactPage implements OnInit {
   }
 
   noteToOpen: number = -1;
-  setNoteOpen(i: number){
-    if(i==this.noteToOpen)
-      this.noteToOpen=-1;
-    this.noteToOpen = i;
+  async setNoteOpen(i: number){
+   let a = await this.alertCtrl.create({
+      subHeader: this.contact.transacHistory[i].note,
+    });
+    a.present();
+
+    // if(i==this.noteToOpen)
+    //   this.noteToOpen=-1;
+    // this.noteToOpen = i;
   }
 
   async transaction(signedOne: number) {

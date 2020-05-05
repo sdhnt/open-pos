@@ -263,7 +263,7 @@
   "Interested in borrowing money": "Interested in borrowing money",
   "Home": "Home",
   "You have negative cash": "You have negative cash",
-  "cashbalancedescrip": "This number helps you view how much cash your business has currently. When you make a sale, this increases by the sale amount, when you pay an expense it decreases by the payament amount.",
+  "cashbalancedescrip": "Cash Balance: Tells you how much cash your business still has, number increases with any sale, number decreases any expenses paid",
   "backupdescrip": "This feature allows you to backup your data to the cloud so that you can restore in-case your app crashes or phone is damaged.",
   "Please Wait...": "Please Wait...",
   "Hello": "Hello",
@@ -337,5 +337,6 @@
   "On Full Credit": "On Full Credit",
   "Income": "Income",
   "Due Date": "Due Date",
-  "None": "None"
+  "None": "None",
+  "Add Details From":"Add Details From"
 }

@@ -69,37 +69,37 @@
     </ion-row>
         <ion-row style="background-color: #fff;">
             <ion-grid style="padding: 0px;">
-                <ion-row style="text-align: center; font-weight: bold; font-size: 16px;">
-                    <ion-col class="table-col">
+                <ion-row style="text-align: center; font-weight: bold; font-size: 14px;">
+                    <ion-col class="table-col" size="4">
                         <p>{{"Date"|translate}}</p>
                     </ion-col>
-                    <ion-col class="table-col">
+                    <ion-col class="table-col" size="3">
                         <p>{{"Get Back"|translate}}</p>
                     </ion-col>
-                    <ion-col class="table-col">
+                    <ion-col class="table-col" size="3">
                         <p>{{"To Pay"|translate}}</p>
+                    </ion-col>
+                    <ion-col class="table-col" size="2">
+                        <p>--</p>
                     </ion-col>
                 </ion-row>
                 <ion-row *ngFor="let val of contact.transacHistory; let i = index" class="tableData">
                     <ion-col>
                         <ion-row (click)="setNoteOpen(i)">
-                            <ion-col>
+                            <ion-col size="4">
                                 <ion-row>
-                                    <ion-col><p>{{ getDateTime(val.date) }}</p></ion-col>
-                                    <ion-col size="1">
-                                        <ion-icon name="caret-down" *ngIf="val.note!=''&&i!=noteToOpen" style="color: black;"></ion-icon>
-                                    </ion-col>
+                                    <ion-col><p style="font-size: 10px;">{{ getDateTime(val.date) }}</p></ion-col>
                                 </ion-row>
                             </ion-col>
-                            <ion-col style="text-align: center;">
+                            <ion-col style="text-align: center;" size="3">
                                 <p *ngIf="val.amount<0" style="color: red;">{{ val.amount }}</p>
                             </ion-col>
-                            <ion-col style="text-align: center;">
+                            <ion-col style="text-align: center;" size="3">
                                 <p *ngIf="val.amount>0" style="color: green;">{{ val.amount }}</p>
                             </ion-col>
-                        </ion-row>
-                        <ion-row *ngIf="val.note!='' && i==noteToOpen">
-                            <p style="padding-left: 20px; padding-top: 3px; padding-bottom: 3px;"><b>Note:</b> {{ val.note }}</p>
+                            <ion-col size="2" style="text-align: center;">
+                                    <ion-icon name="expand-outline" *ngIf="val.note!" style="color: black; margin-top: 10px;"></ion-icon>
+                            </ion-col>
                         </ion-row>
                     </ion-col>
                 </ion-row>
