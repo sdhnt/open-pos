@@ -13,7 +13,7 @@ import { AddItemPopoverPage } from './add-item-popover.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    TranslateModule.forRoot(),
+    TranslateModule.forChild(),
     AddItemPopoverPageRoutingModule
 
   ],

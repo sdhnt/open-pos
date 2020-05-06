@@ -9,11 +9,11 @@
                         </ion-col>
                         <ion-col size="4">
                             <span class="content" style="color: red;" *ngIf="contact.balance<0; else nonNeg">
-                                {{ contact.balance }}
+                                {{ getAmount(contact.balance) }}
                             </span>
                             <span class="content" style="color: green;" *ngIf="contact.balance>0; else zero"
                                 id="nonNeg">
-                                {{ contact.balance }}
+                                {{ getAmount(contact.balance) }}
                             </span>
                             <span class="content" style="color: blue;" *ngIf="contact.balance==0" id="zero">
                                 0
@@ -92,10 +92,10 @@
                                 </ion-row>
                             </ion-col>
                             <ion-col style="text-align: center;" size="3">
-                                <p *ngIf="val.amount<0" style="color: red;">{{ val.amount }}</p>
+                                <p *ngIf="val.amount<0" style="color: red;">{{ getAmount(val.amount) }}</p>
                             </ion-col>
                             <ion-col style="text-align: center;" size="3">
-                                <p *ngIf="val.amount>0" style="color: green;">{{ val.amount }}</p>
+                                <p *ngIf="val.amount>0" style="color: green;">{{ getAmount(val.amount) }}</p>
                             </ion-col>
                             <ion-col size="2" style="text-align: center;">
                                 <ion-icon name="expand-outline" *ngIf="val.note!"

@@ -232,6 +232,10 @@ export class IndividualContactPage implements OnInit {
     }
   }
 
+  getAmount(amount) {
+    return amount.toFixed(2);
+  }
+
   async delete() {
     const a = await this.alertCtrl.create({
       subHeader: this.subscriber(this.translateConfigService.getTranslatedMessage('Are you sure you want to delete this contact?')),
