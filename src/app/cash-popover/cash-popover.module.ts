@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { CashPopoverPageRoutingModule } from './cash-popover-routing.module';
 
 import { CashPopoverPage } from './cash-popover.page';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CashPopoverPageRoutingModule
+    CashPopoverPageRoutingModule,
+    TranslateModule.forChild()
   ],
   declarations: [CashPopoverPage]
 })

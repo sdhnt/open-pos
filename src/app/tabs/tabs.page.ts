@@ -571,23 +571,20 @@ export class TabsPage implements OnInit {
   template: `<ion-list lines="none">
   <ion-item button (click)="uploadbtn()">
       <ion-icon class="mr-1" name="cloud-upload"></ion-icon>
-      <ion-label>Backup</ion-label>
+      <ion-label>{{'Backup Online'|translate}}</ion-label>
   </ion-item>
   <ion-item button (click)="cashbtn()">
       <ion-icon class="mr-1" name="logo-usd"></ion-icon>
-      <ion-label>Cash Balance</ion-label>
+      <ion-label>{{"Cash Balance"|translate}}</ion-label>
   </ion-item>
-  <ion-item button (click)="help()">
-      <ion-icon class="mr-1" name="help-circle"></ion-icon>
-      <ion-label>Help</ion-label>
-  </ion-item>
+
   <ion-item button (click)="contactpg()">
       <ion-icon class="mr-1" name="call"></ion-icon>
-      <ion-label>Contact us</ion-label>
+      <ion-label>{{"Contact Us"|translate}}</ion-label>
   </ion-item>
   <ion-item button (click)="profilepg()">
       <ion-icon class="mr-1" name="card"></ion-icon>
-      <ion-label>Business Card</ion-label>
+      <ion-label>{{"Business Card"|translate}}</ion-label>
   </ion-item>
 </ion-list>`,
   styleUrls: ['tabs.page.scss']

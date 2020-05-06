@@ -17,7 +17,7 @@
           (ionChange)="onChange()"></ion-input>
       </div>
       <div class="form-group">
-        <ion-label>{{ 'Full Business Address' | translate }}</ion-label>
+        <ion-label>{{ 'Address' | translate }}</ion-label>
         <ion-input class="form-control" type="text" formControlName="business_address"
           [(ngModel)]="user.business_address" (ionChange)="onChange()"></ion-input>
       </div>
@@ -35,7 +35,7 @@
         </ion-input>
       </div>
       <div class="form-group">
-        <ion-label>{{ 'E-mail ID' | translate }}</ion-label>
+        <ion-label>{{ 'email' | translate }}</ion-label>
         <ion-input class="form-control" type="email" formControlName="email" [(ngModel)]="user.email"
           (ionChange)="onChange()"></ion-input>
       </div>
@@ -80,7 +80,7 @@
         </ion-select>
       </div>
       <ion-item>
-        <ion-label>Autosave Receipt</ion-label>
+        <ion-label>{{"Autosave Receipt"|translate}}</ion-label>
         <ion-toggle formControlName="autosave" (ionChange)="toggleButton()" color="dark" [checked]="user.autosave==1">
         </ion-toggle>
       </ion-item>

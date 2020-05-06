@@ -160,7 +160,7 @@ export class IndividualContactPage implements OnInit {
         },
         {
           name: 'note',
-          placeholder: 'Notes'
+          placeholder: this.subscriber(this.translateConfigService.getTranslatedMessage('Description'))
         }
       ],
       buttons: [

@@ -100,10 +100,10 @@
                     </tr>
                     <tr>
                         <td *ngIf="!item.showDisc && item.discount==0" colspan="5">
-                            <ion-button (click)="showDisc(item, true)" size="small" color="success">ADD DISCOUNT</ion-button>
+                            <ion-button (click)="showDisc(item, true)" size="small" color="success">{{"ADD DISCOUNT"|translate}}</ion-button>
                         </td>
                         <td *ngIf="item.showDisc || item.discount!=0" colspan="5">
-                            <ion-button (click)="showDisc(item, false)" size="small" color="danger">REMOVE DISCOUNT</ion-button>
+                            <ion-button (click)="showDisc(item, false)" size="small" color="danger">{{"REMOVE DISCOUNT"|translate}}</ion-button>
                         </td>
                     </tr>
                     <tr *ngIf="item.showDisc || item.discount!=0">
@@ -580,7 +580,7 @@
 <bottom-sheet [(State)]="BottomSheetState" (StateChange)="StateChanged($event)">
     <ion-row class="ion-justify-content-center">
         <ion-text color="magents">
-            {{'Receipt Options'}}
+            {{'Receipt Options'|translate}}
         </ion-text>
     </ion-row>
     <div class="row m-0 py-5 option justify-content-around">
@@ -590,7 +590,7 @@
             </ion-fab-button><br>
             <ion-text class="font-weight-bold"
                 style="position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; margin: auto;">
-                <small> New Sale</small>
+                <small> {{"New Sale"|translate}}</small>
             </ion-text>
         </div>
         <div class="col-4 py-3">
@@ -599,7 +599,7 @@
             </ion-fab-button><br>
             <ion-text class="font-weight-bold"
                 style="position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; margin: auto;">
-                <small> New Expense</small>
+                <small> {{"New Expense"|translate}}</small>
             </ion-text>
         </div>
         <div class="col-4 py-3">
@@ -608,7 +608,7 @@
             </ion-fab-button><br>
             <ion-text class="font-weight-bold"
                 style="position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; margin: auto;">
-                <small> Business Card</small>
+                <small> {{"Business Card"|translate}}</small>
             </ion-text>
         </div>
     </div>

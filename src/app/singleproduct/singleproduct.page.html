@@ -4,7 +4,7 @@
     </div>
 
     <div class="uploadPic" (click)="askCamera()">
-        <h6 class="fieldTitle">Upload Picture</h6>
+        <h6 class="fieldTitle">{{"Upload Picture"|translate}}</h6>
         <ion-card style="margin-left: 0;--background:#f8f8f8;margin-right: 0;">
             <div class="dashedDiv">
                 <ion-row>
@@ -13,9 +13,9 @@
                     </ion-col>
                     <ion-col size="9">
                         <div class="uploadContent" *ngIf="!previewImage">
-                            <p>Upload Product Image</p>
+                            <p>{{"Upload Product Image"|translate}}</p>
                             <ion-icon name="camera-outline"></ion-icon>
-                            <span>Take picture</span>
+                            <span>{{"Take picture"|translate}}</span>
                         </div>
                         <img *ngIf="previewImage!=null" [src]="previewImage" style="height: 66px;width: 78px;object-fit: contain;">
                     </ion-col>

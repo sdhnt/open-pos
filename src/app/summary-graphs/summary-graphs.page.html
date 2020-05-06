@@ -8,7 +8,7 @@
         <ion-card-content>
             <ion-row style="text-align: center;">
                 <ion-col style="text-align: center;">
-                    Your accounts between the dates
+                    {{"Your accounts between the dates"|translate}}
                 </ion-col>
 
             </ion-row>
@@ -21,7 +21,7 @@
                         <ion-datetime [(ngModel)]="fromDate" [max]="toDate" (ionChange)="dateChange(fromDate, toDate)"></ion-datetime>
                     </ion-col>
                     <ion-col size="2" style="text-align: center; font-size: large;">
-                        to
+                        {{"to"|translate}}
                     </ion-col>
                     <ion-col size="5"
                         style="height: 10px;text-align: center; font-size: 1em; color: black;border: 1px dashed gray; border-radius: 1rem; background-color: hsl(39, 100%, 68%);">
@@ -48,11 +48,11 @@
     </div>
     <ion-button expand="block" size="large" color="success" (click)="toggleList()" size="small"
         *ngIf="!userdata.isSubUser">
-        <ion-icon name="analytics-outline"></ion-icon> &nbsp; Analytics
+        <ion-icon name="analytics-outline"></ion-icon> &nbsp; {{"Analysis"|translate}}
     </ion-button>
     <ion-button expand="block" size="large" color="success" (click)="toggleGL()" size="small"
         *ngIf="!userdata.isSubUser">
-        <ion-icon name="receipt-outline"></ion-icon> &nbsp; Transactions
+        <ion-icon name="receipt-outline"></ion-icon> &nbsp; {{"Transactions"|translate}}
     </ion-button>
 
     <ion-button expand="block" size="large" color="success" (click)="applyLoan()" *ngIf="!userdata.isSubUser">
@@ -82,7 +82,7 @@
 
     <div [hidden]="islist">
         <div class="lastTransaction">
-            Transactions during the dates:
+            {{"Transactions during the dates:"|translate}}
         </div>
         <ion-list lines="none" *ngFor="let transac of listtransac; let i = index">
             <ion-card>
@@ -105,10 +105,10 @@
                 <ion-card [hidden]="transac.expanded">
                     <ion-list *ngFor="let item of transac.itemslist" [hidden]="transac.expanded">
                         <ion-row style="padding: 0px;">
-                            <ion-col size="12"><span style="font-weight: bolder;">Name: </span> {{item.name}}</ion-col>
-                            <ion-col size="12"><span style="font-weight: bolder;">Quantity: </span> {{item.qty}}
+                            <ion-col size="12"><span style="font-weight: bolder;">{{"Name"|translate}}: </span> {{item.name}}</ion-col>
+                            <ion-col size="12"><span style="font-weight: bolder;">{{"Qty"|translate}: </span> {{item.qty}}
                             </ion-col>
-                            <ion-col size="12"><span style="font-weight: bolder;">Price: </span> {{item.price}}
+                            <ion-col size="12"><span style="font-weight: bolder;">{{"Price"|translate}}: </span> {{item.price}}
                             </ion-col>
                         </ion-row>
                     </ion-list>
@@ -149,7 +149,7 @@
         <ion-list lines="none" *ngIf="listtransac && listtransac.length <= 0">
             <ion-card>
                 <ion-card-content>
-                    No record of transactions
+                    {{"No record of transactions"|translate}}
                 </ion-card-content>
             </ion-card>
         </ion-list>

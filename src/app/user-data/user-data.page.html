@@ -24,7 +24,7 @@
   <ion-list>
     <ion-item-divider style="background-color: #DEDEDE;">
       <ion-label class="m-0">
-        Basic Information
+        {{"Basic Information"|translate}}
       </ion-label>
       <ion-buttons slot="end">
         <ion-button (click)="editProfile()" style="background-color:#ffa500;">
@@ -34,7 +34,7 @@
     </ion-item-divider>
     <ion-row class="px-3">
       <ion-col>
-        <ion-text>{{ 'Onwer Name:' }}</ion-text>
+        <ion-text>{{ 'Owner' |translate}}:</ion-text>
       </ion-col>
       <ion-col class="dataCol">
         <ion-text>{{ user.owner_name }}</ion-text>
@@ -42,7 +42,7 @@
     </ion-row>
     <ion-row class="px-3">
       <ion-col>
-        <ion-text>{{ 'Shop Name:' }}</ion-text>
+        <ion-text>{{ 'Business Name' |translate }}:</ion-text>
       </ion-col>
       <ion-col class="dataCol">
         <ion-text>{{ user.business_name }}</ion-text>
@@ -50,7 +50,7 @@
     </ion-row>
     <ion-row class="px-3">
       <ion-col>
-        <ion-text>{{ 'Address:' }}</ion-text>
+        <ion-text>{{ 'Address' | translate }}:</ion-text>
       </ion-col>
       <ion-col class="dataCol">
         <ion-text>{{ user.business_address }}</ion-text>
@@ -58,7 +58,7 @@
     </ion-row>
     <ion-row class="px-3">
       <ion-col>
-        <ion-text>{{ 'E-mail:' }}</ion-text>
+        <ion-text>{{ 'email' |translate}}:</ion-text>
       </ion-col>
       <ion-col class="dataCol">
         <ion-text>{{ user.email }}</ion-text>
@@ -66,7 +66,7 @@
     </ion-row>
     <ion-row class="px-3">
       <ion-col>
-        <ion-text>{{ 'phone number:' }}</ion-text>
+        <ion-text>{{ 'Phone Number' |translate }}:</ion-text>
       </ion-col>
       <ion-col class="dataCol">
         <ion-text>{{ user.ph_no }}</ion-text>
@@ -74,12 +74,12 @@
     </ion-row>
     <ion-item-divider style="background-color: #DEDEDE;">
       <ion-label class="m-0">
-        Invoices
+        {{"Invoices"|translate}}
       </ion-label>
     </ion-item-divider>
     <ion-row class="px-3">
       <ion-col>
-        <ion-text>{{ 'Cash Balance:' | translate }}</ion-text>
+        <ion-text>{{ 'Cash Balance' | translate }}:</ion-text>
       </ion-col>
       <ion-col class="dataCol">
         <ion-text>{{ user.cash_balance }}</ion-text>
@@ -87,7 +87,7 @@
     </ion-row>
     <ion-row class="px-3">
       <ion-col>
-        <ion-text>{{ 'Usual Discount %:' | translate }}</ion-text>
+        <ion-text>{{ 'Usual Discount %' | translate }}:</ion-text>
       </ion-col>
       <ion-col class="dataCol">
         <ion-text>{{ user.discount }}</ion-text>
@@ -95,7 +95,7 @@
     </ion-row>
     <ion-row class="px-3">
       <ion-col>
-        <ion-text>{{ 'Usual Tax %:' | translate }}</ion-text>
+        <ion-text>{{ 'Usual Tax %' | translate }}:</ion-text>
       </ion-col>
       <ion-col class="dataCol">
         <ion-text>{{ user.taxrate }}</ion-text>
@@ -103,12 +103,12 @@
     </ion-row>
     <ion-item-divider style="background-color: #DEDEDE;">
       <ion-label class="m-0">
-        Other Details
+        {{"Other Details"|translate}}
       </ion-label>
     </ion-item-divider>
     <ion-row class="px-3">
       <ion-col>
-        <ion-text>{{ 'Language:' | translate }}</ion-text>
+        <ion-text>{{ 'Language' | translate }}:</ion-text>
       </ion-col>
       <ion-col class="dataCol">
         <ion-text>{{ language }}</ion-text>

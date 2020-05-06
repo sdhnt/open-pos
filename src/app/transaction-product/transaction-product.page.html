@@ -46,7 +46,7 @@
   </div>
 
   <ion-button *ngIf="event1!=true&&!showSellButton" expand="block" color="success" (click)="openSheet()">
-    <ion-icon name="add-circle-outline"></ion-icon> &nbsp;Add Product/Category
+    <ion-icon name="add-circle-outline"></ion-icon> &nbsp;{{"Add Product/Category"|translate}}
   </ion-button>
 
 
@@ -357,7 +357,7 @@
       </ion-fab-button><br>
       <ion-text class="font-weight-bold"
         style="position: absolute; bottom: 0; left: 0; right: 0; text-align: center; margin: auto;">
-        <small> Add New Category</small>
+        <small> {{"Add New Category"|translate}}</small>
       </ion-text>
     </div>
     <div class="col-6 py-3">
@@ -366,7 +366,7 @@
       </ion-fab-button><br>
       <ion-text class="font-weight-bold"
         style="position: absolute; bottom: 0; left: 0; right: 0; text-align: center; margin: auto;">
-        <small> Add New Product</small>
+        <small> {{"Add Product"|translate}}</small>
       </ion-text>
     </div>
   </div>

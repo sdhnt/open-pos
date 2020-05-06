@@ -4,7 +4,7 @@
     <ion-buttons slot="end">
       <ion-button color="danger" (click)="close()">{{"Close"|translate}}</ion-button>
     </ion-buttons>
-    <ion-title>{{'Add New Expenses' | translate}}</ion-title>
+    <ion-title>{{'Add New Expense' | translate}}</ion-title>
     <ion-title><small>{{"Add non-inventory expense"|translate}}</small></ion-title>
   </ion-toolbar>
 </ion-header>
@@ -70,10 +70,10 @@
         </ion-row>
         <ion-row *ngIf="item.contact!=''">
           <ion-col style="padding-top: 15px; font-size: medium;">
-            <small> Assigned to <b>{{ item.contact }}</b></small>
+            <small> {{"Assigned to"|translate}} <b>{{ item.contact }}</b></small>
           </ion-col>
           <ion-col>
-            <ion-button (click)="clearContact(item)" color="danger" shape="round" size="small" fill="outline">Remove
+            <ion-button (click)="clearContact(item)" color="danger" shape="round" size="small" fill="outline">{{"Remove"|translate}}
             </ion-button>
           </ion-col>
         </ion-row>
@@ -81,7 +81,7 @@
           <ion-col>
             <ion-button (click)="addContact(item)" fill="outline" expand="block" color="magenta"
               *ngIf="item.contact==''">
-              <ion-icon slot="icon-only" name="add-circle-outline" class="mr-1"></ion-icon> Assign to Contact
+              <ion-icon slot="icon-only" name="add-circle-outline" class="mr-1"></ion-icon> {{"Assign to Contact"|translate}}
             </ion-button>
           </ion-col>
         </ion-row>

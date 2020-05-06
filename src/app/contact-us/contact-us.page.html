@@ -19,17 +19,9 @@
         <p>{{"Contact Us"| translate}}</p>
     </div>
 
-    <div class="description">
-        <p>Let us know if you have any questions</p>
-    </div>
-
-    <div class="description">
-        <h4>Way to commuicate</h4>
-    </div>
-
     <ion-row style="text-align: center;" *ngIf="phone.length==0">
         <ion-col>
-            LOADING...
+            {{"LOADING"|translate}}...
         </ion-col>
     </ion-row>
 
@@ -41,7 +33,7 @@
                         <ion-icon name="logo-facebook"></ion-icon>
                     </div>
                     <div class="buttonTitle">
-                        <p>Using Facebook</p>
+                        <p>{{"Reach us on Facebook"|translate}}</p>
                     </div>
                 </ion-col>
             </ion-row>
@@ -54,7 +46,7 @@
                         <ion-icon name="mail-outline"></ion-icon>
                     </div>
                     <div class="buttonTitle">
-                        <p>Mail Us</p>
+                        <p>{{"Send us an e-mail"|translate}}</p>
                     </div>
                 </ion-col>
             </ion-row>
@@ -67,7 +59,7 @@
                         <ion-icon name="call-outline"></ion-icon>
                     </div>
                     <div class="buttonTitle">
-                        <p>Make a call</p>
+                        <p>{{"Give us a call"|translate}}</p>
                     </div>
                 </ion-col>
             </ion-row>

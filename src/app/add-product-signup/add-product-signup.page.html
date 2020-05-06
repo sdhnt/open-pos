@@ -5,7 +5,7 @@
         <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Back</ion-title>
+    <ion-title>{{"Back"|translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -45,10 +45,7 @@
       <br>
       <br>
       <h5>{{"Welcome to OPEN!"|translate}}</h5>
-      <ion-row class="ion-justify-content-center">
-        <ion-text color="lgrey">Still using pen nad paper to track your sell and inventory? Time to change and save
-          time.</ion-text>
-      </ion-row>
+      
       <br>
       <br>
     </div>
@@ -154,7 +151,7 @@
     </ion-row>
     <ion-row class="ion-justify-content-center mt-3">
       <ion-label>
-        Having product category ideas? Add yours
+        {{"Having product category ideas? Add yours"|translate}}
       </ion-label>
       <ion-button size="large" expand="block" color="lgrey" fill="outline" (click)="addCategoryBtn()">
         {{'Add New Category'| translate}}
@@ -183,7 +180,7 @@
     </div>
     <ion-row class="ion-justify-content-center mt-3">
       <ion-text (click)="openSheet()" color="lgrey" style="text-decoration: underline;">
-        Read more about product category
+        {{"Read more about product category"|translate}}
       </ion-text>
     </ion-row>
     <br><br>
@@ -198,9 +195,9 @@
     <div style="text-align: center; align-content:center ;">
       <!-- <img src="assets/imgs/congo5.png"> -->
       <br><br><br><br>
-      <h4 class="text-white text-uppercase font-weight-bolder">{{"Congratulations !!" |translate}}</h4>
+      <h4 class="text-white text-uppercase font-weight-bolder">{{"Congratulations!" |translate}}</h4>
       <h6 class="text-uppercase font-weight-bold">
-        {{"You added first product!"|translate}}</h6>
+        {{"Added your first product!"|translate}}</h6>
       <br>
       <br>
       <ion-button expand="block" shape="round" (click)="startApp()" color="pink">
@@ -212,7 +209,7 @@
       <br>
       <br>
       <ion-row class="ion-justify-content-center">
-        <ion-text class="text-uppercase">We got your product</ion-text>
+        <ion-text class="text-uppercase">{{"We got your product"|translate}}</ion-text>
       </ion-row>
       <br>
       <ion-card *ngIf="finalProd;">

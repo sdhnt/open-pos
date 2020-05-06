@@ -7,14 +7,14 @@
                     <ion-icon name="calendar-outline" style="color: white; font-size: 30px;"></ion-icon>
                 </div>
                 <div class="picker">
-                    <p>Select Date</p>
+                    <p>{{"Select Date"|translate}}</p>
                 </div>
             </div>
         </ion-item>
     </ion-list>
     <ion-datetime #datePicker [hidden]="true" [(ngModel)]="dateSelected" (ionChange)="dateChanged()"></ion-datetime>
     <ion-row id="selectedDate" style="font-size:100%;padding-left: 5%;">
-     For &nbsp; <p style="color: #301924; font-weight: 600;">{{(dateSelected)?(dateSelected | date: 'dd MMM yyyy'):"-"}}</p> &nbsp; there are &nbsp; <p style="color:#301924; font-weight: 600">{{(contacts)?filteredArray.length:0}}</p> &nbsp; due payments
+     {{"For"|translate}} &nbsp; <p style="color: #301924; font-weight: 600;">{{(dateSelected)?(dateSelected | date: 'dd MMM yyyy'):"-"}}</p> &nbsp; {{"there are"|translate}} &nbsp; <p style="color:#301924; font-weight: 600">{{(contacts)?filteredArray.length:0}}</p> &nbsp; {{"due payments"|translate}}
     </ion-row>
     <!-- <div class="totalItems">
         <ion-row>

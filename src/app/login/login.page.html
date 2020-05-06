@@ -140,7 +140,7 @@
             </ion-col>
         </ion-row>
         <ion-row *ngIf="timer==0" style="align-items: center; text-align: center;">
-            <ion-button fill="clear" full color="dark" (click)="fbLogin()" style="text-align: center;">No OTP? Try Facebook Login</ion-button>
+            <ion-button fill="clear" full color="dark" (click)="fbLogin()" style="text-align: center;">{{"No OTP? Try Facebook Login"|translate}}</ion-button>
         </ion-row>
     </div>
 
@@ -222,10 +222,10 @@
 <ion-footer>
     <ion-grid class="terms-of-use" *ngIf="signup !== 1 && otpmode!=1">
         <ion-row class="ion-justify-content-center">
-            <ion-text class="ion-text-center">Privacy policy</ion-text>
+            <ion-text class="ion-text-center">{{"Privacy policy"|translate}</ion-text>
         </ion-row>
         <ion-row class="ion-justify-content-center">
-            <ion-text class="ion-text-center">Terms of service</ion-text>
+            <ion-text class="ion-text-center">{{"Terms of service"|translate}}</ion-text>
         </ion-row>
     </ion-grid>
 </ion-footer>
