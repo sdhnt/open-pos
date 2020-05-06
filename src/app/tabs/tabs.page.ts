@@ -132,7 +132,7 @@ export class TabsPage implements OnInit {
         axios
           .get(url)
           .then(response => {
-            console.log(response);
+            console.log(response);  
             const newestVersion = response.data.versionNumber;
             this.appVersion
               .getVersionNumber()
