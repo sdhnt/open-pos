@@ -14,10 +14,10 @@
             </ion-col>
         </ion-row>
         <ion-button expand="block" size="large" color="success" (click)="openSheet()">
-           Create Receipt
+           {{'Create Receipt' | translate }}
         </ion-button>
         <ion-button expand="block" size="large" color="yellow" (click)="showPrevRec()">
-            Previous Receipt
+            {{'Previous Receipt' | translate }}
         </ion-button>
     </div>
     <ion-card *ngIf="showrec==true" class="m-0" id="imageConvert">

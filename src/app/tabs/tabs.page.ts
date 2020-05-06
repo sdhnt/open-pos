@@ -192,7 +192,15 @@ export class TabsPage implements OnInit {
           this.isHidden = false;
           break;
 
+        case '/home/income-transaction?lang=my':
+          this.isHidden = false;
+          break;
+
         case '/home/income-transaction?data=newUser&lang=en':
+          this.isHidden = false;
+          break;
+
+        case '/home/income-transaction?data=newUser&lang=my':
           this.isHidden = false;
           break;
 

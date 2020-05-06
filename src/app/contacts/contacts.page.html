@@ -1,7 +1,8 @@
 <ion-content class="ion-padding">
     <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-        <ion-button color="yellow" (click)="openSheet()" shape="round"> 
-            <ion-icon name="add-circle-outline"></ion-icon> <ion-text>&nbsp; New Customer</ion-text>
+        <ion-button color="yellow" (click)="openSheet()" shape="round">
+            <ion-icon name="add-circle-outline"></ion-icon>
+            <ion-text>&nbsp; New Customer</ion-text>
         </ion-button>
     </ion-fab>
     <!-- <div class="pageTitle">
@@ -13,30 +14,31 @@
     </div> -->
     <ion-card class="totalBox">
         <ion-row>
-            <ion-col class="totalCol" size=6>
+            <ion-col class="totalCol">
                 <ion-row>
                     <ion-col class="totalCol" size="12">
                         Owed to you: <span style="color: red;">{{ totalUserCredit }}</span>
                     </ion-col>
-            
                 </ion-row>
                 <ion-row>
                     <ion-col class="totalCol" size="12">
                         You Owe: <span style="color: green;">{{ totalUserDebit }}</span>
                     </ion-col>
                 </ion-row>
-
             </ion-col>
-            <ion-col class="totalCol" size="6" style="background-color:#2fdf75; border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
-                <ion-button  (click)="navCredReminder()" fill="clear" style="color: white;">
-                    <ion-icon name="notifications-outline" class="mr-1"></ion-icon> Reminders <ion-icon name="chevron-forward-outline"></ion-icon>
-                  </ion-button>
+            <ion-col class="totalCol"
+                style="background-color:#2fdf75; border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
+                <ion-button size="small" (click)="navCredReminder()" fill="clear" style="color: white;">
+                    <ion-icon name="notifications-outline" class="mr-1"></ion-icon>
+                    Reminders
+                    <ion-icon name="chevron-forward-outline"></ion-icon>
+                </ion-button>
             </ion-col>
         </ion-row>
     </ion-card>
 
     <ion-row class="searchRow">
-        <ion-col size="9" class="searchBar" > &nbsp;
+        <ion-col size="9" class="searchBar"> &nbsp;
             <ion-icon name="search-outline"></ion-icon>
             <input type="text" [(ngModel)]="searchterm" (input)="filter()" placeholder="Search ">
         </ion-col>
@@ -116,7 +118,8 @@
             <ion-col size="3"></ion-col>
         </ion-row>
     </ion-card>
-    <div style="width: 100%; text-align: center;" *ngIf="!contactList || contactList.length==0 || filteredList.length === 0">
+    <div style="width: 100%; text-align: center;"
+        *ngIf="!contactList || contactList.length==0 || filteredList.length === 0">
         <!-- <p>{{"No contacts"|translate}}!</p> -->
         <ion-card class="ion-padding" style="text-align: left; font-weight: 300; color: gray;">
             - Track who owes you & how much<br>
@@ -139,9 +142,10 @@
                 </div>
             </ion-col>
             <ion-col size="3" style="background-color:#2fdf75;">
-                <ion-button fill="clear" >
-                    <ion-icon slot="icon-only" name="expand-outline" size="small" class="mr-1" style="font-size: 18px; color: white;"></ion-icon>
-                  </ion-button>
+                <ion-button fill="clear">
+                    <ion-icon slot="icon-only" name="expand-outline" size="small" class="mr-1"
+                        style="font-size: 18px; color: white;"></ion-icon>
+                </ion-button>
             </ion-col>
         </ion-row>
     </ion-card>
@@ -161,7 +165,8 @@
             <ion-fab-button color="magenta" class="m-auto" size="small" (click)="closeSheet(); navAdd(1)">
                 <ion-icon name="call-outline"></ion-icon>
             </ion-fab-button><br>
-            <ion-text class="font-weight-bold" style="position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; margin: auto;">
+            <ion-text class="font-weight-bold"
+                style="position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; margin: auto;">
                 <small> {{"From Contacts"|translate}}</small>
             </ion-text>
         </div>
@@ -169,7 +174,8 @@
             <ion-fab-button color="magenta" class="m-auto" size="small" (click)="closeSheet(); navAdd(2)">
                 <ion-icon name="settings-outline"></ion-icon>
             </ion-fab-button><br>
-            <ion-text class="font-weight-bold" style="position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; margin: auto;">
+            <ion-text class="font-weight-bold"
+                style="position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; margin: auto;">
                 <small> {{"Manually"|translate}}</small>
             </ion-text>
         </div>

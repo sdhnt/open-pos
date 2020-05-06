@@ -1,6 +1,6 @@
 <ion-content class="ion-padding">
     <div style="background-color: #fff;" id="share">
-        <ion-card>
+        <ion-card *ngIf="contact">
             <div class="borderedCard">
                 <div class="item">
                     <ion-row>
@@ -11,7 +11,8 @@
                             <span class="content" style="color: red;" *ngIf="contact.balance<0; else nonNeg">
                                 {{ contact.balance }}
                             </span>
-                            <span class="content" style="color: green;" *ngIf="contact.balance>0; else zero" id="nonNeg">
+                            <span class="content" style="color: green;" *ngIf="contact.balance>0; else zero"
+                                id="nonNeg">
                                 {{ contact.balance }}
                             </span>
                             <span class="content" style="color: blue;" *ngIf="contact.balance==0" id="zero">
@@ -26,12 +27,9 @@
                             <span class="title">Customer Loyalty Discount %: </span>
                         </ion-col>
                         <ion-col size="6">
-                            <span>
-                            <ion-button expand="block" size="small" style="border: 1px dashed grey; border-radius: 5px;" color="#d8d8d8" >
-                            <ion-input type="number" [(ngModel)]="newDisc" min="0" max="100" placeholder="Discount %" style="padding: 5px; color: black;"></ion-input>
-                            <!-- <span class="content">0</span> -->
-                        </ion-button>
-                    </span>
+                            <ion-input style="border: 1px dashed grey; border-radius: 5px;" type="number"
+                                [(ngModel)]="newDisc" min="0" max="100" placeholder="Discount %">
+                            </ion-input>
                         </ion-col>
                     </ion-row>
                 </div>
@@ -40,33 +38,33 @@
                         <ion-col size="6">
                             <span class="title">{{"Earliest Due Date"|translate}}: </span>
                         </ion-col>
-                  
 
-                     
+
+
                         <ion-col size="6">
                             <ion-button shape="round" expand="block" color="success" size="small">
-                            <span class="content" >
-                                <ion-datetime [(ngModel)]="newDate" style="min-width: 30%; padding: 0;"
-                                    placeholder="{{'None'|translate}}" [min]="minDate" [max]="maxDate">
-                                </ion-datetime>
-                            </span>
-                        </ion-button>
+                                <span class="content">
+                                    <ion-datetime [(ngModel)]="newDate" style="min-width: 30%; padding: 0;"
+                                        placeholder="{{'None'|translate}}" [min]="minDate" [max]="maxDate">
+                                    </ion-datetime>
+                                </span>
+                            </ion-button>
                         </ion-col>
                     </ion-row>
                 </div>
             </div>
         </ion-card>
-        
-    <ion-row>
-        <ion-col>
-            <ion-button expand="block" color="success" (click)="transaction(-1)">{{"Lend Money"|translate}}
-            </ion-button>
-        </ion-col>
-        <ion-col>
-            <ion-button expand="block" color="yellow" (click)="transaction(1)">{{"Accept Payment"|translate}}
-            </ion-button>
-        </ion-col>
-    </ion-row>
+
+        <ion-row>
+            <ion-col>
+                <ion-button expand="block" color="success" (click)="transaction(-1)">{{"Lend Money"|translate}}
+                </ion-button>
+            </ion-col>
+            <ion-col>
+                <ion-button expand="block" color="yellow" (click)="transaction(1)">{{"Accept Payment"|translate}}
+                </ion-button>
+            </ion-col>
+        </ion-row>
         <ion-row style="background-color: #fff;">
             <ion-grid style="padding: 0px;">
                 <ion-row style="text-align: center; font-weight: bold; font-size: 14px;">
@@ -88,7 +86,9 @@
                         <ion-row (click)="setNoteOpen(i)">
                             <ion-col size="4">
                                 <ion-row>
-                                    <ion-col><p style="font-size: 10px;">{{ getDateTime(val.date) }}</p></ion-col>
+                                    <ion-col>
+                                        <p style="font-size: 10px;">{{ getDateTime(val.date) }}</p>
+                                    </ion-col>
                                 </ion-row>
                             </ion-col>
                             <ion-col style="text-align: center;" size="3">
@@ -98,7 +98,8 @@
                                 <p *ngIf="val.amount>0" style="color: green;">{{ val.amount }}</p>
                             </ion-col>
                             <ion-col size="2" style="text-align: center;">
-                                    <ion-icon name="expand-outline" *ngIf="val.note!" style="color: black; margin-top: 10px;"></ion-icon>
+                                <ion-icon name="expand-outline" *ngIf="val.note!"
+                                    style="color: black; margin-top: 10px;"></ion-icon>
                             </ion-col>
                         </ion-row>
                     </ion-col>

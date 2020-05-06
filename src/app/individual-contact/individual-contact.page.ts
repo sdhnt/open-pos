@@ -35,10 +35,10 @@ export class IndividualContactPage implements OnInit {
       console.log(params);
       if (params.data) {
         const res = JSON.parse(params.data);
-        console.log('res', res);
         this.contact = res;
         this.newDisc = this.contact.discount;
         this.newDate = this.contact.dueDate;
+        console.log('res', this.contact, this.newDisc, this.newDate);
       }
     });
     // if(this.newDate==undefined) this.remDate();
@@ -58,11 +58,13 @@ export class IndividualContactPage implements OnInit {
   newDisc;
   usingShare = false;
 
+  noteToOpen = -1;
+
   ngOnInit() {
   }
 
   ionViewDidEnter() {
-    this.newDisc = 0;
+    // this.newDisc = 0;
     this.event.emitIsBack(true);
     this.event.emitBackRoute('/home/contacts');
   }
@@ -128,20 +130,18 @@ export class IndividualContactPage implements OnInit {
       }
 
       if (this.newDisc !== this.contact.discount) {
-        console.log(this.newDisc);
-        console.log(this.contact.discount);
+        console.log('this.newDisc', this.newDisc);
+        console.log('this.contact.discount', this.contact.discount);
         await this.sp.updateContactDisc(this.contact.displayName, this.newDisc);
       }
       this.location.back();
     }
   }
-
-  noteToOpen: number = -1;
-  async setNoteOpen(i: number){
-   let a = await this.alertCtrl.create({
+  async setNoteOpen(i: number) {
+   const a = await this.alertCtrl.create({
       subHeader: this.contact.transacHistory[i].note,
     });
-    a.present();
+   a.present();
 
     // if(i==this.noteToOpen)
     //   this.noteToOpen=-1;
@@ -160,7 +160,7 @@ export class IndividualContactPage implements OnInit {
         },
         {
           name: 'note',
-          placeholder: "Notes"
+          placeholder: 'Notes'
         }
       ],
       buttons: [
@@ -174,8 +174,8 @@ export class IndividualContactPage implements OnInit {
             if (data.amount > 0) {
               amountToAdd = data.amount * signedOne;
               noteForTransac = data.note;
-            } else { 
-              console.log('Improper Number'); 
+            } else {
+              console.log('Improper Number');
               return false;
             }
           },
