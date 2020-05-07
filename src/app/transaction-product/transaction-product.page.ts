@@ -72,6 +72,7 @@ export class TransactionProductPage implements OnInit {
     this.events.newUser.subscribe(data => {
       this.delay(500).then(() => {
         this.ngOnInit();
+        this.ionViewDidEnter();
         console.log('update this page');
       });
     });
@@ -79,6 +80,7 @@ export class TransactionProductPage implements OnInit {
     this.events.productUpdateCreated.subscribe(async data => {
       this.delay(500).then(() => {
         this.ngOnInit();
+        this.ionViewDidEnter();
         console.log('update this page');
       });
     });
@@ -185,6 +187,7 @@ export class TransactionProductPage implements OnInit {
 
   doRefresh(refresher) {
     this.ngOnInit();
+    this.ionViewDidEnter();
     refresher.target.complete();
   }
 
@@ -206,6 +209,7 @@ export class TransactionProductPage implements OnInit {
       this.showmanual = 0;
       this.itname = '';
       this.ngOnInit();
+      this.ionViewDidEnter();
       this.router.navigate(['/home/income-transaction']);
       // (this.navCtrl.parent as Tabs).select(0);
     } else {
@@ -246,6 +250,7 @@ export class TransactionProductPage implements OnInit {
     this.showmanual = 0;
     this.itname = '';
     this.ngOnInit();
+    this.ionViewDidEnter();
     this.router.navigate(['/home/income-transaction']);
     // (this.navCtrl.parent as Tabs).select(0);
   }
@@ -340,22 +345,38 @@ export class TransactionProductPage implements OnInit {
             if (this.event !== true) {
               this.listProducts = JSON.parse(val);
               console.log(this.listProducts);
+              if (this.listProducts !== null) {
+                await this.listProducts.map((element, i) => {
+                  this.listProducts[i].qty = 0;
+                });
+              }
               if (!this.userdata.isSubUser) {
 
-                await this.findSubUserProducts().then((result: any) => {
+                // await this.findSubUserProducts().then((result: any) => {
 
-                  console.log('RESULT ****************', result);
-                  this.listProducts.push(...result);
-                  console.log('RESULT ****************', this.listProducts);
+                //   console.log('RESULT ****************', result);
+                //   this.listProducts.push(...result);
+                //   console.log('RESULT ****************', this.listProducts);
+                // });
+
+                const findSubUsersList = firebase.firestore().collection('users').where('mainUser.owner', '==', this.userdata.owner);
+                await findSubUsersList.get().then(async (querySnapshot) => {
+                  if (querySnapshot.size > 0) {
+                    const productArray = [];
+                    await querySnapshot.forEach(async (doc) => {
+                      const singleUserProduct = await firebase.firestore().collection('users/' + doc.id + '/products');
+                      await singleUserProduct.get().then(async (querySnapshot1) => {
+                        querySnapshot1.forEach(async (doc1) => {
+                          await this.listProducts.push(doc1.data());
+                          this.listProducts[this.listProducts.length - 1].qty = 0;
+                          this.filteredProduct();
+                        });
+                      });
+                    });
+                  }
                 });
               }
               console.log('RESULT FINAL ****************', this.listProducts);
-
-              if (this.listProducts !== null) {
-                this.listProducts.forEach(element => {
-                  element.qty = 0;
-                });
-              }
             }
 
             if (this.event1 !== true) {
@@ -375,24 +396,21 @@ export class TransactionProductPage implements OnInit {
 
   async findSubUserProducts() {
     console.log('USER DATA INSIDE THE FIND SUB USER PRODUCTS ****************', this.userdata);
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       const findSubUsersList = firebase.firestore().collection('users').where('mainUser.owner', '==', this.userdata.owner);
-      findSubUsersList.get().then(async (querySnapshot) => {
+      await findSubUsersList.get().then(async (querySnapshot) => {
         if (querySnapshot.size === 0) {
           resolve([]);
         } else {
           const productArray = [];
-          querySnapshot.forEach(async (doc) => {
-            console.log('SUB USERS ****************', doc.data());
+          await querySnapshot.forEach(async (doc) => {
             const singleUserProduct = await firebase.firestore().collection('users/' + doc.id + '/products');
             await singleUserProduct.get().then(async (querySnapshot1) => {
               querySnapshot1.forEach(async (doc1) => {
                 productArray.push(doc1.data());
-                console.log('PRODUCT DOC ****************', productArray);
+                resolve(productArray);
               });
             });
-            console.log('****************', productArray);
-            resolve(productArray);
           });
         }
       });
@@ -470,6 +488,7 @@ export class TransactionProductPage implements OnInit {
     this.showmanual = 0;
     this.itname = '';
     this.ngOnInit();
+    this.ionViewDidEnter();
     this.router.navigate(['/home/income-transaction']);
     // (this.navCtrl.parent as Tabs).select(0);
     this.delay(300).then(() => {

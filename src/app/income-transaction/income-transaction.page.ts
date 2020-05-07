@@ -342,11 +342,9 @@ export class IncomeTransactionPage implements OnInit {
   showPrevRec() {
     if (this.showprevrec === 0) {
       this.showprevrec = 1;
-      if (this.listOfPrevTransac.length === 0) {
-        let todayDate = new Date();
-        todayDate = new Date(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate(), 0, 0, 0);
-        this.getTransac({ start: todayDate });
-      }
+      let todayDate = new Date();
+      todayDate = new Date(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate(), 0, 0, 0);
+      this.getTransac({ start: todayDate });
     } else {
       this.showprevrec = 0;
     }
@@ -776,9 +774,18 @@ export class IncomeTransactionPage implements OnInit {
     this.getUserData();
     this.getLastTransaction();
   }
-  async ionViewWillEnter() {
+  async ionViewDidEnter() {
     this.events.emitFabButton('income-transaction');
+    this.getCategories();
+    this.getUserData();
+    this.getLastTransaction();
   }
+
+  ionViewWillLeave() {
+    this.listOfPrevTransac = [];
+    this.lastTransaction = null;
+  }
+
   createRec() {
     // Nav to Rec Page
     // Build Expand Feature on REC Page
