@@ -1,0 +1,5 @@
+node_modules/
+firebase-debug.log
+config-dev.js
+serviceAccountKey.json
+dummy-data.js
