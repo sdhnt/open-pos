@@ -51,7 +51,7 @@ exports.syncUserCount = functions
 const dataApp = express();
 dataApp.use(cors({ origin: true }));
 dataApp.get("/versionNumber", (req, res) => {
-  const versionNumber = "0.0.9";
+  const versionNumber = "0.1.0";
   res.status(200).json({ versionNumber });
 });
 
