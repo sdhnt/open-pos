@@ -774,9 +774,18 @@ export class IncomeTransactionPage implements OnInit {
     this.getUserData();
     this.getLastTransaction();
   }
-  async ionViewWillEnter() {
+  async ionViewDidEnter() {
     this.events.emitFabButton('income-transaction');
+    this.getCategories();
+    this.getUserData();
+    this.getLastTransaction();
   }
+
+  ionViewWillLeave() {
+    this.listOfPrevTransac = [];
+    this.lastTransaction = null;
+  }
+
   createRec() {
     // Nav to Rec Page
     // Build Expand Feature on REC Page
