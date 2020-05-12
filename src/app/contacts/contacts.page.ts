@@ -7,7 +7,7 @@ import {
 import { Contacts } from '@ionic-native/contacts/ngx';
 import { StorageProvider } from '../services/storage/storage';
 import { IndividualContactPage } from '../individual-contact/individual-contact.page';
-
+import * as firebase from 'firebase';
 import { TranslateConfigService } from '../services/translation/translate-config.service';
 import { Router, NavigationExtras } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -24,9 +24,25 @@ export class ContactsPage implements OnInit {
   choosingContact = false;
   contactList = [];
   searchterm = '';
-  filteredList;
+  filteredList = [];
   totalUserCredit: number;
   totalUserDebit: number;
+  userdata: any = {
+    autosave: 0,
+    business_address: '',
+    business_name: '',
+    cash_balance: '',
+    currency: '',
+    created: '',
+    language: 'en',
+    owner: '',
+    owner_name: '',
+    ph_no: '',
+    businesstype: '',
+    logo_url: '',
+    taxrate: 0.0,
+    discount: 0.0,
+  };
   public BottomSheetState: SheetStates = SheetStates.Closed;
 
   constructor(
@@ -73,23 +89,85 @@ export class ContactsPage implements OnInit {
     // this.sectionSelect.open();
   }
 
-  ionViewDidEnter() {
+  async ionViewDidEnter() {
     this.event.emitFabButton('contacts');
     this.BottomSheetState = SheetStates.Closed;
+    await this.getUserData();
     console.log('ionViewDidEnter ContactPage');
+  }
+
+  async getUserData() {
+    this.sp.storageReady().then(() => {
+      this.sp
+        .getUserDat()
+        .then(val => {
+          this.userdata = JSON.parse(val);
+          console.log('this.userdata ************', this.userdata);
+          this.getContacts();
+        })
+        .catch(err => {
+          alert('Error: ' + err);
+        });
+    });
+  }
+
+  async getContacts() {
     this.sp.getContacts().then(val => {
       if (val === null) {
         this.contactList = [];
       }
-      this.zone.run(() => {
+      this.zone.run(async () => {
         this.contactList = JSON.parse(val);
         this.totalUserCredit = 0;
         this.totalUserDebit = 0;
+        if (!this.userdata.isSubUser) {
+
+          await this.findSubUserContacts().then((result: any) => {
+
+            console.log('RESULT ****************', result);
+            console.log('RESULT ****************', this.contactList);
+            this.contactList = this.contactList.concat(result);
+          });
+        }
         this.contactList.forEach(contact => {
           if (contact.balance > 0) { this.totalUserDebit += contact.balance; }
           if (contact.balance < 0) { this.totalUserCredit += contact.balance; }
         });
         this.filteredList = this.contactList;
+      });
+    });
+  }
+
+  getAmount(amount: number) {
+    if (amount) {
+      if (amount % 1 !== 0) {
+        return amount.toFixed(2);
+      }
+      return amount;
+    }
+  }
+
+  async findSubUserContacts() {
+    return new Promise((resolve, reject) => {
+      const findSubUsersList = firebase.firestore().collection('users').where('mainUser.owner', '==', this.userdata.owner);
+      findSubUsersList.get().then(async (querySnapshot) => {
+        if (querySnapshot.size === 0) {
+          resolve([]);
+        } else {
+          const transactions = [];
+          querySnapshot.forEach(async (doc) => {
+            console.log('SUB USERS ****************', doc.data());
+            const singleUserProduct = await firebase.firestore().collection('users/' + doc.id + '/contacts');
+            await singleUserProduct.get().then(async (querySnapshot1) => {
+              querySnapshot1.forEach(async (doc1) => {
+                transactions.push(doc1.data());
+                console.log('PRODUCT DOC ****************', transactions);
+              });
+            });
+            console.log('****************', transactions);
+            resolve(transactions);
+          });
+        }
       });
     });
   }

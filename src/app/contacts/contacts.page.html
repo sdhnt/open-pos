@@ -15,20 +15,20 @@
     <ion-card class="totalBox">
         <ion-row>
             <ion-col class="totalCol">
-                <ion-row>
+                <div>Owed to you: <span style="color: red;">{{ getAmount(totalUserCredit) }}</span></div>
+                <div>You Owe: <span style="color: green;">{{ getAmount(totalUserDebit) }}</span></div>
+                <!-- <ion-row>
                     <ion-col class="totalCol" size="12">
-                        Owed to you: <span style="color: red;">{{ totalUserCredit }}</span>
                     </ion-col>
                 </ion-row>
                 <ion-row>
                     <ion-col class="totalCol" size="12">
-                        You Owe: <span style="color: green;">{{ totalUserDebit }}</span>
                     </ion-col>
-                </ion-row>
+                </ion-row> -->
             </ion-col>
-            <ion-col class="totalCol"
+            <ion-col class="totalCol" size="5"
                 style="background-color:#2fdf75; border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
-                <ion-button size="small" (click)="navCredReminder()" fill="clear" style="color: white;">
+                <ion-button size="small" (click)="navCredReminder()" fill="clear" style="color: white; font-size: 10px;">
                     <ion-icon name="notifications-outline" class="mr-1"></ion-icon>
                     Reminders
                     <ion-icon name="chevron-forward-outline"></ion-icon>
@@ -136,8 +136,8 @@
             </ion-col>
             <ion-col size="4">
                 <div>
-                    <p style="color: red;" *ngIf="contact.balance<0; else nonNeg">{{ contact.balance }}</p>
-                    <p style="color: green;" *ngIf="contact.balance>0; else zero" id="nonNeg">{{ contact.balance }}</p>
+                    <p style="color: red;" *ngIf="contact.balance<0; else nonNeg">{{ getAmount(contact.balance) }}</p>
+                    <p style="color: green;" *ngIf="contact.balance>0; else zero" id="nonNeg">{{ getAmount(contact.balance) }}</p>
                     <p style="color: blue;" *ngIf="contact.balance==0" id="zero">0</p>
                 </div>
             </ion-col>
