@@ -112,7 +112,7 @@
     "jspdf": "^1.5.3",
     "lodash": "^4.17.15",
     "lodash.isequal": "^4.5.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "ng-country-flags": "^1.0.7",
     "ng-otp-input": "^1.7.0",
     "node-pre-gyp": "^0.14.0",
